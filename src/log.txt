@@ -1,0 +1,179 @@
+time: Thu Sep 26 16:45:38 2019
+message: Game->Init()
+
+time: Thu Sep 26 16:45:38 2019
+message: Game->initTextures()
+
+time: Thu Sep 26 16:45:38 2019
+message: Game->initShaders()
+
+time: Thu Sep 26 16:45:39 2019
+message: Game->initRenderers()
+
+time: Thu Sep 26 16:45:39 2019
+message: Game->initMaps()
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 32, 0, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 64, 96, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 96, 96, 32, 32)
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: GameObject->Destroy()
+
+time: Thu Sep 26 16:45:39 2019
+message: Game->initMenuSprites()
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 0, 0, 46, 46)
+
+time: Thu Sep 26 16:45:39 2019
+message: Game->NewGame()
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 0, 0, 0, 0)
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 0, 0, 0, 0)
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 0, 0, 0, 0)
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 0, 0, 0, 0)
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 0, 0, 0, 0)
+
+time: Thu Sep 26 16:45:39 2019
+message: Sprite->Sprite(texture, 0, 0, 0, 0)
+
+time: Thu Sep 26 16:45:39 2019
+message: Weapon olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Weapon olusturuldu
+
+time: Thu Sep 26 16:45:39 2019
+message: Weapon olusturuldu
+
+time: Thu Sep 26 16:45:58 2019
+message: StartGame->StartGame()
+
+time: Thu Sep 26 16:45:58 2019
+message: StartGame->Init()
+
+time: Thu Sep 26 16:45:58 2019
+message: Sprite->Sprite(texture, 0, 0, 32, 32)
+
+time: Thu Sep 26 16:45:58 2019
+message: Sprite->Sprite(texture, 0, 32, 32, 32)

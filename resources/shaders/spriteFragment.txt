@@ -1,0 +1,26 @@
+#version 330 core
+in vec2 TexCoords;
+
+out vec4 color;
+
+
+uniform sampler2D image;
+uniform bool overrideColor;
+uniform vec3 uniformColor;
+void main()
+{	
+	if(overrideColor)
+	{
+		vec4 texColor = texture(image, TexCoords);
+		if(texColor.w == 1.0)
+		{
+			texColor = vec4(uniformColor, 1.0);
+		}
+		color = vec4(texColor);
+	}
+	else
+	{
+		color = texture(image, TexCoords);
+	}
+	
+}  

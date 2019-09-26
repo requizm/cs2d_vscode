@@ -1,0 +1,46 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-I${workspaceFolder}\\include",
+                "-L${workspaceFolder}\\lib",
+                "-g",
+                "${workspaceFolder}\\src\\main.cpp",
+                "${workspaceFolder}\\src\\Common.cpp",
+                "-o",
+                "${workspaceFolder}\\bin\\main",
+                "${workspaceFolder}\\lib\\libglfw3dll.a",
+                "-lglew32s",
+                "-lglew32",
+                "-lglfw3",
+                "-lopengl32",
+                "-lfreetype"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "g++.exe build active file",
+            "command": "C:\\MinGW\\bin\\gcc.exe",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "C:\\MinGW\\bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}

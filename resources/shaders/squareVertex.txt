@@ -1,0 +1,15 @@
+#version 330 core
+layout (location = 0) in vec2 vertex;
+
+//varying vec3 vPos;
+uniform mat4 model;
+uniform mat4 projection;
+//out vec4 posWorld;
+
+void main()
+{
+    gl_Position = projection * model * vec4(vertex, 0.0, 1.0);
+	//posWorld = model * gl_Vertex;
+	//vPos = model * vec3(vertex, 0.0)
+	
+}
