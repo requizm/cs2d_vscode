@@ -16,7 +16,7 @@ public:
 	//StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer);
 	void Init();
 	void Update(const float dt) const;
-	void ProcessInput(const float dt) const;
+	void ProcessInput(const float dt);
 	void Render(const float dt);
 	~StartGame();
 

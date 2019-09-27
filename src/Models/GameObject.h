@@ -39,17 +39,17 @@ public:
 	virtual void Destroy();
 	virtual void OnDestroy();
 
-	
 	GameObject GetParentObject() const;
 	int GetObjectType() const;
 	glm::mat4 GetTransform();
-	glm::vec2 GetPosition() const;
+	glm::vec2 GetPosition();
+	GLfloat GetRotation();
 
 	void BuildTransform();
 
 	GLboolean IsCollision() const;
 	GLboolean IsDestroyed() const;
-	GLboolean IsParent() const;
+	bool IsParent();
 
 	Sprite sprite;
 
@@ -58,9 +58,13 @@ protected:
 	glm::vec2 localPosition, localSize, velocity;
 	GLfloat localRotation;
 
+	glm::vec2 globalPosition, globalSize;
+	GLfloat globalRotation;
+
 	glm::vec2 cellPos;
 
-	glm::mat4 localTranform = glm::mat4(1.0f);
+	glm::mat4 localTransform = glm::mat4(1.0f);
+	glm::mat4 globalTransform = glm::mat4(1.0f);
 
 	GameObject *parent = nullptr;
 
@@ -68,8 +72,10 @@ protected:
 	GLboolean isDestroyed;
 
 	ObjectType objType;
+
+	glm::vec2 parentPositionDelta;
+
+	
 };
-
-
 
 #endif

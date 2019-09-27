@@ -3,10 +3,10 @@
 #include <glm/gtx/string_cast.hpp>
 
 GameObject::GameObject()
-	: localPosition(0, 0), localSize(1, 1), localRotation(0.0F), isCollision(false), isDestroyed(false) {}
+	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false) {}
 
 GameObject::GameObject(glm::vec2 pos, Sprite sprite, glm::vec2 size, int objType)
-	: localPosition(pos), localSize(size), localRotation(0.0F), sprite(sprite), isCollision(false), isDestroyed(false)
+	: globalPosition(pos), globalSize(size), globalRotation(0.0F), sprite(sprite), isCollision(false), isDestroyed(false)
 {
 	this->objType = (ObjectType)objType;
 	BuildTransform();
@@ -28,13 +28,15 @@ GameObject::GameObject(glm::vec2 pos, Sprite sprite, glm::vec2 size, int objType
 	}
 	str += " olusturuldu";
 	Logger::WriteLog(str);
+
+	BuildTransform();
 }
 
 GameObject::~GameObject() = default;
 
 void GameObject::Draw(SpriteRenderer &renderer)
 {
-	renderer.DrawSprite(this->sprite, this->localPosition, this->localSize, this->localRotation);
+	renderer.DrawSprite(this->sprite, this->globalPosition, this->globalSize, this->globalRotation);
 }
 
 void GameObject::DrawModel(SpriteRenderer &renderer)
@@ -45,55 +47,67 @@ void GameObject::DrawModel(SpriteRenderer &renderer)
 void GameObject::BuildTransform()
 {
 	glm::mat4 model = glm::mat4(1.0);
-	model = glm::translate(model, glm::vec3(localPosition, 0.0F)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
-	//model = glm::translate(model, glm::vec3(position.x, position.y, 0.0f));
-	model = glm::translate(model, glm::vec3(0.5F * localSize.x, 0.5F * localSize.y, 0.0F));   // Move origin of rotation to center of quad
-	model = glm::rotate(model, glm::radians(localRotation), glm::vec3(0.0F, 0.0F, 1.0F));	 // Then rotate
-	model = glm::translate(model, glm::vec3(-0.5F * localSize.x, -0.5F * localSize.y, 0.0F)); // Move origin back
-	model = glm::scale(model, glm::vec3(localSize, 1.0F));									  // Last scale
+
+	/*	model = glm::translate(model, glm::vec3(GetPosition(), 0.0F));
+		model = glm::translate(model, glm::vec3(0.5F * localSize.x, 0.5F * localSize.y, 0.0F));
+		model = glm::translate(model, glm::vec3(parent->GetPosition(), 0.0F));
+		model = glm::rotate(model, glm::radians(parent->localRotation), glm::vec3(0.0F, 0.0F, 1.0F));
+		model = glm::translate(model, glm::vec3(GetPosition(), 0.0F));
+		model = glm::translate(model, glm::vec3(-0.5F * localSize.x, -0.5F * localSize.y, 0.0F));
+		model = glm::scale(model, glm::vec3(localSize, 1.0F));*/
+
+	model = glm::translate(model, glm::vec3(globalPosition, 0.0F));								// First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
+	model = glm::translate(model, glm::vec3(0.5F * globalSize.x, 0.5F * globalSize.y, 0.0F));   // Move origin of rotation to center of quad
+	model = glm::rotate(model, glm::radians(globalRotation), glm::vec3(0.0F, 0.0F, 1.0F));		// Then rotate
+	model = glm::translate(model, glm::vec3(-0.5F * globalSize.x, -0.5F * globalSize.y, 0.0F)); // Move origin back
+	model = glm::scale(model, glm::vec3(globalSize, 1.0F));
 
 	SetTransform(model);
 }
 
 glm::mat4 GameObject::GetTransform()
 {
-	//Logger::WriteLog("GameObject->GetTransform() " + glm::to_string(localTranform) + "");
-	return localTranform;
+	//BuildTransform();
+	if (IsParent())
+	{
+		return parent->GetTransform() * localTransform;
+	}
+	//Logger::WriteLog("GameObject->GetTransform() " + glm::to_string(localTransform) + "");
+	return globalTransform;
 }
 
-glm::vec2 GameObject::GetPosition() const
+glm::vec2 GameObject::GetPosition()
 {
-	//Logger::WriteLog("GameObject->GetPosition() " + glm::to_string(localPosition) + " ");
-	return localPosition;
+	return globalPosition;
 }
 
 void GameObject::SetTransform(glm::mat4 transform)
 {
-	/*if (parent != nullptr)
+	if (IsParent())
 	{
-		//localTranform = glm::inverse(parent->GetTransform()) * transform;
-		//m_mLocalTransform = parent->GetGlobalTransform().InvertedTR() * mGlobal;
-		//globalTranform = transform;
+		localTransform = glm::inverse(parent->GetTransform()) * transform;
+		//m_mLocalTransform = parent->GetTransform().InvertedTR() * mGlobal;
 		return;
-	}*/
+	}
 	//Logger::WriteLog("GameObject->SetTransform() " + glm::to_string(transform) + "");
-	localTranform = transform;
+	globalTransform = transform;
 }
 
 void GameObject::SetParent(GameObject *go)
 {
-	if (parent != nullptr)
+	if (IsParent())
 	{
-		//globalTranform = GetGlobalTransform();
+		//globalTransform = GetTransform();
 	}
 	Logger::WriteLog("GameObject->SetParent()");
 	parent = go;
-	//localTranform = glm::inverse(parent->GetGlobalTransform()) * globalTranform;
+	//parentPositionDelta = localPosition - go->GetPosition();
+	localTransform = glm::inverse(parent->GetTransform()) * globalTransform;
 }
 
 void GameObject::RemoveParent()
 {
-	if (parent != nullptr)
+	if (IsParent())
 	{
 		Logger::WriteLog("GameObject->RemoveParent()");
 		this->parent = nullptr;
@@ -104,37 +118,37 @@ void GameObject::RemoveParent()
 
 void GameObject::SetTransform(glm::vec2 pos, glm::vec2 size, GLfloat rot)
 {
-	this->localSize = size;
-	this->localRotation = rot;
+	this->globalSize = size;
+	this->globalRotation = rot;
 	SetPosition(pos);
 	Logger::WriteLog("GameObject->SetTransform() ->pos(" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + "), size(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ") rot(" + std::to_string(rot) + ") ");
 }
 
 void GameObject::SetPosition(const glm::vec2 pos)
 {
-	this->localPosition = pos;
+	this->globalPosition = pos;
 	BuildTransform();
 	//Logger::WriteLog("GameObject->SetPosition(" + std::to_string(pos.x) + " " + std::to_string(pos.y) + ")");
 }
 
 void GameObject::SetPosition(const float x, const float y)
 {
-	this->localPosition.x = x;
-	this->localPosition.y = y;
+	this->globalPosition.x = x;
+	this->globalPosition.y = y;
 	BuildTransform();
 	//Logger::WriteLog("GameObject->SetPosition(" + std::to_string(x) + ", " + std::to_string(y) + " )");
 }
 
 void GameObject::SetSize(glm::vec2 size)
 {
-	this->localSize = size;
+	this->globalSize = size;
 	BuildTransform();
 	Logger::WriteLog("GameObject->SetSize(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ")");
 }
 
 void GameObject::SetRotation(GLfloat rot)
 {
-	this->localRotation = rot;
+	this->globalRotation = rot;
 	BuildTransform();
 	//Logger::WriteLog("GameObject->SetRotation(" + std::to_string(rot) + ")");
 }
@@ -169,13 +183,18 @@ GLboolean GameObject::IsDestroyed() const
 	return isDestroyed;
 }
 
-GLboolean GameObject::IsParent() const
+bool GameObject::IsParent()
 {
 	bool returnn;
-	if (parent)
+	if (parent != nullptr)
+	{
 		returnn = true;
-	returnn = false;
-	Logger::WriteLog("GameObject->IsParent() " + std::to_string(returnn) + "");
+	}
+	else
+	{
+		returnn = false;
+	}
+	//Logger::WriteLog("GameObject->IsParent() " + std::to_string(returnn) + "");
 	return returnn;
 }
 

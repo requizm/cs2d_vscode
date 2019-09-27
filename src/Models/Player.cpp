@@ -6,12 +6,12 @@
 
 void Player::Draw(SpriteRenderer &renderer)
 {
-	renderer.DrawSprite(this->sprites[currentIndex], this->localPosition, this->localSize, this->localRotation);
+	renderer.DrawSprite(this->sprites[currentIndex], this->globalPosition, this->globalSize, this->globalRotation);
 }
 
 void Player::DrawModel(SpriteRenderer &renderer)
 {
-	renderer.DrawSprite(this->sprites[currentIndex], this->localTranform);
+	renderer.DrawSprite(this->sprites[currentIndex], this->GetTransform());
 }
 
 Player::~Player() = default;

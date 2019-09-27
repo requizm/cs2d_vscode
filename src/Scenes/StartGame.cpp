@@ -71,6 +71,7 @@ void StartGame::Init()
 						 glm::vec2(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
 	player->setVelocity(500.0F);
 	player->SetMap(map.get());
+	
 }
 
 void StartGame::Update(const float dt) const
@@ -82,8 +83,16 @@ void StartGame::Update(const float dt) const
 	//Weapon b = a;
 }
 
-void StartGame::ProcessInput(const float dt) const
+void StartGame::ProcessInput(const float dt)
 {
+	if(InputManager::isKeyDown(GLFW_KEY_Q))
+	{
+		this->weapons.at(1).SetParent(player.get());
+	}
+	if(InputManager::isKeyDown(GLFW_KEY_E))
+	{
+		this->weapons.at(1).RemoveParent();
+	}
 	player->ProcessInput(dt);
 }
 
@@ -97,7 +106,7 @@ void StartGame::Render(const float dt)
 	int temp = weapons.size();
 	for (int i = 0; i < temp; i++)
 	{
-		this->weapons.at(i).Draw(*this->renderer);
+		this->weapons.at(i).DrawModel(*this->renderer);
 	}
 	player->DrawModel(*renderer);
 

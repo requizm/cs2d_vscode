@@ -208,7 +208,7 @@ void Game::initTextures() const
 	ResourceManager::LoadTexture("../resources/textures/weapons/ak47_d.png", GL_TRUE, "ak47_d");
 	ResourceManager::LoadTexture("../resources/textures/weapons/famas.png", GL_TRUE, "famas");
 	ResourceManager::LoadTexture("../resources/textures/weapons/famas_d.png", GL_TRUE, "famas_d");
-	ResourceManager::LoadTexture("../resources/textures/weapons/deagle.png", GL_TRUE, "deagle");
+	/*ResourceManager::LoadTexture("../resources/textures/weapons/deagle.png", GL_TRUE, "deagle");
 	ResourceManager::LoadTexture("../resources/textures/weapons/deagle_d.png", GL_TRUE, "deagle_d");
 	ResourceManager::LoadTexture("../resources/textures/weapons/fiveseven.png", GL_TRUE, "fiveseven");
 	ResourceManager::LoadTexture("../resources/textures/weapons/fiveseven_d.png", GL_TRUE, "fiveseven_d");
@@ -217,7 +217,7 @@ void Game::initTextures() const
 	ResourceManager::LoadTexture("../resources/textures/weapons/usp.png", GL_TRUE, "usp");
 	ResourceManager::LoadTexture("../resources/textures/weapons/usp_d.png", GL_TRUE, "usp_d");
 	ResourceManager::LoadTexture("../resources/textures/weapons/knife.png", GL_TRUE, "knife");
-	ResourceManager::LoadTexture("../resources/textures/weapons/machete.png", GL_TRUE, "machete");
+	ResourceManager::LoadTexture("../resources/textures/weapons/machete.png", GL_TRUE, "machete");*/
 
 	//menuitems
 	ResourceManager::LoadTexture("../resources/textures/pointer.png", GL_TRUE, "pointer");
