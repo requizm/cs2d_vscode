@@ -35,19 +35,16 @@ void Game::Init()
 	initRenderers();
 	initMaps();
 	initMenuSprites();
-	//weapons = std::vector<std::shared_ptr<Weapon>>();
-	//menu = std::make_unique<Menu>(&menuSprites, textRenderer.get());
-	//menu->Init();
+	menu = Menu(menuSprites, menuRenderer);
+	menu.Init();
 	//editor = std::make_unique<Editor>(textRenderer.get());
 	//editor->Init();
-	NewGame();
-	//GameObject *asd = new Player();
-	//	Player *p = (Player*)asd;
+	//NewGame();
 }
 
-void Game::Update(float dt) const
+void Game::Update(float dt)
 {
-	scene->Update(dt);
+	//scene.Update(dt);
 	/*for (std::vector<int>::size_type i = 0; i != weapons.size(); i++)
 	{
 		const GameObject *a = &weapons[0];
@@ -63,25 +60,14 @@ void Game::Update(float dt) const
 		//std::cout << typeid(pt1).name() << std::endl;
 	}*/
 
-	//player->Update(dt);
-	/*main1->Update(dt);
-	main2->Update(dt);
-	main3->Update(dt);
-	pistol1->Update(dt);
-	pistol2->Update(dt);
-	pistol3->Update(dt);
-	pistol4->Update(dt);
-	knife1->Update(dt);
-	knife2->Update(dt);*/
-	//menu->Update(dt);
+	menu.Update(dt);
 	//editor->Update(dt);
 }
 
 void Game::ProcessInput(float dt)
 {
-	//player->ProcessInput(dt); //also docollider
-	scene->ProcessInput(dt);
-	//menu->ProcessInput(dt);
+	//scene.ProcessInput(dt);
+	menu.ProcessInput(dt);
 	//editor->ProcessInput(dt);
 }
 
@@ -130,52 +116,17 @@ void Game::NewGame()
 	Weapon* knife2 = new Weapon(
 		glm::vec2(20.0f, 210.0f), machete, machete, "machete", WeaponType::KNIFE, 30, 20, 10, 10
 	);*/
-	/*weapons.push_back(main1);
-	weapons.push_back(main2);
-	weapons.push_back(main3);*/
-	/*weapons.push_back(std::make_shared<Weapon>(*pistol1));
-	weapons.push_back(std::make_shared<Weapon>(*pistol2));
-	weapons.push_back(std::make_shared<Weapon>(*pistol3));
-	weapons.push_back(std::make_shared<Weapon>(*pistol4));
-	weapons.push_back(std::make_shared<Weapon>(*knife1));
-	weapons.push_back(std::make_shared<Weapon>(*knife1));*/
+
 	weapons.push_back(*main1.get());
 	weapons.push_back(*main2.get());
 	weapons.push_back(*main3.get());
 
-	/*gameobjects.push_back(main1.get());
-	gameobjects.push_back(main2.get());
-	gameobjects.push_back(main3.get());*/
-	/*gameobjects.push_back(&pistol1);
-	gameobjects.push_back(&pistol2);
-	gameobjects.push_back(&pistol3);
-	gameobjects.push_back(&pistol4);
-	gameobjects.push_back(&knife1);
-	gameobjects.push_back(&knife2);*/
-
-	//scene = std::make_unique<StartGame>(&maps[0], &weapons, spriteRenderer.get());
-	scene = std::make_unique<StartGame>(maps[0], *spriteRenderer.get(), weapons);
-	scene->Init();
-
-	//label = new Label("denememesaj", glm::vec2(0.0f));
-	//label->setColor(glm::vec3(0.5F, 0.5F, 0.5F));
-
-	/*player->addWeapon(*main1);
-	player->addWeapon(*main2);
-	player->addWeapon(*main3);
-	player->addWeapon(*pistol1);
-	player->addWeapon(*pistol2);
-	player->addWeapon(*pistol3);
-	player->addWeapon(*pistol4);
-	player->addWeapon(*knife1);
-	player->addWeapon(*knife2);*/
+	scene = StartGame(maps[0], spriteRenderer, weapons);
+	scene.Init();
 }
 
-void Game::Render(const float dt) const
+void Game::Render(const float dt)
 {
-	//renderer->DrawSprite(Sprite(ResourceManager::GetTexture("buildings"), false, 32, 0, 32, 32), glm::vec2(700, 700), glm::vec2(55.0f, 55.0f), 0.0);
-	//renderer->DrawSprite(ResourceManager::GetTexture("uc"), glm::vec2(101, 218), glm::vec2(28, 55), 40.0f);
-
 	//player->DrawModel(*renderer);
 	/*main1->DrawModel(*renderer);
 	main2->DrawModel(*renderer);
@@ -186,12 +137,10 @@ void Game::Render(const float dt) const
 	pistol4->DrawModel(*renderer);
 	knife1->DrawModel(*renderer);
 	knife2->DrawModel(*renderer);*/
-
-	//menu->Render(dt);
+	menu.Render(dt);
 	//editor->Render(dt);
-	scene->Render(dt);
-	textRenderer->DrawSprite(mouseSprite, glm::vec2(InputManager::mouseX, InputManager::mouseY), glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), true);
-	//label->Draw(*textRenderer);
+	//scene.Render(dt);
+	menuRenderer.DrawSprite(mouseSprite, glm::vec2(InputManager::mouseX, InputManager::mouseY), glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
 }
 
 void Game::initTextures() const
@@ -221,11 +170,11 @@ void Game::initTextures() const
 
 	//menuitems
 	ResourceManager::LoadTexture("../resources/textures/pointer.png", GL_TRUE, "pointer");
-	/*ResourceManager::LoadTexture("../resources/textures/cs2d.png", GL_TRUE, "cs2d");
+	ResourceManager::LoadTexture("../resources/textures/cs2d.png", GL_TRUE, "cs2d");
 	ResourceManager::LoadTexture("../resources/textures/gametitle.png", GL_TRUE, "gametitle");
 	ResourceManager::LoadTexture("../resources/textures/unrealsoftware.png", GL_TRUE, "unrealsoftware");
 	ResourceManager::LoadTexture("../resources/textures/splash.png", GL_FALSE, "splash");
-	ResourceManager::LoadTexture("../resources/textures/cursor-spec.png", GL_TRUE, "textcursor");
+	/*ResourceManager::LoadTexture("../resources/textures/cursor-spec.png", GL_TRUE, "textcursor");
 
 	//GUIIcons
 	ResourceManager::LoadTexture("../resources/textures/gui_icons.png", GL_TRUE, "gui_icons");*/
@@ -250,18 +199,16 @@ void Game::initShaders() const
 void Game::initMenuSprites()
 {
 	Logger::WriteLog("Game->initMenuSprites()");
-	/*Sprite cs2d = Sprite(ResourceManager::GetTexture("cs2d"));
+	Sprite cs2d = Sprite(ResourceManager::GetTexture("cs2d"));
 	Sprite unrealsoftware = Sprite(ResourceManager::GetTexture("unrealsoftware"));
 	Sprite splash = Sprite(ResourceManager::GetTexture("splash"));
-	//Sprite mouseSprite = Sprite(ResourceManager::GetTexture("pointer"), 0, 0, 46, 46);
-	Sprite gametitle = Sprite(ResourceManager::GetTexture("gametitle"));*/
+	Sprite gametitle = Sprite(ResourceManager::GetTexture("gametitle"));
 	mouseSprite = Sprite(ResourceManager::GetTexture("pointer"), 0, 0, 46, 46);
 
-	/*menuSprites.insert(std::pair<std::string, Sprite>("unrealsoftware", unrealsoftware));
+	menuSprites.insert(std::pair<std::string, Sprite>("unrealsoftware", unrealsoftware));
 	menuSprites.insert(std::pair<std::string, Sprite>("cs2d", cs2d));
 	menuSprites.insert(std::pair<std::string, Sprite>("gametitle", gametitle));
-	//menuSprites.insert(std::pair<std::string, Sprite>("mouseSprite", mouseSprite));
-	menuSprites.insert(std::pair<std::string, Sprite>("splash", splash));*/
+	menuSprites.insert(std::pair<std::string, Sprite>("splash", splash));
 }
 
 void Game::initMaps()
@@ -275,6 +222,6 @@ void Game::initMaps()
 void Game::initRenderers()
 {
 	Logger::WriteLog("Game->initRenderers()");
-	spriteRenderer = std::make_shared<SpriteRenderer>(ResourceManager::GetShader("sprite"));
-	textRenderer = std::make_shared<SpriteRenderer>(ResourceManager::GetShader("menu"));
+	spriteRenderer = SpriteRenderer(ResourceManager::GetShader("sprite"));
+	menuRenderer = SpriteRenderer(ResourceManager::GetShader("menu"));
 }

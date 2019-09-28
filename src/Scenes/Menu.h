@@ -1,16 +1,17 @@
 #ifndef MENU_H
 #define MENU_H
 #include <map>
-#include "../Models/Sprite.h"
 #include <string.h>
 #include <memory>
+#include "../Models/Sprite.h"
 #include "../Renderers/SpriteRenderer.h"
+#include "../Renderers/TextRenderer.h"
 #include "../Managers/InputManager.h"
+#include "../Others/Game_Parameters.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "../Renderers/TextRenderer.h"
+
 /*#include "ButtonRenderer.h"
-#include "Enums.h"
 #include "TextBox.h"
 #include "Panel.h"*/
 
@@ -18,16 +19,16 @@ class Menu
 {
 public:
 	Menu();
-	Menu(std::map<std::string, Sprite> *menuSprites, SpriteRenderer *menuRenderer);
+	Menu(const std::map<std::string, Sprite> &menuSprites, const SpriteRenderer &menuRenderer);
 	~Menu();
 
 	void Init();
 	void Update(const float dt) const;
 	void ProcessInput(const float dt) const;
-	void Render(const float dt) const;
+	void Render(const float dt);
 
-	//std::map<std::string, Sprite>* menuSprites;
-	std::shared_ptr<TextRenderer> textRenderer;
+	std::map<std::string, Sprite> menuSprites;
+	TextRenderer textRenderer;
 	SpriteRenderer menuRenderer;
 	//std::shared_ptr<SquareRenderer> squareRenderer;
 	//std::shared_ptr<ButtonRenderer> buttonRenderer;

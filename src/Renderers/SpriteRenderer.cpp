@@ -83,3 +83,10 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::mat4 model)
 	glBindVertexArray(0);
 	this->shader.UnUse();
 }
+
+void SpriteRenderer::SetProjection(glm::mat4 projection)
+{
+	this->shader.Use();
+	this->shader.SetMatrix4("projection", projection);
+	this->shader.UnUse();
+}

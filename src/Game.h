@@ -11,7 +11,7 @@
 #include "Scenes/StartGame.h"
 #include "Managers/ResourceManager.h"
 #include "Others/Game_Parameters.h"
-//#include "Menu.h"
+#include "Scenes/Menu.h"
 //#include "Editor.h"
 
 class Game
@@ -23,8 +23,8 @@ public:
 	virtual ~Game();
 
 	void Init();
-	void Update(const float dt) const;
-	void Render(const float dt) const;
+	void Update(const float dt);
+	void Render(const float dt);
 	void ProcessInput(const float dt);
 	void NewGame();
 	void initTextures() const;
@@ -35,8 +35,8 @@ public:
 private:
 	//std::unique_ptr<SpriteRenderer> renderer;
 
-	std::shared_ptr<SpriteRenderer> spriteRenderer;
-	std::shared_ptr<SpriteRenderer> textRenderer;
+	SpriteRenderer spriteRenderer;
+	SpriteRenderer menuRenderer;
 	//std::shared_ptr<TextRenderer> textRenderer;
 	Camera camera;
 	//Label *label;
@@ -51,13 +51,13 @@ private:
 	//std::vector<std::shared_ptr<Weapon>> weapons;
 	//std::vector<std::shared_ptr<Sprite>> pointers;
 	Sprite mouseSprite;
-	std::unique_ptr<StartGame> scene;
-	//std::unique_ptr <Menu> menu;
+	StartGame scene;
+	Menu menu;
 	//std::unique_ptr <Editor> editor;
 	GameState state;
 	
 
-	//std::map<std::string, Sprite> menuSprites;
+	std::map<std::string, Sprite> menuSprites;
 
 	//Weapon *main1, *main2, *main3, *pistol1, *pistol2, *pistol3, *pistol4, *knife1, *knife2;
 	void initMenuSprites();

@@ -47,21 +47,11 @@ void GameObject::DrawModel(SpriteRenderer &renderer)
 void GameObject::BuildTransform()
 {
 	glm::mat4 model = glm::mat4(1.0);
-
-	/*	model = glm::translate(model, glm::vec3(GetPosition(), 0.0F));
-		model = glm::translate(model, glm::vec3(0.5F * localSize.x, 0.5F * localSize.y, 0.0F));
-		model = glm::translate(model, glm::vec3(parent->GetPosition(), 0.0F));
-		model = glm::rotate(model, glm::radians(parent->localRotation), glm::vec3(0.0F, 0.0F, 1.0F));
-		model = glm::translate(model, glm::vec3(GetPosition(), 0.0F));
-		model = glm::translate(model, glm::vec3(-0.5F * localSize.x, -0.5F * localSize.y, 0.0F));
-		model = glm::scale(model, glm::vec3(localSize, 1.0F));*/
-
 	model = glm::translate(model, glm::vec3(globalPosition, 0.0F));								// First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	model = glm::translate(model, glm::vec3(0.5F * globalSize.x, 0.5F * globalSize.y, 0.0F));   // Move origin of rotation to center of quad
 	model = glm::rotate(model, glm::radians(globalRotation), glm::vec3(0.0F, 0.0F, 1.0F));		// Then rotate
 	model = glm::translate(model, glm::vec3(-0.5F * globalSize.x, -0.5F * globalSize.y, 0.0F)); // Move origin back
 	model = glm::scale(model, glm::vec3(globalSize, 1.0F));
-
 	SetTransform(model);
 }
 

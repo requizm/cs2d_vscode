@@ -99,8 +99,7 @@ void StartGame::Render(const float dt)
 {
 	camera->setPosition(glm::vec2(player->GetPosition().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPosition().y - Game_Parameters::SCREEN_HEIGHT / 2));
 	camera->update();
-	ResourceManager::GetShader("sprite").Use();
-	ResourceManager::GetShader("sprite").SetMatrix4("projection", camera->cameraMatrix);
+	renderer.SetProjection(camera->cameraMatrix);
 	map.Draw(renderer);
 	int temp = weapons.size();
 	for (int i = 0; i < temp; i++)

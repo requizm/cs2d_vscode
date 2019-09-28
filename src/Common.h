@@ -43,7 +43,7 @@
 #include "Models/Mag.h"
 
 #include "Renderers/SpriteRenderer.cpp"
-#include "Renderers/TextRenderer.h"
+#include "Renderers/TextRenderer.cpp"
 
 #include "Managers/ResourceManager.cpp"
 #include "Managers/InputManager.cpp"
@@ -52,7 +52,7 @@
 #include "Others/Logger.cpp"
 
 #include "Scenes/StartGame.cpp"
-#include "Scenes/Menu.h"
+#include "Scenes/Menu.cpp"
 
 #include "Game.cpp"
 
