@@ -4,22 +4,22 @@
 
 StartGame::StartGame() = default;
 
-StartGame::StartGame(Map *map, SpriteRenderer *renderer)
+StartGame::StartGame(const Map &map, const SpriteRenderer &renderer)
 {
 	Logger::WriteLog("StartGame->StartGame()");
 	//this->weapons = std::make_shared<std::vector<Weapon *>>(nullptr);
-	this->map = std::make_shared<Map>(*map);
-	this->renderer = std::make_shared<SpriteRenderer>(*renderer);
+	this->map = map;
+	this->renderer = renderer;
 	//this->renderer = std::make_shared<SpriteRenderer>();,
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 }
 
-StartGame::StartGame(Map *map, SpriteRenderer *renderer, const std::vector<Weapon> &weapons)
+StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::vector<Weapon> &weapons)
 {
 	Logger::WriteLog("StartGame->StartGame()");
 	//this->weapons = std::make_shared<std::vector<Weapon *>>(nullptr);
-	this->map = std::make_shared<Map>(*map);
-	this->renderer = std::make_shared<SpriteRenderer>(*renderer);
+	this->map = map;
+	this->renderer = renderer;
 	//this->renderer = std::make_shared<SpriteRenderer>();,
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->weapons = weapons;
@@ -70,8 +70,7 @@ void StartGame::Init()
 	player->SetTransform(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
 						 glm::vec2(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
 	player->setVelocity(500.0F);
-	player->SetMap(map.get());
-	
+	player->SetMap(&map);
 }
 
 void StartGame::Update(const float dt) const
@@ -85,11 +84,11 @@ void StartGame::Update(const float dt) const
 
 void StartGame::ProcessInput(const float dt)
 {
-	if(InputManager::isKeyDown(GLFW_KEY_Q))
+	if (InputManager::isKeyDown(GLFW_KEY_Q))
 	{
 		this->weapons.at(1).SetParent(player.get());
 	}
-	if(InputManager::isKeyDown(GLFW_KEY_E))
+	if (InputManager::isKeyDown(GLFW_KEY_E))
 	{
 		this->weapons.at(1).RemoveParent();
 	}
@@ -102,13 +101,13 @@ void StartGame::Render(const float dt)
 	camera->update();
 	ResourceManager::GetShader("sprite").Use();
 	ResourceManager::GetShader("sprite").SetMatrix4("projection", camera->cameraMatrix);
-	map->Draw(*renderer);
+	map.Draw(renderer);
 	int temp = weapons.size();
 	for (int i = 0; i < temp; i++)
 	{
-		this->weapons.at(i).DrawModel(*this->renderer);
+		this->weapons.at(i).DrawModel(this->renderer);
 	}
-	player->DrawModel(*renderer);
+	player->DrawModel(renderer);
 
 	//label->Draw(*textRenderer);
 

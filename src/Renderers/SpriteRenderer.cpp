@@ -13,7 +13,7 @@ SpriteRenderer::SpriteRenderer()
 SpriteRenderer::~SpriteRenderer()
 = default;
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool drawCenter, GLfloat rotate)
+void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, GLfloat rotate, bool drawCenter)
 {
 	//rotate = rotate * static_cast<GLfloat>(PI) / static_cast<GLfloat>(180);
 	// Prepare transformations

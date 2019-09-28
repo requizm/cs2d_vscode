@@ -36,7 +36,7 @@ GameObject::~GameObject() = default;
 
 void GameObject::Draw(SpriteRenderer &renderer)
 {
-	renderer.DrawSprite(this->sprite, this->globalPosition, this->globalSize, this->globalRotation);
+	renderer.DrawSprite(this->sprite, this->GetPosition(), this->globalSize, this->globalRotation);
 }
 
 void GameObject::DrawModel(SpriteRenderer &renderer)

@@ -154,7 +154,7 @@ void Game::NewGame()
 	gameobjects.push_back(&knife2);*/
 
 	//scene = std::make_unique<StartGame>(&maps[0], &weapons, spriteRenderer.get());
-	scene = std::make_unique<StartGame>(&maps[0], spriteRenderer.get(), weapons);
+	scene = std::make_unique<StartGame>(maps[0], *spriteRenderer.get(), weapons);
 	scene->Init();
 
 	//label = new Label("denememesaj", glm::vec2(0.0f));
@@ -234,7 +234,7 @@ void Game::initTextures() const
 void Game::initShaders() const
 {
 	Logger::WriteLog("Game->initShaders()");
-	//ResourceManager::LoadShader("../resources/shaders/textVertex.txt", "../resources/shaders/textFragment.txt", nullptr, "text");
+	ResourceManager::LoadShader("../resources/shaders/textVertex.txt", "../resources/shaders/textFragment.txt", nullptr, "text");
 	ResourceManager::LoadShader("../resources/shaders/spriteVertex.txt", "../resources/shaders/spriteFragment.txt", nullptr, "sprite");
 	ResourceManager::LoadShader("../resources/shaders/spriteVertex.txt", "../resources/shaders/spriteFragment.txt", nullptr, "menu");
 	//ResourceManager::LoadShader("../resources/shaders/spriteVertex.txt", "../resources/shaders/spriteFragment.txt", nullptr, "outline");

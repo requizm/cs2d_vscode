@@ -51,7 +51,7 @@ void Weapon::SetParent(GameObject *go)
 {
 	if (IsParent())
 	{
-		//globalTranform = GetGlobalTransform();
+		return;
 	}
 	Logger::WriteLog("Weapon->SetParent()");
 	parent = go;
