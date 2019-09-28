@@ -135,20 +135,20 @@ std::string Map::GetName() const
 
 Tile *Map::getTile(int cellX, int cellY)
 {
-	bool result = false;
+	/*	bool result = false;
 	int index = 0;
 	for (std::vector<int>::size_type i = 0; i != Tiles.size(); i++)
 	{
-		/*	if (static_cast<int>(Tiles.at(i).getCellPosition().x) == cellX && static_cast<int>(Tiles.at(i).getCellPosition().y) == cellY)
+			if (static_cast<int>(Tiles.at(i).getCellPosition().x) == cellX && static_cast<int>(Tiles.at(i).getCellPosition().y) == cellY)
 		{
 			result = true;
 			index = i;
 			break;
-		}*/
+		}
 	}
 
 	if (result)
 		return &Tiles.at(index);
 
-	return nullptr;
+	return nullptr;*/
 }
