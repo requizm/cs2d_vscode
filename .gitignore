@@ -27,3 +27,7 @@
 *.out
 *.app
 
+sonar-project.properties
+src/.scannerwork/report-task.txt
+bin/main.exe
+bin/log.txt
