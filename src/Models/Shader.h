@@ -35,7 +35,7 @@ public:
 	void	UnUse() const;
 private:
 	// Checks if compilation or linking failed and if so, print the error logs
-	void    checkCompileErrors(GLuint object, std::string type) const;
+	void    checkCompileErrors(GLuint object, const std::string &type) const;
 };
 
 #endif

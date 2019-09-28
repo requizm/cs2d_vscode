@@ -11,7 +11,7 @@ Logger::~Logger() = default;
 
 std::ofstream Logger::outfile;
 
-void Logger::DebugLog(std::string msg)
+void Logger::DebugLog(const std::string &msg)
 {
     auto start = std::chrono::system_clock::now();
     // Some computation here
@@ -23,7 +23,7 @@ void Logger::DebugLog(std::string msg)
     std::cout << "time: " << time << "message: " << msg << "\n\n\n";
 }
 
-void Logger::WriteLog(std::string msg)
+void Logger::WriteLog(const std::string &msg)
 {
     auto start = std::chrono::system_clock::now();
     auto end = std::chrono::system_clock::now();

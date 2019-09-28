@@ -3,9 +3,9 @@
 #include <glm/gtx/string_cast.hpp>
 
 GameObject::GameObject()
-	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false) {}
+	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0.0F), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT)  {}
 
-GameObject::GameObject(glm::vec2 pos, Sprite sprite, glm::vec2 size, int objType)
+GameObject::GameObject(glm::vec2 pos, const Sprite &sprite, glm::vec2 size, int objType)
 	: globalPosition(pos), globalSize(size), globalRotation(0.0F), sprite(sprite), isCollision(false), isDestroyed(false)
 {
 	this->objType = (ObjectType)objType;

@@ -19,9 +19,9 @@ public:
 	~SpriteRenderer();
 	// Renders a defined quad textured with given sprite
 	//void DrawSprite(Texture2D texture, glm::vec2 position, glm::vec2 size = glm::vec2(10, 10), GLfloat rotate = 0.0f);
-	void DrawSprite(Sprite sprite, glm::vec2 position, glm::vec2 size, bool drawCenter = false, GLfloat rotate = 0.0f);
-	void DrawSprite(Sprite sprite, glm::vec2 position, glm::vec2 size, glm::vec3 color, bool drawCenter = false, GLfloat rotate = 0.0f);
-	void DrawSprite(Sprite sprite, glm::mat4 model);
+	void DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool drawCenter = false, GLfloat rotate = 0.0f);
+	void DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, glm::vec3 color, bool drawCenter = false, GLfloat rotate = 0.0f);
+	void DrawSprite(const Sprite &sprite, glm::mat4 model);
 private:
 	// Render state
 	Shader shader;

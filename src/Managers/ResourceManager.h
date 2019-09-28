@@ -35,8 +35,6 @@ public:
 	static Texture2D LoadTexture(const GLchar* file, GLboolean alpha, std::string name);
 	// Retrieves a stored texture
 	static Texture2D GetTexture(std::string name);
-
-	static Texture2D createTextureWithColor(GLboolean alpha, std::string name, GLboolean isBlack = false);
 	// Properly de-allocates all loaded resources
 	static void      Clear();
 private:

@@ -16,7 +16,7 @@ class GameObject
 {
 public:
 	GameObject();
-	GameObject(glm::vec2 pos, Sprite sprite, glm::vec2 size, int objType = 2);
+	GameObject(glm::vec2 pos, const Sprite& sprite, glm::vec2 size, int objType = 2);
 	virtual ~GameObject();
 
 	// Draw sprite
@@ -55,7 +55,7 @@ public:
 
 protected:
 	// Object state
-	glm::vec2 localPosition, localSize, velocity;
+	glm::vec2 localPosition, localSize, Velocity2d;
 	GLfloat localRotation;
 
 	glm::vec2 globalPosition, globalSize;

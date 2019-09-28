@@ -14,7 +14,7 @@ StartGame::StartGame(Map *map, SpriteRenderer *renderer)
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 }
 
-StartGame::StartGame(Map *map, SpriteRenderer *renderer, std::vector<Weapon> weapons)
+StartGame::StartGame(Map *map, SpriteRenderer *renderer, const std::vector<Weapon> &weapons)
 {
 	Logger::WriteLog("StartGame->StartGame()");
 	//this->weapons = std::make_shared<std::vector<Weapon *>>(nullptr);

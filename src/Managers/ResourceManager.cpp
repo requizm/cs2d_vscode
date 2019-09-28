@@ -76,7 +76,7 @@ Shader ResourceManager::loadShaderFromFile(const GLchar * vShaderFile, const GLc
 			geometryCode = gShaderStream.str();
 		}
 	}
-	catch (std::exception e)
+	catch (std::exception &e)
 	{
 		std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
 	}
@@ -121,31 +121,4 @@ Texture2D ResourceManager::loadTextureFromFile(const GLchar * file, GLboolean al
 	//SOIL_free_image_data(image);
 	stbi_image_free(image);
 	return texture;
-}
-
-Texture2D ResourceManager::createTextureWithColor(GLboolean alpha, std::string name, GLboolean isBlack)
-{
-	// Create Texture object
-	Texture2D texture;
-	if (alpha)
-	{
-		texture.Internal_Format = GL_RGBA;
-		texture.Image_Format = GL_RGBA;
-	}
-	GLubyte image[5][1][4];
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 1; j++) {
-			int c = ((((i & 0x8) == 0) ^ ((j & 0x8)) == 0)) * 255;
-			image[i][j][0] = (GLubyte)c;
-			image[i][j][1] = (GLubyte)c;
-			image[i][j][2] = (GLubyte)c;
-			image[i][j][3] = (GLubyte)255;
-		}
-	}
-	// Now generate texture
-	texture.Generate(1, 5, image, isBlack);
-	// And finally free image data
-	//SOIL_free_image_data(image);
-	Textures[name] = texture;
-	return Textures[name];
 }

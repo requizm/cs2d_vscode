@@ -11,7 +11,7 @@ class StartGame
 public:
 	StartGame();
 	StartGame(Map* map, SpriteRenderer* renderer);
-	StartGame(Map* map, SpriteRenderer* renderer, std::vector<Weapon> weapons);
+	StartGame(Map* map, SpriteRenderer* renderer, const std::vector<Weapon> &weapons);
 	//StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer, std::vector<GameObject*> gameobjects);
 	//StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer);
 	void Init();

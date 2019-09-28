@@ -13,7 +13,7 @@ SpriteRenderer::SpriteRenderer()
 SpriteRenderer::~SpriteRenderer()
 = default;
 
-void SpriteRenderer::DrawSprite(Sprite sprite, glm::vec2 position, glm::vec2 size, bool drawCenter, GLfloat rotate)
+void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool drawCenter, GLfloat rotate)
 {
 	//rotate = rotate * static_cast<GLfloat>(PI) / static_cast<GLfloat>(180);
 	// Prepare transformations
@@ -41,7 +41,7 @@ void SpriteRenderer::DrawSprite(Sprite sprite, glm::vec2 position, glm::vec2 siz
 	this->shader.UnUse();
 }
 
-void SpriteRenderer::DrawSprite(Sprite sprite, glm::vec2 position, glm::vec2 size, glm::vec3 color, bool drawCenter,
+void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, glm::vec3 color, bool drawCenter,
 	GLfloat rotate)
 {
 	//rotate = rotate * static_cast<GLfloat>(PI) / static_cast<GLfloat>(180);
@@ -71,7 +71,7 @@ void SpriteRenderer::DrawSprite(Sprite sprite, glm::vec2 position, glm::vec2 siz
 	this->shader.UnUse();
 }
 
-void SpriteRenderer::DrawSprite(Sprite sprite, glm::mat4 model)
+void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::mat4 model)
 {
 	this->shader.Use();
 	this->shader.SetMatrix4("model", model);

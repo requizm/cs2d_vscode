@@ -15,8 +15,8 @@ public:
     Logger();
     ~Logger();
 
-    static void DebugLog(std::string msg);
-    static void WriteLog(std::string msg);
+    static void DebugLog(const std::string &msg);
+    static void WriteLog(const std::string &msg);
     static void Start();
     static void Stop();
 };

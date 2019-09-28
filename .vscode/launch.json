@@ -12,7 +12,7 @@
             "args": [],
             "targetArchitecture": "x86",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\src",
+            "cwd": "${workspaceFolder}\\bin",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
@@ -34,7 +34,7 @@
             "args": [],
             "targetArchitecture": "x86",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\src",
+            "cwd": "${workspaceFolder}\\bin",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
@@ -55,7 +55,7 @@
             "args": [],
             "targetArchitecture": "x86",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}\\bin",
             "environment": [],
             "externalConsole": true
         }

@@ -86,7 +86,7 @@ void Shader::UnUse() const
 	glUseProgram(0);
 }
 
-void Shader::checkCompileErrors(GLuint object, std::string type) const
+void Shader::checkCompileErrors(GLuint object, const std::string &type) const
 {
 	GLint success;
 	GLchar infoLog[1024];

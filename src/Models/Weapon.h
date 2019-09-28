@@ -39,7 +39,7 @@ public:
 		player.addWeapon(*this);
 	}*/
 
-	Weapon(const glm::vec2 pos, const Sprite &sprite, const Sprite &floorSprite, std::string weaponName,
+	Weapon(const glm::vec2 pos, const Sprite &sprite, const Sprite &floorSprite,const std::string &weaponName,
 		   WeaponType type, int maxAmmo, int curAmmo, int curAmmoInMag,
 		   const int maxAmmoInMag) : GameObject(pos, floorSprite,
 												glm::vec2(Game_Parameters::SCREEN_HEIGHT / 20, Game_Parameters::SCREEN_HEIGHT / 20), (int)ObjectType::WEAPON)
