@@ -31,3 +31,7 @@ sonar-project.properties
 src/.scannerwork/report-task.txt
 bin/main.exe
 bin/log.txt
+*.pb
+.scannerwork/.sonar_lock
+.scannerwork/scanner-report/analysis.log
+.scannerwork/report-task.txt
