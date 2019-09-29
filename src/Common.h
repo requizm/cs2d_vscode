@@ -42,6 +42,9 @@
 #include "Models/Weapon.cpp"
 #include "Models/Mag.h"
 
+#include "Models/UI/Label.cpp"
+#include "Models/UI/UIObject.cpp"
+
 #include "Renderers/SpriteRenderer.cpp"
 #include "Renderers/TextRenderer.cpp"
 

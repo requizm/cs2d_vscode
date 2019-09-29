@@ -3,32 +3,14 @@
 #include <glm/gtx/string_cast.hpp>
 
 GameObject::GameObject()
-	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0.0F), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT)  {}
+	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0.0F), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT) {}
 
 GameObject::GameObject(glm::vec2 pos, const Sprite &sprite, glm::vec2 size, int objType)
 	: globalPosition(pos), globalSize(size), globalRotation(0.0F), sprite(sprite), isCollision(false), isDestroyed(false)
 {
 	this->objType = (ObjectType)objType;
 	BuildTransform();
-	std::string str;
-	switch ((int)this->objType)
-	{
-	case 0:
-		str = "Player";
-		break;
-	case 1:
-		str = "Weapon";
-		break;
-	case 2:
-		str = "GameObject";
-		break;
-	default:
-		str = "Bilinmeyen";
-		break;
-	}
-	str += " olusturuldu";
-	Logger::WriteLog(str);
-
+	Logger::WriteLog("" + GetObjectTypeString() + " olusturuldu");
 	BuildTransform();
 }
 
@@ -89,7 +71,7 @@ void GameObject::SetParent(GameObject *go)
 	{
 		//globalTransform = GetTransform();
 	}
-	Logger::WriteLog("GameObject->SetParent()");
+	Logger::WriteLog("" + GetObjectTypeString() + "->SetParent()");
 	parent = go;
 	//parentPositionDelta = localPosition - go->GetPosition();
 	localTransform = glm::inverse(parent->GetTransform()) * globalTransform;
@@ -99,11 +81,11 @@ void GameObject::RemoveParent()
 {
 	if (IsParent())
 	{
-		Logger::WriteLog("GameObject->RemoveParent()");
+		Logger::WriteLog("" + GetObjectTypeString() + "->RemoveParent()");
 		this->parent = nullptr;
 		return;
 	}
-	Logger::WriteLog("GameObject->RemoveParent() -->parent zaten yok");
+	Logger::WriteLog("" + GetObjectTypeString() + "->RemoveParent() -->parent zaten yok");
 }
 
 void GameObject::SetTransform(glm::vec2 pos, glm::vec2 size, GLfloat rot)
@@ -111,7 +93,7 @@ void GameObject::SetTransform(glm::vec2 pos, glm::vec2 size, GLfloat rot)
 	this->globalSize = size;
 	this->globalRotation = rot;
 	SetPosition(pos);
-	Logger::WriteLog("GameObject->SetTransform() ->pos(" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + "), size(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ") rot(" + std::to_string(rot) + ") ");
+	Logger::WriteLog("" + GetObjectTypeString() + "->SetTransform() ->pos(" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + "), size(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ") rot(" + std::to_string(rot) + ") ");
 }
 
 void GameObject::SetPosition(const glm::vec2 pos)
@@ -133,7 +115,7 @@ void GameObject::SetSize(glm::vec2 size)
 {
 	this->globalSize = size;
 	BuildTransform();
-	Logger::WriteLog("GameObject->SetSize(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ")");
+	Logger::WriteLog("" + GetObjectTypeString() + "->SetSize(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ")");
 }
 
 void GameObject::SetRotation(GLfloat rot)
@@ -143,28 +125,28 @@ void GameObject::SetRotation(GLfloat rot)
 	//Logger::WriteLog("GameObject->SetRotation(" + std::to_string(rot) + ")");
 }
 
-GameObject GameObject::GetParentObject() const
+GameObject GameObject::GetParentObject()
 {
-	Logger::WriteLog("GameObject->SetRotation()");
+	Logger::WriteLog("" + GetObjectTypeString() + "->GetParentObject()");
 	return *parent;
 }
 
-int GameObject::GetObjectType() const
+int GameObject::GetObjectType()
 {
-	Logger::WriteLog("GameObject->GetObjectType()");
+	Logger::WriteLog("" + GetObjectTypeString() + "->GetObjectType()");
 	return (int)this->objType;
 }
 
 void GameObject::Destroy()
 {
-	Logger::WriteLog("GameObject->Destroy()");
+	Logger::WriteLog("" + GetObjectTypeString() + "->Destroy()");
 	OnDestroy();
 	isDestroyed = true;
 }
 
 void GameObject::OnDestroy()
 {
-	Logger::WriteLog("GameObject->OnDestroy()");
+	Logger::WriteLog("" + GetObjectTypeString() + "->OnDestroy()");
 }
 
 GLboolean GameObject::IsDestroyed() const
@@ -192,4 +174,25 @@ GLboolean GameObject::IsCollision() const
 {
 	//Logger::WriteLog("GameObject->IsCollision() " + std::to_string(isCollision) + "");
 	return isCollision;
+}
+
+std::string GameObject::GetObjectTypeString()
+{
+	std::string str;
+	switch ((int)this->objType)
+	{
+	case 0:
+		str = "Player";
+		break;
+	case 1:
+		str = "Weapon";
+		break;
+	case 2:
+		str = "GameObject";
+		break;
+	default:
+		str = "Bilinmeyen";
+		break;
+	}
+	return str;
 }

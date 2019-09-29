@@ -247,7 +247,7 @@ void TextRenderer::RenderLabel(Label *label)
 	//label->size.y = 12;
 }*/
 
-glm::vec2 TextRenderer::CalculateSize(std::string text, GLfloat scale)
+glm::vec2 TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
 {
 	//GLfloat startX = 0;
 	float xPo = 0;

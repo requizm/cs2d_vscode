@@ -16,7 +16,7 @@ class GameObject
 {
 public:
 	GameObject();
-	GameObject(glm::vec2 pos, const Sprite& sprite, glm::vec2 size, int objType = 2);
+	GameObject(glm::vec2 pos, const Sprite &sprite, glm::vec2 size, int objType = 2);
 	virtual ~GameObject();
 
 	// Draw sprite
@@ -39,8 +39,8 @@ public:
 	virtual void Destroy();
 	virtual void OnDestroy();
 
-	GameObject GetParentObject() const;
-	int GetObjectType() const;
+	GameObject GetParentObject();
+	int GetObjectType();
 	glm::mat4 GetTransform();
 	glm::vec2 GetPosition();
 	GLfloat GetRotation();
@@ -75,7 +75,8 @@ protected:
 
 	glm::vec2 parentPositionDelta;
 
-	
+private:
+	std::string GetObjectTypeString();
 };
 
 #endif

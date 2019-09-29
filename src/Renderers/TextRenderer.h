@@ -37,7 +37,7 @@ public:
 	void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color = glm::vec3(1.0f));
 	void RenderText(std::string text, glm::vec2 position, GLfloat scale, glm::vec3 color = glm::vec3(1.0f));
 	//void RenderLabel(Label *label);
-	glm::vec2 CalculateSize(std::string text, GLfloat scale);
+	glm::vec2 CalculateSize(const std::string &text, GLfloat scale);
 	//void RenderButton(Button *button);
 private:
 	// Render state
