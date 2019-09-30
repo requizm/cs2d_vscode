@@ -3,7 +3,7 @@
 
 Label::Label() = default;
 
-Label::Label(const std::string &text, glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color) : UIObject(position, scale, renderer, UIObjectType::LABEL)
+Label::Label(const std::string &text, glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color, UIObjectType type) : UIObject(position, scale, renderer, type)
 {
 	this->labelColor = color;
 	this->text = text;
@@ -15,7 +15,7 @@ Label::Label(const std::string &text, glm::vec2 position, TextRenderer &renderer
 	this->labelSize = this->rend->CalculateSize(text, scale);
 }
 
-Label::Label(glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color) : UIObject(position, scale, renderer, UIObjectType::LABEL)
+Label::Label(glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color, UIObjectType type) : UIObject(position, scale, renderer, type)
 {
 	this->labelColor = color;
 	this->labelMouseHoverColor = glm::vec3(0.78F);
@@ -23,7 +23,7 @@ Label::Label(glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 
 	this->labelCurrentColor = color;
 }
 
-Label::Label(glm::vec2 position, glm::vec2 size, float scale) : UIObject(position, size, scale, UIObjectType::LABEL)
+Label::Label(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type) : UIObject(position, size, scale, type)
 {
 }
 
@@ -39,18 +39,10 @@ void Label::Update(const float dt)
 {
 	if (isEnable() && isMouseEvents() && !text.empty())
 	{
-		if (isMousePress(GLFW_MOUSE_BUTTON_LEFT))
-		{
-			labelCurrentColor = labelClickColor;
-		}
-		else if (isMouseHover())
-		{
-			labelCurrentColor = labelMouseHoverColor;
-		}
-		else
-		{
-			labelCurrentColor = labelColor;
-		}
+		isMouseHoverM();
+		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
+		isMousePressM(GLFW_MOUSE_BUTTON_LEFT);
+		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 	}
 }
 
@@ -72,60 +64,22 @@ void Label::setText(const std::string &text)
 
 bool Label::isMouseHover() const
 {
-	const int posX = static_cast<int>(this->getPosition().x);
-	const int posY = static_cast<int>(this->getPosition().y);
-
-	const int labelSizeX = static_cast<int>(this->labelSize.x);
-	const int labelSizeY = static_cast<int>(this->labelSize.y);
-
-	bool ret = false;
-	for (int i = posX; i <= posX + labelSizeX; i++)
-	{
-		for (int j = posY; j <= posY + labelSizeY; j++)
-		{
-			if (InputManager::mouseX == i && InputManager::mouseY == j)
-			{
-				ret = true;
-				break;
-			}
-		}
-	}
-	return ret;
+	return isHover;
 }
 
 bool Label::isMouseDown(const int key)
 {
-	bool ret = false;
-	if (isMouseHover() && InputManager::isButtonDown(key))
-	{
-		isDown = true;
-		ret = true;
-	}
-	return ret;
+	return isDown;
 }
 
-bool Label::isMouseUp(const int key)
+bool Label::isMouseUp(const int key) //refactor: neden beraber degiller
 {
-	bool ret = false;
-	if (InputManager::isButtonUp(key))
-	{
-		if (isDown)
-		{
-			isDown = false;
-			ret = true;
-		}
-	}
-	return ret;
+	return isUp;
 }
 
 bool Label::isMousePress(const int key) const
 {
-	bool ret = false;
-	if (isMouseHover() && InputManager::isButton(key))
-	{
-		ret = true;
-	}
-	return ret;
+	return isPress;
 }
 
 glm::vec3 Label::getLabelColor() const
@@ -156,4 +110,74 @@ void Label::setLabelMouseHoverColor(const glm::vec3 color)
 void Label::setLabelClickColor(const glm::vec3 color)
 {
 	this->labelClickColor = color;
+}
+
+void Label::isMouseHoverM()
+{
+	const int posX = static_cast<int>(this->getPosition().x);
+	const int posY = static_cast<int>(this->getPosition().y);
+
+	const int labelSizeX = static_cast<int>(this->labelSize.x);
+	const int labelSizeY = static_cast<int>(this->labelSize.y);
+
+	for (int i = posX; i <= posX + labelSizeX; i++)
+	{
+		for (int j = posY; j <= posY + labelSizeY; j++)
+		{
+			if (InputManager::mouseX == i && InputManager::mouseY == j)
+			{
+				//SetMouseState(isHover, true);
+				isHover = true;
+				labelCurrentColor = labelMouseHoverColor;
+				return;
+			}
+		}
+	}
+	//SetMouseState(isHover, false);
+	isHover = false;
+	labelCurrentColor = labelColor;
+}
+
+void Label::isMouseDownM(const int key)
+{
+	if (isMouseHover() && InputManager::isButtonDown(key))
+	{
+		isDown = true;
+		isUp = false;
+		//SetMouseState(isDown, true);
+		//SetMouseState(isUp, false);
+	}
+}
+
+void Label::isMouseUpM(const int key) //refactor: neden beraber degiller
+{
+	if (InputManager::isButtonUp(key))
+	{
+		if (isDown)
+		{
+			
+			isUp = true;
+			isPress = false;
+			//SetMouseState(isDown, false);
+			//SetMouseState(isUp, true);
+			//SetMouseState(isPress, false);
+			labelCurrentColor = labelColor;
+		}
+	}
+}
+
+void Label::isMousePressM(const int key)
+{
+	if (isMouseHover() && InputManager::isButton(key))
+	{
+		//isDown = false;
+		isPress = true;
+		//SetMouseState(isPress, true);
+		labelCurrentColor = labelClickColor;
+	}
+}
+
+void Label::SetMouseState(bool &variable, bool value)
+{
+	variable = value;
 }

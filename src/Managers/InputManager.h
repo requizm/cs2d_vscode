@@ -1,10 +1,12 @@
 #ifndef EVENTMANAGER_H
 #define EVENTMANAGER_H
-#include "GL/glew.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 class InputManager
 {
 public:
+	
 	static int mouseX, mouseY;
 
 	static GLboolean Keys[1024];
@@ -18,6 +20,8 @@ public:
 	static GLboolean mouseKeysUp[8];
 	static GLboolean mouseDownTrigger[8];
 	static GLboolean mouseUpTrigger[8];
+	static int mouseOldKeys[8];
+	static int mouseNewKeys[8];
 
 	static wchar_t keycode;
 	InputManager();

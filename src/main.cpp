@@ -142,14 +142,21 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
-	glfwGetMouseButton(window, button);
 	if (button >= 0 && button < 8)
 	{
+		/*InputManager::mouseNewKeys[button] = action;
+		if (InputManager::mouseOldKeys[button] == GLFW_RELEASE && InputManager::mouseNewKeys[button] == GLFW_PRESS)
+		{
+
+		}
+		InputManager::mouseOldKeys[button] = InputManager::mouseNewKeys[button];*/
+
 		if (action == GLFW_PRESS)
 		{
 			InputManager::mouseKeys[button] = GL_TRUE;
 			InputManager::mouseKeysUp[button] = GL_FALSE;
 			InputManager::mouseDownTrigger[button] = GL_TRUE;
+			//InputManager::mouseOldKeys[button] = GLFW_PRESS;
 		}
 
 		else if (action == GLFW_RELEASE)
@@ -158,6 +165,8 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			InputManager::mouseKeysProcessed[button] = GL_FALSE;
 			InputManager::mouseKeysUp[button] = GL_TRUE;
 			InputManager::mouseUpTrigger[button] = GL_TRUE;
+			//InputManager::mouseOldKeys[button] = GLFW_RELEASE;
+			//InputManager::mouseNewKeys[button] = GLFW_RELEASE;
 		}
 	}
 }

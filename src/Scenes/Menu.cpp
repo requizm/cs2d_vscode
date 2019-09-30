@@ -38,8 +38,8 @@ void Menu::Init()
 
 void Menu::Update(const float dt)
 {
-	l_console.Update(dt);
 	l_options.Update(dt);
+	l_console.Update(dt);
 	l_editor.Update(dt);
 	l_newgame.Update(dt);
 	//button->Update(dt);
@@ -49,21 +49,39 @@ void Menu::Update(const float dt)
 	//std::wcout << ad << std::endl;*/
 }
 
-void Menu::ProcessInput(const float dt) const
+void Menu::ProcessInput(const float dt)
 {
-	/*	if (l_editor->isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
+	if (l_editor.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
-		state = GameState::EDITOR;
+		Logger::DebugLog("editor->buttondown()");
+		//state = GameState::EDITOR;
+	}
+	if (l_editor.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
+	{
+		Logger::DebugLog("editor->buttonup()");
+		//state = GameState::EDITOR;
 	}
 
-	if (l_newgame->isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
+	if (l_newgame.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
-		state = GameState::INGAME;
+		Logger::DebugLog("newgame->buttondown()");
+		//state = GameState::INGAME;
+	}
+	if (l_newgame.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
+	{
+		Logger::DebugLog("newgame->buttonup()");
+		//state = GameState::INGAME;
 	}
 
-	if (l_options->isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
+	if (l_options.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
-		panel->setEnable(true);
+		Logger::DebugLog("options->buttondown()");
+		//panel->setEnable(true);
+	}
+	if (l_options.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
+	{
+		Logger::DebugLog("options->buttonup()");
+		//panel->setEnable(true);
 	}
 
 	//std::cout << state << std::endl;*/

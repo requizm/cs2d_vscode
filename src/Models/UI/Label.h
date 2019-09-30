@@ -14,9 +14,9 @@ class Label : public UIObject
 {
 public:
 	Label();
-	Label(const std::string &text, glm::vec2 position, TextRenderer &renderer, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F));
-	Label(glm::vec2 position, TextRenderer &renderer, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F));
-	Label(glm::vec2 position, glm::vec2 size, float scale = 1.0F);
+	Label(const std::string &text, glm::vec2 position, TextRenderer &renderer, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(glm::vec2 position, TextRenderer &renderer, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(glm::vec2 position, glm::vec2 size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
 	~Label();
 
 	void Draw() const;
@@ -47,8 +47,18 @@ protected:
 	glm::vec3 labelMouseHoverColor;
 	glm::vec3 labelCurrentColor;
 
-private:
 	bool isDown = false;
+	bool isUp = false;
+	bool isPress = false;
+	bool isHover = false;
+
+	virtual void isMouseHoverM();
+	virtual void isMouseDownM(int key);
+	virtual void isMouseUpM(int key);
+	virtual void isMousePressM(int key);
+
+private:
+	void SetMouseState(bool &variable, bool value);
 };
 
 #endif // LABEL_H

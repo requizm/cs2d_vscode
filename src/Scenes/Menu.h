@@ -27,7 +27,7 @@ public:
 
 	void Init();
 	void Update(const float dt);
-	void ProcessInput(const float dt) const;
+	void ProcessInput(const float dt);
 	void Render(const float dt);
 
 	std::map<std::string, Sprite> menuSprites;

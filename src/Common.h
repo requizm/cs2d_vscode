@@ -44,6 +44,8 @@
 
 #include "Models/UI/Label.cpp"
 #include "Models/UI/UIObject.cpp"
+#include "Models/UI/Button.h"
+#include "Models/UI/Square.h"
 
 #include "Renderers/SpriteRenderer.cpp"
 #include "Renderers/TextRenderer.cpp"
