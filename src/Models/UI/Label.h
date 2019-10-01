@@ -22,10 +22,10 @@ public:
 	void Draw() const;
 	void Update(const float dt) override;
 
-	virtual bool isMouseHover() const;
+	virtual bool isMouseHover();
 	virtual bool isMouseDown(int key);
 	virtual bool isMouseUp(int key);
-	virtual bool isMousePress(int key) const;
+	virtual bool isMousePress(int key);
 
 	std::string getText() const;
 	glm::vec2 getLabelSize() const;
@@ -52,10 +52,10 @@ protected:
 	bool isPress = false;
 	bool isHover = false;
 
-	virtual void isMouseHoverM();
-	virtual void isMouseDownM(int key);
-	virtual void isMouseUpM(int key);
-	virtual void isMousePressM(int key);
+	virtual bool isMouseHoverM();
+	virtual bool isMouseDownM(int key);
+	virtual bool isMouseUpM(int key);
+	virtual bool isMousePressM(int key);
 
 private:
 	void SetMouseState(bool &variable, bool value);

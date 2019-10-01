@@ -29,10 +29,10 @@ public:
 
 	glm::vec2 getPosition() const override;
 	glm::vec2 getSize() const override;
-	bool isMouseHover() const override;
+	bool isMouseHover() override;
 	bool isMouseDown(int key) override;
 	bool isMouseUp(int key) override;
-	bool isMousePress(int key) const override;
+	bool isMousePress(int key) override;
 
 	void setMouseHoverColor(const glm::vec3 color);
 	void setButtonColor(const glm::vec3 color);
@@ -48,7 +48,7 @@ protected:
 	glm::vec3 currentColor;
 
 private:
-	bool isDown = false;
+	//bool isDown = false;
 	bool haveTile = false;
 };
 

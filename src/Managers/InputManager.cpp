@@ -36,12 +36,12 @@ bool InputManager::isKey(const int key)
 
 bool InputManager::isKeyDown(const int key)
 {
-	//InputManager::processKey(key);
-	/*if (downTrigger[key])
+	InputManager::processKey(key);
+	if (downTrigger[key])
 	{
 		downTrigger[key] = GL_FALSE;
 		return Keys[key] && KeysProcessed[key] && !KeysUp[key];
-	}*/
+	}
 	
 	return false;
 }
