@@ -23,29 +23,35 @@ public:
 	Button(Tile tile, float scale = 1.0F);
 	~Button();
 
-	void Draw(SpriteRenderer &spriteRenderer) const;
-	void Draw(/*SquareRenderer &squareRenderer */ /*ButtonRenderer &buttonRenderer,*/) const;
+	void Draw(SpriteRenderer &spriteRenderer);
+	void Draw(/*SquareRenderer &squareRenderer */ /*ButtonRenderer &buttonRenderer,*/);
 	void Update(const float dt) override;
 
-	glm::vec2 getPosition() const override;
-	glm::vec2 getSize() const override;
-	bool isMouseHover() override;
-	bool isMouseDown(int key) override;
-	bool isMouseUp(int key) override;
-	bool isMousePress(int key) override;
+	glm::vec2 getPosition() override;
+	glm::vec2 getSize() override;
 
 	void setMouseHoverColor(const glm::vec3 color);
 	void setButtonColor(const glm::vec3 color);
 	void setMouseClickColor(const glm::vec3 color);
 
+	bool isMouseHover() override;
+	bool isMouseDown(int key) override;
+	bool isMouseUp(int key) override;
+	bool isMousePress(int key) override;
+
 protected:
 	Sprite sprite;
-	Square square = Square();
+	Square square;
 	Tile tile;
 	glm::vec3 buttonColor;
 	glm::vec3 mouseHoverColor;
 	glm::vec3 mouseclickColor;
 	glm::vec3 currentColor;
+
+	bool isMouseHoverM() override;
+	bool isMouseDownM(int key) override;
+	bool isMouseUpM(int key) override;
+	bool isMousePressM(int key) override;
 
 private:
 	//bool isDown = false;

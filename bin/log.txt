@@ -1,162 +1,168 @@
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Game->Init()
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Game->initTextures()
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Game->initShaders()
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Game->initRenderers()
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Game->initMaps()
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 32, 0, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 64, 96, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 96, 96, 32, 32)
 
-time: Mon Sep 30 00:21:51 2019
-message: GameObject olusturuldu
+time: Thu Oct 03 01:14:26 2019
+message: Tile olusturuldu
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: GameObject->Destroy()
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Game->initMenuSprites()
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 0, 0, 0, 0)
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 0, 0, 0, 0)
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 0, 0, 0, 0)
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 0, 0, 0, 0)
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Sprite->Sprite(texture, 0, 0, 46, 46)
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Label->UIObject(pos(10.000000,400.000000),0.800000, TextRenderer
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Label->UIObject(pos(10.000000,430.000000),1.000000, TextRenderer
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Label->UIObject(pos(10.000000,450.000000),1.000000, TextRenderer
 
-time: Mon Sep 30 00:21:51 2019
+time: Thu Oct 03 01:14:26 2019
 message: Label->UIObject(pos(10.000000,470.000000),1.000000, TextRenderer
+
+time: Thu Oct 03 01:14:26 2019
+message: TextBox->UIObject(pos(20.000000,20.000000),1.000000, TextRenderer
+
+time: Thu Oct 03 01:14:26 2019
+message: Sprite->Sprite(texture, 0, 0, 0, 0)
 

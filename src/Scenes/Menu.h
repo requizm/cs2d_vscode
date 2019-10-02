@@ -13,9 +13,9 @@
 #include "../Others/Game_Parameters.h"
 
 #include "../Models/UI/Label.h"
+#include "../Models/UI/TextBox.h"
 
 /*#include "ButtonRenderer.h"
-#include "TextBox.h"
 #include "Panel.h"*/
 
 class Menu
@@ -33,7 +33,7 @@ public:
 	std::map<std::string, Sprite> menuSprites;
 	TextRenderer textRenderer;
 	SpriteRenderer menuRenderer;
-	//std::shared_ptr<SquareRenderer> squareRenderer;
+	SquareRenderer squareRenderer;
 	//std::shared_ptr<ButtonRenderer> buttonRenderer;
 
 	/*	std::shared_ptr <Label> l_console;
@@ -41,7 +41,7 @@ public:
 
 	std::shared_ptr <Button> button;
 
-	std::shared_ptr <TextBox> textbox;
+	
 
 	std::shared_ptr <Panel> panel;*/
 	Label l_console;
@@ -49,6 +49,8 @@ public:
 	Label l_newgame;
 	Label l_options;
 	Label l_editor;
+
+	TextBox textbox;
 };
 
 #endif // MENU_H

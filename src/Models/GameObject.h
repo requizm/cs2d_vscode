@@ -9,7 +9,8 @@ enum class ObjectType
 {
 	PLAYER,
 	WEAPON,
-	GAMEOBJECT
+	GAMEOBJECT,
+	TILE
 };
 
 class GameObject
@@ -44,6 +45,7 @@ public:
 	glm::mat4 GetTransform();
 	glm::vec2 GetPosition();
 	GLfloat GetRotation();
+	glm::vec2 GetSize();
 
 	void BuildTransform();
 

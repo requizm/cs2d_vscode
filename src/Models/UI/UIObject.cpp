@@ -120,7 +120,7 @@ void UIObject::setSize(const int x, const int y)
 	this->size = glm::vec2(x, y);
 }
 
-glm::vec2 UIObject::getPosition() const
+glm::vec2 UIObject::getPosition()
 {
 	if (isParent())
 	{
@@ -129,7 +129,7 @@ glm::vec2 UIObject::getPosition() const
 	return this->position;
 }
 
-glm::vec2 UIObject::getSize() const
+glm::vec2 UIObject::getSize()
 {
 	return this->size;
 }

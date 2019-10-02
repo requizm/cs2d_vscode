@@ -2,6 +2,10 @@
 
 Square::Square()
 {
+}
+
+Square::Square(bool init)
+{
 	initData();
 }
 

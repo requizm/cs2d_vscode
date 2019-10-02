@@ -53,6 +53,11 @@ glm::vec2 GameObject::GetPosition()
 	return globalPosition;
 }
 
+glm::vec2 GameObject::GetSize()
+{
+	return globalSize;
+}
+
 void GameObject::SetTransform(glm::mat4 transform)
 {
 	if (IsParent())
@@ -189,6 +194,9 @@ std::string GameObject::GetObjectTypeString()
 		break;
 	case 2:
 		str = "GameObject";
+		break;
+	case 3:
+		str = "Tile";
 		break;
 	default:
 		str = "Bilinmeyen";

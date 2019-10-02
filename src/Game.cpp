@@ -174,10 +174,10 @@ void Game::initTextures() const
 	ResourceManager::LoadTexture("../resources/textures/gametitle.png", GL_TRUE, "gametitle");
 	ResourceManager::LoadTexture("../resources/textures/unrealsoftware.png", GL_TRUE, "unrealsoftware");
 	ResourceManager::LoadTexture("../resources/textures/splash.png", GL_FALSE, "splash");
-	/*ResourceManager::LoadTexture("../resources/textures/cursor-spec.png", GL_TRUE, "textcursor");
+	ResourceManager::LoadTexture("../resources/textures/cursor-spec.png", GL_TRUE, "textcursor");
 
 	//GUIIcons
-	ResourceManager::LoadTexture("../resources/textures/gui_icons.png", GL_TRUE, "gui_icons");*/
+	//ResourceManager::LoadTexture("../resources/textures/gui_icons.png", GL_TRUE, "gui_icons");
 }
 
 void Game::initShaders() const

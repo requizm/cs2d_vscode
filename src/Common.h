@@ -40,15 +40,18 @@
 #include "Models/Texture.cpp"
 #include "Models/Camera.cpp"
 #include "Models/Weapon.cpp"
-#include "Models/Mag.h"
+#include "Models/Mag.cpp"
 
 #include "Models/UI/Label.cpp"
 #include "Models/UI/UIObject.cpp"
-#include "Models/UI/Button.h"
-#include "Models/UI/Square.h"
+#include "Models/UI/Button.cpp"
+#include "Models/UI/Square.cpp"
+#include "Models/UI/TextBox.cpp"
+#include "Models/UI/Outline.cpp"
 
 #include "Renderers/SpriteRenderer.cpp"
 #include "Renderers/TextRenderer.cpp"
+#include "Renderers/SquareRenderer.cpp"
 
 #include "Managers/ResourceManager.cpp"
 #include "Managers/InputManager.cpp"

@@ -32,8 +32,8 @@ public:
 	virtual void OnEnable();
 	virtual void OnDisable();
 
-	virtual glm::vec2 getPosition() const;
-	virtual glm::vec2 getSize() const;
+	virtual glm::vec2 getPosition();
+	virtual glm::vec2 getSize();
 	virtual glm::vec2 getCenterPosition() const;
 	UIObject getParent() const;
 	float getScale() const;

@@ -29,7 +29,7 @@ Label::Label(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type)
 
 Label::~Label() = default;
 
-void Label::Draw() const
+void Label::Draw()
 {
 	if (isVisible() && isEnable() && !text.empty())
 		this->rend->RenderText(text, getPosition(), scale, labelCurrentColor);

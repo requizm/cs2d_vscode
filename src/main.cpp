@@ -173,7 +173,7 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 
 void character_callback(GLFWwindow *window, unsigned int codepoint)
 {
-	//InputManager::keycode = codepoint;
+	InputManager::keycode = codepoint;
 }
 
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)

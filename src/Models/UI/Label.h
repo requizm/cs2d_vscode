@@ -19,7 +19,7 @@ public:
 	Label(glm::vec2 position, glm::vec2 size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
 	~Label();
 
-	void Draw() const;
+	void Draw();
 	void Update(const float dt) override;
 
 	virtual bool isMouseHover();

@@ -10,22 +10,25 @@ Button::Button() = default;
 Button::Button(const std::string &text, glm::vec2 position, TextRenderer &renderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON)
 {
 	this->buttonColor = buttonColor;
+	square = Square(true);
 }
 
 Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, float scale) : Label(position, size, scale, UIObjectType::BUTTON)
 {
 	this->sprite = sprite;
+	square = Square(true);
 }
 
 Button::Button(Tile tile, float scale) : Label(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::BUTTON)
 {
 	this->tile = tile;
 	this->haveTile = true;
+	square = Square(true);
 }
 
 Button::~Button() = default;
 
-void Button::Draw(SpriteRenderer &spriteRenderer) const
+void Button::Draw(SpriteRenderer &spriteRenderer)
 {
 	if (isVisible() && isEnable())
 	{
@@ -38,36 +41,19 @@ void Button::Draw(SpriteRenderer &spriteRenderer) const
 	//Label::Draw();
 }
 
-void Button::Draw(/*SquareRenderer &squareRenderer*/ /*ButtonRenderer &buttonRenderer,*/) const
+void Button::Draw(/*SquareRenderer &squareRenderer*/ /*ButtonRenderer &buttonRenderer,*/)
 {
 	//buttonRenderer.CalculateSize(&textRenderer, this);
 	//squareRenderer.RenderSquare(square, this->position, glm::vec2(this->labelSize.x + 20.0F, this->labelSize.y + 10.0F), this->buttonColor);
 	Label::Draw();
 }
 
-void Button::Update(const float dt) //refactor: sürekli atama yapılamaz, state change callback lazim
+void Button::Update(const float dt) 
 {
-	if (isEnable())
-	{
-		if (!haveTile)
-		{
-			if (isMousePress(GLFW_MOUSE_BUTTON_LEFT))
-			{
-				currentColor = mouseclickColor;
-			}
-			else if (isMouseHover())
-			{
-				currentColor = mouseHoverColor;
-			}
-			else
-			{
-				currentColor = buttonColor;
-			}
-		}
-	}
+	
 }
 
-glm::vec2 Button::getPosition() const
+glm::vec2 Button::getPosition()
 {
 	if (haveTile)
 	{
@@ -84,7 +70,7 @@ glm::vec2 Button::getPosition() const
 	return this->position;
 }
 
-glm::vec2 Button::getSize() const
+glm::vec2 Button::getSize()
 {
 	if (haveTile)
 	{
@@ -93,7 +79,31 @@ glm::vec2 Button::getSize() const
 	return this->size;
 }
 
-bool Button::isMouseHover() const
+bool Button::isMouseHover()
+{
+	return isMouseHoverM();
+	//return isHover;
+}
+
+bool Button::isMouseDown(const int key)
+{
+	return isMouseDownM(key);
+	//return isDown;
+}
+
+bool Button::isMouseUp(const int key) //refactor: neden beraber degiller
+{
+	return isMouseUpM(key);
+	//return isUp;
+}
+
+bool Button::isMousePress(const int key)
+{
+	return isMousePressM(key);
+	//return isPress;
+}
+
+bool Button::isMouseHoverM()
 {
 	const int posX = static_cast<int>(this->getPosition().x);
 	const int posY = static_cast<int>(this->getPosition().y);
@@ -107,44 +117,63 @@ bool Button::isMouseHover() const
 		{
 			if (InputManager::mouseX == i && InputManager::mouseY == j)
 			{
+				//SetMouseState(isHover, true);
+				//isHover = true;
+				labelCurrentColor = labelMouseHoverColor;
+				currentColor = mouseHoverColor;
 				return true;
 			}
 		}
 	}
+	//SetMouseState(isHover, false);
+	//isHover = false;
+	labelCurrentColor = labelColor;
+	currentColor = buttonColor;
 	return false;
 }
 
-bool Button::isMouseDown(int key) //refactor: bu ne allah askina
+bool Button::isMouseDownM(const int key)
 {
-	if (!isDown)
+	if (isMouseHover() && InputManager::isButtonDown(key))
 	{
-		if (InputManager::isButtonDown(key) && isMouseHover())
-		{
-			isDown = true;
-			return true;
-		}
+		isDown = true;
+		//isUp = false;
+		//SetMouseState(isDown, true);
+		//SetMouseState(isUp, false);
+		return true;
 	}
-
 	return false;
 }
 
-bool Button::isMouseUp(int key) //refactor: bunlar neden bir arada degil? 
+bool Button::isMouseUpM(const int key) //refactor: neden beraber degiller
 {
-	if (InputManager::isButtonUp(key))
+	if (isDown)
 	{
-		if (isDown)
+		if (InputManager::isButtonUp(key))
 		{
 			isDown = false;
+			//isUp = true;
+			//isPress = false;
+			//SetMouseState(isDown, false);
+			//SetMouseState(isUp, true);
+			//SetMouseState(isPress, false);
+			labelCurrentColor = labelColor;
+			currentColor = buttonColor;
 			return true;
 		}
+		return false;
 	}
 	return false;
 }
 
-bool Button::isMousePress(int key) const
+bool Button::isMousePressM(const int key)
 {
 	if (isMouseHover() && InputManager::isButton(key))
 	{
+		//isPress = true;
+		//SetMouseState(isPress, true);
+		labelCurrentColor = labelClickColor;
+		currentColor = mouseclickColor;
 		return true;
 	}
 	return false;

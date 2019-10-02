@@ -1,21 +1,15 @@
-#ifndef SQUARE_H
-#define SQUARE_H
-
+#ifndef OUTLINE_H
+#define OUTLINE_H
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-class Square
+class Outline
 {
 public:
-	Square();
-	Square(bool init);
-	~Square();
-
+	Outline();
+	~Outline();
 	GLuint VAO;
-
-private:
 	void initData();
+	
 };
-
-#endif // SQUARE_H
+#endif // OUTLINE_H
