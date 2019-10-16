@@ -39,10 +39,19 @@ void Label::Update(const float dt)
 {
 	if (isEnable() && isMouseEvents() && !text.empty())
 	{
-		/*isMouseHoverM();
-		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
-		isMousePressM(GLFW_MOUSE_BUTTON_LEFT);
-		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);*/
+
+		if (isMousePress(GLFW_MOUSE_BUTTON_LEFT))
+		{
+			labelCurrentColor = labelClickColor;
+		}
+		else if (isMouseHover())
+		{
+			labelCurrentColor = labelMouseHoverColor;
+		}
+		else
+		{
+			labelCurrentColor = labelColor;
+		}
 	}
 }
 
@@ -132,35 +141,64 @@ bool Label::isMouseHoverM()
 			{
 				//SetMouseState(isHover, true);
 				//isHover = true;
-				labelCurrentColor = labelMouseHoverColor;
+				//labelCurrentColor = labelMouseHoverColor;
 				return true;
 			}
 		}
 	}
 	//SetMouseState(isHover, false);
 	//isHover = false;
-	labelCurrentColor = labelColor;
+	//labelCurrentColor = labelColor;
 	return false;
 }
 
 bool Label::isMouseDownM(const int key)
 {
-	if (isMouseHover() && InputManager::isButtonDown(key))
+	if (!isDown)
 	{
-		isDown = true;
-		//isUp = false;
-		//SetMouseState(isDown, true);
-		//SetMouseState(isUp, false);
-		return true;
+		if (InputManager::isButtonDown(key))
+		{
+			if (isMouseHover())
+			{
+				isDown = true;
+				isDownForClick = true;
+				//isUp = false;
+				//SetMouseState(isDown, true);
+				//SetMouseState(isUp, false);
+				//InputManager::mouseDownTrigger[key] = GL_TRUE;
+				return true;
+			}
+
+			isDown = true;
+			isDownForClick = false;
+			InputManager::mouseDownTrigger[key] = GL_TRUE;
+		}
 	}
+	//InputManager::mouseDownTrigger[key] = GL_TRUE;
 	return false;
 }
 
-bool Label::isMouseUpM(const int key) //refactor: neden beraber degiller
+bool Label::isMouseUpM(const int key)
 {
-	if (isDown)
+	if (isDown && isDownForClick)
 	{
 		if (InputManager::isButtonUp(key))
+		{
+			isDown = false;
+			isDownForClick = false;
+			//isUp = true;
+			//isPress = false;
+			//SetMouseState(isDown, false);
+			//SetMouseState(isUp, true);
+			//SetMouseState(isPress, false);
+			//labelCurrentColor = labelColor;
+			return true;
+		}
+	}
+
+	else if (InputManager::isButtonUp(key))
+	{
+		if (isDown && !isDownForClick)
 		{
 			isDown = false;
 			//isUp = true;
@@ -168,11 +206,11 @@ bool Label::isMouseUpM(const int key) //refactor: neden beraber degiller
 			//SetMouseState(isDown, false);
 			//SetMouseState(isUp, true);
 			//SetMouseState(isPress, false);
-			labelCurrentColor = labelColor;
-			return true;
+			//labelCurrentColor = labelColor;
 		}
-		return false;
+		InputManager::mouseUpTrigger[key] = GL_TRUE;
 	}
+	//InputManager::mouseUpTrigger[key] = GL_TRUE;
 	return false;
 }
 
@@ -182,7 +220,7 @@ bool Label::isMousePressM(const int key)
 	{
 		//isPress = true;
 		//SetMouseState(isPress, true);
-		labelCurrentColor = labelClickColor;
+		//labelCurrentColor = labelClickColor;
 		return true;
 	}
 	return false;

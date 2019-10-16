@@ -40,6 +40,7 @@ private:
 	float time = 0.0F;
 	Sprite cursor; //refactor: bunun optimize bir yol oldugundan emin degilim
 	glm::vec3 currentBorderColor, hoverBorderColor, clickBorderColor, borderColor;
+	bool click = false;
 
 	void InputText(const float dt);
 };

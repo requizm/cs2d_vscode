@@ -51,6 +51,7 @@ protected:
 	bool isUp = false;
 	bool isPress = false;
 	bool isHover = false;
+	bool isDownForClick = false;
 
 	virtual bool isMouseHoverM();
 	virtual bool isMouseDownM(int key);

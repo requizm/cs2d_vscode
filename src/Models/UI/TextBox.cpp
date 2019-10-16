@@ -103,32 +103,64 @@ bool TextBox::isMouseHoverM()
 
 bool TextBox::isMouseDownM(const int key)
 {
-	if (isMouseHover() && InputManager::isButtonDown(key))
+	if (!isDown)
 	{
-		isDown = true;
-		if (editable)
+		if (InputManager::isButtonDown(key))
 		{
-			labelCurrentColor = labelClickColor;
-			currentBorderColor = clickBorderColor; //1.0F
+			if (isMouseHover())
+			{
+				isDown = true;
+				isDownForClick = true;
+				//isUp = false;
+				//SetMouseState(isDown, true);
+				//SetMouseState(isUp, false);
+				//InputManager::mouseDownTrigger[key] = GL_TRUE;
+				return true;
+			}
+
+			isDown = true;
+			isDownForClick = false;
+			InputManager::mouseDownTrigger[key] = GL_TRUE;
 		}
-		return true;
 	}
+	//InputManager::mouseDownTrigger[key] = GL_TRUE;
 	return false;
 }
 
 bool TextBox::isMouseUpM(const int key)
 {
-	if (isDown)
+	if (isDown && isDownForClick)
 	{
 		if (InputManager::isButtonUp(key))
 		{
 			isDown = false;
-			if (!editable)
-				currentBorderColor = borderColor;
+			isDownForClick = false;
+			//isUp = true;
+			//isPress = false;
+			//SetMouseState(isDown, false);
+			//SetMouseState(isUp, true);
+			//SetMouseState(isPress, false);
+			//labelCurrentColor = labelColor;
 			return true;
 		}
-		return false;
 	}
+
+	else if (InputManager::isButtonUp(key))
+	{
+		if (isDown && !isDownForClick)
+		{
+			isDown = false;
+			//isUp = true;
+			//isPress = false;
+			//SetMouseState(isDown, false);
+			//SetMouseState(isUp, true);
+			//SetMouseState(isPress, false);
+			//labelCurrentColor = labelColor;
+		}
+		InputManager::mouseUpTrigger[key] = GL_TRUE;
+	}
+	//InputManager::mouseUpTrigger[key] = GL_TRUE;
+	return false;
 }
 
 bool TextBox::isMousePressM(const int key)
@@ -148,6 +180,8 @@ void TextBox::InputText(const float dt)
 		{
 			editMode = true;
 			time = 0.0F;
+			labelCurrentColor = labelClickColor;
+			currentBorderColor = clickBorderColor; //1.0F
 		}
 
 		if (editMode && isEnable())
@@ -194,5 +228,16 @@ void TextBox::InputText(const float dt)
 				InputManager::keycode = L'\0';
 			}
 		}
+		else if (isMouseHover())
+		{
+			currentBorderColor = hoverBorderColor; //0.78F
+		}
+
+		else
+		{
+			currentBorderColor = borderColor; //0.6F
+		}
 	}
+
+	isMouseUp(GLFW_MOUSE_BUTTON_LEFT);
 }

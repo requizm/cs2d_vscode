@@ -14,8 +14,8 @@ GLboolean InputManager::mouseKeysProcessed[8];
 GLboolean InputManager::mouseKeysUp[8];
 GLboolean InputManager::mouseDownTrigger[8];
 GLboolean InputManager::mouseUpTrigger[8];
-int InputManager::mouseOldKeys[8];
-int InputManager::mouseNewKeys[8];
+//int InputManager::mouseOldKeys[8];
+//int InputManager::mouseNewKeys[8];
 
 wchar_t InputManager::keycode;
 
@@ -42,7 +42,7 @@ bool InputManager::isKeyDown(const int key)
 		downTrigger[key] = GL_FALSE;
 		return Keys[key] && KeysProcessed[key] && !KeysUp[key];
 	}
-	
+
 	return false;
 }
 
@@ -71,11 +71,11 @@ bool InputManager::isButton(int key)
 
 bool InputManager::isButtonDown(int key)
 {
-	InputManager::processButton(key);
+	//InputManager::processButton(key);
 	if (mouseDownTrigger[key])
 	{
 		mouseDownTrigger[key] = GL_FALSE;
-		return mouseKeys[key] && mouseKeysProcessed[key] && !mouseKeysUp[key];
+		return mouseKeys[key] && !mouseKeysUp[key];
 	}
 	return false;
 }
