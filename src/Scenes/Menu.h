@@ -14,9 +14,9 @@
 
 #include "../Models/UI/Label.h"
 #include "../Models/UI/TextBox.h"
+#include "../Models/UI/Panel.h"
 
-/*#include "ButtonRenderer.h"
-#include "Panel.h"*/
+//#include "ButtonRenderer.h"
 
 class Menu
 {
@@ -51,6 +51,7 @@ public:
 	Label l_editor;
 
 	TextBox textbox;
+	std::shared_ptr<Panel> panel;
 };
 
 #endif // MENU_H

@@ -177,7 +177,7 @@ void Game::initTextures() const
 	ResourceManager::LoadTexture("../resources/textures/cursor-spec.png", GL_TRUE, "textcursor");
 
 	//GUIIcons
-	//ResourceManager::LoadTexture("../resources/textures/gui_icons.png", GL_TRUE, "gui_icons");
+	ResourceManager::LoadTexture("../resources/textures/gui_icons.png", GL_TRUE, "gui_icons");
 }
 
 void Game::initShaders() const

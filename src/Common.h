@@ -48,6 +48,7 @@
 #include "Models/UI/Square.cpp"
 #include "Models/UI/TextBox.cpp"
 #include "Models/UI/Outline.cpp"
+#include "Models/UI/Panel.cpp"
 
 #include "Renderers/SpriteRenderer.cpp"
 #include "Renderers/TextRenderer.cpp"
@@ -61,6 +62,7 @@
 
 #include "Scenes/StartGame.cpp"
 #include "Scenes/Menu.cpp"
+#include "Scenes/Editor.cpp"
 
 #include "Game.cpp"
 

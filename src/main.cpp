@@ -15,14 +15,9 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 
 //Game_Parameters::LoadParameters();
 
-//std::unique_ptr<Game> cs2d(std::make_unique<Game>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT));
 std::unique_ptr<Game> cs2d(std::make_unique<Game>());
 
 //Game cs2d(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-//float lastX = SCREEN_WIDTH / 2.0F;
-//float lastY = SCREEN_HEIGHT / 2.0F;
-//bool firstMouse = true;
 
 int main(int argc, char *argv[])
 {
@@ -50,12 +45,15 @@ int main(int argc, char *argv[])
 	glfwSetCursorPos(window, 1440 / 2, 900 / 2);
 
 	// OpenGL configuration
-
 	glViewport(0, 0, Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
 	glEnable(GL_CULL_FACE);
+	/*glEnable(GL_LINE_SMOOTH);
+	glEnable(GL_POLYGON_SMOOTH);
+	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);*/
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glEnable(GL_DEPTH_TEST);
+
 	// Initialize game
 	cs2d->Init();
 
@@ -63,29 +61,13 @@ int main(int argc, char *argv[])
 	float deltaTime = 0.0F;
 	float lastFrame = 0.0F;
 
-	// Start Game within Menu State
-	//cs2d->State = MENU;
 	int nbFrames = 0;
 	while (!glfwWindowShouldClose(window))
 	{
-		// Calculate delta time
 		const float currentFrame = static_cast<float>(glfwGetTime());
-		//nbFrames++;
 		deltaTime = currentFrame - lastFrame;
-		//const double timeDelay = 1.0;
-		//if (deltaTime >= timeDelay)
-		//{
-		//std::cout << static_cast<float>(1000) / static_cast<float>(nbFrames) << std::endl;
-		//const double fps = nbFrames / deltaTime;
-		//std::cout << 1.0 / deltaTime << std::endl;
-		//std::cout << fps << std::endl;
-		//lastFrame = currentFrame;-
-		//nbFrames = 0;
-		//}
 		lastFrame = currentFrame;
 		glfwPollEvents();
-
-		//deltaTime = 0.001f;
 		// Manage user input
 		cs2d->ProcessInput(deltaTime);
 
@@ -167,6 +149,4 @@ void character_callback(GLFWwindow *window, unsigned int codepoint)
 
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
-	/*	Game* gm = cs2d.get();
-	gm->ScrollCallback(xoffset, yoffset);*/
 }

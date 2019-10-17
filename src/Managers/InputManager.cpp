@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 
 int InputManager::mouseX, InputManager::mouseY;
+int InputManager::scrollX, InputManager::scrollY;
 
 GLboolean InputManager::Keys[1024];
 GLboolean InputManager::KeysProcessed[1024];

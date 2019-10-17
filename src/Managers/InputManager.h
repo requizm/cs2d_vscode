@@ -8,6 +8,7 @@ class InputManager
 public:
 	
 	static int mouseX, mouseY;
+	static int scrollX, scrollY;
 
 	static GLboolean Keys[1024];
 	static GLboolean KeysProcessed[1024];

@@ -31,9 +31,10 @@ void Menu::Init()
 	l_editor = Label("Editor", glm::vec2(10.0F, Game_Parameters::SCREEN_HEIGHT / 2 + 20.0F), textRenderer, 1.0F, glm::vec3(0.58F));
 	//button = Button("hehehefs", glm::vec2(700.0F), textRenderer, glm::vec3(1.0F), glm::vec3(0.57F));
 	textbox = TextBox(glm::vec2(20.0F, 20.0F), textRenderer, glm::vec2(100.0F, 20.0F), true, 1.0F, glm::vec3(0.58F));
-	//panel = std::make_shared<Panel>(glm::vec2(InputManager::Width / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", glm::vec2(420.0F, 450.0F), *textRenderer, true, true, 1.0F, glm::vec3(0.21F));
-	//textbox->setParent(panel.get());
-	//textbox->setParentCenterPos();
+	//panel = Panel(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", glm::vec2(420.0F, 450.0F), textRenderer, true, true, 1.0F, glm::vec3(0.21F));
+	panel = std::make_shared<Panel>(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", glm::vec2(420.0F, 450.0F), textRenderer, true, true, 1.0F, glm::vec3(0.21F));
+	textbox.setParent(panel.get());
+	textbox.setParentCenterPos();
 }
 
 void Menu::Update(const float dt)
@@ -44,7 +45,7 @@ void Menu::Update(const float dt)
 	l_newgame.Update(dt);
 	//button->Update(dt);
 	textbox.Update(dt);
-	//panel->Update(dt);
+	panel->Update(dt);
 	//wchar_t ad = 97;
 	//std::wcout << ad << std::endl;*/
 }
@@ -75,6 +76,7 @@ void Menu::ProcessInput(const float dt)
 
 	if (l_options.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
+		panel->setEnable(true);
 		Logger::DebugLog("options->buttondown()");
 		//panel->setEnable(true);
 	}
@@ -115,6 +117,6 @@ void Menu::Render(const float dt)
 	l_console.Draw();
 	l_newgame.Draw();
 	//button->Draw(*squareRenderer);
-	//panel->Draw(*squareRenderer.get(), *menuRenderer.get());
+	panel->Draw(squareRenderer, menuRenderer);
 	textbox.Draw(squareRenderer, menuRenderer);
 }
