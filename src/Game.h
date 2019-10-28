@@ -12,12 +12,11 @@
 #include "Managers/ResourceManager.h"
 #include "Others/Game_Parameters.h"
 #include "Scenes/Menu.h"
-//#include "Editor.h"
+#include "Scenes/Editor.h"
 
 class Game
 {
 public:
-
 	Game(GLuint width, GLuint height);
 	Game();
 	virtual ~Game();
@@ -27,10 +26,8 @@ public:
 	void Render(const float dt);
 	void ProcessInput(const float dt);
 	void NewGame();
-	void initTextures() const;
-	void initMaps();
-	void initRenderers();
-	void initShaders() const;
+
+	static GameState state;
 
 private:
 	//std::unique_ptr<SpriteRenderer> renderer;
@@ -53,13 +50,15 @@ private:
 	Sprite mouseSprite;
 	StartGame scene;
 	Menu menu;
-	//std::unique_ptr <Editor> editor;
-	GameState state;
-	
+	Editor editor;
 
 	std::map<std::string, Sprite> menuSprites;
 
 	//Weapon *main1, *main2, *main3, *pistol1, *pistol2, *pistol3, *pistol4, *knife1, *knife2;
+	void initTextures() const;
+	void initMaps();
+	void initRenderers();
+	void initShaders() const;
 	void initMenuSprites();
 };
 

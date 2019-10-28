@@ -16,15 +16,22 @@ void Editor::Init()
 {
 	textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
 	textRenderer->Load("../resources/fonts/liberationsans.ttf", 16);
-	squareRenderer = std::make_shared<SquareRenderer>();
-
+	squareRenderer = std::make_shared<SquareRenderer>(true);
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
+}
+
+void Editor::Start()
+{
 	this->buildPanel = std::make_shared<Panel>(glm::vec2(0.0F), "Build Panel", glm::vec2(130, Game_Parameters::SCREEN_HEIGHT - 55), *textRenderer, true, false, 1.0F, glm::vec3(0.21F));
 	this->buildPanel->setMovable(false);
 	this->controlPanel = std::make_shared<Panel>(glm::vec2(0.0F), "Control Panel", glm::vec2(130, Game_Parameters::SCREEN_HEIGHT), *textRenderer, true, false, 1.0F, glm::vec3(0.21F));
 	this->controlPanel->setMovable(false);
-	this->buildPanel->setParent(controlPanel.get(), true);
-	this->buildPanel->setPosition(0, 55);
+	//this->buildPanel->setParent(controlPanel.get(), true);
+	this->buildPanel->setPosition(200, 0);
+	this->controlPanel->setPosition(500, 0);
+
+	this->buildPanel->setEnable(true);
+	this->controlPanel->setEnable(true);
 
 	cellWidth = ResourceManager::GetTexture("cs2dnorm").Width / 32;
 	cellHeight = ResourceManager::GetTexture("cs2dnorm").Height / 32;
@@ -48,10 +55,17 @@ void Editor::Init()
 			tiles.push_back(button);
 		}
 	}
+
+	start = false;
 }
 
 void Editor::Update(const float dt)
 {
+	this->dt += dt;
+	if (this->dt < 0.5f)
+		return;
+	if (start)
+		Start();
 	this->buildPanel->Update(dt);
 	this->controlPanel->Update(dt);
 	if (!tiles.empty())
@@ -60,7 +74,11 @@ void Editor::Update(const float dt)
 		{
 			if (tile.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 			{
-				std::cout << "holeyeyy" << std::endl;
+				Logger::DebugLog("down");
+			}
+			if (tile.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
+			{
+				Logger::DebugLog("up");
 			}
 		}
 	}
@@ -68,6 +86,8 @@ void Editor::Update(const float dt)
 
 void Editor::ProcessInput(const float dt)
 {
+	if (this->dt < 0.5f)
+		return;
 	if (InputManager::isKey(GLFW_KEY_W))
 	{
 		this->position = glm::vec2(this->position.x, this->position.y - 1.0F);
@@ -88,10 +108,12 @@ void Editor::ProcessInput(const float dt)
 
 void Editor::Render(const float dt)
 {
-//	camera->setPosition(position);
-//	camera->update();
-	ResourceManager::GetShader("sprite").Use();
-//	ResourceManager::GetShader("sprite").SetMatrix4("projection", camera->cameraMatrix);
+	if (this->dt < 0.5f)
+		return;
+	//	camera->setPosition(position);
+	//	camera->update();
+	//ResourceManager::GetShader("sprite").Use();
+	//	ResourceManager::GetShader("sprite").SetMatrix4("projection", camera->cameraMatrix);
 
 	this->controlPanel->Draw(*squareRenderer.get(), *menuRenderer.get());
 	this->buildPanel->Draw(*squareRenderer.get(), *menuRenderer.get());

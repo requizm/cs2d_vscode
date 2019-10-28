@@ -144,8 +144,6 @@ bool Button::isMouseHoverM()
 	}
 	//SetMouseState(isHover, false);
 	//isHover = false;
-	labelCurrentColor = labelColor;
-	currentColor = buttonColor;
 	return false;
 }
 

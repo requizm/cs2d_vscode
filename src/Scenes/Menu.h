@@ -25,6 +25,7 @@ public:
 	Menu(const std::map<std::string, Sprite> &menuSprites, const SpriteRenderer &menuRenderer);
 	~Menu();
 
+	void Start();
 	void Init();
 	void Update(const float dt);
 	void ProcessInput(const float dt);
@@ -34,14 +35,10 @@ public:
 	TextRenderer textRenderer;
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
-	//std::shared_ptr<ButtonRenderer> buttonRenderer;
 
 	/*	std::shared_ptr <Label> l_console;
-	
 
 	std::shared_ptr <Button> button;
-
-	
 
 	std::shared_ptr <Panel> panel;*/
 	Label l_console;
@@ -51,7 +48,11 @@ public:
 	Label l_editor;
 
 	TextBox textbox;
+
+
 	std::shared_ptr<Panel> panel;
+	private:
+	bool start;
 };
 
 #endif // MENU_H

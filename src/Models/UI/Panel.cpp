@@ -95,7 +95,7 @@ void Panel::Update(const float dt)
 
 void Panel::OnEnable()
 {
-	setPosition(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F));
+	//setPosition(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F));
 	if (opttitles)
 	{
 		escapeButton.setEnable(true);

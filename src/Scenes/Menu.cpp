@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "../Game.h"
 
 Menu::Menu() = default;
 
@@ -10,13 +11,6 @@ Menu::Menu(const std::map<std::string, Sprite> &menuSprites, const SpriteRendere
 
 Menu::~Menu()
 {
-	/*delete l_options;
-	delete l_console;
-	delete l_editor;
-	delete l_newgame;
-	delete button;
-	delete textbox;
-	delete panel;*/
 }
 
 void Menu::Init()
@@ -37,8 +31,16 @@ void Menu::Init()
 	textbox.setParentCenterPos();
 }
 
+void Menu::Start()
+{
+
+	start = false;
+}
+
 void Menu::Update(const float dt)
 {
+	if(start)
+		Start();
 	l_options.Update(dt);
 	l_console.Update(dt);
 	l_editor.Update(dt);
@@ -54,8 +56,9 @@ void Menu::ProcessInput(const float dt)
 {
 	if (l_editor.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
+		start = true;
 		Logger::DebugLog("editor->buttondown()");
-		//state = GameState::EDITOR;
+		Game::state = GameState::EDITOR;
 	}
 	if (l_editor.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
 	{

@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
-
+GameState Game::state;
 Game::Game(const GLuint width, const GLuint height)
 {
 	//camera = std::make_unique<Camera>(width, height);
@@ -13,14 +13,14 @@ Game::Game(const GLuint width, const GLuint height)
 	//InputManager::Height = height;
 	Logger::WriteLog("Game->Game()");
 	Game_Parameters::LoadParameters();
-	state = GameState::MENU;
+	Game::state = GameState::MENU;
 }
 
 Game::Game()
 {
 	Logger::WriteLog("Game->Game()");
 	Game_Parameters::LoadParameters();
-	state = GameState::MENU;
+	Game::state = GameState::MENU;
 }
 
 Game::~Game()
@@ -37,38 +37,64 @@ void Game::Init()
 	initMenuSprites();
 	menu = Menu(menuSprites, menuRenderer);
 	menu.Init();
-	//editor = std::make_unique<Editor>(textRenderer.get());
-	//editor->Init();
+	editor = Editor(&menuRenderer);
+	editor.Init();
 	//NewGame();
 }
 
 void Game::Update(float dt)
 {
-	//scene.Update(dt);
-	/*for (std::vector<int>::size_type i = 0; i != weapons.size(); i++)
+	switch (Game::state)
 	{
-		const GameObject *a = &weapons[0];
-		const Tile *pt = dynamic_cast<const Tile *>(a);
-		if (pt == NULL)
-		{
-			std::cout << "NULL" << std::endl;
-		}
-		const Weapon *pt1 = dynamic_cast<const Weapon *>(a);
-		if (pt1 == NULL)
-		{
-		}
-		//std::cout << typeid(pt1).name() << std::endl;
-	}*/
-
-	menu.Update(dt);
-	//editor->Update(dt);
+	case GameState::MENU:
+		menu.Update(dt);
+		break;
+	case GameState::EDITOR:
+		editor.Update(dt);
+		break;
+	case GameState::INGAME:
+		//editor->Update(dt);
+		break;
+	default:
+		break;
+	}
 }
 
 void Game::ProcessInput(float dt)
 {
-	//scene.ProcessInput(dt);
-	menu.ProcessInput(dt);
-	//editor->ProcessInput(dt);
+	switch (Game::state)
+	{
+	case GameState::MENU:
+		menu.ProcessInput(dt);
+		break;
+	case GameState::EDITOR:
+		editor.ProcessInput(dt);
+		break;
+	case GameState::INGAME:
+		/* code */
+		break;
+	default:
+		break;
+	}
+}
+
+void Game::Render(const float dt)
+{
+	switch (Game::state)
+	{
+	case GameState::MENU:
+		menu.Render(dt);
+		break;
+	case GameState::EDITOR:
+		editor.Render(dt);
+		break;
+	case GameState::INGAME:
+		/* code */
+		break;
+	default:
+		break;
+	}
+	menuRenderer.DrawSprite(mouseSprite, glm::vec2(InputManager::mouseX, InputManager::mouseY), glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
 }
 
 void Game::NewGame()
@@ -123,24 +149,6 @@ void Game::NewGame()
 
 	scene = StartGame(maps[0], spriteRenderer, weapons);
 	scene.Init();
-}
-
-void Game::Render(const float dt)
-{
-	//player->DrawModel(*renderer);
-	/*main1->DrawModel(*renderer);
-	main2->DrawModel(*renderer);
-	main3->DrawModel(*renderer);
-	pistol1->DrawModel(*renderer);
-	pistol2->DrawModel(*renderer);
-	pistol3->DrawModel(*renderer);
-	pistol4->DrawModel(*renderer);
-	knife1->DrawModel(*renderer);
-	knife2->DrawModel(*renderer);*/
-	menu.Render(dt);
-	//editor->Render(dt);
-	//scene.Render(dt);
-	menuRenderer.DrawSprite(mouseSprite, glm::vec2(InputManager::mouseX, InputManager::mouseY), glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
 }
 
 void Game::initTextures() const

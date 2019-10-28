@@ -15,6 +15,7 @@ public:
 	virtual ~Editor();
 
 	void Init();
+	void Start();
 	void Update(const float dt);
 	void ProcessInput(const float dt);
 	void Render(const float dt);
@@ -32,6 +33,9 @@ private:
 	std::vector<Button> tiles;
 	int cellWidth, cellHeight, tileCount;
 	int maxCellInColumn = 5;
+
+	bool start;
+	float dt;
 };
 #endif
 
