@@ -1,6 +1,7 @@
 #include "GameObject.h"
-#include "../Others/Logger.h"
 #include <glm/gtx/string_cast.hpp>
+#include "../Others/Logger.h"
+#include "../Others/Game_Parameters.h"
 
 GameObject::GameObject()
 	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0.0F), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT) {}
@@ -179,6 +180,16 @@ GLboolean GameObject::IsCollision() const
 {
 	//Logger::WriteLog("GameObject->IsCollision() " + std::to_string(isCollision) + "");
 	return isCollision;
+}
+
+glm::vec2 GameObject::PositionToCell(glm::vec2 pos)
+{
+	glm::vec2 temp = glm::vec2((int)(pos.x / Game_Parameters::SIZE_TILE), (int)(pos.y / Game_Parameters::SIZE_TILE));
+	return temp;
+}
+glm::vec2 GameObject::PositionToCell(float x, float y)
+{
+	return glm::vec2((int)(x / Game_Parameters::SIZE_TILE), (int)(y / Game_Parameters::SIZE_TILE));
 }
 
 std::string GameObject::GetObjectTypeString()

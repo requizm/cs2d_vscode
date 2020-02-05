@@ -37,7 +37,7 @@ void Game::Init()
 	initMenuSprites();
 	menu = Menu(menuSprites, menuRenderer);
 	menu.Init();
-	editor = Editor(&menuRenderer);
+	editor = Editor(menuRenderer);
 	editor.Init();
 	//NewGame();
 }
@@ -53,7 +53,7 @@ void Game::Update(float dt)
 		editor.Update(dt);
 		break;
 	case GameState::INGAME:
-		//editor->Update(dt);
+		scene.Update(dt);
 		break;
 	default:
 		break;
@@ -71,7 +71,7 @@ void Game::ProcessInput(float dt)
 		editor.ProcessInput(dt);
 		break;
 	case GameState::INGAME:
-		/* code */
+		scene.ProcessInput(dt);
 		break;
 	default:
 		break;
@@ -89,7 +89,7 @@ void Game::Render(const float dt)
 		editor.Render(dt);
 		break;
 	case GameState::INGAME:
-		/* code */
+		scene.Render(dt);
 		break;
 	default:
 		break;
@@ -118,11 +118,11 @@ void Game::NewGame()
 	Sprite machete = Sprite(ResourceManager::GetTexture("machete"));*/
 
 	std::shared_ptr<Weapon> main1 = std::make_shared<Weapon>(
-		glm::vec2(20.0f, 30.0f), awp, awp_d, "awp", WeaponType::MAIN, 30, 20, 10, 10);
+		glm::vec2(65.0f, 65.0f), awp, awp_d, "awp", WeaponType::MAIN, 30, 20, 10, 10);
 	std::shared_ptr<Weapon> main2 = std::make_shared<Weapon>(
-		glm::vec2(80.0f, 30.0f), famas, famas_d, "famas", WeaponType::MAIN, 30, 20, 10, 10);
+		glm::vec2(10.0f, 10.0f), famas, famas_d, "famas", WeaponType::MAIN, 30, 20, 10, 10);
 	std::shared_ptr<Weapon> main3 = std::make_shared<Weapon>(
-		glm::vec2(120.0f, 30.0f), ak47, ak47_d, "ak47", WeaponType::MAIN, 30, 20, 10, 10);
+		glm::vec2(12.0f, 20.0f), ak47, ak47_d, "ak47", WeaponType::MAIN, 30, 20, 10, 10);
 	/*Weapon* pistol1 = new Weapon(
 		glm::vec2(170.0f, 30.0f), deagle, deagle_d, "deagle", WeaponType::PISTOL, 30, 20, 10, 10
 	);
@@ -149,6 +149,7 @@ void Game::NewGame()
 
 	scene = StartGame(maps[0], spriteRenderer, weapons);
 	scene.Init();
+	Game::state = GameState::INGAME;
 }
 
 void Game::initTextures() const

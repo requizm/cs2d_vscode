@@ -39,6 +39,11 @@ void Panel::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer)
 			escapeButton.Draw(spriteRenderer);
 			title.Draw();
 		}
+
+		if(isOutline())
+		{
+			squareRenderer.RenderSquare(this->square, getPosition(), size, getPanelColor(), getOutlineColor());
+		}
 	}
 }
 
@@ -55,6 +60,7 @@ void Panel::Update(const float dt)
 			{
 				if (isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 				{
+
 					deltaX = InputManager::mouseX - static_cast<int>(position.x);
 					deltaY = InputManager::mouseY - static_cast<int>(position.y);
 					click = true;
@@ -70,7 +76,7 @@ void Panel::Update(const float dt)
 				if (!isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
 				{
 					glm::vec2 mousePos = glm::vec2(InputManager::mouseX, InputManager::mouseY);
-					this->position = glm::vec2(mousePos.x - static_cast<float>(deltaX), mousePos.y - static_cast<float>(deltaY));
+					this->setPosition(glm::vec2(mousePos.x - static_cast<float>(deltaX), mousePos.y - static_cast<float>(deltaY)));
 					//std::cout << "hey" << std::endl;
 				}
 			}
@@ -236,6 +242,11 @@ glm::vec3 Panel::getPanelColor() const
 	return this->panelColor;
 }
 
+glm::vec3 Panel::getOutlineColor() const
+{
+	return this->outlineColor;
+}
+
 bool Panel::isBackGround() const
 {
 	return this->backGround;
@@ -244,6 +255,11 @@ bool Panel::isBackGround() const
 bool Panel::isMovable() const
 {
 	return this->movable;
+}
+
+bool Panel::isOutline() const
+{
+	return this->outline;
 }
 
 std::string Panel::getTitle() const
@@ -270,3 +286,14 @@ void Panel::setTitle(const std::string &text)
 {
 	this->title.setText(text);
 }
+
+void Panel::setOutlineColor(const glm::vec3 color)
+{
+	this->outlineColor = color;
+}
+
+void Panel::setOutline(const bool value)
+{
+	this->outline = value;
+}
+

@@ -41,14 +41,14 @@ public:
 
 	Weapon(const glm::vec2 pos, const Sprite &sprite, const Sprite &floorSprite,const std::string &weaponName,
 		   WeaponType type, int maxAmmo, int curAmmo, int curAmmoInMag,
-		   const int maxAmmoInMag) : GameObject(pos, floorSprite,
-												glm::vec2(Game_Parameters::SCREEN_HEIGHT / 20, Game_Parameters::SCREEN_HEIGHT / 20), (int)ObjectType::WEAPON)
+		   const int maxAmmoInMag) : GameObject(glm::vec2(PositionToCell(pos).x * Game_Parameters::SIZE_TILE, PositionToCell(pos).y * Game_Parameters::SIZE_TILE), floorSprite,
+												glm::vec2(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE), (int)ObjectType::WEAPON)
 	{
 		this->weaponType = type;
 		if (weaponType == WeaponType::MAIN)
 		{
 			ammoType = AmmoType::PRIMARY;
-			this->SetSize(glm::vec2(Game_Parameters::SCREEN_HEIGHT / 10, Game_Parameters::SCREEN_HEIGHT / 20));
+			this->SetSize(glm::vec2(Game_Parameters::SIZE_TILE * 2, Game_Parameters::SIZE_TILE));
 		}
 
 		else if (weaponType == WeaponType::PISTOL)

@@ -28,11 +28,15 @@ public:
 	void Update(const float dt) override;
 
 	glm::vec2 getPosition() override;
+	glm::vec2 getLocalPosition() override;
 	glm::vec2 getSize() override;
 
 	void setMouseHoverColor(const glm::vec3 color);
 	void setButtonColor(const glm::vec3 color);
 	void setMouseClickColor(const glm::vec3 color);
+
+	void setPosition(const glm::vec2 position) override;
+	void setPosition(const int x, const int y) override;
 
 	bool isMouseHover() override;
 	bool isMouseDown(int key) override;

@@ -1,9 +1,11 @@
 #include "Game_Parameters.h"
 #include <fstream>
 #include <string>
+#include <math.h> // pow()
 
 int Game_Parameters::SCREEN_WIDTH;
 int Game_Parameters::SCREEN_HEIGHT;
+float Game_Parameters::SIZE_TILE;
 
 Game_Parameters::Game_Parameters()
 {
@@ -36,4 +38,6 @@ void Game_Parameters::LoadParameters()
             break;
         }
     }
+
+    Game_Parameters::SIZE_TILE = powf((((float)Game_Parameters::SCREEN_HEIGHT * (float)Game_Parameters::SCREEN_WIDTH) / (26.5f * (float)15)), 0.5f);
 }

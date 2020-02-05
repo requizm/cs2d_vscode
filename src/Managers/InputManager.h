@@ -9,6 +9,7 @@ public:
 	
 	static int mouseX, mouseY;
 	static int scrollX, scrollY;
+	static bool scrollYPressed;
 
 	static GLboolean Keys[1024];
 	static GLboolean KeysProcessed[1024];

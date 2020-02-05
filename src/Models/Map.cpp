@@ -1,6 +1,7 @@
 #include "Map.h"
 #include <fstream>
 #include <sstream>
+#include <math.h> // pow()
 #include "rapidxml-1.13/rapidxml.hpp"
 #include "../Managers/ResourceManager.h"
 #include "../Others/Game_Parameters.h"
@@ -59,8 +60,8 @@ void Map::Load(const GLchar *file)
 		int cellY = atoi(y);
 		int textureIndex = atoi(tIndex);
 		int tileType = atoi(tType);
-		const glm::vec2 pos(Game_Parameters::SCREEN_HEIGHT / 15 * cellX, Game_Parameters::SCREEN_HEIGHT / 15 * cellY);
-		const glm::vec2 size(glm::vec2(Game_Parameters::SCREEN_HEIGHT / 15, Game_Parameters::SCREEN_HEIGHT / 15));
+		const glm::vec2 pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
+		const glm::vec2 size(glm::vec2(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
 		const int xoffset = textureIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const int yoffset = textureIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
@@ -76,6 +77,7 @@ void Map::Draw(SpriteRenderer &renderer)
 			tile.DrawModel(renderer);
 	}
 }
+
 /*
 void Map::Load(const GLchar * file)
 {

@@ -149,4 +149,8 @@ void character_callback(GLFWwindow *window, unsigned int codepoint)
 
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
+	//Logger::DebugLog(std::to_string(yoffset));
+	InputManager::scrollY = yoffset;
+	InputManager::scrollYPressed = true;
+	
 }

@@ -129,6 +129,15 @@ glm::vec2 UIObject::getPosition()
 	return this->position;
 }
 
+glm::vec2 UIObject::getLocalPosition()
+{
+	if (isParent())
+	{
+		return this->getPosition() - parent->getPosition();
+	}
+	return this->position;
+}
+
 glm::vec2 UIObject::getSize()
 {
 	return this->size;
@@ -230,6 +239,51 @@ bool UIObject::isDependParent() const
 	return this->dependParent;
 }
 
+int UIObject::getID() const
+{
+	return this->id;
+}
+
+bool UIObject::isRenderable()
+{
+	if (this->isParent())
+	{
+		UIObject p = this->getParent();
+		if (p.isScrollable())
+		{
+			//setPosition(getLocalPosition().x, getLocalPosition().y - p.getScrollOffset() * 32);
+			//Logger::DebugLog(std::to_string(getLocalPosition().x) + " - " + std::to_string(getLocalPosition().y));
+			if ((getLocalPosition().y + getSize().y <= p.getSize().y) && getLocalPosition().y >= 0)
+			{
+				return true;
+			}
+			return false;
+		}
+		return true;
+	}
+	return true;
+}
+
+int UIObject::getScrollOffset() const
+{
+	return this->scrollOffset;
+}
+
+bool UIObject::isScrollable() const
+{
+	return this->scrollable;
+}
+
+void UIObject::setID(const int value)
+{
+	this->id = value;
+}
+
+void UIObject::setScrollOffset(const int value)
+{
+	this->scrollOffset = value;
+}
+
 std::string UIObject::GetObjectTypeString()
 {
 	std::string str;
@@ -255,4 +309,9 @@ std::string UIObject::GetObjectTypeString()
 		break;
 	}
 	return str;
+}
+
+void UIObject::setScrollable(const bool value)
+{
+	this->scrollable = value;
 }

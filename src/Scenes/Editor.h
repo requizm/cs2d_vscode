@@ -11,7 +11,7 @@ class Editor
 {
 public:
 	Editor();
-	Editor(SpriteRenderer* menuRenderer);
+	Editor(const SpriteRenderer &menuRenderer);
 	virtual ~Editor();
 
 	void Init();
@@ -21,18 +21,20 @@ public:
 	void Render(const float dt);
 
 private:
-	std::shared_ptr<TextRenderer> textRenderer;
-	std::shared_ptr<SpriteRenderer> menuRenderer;
-	std::shared_ptr<SquareRenderer> squareRenderer;
+	TextRenderer textRenderer;
+	SpriteRenderer menuRenderer;
+	SquareRenderer squareRenderer;
 	std::shared_ptr<Camera> camera;
 	glm::vec2 position;
 
 	std::shared_ptr<Panel> controlPanel;
 	std::shared_ptr<Panel> buildPanel;
+	std::shared_ptr<Panel> tilePanel;
 
 	std::vector<Button> tiles;
 	int cellWidth, cellHeight, tileCount;
 	int maxCellInColumn = 5;
+	int maxCellInRow;
 
 	bool start;
 	float dt;

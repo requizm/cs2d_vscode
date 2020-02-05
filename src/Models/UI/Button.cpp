@@ -30,7 +30,7 @@ Button::~Button() = default;
 
 void Button::Draw(SpriteRenderer &spriteRenderer)
 {
-	if (isVisible() && isEnable())
+	if (isVisible() && isEnable() && isRenderable())
 	{
 		if (!haveTile)
 			spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize(), currentColor);
@@ -83,6 +83,23 @@ glm::vec2 Button::getPosition()
 	if (isParent())
 	{
 		return parent->getPosition() + this->position;
+	}
+	return this->position;
+}
+
+glm::vec2 Button::getLocalPosition()
+{
+	if (haveTile)
+	{
+		if (isParent())
+		{
+			return this->getPosition() - parent->getPosition();
+		}
+		return this->tile.GetPosition();
+	}
+	if (isParent())
+	{
+		return this->getPosition() - parent->getPosition();
 	}
 	return this->position;
 }
@@ -233,4 +250,27 @@ void Button::setButtonColor(const glm::vec3 color)
 void Button::setMouseClickColor(const glm::vec3 color)
 {
 	this->mouseclickColor = color;
+}
+
+void Button::setPosition(const glm::vec2 position)
+{
+	if (haveTile)
+	{
+		this->tile.SetPosition(position);
+	}
+	else
+		this->position = position;
+}
+
+void Button::setPosition(const int x, const int y)
+{
+	if (haveTile)
+	{
+		this->tile.SetPosition(x, y);
+	}
+	else
+	{
+		this->position.x = x;
+		this->position.y = y;
+	}
 }

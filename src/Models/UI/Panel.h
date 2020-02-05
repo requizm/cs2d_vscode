@@ -27,16 +27,21 @@ public:
 	bool isMouseDownM(int key);
 	bool isMouseUpM(int key);
 	bool isMousePressM(int key);
+	
 
 	glm::vec3 getPanelColor() const;
+	glm::vec3 getOutlineColor() const;
 	bool isBackGround() const;
 	bool isMovable() const;
 	std::string getTitle() const;
+	bool isOutline() const;
 
 	void setPanelColor(const glm::vec3 color);
 	void setBackGround(const bool value);
 	void setMovable(const bool value);
 	void setTitle(const std::string &text);
+	void setOutlineColor(const glm::vec3 color);
+	void setOutline(const bool value);
 
 protected:
 	glm::vec3 panelColor;
@@ -49,11 +54,15 @@ protected:
 
 	bool backGround;
 	bool movable;
-
+	
 private:
 	bool isDownForClick = false;
 	bool isDown = false;
 	float lineOffset = 20.0F;
+
+	bool outline;
+	glm::vec3 outlineColor;
+	
 };
 
 #endif

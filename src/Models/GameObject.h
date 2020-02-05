@@ -53,6 +53,9 @@ public:
 	GLboolean IsDestroyed() const;
 	bool IsParent();
 
+	glm::vec2 PositionToCell(glm::vec2 pos);
+	glm::vec2 PositionToCell(float x, float y);
+
 	Sprite sprite;
 
 protected:

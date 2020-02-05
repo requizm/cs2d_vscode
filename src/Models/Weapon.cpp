@@ -123,7 +123,7 @@ void Weapon::RemoveParent()
 		this->parent = nullptr;
 		if (weaponType == WeaponType::MAIN)
 		{
-			this->SetSize(glm::vec2(Game_Parameters::SCREEN_HEIGHT / 10, Game_Parameters::SCREEN_HEIGHT / 20));
+			this->SetSize(glm::vec2(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
 		}
 		return;
 	}

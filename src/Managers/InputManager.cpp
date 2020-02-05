@@ -3,6 +3,7 @@
 
 int InputManager::mouseX, InputManager::mouseY;
 int InputManager::scrollX, InputManager::scrollY;
+bool InputManager::scrollYPressed;
 
 GLboolean InputManager::Keys[1024];
 GLboolean InputManager::KeysProcessed[1024];
