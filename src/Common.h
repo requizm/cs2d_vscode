@@ -59,6 +59,7 @@
 
 #include "Others/Game_Parameters.cpp"
 #include "Others/Logger.cpp"
+#include "Others/Utils.cpp"
 
 #include "Scenes/StartGame.cpp"
 #include "Scenes/Menu.cpp"

@@ -19,11 +19,12 @@ public:
 	void Update(const float dt) override;
 	void OnEnable() override;
 	void OnDisable() override;
-	bool isMouseHover();
+	bool isMouseHover(bool drag = true);
 	bool isMouseDown(int key);
 	bool isMouseUp(int key);
 	bool isMousePress(int key);
 	bool isMouseHoverM();
+	bool isMouseHoverForMouse();
 	bool isMouseDownM(int key);
 	bool isMouseUpM(int key);
 	bool isMousePressM(int key);

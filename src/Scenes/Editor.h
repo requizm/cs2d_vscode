@@ -7,11 +7,30 @@
 #include "../Models/Camera.h"
 #include "../Models/Tile.h"
 
+struct ButtonTile
+{
+	Button button;
+	bool exist;
+	glm::ivec2 cell;
+	ButtonTile(glm::ivec2 cell)
+	{
+		this->cell = cell;
+		this->exist = false;
+	}
+	
+	ButtonTile(Button button, glm::ivec2 cell)
+	{
+		this->button = button;
+		this->cell = cell;
+		this->exist = true;
+	}
+};
+
 class Editor
 {
 public:
 	Editor();
-	Editor(const SpriteRenderer &menuRenderer);
+	Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer);
 	virtual ~Editor();
 
 	void Init();
@@ -21,9 +40,13 @@ public:
 	void Render(const float dt);
 
 private:
+	void SaveMap();
+
 	TextRenderer textRenderer;
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
+
+	SpriteRenderer worldRenderer;
 	std::shared_ptr<Camera> camera;
 	glm::vec2 position;
 
@@ -31,13 +54,21 @@ private:
 	std::shared_ptr<Panel> buildPanel;
 	std::shared_ptr<Panel> tilePanel;
 
-	std::vector<Button> tiles;
+	std::vector<Button> tilesUI;
 	int cellWidth, cellHeight, tileCount;
-	int maxCellInColumn = 5;
+	int maxCellInColumn;
 	int maxCellInRow;
+
+	Tile selectedTile;
+	bool firstSelect;
+
+	int mapXLimit, mapYLimit;
+	std::vector<ButtonTile> tiles;
 
 	bool start;
 	float dt;
+
+	Button save_button;
 };
 #endif
 

@@ -13,8 +13,9 @@ Button::Button(const std::string &text, glm::vec2 position, TextRenderer &render
 	square = Square(true);
 }
 
-Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, float scale) : Label(position, size, scale, UIObjectType::BUTTON)
+Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON)
 {
+	this->difColor = difColor;
 	this->sprite = sprite;
 	square = Square(true);
 }
@@ -32,8 +33,10 @@ void Button::Draw(SpriteRenderer &spriteRenderer)
 {
 	if (isVisible() && isEnable() && isRenderable())
 	{
-		if (!haveTile)
+		if (!haveTile && difColor)
 			spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize(), currentColor);
+		else if(!haveTile && !difColor)
+			spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize());
 		else
 			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize());
 	}
@@ -273,4 +276,9 @@ void Button::setPosition(const int x, const int y)
 		this->position.x = x;
 		this->position.y = y;
 	}
+}
+
+Tile Button::getTile()
+{
+	return this->tile;
 }

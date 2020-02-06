@@ -18,7 +18,7 @@ public:
 	Outline outline;
 	//Outline title_line = Outline();
 
-	void RenderSquare(Square square, glm::vec2 position, glm::vec2 size, glm::vec3 color, glm::vec3 borderColor, GLfloat rotate = 0.0F);
+	void RenderSquare(Square square, glm::vec2 position, glm::vec2 size, glm::vec3 color, glm::vec3 borderColor, float borderSize, GLfloat rotate = 0.0F);
 	void RenderSquare(Square square, glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat rotate = 0.0F);
 	void RenderLine(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat rotate = 0.0F);
 };

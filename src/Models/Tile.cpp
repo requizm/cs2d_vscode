@@ -2,9 +2,8 @@
 
 Tile::Tile() = default;
 
-Tile::Tile(glm::vec2 pos, const Sprite &sprite, glm::vec2 size, TileTypes type) : GameObject(pos, sprite, size, (int)ObjectType::TILE)
+Tile::Tile(glm::vec2 pos, const Sprite &sprite, glm::vec2 size, TileTypes typee, int framee) : GameObject(pos, sprite, size, (int)ObjectType::TILE), type(typee), frame(framee)
 {
-	this->type = type;
 }
 
 Tile::Tile(glm::vec2 pos, const Sprite &sprite, glm::vec2 size) : GameObject(pos, sprite, size, (int)ObjectType::TILE), type(TileTypes::FLOOR)

@@ -48,6 +48,7 @@ void Map::Load(const GLchar *file)
 	this->name = doc.first_node("info")->first_node("name")->value();
 	rapidxml::xml_node<> *node = doc.first_node("map");
 	//std::cout << node->first_node("tile")->first_node("cellX")->next_sibling()->name() << std::endl;
+	int i = 0;
 	for (rapidxml::xml_node<> *child = node->first_node(); child; child = child->next_sibling())
 	{
 		//std::cout << child->first_node("cellY")->value() << std::endl;
@@ -65,7 +66,7 @@ void Map::Load(const GLchar *file)
 		const int xoffset = textureIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const int yoffset = textureIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
-		Tile tile(pos, sprite, size, TileTypes(tileType));
+		Tile tile = Tile(pos, sprite, size, TileTypes(tileType));
 		Tiles.push_back(tile);
 	}
 }

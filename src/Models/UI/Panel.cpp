@@ -9,6 +9,7 @@ Panel::Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextR
 	this->opttitles = opttitles;
 	this->enable = false;
 	this->movable = true;
+	this->scrollable = false;
 	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, glm::vec2(20.0F, 20.0F), scale);
 	escapeButton.setParent(this);
 	escapeButton.setPosition(this->size.x - 20.0F, 3.0F);
@@ -26,23 +27,24 @@ Panel::~Panel() = default;
 
 void Panel::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer)
 {
-	if (isEnable())
+	if (isEnable() && isVisible())
 	{
-		if (isVisible() && this->backGround)
+		if (this->backGround)
 		{
-			squareRenderer.RenderSquare(this->square, this->getPosition(), this->getSize(), this->getPanelColor());
+			if (!isOutline())
+			{
+				squareRenderer.RenderSquare(this->square, this->getPosition(), this->getSize(), this->getPanelColor());
+			}
+			else if (isOutline())
+			{
+				squareRenderer.RenderSquare(this->square, getPosition(), this->getSize(), getPanelColor(), getOutlineColor(), 1.0F);
+			}
 		}
-
 		if (opttitles)
 		{
 			squareRenderer.RenderLine(glm::vec2(getPosition().x + lineOffset, getPosition().y + 23.0F), glm::vec2(size.x - 2 * lineOffset, 1.0F), glm::vec3(0.39F));
 			escapeButton.Draw(spriteRenderer);
 			title.Draw();
-		}
-
-		if(isOutline())
-		{
-			squareRenderer.RenderSquare(this->square, getPosition(), size, getPanelColor(), getOutlineColor());
 		}
 	}
 }
@@ -122,9 +124,12 @@ void Panel::OnDisable()
 	}
 }
 
-bool Panel::isMouseHover()
+bool Panel::isMouseHover(bool drag)
 {
-	return isMouseHoverM();
+	if (drag)
+		return isMouseHoverM();
+	else
+		return isMouseHoverForMouse();
 }
 
 bool Panel::isMouseDown(const int key)
@@ -149,6 +154,27 @@ bool Panel::isMouseHoverM()
 
 	const int sizeX = static_cast<int>(this->dragSize.x);
 	const int sizeY = static_cast<int>(this->dragSize.y);
+
+	for (int i = posX; i <= posX + sizeX; i++)
+	{
+		for (int j = posY; j <= posY + sizeY; j++)
+		{
+			if (InputManager::mouseX == i && InputManager::mouseY == j)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool Panel::isMouseHoverForMouse()
+{
+	const int posX = static_cast<int>(this->getPosition().x);
+	const int posY = static_cast<int>(this->getPosition().y);
+
+	const int sizeX = static_cast<int>(this->getSize().x);
+	const int sizeY = static_cast<int>(this->getSize().y);
 
 	for (int i = posX; i <= posX + sizeX; i++)
 	{
@@ -296,4 +322,3 @@ void Panel::setOutline(const bool value)
 {
 	this->outline = value;
 }
-
