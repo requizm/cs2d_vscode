@@ -4,7 +4,7 @@
 
 enum TileTypes
 {
-	FLOOR, SOLID_FLOOR, WALL, TRENCH
+	WALL, OBSTACLE, FLOOR
 };
 
 class Tile :
@@ -12,14 +12,17 @@ class Tile :
 {
 public:
 	Tile();
-	Tile(glm::vec2 pos, const Sprite& sprite, glm::vec2 size, TileTypes type);
+	Tile(glm::vec2 pos, const Sprite& sprite, glm::vec2 size, TileTypes typee, int framee = -1);
 	Tile(glm::vec2 pos, const Sprite& sprite, glm::vec2 size);
 
 	void setType(TileTypes type);
 	TileTypes getType() const;
 
+	int frame;
+
 private:
 	TileTypes type;
+
 };
 
 #endif

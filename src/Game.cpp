@@ -37,7 +37,7 @@ void Game::Init()
 	initMenuSprites();
 	menu = Menu(menuSprites, menuRenderer);
 	menu.Init();
-	editor = Editor(menuRenderer);
+	editor = Editor(menuRenderer, spriteRenderer);
 	editor.Init();
 	//NewGame();
 }

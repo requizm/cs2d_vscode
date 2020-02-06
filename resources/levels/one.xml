@@ -3,117 +3,34 @@
 		<tileTexture>1</tileTexture>
 		<cellX>0</cellX>
 		<cellY>0</cellY>
-		<tileType>0</tileType>
+		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>1</tileTexture>
+		<tileTexture>2</tileTexture>
 		<cellX>1</cellX>
 		<cellY>0</cellY>
-		<tileType>0</tileType>
+		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>1</tileTexture>
+		<tileTexture>3</tileTexture>
 		<cellX>2</cellX>
 		<cellY>0</cellY>
-		<tileType>0</tileType>
+		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>1</tileTexture>
+		<tileTexture>4</tileTexture>
 		<cellX>3</cellX>
 		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>4</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>5</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>6</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
+		<tileType>2</tileType>
 	</tile>
 	<tile>
 		<tileTexture>1</tileTexture>
 		<cellX>7</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>8</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>9</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>10</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>11</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>12</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>13</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>14</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>15</cellX>
-		<cellY>0</cellY>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellY>1</cellY>
-		<cellX>0</cellX>
-		<tileType>0</tileType>
-	</tile>
-	<tile>
-		<tileTexture>53</tileTexture>
-		<cellX>1</cellX>
-		<cellY>1</cellY>
-		<tileType>2</tileType>
-	</tile>
-	<tile>
-		<tileTexture>54</tileTexture>
-		<cellX>2</cellX>
-		<cellY>1</cellY>
+		<cellY>2</cellY>
 		<tileType>2</tileType>
 	</tile>
 </map>
 <info>
-	<name>de_test</name>
+	<name>de_test1</name>
 </info>
+
