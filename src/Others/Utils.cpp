@@ -42,7 +42,11 @@ glm::vec2 Utils::ScreenToWorld(glm::vec2 view, glm::vec2 point)
 
 glm::ivec2 Utils::PositionToCell(glm::vec2 pos)
 {
-    return glm::ivec2((int)pos.x / Game_Parameters::SIZE_TILE, (int)pos.y / Game_Parameters::SIZE_TILE);
+    if (pos.x >= 0 && pos.y >= 0)
+    {
+        return glm::ivec2((int)pos.x / Game_Parameters::SIZE_TILE, (int)pos.y / Game_Parameters::SIZE_TILE);
+    }
+    return glm::ivec2(-1, -1); //gereksiz
 }
 
 glm::vec2 Utils::CellToPosition(glm::ivec2 cell)

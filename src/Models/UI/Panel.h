@@ -11,7 +11,7 @@
 class Panel : public UIObject
 {
 public:
-	Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextRenderer &renderer, bool isBackGround = false, bool opttitles = true, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F));
+	Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextRenderer &renderer, bool isBackGround = false, bool opttitles = true, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), float transp = 0.9F);
 	Panel();
 	~Panel();
 
@@ -63,6 +63,7 @@ private:
 
 	bool outline;
 	glm::vec3 outlineColor;
+	float trans;
 	
 };
 

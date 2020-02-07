@@ -13,14 +13,14 @@ Game::Game(const GLuint width, const GLuint height)
 	//InputManager::Height = height;
 	Logger::WriteLog("Game->Game()");
 	Game_Parameters::LoadParameters();
-	Game::state = GameState::MENU;
+	Game::SetGameState(GameState::MENU);
 }
 
 Game::Game()
 {
 	Logger::WriteLog("Game->Game()");
 	Game_Parameters::LoadParameters();
-	Game::state = GameState::MENU;
+	Game::SetGameState(GameState::MENU);
 }
 
 Game::~Game()
@@ -39,7 +39,7 @@ void Game::Init()
 	menu.Init();
 	editor = Editor(menuRenderer, spriteRenderer);
 	editor.Init();
-	//NewGame();
+	NewGame();
 }
 
 void Game::Update(float dt)
@@ -54,8 +54,6 @@ void Game::Update(float dt)
 		break;
 	case GameState::INGAME:
 		scene.Update(dt);
-		break;
-	default:
 		break;
 	}
 }
@@ -73,8 +71,6 @@ void Game::ProcessInput(float dt)
 	case GameState::INGAME:
 		scene.ProcessInput(dt);
 		break;
-	default:
-		break;
 	}
 }
 
@@ -90,8 +86,6 @@ void Game::Render(const float dt)
 		break;
 	case GameState::INGAME:
 		scene.Render(dt);
-		break;
-	default:
 		break;
 	}
 	menuRenderer.DrawSprite(mouseSprite, glm::vec2(InputManager::mouseX, InputManager::mouseY), glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
@@ -149,7 +143,6 @@ void Game::NewGame()
 
 	scene = StartGame(maps[0], spriteRenderer, weapons);
 	scene.Init();
-	Game::state = GameState::INGAME;
 }
 
 void Game::initTextures() const
@@ -233,4 +226,14 @@ void Game::initRenderers()
 	Logger::WriteLog("Game->initRenderers()");
 	spriteRenderer = SpriteRenderer(ResourceManager::GetShader("sprite"));
 	menuRenderer = SpriteRenderer(ResourceManager::GetShader("menu"));
+}
+
+void Game::SetGameState(GameState state)
+{
+	Game::state = state;
+}
+
+GameState Game::GetGameState()
+{
+	return Game::state;
 }

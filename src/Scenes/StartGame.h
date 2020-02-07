@@ -15,7 +15,8 @@ public:
 	//StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer, std::vector<GameObject*> gameobjects);
 	//StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer);
 	void Init();
-	void Update(const float dt) const;
+	void Start();
+	void Update(const float dt);
 	void ProcessInput(const float dt);
 	void Render(const float dt);
 	~StartGame();
@@ -26,6 +27,7 @@ private:
 	std::shared_ptr<Camera> camera;
 	SpriteRenderer renderer;
 	std::vector<Weapon> weapons;
+	bool start;
 };
 
 #endif //SCENE_H

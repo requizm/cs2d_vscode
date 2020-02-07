@@ -29,6 +29,7 @@ void Menu::Init()
 	panel = std::make_shared<Panel>(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", glm::vec2(420.0F, 450.0F), textRenderer, true, true, 1.0F, glm::vec3(0.21F));
 	textbox.setParent(panel.get());
 	textbox.setParentCenterPos();
+	start = true;
 }
 
 void Menu::Start()
@@ -56,9 +57,9 @@ void Menu::ProcessInput(const float dt)
 {
 	if (l_editor.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
-		start = true;
 		Logger::DebugLog("editor->buttondown()");
-		Game::state = GameState::EDITOR;
+		Game::SetGameState(GameState::EDITOR);
+		start = true;
 	}
 	if (l_editor.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
 	{
@@ -69,7 +70,8 @@ void Menu::ProcessInput(const float dt)
 	if (l_newgame.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
 		Logger::DebugLog("newgame->buttondown()");
-		//state = GameState::INGAME;
+		Game::SetGameState(GameState::INGAME);
+		start = true;
 	}
 	if (l_newgame.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
 	{

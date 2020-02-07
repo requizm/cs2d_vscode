@@ -59,6 +59,13 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::
 void StartGame::Init()
 {
 	Logger::WriteLog("StartGame->Init()");
+	
+	
+	start = true;
+}
+
+void StartGame::Start()
+{
 	Sprite ct1_0 = Sprite(ResourceManager::GetTexture("ct1"), 0, 0, 32, 32);
 	Sprite ct1_1 = Sprite(ResourceManager::GetTexture("ct1"), 0, 32, 32, 32);
 	Sprite ct1_2 = Sprite(ResourceManager::GetTexture("ct1"), 0, 64, 32, 32);
@@ -71,10 +78,13 @@ void StartGame::Init()
 						 glm::vec2(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
 	player->setVelocity(500.0F);
 	player->SetMap(&map);
+	start = false;
 }
 
-void StartGame::Update(const float dt) const
+void StartGame::Update(const float dt)
 {
+	if(start)
+		Start();
 	player->Update(dt);
 
 	//player->DoCollision(weapons);

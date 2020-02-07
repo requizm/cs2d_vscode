@@ -1,32 +1,32 @@
 <map>
 	<tile>
 		<tileTexture>1</tileTexture>
-		<cellX>0</cellX>
-		<cellY>0</cellY>
+		<cellX>7</cellX>
+		<cellY>4</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
 		<tileTexture>2</tileTexture>
-		<cellX>1</cellX>
-		<cellY>0</cellY>
+		<cellX>8</cellX>
+		<cellY>4</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
 		<tileTexture>3</tileTexture>
-		<cellX>2</cellX>
-		<cellY>0</cellY>
+		<cellX>9</cellX>
+		<cellY>4</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
 		<tileTexture>4</tileTexture>
-		<cellX>3</cellX>
-		<cellY>0</cellY>
+		<cellX>11</cellX>
+		<cellY>4</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>7</cellX>
-		<cellY>2</cellY>
+		<tileTexture>8</tileTexture>
+		<cellX>12</cellX>
+		<cellY>4</cellY>
 		<tileType>2</tileType>
 	</tile>
 </map>

@@ -1,12 +1,13 @@
 #include "Panel.h"
 #include <iostream>
 
-Panel::Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextRenderer &renderer, bool isBackGround, bool opttitles, float scale, glm::vec3 color) : UIObject(position, size, scale, UIObjectType::PANEL)
+Panel::Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextRenderer &renderer, bool isBackGround, bool opttitles, float scale, glm::vec3 color, float transp) : UIObject(position, size, scale, UIObjectType::PANEL)
 {
 	this->panelColor = color;
 	this->backGround = isBackGround;
 	this->dragSize = glm::vec2(size.x, 23.0F);
 	this->opttitles = opttitles;
+	this->trans = transp;
 	this->enable = false;
 	this->movable = true;
 	this->scrollable = false;
@@ -33,16 +34,16 @@ void Panel::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer)
 		{
 			if (!isOutline())
 			{
-				squareRenderer.RenderSquare(this->square, this->getPosition(), this->getSize(), this->getPanelColor());
+				squareRenderer.RenderSquare(this->getPosition(), this->getSize(), this->getPanelColor(), this->trans);
 			}
 			else if (isOutline())
 			{
-				squareRenderer.RenderSquare(this->square, getPosition(), this->getSize(), getPanelColor(), getOutlineColor(), 1.0F);
+				squareRenderer.RenderSquare(this->getPosition(), this->getSize(), getPanelColor(), getOutlineColor(), 1.0F, this->trans);
 			}
 		}
 		if (opttitles)
 		{
-			squareRenderer.RenderLine(glm::vec2(getPosition().x + lineOffset, getPosition().y + 23.0F), glm::vec2(size.x - 2 * lineOffset, 1.0F), glm::vec3(0.39F));
+			squareRenderer.RenderLine(glm::vec2(getPosition().x + lineOffset, getPosition().y + 23.0F), glm::vec2(size.x - 2 * lineOffset, 1.0F), glm::vec3(0.39F), this->trans);
 			escapeButton.Draw(spriteRenderer);
 			title.Draw();
 		}

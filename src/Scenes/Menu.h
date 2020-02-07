@@ -49,8 +49,8 @@ public:
 
 	TextBox textbox;
 
-
 	std::shared_ptr<Panel> panel;
+	
 	private:
 	bool start;
 };

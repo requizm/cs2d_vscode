@@ -27,6 +27,9 @@ public:
 	void ProcessInput(const float dt);
 	void NewGame();
 
+	static void SetGameState(GameState state);
+	static GameState GetGameState();
+	
 	static GameState state;
 
 private:
@@ -53,6 +56,8 @@ private:
 	Editor editor;
 
 	std::map<std::string, Sprite> menuSprites;
+
+	
 
 	//Weapon *main1, *main2, *main3, *pistol1, *pistol2, *pistol3, *pistol4, *knife1, *knife2;
 	void initTextures() const;

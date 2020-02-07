@@ -5,6 +5,7 @@
 #include "rapidxml-1.13/rapidxml_print.hpp"
 #include "../Others/Game_Parameters.h"
 #include "../Others/Utils.h"
+#include "../Game.h"
 
 Editor::Editor()
 {
@@ -24,11 +25,16 @@ void Editor::Init()
 	textRenderer.Load("../resources/fonts/liberationsans.ttf", 16);
 	squareRenderer = SquareRenderer(true);
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
+	mouse_yellow = glm::vec3(0.73F, 0.73F, 0.0F);
+	cell_yellow = glm::vec3(0.15F, 0.15F, 0.0F);
 }
 
 void Editor::Start()
 {
+	this->dt = 0.0F;
 	position = glm::vec2(0.0F);
+	tiles.clear();
+	tilesUI.clear();
 
 	maxCellInColumn = 5;
 	firstSelect = false;
@@ -44,17 +50,17 @@ void Editor::Start()
 	else
 		maxCellInRow = (Game_Parameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32;
 
-	this->buildPanel = std::make_shared<Panel>(glm::vec2(0.0F, 0.0F), "Build Panel", glm::vec2(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), textRenderer, true, false, 1.0F, glm::vec3(0.21F));
+	this->buildPanel = std::make_shared<Panel>(glm::vec2(0.0F, 0.0F), "Build Panel", glm::vec2(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->buildPanel->setMovable(false);
 	this->buildPanel->setEnable(true);
 	this->buildPanel->setID(1);
 
-	this->controlPanel = std::make_shared<Panel>(glm::vec2(5.0F, 5.0F), "Control Panel", glm::vec2(32 * maxCellInColumn, 32 * 2 - 11), textRenderer, true, false, 1.0F, glm::vec3(0.21F));
+	this->controlPanel = std::make_shared<Panel>(glm::vec2(5.0F, 5.0F), "Control Panel", glm::vec2(32 * maxCellInColumn, 32 * 2 - 11), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->controlPanel->setMovable(false);
 	this->controlPanel->setEnable(true);
 	this->buildPanel->setID(3);
 
-	this->tilePanel = std::make_shared<Panel>(glm::vec2(5.0F, 75.0F), "", glm::vec2(32 * maxCellInColumn, 32 * maxCellInRow), textRenderer, true, false, 1.0F, glm::vec3(0.21F));
+	this->tilePanel = std::make_shared<Panel>(glm::vec2(5.0F, 75.0F), "", glm::vec2(32 * maxCellInColumn, 32 * maxCellInRow), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->tilePanel->setEnable(true);
 	this->tilePanel->setMovable(false);
 	this->tilePanel->setID(2);
@@ -155,19 +161,27 @@ void Editor::ProcessInput(const float dt)
 
 	if (InputManager::isKey(GLFW_KEY_W))
 	{
-		this->position = glm::vec2(this->position.x, this->position.y - 1.0F);
+		this->position = glm::vec2(this->position.x, this->position.y - Game_Parameters::SCREEN_HEIGHT * dt);
 	}
 	if (InputManager::isKey(GLFW_KEY_S))
 	{
-		this->position = glm::vec2(this->position.x, this->position.y + 1.0F);
+		this->position = glm::vec2(this->position.x, this->position.y + Game_Parameters::SCREEN_HEIGHT * dt);
 	}
 	if (InputManager::isKey(GLFW_KEY_A))
 	{
-		this->position = glm::vec2(this->position.x - 1.0F, this->position.y);
+		this->position = glm::vec2(this->position.x - Game_Parameters::SCREEN_HEIGHT * dt, this->position.y);
 	}
 	if (InputManager::isKey(GLFW_KEY_D))
 	{
-		this->position = glm::vec2(this->position.x + 1.0F, this->position.y);
+		this->position = glm::vec2(this->position.x + Game_Parameters::SCREEN_HEIGHT * dt, this->position.y);
+	}
+	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
+	{
+		Game::SetGameState(GameState::MENU);
+		start = true;
+	}
+	if (InputManager::isKeyUp(GLFW_KEY_ESCAPE))
+	{
 	}
 	if (save_button.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
@@ -176,7 +190,7 @@ void Editor::ProcessInput(const float dt)
 	if (save_button.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
 	{
 	}
-	if (InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT) && firstSelect)
+	if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT) && firstSelect)
 	{
 		if (!buildPanel->isMouseHover(false))
 		{
@@ -217,20 +231,29 @@ void Editor::Render(const float dt)
 	camera->setPosition(position);
 	camera->update();
 	worldRenderer.SetProjection(camera->cameraMatrix);
+	squareRenderer.SetProjection(camera->cameraMatrix);
 
-	if (!tiles.empty())
+	glm::vec2 mouse = Utils::ScreenToWorld(glm::vec2(camera->x, camera->y), glm::vec2(InputManager::mouseX, InputManager::mouseY));
+	glm::ivec2 ms = Utils::PositionToCell(mouse);
+
+	for (auto &tile_1 : tiles)
 	{
-		for (auto &tile_1 : tiles)
+		if (tile_1.exist)
+			tile_1.button.Draw(worldRenderer);
+
+		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1.cell), glm::vec2(Game_Parameters::SIZE_TILE), cell_yellow);
+
+		if (ms == tile_1.cell)
 		{
-			if (tile_1.exist)
-				tile_1.button.Draw(worldRenderer);
+			glm::vec2 pos = Utils::CellToPosition(tile_1.cell);
+			squareRenderer.world_RenderEmptySquareWithLine(pos, glm::vec2(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
 		}
 	}
 
 	//ui
 	this->controlPanel->Draw(squareRenderer, menuRenderer);
-	this->buildPanel->Draw(squareRenderer, menuRenderer);
 	this->tilePanel->Draw(squareRenderer, menuRenderer);
+	this->buildPanel->Draw(squareRenderer, menuRenderer);
 	//this->menuRenderer.DrawSprite(Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16, 16), glm::vec2(10), glm::vec2(16.0F));
 	save_button.Draw(menuRenderer);
 	if (!tilesUI.empty())
@@ -274,7 +297,7 @@ void Editor::SaveMap()
 		rapidxml::xml_node<> *node_name = doc.allocate_node(rapidxml::node_element, "name", "de_test1");
 		node_info->append_node(node_name);
 		doc.append_node(node_map);
-			doc.append_node(node_info);
+		doc.append_node(node_info);
 		std::ofstream fileC;
 		fileC.open("../resources/levels/one.xml");
 		if (!fileC)

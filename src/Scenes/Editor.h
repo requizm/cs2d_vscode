@@ -39,6 +39,9 @@ public:
 	void ProcessInput(const float dt);
 	void Render(const float dt);
 
+
+	
+
 private:
 	void SaveMap();
 
@@ -69,6 +72,9 @@ private:
 	float dt;
 
 	Button save_button;
+
+	glm::vec3 cell_yellow;
+	glm::vec3 mouse_yellow;
 };
 #endif
 
