@@ -44,6 +44,7 @@ public:
 
 private:
 	void SaveMap();
+	void Button_NewMap(std::string tileSet, glm::vec2 mapSize);
 
 	TextRenderer textRenderer;
 	SpriteRenderer menuRenderer;
@@ -56,6 +57,8 @@ private:
 	std::shared_ptr<Panel> controlPanel;
 	std::shared_ptr<Panel> buildPanel;
 	std::shared_ptr<Panel> tilePanel;
+
+	std::shared_ptr<Panel> newPanel;
 
 	std::vector<Button> tilesUI;
 	int cellWidth, cellHeight, tileCount;
@@ -71,7 +74,7 @@ private:
 	bool start;
 	float dt;
 
-	Button save_button;
+	Button save_button, new_button, load_button;
 
 	glm::vec3 cell_yellow;
 	glm::vec3 mouse_yellow;

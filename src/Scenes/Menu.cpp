@@ -9,9 +9,7 @@ Menu::Menu(const std::map<std::string, Sprite> &menuSprites, const SpriteRendere
 	this->menuRenderer = menuRenderer;
 }
 
-Menu::~Menu()
-{
-}
+Menu::~Menu() = default;
 
 void Menu::Init()
 {
@@ -34,7 +32,6 @@ void Menu::Init()
 
 void Menu::Start()
 {
-
 	start = false;
 }
 

@@ -29,7 +29,7 @@ void TextBox::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRendere
 	if (isVisible() && isEnable())
 	{
 		if (isBackGround)
-			squareRenderer.RenderSquare(this->getPosition(), this->getSize(), glm::vec3(0.15F), currentBorderColor, 1.0F);
+			squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), glm::vec3(0.15F), currentBorderColor, 1.0F, 1.0F);
 		if (editMode)
 		{
 			if (time <= 0.5F)
@@ -84,17 +84,11 @@ bool TextBox::isMouseHoverM()
 	const int sizeX = static_cast<int>(this->size.x);
 	const int sizeY = static_cast<int>(this->size.y);
 
-	for (int i = posX; i <= posX + sizeX; i++)
+	if (InputManager::mouseX >= posX && InputManager::mouseX <= posX + sizeX && InputManager::mouseY >= posY && InputManager::mouseY <= posY + sizeY)
 	{
-		for (int j = posY; j <= posY + sizeY; j++)
-		{
-			if (InputManager::mouseX == i && InputManager::mouseY == j)
-			{
-				if (editable && !editMode)
-					currentBorderColor = hoverBorderColor; //0.78F
-				return true;
-			}
-		}
+		if (editable && !editMode)
+			currentBorderColor = hoverBorderColor; //0.78F
+		return true;
 	}
 	if (editable && !editMode)
 		currentBorderColor = borderColor; //0.6F

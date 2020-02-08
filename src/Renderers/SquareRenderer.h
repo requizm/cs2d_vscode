@@ -20,10 +20,12 @@ public:
 	Square square;
 	//Outline title_line = Outline();
 
-	void RenderSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, glm::vec3 borderColor, float borderSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-	void RenderSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-	void world_RenderSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderFilledSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, glm::vec3 borderColor, float borderSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderFilledSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void world_RenderFilledSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
 	void world_RenderEmptySquareWithLine(glm::vec2 position, glm::vec2 size, glm::vec3 color, float lineSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderEmptySquareWithLine(glm::vec2 position, glm::vec2 size, glm::vec3 color, float lineSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+
 	void RenderLine(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
 	void ui_RenderEmptySquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
 	void world_RenderEmptySquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);

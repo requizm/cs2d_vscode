@@ -9,8 +9,9 @@ Panel::Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextR
 	this->opttitles = opttitles;
 	this->trans = transp;
 	this->enable = false;
-	this->movable = true;
+	this->movable = false;
 	this->scrollable = false;
+	this->outline = false;
 	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, glm::vec2(20.0F, 20.0F), scale);
 	escapeButton.setParent(this);
 	escapeButton.setPosition(this->size.x - 20.0F, 3.0F);
@@ -34,17 +35,17 @@ void Panel::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer)
 		{
 			if (!isOutline())
 			{
-				squareRenderer.RenderSquare(this->getPosition(), this->getSize(), this->getPanelColor(), this->trans);
+				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), this->getPanelColor(), this->trans );
 			}
-			else if (isOutline())
+			else
 			{
-				squareRenderer.RenderSquare(this->getPosition(), this->getSize(), getPanelColor(), getOutlineColor(), 1.0F, this->trans);
+				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), getPanelColor(), getOutlineColor(), 2.0F, this->trans, 0.0F);
 			}
 		}
 		if (opttitles)
 		{
 			squareRenderer.RenderLine(glm::vec2(getPosition().x + lineOffset, getPosition().y + 23.0F), glm::vec2(size.x - 2 * lineOffset, 1.0F), glm::vec3(0.39F), this->trans);
-			escapeButton.Draw(spriteRenderer);
+			escapeButton.Draw(spriteRenderer, squareRenderer);
 			title.Draw();
 		}
 	}
@@ -156,15 +157,9 @@ bool Panel::isMouseHoverM()
 	const int sizeX = static_cast<int>(this->dragSize.x);
 	const int sizeY = static_cast<int>(this->dragSize.y);
 
-	for (int i = posX; i <= posX + sizeX; i++)
+	if (InputManager::mouseX >= posX && InputManager::mouseX <= posX + sizeX && InputManager::mouseY >= posY && InputManager::mouseY <= posY + sizeY)
 	{
-		for (int j = posY; j <= posY + sizeY; j++)
-		{
-			if (InputManager::mouseX == i && InputManager::mouseY == j)
-			{
-				return true;
-			}
-		}
+		return true;
 	}
 	return false;
 }
@@ -177,15 +172,9 @@ bool Panel::isMouseHoverForMouse()
 	const int sizeX = static_cast<int>(this->getSize().x);
 	const int sizeY = static_cast<int>(this->getSize().y);
 
-	for (int i = posX; i <= posX + sizeX; i++)
+	if (InputManager::mouseX >= posX && InputManager::mouseX <= posX + sizeX && InputManager::mouseY >= posY && InputManager::mouseY <= posY + sizeY)
 	{
-		for (int j = posY; j <= posY + sizeY; j++)
-		{
-			if (InputManager::mouseX == i && InputManager::mouseY == j)
-			{
-				return true;
-			}
-		}
+		return true;
 	}
 	return false;
 }

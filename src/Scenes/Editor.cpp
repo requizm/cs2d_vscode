@@ -27,28 +27,8 @@ void Editor::Init()
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	mouse_yellow = glm::vec3(0.73F, 0.73F, 0.0F);
 	cell_yellow = glm::vec3(0.15F, 0.15F, 0.0F);
-}
-
-void Editor::Start()
-{
-	this->dt = 0.0F;
-	position = glm::vec2(0.0F);
-	tiles.clear();
-	tilesUI.clear();
-
 	maxCellInColumn = 5;
-	firstSelect = false;
-
-	mapXLimit = 50;
-	mapYLimit = 50;
-
-	cellWidth = ResourceManager::GetTexture("cs2dnorm").Width / 32;
-	cellHeight = ResourceManager::GetTexture("cs2dnorm").Height / 32;
-	tileCount = cellWidth * cellHeight;
-	if (tileCount % maxCellInColumn != 0)
-		maxCellInRow = (Game_Parameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32 + 1;
-	else
-		maxCellInRow = (Game_Parameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32;
+	maxCellInRow = (Game_Parameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32 + 1;
 
 	this->buildPanel = std::make_shared<Panel>(glm::vec2(0.0F, 0.0F), "Build Panel", glm::vec2(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->buildPanel->setMovable(false);
@@ -58,48 +38,51 @@ void Editor::Start()
 	this->controlPanel = std::make_shared<Panel>(glm::vec2(5.0F, 5.0F), "Control Panel", glm::vec2(32 * maxCellInColumn, 32 * 2 - 11), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->controlPanel->setMovable(false);
 	this->controlPanel->setEnable(true);
-	this->buildPanel->setID(3);
+	this->controlPanel->setID(3);
 
 	this->tilePanel = std::make_shared<Panel>(glm::vec2(5.0F, 75.0F), "", glm::vec2(32 * maxCellInColumn, 32 * maxCellInRow), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->tilePanel->setEnable(true);
 	this->tilePanel->setMovable(false);
 	this->tilePanel->setID(2);
 	this->tilePanel->setScrollable(true);
-	this->tilePanel->setScrollOffset(0);
 	this->tilePanel->setOutline(true);
 	this->tilePanel->setOutlineColor(glm::vec3(0.47F));
-	//this->buildPanel->setParent(controlPanel->get(), true);
 
-	int curIndex = 0;
-	for (int i = 0; i < cellWidth * cellHeight; i++)
-	{
-		const int xPos = 32 * (curIndex % maxCellInColumn);
-		const int yPos = 32 * (curIndex / maxCellInColumn);
-		const glm::vec2 pos(xPos, yPos);
-		const glm::vec2 size(glm::vec2(32, 32));
-		const int xoffset = curIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
-		const int yoffset = curIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
-		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
-		const Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-		Button button = Button(tile);
-		button.setParent(tilePanel.get(), true);
-		tilesUI.push_back(button);
-	}
+	this->newPanel = std::make_shared<Panel>(glm::vec2(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", glm::vec2(600, 300), textRenderer, true, true, 1.0F, glm::vec3(0.21F));
+	this->newPanel->setMovable(false);
+	this->newPanel->setEnable(false);
+	this->newPanel->setID(4);
 
-	for (int i = 0; i < mapXLimit; i++)
-	{
-		for (int j = 0; j < mapYLimit; j++)
-		{
-			ButtonTile t = ButtonTile(glm::ivec2(i, j));
-			tiles.push_back(t);
-		}
-	}
+	Sprite sprite;
+	glm::vec2 pos;
+
+	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16, 16); //save_sprite
+	pos = this->controlPanel->getPosition();
+	new_button = Button(sprite, pos, glm::vec2(16.0F));
+	new_button.setOutline(true);
+	new_button.setOutlineColor(glm::vec3(0.45));
+	new_button.setMargin(glm::vec2(8, 8));
+
+	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16, 16); //save_sprite
+	pos = glm::vec2(controlPanel->getPosition().x + 30, controlPanel->getPosition().y);
+	load_button = Button(sprite, pos, glm::vec2(16.0F));
+	load_button.setOutline(true);
+	load_button.setOutlineColor(glm::vec3(0.45));
+	load_button.setMargin(glm::vec2(8, 8));
+
+	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16, 16); //save_sprite
+	pos = glm::vec2(controlPanel->getPosition().x + 60, controlPanel->getPosition().y);
+	save_button = Button(sprite, pos, glm::vec2(16.0F));
+	save_button.setOutline(true);
+	save_button.setOutlineColor(glm::vec3(0.45));
+	save_button.setMargin(glm::vec2(8, 8));
+}
+
+void Editor::Start()
+{
+	Button_NewMap("cs2dnorm", glm::vec2(50));
+
 	start = false;
-
-	Sprite save_sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16, 16);
-	glm::vec2 pos = this->controlPanel->getPosition();
-	pos.x += 60;
-	save_button = Button(save_sprite, pos, glm::vec2(32 * maxCellInColumn / 7));
 }
 
 void Editor::Update(const float dt)
@@ -117,6 +100,8 @@ void Editor::Update(const float dt)
 	this->buildPanel->Update(dt);
 	this->tilePanel->Update(dt);
 	this->save_button.Update(dt);
+	this->new_button.Update(dt);
+	this->load_button.Update(dt);
 
 	if (this->tilePanel->isScrollable() && InputManager::scrollYPressed)
 	{
@@ -183,6 +168,10 @@ void Editor::ProcessInput(const float dt)
 	if (InputManager::isKeyUp(GLFW_KEY_ESCAPE))
 	{
 	}
+	if (save_button.isMouseHover())
+	{
+		
+	}
 	if (save_button.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
 		SaveMap();
@@ -239,7 +228,7 @@ void Editor::Render(const float dt)
 	for (auto &tile_1 : tiles)
 	{
 		if (tile_1.exist)
-			tile_1.button.Draw(worldRenderer);
+			tile_1.button.Draw(worldRenderer, squareRenderer);
 
 		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1.cell), glm::vec2(Game_Parameters::SIZE_TILE), cell_yellow);
 
@@ -251,16 +240,18 @@ void Editor::Render(const float dt)
 	}
 
 	//ui
+	
 	this->controlPanel->Draw(squareRenderer, menuRenderer);
-	this->tilePanel->Draw(squareRenderer, menuRenderer);
 	this->buildPanel->Draw(squareRenderer, menuRenderer);
-	//this->menuRenderer.DrawSprite(Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16, 16), glm::vec2(10), glm::vec2(16.0F));
-	save_button.Draw(menuRenderer);
+	this->tilePanel->Draw(squareRenderer, menuRenderer);
+	this->save_button.Draw(menuRenderer, squareRenderer);
+	this->new_button.Draw(menuRenderer, squareRenderer);
+	this->load_button.Draw(menuRenderer, squareRenderer);
 	if (!tilesUI.empty())
 	{
 		for (auto &tile : tilesUI)
 		{
-			tile.Draw(menuRenderer);
+			tile.Draw(menuRenderer, squareRenderer);
 		}
 	}
 }
@@ -309,5 +300,46 @@ void Editor::SaveMap()
 		}
 		fileC << doc;
 		fileC.close();
+	}
+}
+
+void Editor::Button_NewMap(std::string tileSet, glm::vec2 mapSize)
+{
+	this->dt = 0.0F;
+	position = glm::vec2(0.0F);
+	tiles.clear();
+	tilesUI.clear();
+
+	firstSelect = false;
+	mapXLimit = mapSize.x;
+	mapYLimit = mapSize.y;
+
+	cellWidth = ResourceManager::GetTexture(tileSet).Width / 32;
+	cellHeight = ResourceManager::GetTexture(tileSet).Height / 32;
+	tileCount = cellWidth * cellHeight;
+
+	int curIndex = 0;
+	for (int i = 0; i < tileCount; i++)
+	{
+		const int xPos = 32 * (curIndex % maxCellInColumn);
+		const int yPos = 32 * (curIndex / maxCellInColumn);
+		const glm::vec2 pos(xPos, yPos);
+		const glm::vec2 size(glm::vec2(32, 32));
+		const int xoffset = curIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
+		const int yoffset = curIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
+		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
+		const Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
+		Button button = Button(tile);
+		button.setParent(tilePanel.get(), true);
+		tilesUI.push_back(button);
+	}
+
+	for (int i = 0; i < mapXLimit; i++)
+	{
+		for (int j = 0; j < mapYLimit; j++)
+		{
+			ButtonTile t = ButtonTile(glm::ivec2(i, j));
+			tiles.push_back(t);
+		}
 	}
 }

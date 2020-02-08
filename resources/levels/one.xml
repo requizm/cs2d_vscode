@@ -1,35 +1,4 @@
-<map>
-	<tile>
-		<tileTexture>1</tileTexture>
-		<cellX>7</cellX>
-		<cellY>4</cellY>
-		<tileType>2</tileType>
-	</tile>
-	<tile>
-		<tileTexture>2</tileTexture>
-		<cellX>8</cellX>
-		<cellY>4</cellY>
-		<tileType>2</tileType>
-	</tile>
-	<tile>
-		<tileTexture>3</tileTexture>
-		<cellX>9</cellX>
-		<cellY>4</cellY>
-		<tileType>2</tileType>
-	</tile>
-	<tile>
-		<tileTexture>4</tileTexture>
-		<cellX>11</cellX>
-		<cellY>4</cellY>
-		<tileType>2</tileType>
-	</tile>
-	<tile>
-		<tileTexture>8</tileTexture>
-		<cellX>12</cellX>
-		<cellY>4</cellY>
-		<tileType>2</tileType>
-	</tile>
-</map>
+<map/>
 <info>
 	<name>de_test1</name>
 </info>

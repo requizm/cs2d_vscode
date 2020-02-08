@@ -23,7 +23,7 @@ class Menu
 public:
 	Menu();
 	Menu(const std::map<std::string, Sprite> &menuSprites, const SpriteRenderer &menuRenderer);
-	~Menu();
+	virtual ~Menu();
 
 	void Start();
 	void Init();

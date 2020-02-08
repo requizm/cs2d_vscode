@@ -10,12 +10,18 @@ Button::Button() = default;
 Button::Button(const std::string &text, glm::vec2 position, TextRenderer &renderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON)
 {
 	this->buttonColor = buttonColor;
+	this->haveOutline = false;
+	this->haveTile = false;
+	this->difColor = false;
 	square = Square(true);
 }
 
 Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON)
 {
 	this->difColor = difColor;
+	this->haveOutline = false;
+	this->haveTile = false;
+	this->haveSprite = true;
 	this->sprite = sprite;
 	square = Square(true);
 }
@@ -24,21 +30,40 @@ Button::Button(Tile tile, float scale) : Label(tile.GetPosition(), tile.GetSize(
 {
 	this->tile = tile;
 	this->haveTile = true;
+	this->difColor = false;
+	this->haveOutline = false;
 	square = Square(true);
 }
 
 Button::~Button() = default;
 
-void Button::Draw(SpriteRenderer &spriteRenderer)
+void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
 	if (isVisible() && isEnable() && isRenderable())
 	{
-		if (!haveTile && difColor)
-			spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize(), currentColor);
-		else if(!haveTile && !difColor)
-			spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize());
+		if (!haveTile)
+		{
+			if (difColor)
+			{
+				spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize(), currentColor);
+			}
+			else if (!difColor)
+			{
+				if (haveOutline)
+				{
+					squareRenderer.ui_RenderEmptySquare(this->getPosition(), glm::vec2(this->getSize().x + margin.x, this->getSize().y + margin.y), this->outlineColor);
+					spriteRenderer.DrawSprite(this->sprite, glm::vec2(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
+				}
+				else
+				{
+					spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize());
+				}
+			}
+		}
 		else
+		{
 			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize());
+		}
 	}
 	//buttonRenderer.RenderButton(&textRenderer, this);
 	//Label::Draw();
@@ -145,23 +170,24 @@ bool Button::isMouseHoverM()
 	const int posX = static_cast<int>(this->getPosition().x);
 	const int posY = static_cast<int>(this->getPosition().y);
 
-	const int sizeX = static_cast<int>(this->getSize().x);
-	const int sizeY = static_cast<int>(this->getSize().y);
+	int sizeX = static_cast<int>(this->getSize().x);
+	int sizeY = static_cast<int>(this->getSize().y);
 
-	for (int i = posX; i <= posX + sizeX; i++)
+	if (haveOutline)
 	{
-		for (int j = posY; j <= posY + sizeY; j++)
-		{
-			if (InputManager::mouseX == i && InputManager::mouseY == j)
-			{
-				//SetMouseState(isHover, true);
-				//isHover = true;
-				//labelCurrentColor = labelMouseHoverColor;
-				//currentColor = mouseHoverColor;
-				return true;
-			}
-		}
+		sizeX += margin.x;
+		sizeY += margin.y;
 	}
+
+	if (InputManager::mouseX >= posX && InputManager::mouseX <= posX + sizeX && InputManager::mouseY >= posY && InputManager::mouseY <= posY + sizeY)
+	{
+		//SetMouseState(isHover, true);
+		//isHover = true;
+		//labelCurrentColor = labelMouseHoverColor;
+		//currentColor = mouseHoverColor;
+		return true;
+	}
+
 	//SetMouseState(isHover, false);
 	//isHover = false;
 	return false;
@@ -253,6 +279,24 @@ void Button::setButtonColor(const glm::vec3 color)
 void Button::setMouseClickColor(const glm::vec3 color)
 {
 	this->mouseclickColor = color;
+}
+
+void Button::setOutlineColor(const glm::vec3 color)
+{
+	this->outlineColor = color;
+}
+
+void Button::setOutline(const bool value)
+{
+	this->haveOutline = value;
+}
+
+void Button::setMargin(const glm::vec2 value)
+{
+	if (haveOutline)
+		this->margin = value;
+	else
+		Logger::DebugLog("haveOutline false oldugu halde margin degistirilmeye calisiliyor!");
 }
 
 void Button::setPosition(const glm::vec2 position)

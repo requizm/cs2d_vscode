@@ -2,11 +2,10 @@
 #define BUTTON_H
 
 #include "../../Renderers/SpriteRenderer.h"
-//#include "SquareRenderer.h"
+#include "../../Renderers/SquareRenderer.h"
 #include "Label.h"
 #include "Square.h"
 #include "../Sprite.h"
-//#include "ButtonRenderer.h"
 #include "../Tile.h"
 
 //class ButtonRenderer;
@@ -23,7 +22,7 @@ public:
 	Button(Tile tile, float scale = 1.0F);
 	~Button();
 
-	void Draw(SpriteRenderer &spriteRenderer);
+	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
 	void Draw(/*SquareRenderer &squareRenderer */ /*ButtonRenderer &buttonRenderer,*/);
 	void Update(const float dt) override;
 
@@ -35,6 +34,10 @@ public:
 	void setMouseHoverColor(const glm::vec3 color);
 	void setButtonColor(const glm::vec3 color);
 	void setMouseClickColor(const glm::vec3 color);
+	void setOutlineColor(const glm::vec3 color);
+	void setOutline(const bool value);
+
+	void setMargin(const glm::vec2 value);
 
 	void setPosition(const glm::vec2 position) override;
 	void setPosition(const int x, const int y) override;
@@ -53,6 +56,8 @@ protected:
 	glm::vec3 mouseclickColor;
 	glm::vec3 currentColor;
 
+	
+
 	bool isMouseHoverM() override;
 	bool isMouseDownM(int key) override;
 	bool isMouseUpM(int key) override;
@@ -60,8 +65,13 @@ protected:
 
 private:
 	//bool isDown = false;
-	bool haveTile = false;
-	bool difColor = false;
+	bool haveTile;
+	bool haveOutline;
+	bool haveSprite;
+	bool difColor;
+
+	glm::vec3 outlineColor; 
+	glm::vec2 margin; 
 };
 
 #endif // BUTTON_H
