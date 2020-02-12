@@ -4,3 +4,9 @@
   <img alt="Coverity Scan Build Status"
        src="https://scan.coverity.com/projects/20359/badge.svg"/>
 </a>
+
+<a >
+  <img alt="Coverity Scan Build Status"
+       src="https://travis-ci.com/requizm/cs2d_vscode.svg?branch=master"/>
+</a>
+
