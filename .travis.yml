@@ -1,27 +1,21 @@
 language: c
 os: windows
 compiler:
-  - gcc
-
+- gcc
 env:
   global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "AAAAB3NzaC1yc2EAAAADAQABAAACAQDTWRHA7wwKLPoYhoPJlYfcAl6dhZ4L2hBw5305opmXlyVzYnmw1qeYiX61Llo+z0p10maRM1V+O11UsMkH/qQM4wT+2CghLH8Ib7ydH5ka2x7f71wqhI8801xvHWJC6wAQi0U5PgTqMNONVG1HeQUm6yvk6d1fD7PnJraA6W7ehvRlGKsHGqbHDTpg6Zrnw16p+UdkrmnT4dzyzn9+6Qkok9g+nSXLACWYSN5TE47D99SqbKWjaU+U9vy7mMU+JESSz6MOxni3mIAfvREpwS4u1t6eVU77cl+IE51FULf1+HxdVQPS0Ufb7aOoBaytqkBlFVnSWZ89HqDp+f62IhAfAk7p89NrUBxkij66BaZua3i45+8fNcvMeWrZSltqCVvejr6o4JCfQGKCFJjLrhxS/K5PWv7ejCsoLtIoAeO8RnwEu5jDUqRDtsWChz9oZjXcTKsw48vY1wNY/srnY6ZeIvG5x4pLmWiH65G5slYJejL72lUMuPsyf9rCZSura1x3rEvOEjvJngB+0zn2G33Fqy0hqhtLQMJiPe9Hsds/Bo3nM0uQi46aGD1HB401z8cNBT+QVFKU6DnMOOOtgGwFHFauGJqECsKwPlciCIfHCejNjAAYBtlOEdD8kKNDMhirYNyAKU6KOu+wIGf7hODiCcGpOcdalE6lpTgQ0es2kQ=="
-  
-  
-   
+  - secure: AAAAB3NzaC1yc2EAAAADAQABAAACAQDTWRHA7wwKLPoYhoPJlYfcAl6dhZ4L2hBw5305opmXlyVzYnmw1qeYiX61Llo+z0p10maRM1V+O11UsMkH/qQM4wT+2CghLH8Ib7ydH5ka2x7f71wqhI8801xvHWJC6wAQi0U5PgTqMNONVG1HeQUm6yvk6d1fD7PnJraA6W7ehvRlGKsHGqbHDTpg6Zrnw16p+UdkrmnT4dzyzn9+6Qkok9g+nSXLACWYSN5TE47D99SqbKWjaU+U9vy7mMU+JESSz6MOxni3mIAfvREpwS4u1t6eVU77cl+IE51FULf1+HxdVQPS0Ufb7aOoBaytqkBlFVnSWZ89HqDp+f62IhAfAk7p89NrUBxkij66BaZua3i45+8fNcvMeWrZSltqCVvejr6o4JCfQGKCFJjLrhxS/K5PWv7ejCsoLtIoAeO8RnwEu5jDUqRDtsWChz9oZjXcTKsw48vY1wNY/srnY6ZeIvG5x4pLmWiH65G5slYJejL72lUMuPsyf9rCZSura1x3rEvOEjvJngB+0zn2G33Fqy0hqhtLQMJiPe9Hsds/Bo3nM0uQi46aGD1HB401z8cNBT+QVFKU6DnMOOOtgGwFHFauGJqECsKwPlciCIfHCejNjAAYBtlOEdD8kKNDMhirYNyAKU6KOu+wIGf7hODiCcGpOcdalE6lpTgQ0es2kQ==
 addons:
   coverity_scan:
     project:
-      name: "requizm/cs2d_vscode"
-      description: "Your project description here"
+      name: requizm/cs2d_vscode
+      description: Your project description here
     notification_email: mehmet416500@hotmail.com
     build_command_prepend: "./configure"
-    build_command: "make"
+    build_command: make
     branch_pattern: master
-
-
-    
 script:
-  - make  
+- make
+before_install:
+- openssl aes-256-cbc -K $encrypted_288b5c217884_key -iv $encrypted_288b5c217884_iv
+  -in super_secret.txt.enc -out super_secret.txt -d
