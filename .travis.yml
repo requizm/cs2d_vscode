@@ -1,4 +1,4 @@
 language: cpp
 os: windows
-compiler: gcc
+compiler: g++
 script: mingw32-make
