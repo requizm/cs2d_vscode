@@ -8,16 +8,15 @@ env:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
    - secure: "DHLOJhdltkaNY+oVlZVpw8IUuUGadFgOiW1gOrXn9tNpRDdu7Jdgt/nEupUsTTajtWT//fO2LTPAadlFOqM8/ejxZjuDJ4HYt0x5N8t1nsIXGVOCoiS2WvroB1vW+9i+hgTGFVmAt5n6Vzewwm9DRAzt7VxhoaWNIVEVJ4FkIDTbtk+P9bigDeL24VwPzTvARPTtgsND1bl8efJ0EcL2ESjhxJt0Ba9IezNmRp/apbgOtNSNQRqi76T+L+Of+R8QpRVW13Y/1Cp+ASJ9SD1Hz8amCC1VGdFsZf66vIsyrb7Fg5sz+7FbZJ5NpoWHQR1P4rpDpubrmkR4+LjAz/axsvkDdUcD4blIvt4YBhdhZXBGWEv9xqXXC4BUsruYNMAdoSal8wpAFJTJCCIIsepNWnRrp3ioCOh/NHNjyq6lil6J2nxxpNn8FJBo3uE7ldYUQvgTwOMFxjpqfMKqqzRrgIcgcRa+dVjgUMcTJJtLVW7z1uxKAlWHvOdHrhaOR6HvqNE5DH8OdIlVdxcid/bNYTME6BPwD0P8xuU7s3awO+Z7SOy4/xkkmCcd6k3pXt4IRCdSPlhjdE4mN4Wx1ejKon31OD4rM9sjYrvsWCzaSIuZb/fp4QHCM2m4vF0E8xcYTsn/IbpIhwNGxUIdT86rh+84rtoHCJhyojWfyf2mQd8="
-   
-before_install:
-  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+  
+  
    
 addons:
   coverity_scan:
     project:
       name: "requizm/cs2d_vscode"
       description: "Your project description here"
-    notification_email: mehmet41650@gmail.com
+    notification_email: mehmet416500@hotmail.com
     build_command_prepend: "./configure"
     build_command: "make"
     branch_pattern: master
