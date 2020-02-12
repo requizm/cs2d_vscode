@@ -15,4 +15,4 @@ script:
 - make
 before_install:
 - openssl aes-256-cbc -K $encrypted_288b5c217884_key -iv $encrypted_288b5c217884_iv
-  -in super_secret.txt.enc -out super_secret.txt -d
+  -in github_deploy_key.enc -out github_deploy_key -d

@@ -38,3 +38,7 @@ build/*
 .scannerwork/report-task.txt
 
 super_secret.txt
+
+github_deploy_key
+
+github_deploy_key.pub
