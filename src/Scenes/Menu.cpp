@@ -7,6 +7,8 @@ Menu::Menu(const std::map<std::string, Sprite> &menuSprites, const SpriteRendere
 {
 	this->menuSprites = menuSprites;
 	this->menuRenderer = menuRenderer;
+
+	this->start = true;
 }
 
 Menu::~Menu() = default;

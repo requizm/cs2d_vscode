@@ -69,6 +69,8 @@ void Map::Load(const GLchar *file)
 		Tile tile = Tile(pos, sprite, size, TileTypes(tileType));
 		Tiles.push_back(tile);
 	}
+
+	delete codeChar;
 }
 void Map::Draw(SpriteRenderer &renderer)
 {
@@ -136,9 +138,9 @@ std::string Map::GetName() const
 	return name;
 }
 
-Tile *Map::getTile(int cellX, int cellY)
+/*Tile *Map::getTile(int cellX, int cellY)
 {
-	/*	bool result = false;
+		bool result = false;
 	int index = 0;
 	for (std::vector<int>::size_type i = 0; i != Tiles.size(); i++)
 	{
@@ -153,5 +155,5 @@ Tile *Map::getTile(int cellX, int cellY)
 	if (result)
 		return &Tiles.at(index);
 
-	return nullptr;*/
-}
+	return nullptr;
+}*/

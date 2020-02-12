@@ -46,7 +46,6 @@ public:
 	int getID() const;
 	bool isRenderable(); //scroll'dan dolayi
 	bool isScrollable() const;
-	int getScrollOffset() const;
 
 	virtual void setPosition(const glm::vec2 position);
 	virtual void setPosition(const int x, const int y);
@@ -62,7 +61,6 @@ public:
 	void setDependParent(const bool value);
 	void setID(const int value);
 	void setScrollable(const bool value);
-	void setScrollOffset(const int value);
 
 protected:
 	glm::vec2 position;
@@ -80,7 +78,6 @@ protected:
 	bool mouseEvents;
 
 	bool scrollable;
-	int scrollOffset;
 
 private:
 	std::string GetObjectTypeString();

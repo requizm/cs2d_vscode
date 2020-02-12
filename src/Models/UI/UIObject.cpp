@@ -50,6 +50,9 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType
 	this->enable = true;
 	this->visible = true;
 	this->mouseEvents = true;
+	
+	this->scrollable = false;
+	this->dependParent = false;
 }
 
 UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer)
@@ -62,6 +65,9 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer)
 	this->visible = true;
 	this->mouseEvents = true;
 	this->rend = &renderer;
+
+	this->scrollable = false;
+	this->dependParent = false;
 }
 
 UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIObjectType type)
@@ -74,6 +80,9 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIOb
 	this->visible = true;
 	this->mouseEvents = true;
 	this->rend = &renderer;
+
+	this->scrollable = false;
+	this->dependParent = false;
 }
 
 UIObject::~UIObject() = default;
@@ -264,11 +273,6 @@ bool UIObject::isRenderable()
 	return true;
 }
 
-int UIObject::getScrollOffset() const
-{
-	return this->scrollOffset;
-}
-
 bool UIObject::isScrollable() const
 {
 	return this->scrollable;
@@ -277,11 +281,6 @@ bool UIObject::isScrollable() const
 void UIObject::setID(const int value)
 {
 	this->id = value;
-}
-
-void UIObject::setScrollOffset(const int value)
-{
-	this->scrollOffset = value;
 }
 
 std::string UIObject::GetObjectTypeString()

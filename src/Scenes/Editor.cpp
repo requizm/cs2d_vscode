@@ -9,12 +9,31 @@
 
 Editor::Editor()
 {
+	this->tileCount = 0;
+	this->maxCellInColumn = 0;
+	this->maxCellInRow = 0;
+	this->position = glm::vec2(0.0F);
+	this->firstSelect = false;
+	this->dt = 0.0F;
+	this->start = true;
+	this->mapLimit = glm::ivec2(0);
+	this->texture = glm::vec2(0.0F);
 }
 
 Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer)
 {
 	this->menuRenderer = menuRenderer;
 	this->worldRenderer = worldRenderer;
+
+	this->tileCount = 0;
+	this->maxCellInColumn = 0;
+	this->maxCellInRow = 0;
+	this->position = glm::vec2(0.0F);
+	this->firstSelect = false;
+	this->dt = 0.0F;
+	this->start = true;
+	this->mapLimit = glm::ivec2(0);
+	this->texture = glm::vec2(0.0F);
 }
 
 Editor::~Editor() = default;
@@ -170,7 +189,6 @@ void Editor::ProcessInput(const float dt)
 	}
 	if (save_button.isMouseHover())
 	{
-		
 	}
 	if (save_button.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
@@ -240,7 +258,7 @@ void Editor::Render(const float dt)
 	}
 
 	//ui
-	
+
 	this->controlPanel->Draw(squareRenderer, menuRenderer);
 	this->buildPanel->Draw(squareRenderer, menuRenderer);
 	this->tilePanel->Draw(squareRenderer, menuRenderer);
@@ -311,12 +329,11 @@ void Editor::Button_NewMap(std::string tileSet, glm::vec2 mapSize)
 	tilesUI.clear();
 
 	firstSelect = false;
-	mapXLimit = mapSize.x;
-	mapYLimit = mapSize.y;
+	mapLimit = mapSize;
 
-	cellWidth = ResourceManager::GetTexture(tileSet).Width / 32;
-	cellHeight = ResourceManager::GetTexture(tileSet).Height / 32;
-	tileCount = cellWidth * cellHeight;
+	texture.x = ResourceManager::GetTexture(tileSet).Width / 32;
+	texture.y = ResourceManager::GetTexture(tileSet).Height / 32;
+	tileCount = texture.x * texture.y;
 
 	int curIndex = 0;
 	for (int i = 0; i < tileCount; i++)
@@ -328,15 +345,15 @@ void Editor::Button_NewMap(std::string tileSet, glm::vec2 mapSize)
 		const int xoffset = curIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const int yoffset = curIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
-		const Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
+		Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
 		Button button = Button(tile);
 		button.setParent(tilePanel.get(), true);
 		tilesUI.push_back(button);
 	}
 
-	for (int i = 0; i < mapXLimit; i++)
+	for (int i = 0; i < mapLimit.x; i++)
 	{
-		for (int j = 0; j < mapYLimit; j++)
+		for (int j = 0; j < mapLimit.y; j++)
 		{
 			ButtonTile t = ButtonTile(glm::ivec2(i, j));
 			tiles.push_back(t);

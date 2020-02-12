@@ -12,6 +12,8 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer)
 	this->renderer = renderer;
 	//this->renderer = std::make_shared<SpriteRenderer>();,
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
+
+	start = true;
 }
 
 StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::vector<Weapon> &weapons)
@@ -23,6 +25,8 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::
 	//this->renderer = std::make_shared<SpriteRenderer>();,
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->weapons = weapons;
+
+	start = true;
 }
 
 /*StartGame::StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer, std::vector<GameObject*> gameobjects)

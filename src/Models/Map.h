@@ -18,7 +18,7 @@ public:
 	~Map();
 
 	std::string GetName() const;
-	Tile* getTile(int cellX, int cellY);
+	//Tile* getTile(int cellX, int cellY);
 
 	// Render level
 	void Draw(SpriteRenderer& renderer);

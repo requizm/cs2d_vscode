@@ -19,7 +19,7 @@ public:
 	//Button(Sprite sprite, std::string text, glm::vec2 position, float scale = 1.0F, glm::vec3 textColor = glm::vec3(0.0F));
 	Button(const std::string &text, glm::vec2 position, TextRenderer &renderer, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
 	Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor = false, float scale = 1.0F);
-	Button(Tile tile, float scale = 1.0F);
+	Button(Tile &tile, float scale = 1.0F);
 	~Button();
 
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
@@ -56,8 +56,6 @@ protected:
 	glm::vec3 mouseclickColor;
 	glm::vec3 currentColor;
 
-	
-
 	bool isMouseHoverM() override;
 	bool isMouseDownM(int key) override;
 	bool isMouseUpM(int key) override;
@@ -70,8 +68,8 @@ private:
 	bool haveSprite;
 	bool difColor;
 
-	glm::vec3 outlineColor; 
-	glm::vec2 margin; 
+	glm::vec3 outlineColor;
+	glm::vec2 margin;
 };
 
 #endif // BUTTON_H

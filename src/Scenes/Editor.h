@@ -61,14 +61,15 @@ private:
 	std::shared_ptr<Panel> newPanel;
 
 	std::vector<Button> tilesUI;
-	int cellWidth, cellHeight, tileCount;
+	glm::ivec2 texture;
+	int tileCount;
 	int maxCellInColumn;
 	int maxCellInRow;
 
 	Tile selectedTile;
 	bool firstSelect;
 
-	int mapXLimit, mapYLimit;
+	glm::ivec2 mapLimit;
 	std::vector<ButtonTile> tiles;
 
 	bool start;

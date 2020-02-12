@@ -13,7 +13,7 @@ Button::Button(const std::string &text, glm::vec2 position, TextRenderer &render
 	this->haveOutline = false;
 	this->haveTile = false;
 	this->difColor = false;
-	square = Square(true);
+	this->haveSprite = false; 
 }
 
 Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON)
@@ -23,16 +23,15 @@ Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool di
 	this->haveTile = false;
 	this->haveSprite = true;
 	this->sprite = sprite;
-	square = Square(true);
 }
 
-Button::Button(Tile tile, float scale) : Label(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::BUTTON)
+Button::Button(Tile &tile, float scale) : Label(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::BUTTON)
 {
 	this->tile = tile;
 	this->haveTile = true;
+	this->haveSprite = false;
 	this->difColor = false;
 	this->haveOutline = false;
-	square = Square(true);
 }
 
 Button::~Button() = default;
