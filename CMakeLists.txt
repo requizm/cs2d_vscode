@@ -1,0 +1,59 @@
+# Copyright (C) 2018 Tomasz Gałaj
+
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(cs2d_vscode)
+
+
+set (CMAKE_CXX_STANDARD 14)
+
+# Add .lib files
+link_directories(${CMAKE_SOURCE_DIR}/lib)
+
+# Add source files
+file(GLOB_RECURSE SOURCE_FILES 
+	${CMAKE_SOURCE_DIR}/src/*.c
+	${CMAKE_SOURCE_DIR}/src/*.cpp)
+	
+# Add header files
+file(GLOB_RECURSE HEADER_FILES 
+	${CMAKE_SOURCE_DIR}/src/*.h
+	${CMAKE_SOURCE_DIR}/src/*.hpp)
+	
+# Define the executable
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} include/glad.c)
+
+# We need a CMAKE_DIR with some code to find external dependencies
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+
+#######################################
+# LOOK for the packages that we need! #
+#######################################
+
+# OpenGL
+#find_package(OpenGL REQUIRED)
+
+# FREETYPE
+#find_package(Freetype REQUIRED)
+
+# GLAD
+#add_library(GLAD "include/glad.c")
+
+# Put all libraries into a variable
+set(LIBS ${CMAKE_SOURCE_DIR}/lib/libglfw3dll.a glew32s glew32 glfw3 opengl32 freetype)
+
+# Define the include DIRs
+include_directories(
+	"${CMAKE_SOURCE_DIR}/src"
+	"${CMAKE_SOURCE_DIR}/include"
+)
+
+# Define the link libraries
+target_link_libraries(${PROJECT_NAME} ${LIBS})
+
+# Copy dlls
+if(WIN32)
+	add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory
+		"${PROJECT_SOURCE_DIR}/dlls"
+		$<TARGET_FILE_DIR:${PROJECT_NAME}>)
+endif()
