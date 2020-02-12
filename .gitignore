@@ -36,3 +36,5 @@ build/*
 .scannerwork/.sonar_lock
 .scannerwork/scanner-report/analysis.log
 .scannerwork/report-task.txt
+
+super_secret.txt
