@@ -1,6 +1,4 @@
 language: cpp
 os: windows
-compiler:
-- gcc
-script:
-- make
+compiler: gcc
+script: make
