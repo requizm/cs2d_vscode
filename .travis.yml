@@ -3,7 +3,6 @@ os: windows
 compiler: gcc
 script:
 - mkdir build
-- cmake -DCMAKE_SH="CMAKE_SH-NOTFOUND" 
-- cmake -G "MinGW Makefiles" -B build/
+- cmake -DCMAKE_SH="CMAKE_SH-NOTFOUND" -G "MinGW Makefiles" -B build/
 - cd build
 - mingw32-make
