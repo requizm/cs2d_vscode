@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 int InputManager::mouseX, InputManager::mouseY;

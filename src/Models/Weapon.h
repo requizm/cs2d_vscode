@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "../Others/Game_Parameters.h"
+#include "../Others/Logger.h"
 #include "Mag.h"
 
 enum WeaponType

@@ -4,6 +4,7 @@
 #include "UIObject.h"
 #include "../../Renderers/SquareRenderer.h"
 #include "../../Renderers/SpriteRenderer.h"
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "../../Managers/InputManager.h"
 #include "Button.h"

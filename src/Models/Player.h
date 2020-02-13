@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "Weapon.h"
 #include "../Others/Game_Parameters.h"
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 

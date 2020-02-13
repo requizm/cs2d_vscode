@@ -70,7 +70,7 @@ void Map::Load(const GLchar *file)
 		Tiles.push_back(tile);
 	}
 
-	delete codeChar;
+	delete[] codeChar;
 }
 void Map::Draw(SpriteRenderer &renderer)
 {

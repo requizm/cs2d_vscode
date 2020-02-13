@@ -5,6 +5,7 @@
 
 #include "../../Managers/InputManager.h"
 #include "../../Others/Logger.h"
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "UIObject.h"
 

@@ -1,6 +1,7 @@
 #include "StartGame.h"
 #include "../Others/Game_Parameters.h"
 #include "../Others/Logger.h"
+#include "../Managers/InputManager.h"
 
 StartGame::StartGame() = default;
 
