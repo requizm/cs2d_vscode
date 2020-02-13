@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER C:/ProgramData/chocolatey/bin/g++.exe)
 enable_language(CXX)
 
 # Add .lib files
-link_directories(${CMAKE_SOURCE_DIR}/lib)
+link_directories(${CMAKE_SOURCE_DIR}/lib/x64)
 
 # Add source files
 file(GLOB_RECURSE SOURCE_FILES 
@@ -43,7 +43,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 #add_library(GLAD "include/glad.c")
 
 # Put all libraries into a variable
-set(LIBS ${CMAKE_SOURCE_DIR}/lib/libglfw3dll.a glew32s glew32 glfw3 opengl32 freetype)
+set(LIBS ${CMAKE_SOURCE_DIR}/lib/x64/libglfw3dll.a glew32s glew32 glfw3 opengl32 freetype)
 
 # Define the include DIRs
 include_directories(
