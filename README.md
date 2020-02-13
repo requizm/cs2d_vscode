@@ -4,7 +4,12 @@
   <img alt="Coverity Scan Build Status"
        src="https://scan.coverity.com/projects/20359/badge.svg"/>
 </a><br/>
-[![Build Status](https://travis-ci.org/requizm/cs2d_vscode.svg?branch=master)](https://travis-ci.org/requizm/cs2d_vscode)
+
+<a href="https://travis-ci.org/requizm/cs2d_vscode?utm_medium=notification&utm_source=github_status">
+  <img alt="Travis Build Status"
+       src="[![Build Status](https://travis-ci.org/requizm/cs2d_vscode.svg?branch=master)](https://travis-ci.org/requizm/cs2d_vscode)"/>
+</a><br/>
+
 <br/><br/><br/>
 
 <p>-Windows x86</p>
