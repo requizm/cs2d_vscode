@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 project(cs2d_vscode)
 
-set(CMAKE_C_COMPILER "C:/ProgramData/chocolatey/bin/gcc.exe")
-set(CMAKE_CXX_COMPILER "C:/ProgramData/chocolatey/bin/g++.exe")
+set(DCMAKE_SH="CMAKE_SH-NOTFOUND")
+
+set(CMAKE_C_COMPILER gcc)
+set(CMAKE_CXX_COMPILER g++)
 enable_language(CXX)
 
 # Add .lib files
