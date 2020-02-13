@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(cs2d_vscode)
 
+set(CMAKE_CXX_COMPILER g++)
 
 # Add .lib files
 link_directories(${CMAKE_SOURCE_DIR}/lib)
