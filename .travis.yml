@@ -1,16 +1,6 @@
 language: cpp
 os: windows
 compiler: gcc
-addons:
-  coverity_scan:
-    project:
-      name: requizm/cs2d_vscode
-      description: "<Your project description here>"
-    notification_email: mehmet41650@gmail.com
-    build_command_prepend: "./configure"
-    build_command:
-    - mingw32-make
-    branch_pattern: master
 script:
 - mingw32-make
 env:
