@@ -3,7 +3,9 @@
 <a href="https://scan.coverity.com/projects/requizm-cs2d_vscode">
   <img alt="Coverity Scan Build Status"
        src="https://scan.coverity.com/projects/20359/badge.svg"/>
-</a><br/><br/><br/>
+</a><br/>
+[![Build Status](https://travis-ci.org/requizm/cs2d_vscode.svg?branch=master)](https://travis-ci.org/requizm/cs2d_vscode)
+<br/><br/><br/>
 
 <p>-Windows x86</p>
 <p>&nbsp;</p>
