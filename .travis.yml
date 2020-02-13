@@ -8,4 +8,4 @@ script:
 - cmake --version
 - cmake -G "MinGW Makefiles" -B build/
 - cd build
-- ming32-make
+- mingw32-make
