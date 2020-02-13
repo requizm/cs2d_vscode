@@ -1,6 +1,8 @@
 language: cpp
 os: windows
 compiler: gcc
+before_install:
+- choco install mingw
 script:
 - mkdir build
 - cmake --version
