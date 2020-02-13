@@ -9,10 +9,15 @@ addons:
     notification_email: mehmet41650@gmail.com
     build_command_prepend: "./configure"
     build_command:
+    - dir
     - mkdir build
+    - dir
     - cmake -DCMAKE_SH="CMAKE_SH-NOTFOUND" -G "MinGW Makefiles" -B build/
+    - dir
     - cd build
+    - dir
     - mingw32-make
+    - dir
     branch_pattern: master
 script:
 - mkdir build
