@@ -9,11 +9,9 @@ addons:
     notification_email: mehmet41650@gmail.com
     build_command_prepend: "./configure"
     build_command:
-    - cd build
     - mingw32-make
     branch_pattern: master
 script:
-- cd build
 - mingw32-make
 env:
   global:
@@ -22,3 +20,4 @@ env:
 before_install:
 - mkdir build
 - cmake -DCMAKE_SH="CMAKE_SH-NOTFOUND" -G "MinGW Makefiles" -B build/
+- cd build
