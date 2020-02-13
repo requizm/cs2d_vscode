@@ -2,8 +2,8 @@ language: cpp
 os: windows
 compiler: gcc
 script:
-- where -gcc
-- where -g++
+- where gcc
+- where g++
 - mkdir build
 - cmake -G "MinGW Makefiles" -B build/
 - cd build
