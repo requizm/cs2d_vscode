@@ -3,6 +3,7 @@ os: windows
 compiler: gcc
 script:
 - mkdir build
+- cmake --version
 - cmake -G "MinGW Makefiles" -B build/
 - cd build
-- ming32-make.exe all
+- ming32-make
