@@ -5,10 +5,7 @@
        src="https://scan.coverity.com/projects/20359/badge.svg"/>
 </a><br/>
 
-<a href="https://travis-ci.org/requizm/cs2d_vscode?utm_medium=notification&utm_source=github_status">
-  <img alt="Travis Build Status"
-       src="[![Build Status](https://travis-ci.org/requizm/cs2d_vscode.svg?branch=master)](https://travis-ci.org/requizm/cs2d_vscode)"/>
-</a><br/>
+[![Build Status](https://travis-ci.org/requizm/cs2d_vscode.svg?branch=master)](https://travis-ci.org/requizm/cs2d_vscode)
 
 <br/><br/><br/>
 
