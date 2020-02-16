@@ -2,6 +2,7 @@
 
 Square::Square()
 {
+	this->VAO = 0;
 }
 
 Square::Square(bool init)

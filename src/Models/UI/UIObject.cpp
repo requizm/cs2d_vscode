@@ -13,6 +13,9 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 	this->visible = true;
 	this->mouseEvents = true;
 	this->rend = &renderer;
+
+	this->scrollable = false;
+	this->dependParent = false;
 }
 
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer, UIObjectType type)
@@ -26,6 +29,9 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 	this->visible = true;
 	this->mouseEvents = true;
 	this->rend = &renderer;
+
+	this->scrollable = false;
+	this->dependParent = false;
 }
 
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale)
@@ -38,6 +44,9 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale)
 	this->enable = true;
 	this->visible = true;
 	this->mouseEvents = true;
+
+	this->scrollable = false;
+	this->dependParent = false;
 }
 
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type)

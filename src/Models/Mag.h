@@ -6,7 +6,7 @@
 
 enum AmmoType
 {
-	PRIMARY, SECONDARY
+	PRIMARY, SECONDARY, EMPTY
 };
 
 class Mag :GameObject

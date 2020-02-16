@@ -12,7 +12,7 @@ class Tile :
 {
 public:
 	Tile();
-	Tile(glm::vec2 pos, const Sprite& sprite, glm::vec2 size, TileTypes typee, int framee = -1);
+	Tile(glm::vec2 pos, const Sprite& sprite, glm::vec2 size, TileTypes type, int frame = -1);
 	Tile(glm::vec2 pos, const Sprite& sprite, glm::vec2 size);
 
 	void setType(TileTypes type);
