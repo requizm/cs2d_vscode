@@ -18,7 +18,9 @@
                 "-lglew32",
                 "-lglfw3",
                 "-lopengl32",
-                "-lfreetype"
+                "-lfreetype",
+                "-Wall",
+                "-std=c++17"
             ],
             "group": {
                 "kind": "build",
