@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER C:/ProgramData/chocolatey/bin/g++.exe)
 enable_language(CXX)
 
 # Add .lib files
-link_directories(${CMAKE_SOURCE_DIR}/lib/x64)
+link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 # Add source files
 file(GLOB_RECURSE SOURCE_FILES 
