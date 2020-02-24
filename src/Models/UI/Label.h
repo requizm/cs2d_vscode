@@ -39,6 +39,14 @@ public:
 	void setLabelMouseHoverColor(const glm::vec3 color);
 	void setLabelClickColor(const glm::vec3 color);
 
+	/**
+ 	* MouseDown() fonksiyonu ile state'i degistirince, maalesef MouseUp() fonksiyonuna giremiyoruz. 
+	* Bu sefer de tekrar eski state'e gelince, bir defaya mahsus MouseDown() fonksiyonu calismiyor. 
+	* Cunku state ilk degisirken MouseUp() fonksiyonuna giremedigimiz icin durumu resetleyememistik.
+	* Bu fonksiyon, state degisikliklerinden sonra kullanilmalidir.  
+ 	*/
+	void SimulateUp();
+
 protected:
 	glm::vec2 labelSize;
 

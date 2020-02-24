@@ -125,6 +125,12 @@ void Label::setLabelClickColor(const glm::vec3 color)
 	this->labelClickColor = color;
 }
 
+void Label::SimulateUp()
+{
+	this->isDownForClick = false;
+	this->isDown = false;
+}
+
 bool Label::isMouseHoverM()
 {
 	const int posX = static_cast<int>(this->getPosition().x);

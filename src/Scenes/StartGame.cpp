@@ -2,6 +2,7 @@
 #include "../Others/Game_Parameters.h"
 #include "../Others/Logger.h"
 #include "../Managers/InputManager.h"
+#include "../Game.h"
 
 StartGame::StartGame() = default;
 
@@ -99,6 +100,14 @@ void StartGame::Update(const float dt)
 
 void StartGame::ProcessInput(const float dt)
 {
+	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
+	{
+		Game::SetGameState(GameState::MENU);
+		start = true;
+	}
+	if (InputManager::isKeyUp(GLFW_KEY_ESCAPE))
+	{
+	}
 	if (InputManager::isKeyDown(GLFW_KEY_Q))
 	{
 		this->weapons.at(1).SetParent(player.get());

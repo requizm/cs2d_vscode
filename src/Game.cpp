@@ -88,7 +88,7 @@ void Game::Render(const float dt)
 		scene.Render(dt);
 		break;
 	}
-	menuRenderer.DrawSprite(mouseSprite, glm::vec2(InputManager::mousePos.x, InputManager::mousePos.y), glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
+	menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos, glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
 }
 
 void Game::NewGame()

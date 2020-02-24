@@ -61,6 +61,7 @@ void Menu::ProcessInput(const float dt)
 	{
 		Logger::DebugLog("editor->buttondown()");
 		Game::SetGameState(GameState::EDITOR);
+		l_editor.SimulateUp();
 		start = true;
 	}
 	if (l_editor.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
@@ -73,6 +74,7 @@ void Menu::ProcessInput(const float dt)
 	{
 		Logger::DebugLog("newgame->buttondown()");
 		Game::SetGameState(GameState::INGAME);
+		l_newgame.SimulateUp();
 		start = true;
 	}
 	if (l_newgame.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
