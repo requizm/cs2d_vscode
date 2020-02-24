@@ -19,6 +19,7 @@ public:
     static void WriteLog(const std::string &msg);
     static void Start();
     static void Stop();
+    static void StartApp();
 };
 
 #endif

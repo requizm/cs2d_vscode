@@ -21,7 +21,7 @@ std::unique_ptr<Game> cs2d(std::make_unique<Game>());
 
 int main(int argc, char *argv[])
 {
-	Logger::Start();
+	//Logger::Start();
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	Logger::StartApp();
 	// Initialize game
 	cs2d->Init();
 
@@ -88,7 +89,7 @@ int main(int argc, char *argv[])
 	ResourceManager::Clear();
 
 	glfwTerminate();
-	Logger::Stop();
+	//Logger::Stop();
 	return 0;
 }
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode)
@@ -117,10 +118,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 {
-	int lastX = static_cast<float>(xpos);
-	int lastY = static_cast<float>(ypos);
-	InputManager::mouseX = static_cast<int>(lastX);
-	InputManager::mouseY = static_cast<int>(lastY);
+	InputManager::mousePos = glm::vec2(static_cast<float>(xpos), static_cast<float>(ypos));
 }
 
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
@@ -151,7 +149,6 @@ void character_callback(GLFWwindow *window, unsigned int codepoint)
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
 	//Logger::DebugLog(std::to_string(yoffset));
-	InputManager::scrollY = yoffset;
+	InputManager::scroll = glm::vec2(xoffset, yoffset);
 	InputManager::scrollYPressed = true;
-	
 }

@@ -26,19 +26,27 @@ void Logger::DebugLog(const std::string &msg)
 
 void Logger::WriteLog(const std::string &msg)
 {
+    Start();
     auto start = std::chrono::system_clock::now();
     auto end = std::chrono::system_clock::now();
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
     char *time = std::ctime(&end_time);
     Logger::outfile << "time: " << time << "message: " << msg << "\n\n";
+    Stop();
 }
 
 void Logger::Start()
 {
-    Logger::outfile.open("log.txt");
+    Logger::outfile.open("log.txt", std::ofstream::out | std::ofstream::app);
 }
 
 void Logger::Stop()
 {
+    Logger::outfile.close();
+}
+
+void Logger::StartApp()
+{
+    Logger::outfile.open("log.txt");
     Logger::outfile.close();
 }
