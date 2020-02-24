@@ -2,8 +2,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-int InputManager::mouseX, InputManager::mouseY;
-int InputManager::scrollX, InputManager::scrollY;
+glm::vec2 InputManager::mousePos;
+glm::vec2 InputManager::scroll;
 bool InputManager::scrollYPressed;
 
 GLboolean InputManager::Keys[1024];

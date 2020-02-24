@@ -2,13 +2,14 @@
 #define EVENTMANAGER_H
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/vec2.hpp>
 
 class InputManager
 {
 public:
 	
-	static int mouseX, mouseY;
-	static int scrollX, scrollY;
+	static glm::vec2 mousePos;
+	static glm::vec2 scroll;
 	static bool scrollYPressed;
 
 	static GLboolean Keys[1024];

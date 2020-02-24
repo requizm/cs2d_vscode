@@ -18,8 +18,8 @@ Player::~Player() = default;
 
 void Player::Update(float dt)
 {
-	const int komsu = static_cast<int>(InputManager::mouseX) - Game_Parameters::SCREEN_WIDTH / 2;
-	const int karsi = static_cast<int>(InputManager::mouseY) - Game_Parameters::SCREEN_HEIGHT / 2;
+	const int komsu = static_cast<int>(InputManager::mousePos.x) - Game_Parameters::SCREEN_WIDTH / 2;
+	const int karsi = static_cast<int>(InputManager::mousePos.y) - Game_Parameters::SCREEN_HEIGHT / 2;
 	const float atan = atan2(static_cast<float>(karsi), static_cast<float>(komsu)) * 180.0F / static_cast<float>(PI);
 	SetRotation(atan + 90.0F);
 }

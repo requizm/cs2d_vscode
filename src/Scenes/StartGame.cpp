@@ -113,7 +113,7 @@ void StartGame::ProcessInput(const float dt)
 void StartGame::Render(const float dt)
 {
 	camera->setPosition(glm::vec2(player->GetPosition().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPosition().y - Game_Parameters::SCREEN_HEIGHT / 2));
-	camera->update();
+	
 	renderer.SetProjection(camera->cameraMatrix);
 	map.Draw(renderer);
 	int temp = weapons.size();

@@ -126,14 +126,14 @@ void Editor::Update(const float dt)
 	{
 		if (!tilesUI.empty())
 		{
-			bool check_1 = tilesUI.at(0).getLocalPosition().y == 0 && InputManager::scrollY > 0;
-			bool check_2 = tilesUI.at(tileCount - 1).getLocalPosition().y == maxCellInRow * 32 && InputManager::scrollY < 0;
+			bool check_1 = tilesUI.at(0).getLocalPosition().y == 0 && InputManager::scroll.y > 0;
+			bool check_2 = tilesUI.at(tileCount - 1).getLocalPosition().y == maxCellInRow * 32 && InputManager::scroll.y < 0;
 
 			if (!check_1 && !check_2)
 			{
 				for (auto &tile : tilesUI)
 				{
-					tile.setPosition(tile.getLocalPosition().x, tile.getLocalPosition().y + InputManager::scrollY * 32);
+					tile.setPosition(tile.getLocalPosition().x, tile.getLocalPosition().y + InputManager::scroll.y * 32);
 				}
 			}
 		}
@@ -201,7 +201,7 @@ void Editor::ProcessInput(const float dt)
 	{
 		if (!buildPanel->isMouseHover(false))
 		{
-			glm::vec2 wd = Utils::ScreenToWorld(glm::vec2(camera->x, camera->y), glm::vec2(InputManager::mouseX, InputManager::mouseY));
+			glm::vec2 wd = Utils::ScreenToWorld(camera->view, glm::vec2(InputManager::mousePos.x, InputManager::mousePos.y));
 			//Logger::DebugLog("pos: " + std::to_string(wd.x) + " - " + std::to_string(wd.y));
 			glm::ivec2 selectedCell = Utils::PositionToCell(wd);
 			Logger::DebugLog("pos: " + std::to_string(selectedCell.x) + " - " + std::to_string(selectedCell.y));
@@ -236,11 +236,11 @@ void Editor::Render(const float dt)
 	if (this->dt < 0.5f)
 		return;
 	camera->setPosition(position);
-	camera->update();
+	
 	worldRenderer.SetProjection(camera->cameraMatrix);
 	squareRenderer.SetProjection(camera->cameraMatrix);
 
-	glm::vec2 mouse = Utils::ScreenToWorld(glm::vec2(camera->x, camera->y), glm::vec2(InputManager::mouseX, InputManager::mouseY));
+	glm::vec2 mouse = Utils::ScreenToWorld(camera->view, glm::vec2(InputManager::mousePos.x, InputManager::mousePos.y));
 	glm::ivec2 ms = Utils::PositionToCell(mouse);
 
 	for (auto &tile_1 : tiles)

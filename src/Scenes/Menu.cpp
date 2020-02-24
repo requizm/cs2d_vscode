@@ -1,10 +1,12 @@
 #include "Menu.h"
 #include "../Game.h"
+#include "../Others/Logger.h"
 
 Menu::Menu() = default;
 
 Menu::Menu(const std::map<std::string, Sprite> &menuSprites, const SpriteRenderer &menuRenderer)
 {
+	Logger::WriteLog("Menu::Menu(map<string, Sprite>menuSprites, menuRenderer)");
 	this->menuSprites = menuSprites;
 	this->menuRenderer = menuRenderer;
 
@@ -15,6 +17,7 @@ Menu::~Menu() = default;
 
 void Menu::Init()
 {
+	Logger::WriteLog("Menu::Init()");
 	textRenderer = TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
 	textRenderer.Load("../resources/fonts/liberationsans.ttf", 16);
 	squareRenderer = SquareRenderer(true);
@@ -114,7 +117,7 @@ void Menu::Render(const float dt)
 		{
 		}
 	}
-	//menuRenderer.DrawSprite(menuSprites["mouseSprite"], glm::vec2(InputManager::mouseX, InputManager::mouseY), glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
+	//menuRenderer.DrawSprite(menuSprites["mouseSprite"], glm::vec2(InputManager::mousePos.x, InputManager::mousePos.y), glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
 	l_console.Draw();
 	l_options.Draw();
 	l_editor.Draw();

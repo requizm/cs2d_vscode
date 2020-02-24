@@ -84,7 +84,7 @@ bool TextBox::isMouseHoverM()
 	const int sizeX = static_cast<int>(this->size.x);
 	const int sizeY = static_cast<int>(this->size.y);
 
-	if (InputManager::mouseX >= posX && InputManager::mouseX <= posX + sizeX && InputManager::mouseY >= posY && InputManager::mouseY <= posY + sizeY)
+	if (InputManager::mousePos.x >= posX && InputManager::mousePos.x <= posX + sizeX && InputManager::mousePos.y >= posY && InputManager::mousePos.y <= posY + sizeY)
 	{
 		if (editable && !editMode)
 			currentBorderColor = hoverBorderColor; //0.78F

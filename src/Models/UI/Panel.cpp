@@ -65,8 +65,8 @@ void Panel::Update(const float dt)
 				if (isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 				{
 
-					deltaX = InputManager::mouseX - static_cast<int>(position.x);
-					deltaY = InputManager::mouseY - static_cast<int>(position.y);
+					deltaX = InputManager::mousePos.x - static_cast<int>(position.x);
+					deltaY = InputManager::mousePos.y - static_cast<int>(position.y);
 					click = true;
 				}
 			}
@@ -79,7 +79,7 @@ void Panel::Update(const float dt)
 
 				if (!isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
 				{
-					glm::vec2 mousePos = glm::vec2(InputManager::mouseX, InputManager::mouseY);
+					glm::vec2 mousePos = glm::vec2(InputManager::mousePos.x, InputManager::mousePos.y);
 					this->setPosition(glm::vec2(mousePos.x - static_cast<float>(deltaX), mousePos.y - static_cast<float>(deltaY)));
 					//std::cout << "hey" << std::endl;
 				}
@@ -157,7 +157,7 @@ bool Panel::isMouseHoverM()
 	const int sizeX = static_cast<int>(this->dragSize.x);
 	const int sizeY = static_cast<int>(this->dragSize.y);
 
-	if (InputManager::mouseX >= posX && InputManager::mouseX <= posX + sizeX && InputManager::mouseY >= posY && InputManager::mouseY <= posY + sizeY)
+	if (InputManager::mousePos.x >= posX && InputManager::mousePos.x <= posX + sizeX && InputManager::mousePos.y >= posY && InputManager::mousePos.y <= posY + sizeY)
 	{
 		return true;
 	}
@@ -172,7 +172,7 @@ bool Panel::isMouseHoverForMouse()
 	const int sizeX = static_cast<int>(this->getSize().x);
 	const int sizeY = static_cast<int>(this->getSize().y);
 
-	if (InputManager::mouseX >= posX && InputManager::mouseX <= posX + sizeX && InputManager::mouseY >= posY && InputManager::mouseY <= posY + sizeY)
+	if (InputManager::mousePos.x >= posX && InputManager::mousePos.x <= posX + sizeX && InputManager::mousePos.y >= posY && InputManager::mousePos.y <= posY + sizeY)
 	{
 		return true;
 	}

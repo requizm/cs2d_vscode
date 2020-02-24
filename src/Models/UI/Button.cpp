@@ -178,7 +178,7 @@ bool Button::isMouseHoverM()
 		sizeY += margin.y;
 	}
 
-	if (InputManager::mouseX >= posX && InputManager::mouseX <= posX + sizeX && InputManager::mouseY >= posY && InputManager::mouseY <= posY + sizeY)
+	if (InputManager::mousePos.x >= posX && InputManager::mousePos.x <= posX + sizeX && InputManager::mousePos.y >= posY && InputManager::mousePos.y <= posY + sizeY)
 	{
 		//SetMouseState(isHover, true);
 		//isHover = true;

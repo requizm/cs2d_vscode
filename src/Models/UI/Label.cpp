@@ -133,7 +133,7 @@ bool Label::isMouseHoverM()
 	const int labelSizeX = static_cast<int>(this->labelSize.x);
 	const int labelSizeY = static_cast<int>(this->labelSize.y);
 
-	if (InputManager::mouseX >= posX && InputManager::mouseX <= posX + labelSizeX && InputManager::mouseY >= posY && InputManager::mouseY <= posY + labelSizeY)
+	if (InputManager::mousePos.x >= posX && InputManager::mousePos.x <= posX + labelSizeX && InputManager::mousePos.y >= posY && InputManager::mousePos.y <= posY + labelSizeY)
 	{
 		//SetMouseState(isHover, true);
 		//isHover = true;
