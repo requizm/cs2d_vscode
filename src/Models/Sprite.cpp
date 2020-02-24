@@ -14,7 +14,7 @@ Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width, GLuint heigh
 		size = glm::vec2(width, height);
 		initData(x, y, width, height);
 	}
-	Logger::WriteLog("Sprite->Sprite(texture, " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(width) + ", " + std::to_string(height) + ")");
+	//Logger::WriteLog("Sprite->Sprite(texture, " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(width) + ", " + std::to_string(height) + ")");
 }
 
 Sprite::Sprite() = default;

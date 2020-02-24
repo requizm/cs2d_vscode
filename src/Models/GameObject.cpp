@@ -11,7 +11,7 @@ GameObject::GameObject(glm::vec2 pos, const Sprite &sprite, glm::vec2 size, int 
 {
 	this->objType = (ObjectType)objType;
 	BuildTransform();
-	Logger::WriteLog("" + GetObjectTypeString() + " olusturuldu");
+	//Logger::WriteLog("" + GetObjectTypeString() + " olusturuldu");
 }
 
 GameObject::~GameObject() = default;
