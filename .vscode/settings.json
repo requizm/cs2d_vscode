@@ -47,7 +47,17 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "chrono": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "bitset": "cpp",
+        "condition_variable": "cpp",
+        "forward_list": "cpp",
+        "unordered_set": "cpp",
+        "regex": "cpp",
+        "string_view": "cpp",
+        "mutex": "cpp",
+        "shared_mutex": "cpp",
+        "thread": "cpp",
+        "valarray": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
