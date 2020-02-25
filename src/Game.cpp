@@ -4,6 +4,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 GameState Game::state;
+Menu Game::menu;
+Editor Game::editor;
+StartGame Game::scene;
+
 Game::Game(const GLuint width, const GLuint height)
 {
 	//camera = std::make_unique<Camera>(width, height);
@@ -13,14 +17,14 @@ Game::Game(const GLuint width, const GLuint height)
 	//InputManager::Height = height;
 	Logger::WriteLog("Game->Game()");
 	Game_Parameters::LoadParameters();
-	Game::SetGameState(GameState::MENU);
+	Game::state = GameState::MENU;
 }
 
 Game::Game()
 {
 	Logger::WriteLog("Game->Game()");
 	Game_Parameters::LoadParameters();
-	Game::SetGameState(GameState::MENU);
+	Game::state = GameState::MENU;
 }
 
 Game::~Game()
@@ -35,10 +39,8 @@ void Game::Init()
 	initRenderers();
 	initMaps();
 	initMenuSprites();
-	menu = Menu(menuSprites, menuRenderer);
-	menu.Init();
-	editor = Editor(menuRenderer, spriteRenderer);
-	editor.Init();
+	Game::menu = Menu(menuSprites, menuRenderer);
+	Game::editor = Editor(menuRenderer, spriteRenderer);
 	NewGame();
 }
 
@@ -47,13 +49,13 @@ void Game::Update(float dt)
 	switch (Game::state)
 	{
 	case GameState::MENU:
-		menu.Update(dt);
+		Game::menu.Update(dt);
 		break;
 	case GameState::EDITOR:
-		editor.Update(dt);
+		Game::editor.Update(dt);
 		break;
 	case GameState::INGAME:
-		scene.Update(dt);
+		Game::scene.Update(dt);
 		break;
 	}
 }
@@ -63,13 +65,13 @@ void Game::ProcessInput(float dt)
 	switch (Game::state)
 	{
 	case GameState::MENU:
-		menu.ProcessInput(dt);
+		Game::menu.ProcessInput(dt);
 		break;
 	case GameState::EDITOR:
-		editor.ProcessInput(dt);
+		Game::editor.ProcessInput(dt);
 		break;
 	case GameState::INGAME:
-		scene.ProcessInput(dt);
+		Game::scene.ProcessInput(dt);
 		break;
 	}
 }
@@ -79,13 +81,13 @@ void Game::Render(const float dt)
 	switch (Game::state)
 	{
 	case GameState::MENU:
-		menu.Render(dt);
+		Game::menu.Render(dt);
 		break;
 	case GameState::EDITOR:
-		editor.Render(dt);
+		Game::editor.Render(dt);
 		break;
 	case GameState::INGAME:
-		scene.Render(dt);
+		Game::scene.Render(dt);
 		break;
 	}
 	menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos, glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
@@ -141,8 +143,7 @@ void Game::NewGame()
 	weapons.push_back(*main2.get());
 	weapons.push_back(*main3.get());
 
-	scene = StartGame(maps[0], spriteRenderer, weapons);
-	scene.Init();
+	Game::scene = StartGame(maps[0], spriteRenderer, weapons);
 }
 
 void Game::initTextures() const
@@ -230,6 +231,32 @@ void Game::initRenderers()
 
 void Game::SetGameState(GameState state)
 {
+	switch (Game::state)
+	{
+	case GameState::MENU:
+		Game::menu.SetEnable(false);
+		break;
+	case GameState::EDITOR:
+		Game::editor.SetEnable(false);
+		break;
+	case GameState::INGAME:
+		Game::scene.SetEnable(false);
+		break;
+	}
+	
+	switch (state)
+	{
+	case GameState::MENU:
+		Game::menu.SetEnable(true);
+		break;
+	case GameState::EDITOR:
+		Game::editor.SetEnable(true);
+		break;
+	case GameState::INGAME:
+		Game::scene.SetEnable(true);
+		break;
+	}
+	
 	Game::state = state;
 }
 

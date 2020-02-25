@@ -51,9 +51,9 @@ private:
 	//std::vector<std::shared_ptr<Weapon>> weapons;
 	//std::vector<std::shared_ptr<Sprite>> pointers;
 	Sprite mouseSprite;
-	StartGame scene;
-	Menu menu;
-	Editor editor;
+	static StartGame scene;
+	static Menu menu;
+	static Editor editor;
 
 	std::map<std::string, Sprite> menuSprites;
 
