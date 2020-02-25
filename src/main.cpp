@@ -21,6 +21,7 @@ std::unique_ptr<Game> cs2d(std::make_unique<Game>());
 
 int main(int argc, char *argv[])
 {
+	int mouse_key;
 	//Logger::Start();
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -59,6 +60,13 @@ int main(int argc, char *argv[])
 	// Initialize game
 	cs2d->Init();
 
+	InputManager::oldMouseUp[GLFW_MOUSE_BUTTON_LEFT] = GLFW_RELEASE;
+	InputManager::oldMouseUp[GLFW_MOUSE_BUTTON_RIGHT] = GLFW_RELEASE;
+	InputManager::oldMouseUp[GLFW_MOUSE_BUTTON_MIDDLE] = GLFW_RELEASE;
+	
+	InputManager::oldMouseDown[GLFW_MOUSE_BUTTON_LEFT] = GLFW_PRESS;
+	InputManager::oldMouseDown[GLFW_MOUSE_BUTTON_RIGHT] = GLFW_PRESS;
+	InputManager::oldMouseDown[GLFW_MOUSE_BUTTON_MIDDLE] = GLFW_PRESS;
 	// DeltaTime variables
 	float deltaTime = 0.0F;
 	float lastFrame = 0.0F;
@@ -71,6 +79,22 @@ int main(int argc, char *argv[])
 		lastFrame = currentFrame;
 		glfwPollEvents();
 		// Manage user input
+		
+		int newState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+		if (newState == GLFW_PRESS && InputManager::oldMouseDown[GLFW_MOUSE_BUTTON_LEFT] == GLFW_RELEASE)
+		{
+			InputManager::mouseDown[GLFW_MOUSE_BUTTON_LEFT] = true;
+		}
+		InputManager::oldMouseDown[GLFW_MOUSE_BUTTON_LEFT] = newState;
+
+		newState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+		if (newState == GLFW_RELEASE && InputManager::oldMouseUp[GLFW_MOUSE_BUTTON_LEFT] == GLFW_PRESS)
+		{
+			InputManager::mouseUp[GLFW_MOUSE_BUTTON_LEFT] = true;
+		}
+		InputManager::oldMouseUp[GLFW_MOUSE_BUTTON_LEFT] = newState;
+
+		
 		cs2d->ProcessInput(deltaTime);
 
 		// Update Game state
@@ -81,6 +105,9 @@ int main(int argc, char *argv[])
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		cs2d->Render(deltaTime);
+
+		InputManager::mouseDown[GLFW_MOUSE_BUTTON_LEFT] = false;
+		InputManager::mouseUp[GLFW_MOUSE_BUTTON_LEFT] = false;
 
 		glfwSwapBuffers(window);
 	}

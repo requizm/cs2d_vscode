@@ -20,15 +20,12 @@ public:
 	void Update(const float dt) override;
 	void OnEnable() override;
 	void OnDisable() override;
-	bool isMouseHover(bool drag = true);
-	bool isMouseDown(int key);
-	bool isMouseUp(int key);
-	bool isMousePress(int key);
-	bool isMouseHoverM();
-	bool isMouseHoverForMouse();
-	bool isMouseDownM(int key);
-	bool isMouseUpM(int key);
-	bool isMousePressM(int key);
+	bool isMouseHover(bool drag);
+	bool isMouseDown(const int key, bool drag);
+	bool isMouseUp(const int key, bool drag);
+	bool isMousePress(const int key, bool drag);
+	
+	
 	
 
 	glm::vec3 getPanelColor() const;
@@ -44,7 +41,7 @@ public:
 	void setTitle(const std::string &text);
 	void setOutlineColor(const glm::vec3 color);
 	void setOutline(const bool value);
-
+	
 protected:
 	glm::vec3 panelColor;
 	glm::vec2 dragSize;
@@ -53,18 +50,27 @@ protected:
 	Button escapeButton;
 	Label title;
 	bool opttitles;
-
+	bool isDown = false; 
 	bool backGround;
 	bool movable;
 	
 private:
 	bool isDownForClick = false;
-	bool isDown = false;
+	
 	float lineOffset = 20.0F;
 
 	bool outline;
 	glm::vec3 outlineColor;
 	float trans;
+
+	bool isMouseHoverForDrag();
+	bool isMouseDownForDrag(const int key);
+	bool isMouseUp(const int key);
+	bool isMousePressForDrag(const int key);
+
+	bool isMouseHoverForMouse();
+	bool isMouseDownForMouse(const int key);
+	bool isMousePressForMouse(const int key);
 	
 };
 

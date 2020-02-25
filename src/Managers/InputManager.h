@@ -23,8 +23,12 @@ public:
 	static GLboolean mouseKeysUp[8];
 	static GLboolean mouseDownTrigger[8];
 	static GLboolean mouseUpTrigger[8];
-	//static int mouseOldKeys[8];
-	//static int mouseNewKeys[8];
+	
+	static GLboolean mouseUp[8];
+	static GLboolean mouseDown[8];
+	static GLboolean mousePress[8];
+	static GLboolean oldMouseUp[8];
+	static GLboolean oldMouseDown[8];
 
 	static wchar_t keycode;
 	InputManager();

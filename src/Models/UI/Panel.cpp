@@ -35,7 +35,7 @@ void Panel::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer)
 		{
 			if (!isOutline())
 			{
-				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), this->getPanelColor(), this->trans );
+				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), this->getPanelColor(), this->trans);
 			}
 			else
 			{
@@ -62,9 +62,8 @@ void Panel::Update(const float dt)
 		{
 			if (!click && (opttitles && !escapeButton.isMousePress(GLFW_MOUSE_BUTTON_LEFT)) || (!opttitles && !click))
 			{
-				if (isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
+				if (isMouseDown(GLFW_MOUSE_BUTTON_LEFT, true))
 				{
-
 					deltaX = InputManager::mousePos.x - static_cast<int>(position.x);
 					deltaY = InputManager::mousePos.y - static_cast<int>(position.y);
 					click = true;
@@ -128,28 +127,46 @@ void Panel::OnDisable()
 
 bool Panel::isMouseHover(bool drag)
 {
+	if (!this->isEnable())
+	{
+		return false;
+	}
 	if (drag)
-		return isMouseHoverM();
+		return isMouseHoverForDrag();
 	else
 		return isMouseHoverForMouse();
 }
 
-bool Panel::isMouseDown(const int key)
+bool Panel::isMouseDown(const int key, bool drag)
 {
-	return isMouseDownM(key);
+	if (!this->isEnable())
+	{
+		return false;
+	}
+	if (drag)
+		return isMouseDownForDrag(key);
+	else
+		return isMouseDownForMouse(key);
 }
 
-bool Panel::isMouseUp(const int key)
+bool Panel::isMouseUp(const int key, bool drag)
 {
-	return isMouseUpM(key);
+	return isMouseUp(key);
 }
 
-bool Panel::isMousePress(const int key)
+bool Panel::isMousePress(const int key, bool drag)
 {
-	return isMousePressM(key);
+	if (!this->isEnable())
+	{
+		return false;
+	}
+	if (drag)
+		return isMousePressForDrag(key);
+	else
+		return isMousePressForMouse(key);
 }
 
-bool Panel::isMouseHoverM()
+bool Panel::isMouseHoverForDrag()
 {
 	const int posX = static_cast<int>(this->getPosition().x);
 	const int posY = static_cast<int>(this->getPosition().y);
@@ -179,13 +196,13 @@ bool Panel::isMouseHoverForMouse()
 	return false;
 }
 
-bool Panel::isMouseDownM(const int key)
+bool Panel::isMouseDownForDrag(const int key)
 {
 	if (!isDown)
 	{
-		if (InputManager::isButtonDown(key))
+		if (isMouseHover(true))
 		{
-			if (isMouseHover())
+			if (InputManager::isButtonDown(key))
 			{
 				isDown = true;
 				isDownForClick = true;
@@ -205,7 +222,33 @@ bool Panel::isMouseDownM(const int key)
 	return false;
 }
 
-bool Panel::isMouseUpM(const int key)
+bool Panel::isMouseDownForMouse(const int key)
+{
+	if (!isDown)
+	{
+		if (isMouseHover(false))
+		{
+			if (InputManager::isButtonDown(key))
+			{
+				isDown = true;
+				isDownForClick = true;
+				//isUp = false;
+				//SetMouseState(isDown, true);
+				//SetMouseState(isUp, false);
+				//InputManager::mouseDownTrigger[key] = GL_TRUE;
+				return true;
+			}
+
+			isDown = true;
+			isDownForClick = false;
+			InputManager::mouseDownTrigger[key] = GL_TRUE;
+		}
+	}
+	//InputManager::mouseDownTrigger[key] = GL_TRUE;
+	return false;
+}
+
+bool Panel::isMouseUp(const int key)
 {
 	if (isDown && isDownForClick)
 	{
@@ -241,9 +284,21 @@ bool Panel::isMouseUpM(const int key)
 	return false;
 }
 
-bool Panel::isMousePressM(const int key)
+bool Panel::isMousePressForDrag(const int key)
 {
-	if (isMouseHover() && InputManager::isButton(key))
+	if (isMouseHover(true) && InputManager::isButton(key))
+	{
+		//isPress = true;
+		//SetMouseState(isPress, true);
+		//labelCurrentColor = labelClickColor;
+		return true;
+	}
+	return false;
+}
+
+bool Panel::isMousePressForMouse(const int key)
+{
+	if (isMouseHover(false) && InputManager::isButton(key))
 	{
 		//isPress = true;
 		//SetMouseState(isPress, true);

@@ -47,7 +47,7 @@ private:
 	void SaveMap();
 	void Button_NewMap(std::string tileSet, glm::vec2 mapSize);
 
-	TextRenderer textRenderer;
+	std::shared_ptr<TextRenderer> textRenderer;
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
 

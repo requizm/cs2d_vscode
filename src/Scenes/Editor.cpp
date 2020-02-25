@@ -38,11 +38,10 @@ Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRe
 
 Editor::~Editor() = default;
 
-
 void Editor::Start()
 {
-	this->textRenderer = TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
-	this->textRenderer.Load("../resources/fonts/liberationsans.ttf", 16);
+	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
+	this->textRenderer->Load("../resources/fonts/liberationsans.ttf", 16);
 	this->squareRenderer = SquareRenderer(true);
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->mouse_yellow = glm::vec3(0.73F, 0.73F, 0.0F);
@@ -50,17 +49,17 @@ void Editor::Start()
 	this->maxCellInColumn = 5;
 	this->maxCellInRow = (Game_Parameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32 + 1;
 
-	this->buildPanel = std::make_shared<Panel>(glm::vec2(0.0F, 0.0F), "Build Panel", glm::vec2(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
+	this->buildPanel = std::make_shared<Panel>(glm::vec2(0.0F, 0.0F), "Build Panel", glm::vec2(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), *textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->buildPanel->setMovable(false);
 	this->buildPanel->setEnable(true);
 	this->buildPanel->setID(1);
 
-	this->controlPanel = std::make_shared<Panel>(glm::vec2(5.0F, 5.0F), "Control Panel", glm::vec2(32 * maxCellInColumn, 32 * 2 - 11), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
+	this->controlPanel = std::make_shared<Panel>(glm::vec2(5.0F, 5.0F), "Control Panel", glm::vec2(32 * maxCellInColumn, 32 * 2 - 11), *textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->controlPanel->setMovable(false);
 	this->controlPanel->setEnable(true);
 	this->controlPanel->setID(3);
 
-	this->tilePanel = std::make_shared<Panel>(glm::vec2(5.0F, 75.0F), "", glm::vec2(32 * maxCellInColumn, 32 * maxCellInRow), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
+	this->tilePanel = std::make_shared<Panel>(glm::vec2(5.0F, 75.0F), "", glm::vec2(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->tilePanel->setEnable(true);
 	this->tilePanel->setMovable(false);
 	this->tilePanel->setID(2);
@@ -68,7 +67,7 @@ void Editor::Start()
 	this->tilePanel->setOutline(true);
 	this->tilePanel->setOutlineColor(glm::vec3(0.47F));
 
-	this->newPanel = std::make_shared<Panel>(glm::vec2(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", glm::vec2(600, 300), textRenderer, true, true, 1.0F, glm::vec3(0.21F));
+	this->newPanel = std::make_shared<Panel>(glm::vec2(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", glm::vec2(600, 300), *textRenderer, true, true, 1.0F, glm::vec3(0.21F));
 	this->newPanel->setMovable(false);
 	this->newPanel->setEnable(false);
 	this->newPanel->setID(4);
@@ -76,14 +75,14 @@ void Editor::Start()
 	Sprite sprite;
 	glm::vec2 pos;
 
-	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16, 16); //save_sprite
+	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16, 16); //new_sprite
 	pos = this->controlPanel->getPosition();
 	new_button = Button(sprite, pos, glm::vec2(16.0F));
 	new_button.setOutline(true);
 	new_button.setOutlineColor(glm::vec3(0.45));
 	new_button.setMargin(glm::vec2(8, 8));
 
-	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16, 16); //save_sprite
+	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16, 16); //load_sprite
 	pos = glm::vec2(controlPanel->getPosition().x + 30, controlPanel->getPosition().y);
 	load_button = Button(sprite, pos, glm::vec2(16.0F));
 	load_button.setOutline(true);
@@ -106,15 +105,14 @@ void Editor::OnEnable()
 
 void Editor::OnDisable()
 {
-
 }
 
 void Editor::SetEnable(const bool value)
 {
-	if(this->enable == value)
-		return;	
+	if (this->enable == value)
+		return;
 	this->enable = value;
-	if(this->enable)
+	if (this->enable)
 		OnEnable();
 	else
 		OnDisable();
@@ -132,6 +130,7 @@ void Editor::Update(const float dt)
 	this->save_button.Update(dt);
 	this->new_button.Update(dt);
 	this->load_button.Update(dt);
+	this->newPanel->Update(dt);
 
 	if (this->tilePanel->isScrollable() && InputManager::scrollYPressed)
 	{
@@ -154,9 +153,6 @@ void Editor::Update(const float dt)
 
 void Editor::ProcessInput(const float dt)
 {
-	/*if (this->dt < 0.5f)
-		return;*/
-
 	if (!tilesUI.empty())
 	{
 		for (auto &tile : tilesUI)
@@ -197,6 +193,15 @@ void Editor::ProcessInput(const float dt)
 	if (InputManager::isKeyUp(GLFW_KEY_ESCAPE))
 	{
 	}
+	if (new_button.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
+	{
+		Logger::DebugLog("basildi!");
+		this->newPanel->setEnable(true);
+	}
+	if (new_button.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
+	{
+		Logger::DebugLog("birakildi!");
+	}
 	if (save_button.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
 	{
 		SaveMap();
@@ -204,9 +209,10 @@ void Editor::ProcessInput(const float dt)
 	if (save_button.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
 	{
 	}
-	if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT) && firstSelect)
+
+	if (firstSelect && !buildPanel->isMouseHover(false) && !newPanel->isMouseHover(false))
 	{
-		if (!buildPanel->isMouseHover(false))
+		if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT))
 		{
 			glm::vec2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
 			//Logger::DebugLog("pos: " + std::to_string(wd.x) + " - " + std::to_string(wd.y));
@@ -253,7 +259,7 @@ void Editor::Render(const float dt)
 	worldRenderer.SetProjection(camera->cameraMatrix);
 	squareRenderer.SetProjection(camera->cameraMatrix);
 
-	glm::vec2 mouse = Utils::ScreenToWorld(camera->view, glm::vec2(InputManager::mousePos.x, InputManager::mousePos.y));
+	glm::vec2 mouse = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
 	glm::ivec2 ms = Utils::PositionToCell(mouse);
 
 	for (auto &tile_1 : tiles)
@@ -263,7 +269,7 @@ void Editor::Render(const float dt)
 
 		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1.cell), glm::vec2(Game_Parameters::SIZE_TILE), cell_yellow);
 
-		if (ms == tile_1.cell)
+		if (ms == tile_1.cell && !newPanel->isMouseHover(false) && !buildPanel->isMouseHover(false))
 		{
 			glm::vec2 pos = Utils::CellToPosition(tile_1.cell);
 			squareRenderer.world_RenderEmptySquareWithLine(pos, glm::vec2(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
@@ -278,6 +284,11 @@ void Editor::Render(const float dt)
 	this->save_button.Draw(menuRenderer, squareRenderer);
 	this->new_button.Draw(menuRenderer, squareRenderer);
 	this->load_button.Draw(menuRenderer, squareRenderer);
+	if (newPanel->isEnable())
+	{
+		this->newPanel->Draw(squareRenderer, menuRenderer);
+	}
+
 	if (!tilesUI.empty())
 	{
 		for (auto &tile : tilesUI)
