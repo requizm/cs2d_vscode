@@ -15,7 +15,7 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer)
 	//this->renderer = std::make_shared<SpriteRenderer>();,
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 
-	start = true;
+	this->SetEnable(true);
 }
 
 StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::vector<Weapon> &weapons)
@@ -28,7 +28,8 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->weapons = weapons;
 
-	start = true;
+	
+	this->SetEnable(true);
 }
 
 /*StartGame::StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer, std::vector<GameObject*> gameobjects)
@@ -62,16 +63,9 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::
 	this->camera = std::make_shared<Camera>(InputManager::Width, InputManager::Height, glm::vec3(0.0f, 0.0f, 3.0f));
 }*/
 
-void StartGame::Init()
-{
-	Logger::WriteLog("StartGame->Init()");
-	
-	
-	start = true;
-}
-
 void StartGame::Start()
 {
+	Logger::WriteLog("StartGame->Start()");
 	Sprite ct1_0 = Sprite(ResourceManager::GetTexture("ct1"), 0, 0, 32, 32);
 	Sprite ct1_1 = Sprite(ResourceManager::GetTexture("ct1"), 0, 32, 32, 32);
 	Sprite ct1_2 = Sprite(ResourceManager::GetTexture("ct1"), 0, 64, 32, 32);
@@ -80,19 +74,36 @@ void StartGame::Start()
 	sprites.push_back(ct1_0);
 	sprites.push_back(ct1_1);
 	player = std::make_unique<Player>(glm::vec2(70, 70), sprites);
+}
+
+void StartGame::OnEnable()
+{
+	this->Start();
+	
 	player->SetTransform(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
 						 glm::vec2(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
 	player->setVelocity(500.0F);
 	player->SetMap(&map);
-	start = false;
+}
+
+void StartGame::OnDisable()
+{
+}
+
+void StartGame::SetEnable(const bool value)
+{
+	if (this->enable == value)
+		return;
+	this->enable = value;
+	if (this->enable)
+		OnEnable();
+	else
+		OnDisable();
 }
 
 void StartGame::Update(const float dt)
 {
-	if(start)
-		Start();
 	player->Update(dt);
-
 	//player->DoCollision(weapons);
 	//GameObject a = weapons->at(5);
 	//Weapon b = a;
@@ -103,7 +114,6 @@ void StartGame::ProcessInput(const float dt)
 	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
 	{
 		Game::SetGameState(GameState::MENU);
-		start = true;
 	}
 	if (InputManager::isKeyUp(GLFW_KEY_ESCAPE))
 	{
@@ -122,7 +132,7 @@ void StartGame::ProcessInput(const float dt)
 void StartGame::Render(const float dt)
 {
 	camera->setPosition(glm::vec2(player->GetPosition().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPosition().y - Game_Parameters::SCREEN_HEIGHT / 2));
-	
+
 	renderer.SetProjection(camera->cameraMatrix);
 	map.Draw(renderer);
 	int temp = weapons.size();

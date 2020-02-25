@@ -14,20 +14,22 @@ public:
 	StartGame(const Map &map, const SpriteRenderer &renderer, const std::vector<Weapon> &weapons);
 	//StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer, std::vector<GameObject*> gameobjects);
 	//StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer);
-	void Init();
+	~StartGame();
 	void Start();
+	void OnEnable();
+	void OnDisable();
 	void Update(const float dt);
 	void ProcessInput(const float dt);
 	void Render(const float dt);
-	~StartGame();
-
+	
+	void SetEnable(const bool value);
 private:
 	Map map;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera;
 	SpriteRenderer renderer;
 	std::vector<Weapon> weapons;
-	bool start;
+	bool enable;
 };
 
 #endif //SCENE_H

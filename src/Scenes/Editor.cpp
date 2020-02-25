@@ -15,7 +15,6 @@ Editor::Editor()
 	this->position = glm::vec2(0.0F);
 	this->firstSelect = false;
 	this->dt = 0.0F;
-	this->start = true;
 	this->mapLimit = glm::ivec2(0);
 	this->texture = glm::vec2(0.0F);
 }
@@ -31,23 +30,25 @@ Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRe
 	this->position = glm::vec2(0.0F);
 	this->firstSelect = false;
 	this->dt = 0.0F;
-	this->start = true;
 	this->mapLimit = glm::ivec2(0);
 	this->texture = glm::vec2(0.0F);
+
+	this->SetEnable(true);
 }
 
 Editor::~Editor() = default;
 
-void Editor::Init()
+
+void Editor::Start()
 {
-	textRenderer = TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
-	textRenderer.Load("../resources/fonts/liberationsans.ttf", 16);
-	squareRenderer = SquareRenderer(true);
+	this->textRenderer = TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
+	this->textRenderer.Load("../resources/fonts/liberationsans.ttf", 16);
+	this->squareRenderer = SquareRenderer(true);
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
-	mouse_yellow = glm::vec3(0.73F, 0.73F, 0.0F);
-	cell_yellow = glm::vec3(0.15F, 0.15F, 0.0F);
-	maxCellInColumn = 5;
-	maxCellInRow = (Game_Parameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32 + 1;
+	this->mouse_yellow = glm::vec3(0.73F, 0.73F, 0.0F);
+	this->cell_yellow = glm::vec3(0.15F, 0.15F, 0.0F);
+	this->maxCellInColumn = 5;
+	this->maxCellInRow = (Game_Parameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32 + 1;
 
 	this->buildPanel = std::make_shared<Panel>(glm::vec2(0.0F, 0.0F), "Build Panel", glm::vec2(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->buildPanel->setMovable(false);
@@ -97,23 +98,33 @@ void Editor::Init()
 	save_button.setMargin(glm::vec2(8, 8));
 }
 
-void Editor::Start()
+void Editor::OnEnable()
 {
+	Start();
 	Button_NewMap("cs2dnorm", glm::vec2(50));
+}
 
-	start = false;
+void Editor::OnDisable()
+{
+
+}
+
+void Editor::SetEnable(const bool value)
+{
+	if(this->enable == value)
+		return;	
+	this->enable = value;
+	if(this->enable)
+		OnEnable();
+	else
+		OnDisable();
 }
 
 void Editor::Update(const float dt)
 {
-	this->dt += dt;
+	/*this->dt += dt;
 	if (this->dt < 0.5f)
-		return;
-	if (start)
-	{
-		Start();
-		return;
-	}
+		return;*/
 
 	this->controlPanel->Update(dt);
 	this->buildPanel->Update(dt);
@@ -143,8 +154,8 @@ void Editor::Update(const float dt)
 
 void Editor::ProcessInput(const float dt)
 {
-	if (this->dt < 0.5f)
-		return;
+	/*if (this->dt < 0.5f)
+		return;*/
 
 	if (!tilesUI.empty())
 	{
@@ -182,12 +193,8 @@ void Editor::ProcessInput(const float dt)
 	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
 	{
 		Game::SetGameState(GameState::MENU);
-		start = true;
 	}
 	if (InputManager::isKeyUp(GLFW_KEY_ESCAPE))
-	{
-	}
-	if (save_button.isMouseHover())
 	{
 	}
 	if (save_button.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
@@ -201,25 +208,31 @@ void Editor::ProcessInput(const float dt)
 	{
 		if (!buildPanel->isMouseHover(false))
 		{
-			glm::vec2 wd = Utils::ScreenToWorld(camera->view, glm::vec2(InputManager::mousePos.x, InputManager::mousePos.y));
+			glm::vec2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
 			//Logger::DebugLog("pos: " + std::to_string(wd.x) + " - " + std::to_string(wd.y));
 			glm::ivec2 selectedCell = Utils::PositionToCell(wd);
-			Logger::DebugLog("pos: " + std::to_string(selectedCell.x) + " - " + std::to_string(selectedCell.y));
+			//Logger::DebugLog("pos: " + std::to_string(selectedCell.x) + " - " + std::to_string(selectedCell.y));
 			for (auto &tile : tiles)
 			{
 				if (tile.cell == selectedCell)
 				{
 					Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile.sprite, glm::vec2(Game_Parameters::SIZE_TILE), selectedTile.getType(), selectedTile.frame);
 					Button bt = Button(tilee);
-					tile.button = bt;
-					if (tile.exist)
+					if (selectedTile.frame == tile.button.getTile().frame || (!tile.exist && selectedTile.frame == 0))
 					{
-						Logger::DebugLog("degistirildi!");
 					}
 					else
 					{
-						tile.exist = true;
-						Logger::DebugLog("eklendi!");
+						tile.button = bt;
+						if (tile.exist)
+						{
+							Logger::DebugLog("degistirildi!");
+						}
+						else
+						{
+							tile.exist = true;
+							Logger::DebugLog("eklendi!");
+						}
 					}
 				}
 			}
@@ -233,10 +246,10 @@ void Editor::ProcessInput(const float dt)
 
 void Editor::Render(const float dt)
 {
-	if (this->dt < 0.5f)
-		return;
+	/*if (this->dt < 0.5f)
+		return;*/
 	camera->setPosition(position);
-	
+
 	worldRenderer.SetProjection(camera->cameraMatrix);
 	squareRenderer.SetProjection(camera->cameraMatrix);
 

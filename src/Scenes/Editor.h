@@ -33,13 +33,14 @@ public:
 	Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer);
 	virtual ~Editor();
 
-	void Init();
 	void Start();
+	void OnEnable();
+	void OnDisable();
 	void Update(const float dt);
 	void ProcessInput(const float dt);
 	void Render(const float dt);
 
-
+	void SetEnable(const bool value);
 	
 
 private:
@@ -72,8 +73,8 @@ private:
 	glm::ivec2 mapLimit;
 	std::vector<ButtonTile> tiles;
 
-	bool start;
-	float dt;
+	bool enable = false;
+	float dt = 0;
 
 	Button save_button, new_button, load_button;
 

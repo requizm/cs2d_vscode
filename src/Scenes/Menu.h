@@ -26,14 +26,17 @@ public:
 	Menu(const std::map<std::string, Sprite> &menuSprites, const SpriteRenderer &menuRenderer);
 	virtual ~Menu();
 
+	void OnEnable();
+	void OnDisable();
 	void Start();
-	void Init();
 	void Update(const float dt);
 	void ProcessInput(const float dt);
 	void Render(const float dt);
 
+	void SetEnable(const bool value);
+
 	std::map<std::string, Sprite> menuSprites;
-	TextRenderer textRenderer;
+	std::shared_ptr<TextRenderer> textRenderer;
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
 
@@ -42,18 +45,14 @@ public:
 	std::shared_ptr <Button> button;
 
 	std::shared_ptr <Panel> panel;*/
-	Label l_console;
-	Label l_quickplay;
-	Label l_newgame;
-	Label l_options;
-	Label l_editor;
-
-	TextBox textbox;
+	std::shared_ptr<Label> l_console, l_quickplay, l_newgame, l_options, l_editor;
+	
+	std::shared_ptr<TextBox> t_test;
 
 	std::shared_ptr<Panel> panel;
 	
 	private:
-	bool start;
+	bool enable;
 };
 
 #endif // MENU_H
