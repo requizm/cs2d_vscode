@@ -7,7 +7,6 @@ TextBox::TextBox(glm::vec2 position, TextRenderer &renderer, glm::vec2 size, boo
 {
 	this->editable = true;
 	this->editMode = false;
-	//this->mouseEvents = true;
 	this->isBackGround = isBackGround;
 	cursor = Sprite(ResourceManager::GetTexture("textcursor"));
 	this->size = size;
@@ -58,21 +57,21 @@ bool TextBox::isMouseHover()
 	//return isHover;
 }
 
-bool TextBox::isMouseDown(const int key)
+bool TextBox::isMouseDown()
 {
-	return isMouseDownM(key);
+	return isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
 	//return isDown;
 }
 
-bool TextBox::isMouseUp(const int key) //refactor: neden beraber degiller
+bool TextBox::isMouseUp() //refactor: neden beraber degiller
 {
-	return isMouseUpM(key);
+	return isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 	//return isUp;
 }
 
-bool TextBox::isMousePress(const int key)
+bool TextBox::isMousePress()
 {
-	return isMousePressM(key);
+	return isMousePressM(GLFW_MOUSE_BUTTON_LEFT);
 	//return isPress;
 }
 
@@ -97,63 +96,21 @@ bool TextBox::isMouseHoverM()
 
 bool TextBox::isMouseDownM(const int key)
 {
-	if (!isDown)
+	if (InputManager::isButtonDown(key) && isMouseHover())
 	{
-		if (InputManager::isButtonDown(key))
-		{
-			if (isMouseHover())
-			{
-				isDown = true;
-				isDownForClick = true;
-				//isUp = false;
-				//SetMouseState(isDown, true);
-				//SetMouseState(isUp, false);
-				//InputManager::mouseDownTrigger[key] = GL_TRUE;
-				return true;
-			}
-
-			isDown = true;
-			isDownForClick = false;
-			InputManager::mouseDownTrigger[key] = GL_TRUE;
-		}
+		isDown = true;
+		return true;
 	}
-	//InputManager::mouseDownTrigger[key] = GL_TRUE;
 	return false;
 }
 
 bool TextBox::isMouseUpM(const int key)
 {
-	if (isDown && isDownForClick)
+	if (InputManager::isButtonUp(key) && isDown)
 	{
-		if (InputManager::isButtonUp(key))
-		{
-			isDown = false;
-			isDownForClick = false;
-			//isUp = true;
-			//isPress = false;
-			//SetMouseState(isDown, false);
-			//SetMouseState(isUp, true);
-			//SetMouseState(isPress, false);
-			//labelCurrentColor = labelColor;
-			return true;
-		}
+		isDown = false;
+		return true;
 	}
-
-	else if (InputManager::isButtonUp(key))
-	{
-		if (isDown && !isDownForClick)
-		{
-			isDown = false;
-			//isUp = true;
-			//isPress = false;
-			//SetMouseState(isDown, false);
-			//SetMouseState(isUp, true);
-			//SetMouseState(isPress, false);
-			//labelCurrentColor = labelColor;
-		}
-		InputManager::mouseUpTrigger[key] = GL_TRUE;
-	}
-	//InputManager::mouseUpTrigger[key] = GL_TRUE;
 	return false;
 }
 
@@ -170,7 +127,7 @@ void TextBox::InputText(const float dt)
 {
 	if (editable)
 	{
-		if (isEnable() && isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
+		if (isEnable() && isMouseDown())
 		{
 			editMode = true;
 			time = 0.0F;
@@ -233,5 +190,5 @@ void TextBox::InputText(const float dt)
 		}
 	}
 
-	isMouseUp(GLFW_MOUSE_BUTTON_LEFT);
+	isMouseUp();
 }

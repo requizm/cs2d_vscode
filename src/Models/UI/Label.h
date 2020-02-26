@@ -22,11 +22,12 @@ public:
 
 	void Draw();
 	void Update(const float dt) override;
+	void ProcessInput() override;
 
 	virtual bool isMouseHover();
-	virtual bool isMouseDown(int key);
-	virtual bool isMouseUp(int key);
-	virtual bool isMousePress(int key);
+	virtual bool isMouseDown();
+	virtual bool isMouseUp();
+	virtual bool isMousePress();
 
 	std::string getText() const;
 	glm::vec2 getLabelSize() const;
@@ -46,7 +47,6 @@ public:
 	* Bu fonksiyon, state degisikliklerinden sonra kullanilmalidir.  
  	*/
 	void SimulateUp();
-
 protected:
 	glm::vec2 labelSize;
 
@@ -55,20 +55,18 @@ protected:
 	glm::vec3 labelColor;
 	glm::vec3 labelMouseHoverColor;
 	glm::vec3 labelCurrentColor;
-
-	bool isDown = false;
-	bool isUp = false;
-	bool isPress = false;
-	bool isHover = false;
-	bool isDownForClick = false;
+	
+	
 
 	virtual bool isMouseHoverM();
-	virtual bool isMouseDownM(int key);
-	virtual bool isMouseUpM(int key);
-	virtual bool isMousePressM(int key);
+	virtual bool isMouseDownM(const int key);
+	virtual bool isMouseUpM(const int key);
+	virtual bool isMousePressM(const int key);
 
 private:
 	void SetMouseState(bool &variable, bool value);
+	
+	bool isHover = false;
 };
 
 #endif // LABEL_H

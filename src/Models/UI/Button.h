@@ -16,15 +16,15 @@ class Button : public Label
 {
 public:
 	Button();
-	//Button(Sprite sprite, std::string text, glm::vec2 position, float scale = 1.0F, glm::vec3 textColor = glm::vec3(0.0F));
 	Button(const std::string &text, glm::vec2 position, TextRenderer &renderer, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
 	Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor = false, float scale = 1.0F);
 	Button(Tile &tile, float scale = 1.0F);
 	~Button();
 
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
-	void Draw(/*SquareRenderer &squareRenderer */ /*ButtonRenderer &buttonRenderer,*/);
+	void Draw();
 	void Update(const float dt) override;
+	void ProcessInput() override;
 
 	glm::vec2 getPosition() override;
 	glm::vec2 getLocalPosition() override;
@@ -43,9 +43,9 @@ public:
 	void setPosition(const int x, const int y) override;
 
 	bool isMouseHover() override;
-	bool isMouseDown(int key) override;
-	bool isMouseUp(int key) override;
-	bool isMousePress(int key) override;
+	bool isMouseDown() override;
+	bool isMouseUp() override;
+	bool isMousePress() override;
 
 protected:
 	Sprite sprite;
@@ -57,9 +57,9 @@ protected:
 	glm::vec3 currentColor;
 
 	bool isMouseHoverM() override;
-	bool isMouseDownM(int key) override;
-	bool isMouseUpM(int key) override;
-	bool isMousePressM(int key) override;
+	bool isMouseDownM(const int key) override;
+	bool isMouseUpM(const int key) override;
+	bool isMousePressM(const int key) override;
 
 private:
 	//bool isDown = false;

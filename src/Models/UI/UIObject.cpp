@@ -111,6 +111,11 @@ void UIObject::OnDisable()
 	Logger::WriteLog("" + GetObjectTypeString() + "->OnDisable()");
 }
 
+void UIObject::ProcessInput()
+{
+	
+}
+
 void UIObject::setPosition(const glm::vec2 position)
 {
 	this->position = position;
@@ -269,8 +274,6 @@ bool UIObject::isRenderable()
 		UIObject p = this->getParent();
 		if (p.isScrollable())
 		{
-			//setPosition(getLocalPosition().x, getLocalPosition().y - p.getScrollOffset() * 32);
-			//Logger::DebugLog(std::to_string(getLocalPosition().x) + " - " + std::to_string(getLocalPosition().y));
 			if ((getLocalPosition().y + getSize().y <= p.getSize().y) && getLocalPosition().y >= 0)
 			{
 				return true;

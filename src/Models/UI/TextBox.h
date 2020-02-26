@@ -18,9 +18,9 @@ public:
 	void Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer);
 
 	bool isMouseHover() override;
-	bool isMouseDown(const int key) override;
-	bool isMouseUp(const int key) override;
-	bool isMousePress(const int key) override;
+	bool isMouseDown() override;
+	bool isMouseUp() override;
+	bool isMousePress() override;
 
 	bool isMouseHoverM() override;
 	bool isMouseDownM(const int key) override;

@@ -15,7 +15,7 @@ Game::Game(const GLuint width, const GLuint height)
 	//camera = Camera(width, height, glm::vec3(0.0f, 0.0f, 3.0f));
 	//InputManager::Width = width;
 	//InputManager::Height = height;
-	Logger::WriteLog("Game->Game()");
+	Logger::WriteLog("Game->Game(width, height)");
 	Game_Parameters::LoadParameters();
 	Game::state = GameState::MENU;
 }
@@ -189,10 +189,11 @@ void Game::initShaders() const
 	ResourceManager::LoadShader("../resources/shaders/textVertex.txt", "../resources/shaders/textFragment.txt", nullptr, "text");
 	ResourceManager::LoadShader("../resources/shaders/spriteVertex.txt", "../resources/shaders/spriteFragment.txt", nullptr, "sprite");
 	ResourceManager::LoadShader("../resources/shaders/spriteVertex.txt", "../resources/shaders/spriteFragment.txt", nullptr, "menu");
-	//ResourceManager::LoadShader("../resources/shaders/spriteVertex.txt", "../resources/shaders/spriteFragment.txt", nullptr, "outline");
+
 	ResourceManager::GetShader("sprite").Use();
 	ResourceManager::GetShader("sprite").SetInteger("image", 0);
 	ResourceManager::GetShader("sprite").UnUse();
+
 	ResourceManager::GetShader("menu").Use();
 	ResourceManager::GetShader("menu").SetMatrix4("projection", glm::ortho(0.0f, static_cast<GLfloat>(Game_Parameters::SCREEN_WIDTH), static_cast<GLfloat>(Game_Parameters::SCREEN_HEIGHT), 0.0f), GL_TRUE);
 	ResourceManager::GetShader("menu").SetInteger("image", 0);
@@ -207,11 +208,10 @@ void Game::initMenuSprites()
 	Sprite splash = Sprite(ResourceManager::GetTexture("splash"));
 	Sprite gametitle = Sprite(ResourceManager::GetTexture("gametitle"));
 	mouseSprite = Sprite(ResourceManager::GetTexture("pointer"), 0, 0, 46, 46);
-
-	menuSprites.insert(std::pair<std::string, Sprite>("unrealsoftware", unrealsoftware));
-	menuSprites.insert(std::pair<std::string, Sprite>("cs2d", cs2d));
-	menuSprites.insert(std::pair<std::string, Sprite>("gametitle", gametitle));
-	menuSprites.insert(std::pair<std::string, Sprite>("splash", splash));
+	menuSprites[0] = unrealsoftware;
+	menuSprites[1] = cs2d;
+	menuSprites[2] = gametitle;
+	menuSprites[3] = splash;
 }
 
 void Game::initMaps()
@@ -243,7 +243,7 @@ void Game::SetGameState(GameState state)
 		Game::scene.SetEnable(false);
 		break;
 	}
-	
+
 	switch (state)
 	{
 	case GameState::MENU:
@@ -256,7 +256,7 @@ void Game::SetGameState(GameState state)
 		Game::scene.SetEnable(true);
 		break;
 	}
-	
+
 	Game::state = state;
 }
 

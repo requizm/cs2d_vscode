@@ -153,19 +153,26 @@ void Editor::Update(const float dt)
 
 void Editor::ProcessInput(const float dt)
 {
+	this->controlPanel->ProcessInput();
+	this->buildPanel->ProcessInput();
+	this->tilePanel->ProcessInput();
+	this->save_button.ProcessInput();
+	this->new_button.ProcessInput();
+	this->load_button.ProcessInput();
+	this->newPanel->ProcessInput();
+
 	if (!tilesUI.empty())
 	{
 		for (auto &tile : tilesUI)
 		{
-			if (tile.isMouseDown(GLFW_MOUSE_BUTTON_LEFT) && tile.isRenderable())
+			if (tile.isRenderable())
 			{
-				Logger::DebugLog("down");
-				selectedTile = tile.getTile();
-				firstSelect = true;
-			}
-			if (tile.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
-			{
-				Logger::DebugLog("up");
+				tile.ProcessInput();
+				if (tile.isMouseDown())
+				{
+					selectedTile = tile.getTile();
+					firstSelect = true;
+				}
 			}
 		}
 	}
@@ -190,27 +197,18 @@ void Editor::ProcessInput(const float dt)
 	{
 		Game::SetGameState(GameState::MENU);
 	}
-	if (InputManager::isKeyUp(GLFW_KEY_ESCAPE))
+
+	if (new_button.isMouseDown())
 	{
-	}
-	if (new_button.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
-	{
-		Logger::DebugLog("basildi!");
 		this->newPanel->setEnable(true);
 	}
-	if (new_button.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
-	{
-		Logger::DebugLog("birakildi!");
-	}
-	if (save_button.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
+
+	if (save_button.isMouseDown())
 	{
 		SaveMap();
 	}
-	if (save_button.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
-	{
-	}
 
-	if (firstSelect && !buildPanel->isMouseHover(false) && !newPanel->isMouseHover(false))
+	if (firstSelect && !buildPanel->isPressed && !newPanel->isPressed && !buildPanel->isMouseHover(false) && !newPanel->isMouseHover(false))
 	{
 		if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT))
 		{
@@ -224,29 +222,17 @@ void Editor::ProcessInput(const float dt)
 				{
 					Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile.sprite, glm::vec2(Game_Parameters::SIZE_TILE), selectedTile.getType(), selectedTile.frame);
 					Button bt = Button(tilee);
-					if (selectedTile.frame == tile.button.getTile().frame || (!tile.exist && selectedTile.frame == 0))
-					{
-					}
-					else
+					if (!(selectedTile.frame == tile.button.getTile().frame || (!tile.exist && selectedTile.frame == 0)))
 					{
 						tile.button = bt;
-						if (tile.exist)
-						{
-							Logger::DebugLog("degistirildi!");
-						}
-						else
+						if (!tile.exist)
 						{
 							tile.exist = true;
-							Logger::DebugLog("eklendi!");
 						}
 					}
 				}
 			}
 		}
-	}
-
-	if (InputManager::isButtonUp(GLFW_MOUSE_BUTTON_LEFT))
-	{
 	}
 }
 

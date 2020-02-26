@@ -23,7 +23,7 @@ class Menu
 {
 public:
 	Menu();
-	Menu(const std::map<std::string, Sprite> &menuSprites, const SpriteRenderer &menuRenderer);
+	Menu(Sprite menuSprites[4], const SpriteRenderer &menuRenderer);
 	virtual ~Menu();
 
 	void OnEnable();
@@ -35,8 +35,9 @@ public:
 
 	void SetEnable(const bool value);
 
-	std::map<std::string, Sprite> menuSprites;
+	Sprite menuSprites[4];
 	std::shared_ptr<TextRenderer> textRenderer;
+	
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
 
@@ -46,12 +47,12 @@ public:
 
 	std::shared_ptr <Panel> panel;*/
 	std::shared_ptr<Label> l_console, l_quickplay, l_newgame, l_options, l_editor;
-	
+
 	std::shared_ptr<TextBox> t_test;
 
 	std::shared_ptr<Panel> panel;
-	
-	private:
+
+private:
 	bool enable;
 };
 

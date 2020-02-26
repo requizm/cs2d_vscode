@@ -12,7 +12,7 @@ public:
 	static glm::vec2 scroll;
 	static bool scrollYPressed;
 
-	static GLboolean Keys[1024];
+	/*static GLboolean Keys[1024];
 	static GLboolean KeysProcessed[1024];
 	static GLboolean KeysUp[1024];
 	static GLboolean downTrigger[1024];
@@ -22,7 +22,7 @@ public:
 	static GLboolean mouseKeysProcessed[8];
 	static GLboolean mouseKeysUp[8];
 	static GLboolean mouseDownTrigger[8];
-	static GLboolean mouseUpTrigger[8];
+	static GLboolean mouseUpTrigger[8];*/
 	
 	static GLboolean mouseUp[8];
 	static GLboolean mouseDown[8];
@@ -30,15 +30,21 @@ public:
 	static GLboolean oldMouseUp[8];
 	static GLboolean oldMouseDown[8];
 
+	static GLboolean keyUp[350];
+	static GLboolean keyDown[350];
+	static GLboolean keyPress[350];
+	static GLboolean oldKeyUp[350];
+	static GLboolean oldKeyDown[350];
+
 	static wchar_t keycode;
 	InputManager();
 
-	static void processKey(int key);
+	//static void processKey(int key);
 	static bool isKey(int key);
 	static bool isKeyDown(int key);
 	static bool isKeyUp(int key);
 
-	static void processButton(int key);
+	//static void processButton(int key);
 	static bool isButton(int key);
 	static bool isButtonDown(int key);
 	static bool isButtonUp(int key);

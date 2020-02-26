@@ -13,7 +13,7 @@ Button::Button(const std::string &text, glm::vec2 position, TextRenderer &render
 	this->haveOutline = false;
 	this->haveTile = false;
 	this->difColor = false;
-	this->haveSprite = false; 
+	this->haveSprite = false;
 }
 
 Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON)
@@ -64,24 +64,20 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize());
 		}
 	}
-	//buttonRenderer.RenderButton(&textRenderer, this);
-	//Label::Draw();
 }
 
-void Button::Draw(/*SquareRenderer &squareRenderer*/ /*ButtonRenderer &buttonRenderer,*/)
+void Button::Draw()
 {
-	//buttonRenderer.CalculateSize(&textRenderer, this);
-	//squareRenderer.RenderSquare(square, this->position, glm::vec2(this->labelSize.x + 20.0F, this->labelSize.y + 10.0F), this->buttonColor);
 	Label::Draw();
 }
 
 void Button::Update(const float dt)
 {
-	if (isEnable())
+	if (isEnable() && mouseEvents)
 	{
 		if (!haveTile)
 		{
-			if (isMousePress(GLFW_MOUSE_BUTTON_LEFT))
+			if (isMousePress())
 			{
 				currentColor = mouseclickColor;
 			}
@@ -94,6 +90,15 @@ void Button::Update(const float dt)
 				currentColor = buttonColor;
 			}
 		}
+	}
+}
+
+void Button::ProcessInput()
+{
+	if (mouseEvents)
+	{
+		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
+		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 	}
 }
 
@@ -143,24 +148,21 @@ glm::vec2 Button::getSize()
 bool Button::isMouseHover()
 {
 	return isMouseHoverM();
-	//return isHover;
 }
 
-bool Button::isMouseDown(const int key)
+bool Button::isMouseDown()
 {
-	return isMouseDownM(key);
-	//return isDown;
+	return this->isDown;
 }
 
-bool Button::isMouseUp(const int key) //refactor: neden beraber degiller
+bool Button::isMouseUp()
 {
-	return isMouseUpM(key);
-	//return isUp;
+	return this->isUp;
 }
 
-bool Button::isMousePress(const int key)
+bool Button::isMousePress()
 {
-	return isMousePressM(key);
+	return isMousePressM(GLFW_MOUSE_BUTTON_LEFT);
 	//return isPress;
 }
 
@@ -180,77 +182,36 @@ bool Button::isMouseHoverM()
 
 	if (InputManager::mousePos.x >= posX && InputManager::mousePos.x <= posX + sizeX && InputManager::mousePos.y >= posY && InputManager::mousePos.y <= posY + sizeY)
 	{
-		//SetMouseState(isHover, true);
-		//isHover = true;
-		//labelCurrentColor = labelMouseHoverColor;
-		//currentColor = mouseHoverColor;
 		return true;
 	}
-
-	//SetMouseState(isHover, false);
-	//isHover = false;
 	return false;
 }
 
 bool Button::isMouseDownM(const int key)
 {
-	if (!isDown)
+	if(isPressed && isDown)
 	{
-		if (InputManager::isButtonDown(key))
-		{
-			if (isMouseHover())
-			{
-				isDown = true;
-				isDownForClick = true;
-				//isUp = false;
-				//SetMouseState(isDown, true);
-				//SetMouseState(isUp, false);
-				//InputManager::mouseDownTrigger[key] = GL_TRUE;
-				return true;
-			}
-
-			isDown = true;
-			isDownForClick = false;
-			InputManager::mouseDownTrigger[key] = GL_TRUE;
-		}
+		isDown = false;
+		return false;
 	}
-	//InputManager::mouseDownTrigger[key] = GL_TRUE;
-	return false;
+	if (InputManager::isButtonDown(key) && isMouseHover())
+	{
+		isPressed = true;
+		isDown = true;
+		return true;
+	}
 }
 
-bool Button::isMouseUpM(const int key) //refactor: neden beraber degiller
+bool Button::isMouseUpM(const int key)
 {
-	if (isDown && isDownForClick)
+	if (InputManager::isButtonUp(key) && isPressed)
 	{
-		if (InputManager::isButtonUp(key))
-		{
-			isDown = false;
-			isDownForClick = false;
-			//isUp = true;
-			//isPress = false;
-			//SetMouseState(isDown, false);
-			//SetMouseState(isUp, true);
-			//SetMouseState(isPress, false);
-			//labelCurrentColor = labelColor;
-			return true;
-		}
+		isPressed = false;
+		isUp = true;
+		return true;
 	}
-
-	else if (InputManager::isButtonUp(key))
-	{
-		if (isDown && !isDownForClick)
-		{
-			isDown = false;
-			//isUp = true;
-			//isPress = false;
-			//SetMouseState(isDown, false);
-			//SetMouseState(isUp, true);
-			//SetMouseState(isPress, false);
-			//labelCurrentColor = labelColor;
-		}
-		InputManager::mouseUpTrigger[key] = GL_TRUE;
-	}
-	//InputManager::mouseUpTrigger[key] = GL_TRUE;
+	if (isUp)
+		isUp = false;
 	return false;
 }
 
@@ -258,8 +219,6 @@ bool Button::isMousePressM(const int key)
 {
 	if (isMouseHover() && InputManager::isButton(key))
 	{
-		//isPress = true;
-		//SetMouseState(isPress, true);
 		return true;
 	}
 	return false;
@@ -294,8 +253,6 @@ void Button::setMargin(const glm::vec2 value)
 {
 	if (haveOutline)
 		this->margin = value;
-	else
-		Logger::DebugLog("haveOutline false oldugu halde margin degistirilmeye calisiliyor!");
 }
 
 void Button::setPosition(const glm::vec2 position)

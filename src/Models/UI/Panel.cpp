@@ -58,53 +58,56 @@ void Panel::Update(const float dt)
 {
 	if (isEnable())
 	{
-		if (isMovable())
+		if (mouseEvents && isMovable())
 		{
-			if (!click && (opttitles && !escapeButton.isMousePress(GLFW_MOUSE_BUTTON_LEFT)) || (!opttitles && !click))
+			if (!click && (opttitles && !escapeButton.isPressed) || (!opttitles && !click))
 			{
-				if (isMouseDown(GLFW_MOUSE_BUTTON_LEFT, true))
+				if (isMouseDown(true))
 				{
 					deltaX = InputManager::mousePos.x - static_cast<int>(position.x);
 					deltaY = InputManager::mousePos.y - static_cast<int>(position.y);
 					click = true;
 				}
 			}
-			if (click)
+			if (isPressed && click)
 			{
-				if (isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
-				{
-					click = false;
-				}
-
-				if (!isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
-				{
-					glm::vec2 mousePos = glm::vec2(InputManager::mousePos.x, InputManager::mousePos.y);
-					this->setPosition(glm::vec2(mousePos.x - static_cast<float>(deltaX), mousePos.y - static_cast<float>(deltaY)));
-					//std::cout << "hey" << std::endl;
-				}
+				glm::vec2 mousePos = InputManager::mousePos;
+				this->setPosition(glm::vec2(mousePos.x - static_cast<float>(deltaX), mousePos.y - static_cast<float>(deltaY)));
+				//std::cout << "hey" << std::endl;
 			}
+			if (!isPressed)
+				click = false;
 		}
 		if (opttitles)
 		{
 			escapeButton.Update(dt);
-			if (escapeButton.isMouseDown(GLFW_MOUSE_BUTTON_LEFT))
-			{
-			}
-			if (escapeButton.isMouseUp(GLFW_MOUSE_BUTTON_LEFT))
+			if (escapeButton.isMouseUp())
 			{
 				this->setEnable(false);
 			}
 		}
-		if (!click)
+	}
+}
+
+void Panel::ProcessInput()
+{
+	escapeButton.ProcessInput();
+	if (mouseEvents)
+	{
+		if (isMovable())
 		{
-			isMouseUp(GLFW_MOUSE_BUTTON_LEFT);
+			isMouseDownForDrag(GLFW_MOUSE_BUTTON_LEFT);
+		}
+		else
+		{
+			isMouseDownForMouse(GLFW_MOUSE_BUTTON_LEFT);
 		}
 	}
+	isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 }
 
 void Panel::OnEnable()
 {
-	//setPosition(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F));
 	if (opttitles)
 	{
 		escapeButton.setEnable(true);
@@ -137,33 +140,33 @@ bool Panel::isMouseHover(bool drag)
 		return isMouseHoverForMouse();
 }
 
-bool Panel::isMouseDown(const int key, bool drag)
+bool Panel::isMouseDown(bool drag)
 {
 	if (!this->isEnable())
 	{
 		return false;
 	}
 	if (drag)
-		return isMouseDownForDrag(key);
+		return isDownForDrag;
 	else
-		return isMouseDownForMouse(key);
+		return isDown;
 }
 
-bool Panel::isMouseUp(const int key, bool drag)
+bool Panel::isMouseUp()
 {
-	return isMouseUp(key);
+	return isUp;
 }
 
-bool Panel::isMousePress(const int key, bool drag)
+bool Panel::isMousePress(bool drag)
 {
 	if (!this->isEnable())
 	{
 		return false;
 	}
 	if (drag)
-		return isMousePressForDrag(key);
+		return isMousePressForDrag(GLFW_MOUSE_BUTTON_LEFT);
 	else
-		return isMousePressForMouse(key);
+		return isMousePressForMouse(GLFW_MOUSE_BUTTON_LEFT);
 }
 
 bool Panel::isMouseHoverForDrag()
@@ -198,89 +201,46 @@ bool Panel::isMouseHoverForMouse()
 
 bool Panel::isMouseDownForDrag(const int key)
 {
-	if (!isDown)
+	if (isPressed && isDownForDrag)
 	{
-		if (isMouseHover(true))
-		{
-			if (InputManager::isButtonDown(key))
-			{
-				isDown = true;
-				isDownForClick = true;
-				//isUp = false;
-				//SetMouseState(isDown, true);
-				//SetMouseState(isUp, false);
-				//InputManager::mouseDownTrigger[key] = GL_TRUE;
-				return true;
-			}
-
-			isDown = true;
-			isDownForClick = false;
-			InputManager::mouseDownTrigger[key] = GL_TRUE;
-		}
+		isDownForDrag = false;
+		return false;
 	}
-	//InputManager::mouseDownTrigger[key] = GL_TRUE;
+	if (InputManager::isButtonDown(key) && isMouseHover(true))
+	{
+		isPressed = true;
+		isDownForDrag = true;
+		return true;
+	}
 	return false;
 }
 
 bool Panel::isMouseDownForMouse(const int key)
 {
-	if (!isDown)
+	if (isPressed && isDown)
 	{
-		if (isMouseHover(false))
-		{
-			if (InputManager::isButtonDown(key))
-			{
-				isDown = true;
-				isDownForClick = true;
-				//isUp = false;
-				//SetMouseState(isDown, true);
-				//SetMouseState(isUp, false);
-				//InputManager::mouseDownTrigger[key] = GL_TRUE;
-				return true;
-			}
-
-			isDown = true;
-			isDownForClick = false;
-			InputManager::mouseDownTrigger[key] = GL_TRUE;
-		}
+		isDown = false;
+		return false;
 	}
-	//InputManager::mouseDownTrigger[key] = GL_TRUE;
+	if (InputManager::isButtonDown(key) && isMouseHover(false))
+	{
+		isPressed = true;
+		isDown = true;
+		return true;
+	}
 	return false;
 }
 
-bool Panel::isMouseUp(const int key)
+bool Panel::isMouseUpM(const int key)
 {
-	if (isDown && isDownForClick)
+	if (InputManager::isButtonUp(key) && isPressed)
 	{
-		if (InputManager::isButtonUp(key))
-		{
-			isDown = false;
-			isDownForClick = false;
-			//isUp = true;
-			//isPress = false;
-			//SetMouseState(isDown, false);
-			//SetMouseState(isUp, true);
-			//SetMouseState(isPress, false);
-			//labelCurrentColor = labelColor;
-			return true;
-		}
+		isPressed = false;
+		isUp = true;
+		return true;
 	}
-
-	else if (InputManager::isButtonUp(key))
-	{
-		if (isDown && !isDownForClick)
-		{
-			isDown = false;
-			//isUp = true;
-			//isPress = false;
-			//SetMouseState(isDown, false);
-			//SetMouseState(isUp, true);
-			//SetMouseState(isPress, false);
-			//labelCurrentColor = labelColor;
-		}
-		InputManager::mouseUpTrigger[key] = GL_TRUE;
-	}
-	//InputManager::mouseUpTrigger[key] = GL_TRUE;
+	if (isUp)
+		isUp = false;
 	return false;
 }
 
@@ -288,9 +248,6 @@ bool Panel::isMousePressForDrag(const int key)
 {
 	if (isMouseHover(true) && InputManager::isButton(key))
 	{
-		//isPress = true;
-		//SetMouseState(isPress, true);
-		//labelCurrentColor = labelClickColor;
 		return true;
 	}
 	return false;
@@ -300,9 +257,6 @@ bool Panel::isMousePressForMouse(const int key)
 {
 	if (isMouseHover(false) && InputManager::isButton(key))
 	{
-		//isPress = true;
-		//SetMouseState(isPress, true);
-		//labelCurrentColor = labelClickColor;
 		return true;
 	}
 	return false;

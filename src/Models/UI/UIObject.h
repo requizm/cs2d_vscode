@@ -31,6 +31,7 @@ public:
 	virtual void Update(const float dt);
 	virtual void OnEnable();
 	virtual void OnDisable();
+	virtual void ProcessInput();
 
 	virtual glm::vec2 getPosition();
 	virtual glm::vec2 getSize();
@@ -62,6 +63,7 @@ public:
 	void setID(const int value);
 	void setScrollable(const bool value);
 
+	bool isPressed = false;
 protected:
 	glm::vec2 position;
 	float scale;
@@ -78,6 +80,10 @@ protected:
 	bool mouseEvents;
 
 	bool scrollable;
+
+	bool isDown = false;
+	bool isUp = false;
+	
 
 private:
 	std::string GetObjectTypeString();

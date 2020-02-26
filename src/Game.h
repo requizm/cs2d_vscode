@@ -29,14 +29,13 @@ public:
 
 	static void SetGameState(GameState state);
 	static GameState GetGameState();
-	
+
 	static GameState state;
 
 private:
 	//std::unique_ptr<SpriteRenderer> renderer;
 
-	SpriteRenderer spriteRenderer;
-	SpriteRenderer menuRenderer;
+	SpriteRenderer spriteRenderer, menuRenderer;
 	//std::shared_ptr<TextRenderer> textRenderer;
 	Camera camera;
 	//Label *label;
@@ -55,9 +54,7 @@ private:
 	static Menu menu;
 	static Editor editor;
 
-	std::map<std::string, Sprite> menuSprites;
-
-	
+	Sprite menuSprites[4];
 
 	//Weapon *main1, *main2, *main3, *pistol1, *pistol2, *pistol3, *pistol4, *knife1, *knife2;
 	void initTextures() const;

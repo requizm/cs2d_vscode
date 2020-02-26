@@ -6,7 +6,7 @@ glm::vec2 InputManager::mousePos;
 glm::vec2 InputManager::scroll;
 bool InputManager::scrollYPressed;
 
-GLboolean InputManager::Keys[1024];
+/*GLboolean InputManager::Keys[1024];
 GLboolean InputManager::KeysProcessed[1024];
 GLboolean InputManager::KeysUp[1024];
 GLboolean InputManager::downTrigger[1024];
@@ -16,7 +16,7 @@ GLboolean InputManager::mouseKeys[8];
 GLboolean InputManager::mouseKeysProcessed[8];
 GLboolean InputManager::mouseKeysUp[8];
 GLboolean InputManager::mouseDownTrigger[8];
-GLboolean InputManager::mouseUpTrigger[8];
+GLboolean InputManager::mouseUpTrigger[8];*/
 
 GLboolean InputManager::mouseUp[8];
 GLboolean InputManager::mouseDown[8];
@@ -24,56 +24,66 @@ GLboolean InputManager::mousePress[8];
 GLboolean InputManager::oldMouseUp[8];
 GLboolean InputManager::oldMouseDown[8];
 
+GLboolean InputManager::keyUp[350];
+GLboolean InputManager::keyDown[350];
+GLboolean InputManager::keyPress[350];
+GLboolean InputManager::oldKeyUp[350];
+GLboolean InputManager::oldKeyDown[350];
+
 wchar_t InputManager::keycode;
 
 InputManager::InputManager() = default;
 
-void InputManager::processKey(int key)
+/*void InputManager::processKey(int key)
 {
 	if (Keys[key] && !KeysProcessed[key])
 	{
 		KeysProcessed[key] = GL_TRUE;
 	}
-}
+}*/
 
 bool InputManager::isKey(const int key)
 {
-	return Keys[key];
+	//return Keys[key];
+	return InputManager::keyPress[key];
 }
 
 bool InputManager::isKeyDown(const int key)
 {
-	InputManager::processKey(key);
+	/*InputManager::processKey(key);
 	if (downTrigger[key])
 	{
 		downTrigger[key] = GL_FALSE;
 		return Keys[key] && KeysProcessed[key] && !KeysUp[key];
 	}
 
-	return false;
+	return false;*/
+	return InputManager::keyDown[key];
 }
 
 bool InputManager::isKeyUp(const int key)
 {
-	if (upTrigger[key])
+	/*if (upTrigger[key])
 	{
 		upTrigger[key] = GL_FALSE;
 		return !Keys[key] && KeysUp[key] && !KeysProcessed[key];
 	}
-	return false;
+	return false;*/
+	return InputManager::keyUp[key];
 }
 
-void InputManager::processButton(int key)
+/*void InputManager::processButton(int key)
 {
 	if (mouseKeys[key] && !mouseKeysProcessed[key])
 	{
 		mouseKeysProcessed[key] = GL_TRUE;
 	}
-}
+}*/
 
 bool InputManager::isButton(int key)
 {
-	return mouseKeys[key];
+	//return mouseKeys[key];
+	return InputManager::mousePress[key];
 }
 
 bool InputManager::isButtonDown(int key)
