@@ -22,6 +22,11 @@ public:
 	~Button();
 
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
+
+	/**
+ 	* Bu fonksiyon sadece editor'deki uiButton'lar icin kullanilacak!
+ 	*/ 
+	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, float dt, bool selected);
 	void Draw();
 	void Update(const float dt) override;
 	void ProcessInput() override;

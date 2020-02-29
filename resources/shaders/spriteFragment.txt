@@ -3,10 +3,15 @@ in vec2 TexCoords;
 
 out vec4 color;
 
-
 uniform sampler2D image;
+
 uniform bool overrideColor;
 uniform vec3 uniformColor;
+
+uniform float shineFactor;
+uniform bool selectedTile;
+uniform float time;
+
 void main()
 {	
 	if(overrideColor)
@@ -20,7 +25,15 @@ void main()
 	}
 	else
 	{
-		color = texture(image, TexCoords);
+		vec4 col = texture(image, TexCoords);
+		if(selectedTile)
+		{
+			col.xyz += col.xyz * (1.0 - sin(time * 7.0));
+		}
+		else
+		{
+			col.xyz += (col.xyz * shineFactor);
+		}
+		color = col;
 	}
-	
 }  

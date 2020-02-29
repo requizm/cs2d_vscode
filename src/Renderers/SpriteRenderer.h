@@ -19,8 +19,18 @@ public:
 	~SpriteRenderer();
 	// Renders a defined quad textured with given sprite
 	//void DrawSprite(Texture2D texture, glm::vec2 position, glm::vec2 size = glm::vec2(10, 10), GLfloat rotate = 0.0f);
-	void DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, GLfloat rotate = 0.0f, bool drawCenter = false);
-	void DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, glm::vec3 color, bool drawCenter = false, GLfloat rotate = 0.0f);
+
+	/**
+ 	* Does stuff
+ 	* @param {GLfloat} shineFactor : sadece editor'deki tile'larin parlamasi icin
+	* @param {bool} isSelected : sadece editor'deki secili tile'larin parlamasi icin
+ 	*/
+	void DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, GLfloat rotate = 0.0F, bool drawCenter = false,
+	GLfloat shineFactor = 0.0F, bool isSelected = false, GLfloat time = 0.0F);
+	
+	void DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, glm::vec3 color, bool drawCenter = false, 
+	GLfloat rotate = 0.0F, GLfloat shineFactor = 0.0F, bool isSelected = false);
+
 	void DrawSprite(const Sprite &sprite, glm::mat4 model);
 	void SetProjection(glm::mat4 projection);
 

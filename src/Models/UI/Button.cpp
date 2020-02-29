@@ -66,6 +66,14 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 	}
 }
 
+void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, float dt, bool selected)
+{
+	if (isVisible() && isEnable() && isRenderable())
+	{
+		spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize(), 0.0F, false, shine, selected, dt);
+	}
+}
+
 void Button::Draw()
 {
 	Label::Draw();
@@ -189,7 +197,7 @@ bool Button::isMouseHoverM()
 
 bool Button::isMouseDownM(const int key)
 {
-	if(isPressed && isDown)
+	if (isPressed && isDown)
 	{
 		isDown = false;
 		return false;

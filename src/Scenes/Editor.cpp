@@ -120,9 +120,7 @@ void Editor::SetEnable(const bool value)
 
 void Editor::Update(const float dt)
 {
-	/*this->dt += dt;
-	if (this->dt < 0.5f)
-		return;*/
+	this->dt += dt;
 
 	this->controlPanel->Update(dt);
 	this->buildPanel->Update(dt);
@@ -238,8 +236,6 @@ void Editor::ProcessInput(const float dt)
 
 void Editor::Render(const float dt)
 {
-	/*if (this->dt < 0.5f)
-		return;*/
 	camera->setPosition(position);
 
 	worldRenderer.SetProjection(camera->cameraMatrix);
@@ -279,7 +275,20 @@ void Editor::Render(const float dt)
 	{
 		for (auto &tile : tilesUI)
 		{
-			tile.Draw(menuRenderer, squareRenderer);
+			if(firstSelect && selectedTile.frame == tile.getTile().frame)
+			{
+				tile.Draw(menuRenderer, squareRenderer, 0.3F, this->dt, true);
+			}
+			else if(tile.isMouseHover())
+			{
+				tile.Draw(menuRenderer, squareRenderer, 0.3F, this->dt, false);
+			}
+			else
+			{
+				tile.Draw(menuRenderer, squareRenderer);
+			}
+			
+			
 		}
 	}
 }
