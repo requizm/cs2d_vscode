@@ -29,7 +29,7 @@ private:
 	std::shared_ptr<Camera> camera;
 	SpriteRenderer renderer;
 	std::vector<Weapon> weapons;
-	bool enable;
+	bool enable = false;
 };
 
 #endif //SCENE_H

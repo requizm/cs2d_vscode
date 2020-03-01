@@ -37,23 +37,18 @@ public:
 
 	Sprite menuSprites[4];
 	std::shared_ptr<TextRenderer> textRenderer;
-	
+
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
 
-	/*	std::shared_ptr <Label> l_console;
-
-	std::shared_ptr <Button> button;
-
-	std::shared_ptr <Panel> panel;*/
 	std::shared_ptr<Label> l_console, l_quickplay, l_newgame, l_options, l_editor;
-
+	
 	std::shared_ptr<TextBox> t_test;
 
 	std::shared_ptr<Panel> panel;
 
 private:
-	bool enable;
+	bool enable =false;
 };
 
 #endif // MENU_H

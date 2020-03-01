@@ -12,7 +12,7 @@ Panel::Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextR
 	this->movable = false;
 	this->scrollable = false;
 	this->outline = false;
-	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, glm::vec2(20.0F, 20.0F), scale);
+	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, glm::vec2(20.0F, 20.0F), true);
 	escapeButton.setParent(this);
 	escapeButton.setPosition(this->size.x - 20.0F, 3.0F);
 	escapeButton.setButtonColor(color);
