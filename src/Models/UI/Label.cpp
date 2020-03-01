@@ -59,7 +59,7 @@ void Label::Update(const float dt)
 
 void Label::ProcessInput()
 {
-	if (mouseEvents)
+	if (isMouseEvents())
 	{
 		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
 		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);

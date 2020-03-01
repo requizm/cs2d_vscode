@@ -63,6 +63,8 @@ public:
 	void setID(const int value);
 	void setScrollable(const bool value);
 
+	std::string GetObjectTypeString();
+
 	bool isPressed = false;
 protected:
 	glm::vec2 position;
@@ -70,6 +72,7 @@ protected:
 	glm::vec2 size;
 	UIObjectType objType;
 	UIObject *parent = nullptr;
+	
 	TextRenderer *rend = nullptr;
 	int id = 0;
 
@@ -83,10 +86,9 @@ protected:
 
 	bool isDown = false;
 	bool isUp = false;
-	
 
 private:
-	std::string GetObjectTypeString();
+	
 };
 
 #endif // UIOBJECT_H

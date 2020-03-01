@@ -91,7 +91,7 @@ void Button::Draw()
 
 void Button::Update(const float dt)
 {
-	if (isEnable() && mouseEvents)
+	if (isEnable() && isMouseEvents())
 	{
 		if (type != ButtonType::TILE)
 		{
@@ -113,7 +113,7 @@ void Button::Update(const float dt)
 
 void Button::ProcessInput()
 {
-	if (mouseEvents)
+	if (isMouseEvents())
 	{
 		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
 		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);

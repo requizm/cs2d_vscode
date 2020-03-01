@@ -17,6 +17,8 @@ public:
 	void Update(const float dt) override;
 	void Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer);
 
+	void OnEnable() override;
+
 	bool isMouseHover() override;
 	bool isMouseDown() override;
 	bool isMouseUp() override;

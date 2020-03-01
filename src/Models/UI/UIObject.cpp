@@ -113,7 +113,6 @@ void UIObject::OnDisable()
 
 void UIObject::ProcessInput()
 {
-	
 }
 
 void UIObject::setPosition(const glm::vec2 position)

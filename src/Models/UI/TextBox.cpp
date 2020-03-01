@@ -35,10 +35,9 @@ void TextBox::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRendere
 			{
 				spriteRenderer.DrawSprite(cursor, glm::vec2(getPosition().x + tempTextSize.x, getPosition().y + 2.0F), glm::vec2(8.0F, 16.0F));
 			}
-			else
+			else if (time >= 1.0F)
 			{
-				if (time >= 1.0F)
-					time = 0.0F;
+				time = 0.0F;
 			}
 			if (!tempText.empty())
 				this->rend->RenderText(tempText, getPosition().x, getPosition().y + 2.0F, scale, labelCurrentColor);
@@ -54,25 +53,21 @@ void TextBox::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRendere
 bool TextBox::isMouseHover()
 {
 	return isMouseHoverM();
-	//return isHover;
 }
 
 bool TextBox::isMouseDown()
 {
 	return isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
-	//return isDown;
 }
 
-bool TextBox::isMouseUp() //refactor: neden beraber degiller
+bool TextBox::isMouseUp() 
 {
 	return isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
-	//return isUp;
 }
 
 bool TextBox::isMousePress()
 {
 	return isMousePressM(GLFW_MOUSE_BUTTON_LEFT);
-	//return isPress;
 }
 
 bool TextBox::isMouseHoverM()
@@ -141,8 +136,7 @@ void TextBox::InputText(const float dt)
 			if (InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT) && !isMouseHover())
 			{
 				this->labelCurrentColor = labelColor;
-				this->text = tempText;
-				this->labelSize = rend->CalculateSize(text, scale);
+				this->setText(tempText);
 				this->tempTextSize = labelSize;
 				this->currentBorderColor = borderColor; //0.6F
 				editMode = false;
