@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 #include "Game_Parameters.h"
 
+int Utils::curIndex = 1;
+
 Utils::Utils()
 {
 }
@@ -53,4 +55,9 @@ glm::ivec2 Utils::PositionToCell(glm::vec2 pos)
 glm::vec2 Utils::CellToPosition(glm::ivec2 cell)
 {
     return glm::vec2((int)cell.x * Game_Parameters::SIZE_TILE, (int)cell.y * Game_Parameters::SIZE_TILE);
+}
+
+int Utils::GenerateID()
+{
+    return curIndex++;
 }

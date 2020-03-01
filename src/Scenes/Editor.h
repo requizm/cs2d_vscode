@@ -76,7 +76,10 @@ private:
 	bool enable = false;
 	float dt = 0;
 
-	Button save_button, new_button, load_button;
+	Button b_save, b_new, b_load;
+
+	std::shared_ptr<Label> l_tile, l_mapSize, l_x;
+	std::shared_ptr<TextBox> t_tile, t_mapSizeX, t_mapSizeY;
 
 	glm::vec3 cell_yellow;
 	glm::vec3 mouse_yellow;

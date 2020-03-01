@@ -66,6 +66,9 @@ public:
 	std::string GetObjectTypeString();
 
 	bool isPressed = false;
+
+	std::vector<UIObject *> childs;
+
 protected:
 	glm::vec2 position;
 	float scale;

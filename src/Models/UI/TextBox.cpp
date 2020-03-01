@@ -50,6 +50,11 @@ void TextBox::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRendere
 	}
 }
 
+void TextBox::OnEnable()
+{
+	this->setText("");
+}
+
 bool TextBox::isMouseHover()
 {
 	return isMouseHoverM();

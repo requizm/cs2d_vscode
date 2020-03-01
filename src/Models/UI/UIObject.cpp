@@ -1,4 +1,6 @@
 #include "UIObject.h"
+#include "../../Others/Utils.h"
+#include <algorithm>
 
 UIObject::UIObject() = default;
 
@@ -16,6 +18,8 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 
 	this->scrollable = false;
 	this->dependParent = false;
+
+	this->setID(Utils::GenerateID());
 }
 
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer, UIObjectType type)
@@ -32,6 +36,8 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 
 	this->scrollable = false;
 	this->dependParent = false;
+
+	this->setID(Utils::GenerateID());
 }
 
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale)
@@ -47,6 +53,8 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale)
 
 	this->scrollable = false;
 	this->dependParent = false;
+
+	this->setID(Utils::GenerateID());
 }
 
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type)
@@ -59,9 +67,11 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType
 	this->enable = true;
 	this->visible = true;
 	this->mouseEvents = true;
-	
+
 	this->scrollable = false;
 	this->dependParent = false;
+
+	this->setID(Utils::GenerateID());
 }
 
 UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer)
@@ -77,6 +87,8 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer)
 
 	this->scrollable = false;
 	this->dependParent = false;
+
+	this->setID(Utils::GenerateID());
 }
 
 UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIObjectType type)
@@ -92,6 +104,8 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIOb
 
 	this->scrollable = false;
 	this->dependParent = false;
+
+	this->setID(Utils::GenerateID());
 }
 
 UIObject::~UIObject() = default;
@@ -185,11 +199,20 @@ void UIObject::setScale(const float scale)
 void UIObject::setParent(UIObject *uiobject, bool dependParent)
 {
 	this->dependParent = dependParent;
+	uiobject->childs.push_back(this);
 	this->parent = uiobject;
 }
 
 void UIObject::removeParent()
 {
+	for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
+	{
+		if (parent->childs[i]->getID() == this->getID())
+		{
+			parent->childs.erase(parent->childs.begin() + i);
+			break;
+		}
+	}
 	this->parent = nullptr;
 }
 
@@ -200,6 +223,10 @@ void UIObject::setVisible(const bool value)
 
 void UIObject::setEnable(const bool value)
 {
+	for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+	{
+		childs[i]->setEnable(value);
+	}
 	if (enable == value)
 		return;
 	this->enable = value;

@@ -14,6 +14,9 @@ public:
     static glm::vec2 ScreenToWorld(glm::vec2 view, glm::vec2 point);
     static glm::ivec2 PositionToCell(glm::vec2 pos);
     static glm::vec2 CellToPosition(glm::ivec2 cell);
+    static int GenerateID();
+
+    static int curIndex; 
 };
 
 #endif

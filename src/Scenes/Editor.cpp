@@ -52,49 +52,62 @@ void Editor::Start()
 	this->buildPanel = std::make_shared<Panel>(glm::vec2(0.0F, 0.0F), "Build Panel", glm::vec2(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), *textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->buildPanel->setMovable(false);
 	this->buildPanel->setEnable(true);
-	this->buildPanel->setID(1);
 
 	this->controlPanel = std::make_shared<Panel>(glm::vec2(5.0F, 5.0F), "Control Panel", glm::vec2(32 * maxCellInColumn, 32 * 2 - 11), *textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->controlPanel->setMovable(false);
 	this->controlPanel->setEnable(true);
-	this->controlPanel->setID(3);
 
 	this->tilePanel = std::make_shared<Panel>(glm::vec2(5.0F, 75.0F), "", glm::vec2(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->tilePanel->setEnable(true);
 	this->tilePanel->setMovable(false);
-	this->tilePanel->setID(2);
 	this->tilePanel->setScrollable(true);
 	this->tilePanel->setOutline(true);
 	this->tilePanel->setOutlineColor(glm::vec3(0.47F));
 
-	this->newPanel = std::make_shared<Panel>(glm::vec2(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", glm::vec2(600, 300), *textRenderer, true, true, 1.0F, glm::vec3(0.21F));
+	this->newPanel = std::make_shared<Panel>(glm::vec2(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", glm::vec2(400, 300), *textRenderer, true, true, 1.0F, glm::vec3(0.21F));
 	this->newPanel->setMovable(false);
 	this->newPanel->setEnable(false);
-	this->newPanel->setID(4);
 
 	Sprite sprite;
 	glm::vec2 pos;
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16, 16); //new_sprite
 	pos = this->controlPanel->getPosition();
-	new_button = Button(sprite, pos, glm::vec2(16.0F));
-	new_button.setOutline(true);
-	new_button.setOutlineColor(glm::vec3(0.45));
-	new_button.setMargin(glm::vec2(8, 8));
+	b_new = Button(sprite, pos, glm::vec2(16.0F));
+	b_new.setOutline(true);
+	b_new.setOutlineColor(glm::vec3(0.45));
+	b_new.setMargin(glm::vec2(8, 8));
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16, 16); //load_sprite
 	pos = glm::vec2(controlPanel->getPosition().x + 30, controlPanel->getPosition().y);
-	load_button = Button(sprite, pos, glm::vec2(16.0F));
-	load_button.setOutline(true);
-	load_button.setOutlineColor(glm::vec3(0.45));
-	load_button.setMargin(glm::vec2(8, 8));
+	b_load = Button(sprite, pos, glm::vec2(16.0F));
+	b_load.setOutline(true);
+	b_load.setOutlineColor(glm::vec3(0.45));
+	b_load.setMargin(glm::vec2(8, 8));
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16, 16); //save_sprite
 	pos = glm::vec2(controlPanel->getPosition().x + 60, controlPanel->getPosition().y);
-	save_button = Button(sprite, pos, glm::vec2(16.0F));
-	save_button.setOutline(true);
-	save_button.setOutlineColor(glm::vec3(0.45));
-	save_button.setMargin(glm::vec2(8, 8));
+	b_save = Button(sprite, pos, glm::vec2(16.0F));
+	b_save.setOutline(true);
+	b_save.setOutlineColor(glm::vec3(0.45));
+	b_save.setMargin(glm::vec2(8, 8));
+
+	t_mapSizeX = std::make_shared<TextBox>(glm::vec2(180.0F, 40.0F), *textRenderer, glm::vec2(60.0F, 20.0F), true, 1.0F, glm::vec3(0.58F));
+	t_mapSizeX->setParent(newPanel.get());
+	t_mapSizeY = std::make_shared<TextBox>(glm::vec2(250.0F, 40.0F), *textRenderer, glm::vec2(60.0F, 20.0F), true, 1.0F, glm::vec3(0.58F));
+	t_mapSizeY->setParent(newPanel.get());
+	t_tile = std::make_shared<TextBox>(glm::vec2(180.0F, 65.0F), *textRenderer, glm::vec2(120.0F, 20.0F), true, 1.0F, glm::vec3(0.58F));
+	t_tile->setParent(newPanel.get());
+
+	l_mapSize = std::make_shared<Label>("Map Size", glm::vec2(40.0F, 40.0F), *textRenderer, 1.0F, glm::vec3(0.58F));
+	l_mapSize->setParent(newPanel.get());
+	l_mapSize->setMouseEvent(false);
+	l_x = std::make_shared<Label>("x", glm::vec2(240.0F, 40.0F), *textRenderer, 1.0F, glm::vec3(0.58F));
+	l_x->setParent(newPanel.get());
+	l_x->setMouseEvent(false);
+	l_tile = std::make_shared<Label>("Tileset", glm::vec2(40.0F, 65.0F), *textRenderer, 1.0F, glm::vec3(0.58F));
+	l_tile->setParent(newPanel.get());
+	l_tile->setMouseEvent(false);
 }
 
 void Editor::OnEnable()
@@ -125,9 +138,12 @@ void Editor::Update(const float dt)
 	this->controlPanel->Update(dt);
 	this->buildPanel->Update(dt);
 	this->tilePanel->Update(dt);
-	this->save_button.Update(dt);
-	this->new_button.Update(dt);
-	this->load_button.Update(dt);
+	this->b_save.Update(dt);
+	this->b_new.Update(dt);
+	this->b_load.Update(dt);
+	this->t_tile->Update(dt);
+	this->t_mapSizeX->Update(dt);
+	this->t_mapSizeY->Update(dt);
 	this->newPanel->Update(dt);
 
 	if (this->tilePanel->isScrollable() && InputManager::scrollYPressed)
@@ -154,9 +170,9 @@ void Editor::ProcessInput(const float dt)
 	this->controlPanel->ProcessInput();
 	this->buildPanel->ProcessInput();
 	this->tilePanel->ProcessInput();
-	this->save_button.ProcessInput();
-	this->new_button.ProcessInput();
-	this->load_button.ProcessInput();
+	this->b_save.ProcessInput();
+	this->b_new.ProcessInput();
+	this->b_load.ProcessInput();
 	this->newPanel->ProcessInput();
 
 	if (!tilesUI.empty())
@@ -174,34 +190,52 @@ void Editor::ProcessInput(const float dt)
 			}
 		}
 	}
+	
+	bool passMovement = false;
+	for (std::vector<int>::size_type i = 0; i != newPanel->childs.size(); i++)
+	{
+		if (newPanel->childs[i]->GetObjectTypeString() == "TextBox")
+		{
+			TextBox *t = dynamic_cast<TextBox *>(newPanel->childs[i]);
+			if (t->editMode)
+			{
+				passMovement = true;
+				break;
+			}
+		}
+	}
 
-	if (InputManager::isKey(GLFW_KEY_W))
+	if (!passMovement)
 	{
-		this->position = glm::vec2(this->position.x, this->position.y - Game_Parameters::SCREEN_HEIGHT * dt);
+		if (InputManager::isKey(GLFW_KEY_W))
+		{
+			this->position = glm::vec2(this->position.x, this->position.y - Game_Parameters::SCREEN_HEIGHT * dt);
+		}
+		if (InputManager::isKey(GLFW_KEY_S))
+		{
+			this->position = glm::vec2(this->position.x, this->position.y + Game_Parameters::SCREEN_HEIGHT * dt);
+		}
+		if (InputManager::isKey(GLFW_KEY_A))
+		{
+			this->position = glm::vec2(this->position.x - Game_Parameters::SCREEN_HEIGHT * dt, this->position.y);
+		}
+		if (InputManager::isKey(GLFW_KEY_D))
+		{
+			this->position = glm::vec2(this->position.x + Game_Parameters::SCREEN_HEIGHT * dt, this->position.y);
+		}
 	}
-	if (InputManager::isKey(GLFW_KEY_S))
-	{
-		this->position = glm::vec2(this->position.x, this->position.y + Game_Parameters::SCREEN_HEIGHT * dt);
-	}
-	if (InputManager::isKey(GLFW_KEY_A))
-	{
-		this->position = glm::vec2(this->position.x - Game_Parameters::SCREEN_HEIGHT * dt, this->position.y);
-	}
-	if (InputManager::isKey(GLFW_KEY_D))
-	{
-		this->position = glm::vec2(this->position.x + Game_Parameters::SCREEN_HEIGHT * dt, this->position.y);
-	}
+
 	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
 	{
 		Game::SetGameState(GameState::MENU);
 	}
 
-	if (new_button.isMouseDown())
+	if (b_new.isMouseDown())
 	{
 		this->newPanel->setEnable(true);
 	}
 
-	if (save_button.isMouseDown())
+	if (b_save.isMouseDown())
 	{
 		SaveMap();
 	}
@@ -263,23 +297,27 @@ void Editor::Render(const float dt)
 	this->controlPanel->Draw(squareRenderer, menuRenderer);
 	this->buildPanel->Draw(squareRenderer, menuRenderer);
 	this->tilePanel->Draw(squareRenderer, menuRenderer);
-	this->save_button.Draw(menuRenderer, squareRenderer);
-	this->new_button.Draw(menuRenderer, squareRenderer);
-	this->load_button.Draw(menuRenderer, squareRenderer);
-	if (newPanel->isEnable())
-	{
-		this->newPanel->Draw(squareRenderer, menuRenderer);
-	}
+	this->b_save.Draw(menuRenderer, squareRenderer);
+	this->b_new.Draw(menuRenderer, squareRenderer);
+	this->b_load.Draw(menuRenderer, squareRenderer);
+
+	this->newPanel->Draw(squareRenderer, menuRenderer);
+	this->t_tile->Draw(squareRenderer, menuRenderer);
+	this->t_mapSizeX->Draw(squareRenderer, menuRenderer);
+	this->t_mapSizeY->Draw(squareRenderer, menuRenderer);
+	this->l_tile->Draw();
+	this->l_mapSize->Draw();
+	this->l_x->Draw();
 
 	if (!tilesUI.empty())
 	{
 		for (auto &tile : tilesUI)
 		{
-			if(firstSelect && selectedTile.frame == tile.getTile().frame)
+			if (firstSelect && selectedTile.frame == tile.getTile().frame)
 			{
 				tile.Draw(menuRenderer, squareRenderer, 0.3F, this->dt, true);
 			}
-			else if(tile.isMouseHover())
+			else if (tile.isMouseHover())
 			{
 				tile.Draw(menuRenderer, squareRenderer, 0.3F, this->dt, false);
 			}
@@ -287,8 +325,6 @@ void Editor::Render(const float dt)
 			{
 				tile.Draw(menuRenderer, squareRenderer);
 			}
-			
-			
 		}
 	}
 }
