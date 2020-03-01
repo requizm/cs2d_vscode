@@ -12,6 +12,13 @@
 //class TextRenderer;
 //class SquareRenderer;
 
+enum ButtonType
+{
+	DEFAULT, //standart buton 
+	TILE, //editor'deki build tile'ları gibi
+	SPRITE //editor'deki save button'u gibi
+};
+
 class Button : public Label
 {
 public:
@@ -68,13 +75,17 @@ protected:
 
 private:
 	//bool isDown = false;
-	bool haveTile;
+
+	//bool haveTile;
 	bool haveOutline;
-	bool haveSprite;
+	//bool haveSprite;
+
+	
 	bool difColor;
 
 	glm::vec3 outlineColor;
 	glm::vec2 margin;
+	ButtonType type;
 };
 
 #endif // BUTTON_H

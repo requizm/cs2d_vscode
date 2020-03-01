@@ -11,37 +11,47 @@ Button::Button(const std::string &text, glm::vec2 position, TextRenderer &render
 {
 	this->buttonColor = buttonColor;
 	this->haveOutline = false;
-	this->haveTile = false;
+
+	this->type = ButtonType::DEFAULT;
 	this->difColor = false;
-	this->haveSprite = false;
+	/*this->haveTile = false;
+	this->difColor = false;
+	this->haveSprite = false;*/
 }
 
 Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON)
 {
-	this->difColor = difColor;
-	this->haveOutline = false;
-	this->haveTile = false;
-	this->haveSprite = true;
 	this->sprite = sprite;
+	this->haveOutline = false;
+	this->difColor = difColor;
+	this->type = ButtonType::SPRITE;
+	/*this->haveTile = false;
+	this->haveSprite = true;*/
 }
 
 Button::Button(Tile &tile, float scale) : Label(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::BUTTON)
 {
 	this->tile = tile;
-	this->haveTile = true;
-	this->haveSprite = false;
-	this->difColor = false;
 	this->haveOutline = false;
+	this->difColor = false;
+	this->type = ButtonType::TILE;
+	/*this->haveTile = true;
+	this->haveSprite = false;*/
 }
 
 Button::~Button() = default;
 
 void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
-	if (isVisible() && isEnable() && isRenderable())
+	if (isVisible() && isEnable() /*&& isRenderable()*/)
 	{
-		if (!haveTile)
+		switch (type)
 		{
+		case ButtonType::DEFAULT:
+			Label::Draw();
+			break;
+
+		case ButtonType::SPRITE:
 			if (difColor)
 			{
 				spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize(), currentColor);
@@ -58,10 +68,10 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 					spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize());
 				}
 			}
-		}
-		else
-		{
+			break;
+		case ButtonType::TILE:
 			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize());
+			break;
 		}
 	}
 }
@@ -83,7 +93,7 @@ void Button::Update(const float dt)
 {
 	if (isEnable() && mouseEvents)
 	{
-		if (!haveTile)
+		if (type != ButtonType::TILE)
 		{
 			if (isMousePress())
 			{
@@ -112,7 +122,7 @@ void Button::ProcessInput()
 
 glm::vec2 Button::getPosition()
 {
-	if (haveTile)
+	if (type == ButtonType::TILE)
 	{
 		if (isParent())
 		{
@@ -129,7 +139,7 @@ glm::vec2 Button::getPosition()
 
 glm::vec2 Button::getLocalPosition()
 {
-	if (haveTile)
+	if (type == ButtonType::TILE)
 	{
 		if (isParent())
 		{
@@ -146,7 +156,7 @@ glm::vec2 Button::getLocalPosition()
 
 glm::vec2 Button::getSize()
 {
-	if (haveTile)
+	if (type == ButtonType::TILE)
 	{
 		return tile.GetSize();
 	}
@@ -265,7 +275,7 @@ void Button::setMargin(const glm::vec2 value)
 
 void Button::setPosition(const glm::vec2 position)
 {
-	if (haveTile)
+	if (type == ButtonType::TILE)
 	{
 		this->tile.SetPosition(position);
 	}
@@ -275,7 +285,7 @@ void Button::setPosition(const glm::vec2 position)
 
 void Button::setPosition(const int x, const int y)
 {
-	if (haveTile)
+	if (type == ButtonType::TILE)
 	{
 		this->tile.SetPosition(x, y);
 	}
