@@ -1,7 +1,7 @@
 CXX      := g++
-CXXFLAGS := -Wall -std=c++17
+CXXFLAGS := -w -std=c++17 -m32
 LDFLAGS  := -L./lib
-LIB_F = -lglew32s -lglew32 -lglfw3 -lopengl32 -lfreetype
+LIB_F = -lglew32s -lglew32 -lglfw3 -lopengl32 -lfreetype 
 BUILD    := ./build
 OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := ./bin
