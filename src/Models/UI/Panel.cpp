@@ -92,7 +92,7 @@ void Panel::Update(const float dt)
 void Panel::ProcessInput()
 {
 	escapeButton.ProcessInput();
-	if (isMouseEvents() && isEnable())
+	if (isMouseEvents())
 	{
 		if (isMovable())
 		{
@@ -115,6 +115,7 @@ void Panel::OnEnable()
 		escapeButton.setVisible(true);
 		title.setVisible(true);
 	}
+	
 }
 
 void Panel::OnDisable()
