@@ -18,6 +18,9 @@ public:
 	void Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer);
 
 	void OnEnable() override;
+	void OnDisable() override;
+
+	void setText(const std::string &text) override;
 
 	bool isMouseHover() override;
 	bool isMouseDown() override;
@@ -37,8 +40,6 @@ public:
 
 
 private:
-	std::string tempText;
-	glm::vec2 tempTextSize;
 	float time = 0.0F;
 	Sprite cursor; //refactor: bunun optimize bir yol oldugundan emin degilim
 	glm::vec3 currentBorderColor, hoverBorderColor, clickBorderColor, borderColor;

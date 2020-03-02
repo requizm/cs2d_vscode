@@ -33,28 +33,31 @@ void TextBox::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRendere
 		{
 			if (time <= 0.5F)
 			{
-				spriteRenderer.DrawSprite(cursor, glm::vec2(getPosition().x + tempTextSize.x, getPosition().y + 2.0F), glm::vec2(8.0F, 16.0F));
+				spriteRenderer.DrawSprite(cursor, glm::vec2(getPosition().x + labelSize.x, getPosition().y + 2.0F), glm::vec2(8.0F, 16.0F));
 			}
 			else if (time >= 1.0F)
 			{
 				time = 0.0F;
 			}
-			if (!tempText.empty())
-				this->rend->RenderText(tempText, getPosition().x, getPosition().y + 2.0F, scale, labelCurrentColor);
 		}
-		else
-		{
-			if (!text.empty())
-				this->rend->RenderText(tempText, getPosition().x, getPosition().y + 2.0F, scale, labelCurrentColor);
-		}
+		this->rend->RenderText(getText(), getPosition().x, getPosition().y + 2.0F, scale, labelCurrentColor);
 	}
 }
 
 void TextBox::OnEnable()
 {
 	this->setText("");
-	this->tempText = "";
-	this->tempTextSize = rend->CalculateSize(tempText, scale);
+}
+
+void TextBox::OnDisable()
+{
+	this->editMode = false;
+}
+
+void TextBox::setText(const std::string &text)
+{
+	this->text = text;
+	this->labelSize = rend->CalculateSize(text, scale);
 }
 
 bool TextBox::isMouseHover()
@@ -67,7 +70,7 @@ bool TextBox::isMouseDown()
 	return isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
 }
 
-bool TextBox::isMouseUp() 
+bool TextBox::isMouseUp()
 {
 	return isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 }
@@ -127,9 +130,9 @@ bool TextBox::isMousePressM(const int key)
 
 void TextBox::InputText(const float dt)
 {
-	if (editable)
+	if (editable && isEnable())
 	{
-		if (isEnable() && isMouseDown())
+		if ( isMouseDown())
 		{
 			editMode = true;
 			time = 0.0F;
@@ -137,24 +140,22 @@ void TextBox::InputText(const float dt)
 			currentBorderColor = clickBorderColor; //1.0F
 		}
 
-		if (editMode && isEnable())
+		if (editMode)
 		{
 			time += dt;
 			if (InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT) && !isMouseHover())
 			{
 				this->labelCurrentColor = labelColor;
-				this->setText(tempText);
-				this->tempTextSize = labelSize;
 				this->currentBorderColor = borderColor; //0.6F
 				editMode = false;
 			}
 
 			if (InputManager::isKeyDown(GLFW_KEY_BACKSPACE))
 			{
-				if (!tempText.empty())
+				if (!text.empty())
 				{
-					tempText.pop_back();
-					this->tempTextSize = rend->CalculateSize(tempText, scale);
+					text.pop_back();
+					this->labelSize = rend->CalculateSize(text, scale);
 				}
 			}
 
@@ -167,14 +168,14 @@ void TextBox::InputText(const float dt)
 					std::wstring tempString = &c[0];
 					std::string afsaf;
 					afsaf = tempString[0];
-					this->tempText += afsaf;
-					if (rend->CalculateSize(tempText, scale).x >= size.x)
+					this->text += afsaf;
+					if (rend->CalculateSize(text, scale).x >= size.x)
 					{
-						tempText.pop_back();
+						text.pop_back();
 					}
 					else
 					{
-						this->tempTextSize = rend->CalculateSize(tempText, scale);
+						this->labelSize = rend->CalculateSize(text, scale);
 					}
 				}
 				InputManager::keycode = L'\0';
