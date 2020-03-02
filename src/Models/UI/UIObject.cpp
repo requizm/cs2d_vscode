@@ -20,6 +20,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
+	this->childs.clear();
 }
 
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer, UIObjectType type)
@@ -38,6 +39,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
+	this->childs.clear();
 }
 
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale)
@@ -55,6 +57,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale)
 	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
+	this->childs.clear();
 }
 
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type)
@@ -72,6 +75,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType
 	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
+	this->childs.clear();
 }
 
 UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer)
@@ -89,6 +93,7 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer)
 	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
+	this->childs.clear();
 }
 
 UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIObjectType type)
@@ -106,6 +111,7 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIOb
 	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
+	this->childs.clear();
 }
 
 UIObject::~UIObject() = default;
@@ -117,12 +123,12 @@ void UIObject::Update(const float dt)
 
 void UIObject::OnEnable()
 {
-	Logger::WriteLog("" + GetObjectTypeString() + "->OnEnable()");
+	//Logger::WriteLog("" + GetObjectTypeString() + "->OnEnable()");
 }
 
 void UIObject::OnDisable()
 {
-	Logger::WriteLog("" + GetObjectTypeString() + "->OnDisable()");
+	//Logger::WriteLog("" + GetObjectTypeString() + "->OnDisable()");
 }
 
 void UIObject::ProcessInput()
@@ -184,11 +190,11 @@ glm::vec2 UIObject::getCenterPosition() const
 	return glm::vec2(this->position.x + this->size.x / 2, this->position.y + this->size.y / 2);
 }
 
-UIObject UIObject::getParent() const
+UIObject *UIObject::getParent() const
 {
 	if (isParent())
-		return *parent;
-	//no parent
+		return parent;
+	return nullptr;
 }
 
 void UIObject::setScale(const float scale)
@@ -223,10 +229,14 @@ void UIObject::setVisible(const bool value)
 
 void UIObject::setEnable(const bool value)
 {
-	for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+	if (!childs.empty())
 	{
-		childs[i]->setEnable(value);
+		for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+		{
+			childs[i]->setEnable(value);
+		}
 	}
+
 	if (enable == value)
 		return;
 	this->enable = value;
@@ -297,15 +307,18 @@ bool UIObject::isRenderable()
 {
 	if (this->isParent())
 	{
-		UIObject p = this->getParent();
-		if (p.isScrollable())
+		UIObject *p = this->getParent();
+		if (p->isScrollable())
 		{
-			if ((getLocalPosition().y + getSize().y <= p.getSize().y) && getLocalPosition().y >= 0)
+			if ((getLocalPosition().y + getSize().y <= p->getSize().y) && getLocalPosition().y >= 0)
 			{
+				p = nullptr;
 				return true;
 			}
+			p = nullptr;
 			return false;
 		}
+		p = nullptr;
 		return true;
 	}
 	return true;

@@ -37,7 +37,7 @@ public:
 	virtual glm::vec2 getSize();
 	virtual glm::vec2 getCenterPosition() const;
 	virtual glm::vec2 getLocalPosition();
-	UIObject getParent() const;
+	UIObject* getParent() const;
 	float getScale() const;
 	bool isParent() const;
 	bool isVisible() const;
