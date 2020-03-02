@@ -41,15 +41,22 @@ Button::Button(Tile &tile, float scale) : Label(tile.GetPosition(), tile.GetSize
 
 Button::~Button() = default;
 
-void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
+void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, const bool value)
 {
 	if (isVisible() && isEnable() && isRenderable())
 	{
 		switch (type)
 		{
 		case ButtonType::DEFAULT:
-			squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, glm::vec3(1.0F), 1.0F, 1.0F, 0.0F);
-			Label::DrawForButton();
+			if (haveOutline)
+			{
+				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, outlineColor, 1.0F, 1.0F, 0.0F);
+			}
+			else
+			{
+				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, outlineColor, 0.0F, 1.0F, 0.0F);
+			}
+			Label::DrawForButton(value);
 			break;
 
 		case ButtonType::SPRITE:
@@ -61,12 +68,14 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 			{
 				if (haveOutline)
 				{
+					squareRenderer.ui_RenderFilledSquare(this->getPosition(), glm::vec2(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
 					squareRenderer.ui_RenderEmptySquare(this->getPosition(), glm::vec2(this->getSize().x + margin.x, this->getSize().y + margin.y), this->outlineColor);
 					spriteRenderer.DrawSprite(this->sprite, glm::vec2(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
 				}
 				else
 				{
-					spriteRenderer.DrawSprite(this->sprite, this->getPosition(), this->getSize());
+					squareRenderer.ui_RenderFilledSquare(this->getPosition(), glm::vec2(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
+					spriteRenderer.DrawSprite(this->sprite, glm::vec2(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
 				}
 			}
 			break;
@@ -81,7 +90,11 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 {
 	if (isVisible() && isEnable() && isRenderable())
 	{
-		spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize(), 0.0F, false, shine, selected, dt);
+		switch (type)
+		{
+		case ButtonType::TILE:
+			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize(), 0.0F, false, shine, selected, dt);
+		}
 	}
 }
 
@@ -138,10 +151,7 @@ void Button::ProcessInput()
 {
 	if (isMouseEvents())
 	{
-		if (isEnable())
-		{
-			isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
-		}
+		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
 		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 	}
 }

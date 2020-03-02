@@ -40,7 +40,7 @@ public:
 	glm::vec3 getLabelMouseHoverColor() const;
 	glm::vec3 getLabelClickColor() const;
 
-	void setText(const std::string &text);
+	virtual void setText(const std::string &text);
 	void setLabelColor(const glm::vec3 color);
 	void setLabelMouseHoverColor(const glm::vec3 color);
 	void setLabelClickColor(const glm::vec3 color);
@@ -64,12 +64,12 @@ protected:
 	/**
 	*Button icindeki text'i render ederken kullanilacak
 	*/
-	void DrawForButton();
+	void DrawForButton(const bool center);
 
 	/**
 	*Button icindeki text'in pozisyonunu alirken kullanilacak
 	*/
-	glm::vec2 getPositionForButton();
+	glm::vec2 getPositionForButton(const bool center);
 
 	virtual bool isMouseHoverM();
 	virtual bool isMouseDownM(const int key);

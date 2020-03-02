@@ -35,10 +35,10 @@ void Label::Draw()
 		this->rend->RenderText(text, getPosition(), scale, labelCurrentColor);
 }
 
-void Label::DrawForButton()
+void Label::DrawForButton(const bool center)
 {
 	if (isVisible() && isEnable() && !text.empty())
-		this->rend->RenderText(text, getPositionForButton(), scale, labelCurrentColor);
+		this->rend->RenderText(text, getPositionForButton(center), scale, labelCurrentColor);
 }
 
 void Label::Update(const float dt)
@@ -67,10 +67,7 @@ void Label::ProcessInput()
 {
 	if (isMouseEvents())
 	{
-		if (isEnable())
-		{
-			isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
-		}
+		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
 		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 	}
 }
@@ -115,20 +112,31 @@ bool Label::isMousePress()
 	//return isPress;
 }
 
-glm::vec2 Label::getPositionForButton()
+glm::vec2 Label::getPositionForButton(const bool center)
 {
 	if (isParent())
 	{
 		if (objType == UIObjectType::BUTTON)
 		{
-			glm::vec2 dif = getSize() - getLabelSize(); dif.x /= 2; dif.y /=2;
-			return parent->getPosition() + this->position + dif;
+			glm::vec2 dif = getSize() - getLabelSize();
+			dif.y /= 2;
+			if (center)
+			{
+				dif.x /= 2;
+				return parent->getPosition() + this->position + dif;
+			}
+			return parent->getPosition() + this->position + glm::vec2(0.0F, dif.y);
 		}
 		return parent->getPosition() + this->position;
 	}
 	if (objType == UIObjectType::BUTTON)
 	{
-		glm::vec2 dif = getSize() - getLabelSize(); dif.x /= 2; dif.y /=2;
+		glm::vec2 dif = getSize() - getLabelSize();
+		dif.y /= 2;
+		if (center)
+		{
+			dif.x /= 2;
+		}
 		return this->position + dif;
 	}
 	return this->position;

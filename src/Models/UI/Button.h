@@ -28,7 +28,7 @@ public:
 	Button(Tile &tile, float scale = 1.0F);
 	~Button();
 
-	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
+	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, const bool value = true);
 
 	/**
  	* Bu fonksiyon sadece editor'deki uiButton'lar icin kullanilacak!
@@ -77,7 +77,7 @@ private:
 	//bool isDown = false;
 
 	//bool haveTile;
-	bool haveOutline;
+	bool haveOutline = true;
 	//bool haveSprite;
 
 	
