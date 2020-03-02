@@ -57,7 +57,10 @@
         "mutex": "cpp",
         "shared_mutex": "cpp",
         "thread": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "codecvt": "cpp",
+        "filesystem": "cpp",
+        "optional": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
