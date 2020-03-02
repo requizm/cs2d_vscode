@@ -45,8 +45,12 @@ public:
 
 private:
 	void SaveMap();
+
 	void NewMap(std::string tileSet, glm::vec2 mapSize);
 	bool B_NewMap();
+
+	void LoadMap(std::string mapPath);
+	void B_LoadMap();
 
 	std::shared_ptr<TextRenderer> textRenderer;
 	SpriteRenderer menuRenderer;
@@ -61,6 +65,12 @@ private:
 	std::shared_ptr<Panel> tilePanel;
 
 	std::shared_ptr<Panel> newPanel;
+
+	std::shared_ptr<Panel> loadPanel, mapsPanel;
+	std::shared_ptr<Button> b_map_load;
+	std::vector<Button> mapsUI;
+	std::shared_ptr<TextBox> t_load;
+	int selectedMap = -1;
 
 	std::vector<Button> tilesUI;
 	glm::ivec2 texture;
@@ -82,6 +92,9 @@ private:
 	std::shared_ptr<Label> l_tile, l_mapSize, l_x;
 	std::shared_ptr<TextBox> t_tile, t_mapSizeX, t_mapSizeY;
 	std::shared_ptr<Button> b_okey, b_cancel;
+	std::vector<std::string> maps;
+	std::string currentTileSet;
+	std::string currentName;
 
 	glm::vec3 cell_yellow;
 	glm::vec3 mouse_yellow;

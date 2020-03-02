@@ -1,72 +1,153 @@
 <map>
 	<tile>
-		<tileTexture>24</tileTexture>
+		<tileTexture>0</tileTexture>
+		<cellX>0</cellX>
+		<cellY>0</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>29</tileTexture>
+		<cellX>0</cellX>
+		<cellY>1</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>29</tileTexture>
+		<cellX>0</cellX>
+		<cellY>2</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>29</tileTexture>
+		<cellX>0</cellX>
+		<cellY>3</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>29</tileTexture>
+		<cellX>0</cellX>
+		<cellY>4</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>29</tileTexture>
+		<cellX>0</cellX>
+		<cellY>5</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>0</tileTexture>
+		<cellX>1</cellX>
+		<cellY>0</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>0</tileTexture>
+		<cellX>1</cellX>
+		<cellY>1</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>29</tileTexture>
+		<cellX>1</cellX>
+		<cellY>2</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>29</tileTexture>
+		<cellX>1</cellX>
+		<cellY>3</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>0</tileTexture>
+		<cellX>1</cellX>
+		<cellY>4</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>37</tileTexture>
+		<cellX>1</cellX>
+		<cellY>5</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>0</tileTexture>
 		<cellX>2</cellX>
 		<cellY>0</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>3</cellX>
+		<tileTexture>0</tileTexture>
+		<cellX>2</cellX>
 		<cellY>1</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>3</cellX>
+		<tileTexture>0</tileTexture>
+		<cellX>2</cellX>
 		<cellY>2</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>4</cellX>
-		<cellY>1</cellY>
-		<tileType>2</tileType>
-	</tile>
-	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>5</cellX>
-		<cellY>1</cellY>
-		<tileType>2</tileType>
-	</tile>
-	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>5</cellX>
-		<cellY>2</cellY>
-		<tileType>2</tileType>
-	</tile>
-	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>5</cellX>
+		<tileTexture>29</tileTexture>
+		<cellX>2</cellX>
 		<cellY>3</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>6</cellX>
+		<tileTexture>29</tileTexture>
+		<cellX>2</cellX>
+		<cellY>4</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>37</tileTexture>
+		<cellX>2</cellX>
+		<cellY>5</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>0</tileTexture>
+		<cellX>3</cellX>
+		<cellY>0</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>0</tileTexture>
+		<cellX>3</cellX>
 		<cellY>1</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>6</cellX>
+		<tileTexture>12</tileTexture>
+		<cellX>3</cellX>
 		<cellY>2</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>8</cellX>
+		<tileTexture>12</tileTexture>
+		<cellX>3</cellX>
+		<cellY>3</cellY>
+		<tileType>2</tileType>
+	</tile>
+	<tile>
+		<tileTexture>0</tileTexture>
+		<cellX>3</cellX>
 		<cellY>4</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>24</tileTexture>
-		<cellX>10</cellX>
-		<cellY>4</cellY>
+		<tileTexture>0</tileTexture>
+		<cellX>3</cellX>
+		<cellY>5</cellY>
 		<tileType>2</tileType>
 	</tile>
 </map>
 <info>
 	<name>de_test1</name>
+	<tileSet>cs2dnorm</tileSet>
+	<mapLimitX>4</mapLimitX>
+	<mapLimitY>6</mapLimitY>
 </info>
 
