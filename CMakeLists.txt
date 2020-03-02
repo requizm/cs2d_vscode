@@ -54,7 +54,7 @@ include_directories(
 )
 
 # Define the link libraries
-target_link_libraries(${PROJECT_NAME} ${LIBS})
+target_link_libraries(${PROJECT_NAME} ${LIBS} "c++experimental")
 
 # Copy dlls
 #if(WIN32)
