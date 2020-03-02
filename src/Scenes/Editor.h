@@ -45,7 +45,8 @@ public:
 
 private:
 	void SaveMap();
-	void Button_NewMap(std::string tileSet, glm::vec2 mapSize);
+	void NewMap(std::string tileSet, glm::vec2 mapSize);
+	bool B_NewMap();
 
 	std::shared_ptr<TextRenderer> textRenderer;
 	SpriteRenderer menuRenderer;
@@ -80,6 +81,7 @@ private:
 
 	std::shared_ptr<Label> l_tile, l_mapSize, l_x;
 	std::shared_ptr<TextBox> t_tile, t_mapSizeX, t_mapSizeY;
+	std::shared_ptr<Button> b_okey, b_cancel;
 
 	glm::vec3 cell_yellow;
 	glm::vec3 mouse_yellow;

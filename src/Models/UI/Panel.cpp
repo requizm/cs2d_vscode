@@ -92,7 +92,7 @@ void Panel::Update(const float dt)
 void Panel::ProcessInput()
 {
 	escapeButton.ProcessInput();
-	if (mouseEvents)
+	if (isMouseEvents() && isEnable())
 	{
 		if (isMovable())
 		{
@@ -102,8 +102,8 @@ void Panel::ProcessInput()
 		{
 			isMouseDownForMouse(GLFW_MOUSE_BUTTON_LEFT);
 		}
+		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 	}
-	isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 }
 
 void Panel::OnEnable()

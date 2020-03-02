@@ -15,6 +15,8 @@ public:
     static glm::ivec2 PositionToCell(glm::vec2 pos);
     static glm::vec2 CellToPosition(glm::ivec2 cell);
     static int GenerateID();
+    static bool TryStringToInt(const char *s);
+    static int StringToInt(const char *s);
 
     static int curIndex; 
 };

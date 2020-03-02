@@ -33,7 +33,7 @@ Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRe
 	this->mapLimit = glm::ivec2(0);
 	this->texture = glm::vec2(0.0F);
 
-	this->SetEnable(true);
+	//this->SetEnable(true);
 }
 
 Editor::~Editor() = default;
@@ -64,7 +64,7 @@ void Editor::Start()
 	this->tilePanel->setOutline(true);
 	this->tilePanel->setOutlineColor(glm::vec3(0.47F));
 
-	this->newPanel = std::make_shared<Panel>(glm::vec2(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", glm::vec2(400, 300), *textRenderer, true, true, 1.0F, glm::vec3(0.21F));
+	this->newPanel = std::make_shared<Panel>(glm::vec2(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", glm::vec2(400, 135), *textRenderer, true, true, 1.0F, glm::vec3(0.21F));
 	this->newPanel->setMovable(false);
 	this->newPanel->setEnable(false);
 
@@ -108,12 +108,18 @@ void Editor::Start()
 	l_tile = std::make_shared<Label>("Tileset", glm::vec2(40.0F, 65.0F), *textRenderer, 1.0F, glm::vec3(0.58F));
 	l_tile->setParent(newPanel.get());
 	l_tile->setMouseEvent(false);
+	b_okey = std::make_shared<Button>("Okay", glm::vec2(50.0F, 105.0F), glm::vec2(60.0F, 20.0F), *textRenderer, glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	b_okey->setMouseClickColor(glm::vec3(0.30F));
+	b_okey->setMouseHoverColor(glm::vec3(0.30F));
+	b_okey->setLabelMouseHoverColor(glm::vec3(0.58F));
+	b_okey->setLabelClickColor(glm::vec3(1.0F));
+	b_okey->setParent(newPanel.get());
 }
 
 void Editor::OnEnable()
 {
 	Start();
-	Button_NewMap("cs2dnorm", glm::vec2(50));
+	NewMap("cs2dnorm", glm::vec2(50));
 }
 
 void Editor::OnDisable()
@@ -145,6 +151,7 @@ void Editor::Update(const float dt)
 	this->t_mapSizeX->Update(dt);
 	this->t_mapSizeY->Update(dt);
 	this->newPanel->Update(dt);
+	this->b_okey->Update(dt);
 
 	if (this->tilePanel->isScrollable() && InputManager::scrollYPressed)
 	{
@@ -174,6 +181,7 @@ void Editor::ProcessInput(const float dt)
 	this->b_new.ProcessInput();
 	this->b_load.ProcessInput();
 	this->newPanel->ProcessInput();
+	this->b_okey->ProcessInput();
 
 	if (!tilesUI.empty())
 	{
@@ -190,7 +198,7 @@ void Editor::ProcessInput(const float dt)
 			}
 		}
 	}
-	
+
 	bool passMovement = false;
 	for (std::vector<int>::size_type i = 0; i != newPanel->childs.size(); i++)
 	{
@@ -228,6 +236,11 @@ void Editor::ProcessInput(const float dt)
 	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
 	{
 		Game::SetGameState(GameState::MENU);
+	}
+
+	if (b_okey->isMouseDown())
+	{
+		B_NewMap();
 	}
 
 	if (b_new.isMouseDown())
@@ -308,6 +321,7 @@ void Editor::Render(const float dt)
 	this->l_tile->Draw();
 	this->l_mapSize->Draw();
 	this->l_x->Draw();
+	this->b_okey->Draw(menuRenderer, squareRenderer);
 
 	if (!tilesUI.empty())
 	{
@@ -376,7 +390,7 @@ void Editor::SaveMap()
 	}
 }
 
-void Editor::Button_NewMap(std::string tileSet, glm::vec2 mapSize)
+void Editor::NewMap(std::string tileSet, glm::vec2 mapSize)
 {
 	this->dt = 0.0F;
 	position = glm::vec2(0.0F);
@@ -390,6 +404,8 @@ void Editor::Button_NewMap(std::string tileSet, glm::vec2 mapSize)
 	texture.y = ResourceManager::GetTexture(tileSet).Height / 32;
 	tileCount = texture.x * texture.y;
 
+	InputManager::scroll.y = 0.0F;
+
 	int curIndex = 0;
 	for (int i = 0; i < tileCount; i++)
 	{
@@ -397,9 +413,9 @@ void Editor::Button_NewMap(std::string tileSet, glm::vec2 mapSize)
 		const int yPos = 32 * (curIndex / maxCellInColumn);
 		const glm::vec2 pos(xPos, yPos);
 		const glm::vec2 size(glm::vec2(32, 32));
-		const int xoffset = curIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
-		const int yoffset = curIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
-		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
+		const int xoffset = curIndex % (ResourceManager::GetTexture(tileSet).Width / 32);
+		const int yoffset = curIndex / (ResourceManager::GetTexture(tileSet).Width / 32);
+		const Sprite sprite = Sprite(ResourceManager::GetTexture(tileSet), (xoffset)*32, yoffset * 32, 32, 32);
 		Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
 		Button button = Button(tile);
 		button.setParent(tilePanel.get(), true);
@@ -414,4 +430,39 @@ void Editor::Button_NewMap(std::string tileSet, glm::vec2 mapSize)
 			tiles.push_back(t);
 		}
 	}
+}
+
+bool Editor::B_NewMap()
+{
+	std::string sizeX = t_mapSizeX->getText();
+	std::string sizeY = t_mapSizeY->getText();
+	std::string tileSet = t_tile->getText();
+	if (sizeX.empty() || sizeY.empty() || tileSet.empty())
+	{
+		Logger::DebugLog("BOS");
+		return false;
+	}
+	if (ResourceManager::GetTexture(tileSet).Width == 0)
+	{
+		Logger::DebugLog("BOYLE BIR TEXTURE YOK");
+		return false;
+	}
+	if (!Utils::TryStringToInt(sizeX.c_str()) || !Utils::TryStringToInt(sizeY.c_str()))
+	{
+		Logger::DebugLog("BUNLAR SAYI DEGIL");
+		return false;
+	}
+
+	int isizeX = Utils::StringToInt(sizeX.c_str());
+	int isizeY = Utils::StringToInt(sizeY.c_str());
+
+	if (isizeX <= 0 || isizeY <= 0)
+	{
+		Logger::DebugLog("BUNLAR NEGATIF");
+		return false;
+	}
+
+	Start();
+	NewMap(tileSet, glm::vec2(isizeX, isizeY));
+	return true;
 }

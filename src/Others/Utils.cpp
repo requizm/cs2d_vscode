@@ -61,3 +61,49 @@ int Utils::GenerateID()
 {
     return curIndex++;
 }
+
+bool Utils::TryStringToInt(char const *s)
+{
+    if (s == NULL || *s == '\0')
+        return false;
+
+    bool negate = (s[0] == '-');
+    if (*s == '+' || *s == '-')
+        ++s;
+
+    if (*s == '\0')
+        return false;
+
+    int result = 0;
+    while (*s)
+    {
+        if (*s >= '0' && *s <= '9')
+        {
+            result = result * 10 - (*s - '0'); //assume negative number
+        }
+        else
+            return false;
+        ++s;
+    }
+    return true;
+}
+
+int Utils::StringToInt(char const *s)
+{
+    bool negate = (s[0] == '-');
+    if (*s == '+' || *s == '-')
+        ++s;
+
+    int result = 0;
+    while (*s)
+    {
+        if (*s >= '0' && *s <= '9')
+        {
+            result = result * 10 - (*s - '0'); //assume negative number
+        }
+        else
+            return false;
+        ++s;
+    }
+    return negate ? result : -result;
+}

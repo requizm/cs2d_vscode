@@ -35,6 +35,12 @@ void Label::Draw()
 		this->rend->RenderText(text, getPosition(), scale, labelCurrentColor);
 }
 
+void Label::DrawForButton()
+{
+	if (isVisible() && isEnable() && !text.empty())
+		this->rend->RenderText(text, getPositionForButton(), scale, labelCurrentColor);
+}
+
 void Label::Update(const float dt)
 {
 	if (isEnable() && isMouseEvents())
@@ -61,7 +67,10 @@ void Label::ProcessInput()
 {
 	if (isMouseEvents())
 	{
-		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
+		if (isEnable())
+		{
+			isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
+		}
 		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 	}
 }
@@ -104,6 +113,25 @@ bool Label::isMousePress()
 {
 	return isMousePressM(GLFW_MOUSE_BUTTON_LEFT);
 	//return isPress;
+}
+
+glm::vec2 Label::getPositionForButton()
+{
+	if (isParent())
+	{
+		if (objType == UIObjectType::BUTTON)
+		{
+			glm::vec2 dif = getSize() - getLabelSize(); dif.x /= 2; dif.y /=2;
+			return parent->getPosition() + this->position + dif;
+		}
+		return parent->getPosition() + this->position;
+	}
+	if (objType == UIObjectType::BUTTON)
+	{
+		glm::vec2 dif = getSize() - getLabelSize(); dif.x /= 2; dif.y /=2;
+		return this->position + dif;
+	}
+	return this->position;
 }
 
 glm::vec3 Label::getLabelColor() const
@@ -158,7 +186,7 @@ bool Label::isMouseHoverM()
 
 bool Label::isMouseDownM(const int key)
 {
-	if(isPressed && isDown)
+	if (isPressed && isDown)
 	{
 		isDown = false;
 		return false;

@@ -7,11 +7,11 @@ Button::Button() = default;
 	this->sprite = sprite;
 }*/
 
-Button::Button(const std::string &text, glm::vec2 position, TextRenderer &renderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON)
+Button::Button(const std::string &text, glm::vec2 position, glm::vec2 size, TextRenderer &renderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON)
 {
 	this->buttonColor = buttonColor;
 	this->haveOutline = false;
-
+	this->setSize(size);
 	this->type = ButtonType::DEFAULT;
 	this->difColor = false;
 	/*this->haveTile = false;
@@ -43,12 +43,13 @@ Button::~Button() = default;
 
 void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
-	if (isVisible() && isEnable() /*&& isRenderable()*/)
+	if (isVisible() && isEnable() && isRenderable())
 	{
 		switch (type)
 		{
 		case ButtonType::DEFAULT:
-			Label::Draw();
+			squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, glm::vec3(1.0F), 1.0F, 1.0F, 0.0F);
+			Label::DrawForButton();
 			break;
 
 		case ButtonType::SPRITE:
@@ -86,14 +87,36 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 
 void Button::Draw()
 {
-	Label::Draw();
+	if (isVisible() && isEnable())
+	{
+		Label::Draw();
+	}
 }
 
 void Button::Update(const float dt)
 {
+
 	if (isEnable() && isMouseEvents())
 	{
-		if (type != ButtonType::TILE)
+		if (type == ButtonType::DEFAULT && !text.empty())
+		{
+			if (isMousePress())
+			{
+				currentColor = mouseclickColor;
+				labelCurrentColor = labelClickColor;
+			}
+			else if (isMouseHover())
+			{
+				currentColor = mouseHoverColor;
+				labelCurrentColor = labelMouseHoverColor;
+			}
+			else
+			{
+				currentColor = buttonColor;
+				labelCurrentColor = labelColor;
+			}
+		}
+		else if (type == ButtonType::SPRITE)
 		{
 			if (isMousePress())
 			{
@@ -115,7 +138,10 @@ void Button::ProcessInput()
 {
 	if (isMouseEvents())
 	{
-		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
+		if (isEnable())
+		{
+			isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
+		}
 		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 	}
 }
@@ -165,7 +191,9 @@ glm::vec2 Button::getSize()
 
 bool Button::isMouseHover()
 {
-	return isMouseHoverM();
+	if (isEnable() && isMouseEvents())
+		return isMouseHoverM();
+	return false;
 }
 
 bool Button::isMouseDown()
@@ -180,8 +208,9 @@ bool Button::isMouseUp()
 
 bool Button::isMousePress()
 {
-	return isMousePressM(GLFW_MOUSE_BUTTON_LEFT);
-	//return isPress;
+	if (isEnable())
+		return isMousePressM(GLFW_MOUSE_BUTTON_LEFT);
+	return false;
 }
 
 bool Button::isMouseHoverM()

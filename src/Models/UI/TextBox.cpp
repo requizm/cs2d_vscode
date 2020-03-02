@@ -53,6 +53,8 @@ void TextBox::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRendere
 void TextBox::OnEnable()
 {
 	this->setText("");
+	this->tempText = "";
+	this->tempTextSize = rend->CalculateSize(tempText, scale);
 }
 
 bool TextBox::isMouseHover()

@@ -21,6 +21,10 @@ public:
 	~Label();
 
 	void Draw();
+
+	
+	
+
 	void Update(const float dt) override;
 	void ProcessInput() override;
 
@@ -29,6 +33,7 @@ public:
 	virtual bool isMouseUp();
 	virtual bool isMousePress();
 
+	
 	std::string getText() const;
 	glm::vec2 getLabelSize() const;
 	glm::vec3 getLabelColor() const;
@@ -56,7 +61,15 @@ protected:
 	glm::vec3 labelMouseHoverColor;
 	glm::vec3 labelCurrentColor;
 	
-	
+	/**
+	*Button icindeki text'i render ederken kullanilacak
+	*/
+	void DrawForButton();
+
+	/**
+	*Button icindeki text'in pozisyonunu alirken kullanilacak
+	*/
+	glm::vec2 getPositionForButton();
 
 	virtual bool isMouseHoverM();
 	virtual bool isMouseDownM(const int key);
