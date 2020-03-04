@@ -162,7 +162,7 @@ void TextBox::InputText(const float dt)
 
 			if (InputManager::keycode != L'\0')
 			{
-				if (InputManager::keycode >= 0 && InputManager::keycode <= 255)
+				if (InputManager::keycode <= 255)
 				{
 					const wchar_t keycode = InputManager::keycode;
 					const wchar_t *c = &keycode;

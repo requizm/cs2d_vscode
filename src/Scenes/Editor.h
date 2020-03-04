@@ -18,7 +18,7 @@ struct ButtonTile
 		this->exist = false;
 	}
 
-	ButtonTile(Button button, glm::ivec2 cell)
+	ButtonTile(Button &button, glm::ivec2 cell)
 	{
 		this->button = button;
 		this->cell = cell;
