@@ -16,7 +16,7 @@ public:
 	Panel();
 	~Panel();
 
-	void Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer);
+	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
 	void Update(const float dt) override;
 	void OnEnable() override;
 	void OnDisable() override;

@@ -20,10 +20,7 @@ public:
 	Label(glm::vec2 position, glm::vec2 size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
 	~Label();
 
-	void Draw();
-
-	
-	
+	void Draw() override;
 
 	void Update(const float dt) override;
 	void ProcessInput() override;

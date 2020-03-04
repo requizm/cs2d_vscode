@@ -14,20 +14,23 @@ Panel::Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextR
 	this->outline = false;
 	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, glm::vec2(20.0F, 20.0F), true);
 	escapeButton.setParent(this);
+	escapeButton.independent = true;
 	escapeButton.setPosition(this->size.x - 20.0F, 3.0F);
 	escapeButton.setButtonColor(color);
 	escapeButton.setMouseHoverColor(glm::vec3(0.64F));
 	escapeButton.setMouseClickColor(glm::vec3(1.0F));
 	this->title = Label(title, position, renderer, scale, glm::vec3(1.0F));
+	this->title.setMouseEvent(false);
 	this->title.setParent(this);
 	this->title.setPosition(static_cast<int>(lineOffset), 4.0F);
+	this->title.independent = true;
 }
 
 Panel::Panel() = default;
 
 Panel::~Panel() = default;
 
-void Panel::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer)
+void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
 	if (isEnable() && isVisible())
 	{
@@ -47,6 +50,16 @@ void Panel::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer)
 			squareRenderer.RenderLine(glm::vec2(getPosition().x + lineOffset, getPosition().y + 23.0F), glm::vec2(size.x - 2 * lineOffset, 1.0F), glm::vec3(0.39F), this->trans);
 			escapeButton.Draw(spriteRenderer, squareRenderer);
 			title.Draw();
+		}
+	}
+	for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+	{
+		if (!childs[i]->independent)
+		{
+			if (childs[i]->GetObjectTypeString() == "Label")
+				childs[i]->Draw();
+			else
+				childs[i]->Draw(spriteRenderer, squareRenderer);
 		}
 	}
 }
@@ -81,10 +94,13 @@ void Panel::Update(const float dt)
 		if (opttitles)
 		{
 			escapeButton.Update(dt);
-			if (escapeButton.isMouseUp())
-			{
-				this->setEnable(false);
-			}
+		}
+	}
+	for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+	{
+		if (!(childs[i]->independent))
+		{
+			childs[i]->Update(dt);
 		}
 	}
 }
@@ -94,6 +110,11 @@ void Panel::ProcessInput()
 	escapeButton.ProcessInput();
 	if (isMouseEvents())
 	{
+		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
+		if (escapeButton.isMouseUp() && opttitles)
+		{
+			this->setEnable(false);
+		}
 		if (isMovable())
 		{
 			isMouseDownForDrag(GLFW_MOUSE_BUTTON_LEFT);
@@ -102,7 +123,11 @@ void Panel::ProcessInput()
 		{
 			isMouseDownForMouse(GLFW_MOUSE_BUTTON_LEFT);
 		}
-		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
+	}
+	for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+	{
+		if (!childs[i]->independent)
+			childs[i]->ProcessInput();
 	}
 }
 
@@ -115,7 +140,6 @@ void Panel::OnEnable()
 		escapeButton.setVisible(true);
 		title.setVisible(true);
 	}
-	
 }
 
 void Panel::OnDisable()

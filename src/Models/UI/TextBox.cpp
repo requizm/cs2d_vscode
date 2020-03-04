@@ -23,7 +23,7 @@ void TextBox::Update(const float dt)
 	InputText(dt);
 }
 
-void TextBox::Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer)
+void TextBox::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
 	if (isVisible() && isEnable())
 	{

@@ -126,13 +126,13 @@ int main(int argc, char *argv[])
 		lastFrame = currentFrame;
 		glfwPollEvents();
 		time += deltaTime;
-		nbFrames++;
+		/*nbFrames++;
 		if (time >= 1.0F)
 		{
 			Logger::DebugLog(std::to_string(nbFrames));
 			nbFrames = 0;
 			time = 0.0F;
-		}
+		}*/
 #pragma region input_0
 			int newState;
 		//mouse

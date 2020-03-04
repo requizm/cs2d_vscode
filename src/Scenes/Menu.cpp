@@ -29,13 +29,13 @@ void Menu::Start()
 	this->l_options = std::make_shared<Label>("Options", glm::vec2(10.0F, Game_Parameters::SCREEN_HEIGHT / 2), *textRenderer, 1.0F, glm::vec3(0.58F));
 	this->l_editor = std::make_shared<Label>("Editor", glm::vec2(10.0F, Game_Parameters::SCREEN_HEIGHT / 2 + 20.0F), *textRenderer, 1.0F, glm::vec3(0.58F));
 
-	this->t_test = std::make_shared<TextBox>(glm::vec2(20.0F, 20.0F), *textRenderer, glm::vec2(100.0F, 20.0F), true, 1.0F, glm::vec3(0.58F));
-	
 	this->panel = std::make_shared<Panel>(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", glm::vec2(420.0F, 450.0F), *textRenderer, true, true, 1.0F, glm::vec3(0.21F));
-
+	this->panel->setMovable(true);
+	
+	this->t_test = std::make_shared<TextBox>(glm::vec2(20.0F, 20.0F), *textRenderer, glm::vec2(100.0F, 20.0F), true, 1.0F, glm::vec3(0.58F));
 	this->t_test->setParent(panel.get());
 	this->t_test->setParentCenterPos();
-	this->panel->setMovable(true);
+	
 }
 
 void Menu::OnEnable()
@@ -65,8 +65,6 @@ void Menu::Update(const float dt)
 	l_console->Update(dt);
 	l_editor->Update(dt);
 	l_newgame->Update(dt);
-	//button->Update(dt);
-	t_test->Update(dt);
 	panel->Update(dt);
 }
 
@@ -117,6 +115,6 @@ void Menu::Render(const float dt)
 	l_console->Draw();
 	l_newgame->Draw();
 	//button->Draw(*squareRenderer);
-	panel->Draw(squareRenderer, menuRenderer);
-	t_test->Draw(squareRenderer, menuRenderer);
+	panel->Draw(menuRenderer, squareRenderer);
+	//t_test->Draw(menuRenderer, squareRenderer);
 }

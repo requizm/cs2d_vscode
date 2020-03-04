@@ -57,19 +57,21 @@ void Editor::Start()
 	this->controlPanel = std::make_shared<Panel>(glm::vec2(5.0F, 5.0F), "Control Panel", glm::vec2(32 * maxCellInColumn, 32 * 2 - 11), *textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->controlPanel->setMovable(false);
 	this->controlPanel->setEnable(true);
+	this->controlPanel->setParent(buildPanel.get());
 
-	this->tilePanel = std::make_shared<Panel>(glm::vec2(5.0F, 75.0F), "", glm::vec2(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
+	this->tilePanel = std::make_shared<Panel>(glm::vec2(5.0F, 75.0F), "Tile Panel", glm::vec2(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer, true, false, 1.0F, glm::vec3(0.21F), 1.0F);
 	this->tilePanel->setEnable(true);
 	this->tilePanel->setMovable(false);
 	this->tilePanel->setScrollable(true);
 	this->tilePanel->setOutline(true);
 	this->tilePanel->setOutlineColor(glm::vec3(0.47F));
+	this->tilePanel->setParent(buildPanel.get());
 
 	Sprite sprite;
 	glm::vec2 pos;
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16, 16); //new_sprite
-	pos = this->controlPanel->getPosition();
+	pos = glm::vec2(0.0F);
 	b_new = Button(sprite, pos, glm::vec2(16.0F));
 	b_new.setOutline(true);
 	b_new.setOutlineColor(glm::vec3(0.45));
@@ -77,9 +79,10 @@ void Editor::Start()
 	b_new.setButtonColor(glm::vec3(0.15F));
 	b_new.setMouseClickColor(glm::vec3(0.30F));
 	b_new.setMouseHoverColor(glm::vec3(0.30F));
+	b_new.setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16, 16); //load_sprite
-	pos = glm::vec2(controlPanel->getPosition().x + 30, controlPanel->getPosition().y);
+	pos = glm::vec2(30.0F, 0.0F);
 	b_load = Button(sprite, pos, glm::vec2(16.0F));
 	b_load.setOutline(true);
 	b_load.setOutlineColor(glm::vec3(0.45));
@@ -87,9 +90,10 @@ void Editor::Start()
 	b_load.setButtonColor(glm::vec3(0.15F));
 	b_load.setMouseClickColor(glm::vec3(0.30F));
 	b_load.setMouseHoverColor(glm::vec3(0.30F));
+	b_load.setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16, 16); //save_sprite
-	pos = glm::vec2(controlPanel->getPosition().x + 60, controlPanel->getPosition().y);
+	pos = glm::vec2(60.0F, 0.0F);
 	b_save = Button(sprite, pos, glm::vec2(16.0F));
 	b_save.setOutline(true);
 	b_save.setOutlineColor(glm::vec3(0.45));
@@ -97,6 +101,7 @@ void Editor::Start()
 	b_save.setButtonColor(glm::vec3(0.15F));
 	b_save.setMouseClickColor(glm::vec3(0.30F));
 	b_save.setMouseHoverColor(glm::vec3(0.30F));
+	b_save.setParent(controlPanel.get());
 
 	//yeni harita paneli
 	this->newPanel = std::make_shared<Panel>(glm::vec2(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", glm::vec2(400, 135), *textRenderer, true, true, 1.0F, glm::vec3(0.21F), 0.8F);
@@ -182,28 +187,16 @@ void Editor::SetEnable(const bool value)
 void Editor::Update(const float dt)
 {
 	this->dt += dt;
-
-	this->controlPanel->Update(dt);
 	this->buildPanel->Update(dt);
-	this->tilePanel->Update(dt);
-	this->b_save.Update(dt);
-	this->b_new.Update(dt);
-	this->b_load.Update(dt);
-	this->t_tile->Update(dt);
-	this->t_mapSizeX->Update(dt);
-	this->t_mapSizeY->Update(dt);
+	
 	this->newPanel->Update(dt);
-	this->b_okey->Update(dt);
 
 	this->loadPanel->Update(dt);
-	this->mapsPanel->Update(dt);
-	this->t_load->Update(dt);
-	this->b_map_load->Update(dt);
 	if (!mapsUI.empty())
 	{
 		for (std::vector<int>::size_type i = 0; i != mapsUI.size(); i++)
 		{
-			mapsUI[i].Update(dt);
+			mapsUI[i]->Update(dt);
 		}
 	}
 
@@ -211,28 +204,28 @@ void Editor::Update(const float dt)
 	{
 		if (!tilesUI.empty() && !loadPanel->isEnable())
 		{
-			bool check_1 = tilesUI.at(0).getLocalPosition().y == 0 && InputManager::scroll.y > 0;
-			bool check_2 = tilesUI.at(tileCount - 1).getLocalPosition().y == maxCellInRow * 32 && InputManager::scroll.y < 0;
+			bool check_1 = tilesUI.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
+			bool check_2 = tilesUI.at(tileCount - 1)->getLocalPosition().y == maxCellInRow * 32 && InputManager::scroll.y < 0;
 
 			if (!check_1 && !check_2)
 			{
 				for (auto &tile : tilesUI)
 				{
-					tile.setPosition(tile.getLocalPosition().x, tile.getLocalPosition().y + InputManager::scroll.y * 32);
+					tile->setPosition(tile->getLocalPosition().x, tile->getLocalPosition().y + InputManager::scroll.y * 32);
 				}
 			}
 		}
 
 		if (!mapsUI.empty())
 		{
-			bool check_1 = mapsUI.at(0).getLocalPosition().y == 0 && InputManager::scroll.y > 0;
-			bool check_2 = mapsUI.at(mapsUI.size() - 1).getLocalPosition().y == mapsPanel->getSize().y && InputManager::scroll.y < 0;
+			bool check_1 = mapsUI.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
+			bool check_2 = mapsUI.at(mapsUI.size() - 1)->getLocalPosition().y == mapsPanel->getSize().y && InputManager::scroll.y < 0;
 
 			if (!check_1 && !check_2)
 			{
 				for (auto &tile : mapsUI)
 				{
-					tile.setPosition(tile.getLocalPosition().x, tile.getLocalPosition().y + InputManager::scroll.y * 20);
+					tile->setPosition(tile->getLocalPosition().x, tile->getLocalPosition().y + InputManager::scroll.y * 20);
 				}
 			}
 		}
@@ -243,22 +236,15 @@ void Editor::Update(const float dt)
 
 void Editor::ProcessInput(const float dt)
 {
-	this->controlPanel->ProcessInput();
 	this->buildPanel->ProcessInput();
-	this->tilePanel->ProcessInput();
-	this->b_save.ProcessInput();
-	this->b_new.ProcessInput();
-	this->b_load.ProcessInput();
 	this->newPanel->ProcessInput();
-	this->b_okey->ProcessInput();
+
 	this->loadPanel->ProcessInput();
-	this->mapsPanel->ProcessInput();
-	this->b_map_load->ProcessInput();
 	if (!mapsUI.empty())
 	{
 		for (std::vector<int>::size_type i = 0; i != mapsUI.size(); i++)
 		{
-			mapsUI[i].ProcessInput();
+			mapsUI[i]->ProcessInput();
 		}
 	}
 
@@ -266,12 +252,12 @@ void Editor::ProcessInput(const float dt)
 	{
 		for (auto &tile : tilesUI)
 		{
-			if (tile.isRenderable())
+			if (tile->isRenderable())
 			{
-				tile.ProcessInput();
-				if (tile.isMouseDown())
+				tile->ProcessInput();
+				if (tile->isMouseDown())
 				{
-					selectedTile = tile.getTile();
+					selectedTile = tile->getTile();
 					firstSelect = true;
 				}
 			}
@@ -290,10 +276,10 @@ void Editor::ProcessInput(const float dt)
 				break;
 			}
 		}
-		if (t_load->editMode)
-		{
-			passMovement = true;
-		}
+	}
+	if (t_load->editMode)
+	{
+		passMovement = true;
 	}
 
 	if (!passMovement)
@@ -348,18 +334,18 @@ void Editor::ProcessInput(const float dt)
 
 	for (std::vector<int>::size_type i = 0; i != mapsUI.size(); i++)
 	{
-		if (mapsUI[i].isMouseDown() && mapsUI[i].isRenderable())
+		if (mapsUI[i]->isMouseDown() && mapsUI[i]->isRenderable())
 		{
 			if (selectedMap != -1)
 			{
-				mapsUI.at(selectedMap).setButtonColor(glm::vec3(0.21F));
-				mapsUI.at(selectedMap).setMouseHoverColor(glm::vec3(0.25F));
-				mapsUI.at(selectedMap).setLabelColor(glm::vec3(0.58F));
+				mapsUI.at(selectedMap)->setButtonColor(glm::vec3(0.21F));
+				mapsUI.at(selectedMap)->setMouseHoverColor(glm::vec3(0.25F));
+				mapsUI.at(selectedMap)->setLabelColor(glm::vec3(0.58F));
 			}
-			mapsUI[i].setButtonColor(glm::vec3(0.35F));
-			mapsUI[i].setMouseHoverColor(glm::vec3(0.35F));
-			mapsUI[i].setLabelColor(glm::vec3(1.0F));
-			t_load->setText(mapsUI[i].getText());
+			mapsUI[i]->setButtonColor(glm::vec3(0.35F));
+			mapsUI[i]->setMouseHoverColor(glm::vec3(0.35F));
+			mapsUI[i]->setLabelColor(glm::vec3(1.0F));
+			t_load->setText(mapsUI[i]->getText());
 			selectedMap = i;
 			break;
 		}
@@ -417,31 +403,16 @@ void Editor::Render(const float dt)
 	}
 
 	//ui
-	this->controlPanel->Draw(squareRenderer, menuRenderer);
-	this->buildPanel->Draw(squareRenderer, menuRenderer);
-	this->tilePanel->Draw(squareRenderer, menuRenderer);
-	this->b_save.Draw(menuRenderer, squareRenderer);
-	this->b_new.Draw(menuRenderer, squareRenderer);
-	this->b_load.Draw(menuRenderer, squareRenderer);
+	this->buildPanel->Draw(menuRenderer, squareRenderer);
 
-	this->newPanel->Draw(squareRenderer, menuRenderer);
-	this->t_tile->Draw(squareRenderer, menuRenderer);
-	this->t_mapSizeX->Draw(squareRenderer, menuRenderer);
-	this->t_mapSizeY->Draw(squareRenderer, menuRenderer);
-	this->l_tile->Draw();
-	this->l_mapSize->Draw();
-	this->l_x->Draw();
-	this->b_okey->Draw(menuRenderer, squareRenderer);
+	this->newPanel->Draw(menuRenderer, squareRenderer);
 
-	this->loadPanel->Draw(squareRenderer, menuRenderer);
-	this->mapsPanel->Draw(squareRenderer, menuRenderer);
-	this->t_load->Draw(squareRenderer, menuRenderer);
-	this->b_map_load->Draw(menuRenderer, squareRenderer);
+	this->loadPanel->Draw(menuRenderer, squareRenderer);
 	if (!mapsUI.empty())
 	{
 		for (std::vector<int>::size_type i = 0; i != mapsUI.size(); i++)
 		{
-			mapsUI[i].Draw(menuRenderer, squareRenderer, false);
+			mapsUI[i]->Draw(menuRenderer, squareRenderer);
 		}
 	}
 
@@ -449,17 +420,17 @@ void Editor::Render(const float dt)
 	{
 		for (auto &tile : tilesUI)
 		{
-			if (firstSelect && selectedTile.frame == tile.getTile().frame)
+			if (firstSelect && selectedTile.frame == tile->getTile().frame)
 			{
-				tile.Draw(menuRenderer, squareRenderer, 0.3F, this->dt, true);
+				tile->Draw(menuRenderer, squareRenderer, 0.3F, this->dt, true);
 			}
-			else if (tile.isMouseHover())
+			else if (tile->isMouseHover())
 			{
-				tile.Draw(menuRenderer, squareRenderer, 0.3F, this->dt, false);
+				tile->Draw(menuRenderer, squareRenderer, 0.3F, this->dt, false);
 			}
 			else
 			{
-				tile.Draw(menuRenderer, squareRenderer);
+				tile->Draw(menuRenderer, squareRenderer);
 			}
 		}
 	}
@@ -558,9 +529,10 @@ void Editor::NewMap(std::string tileSet, glm::vec2 mapSize)
 		const int yoffset = curIndex / (ResourceManager::GetTexture(tileSet).Width / 32);
 		const Sprite sprite = Sprite(ResourceManager::GetTexture(tileSet), (xoffset)*32, yoffset * 32, 32, 32);
 		Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-		Button button = Button(tile);
-		button.setParent(tilePanel.get(), true);
-		tilesUI.push_back(button);
+		Button *button = new Button(tile);
+		button->independent = true;
+		button->setParent(tilePanel.get(), true);
+		tilesUI.push_back(std::make_shared<Button>(*button));
 	}
 
 	for (int i = 0; i < mapLimit.x; i++)
@@ -706,14 +678,16 @@ void Editor::B_LoadMap()
 
 	for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
 	{
-		Button bt = Button(maps[i], glm::vec2(0.0F, static_cast<float>(i * 20)), glm::vec2(mapsPanel->getSize().x, 20.0F), *textRenderer, glm::vec3(0.21F), glm::vec3(0.58F), 1.0F);
-		bt.setMouseClickColor(glm::vec3(0.35F));
-		bt.setMouseHoverColor(glm::vec3(0.25F));
-		bt.setLabelMouseHoverColor(glm::vec3(1.0F));
-		bt.setLabelClickColor(glm::vec3(1.0F));
-		bt.setOutline(false);
-		bt.setParent(mapsPanel.get());
-		mapsUI.push_back(bt);
+		Button *bt = new Button(maps[i], glm::vec2(0.0F, static_cast<float>(i * 20)), glm::vec2(mapsPanel->getSize().x, 20.0F), *textRenderer, glm::vec3(0.21F), glm::vec3(0.58F), 1.0F);
+		bt->setMouseClickColor(glm::vec3(0.35F));
+		bt->setMouseHoverColor(glm::vec3(0.25F));
+		bt->setLabelMouseHoverColor(glm::vec3(1.0F));
+		bt->setLabelClickColor(glm::vec3(1.0F));
+		bt->setOutline(false);
+		bt->setParent(mapsPanel.get());
+		bt->independent = true;
+		bt->center = false;
+		mapsUI.push_back(std::make_shared<Button>(*bt));
 	}
 	this->loadPanel->setEnable(true);
 }

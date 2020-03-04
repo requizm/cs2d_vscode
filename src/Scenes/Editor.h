@@ -17,7 +17,7 @@ struct ButtonTile
 		this->cell = cell;
 		this->exist = false;
 	}
-	
+
 	ButtonTile(Button button, glm::ivec2 cell)
 	{
 		this->button = button;
@@ -41,7 +41,6 @@ public:
 	void Render(const float dt);
 
 	void SetEnable(const bool value);
-	
 
 private:
 	void SaveMap();
@@ -68,11 +67,11 @@ private:
 
 	std::shared_ptr<Panel> loadPanel, mapsPanel;
 	std::shared_ptr<Button> b_map_load;
-	std::vector<Button> mapsUI;
+	std::vector<std::shared_ptr<Button>> mapsUI;
 	std::shared_ptr<TextBox> t_load;
 	int selectedMap = -1;
 
-	std::vector<Button> tilesUI;
+	std::vector<std::shared_ptr<Button>> tilesUI;
 	glm::ivec2 texture;
 	int tileCount;
 	int maxCellInColumn;
@@ -100,4 +99,3 @@ private:
 	glm::vec3 mouse_yellow;
 };
 #endif
-

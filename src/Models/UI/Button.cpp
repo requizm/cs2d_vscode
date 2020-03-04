@@ -41,7 +41,7 @@ Button::Button(Tile &tile, float scale) : Label(tile.GetPosition(), tile.GetSize
 
 Button::~Button() = default;
 
-void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, const bool value)
+void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
 	if (isVisible() && isEnable() && isRenderable())
 	{
@@ -56,7 +56,7 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 			{
 				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, outlineColor, 0.0F, 1.0F, 0.0F);
 			}
-			Label::DrawForButton(value);
+			Label::DrawForButton(center);
 			break;
 
 		case ButtonType::SPRITE:

@@ -7,7 +7,7 @@ UIObject::UIObject() = default;
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer)
 {
 	this->objType = UIObjectType::UIOBJECT;
-	Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
+	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
 	this->position = position;
 	this->scale = scale;
 	this->size = size;
@@ -26,7 +26,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer, UIObjectType type)
 {
 	this->objType = type;
-	Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
+	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
 	this->position = position;
 	this->scale = scale;
 	this->size = size;
@@ -45,7 +45,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale)
 {
 	this->objType = UIObjectType::UIOBJECT;
-	Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
+	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
 	this->position = position;
 	this->scale = scale;
 	this->size = size;
@@ -63,7 +63,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale)
 UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type)
 {
 	this->objType = type;
-	Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
+	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
 	this->position = position;
 	this->scale = scale;
 	this->size = size;
@@ -81,7 +81,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType
 UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer)
 {
 	this->objType = UIObjectType::UIOBJECT;
-	Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
+	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
 	this->position = position;
 	this->scale = scale;
 	this->enable = true;
@@ -99,7 +99,7 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer)
 UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIObjectType type)
 {
 	this->objType = type;
-	Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
+	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
 	this->position = position;
 	this->scale = scale;
 	this->enable = true;
@@ -132,6 +132,14 @@ void UIObject::OnDisable()
 }
 
 void UIObject::ProcessInput()
+{
+}
+
+void UIObject::Draw()
+{
+}
+
+void UIObject::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
 }
 

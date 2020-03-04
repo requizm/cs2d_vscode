@@ -15,7 +15,7 @@ public:
 	TextBox(glm::vec2 position, TextRenderer &renderer, glm::vec2 size, bool isBackGround = false, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F));
 
 	void Update(const float dt) override;
-	void Draw(SquareRenderer &squareRenderer, SpriteRenderer &spriteRenderer);
+	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
 
 	void OnEnable() override;
 	void OnDisable() override;

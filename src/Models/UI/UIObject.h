@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 #include "../../Renderers/TextRenderer.h"
+#include "../../Renderers/SquareRenderer.h"
+#include "../../Renderers/SpriteRenderer.h"
 #include "../../Others/Logger.h"
 #include <memory>
 
@@ -32,12 +34,14 @@ public:
 	virtual void OnEnable();
 	virtual void OnDisable();
 	virtual void ProcessInput();
+	virtual void Draw();
+	virtual void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
 
 	virtual glm::vec2 getPosition();
 	virtual glm::vec2 getSize();
 	virtual glm::vec2 getCenterPosition() const;
 	virtual glm::vec2 getLocalPosition();
-	UIObject* getParent() const;
+	UIObject *getParent() const;
 	float getScale() const;
 	bool isParent() const;
 	bool isVisible() const;
@@ -67,6 +71,11 @@ public:
 
 	bool isPressed = false;
 
+	/**
+	* update, processinput, draw gibi fonksiyonlar, parent içinde gerceklesmeyecek
+	*/
+	bool independent = false;
+
 	std::vector<UIObject *> childs;
 
 protected:
@@ -75,11 +84,14 @@ protected:
 	glm::vec2 size;
 	UIObjectType objType;
 	UIObject *parent = nullptr;
-	
+
 	TextRenderer *rend = nullptr;
 	int id = 0;
 
-	bool dependParent; //visible, enable ve mouseEvent degiskenleri parent'a bagli olsun veya olmasin
+	/**
+	* visible, enable ve mouseEvent degiskenleri parent'a bagli olsun
+	*/
+	bool dependParent;
 
 	bool visible;
 	bool enable;
@@ -91,7 +103,6 @@ protected:
 	bool isUp = false;
 
 private:
-	
 };
 
 #endif // UIOBJECT_H

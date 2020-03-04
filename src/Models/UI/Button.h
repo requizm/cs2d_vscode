@@ -28,13 +28,13 @@ public:
 	Button(Tile &tile, float scale = 1.0F);
 	~Button();
 
-	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, const bool value = true);
+	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
 
 	/**
  	* Bu fonksiyon sadece editor'deki uiButton'lar icin kullanilacak!
  	*/ 
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, float dt, bool selected);
-	void Draw();
+	void Draw() override;
 	void Update(const float dt) override;
 	void ProcessInput() override;
 
@@ -58,6 +58,8 @@ public:
 	bool isMouseDown() override;
 	bool isMouseUp() override;
 	bool isMousePress() override;
+
+	bool center = true;
 
 protected:
 	Sprite sprite;
