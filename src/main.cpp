@@ -118,15 +118,15 @@ int main(int argc, char *argv[])
 	float lastFrame = 0.0F;
 
 	int nbFrames = 0;
-	float time;
+	//float time = 0.0F;
 	while (!glfwWindowShouldClose(window))
 	{
 		const float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		glfwPollEvents();
-		time += deltaTime;
-		/*nbFrames++;
+		/*time += deltaTime;
+		nbFrames++;
 		if (time >= 1.0F)
 		{
 			Logger::DebugLog(std::to_string(nbFrames));
