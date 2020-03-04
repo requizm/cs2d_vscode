@@ -514,7 +514,10 @@ void Editor::SaveMap()
 			node_tile->append_node(node_tile_type);
 			node_map->append_node(node_tile);
 
-			delete cellX, cellY, frame, type;
+			delete[] cellX; 
+			delete[] cellY;
+			delete[] frame; 
+			delete[] type;
 		}
 		char *limitX = doc.allocate_string(std::to_string(mapLimit.x).c_str());
 		char *limitY = doc.allocate_string(std::to_string(mapLimit.y).c_str());
