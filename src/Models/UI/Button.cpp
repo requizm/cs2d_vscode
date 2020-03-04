@@ -257,6 +257,7 @@ bool Button::isMouseDownM(const int key)
 		isDown = true;
 		return true;
 	}
+	return false;
 }
 
 bool Button::isMouseUpM(const int key)

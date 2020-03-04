@@ -545,7 +545,10 @@ void Editor::SaveMap()
 		}
 		fileC << doc;
 		fileC.close();
-		delete limitX, limitY, name, tile;
+		delete[] limitX;
+		delete[] limitY;
+		delete[] name;
+		delete[] tile;
 		delete node_map;
 		this->savePanel->setEnable(false);
 	}
@@ -694,10 +697,15 @@ void Editor::LoadMap(std::string mapName)
 		ButtonTile t = ButtonTile(b, glm::ivec2(cellX, cellY));
 		tiles.push_back(t);
 
-		delete x, y, tIndex, tType;
+		delete[] x;
+		delete[] y;
+		delete[] tIndex;
+		delete[] tType;
 	}
 
-	delete codeChar, mapx, mapy;
+	delete[] codeChar;
+	delete[] mapx;
+	delete[] mapy;
 }
 
 void Editor::B_LoadMap()
