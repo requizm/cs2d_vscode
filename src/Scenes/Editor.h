@@ -44,6 +44,7 @@ public:
 
 private:
 	void SaveMap();
+	void B_SaveMap();
 
 	void NewMap(std::string tileSet, glm::vec2 mapSize);
 	bool B_NewMap();
@@ -65,10 +66,15 @@ private:
 
 	std::shared_ptr<Panel> newPanel;
 
-	std::shared_ptr<Panel> loadPanel, mapsPanel;
+	std::shared_ptr<Panel> loadPanel, load_mapsPanel;
 	std::shared_ptr<Button> b_map_load;
-	std::vector<std::shared_ptr<Button>> mapsUI;
 	std::shared_ptr<TextBox> t_load;
+	
+	std::shared_ptr<Panel> savePanel, save_mapsPanel;
+	std::shared_ptr<Button> b_map_save;
+	std::shared_ptr<TextBox> t_save;
+
+	std::vector<std::shared_ptr<Button>> mapsUI;
 	int selectedMap = -1;
 
 	std::vector<std::shared_ptr<Button>> tilesUI;

@@ -14,9 +14,9 @@
 
 enum ButtonType
 {
-	DEFAULT, //standart buton 
-	TILE, //editor'deki build tile'ları gibi
-	SPRITE //editor'deki save button'u gibi
+	DEFAULT, //standart buton
+	TILE,	//editor'deki build tile'ları gibi
+	SPRITE   //editor'deki save button'u gibi
 };
 
 class Button : public Label
@@ -32,7 +32,7 @@ public:
 
 	/**
  	* Bu fonksiyon sadece editor'deki uiButton'lar icin kullanilacak!
- 	*/ 
+ 	*/
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, float dt, bool selected);
 	void Draw() override;
 	void Update(const float dt) override;
@@ -41,7 +41,7 @@ public:
 	glm::vec2 getPosition() override;
 	glm::vec2 getLocalPosition() override;
 	glm::vec2 getSize() override;
-	Tile getTile();
+	Tile *getTile();
 
 	void setMouseHoverColor(const glm::vec3 color);
 	void setButtonColor(const glm::vec3 color);
@@ -82,7 +82,6 @@ private:
 	bool haveOutline = true;
 	//bool haveSprite;
 
-	
 	bool difColor;
 
 	glm::vec3 outlineColor;

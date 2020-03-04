@@ -335,7 +335,7 @@ void Button::setPosition(const int x, const int y)
 	}
 }
 
-Tile Button::getTile()
+Tile *Button::getTile()
 {
-	return this->tile;
+	return &this->tile;
 }

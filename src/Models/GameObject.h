@@ -36,6 +36,7 @@ public:
 	void SetRotation(GLfloat rot);
 	void setCellPosition(int x, int y);
 	void setCellPosition(glm::vec2 pos);
+	void setID(int id);
 
 	virtual void Destroy();
 	virtual void OnDestroy();
@@ -46,6 +47,7 @@ public:
 	glm::vec2 GetPosition();
 	GLfloat GetRotation();
 	glm::vec2 GetSize();
+	int GetID() const;
 
 	void BuildTransform();
 
@@ -79,6 +81,8 @@ protected:
 	ObjectType objType;
 
 	glm::vec2 parentPositionDelta;
+
+	int id;
 
 private:
 	std::string GetObjectTypeString();

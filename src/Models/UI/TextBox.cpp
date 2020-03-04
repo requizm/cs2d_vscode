@@ -33,7 +33,7 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRendere
 		{
 			if (time <= 0.5F)
 			{
-				spriteRenderer.DrawSprite(cursor, glm::vec2(getPosition().x + labelSize.x, getPosition().y + 2.0F), glm::vec2(8.0F, 16.0F));
+				spriteRenderer.DrawSprite(cursor, glm::vec2(getPosition().x - 2.0F + labelSize.x, getPosition().y + 2.0F), glm::vec2(8.0F, 16.0F));
 			}
 			else if (time >= 1.0F)
 			{
@@ -46,12 +46,13 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRendere
 
 void TextBox::OnEnable()
 {
-	this->setText("");
+	
 }
 
 void TextBox::OnDisable()
 {
 	this->editMode = false;
+	this->setText("");
 }
 
 void TextBox::setText(const std::string &text)
@@ -132,7 +133,7 @@ void TextBox::InputText(const float dt)
 {
 	if (editable && isEnable())
 	{
-		if ( isMouseDown())
+		if (isMouseDown())
 		{
 			editMode = true;
 			time = 0.0F;

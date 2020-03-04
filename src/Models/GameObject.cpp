@@ -2,14 +2,19 @@
 #include <glm/gtx/string_cast.hpp>
 #include "../Others/Logger.h"
 #include "../Others/Game_Parameters.h"
+#include "../Others/Utils.h"
 
 GameObject::GameObject()
-	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0.0F), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT) {}
+	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0.0F), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT) 
+	{
+		this->setID(Utils::GenerateID());
+	}
 
 GameObject::GameObject(glm::vec2 pos, const Sprite &sprite, glm::vec2 size, int objType)
 	: globalPosition(pos), globalSize(size), globalRotation(0.0F), sprite(sprite), isCollision(false), isDestroyed(false), localRotation(0.0F)
 {
 	this->objType = (ObjectType)objType;
+	this->setID(Utils::GenerateID());
 	BuildTransform();
 	//Logger::WriteLog("" + GetObjectTypeString() + " olusturuldu");
 }
@@ -93,6 +98,11 @@ void GameObject::RemoveParent()
 	Logger::WriteLog("" + GetObjectTypeString() + "->RemoveParent() -->parent zaten yok");
 }
 
+void GameObject::setID(int id)
+{
+	this->id = id;
+}
+
 void GameObject::SetTransform(glm::vec2 pos, glm::vec2 size, GLfloat rot)
 {
 	this->globalSize = size;
@@ -158,6 +168,11 @@ GLboolean GameObject::IsDestroyed() const
 {
 	//Logger::WriteLog("GameObject->IsDestroyed() " + std::to_string(isDestroyed) + "");
 	return isDestroyed;
+}
+
+int GameObject::GetID() const
+{
+	return this->id;
 }
 
 bool GameObject::IsParent()

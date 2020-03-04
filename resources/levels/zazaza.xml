@@ -660,13 +660,13 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>2</cellX>
 		<cellY>10</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>2</cellX>
 		<cellY>11</cellY>
 		<tileType>2</tileType>
@@ -954,7 +954,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>3</cellX>
 		<cellY>9</cellY>
 		<tileType>2</tileType>
@@ -972,7 +972,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>3</cellX>
 		<cellY>12</cellY>
 		<tileType>2</tileType>
@@ -1278,7 +1278,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>4</cellX>
 		<cellY>13</cellY>
 		<tileType>2</tileType>
@@ -1584,7 +1584,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>5</cellX>
 		<cellY>14</cellY>
 		<tileType>2</tileType>
@@ -1884,7 +1884,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>6</cellX>
 		<cellY>14</cellY>
 		<tileType>2</tileType>
@@ -2178,13 +2178,13 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>7</cellX>
 		<cellY>13</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>7</cellX>
 		<cellY>14</cellY>
 		<tileType>2</tileType>
@@ -2472,13 +2472,13 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>8</cellX>
 		<cellY>12</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>27</tileTexture>
 		<cellX>8</cellX>
 		<cellY>13</cellY>
 		<tileType>2</tileType>
@@ -15001,7 +15001,7 @@
 	</tile>
 </map>
 <info>
-	<name>one</name>
+	<name>zazaza</name>
 	<tileSet>cs2dnorm</tileSet>
 	<mapLimitX>50</mapLimitX>
 	<mapLimitY>50</mapLimitY>
