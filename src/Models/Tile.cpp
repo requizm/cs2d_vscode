@@ -1,6 +1,9 @@
 #include "Tile.h"
 
-Tile::Tile() = default;
+Tile::Tile() : type(TileTypes::FLOOR), frame(-1)
+{
+
+}
 
 Tile::Tile(glm::vec2 pos, const Sprite &sprite, glm::vec2 size, TileTypes type, int frame) : GameObject(pos, sprite, size, (int)ObjectType::TILE), type(type), frame(frame)
 {
