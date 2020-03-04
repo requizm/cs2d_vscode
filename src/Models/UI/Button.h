@@ -82,11 +82,11 @@ private:
 	bool haveOutline = true;
 	//bool haveSprite;
 
-	bool difColor;
+	bool difColor = false;
 
 	glm::vec3 outlineColor;
 	glm::vec2 margin;
-	ButtonType type;
+	ButtonType type = ButtonType::DEFAULT;
 };
 
 #endif // BUTTON_H

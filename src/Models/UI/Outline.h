@@ -8,7 +8,7 @@ class Outline
 public:
 	Outline();
 	~Outline();
-	GLuint VAO;
+	GLuint VAO = 0;
 	void initData();
 	
 };

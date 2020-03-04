@@ -14,7 +14,7 @@ class Shader
 {
 public:
 	// State
-	GLuint ID;
+	GLuint ID = 0;
 	// Constructor
 	Shader() = default;
 	// Sets the current shader as active

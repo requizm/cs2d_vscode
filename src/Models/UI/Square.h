@@ -12,7 +12,7 @@ public:
 	Square(bool init);
 	~Square();
 
-	GLuint VAO;
+	GLuint VAO = 0;
 
 private:
 	void initData();
