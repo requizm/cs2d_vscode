@@ -212,9 +212,23 @@ void UIObject::setScale(const float scale)
 
 void UIObject::setParent(UIObject *uiobject, bool dependParent)
 {
+	if (isParent())
+	{
+		for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
+		{
+			if (parent->childs[i]->getID() == this->getID())
+			{
+				parent->childs.erase(parent->childs.begin() + i);
+				break;
+			}
+		}
+	}
+	else
+	{
+		uiobject->childs.push_back(this);
+		this->parent = uiobject;
+	}
 	this->dependParent = dependParent;
-	uiobject->childs.push_back(this);
-	this->parent = uiobject;
 }
 
 void UIObject::removeParent()
