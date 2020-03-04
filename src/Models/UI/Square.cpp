@@ -1,8 +1,8 @@
 #include "Square.h"
 
-Square::Square()
+Square::Square() : VAO(0)
 {
-	this->VAO = 0;
+	
 }
 
 Square::Square(bool init)

@@ -1,6 +1,6 @@
 #include "Outline.h"
 
-Outline::Outline()
+Outline::Outline() : VAO(0)
 {
 }
 

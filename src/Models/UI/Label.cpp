@@ -3,19 +3,17 @@
 
 Label::Label() = default;
 
-Label::Label(const std::string &text, glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color, UIObjectType type) : UIObject(position, scale, renderer, type)
+Label::Label(const std::string &text, glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(glm::vec2(1.0F))
 {
 	this->labelColor = color;
 	this->text = text;
 	this->labelMouseHoverColor = glm::vec3(0.78F);
 	this->labelClickColor = glm::vec3(1.0F);
 	this->labelCurrentColor = color;
-	GLfloat x = position.x;
-	GLfloat y = position.y;
 	this->labelSize = this->rend->CalculateSize(text, scale);
 }
 
-Label::Label(glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color, UIObjectType type) : UIObject(position, scale, renderer, type)
+Label::Label(glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(glm::vec2(1.0F))
 {
 	this->labelColor = color;
 	this->labelMouseHoverColor = glm::vec3(0.78F);

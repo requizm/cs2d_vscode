@@ -18,10 +18,10 @@ public:
 	void setType(TileTypes type);
 	TileTypes getType() const;
 
-	int frame = -1;
+	int frame;
 
 private:
-	TileTypes type = TileTypes::FLOOR;
+	TileTypes type;
 
 };
 

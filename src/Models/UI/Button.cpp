@@ -7,33 +7,28 @@ Button::Button() = default;
 	this->sprite = sprite;
 }*/
 
-Button::Button(const std::string &text, glm::vec2 position, glm::vec2 size, TextRenderer &renderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON)
+Button::Button(const std::string &text, glm::vec2 position, glm::vec2 size, TextRenderer &renderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->buttonColor = buttonColor;
-	this->haveOutline = false;
 	this->setSize(size);
 	this->type = ButtonType::DEFAULT;
-	this->difColor = false;
 	/*this->haveTile = false;
 	this->difColor = false;
 	this->haveSprite = false;*/
 }
 
-Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON)
+Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON), haveOutline(false)
 {
 	this->sprite = sprite;
-	this->haveOutline = false;
 	this->difColor = difColor;
 	this->type = ButtonType::SPRITE;
 	/*this->haveTile = false;
 	this->haveSprite = true;*/
 }
 
-Button::Button(Tile &tile, float scale) : Label(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::BUTTON)
+Button::Button(Tile &tile, float scale) : Label(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->tile = tile;
-	this->haveOutline = false;
-	this->difColor = false;
 	this->type = ButtonType::TILE;
 	/*this->haveTile = true;
 	this->haveSprite = false;*/

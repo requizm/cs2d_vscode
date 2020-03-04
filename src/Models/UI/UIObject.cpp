@@ -4,111 +4,81 @@
 
 UIObject::UIObject() = default;
 
-UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer)
+UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer) : enable(true), visible(true),
+																							  mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
 	this->position = position;
 	this->scale = scale;
 	this->size = size;
-	this->enable = true;
-	this->visible = true;
-	this->mouseEvents = true;
 	this->rend = &renderer;
-
-	this->scrollable = false;
-	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer, UIObjectType type)
+UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true),
+																												 mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
 	this->position = position;
 	this->scale = scale;
 	this->size = size;
-	this->enable = true;
-	this->visible = true;
-	this->mouseEvents = true;
 	this->rend = &renderer;
-
-	this->scrollable = false;
-	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale)
+UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale) : enable(true), visible(true),
+																	  mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
 	this->position = position;
 	this->scale = scale;
 	this->size = size;
-	this->enable = true;
-	this->visible = true;
-	this->mouseEvents = true;
-
-	this->scrollable = false;
-	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type)
+UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type) : enable(true), visible(true),
+																						 mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
 	this->position = position;
 	this->scale = scale;
 	this->size = size;
-	this->enable = true;
-	this->visible = true;
-	this->mouseEvents = true;
-
-	this->scrollable = false;
-	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer)
+UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer) : enable(true), visible(true),
+																			  mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
 	this->position = position;
 	this->scale = scale;
-	this->enable = true;
-	this->visible = true;
-	this->mouseEvents = true;
 	this->rend = &renderer;
-
-	this->scrollable = false;
-	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIObjectType type)
+UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true),
+																								 mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
 	this->position = position;
 	this->scale = scale;
-	this->enable = true;
-	this->visible = true;
-	this->mouseEvents = true;
 	this->rend = &renderer;
-
-	this->scrollable = false;
-	this->dependParent = false;
 
 	this->setID(Utils::GenerateID());
 	this->childs.clear();

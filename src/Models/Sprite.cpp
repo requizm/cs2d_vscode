@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include "../Others/Logger.h"
 
-Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width, GLuint height)
+Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width, GLuint height) : VAO(0)
 {
 	this->texture = texture;
 	if (width == 0)

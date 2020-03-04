@@ -14,9 +14,9 @@ class Shader
 {
 public:
 	// State
-	GLuint ID = 0;
+	GLuint ID;
 	// Constructor
-	Shader() = default;
+	Shader();
 	// Sets the current shader as active
 	Shader& Use();
 	// Compiles the shader from given source code
