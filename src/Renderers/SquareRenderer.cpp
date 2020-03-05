@@ -16,6 +16,7 @@ SquareRenderer::SquareRenderer(bool init)
 	this->squareShader_ui.UnUse();
 	outline.initData();
 	square = Square(true);
+	circle = Square(false);
 }
 
 SquareRenderer::~SquareRenderer() = default;
@@ -186,6 +187,25 @@ void SquareRenderer::world_RenderEmptySquare(glm::vec2 position, glm::vec2 size,
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
 	glBindVertexArray(0);
 	this->squareShader_world.UnUse();
+}
+
+void SquareRenderer::ui_RenderEmptyCircle(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy, GLfloat rotate)
+{
+	this->squareShader_ui.Use();
+	glm::mat4 model = glm::mat4(1.0);
+	model = glm::translate(model, glm::vec3(position, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
+	//model = glm::translate(model, glm::vec3(position.x, position.y, 0.0f));
+	model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));   // Move origin of rotation to center of quad
+	model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));  // Then rotate
+	model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
+	model = glm::scale(model, glm::vec3(size, 1.0f));								// Last scale
+	this->squareShader_ui.SetMatrix4("model", model);
+	this->squareShader_ui.SetVector3f("colorUniform", color);
+	this->squareShader_ui.SetFloat("trans", transperancy);
+	glBindVertexArray(circle.VAO);
+	glDrawArrays(GL_LINE_LOOP, 0, 360);
+	glBindVertexArray(0);
+	this->squareShader_ui.UnUse();
 }
 
 void SquareRenderer::SetProjection(glm::mat4 proj)
