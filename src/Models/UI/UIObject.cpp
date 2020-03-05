@@ -346,6 +346,9 @@ std::string UIObject::GetObjectTypeString()
 	case 4:
 		str = "Panel";
 		break;
+	case 5:
+		str = "RadioButton";
+		break;
 	default:
 		str = "Bilinmeyen";
 		break;

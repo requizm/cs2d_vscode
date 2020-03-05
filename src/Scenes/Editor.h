@@ -4,6 +4,7 @@
 #include <vector>
 #include "../Models/UI/Panel.h"
 #include "../Models/UI/TextBox.h"
+#include "../Models/UI/RadioButton.h"
 #include "../Models/Camera.h"
 #include "../Models/Tile.h"
 
@@ -76,6 +77,8 @@ private:
 
 	std::vector<std::shared_ptr<Button>> mapsUI;
 	int selectedMap = -1;
+
+	std::shared_ptr<RadioButton> test;
 
 	std::vector<std::shared_ptr<Button>> tilesUI;
 	glm::ivec2 texture;

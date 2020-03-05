@@ -14,7 +14,8 @@ enum class UIObjectType
 	LABEL,
 	TEXTBOX,
 	BUTTON,
-	PANEL
+	PANEL,
+	RADIOBUTTON
 };
 //class TextRenderer;
 

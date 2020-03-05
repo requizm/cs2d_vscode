@@ -20,10 +20,10 @@ public:
 	Label(glm::vec2 position, glm::vec2 size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
 	~Label();
 
-	void Draw() override;
+	virtual void Draw();
 
-	void Update(const float dt) override;
-	void ProcessInput() override;
+	virtual void Update(const float dt);
+	virtual void ProcessInput();
 
 	virtual bool isMouseHover();
 	virtual bool isMouseDown();
