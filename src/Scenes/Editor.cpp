@@ -180,11 +180,8 @@ void Editor::Start()
 	this->b_map_save->setOutlineColor(glm::vec3(1.0F));
 	this->b_map_save->setParent(savePanel.get());
 
-
-	/*test = std::make_shared<RadioButton>("Test", glm::vec2(300.0F, 300.0F), glm::vec2(60.0F, 20.0F), *textRenderer, glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
-	test->setMouseHoverColor(glm::vec3(1.0F));
-	test->setLabelMouseHoverColor(glm::vec3(1.0F));
-	test->setEnable(true);*/
+	this->test = std::make_shared<RadioButton>("Test", glm::vec2(300.0F, 300.0F), *textRenderer, glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	this->test->setMouseHoverColor(glm::vec3(1.0F));
 
 	tiles.clear();
 	maps.clear();
@@ -219,7 +216,7 @@ void Editor::Update(const float dt)
 {
 	this->dt += dt;
 
-	//this->test->Update(dt);
+	this->test->Update(dt);
 
 	this->buildPanel->Update(dt);
 
@@ -273,7 +270,7 @@ void Editor::Update(const float dt)
 
 void Editor::ProcessInput(const float dt)
 {
-	//this->test->ProcessInput();
+	this->test->ProcessInput();
 	this->buildPanel->ProcessInput();
 	this->newPanel->ProcessInput();
 
@@ -438,22 +435,21 @@ void Editor::Render(const float dt)
 	worldRenderer.SetProjection(camera->cameraMatrix);
 	squareRenderer.SetProjection(camera->cameraMatrix);
 
-	glm::vec2 mouse = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
-	glm::ivec2 ms = Utils::PositionToCell(mouse);
-
+	glm::ivec2 ms = Utils::PositionToCell(Utils::ScreenToWorld(camera->view, InputManager::mousePos));
+	bool f = false;
 	for (auto &tile_1 : tiles)
 	{
 		tile_1.button.Draw(worldRenderer, squareRenderer);
 
 		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1.cell), glm::vec2(Game_Parameters::SIZE_TILE), cell_yellow);
 
-		if (ms == tile_1.cell && !newPanel->isMouseHover(false) && !buildPanel->isMouseHover(false) && !loadPanel->isMouseHover(false) && !savePanel->isMouseHover(false))
+		if (!f && ms == tile_1.cell && !newPanel->isMouseHover(false) && !buildPanel->isMouseHover(false) && !loadPanel->isMouseHover(false) && !savePanel->isMouseHover(false))
 		{
+			f = true;
 			glm::vec2 pos = Utils::CellToPosition(tile_1.cell);
 			squareRenderer.world_RenderEmptySquareWithLine(pos, glm::vec2(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
 		}
 	}
-
 	//ui
 	this->buildPanel->Draw(menuRenderer, squareRenderer);
 
@@ -489,7 +485,7 @@ void Editor::Render(const float dt)
 		}
 	}
 
-	//this->test->Draw(menuRenderer, squareRenderer);
+	this->test->Draw(menuRenderer, squareRenderer);
 }
 
 void Editor::SaveMap()
@@ -526,9 +522,9 @@ void Editor::SaveMap()
 			node_tile->append_node(node_tile_type);
 			node_map->append_node(node_tile);
 
-			delete[] cellX; 
+			delete[] cellX;
 			delete[] cellY;
-			delete[] frame; 
+			delete[] frame;
 			delete[] type;
 		}
 		char *limitX = doc.allocate_string(std::to_string(mapLimit.x).c_str());

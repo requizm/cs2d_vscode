@@ -1,10 +1,13 @@
+#ifndef RADIOBUTTON_H
+#define RADIOBUTTON_H
+
 #include "Label.h"
 
 class RadioButton : public Label
 {
 public:
     RadioButton();
-    RadioButton(const std::string &text, glm::vec2 position, glm::vec2 size, TextRenderer &renderer, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
+    RadioButton(const std::string &text, glm::vec2 position, TextRenderer &renderer, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
     ~RadioButton();
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
@@ -17,7 +20,6 @@ public:
 
     void setMouseHoverColor(const glm::vec3 color);
     void setButtonColor(const glm::vec3 color);
-    void setMouseClickColor(const glm::vec3 color);
 
     void OnEnable() override;
     void OnDisable() override;
@@ -35,7 +37,6 @@ private:
 
     glm::vec3 buttonColor;
     glm::vec3 mouseHoverColor;
-    glm::vec3 mouseclickColor;
     glm::vec3 currentColor;
 
     bool isMouseHoverM() override;
@@ -43,3 +44,6 @@ private:
     bool isMouseUpM(const int key) override;
     bool isMousePressM(const int key) override;
 };
+
+
+#endif
