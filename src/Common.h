@@ -49,6 +49,7 @@
 #include "Models/UI/TextBox.cpp"
 #include "Models/UI/Outline.cpp"
 #include "Models/UI/Panel.cpp"
+#include "Models/UI/RadioButton.cpp"
 
 #include "Renderers/SpriteRenderer.cpp"
 #include "Renderers/TextRenderer.cpp"

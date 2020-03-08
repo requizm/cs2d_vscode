@@ -45,11 +45,11 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 		case ButtonType::DEFAULT:
 			if (haveOutline)
 			{
-				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, outlineColor, 1.0F, 1.0F, 0.0F);
+				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, true, outlineColor, 1.0F, 1.0F, 0.0F);
 			}
 			else
 			{
-				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, outlineColor, 0.0F, 1.0F, 0.0F);
+				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, false, outlineColor, 1.0F, 1.0F, 0.0F);
 			}
 			Label::DrawForButton(center);
 			break;

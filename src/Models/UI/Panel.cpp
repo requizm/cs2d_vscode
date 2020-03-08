@@ -42,12 +42,12 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 			}
 			else
 			{
-				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), getPanelColor(), getOutlineColor(), 2.0F, this->trans, 0.0F);
+				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), getPanelColor(), true, getOutlineColor(), 2.0F, this->trans, 0.0F);
 			}
 		}
 		if (opttitles)
 		{
-			squareRenderer.RenderLine(glm::vec2(getPosition().x + lineOffset, getPosition().y + 23.0F), glm::vec2(size.x - 2 * lineOffset, 1.0F), glm::vec3(0.39F), this->trans);
+			squareRenderer.ui_RenderLine(glm::vec2(getPosition().x + lineOffset, getPosition().y + 23.0F), glm::vec2(getPosition().x  + size.x - lineOffset, getPosition().y + 23.0F), glm::vec3(0.39F), 1.0F, this->trans);
 			escapeButton.Draw(spriteRenderer, squareRenderer);
 			title.Draw();
 		}

@@ -28,7 +28,7 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRendere
 	if (isVisible() && isEnable())
 	{
 		if (isBackGround)
-			squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), glm::vec3(0.15F), currentBorderColor, 1.0F, 1.0F);
+			squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), glm::vec3(0.15F), true, currentBorderColor, 1.0F, 1.0F);
 		if (editMode)
 		{
 			if (time <= 0.5F)
