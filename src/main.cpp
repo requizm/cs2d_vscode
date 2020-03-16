@@ -47,14 +47,15 @@ int main(int argc, char *argv[])
 
 	// OpenGL configuration
 	glViewport(0, 0, Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
-	glEnable(GL_CULL_FACE);
 	/*glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POLYGON_SMOOTH);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);*/
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glLineWidth(4.0F);
 
 	Logger::StartApp();
 	// Initialize game
@@ -134,7 +135,7 @@ int main(int argc, char *argv[])
 			time = 0.0F;
 		}*/
 #pragma region input_0
-			int newState;
+		int newState;
 		//mouse
 		for (int i = 0; i < 8; i++)
 		{

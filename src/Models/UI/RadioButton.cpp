@@ -62,7 +62,7 @@ glm::vec2 RadioButton::getSize()
 {
     glm::vec2 ps;
     ps.x = (getPosition().x + labelSize.y / 2 + 2.0F + labelSize.x) - (getPosition().x - labelSize.y / 2);
-    ps.y = labelSize.y / 2;
+    ps.y = labelSize.y;
     return ps;
 }
 
