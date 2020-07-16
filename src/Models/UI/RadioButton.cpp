@@ -16,7 +16,9 @@ void RadioButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRen
     {
         if (!text.empty())
             this->rend->RenderText(text, glm::vec2(getPosition().x + labelSize.y / 2 + 2.0F, getPosition().y), scale, labelCurrentColor);
-        squareRenderer.ui_RenderEmptyCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2), currentColor);
+        squareRenderer.ui_RenderFilledCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2), glm::vec3(0.21F));
+        squareRenderer.ui_RenderEmptyCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2), currentOutlineColor);
+        squareRenderer.ui_RenderFilledCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2 - labelSize.y / 4), currentColor);
     }
 }
 
@@ -28,11 +30,13 @@ void RadioButton::Update(const float dt)
         {
             labelCurrentColor = mouseHoverColor;
             currentColor = mouseHoverColor;
+            currentOutlineColor = mouseHoverOutlineColor;
         }
         else
         {
             labelCurrentColor = labelColor;
             currentColor = buttonColor;
+            currentOutlineColor = outlineColor;
         }
     }
 }
@@ -74,6 +78,15 @@ void RadioButton::setMouseHoverColor(const glm::vec3 color)
 void RadioButton::setButtonColor(const glm::vec3 color)
 {
     this->buttonColor = color;
+}
+
+void RadioButton::setMouseHoverOutlineColor(const glm::vec3 color)
+{
+    this->mouseHoverOutlineColor = color;
+}
+void RadioButton::setOutlineColor(const glm::vec3 color)
+{
+    this->outlineColor = color;
 }
 
 void RadioButton::OnEnable()

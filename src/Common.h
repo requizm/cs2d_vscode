@@ -46,6 +46,7 @@
 #include "Models/UI/UIObject.cpp"
 #include "Models/UI/Button.cpp"
 #include "Models/UI/Square.cpp"
+#include "Models/UI/Circle.cpp"
 #include "Models/UI/TextBox.cpp"
 #include "Models/UI/Outline.cpp"
 #include "Models/UI/Panel.cpp"

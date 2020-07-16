@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "../Models/UI/Square.h"
+#include "../Models/UI/Circle.h"
 #include "../Models/Shader.h"
 #include "../Models/UI/Outline.h"
 
@@ -18,7 +19,8 @@ public:
 	Shader squareShader_world;
 	Outline outline;
 	Square square;
-	Square circle;
+	Circle emptyCircle;
+	Circle filledCircle;
 	//Outline title_line = Outline();
 
 	void ui_RenderFilledSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, bool outline, glm::vec3 borderColor, float borderSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
@@ -33,6 +35,7 @@ public:
 	void world_RenderEmptySquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
 
 	void ui_RenderEmptyCircle(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderFilledCircle(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
 	void SetProjection(glm::mat4 proj);
 };
 

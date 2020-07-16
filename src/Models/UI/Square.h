@@ -16,7 +16,6 @@ public:
 
 private:
 	void initData();
-	void initCircle();
 };
 
 #endif // SQUARE_H

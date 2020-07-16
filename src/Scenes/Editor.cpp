@@ -180,8 +180,11 @@ void Editor::Start()
 	this->b_map_save->setOutlineColor(glm::vec3(1.0F));
 	this->b_map_save->setParent(savePanel.get());
 
-	this->test = std::make_shared<RadioButton>("Test", glm::vec2(300.0F, 300.0F), *textRenderer, glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
-	this->test->setMouseHoverColor(glm::vec3(1.0F));
+	this->test = std::make_shared<RadioButton>("Testdfdsf", glm::vec2(300.0F, 300.0F), *textRenderer, glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	this->test->setSize(300, 300);
+	this->test->setMouseHoverColor(glm::vec3(0.9F));
+	this->test->setOutlineColor(glm::vec3(0.58F));
+	this->test->setMouseHoverOutlineColor(glm::vec3(0.9F));
 
 	tiles.clear();
 	maps.clear();

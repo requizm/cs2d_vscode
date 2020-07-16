@@ -20,6 +20,8 @@ public:
 
     void setMouseHoverColor(const glm::vec3 color);
     void setButtonColor(const glm::vec3 color);
+    void setMouseHoverOutlineColor(const glm::vec3 color);
+    void setOutlineColor(const glm::vec3 color);
 
     void OnEnable() override;
     void OnDisable() override;
@@ -35,9 +37,12 @@ public:
 private:
     bool selected;
 
-    glm::vec3 buttonColor;
-    glm::vec3 mouseHoverColor;
+    glm::vec3 buttonColor; //secili oldugunu belli eden daire'nin rengi
+    glm::vec3 mouseHoverColor; 
+    glm::vec3 outlineColor; 
+    glm::vec3 mouseHoverOutlineColor;
     glm::vec3 currentColor;
+    glm::vec3 currentOutlineColor;
 
     bool isMouseHoverM() override;
     bool isMouseDownM(const int key) override;
