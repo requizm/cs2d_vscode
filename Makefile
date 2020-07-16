@@ -1,5 +1,5 @@
 CXX      := g++
-CXXFLAGS := -w -std=c++17 -m32
+CXXFLAGS := -w -std=c++17
 LDFLAGS  := -L./lib
 LIB_F = -lglew32s -lglew32 -lglfw3 -lopengl32 -lfreetype
 BUILD    := ./build

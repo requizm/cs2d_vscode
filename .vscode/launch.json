@@ -51,13 +51,15 @@
             "name": " Run",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/main.exe",
+            "program": "${workspaceFolder}\\bin\\main.exe",
             "args": [],
             "targetArchitecture": "x86",
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}\\bin",
             "environment": [],
-            "externalConsole": true
+            "externalConsole": true,
+            "logging": { "engineLogging": true },
+            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe"
         }
     ]
 }

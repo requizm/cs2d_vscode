@@ -9,7 +9,7 @@
             "UNICODE",
             "_UNICODE"
         ],
-        "compilerPath": "C:\\Program Files\\mingw-w64\\mingw64\bin\\g++",
+        "compilerPath": "C:\\MinGW\\bin\\g++",
         "browse": {
             "path": [
                 "${workspaceFolder}"
