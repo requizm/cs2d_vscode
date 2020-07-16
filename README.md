@@ -1,12 +1,12 @@
 </br>
-**-GCC: **9.2.0
+**-GCC:** 9.2.0 
 **-Target:** win32
 
 </br></br></br>
 
 **~~Önemli Not:~~**
 ~~Build edecekseniz, cmake kullanmayın. Build için oluşturduğum makefile’ı kullanın. Cmake kullanma amacım ise Travis CI. Nedeni şu:
-Mingw-64 paketindeki bazı kütüphaneler uyumluluk sorunu çıkartıyor. Kendi bilgisayarımda bu sorunu, “exception: sjlj” şeklinde yükleyerek düzeltiyorum ama bulut bilgisayardaki pakete dokunamıyorum maalesef. O yüzden cmake’in görevi, 64 bit build edilebilir makefile dosyası oluşturmak. Travis CI oradaki makefile’ı build ediyor yani. Docker ile de bu sorunu çözebilirdim ama hiç ona bulaşmak istemiyorum. ~~
+Mingw-64 paketindeki bazı kütüphaneler uyumluluk sorunu çıkartıyor. Kendi bilgisayarımda bu sorunu, “exception: sjlj” şeklinde yükleyerek düzeltiyorum ama bulut bilgisayardaki pakete dokunamıyorum maalesef. O yüzden cmake’in görevi, 64 bit build edilebilir makefile dosyası oluşturmak. Travis CI oradaki makefile’ı build ediyor yani. Docker ile de bu sorunu çözebilirdim ama hiç ona bulaşmak istemiyorum.~~
 </br>
 </br>
 **~~Note:~~**
