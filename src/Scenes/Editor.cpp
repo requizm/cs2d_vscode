@@ -494,9 +494,11 @@ void Editor::SaveMap()
 	{
 		rapidxml::xml_document<> doc;
 		rapidxml::xml_node<> *node_map = doc.allocate_node(rapidxml::node_element, "map");
-
+		Logger::WriteLog("xml_node olusturuldu");
+		//int i = 0;
 		for (auto &tile : tiles)
 		{
+			//Logger::WriteLog("tile: " + std::to_string(i) + "  basladi");
 			rapidxml::xml_node<> *node_tile = doc.allocate_node(rapidxml::node_element, "tile");
 			char *cellX = doc.allocate_string(std::to_string(tile.cell.x).c_str());
 			char *cellY = doc.allocate_string(std::to_string(tile.cell.y).c_str());
@@ -515,7 +517,7 @@ void Editor::SaveMap()
 			rapidxml::xml_node<> *node_cellX = doc.allocate_node(rapidxml::node_element, "cellX", cellX);
 			rapidxml::xml_node<> *node_cellY = doc.allocate_node(rapidxml::node_element, "cellY", cellY);
 			rapidxml::xml_node<> *node_tile_type = doc.allocate_node(rapidxml::node_element, "tileType", type);
-
+			
 			node_tile->append_node(node_tile_texture);
 			node_tile->append_node(node_cellX);
 			node_tile->append_node(node_cellY);
@@ -524,8 +526,10 @@ void Editor::SaveMap()
 
 			delete[] cellX;
 			delete[] cellY;
-			delete[] frame;
+			//delete[] frame;
 			delete[] type;
+
+			//Logger::WriteLog("tile: " + std::to_string(i++) + "  bitti");
 		}
 		char *limitX = doc.allocate_string(std::to_string(mapLimit.x).c_str());
 		char *limitY = doc.allocate_string(std::to_string(mapLimit.y).c_str());
@@ -543,13 +547,11 @@ void Editor::SaveMap()
 		doc.append_node(node_map);
 		doc.append_node(node_info);
 		std::ofstream fileC;
-		std::string a("../resources/levels/");
-		a += t_save->getText();
-		a += ".xml";
+		std::string a("../resources/levels/" + t_save->getText() + ".xml");
 		fileC.open(a.c_str());
 		if (!fileC)
 		{
-			std::string str = "dosya acilamadi: ";
+			std::string str = a + "dosyasi acilamadi";
 			Logger::DebugLog(str);
 			Logger::WriteLog(str);
 			exit(EXIT_FAILURE);
@@ -560,7 +562,7 @@ void Editor::SaveMap()
 		delete[] limitY;
 		delete[] name;
 		delete[] tile;
-		delete node_map;
+		//delete[] node_map;
 		this->savePanel->setEnable(false);
 	}
 }

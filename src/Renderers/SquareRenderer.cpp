@@ -301,7 +301,7 @@ void SquareRenderer::ui_RenderEmptyCircle(glm::vec2 position, glm::vec2 size, gl
 	
 	//glLineWidth(2.0F);
 	glBindVertexArray(circle.VAO);
-	glDrawArrays(GL_POLYGON, 0, 100);
+	glDrawArrays(GL_LINE_LOOP, 0, 360);
 	glBindVertexArray(0);
 	//glLineWidth(1.0F);
 	this->squareShader_ui.UnUse();

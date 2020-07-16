@@ -54,28 +54,15 @@ void Square::initData()
 void Square::initCircle()
 {
 	GLuint VBO;
-	/*glm::vec2 vertices[360];
+	glm::vec2 vertices[360];
 	float rad = 3.14159F;
 
 	for (int i = 0; i < 360; i++)
 	{
 		float angle = (rad / 180.0F) * i; // (thanks Rodrigo)
 		vertices[i] = glm::vec2(1.0F * cos(angle), 1.0F * sin(angle));
-	}*/
-	glm::vec2 vertices[101];
-	const int circle_points = 100;
-	const float angle = 2.0f * PI / circle_points;
-
-	// this code (mostly) copied from question:
-
-	double angle1 = 0.0;
-	vertices[0] = glm::vec2(cos(0.0F), sin(0.0F));
-	int i;
-	for (i = 1; i < circle_points; i++)
-	{
-		vertices[i] = glm::vec2(cos(angle1), sin(angle1));
-		angle1 += angle;
 	}
+	
 
 	glGenVertexArrays(1, &this->VAO);
 	glGenBuffers(1, &VBO);
