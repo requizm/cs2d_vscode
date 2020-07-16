@@ -1,6 +1,6 @@
 </br>
-**-GCC:** 9.2.0 
-**-Target:** win32
+**GCC:** 9.2.0 
+**Target:** win32
 
 </br></br></br>
 
