@@ -1,6 +1,6 @@
 </br>
-__GCC:__ 9.2.0 </br>
-__Target:__ win32
+GCC: 9.2.0 </br>
+Target: win32
 
 </br></br></br>
 
