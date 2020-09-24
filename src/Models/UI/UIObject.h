@@ -29,6 +29,7 @@ public:
 	UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type);
 	UIObject(glm::vec2 position, float scale, TextRenderer &renderer);
 	UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIObjectType type);
+	UIObject(glm::vec2 position, float scale, UIObjectType type);
 	virtual ~UIObject();
 
 	virtual void Update(const float dt);

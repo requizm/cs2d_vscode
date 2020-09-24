@@ -84,6 +84,18 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIOb
 	this->childs.clear();
 }
 
+UIObject::UIObject(glm::vec2 position, float scale, UIObjectType type) : enable(true), visible(true),
+																								 mouseEvents(true), scrollable(false), dependParent(false)
+{
+	this->objType = type;
+	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
+	this->position = position;
+	this->scale = scale;
+
+	this->setID(Utils::GenerateID());
+	this->childs.clear();
+}
+
 UIObject::~UIObject() = default;
 
 bool onenabletrigger = false;

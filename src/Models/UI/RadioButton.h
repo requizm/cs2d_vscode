@@ -3,14 +3,14 @@
 
 #include "Label.h"
 
-class RadioButton : public Label
+class RadioButtonElement : public Label
 {
 public:
-    RadioButton();
-    RadioButton(const std::string &text, glm::vec2 position, TextRenderer &renderer, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
-    ~RadioButton();
-
-    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
+    RadioButtonElement();
+    RadioButtonElement(const std::string &text, glm::vec2 position, TextRenderer &textRenderer, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
+    ~RadioButtonElement();
+    
+    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
     void Update(const float dt) override;
     void ProcessInput() override;
 
@@ -33,13 +33,15 @@ public:
     bool isMouseDown() override;
     bool isMouseUp() override;
     bool isMousePress() override;
+
+    bool selected;
     
 private:
-    bool selected;
+    
 
     glm::vec3 buttonColor; //secili oldugunu belli eden daire'nin rengi
-    glm::vec3 mouseHoverColor; 
-    glm::vec3 outlineColor; 
+    glm::vec3 mouseHoverColor;
+    glm::vec3 outlineColor;
     glm::vec3 mouseHoverOutlineColor;
     glm::vec3 currentColor;
     glm::vec3 currentOutlineColor;
@@ -48,6 +50,30 @@ private:
     bool isMouseDownM(const int key) override;
     bool isMouseUpM(const int key) override;
     bool isMousePressM(const int key) override;
+};
+
+
+
+
+class RadioButton: UIObject
+{
+private:
+    std::vector<RadioButtonElement*> elements;
+    int i = 0;
+    int y_sep; //aradaki bosluklar
+public:
+    RadioButton();
+    RadioButton(TextRenderer &renderer, glm::vec2 position, int y_sep);
+    ~RadioButton();
+
+    void Clear();
+    void AddElement(const std::string &text, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
+    
+    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
+    void Update(const float dt);
+    void ProcessInput();
+
+    int selectedId;
 };
 
 

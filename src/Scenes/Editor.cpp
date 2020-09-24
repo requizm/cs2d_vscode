@@ -180,11 +180,12 @@ void Editor::Start()
 	this->b_map_save->setOutlineColor(glm::vec3(1.0F));
 	this->b_map_save->setParent(savePanel.get());
 
-	this->test = std::make_shared<RadioButton>("Testdfdsf", glm::vec2(300.0F, 300.0F), *textRenderer, glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
-	this->test->setSize(300, 300);
-	this->test->setMouseHoverColor(glm::vec3(0.9F));
-	this->test->setOutlineColor(glm::vec3(0.58F));
-	this->test->setMouseHoverOutlineColor(glm::vec3(0.9F));
+	this->radioButton = std::make_shared<RadioButton>(*textRenderer, glm::vec2(300.0F, 300.0F), 30);
+	this->radioButton->Clear();
+	this->radioButton->AddElement("Test1", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	this->radioButton->AddElement("Test2", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	this->radioButton->AddElement("Test3", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	this->radioButton->AddElement("Test4", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
 
 	tiles.clear();
 	maps.clear();
@@ -219,7 +220,8 @@ void Editor::Update(const float dt)
 {
 	this->dt += dt;
 
-	this->test->Update(dt);
+	//this->test1->Update(dt);
+	this->radioButton->Update(dt);
 
 	this->buildPanel->Update(dt);
 
@@ -273,7 +275,8 @@ void Editor::Update(const float dt)
 
 void Editor::ProcessInput(const float dt)
 {
-	this->test->ProcessInput();
+	//this->test1->ProcessInput();
+	this->radioButton->ProcessInput();
 	this->buildPanel->ProcessInput();
 	this->newPanel->ProcessInput();
 
@@ -488,7 +491,8 @@ void Editor::Render(const float dt)
 		}
 	}
 
-	this->test->Draw(menuRenderer, squareRenderer);
+	//this->test1->Draw(menuRenderer, squareRenderer);
+	this->radioButton->Draw(menuRenderer, squareRenderer);
 }
 
 void Editor::SaveMap()

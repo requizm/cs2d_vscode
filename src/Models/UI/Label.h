@@ -15,6 +15,7 @@ class Label : public UIObject
 {
 public:
 	Label();
+	Label(const std::string &text, glm::vec2 position, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), UIObjectType type = UIObjectType::LABEL);
 	Label(const std::string &text, glm::vec2 position, TextRenderer &renderer, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), UIObjectType type = UIObjectType::LABEL);
 	Label(glm::vec2 position, TextRenderer &renderer, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), UIObjectType type = UIObjectType::LABEL);
 	Label(glm::vec2 position, glm::vec2 size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);

@@ -78,7 +78,8 @@ private:
 	std::vector<std::shared_ptr<Button>> mapsUI;
 	int selectedMap = -1;
 
-	std::shared_ptr<RadioButton> test;
+	std::shared_ptr<RadioButtonElement> test1, test2, test3, test4;
+	std::shared_ptr<RadioButton> radioButton;
 
 	std::vector<std::shared_ptr<Button>> tilesUI;
 	glm::ivec2 texture;

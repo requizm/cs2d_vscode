@@ -1,68 +1,63 @@
 #include "RadioButton.h"
 
-RadioButton::RadioButton() = default;
+RadioButtonElement::RadioButtonElement() = default;
 
-RadioButton::RadioButton(const std::string &text, glm::vec2 position, TextRenderer &renderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale)
-    : Label(text, position, renderer, scale, textColor, UIObjectType::RADIOBUTTON), selected(false)
+RadioButtonElement::RadioButtonElement(const std::string &text, glm::vec2 position, TextRenderer &textRenderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale)
+    : Label(text, position, textRenderer, scale, textColor, UIObjectType::RADIOBUTTON), selected(false)
 {
     this->setButtonColor(buttonColor);
 }
 
-RadioButton::~RadioButton() = default;
+RadioButtonElement::~RadioButtonElement() = default;
 
-void RadioButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
+void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
-    if (isVisible() && isEnable())
+    if (!text.empty())
+        this->rend->RenderText(text, glm::vec2(getPosition().x + labelSize.y / 2 + 2.0F, getPosition().y), scale, labelCurrentColor);
+    squareRenderer.ui_RenderFilledCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2), glm::vec3(0.21F));
+    squareRenderer.ui_RenderEmptyCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2), currentOutlineColor);
+    if (selected)
     {
-        if (!text.empty())
-            this->rend->RenderText(text, glm::vec2(getPosition().x + labelSize.y / 2 + 2.0F, getPosition().y), scale, labelCurrentColor);
-        squareRenderer.ui_RenderFilledCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2), glm::vec3(0.21F));
-        squareRenderer.ui_RenderEmptyCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2), currentOutlineColor);
         squareRenderer.ui_RenderFilledCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2 - labelSize.y / 4), currentColor);
     }
 }
 
-void RadioButton::Update(const float dt)
+void RadioButtonElement::Update(const float dt)
 {
-    if (isEnable() && isMouseEvents())
+    if (isMouseHover())
     {
-        if (isMouseHover())
-        {
-            labelCurrentColor = mouseHoverColor;
-            currentColor = mouseHoverColor;
-            currentOutlineColor = mouseHoverOutlineColor;
-        }
-        else
-        {
-            labelCurrentColor = labelColor;
-            currentColor = buttonColor;
-            currentOutlineColor = outlineColor;
-        }
+        labelCurrentColor = mouseHoverColor;
+        currentColor = mouseHoverColor; //gereksiz
+        currentOutlineColor = mouseHoverOutlineColor;
+    }
+    else
+    {
+        labelCurrentColor = labelColor;
+        currentColor = mouseHoverColor; //gereksiz
+        currentOutlineColor = outlineColor;
     }
 }
 
-void RadioButton::ProcessInput()
+void RadioButtonElement::ProcessInput()
 {
-    if (isMouseEvents() && isEnable())
-    {
-        isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
-        isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
-    }
+
+    isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
+    isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 }
 
-glm::vec2 RadioButton::getPosition()
+glm::vec2 RadioButtonElement::getPosition()
 {
     if (isParent())
         return this->position + parent->getPosition();
     return this->position;
 }
-glm::vec2 RadioButton::getLocalPosition()
+glm::vec2 RadioButtonElement::getLocalPosition()
 {
     if (isParent())
         return this->position - parent->getPosition();
     return glm::vec2(0.0F);
 }
-glm::vec2 RadioButton::getSize()
+glm::vec2 RadioButtonElement::getSize()
 {
     glm::vec2 ps;
     ps.x = (getPosition().x + labelSize.y / 2 + 2.0F + labelSize.x) - (getPosition().x - labelSize.y / 2);
@@ -70,65 +65,65 @@ glm::vec2 RadioButton::getSize()
     return ps;
 }
 
-void RadioButton::setMouseHoverColor(const glm::vec3 color)
+void RadioButtonElement::setMouseHoverColor(const glm::vec3 color)
 {
     this->mouseHoverColor = color;
 }
 
-void RadioButton::setButtonColor(const glm::vec3 color)
+void RadioButtonElement::setButtonColor(const glm::vec3 color)
 {
     this->buttonColor = color;
 }
 
-void RadioButton::setMouseHoverOutlineColor(const glm::vec3 color)
+void RadioButtonElement::setMouseHoverOutlineColor(const glm::vec3 color)
 {
     this->mouseHoverOutlineColor = color;
 }
-void RadioButton::setOutlineColor(const glm::vec3 color)
+void RadioButtonElement::setOutlineColor(const glm::vec3 color)
 {
     this->outlineColor = color;
 }
 
-void RadioButton::OnEnable()
+void RadioButtonElement::OnEnable()
 {
 }
-void RadioButton::OnDisable()
+void RadioButtonElement::OnDisable()
 {
     this->selected = false;
 }
 
-void RadioButton::setPosition(const glm::vec2 position)
+void RadioButtonElement::setPosition(const glm::vec2 position)
 {
     this->position = position;
 }
-void RadioButton::setPosition(const int x, const int y)
+void RadioButtonElement::setPosition(const int x, const int y)
 {
     this->position.x = x;
     this->position.y = y;
 }
 
-bool RadioButton::isMouseHover()
+bool RadioButtonElement::isMouseHover()
 {
     if (isEnable() && isMouseEvents())
         return isMouseHoverM();
     return false;
 }
-bool RadioButton::isMouseDown()
+bool RadioButtonElement::isMouseDown()
 {
     return this->isDown;
 }
-bool RadioButton::isMouseUp()
+bool RadioButtonElement::isMouseUp()
 {
     return this->isUp;
 }
-bool RadioButton::isMousePress()
+bool RadioButtonElement::isMousePress()
 {
     if (isEnable())
         return isMousePressM(GLFW_MOUSE_BUTTON_LEFT);
     return false;
 }
 
-bool RadioButton::isMouseHoverM()
+bool RadioButtonElement::isMouseHoverM()
 {
     const int posX = static_cast<int>(this->getPosition().x - labelSize.y / 2);
     const int posY = static_cast<int>(this->getPosition().y);
@@ -142,7 +137,7 @@ bool RadioButton::isMouseHoverM()
     }
     return false;
 }
-bool RadioButton::isMouseDownM(const int key)
+bool RadioButtonElement::isMouseDownM(const int key)
 {
     if (isPressed && isDown)
     {
@@ -157,7 +152,7 @@ bool RadioButton::isMouseDownM(const int key)
     }
     return false;
 }
-bool RadioButton::isMouseUpM(const int key)
+bool RadioButtonElement::isMouseUpM(const int key)
 {
     if (InputManager::isButtonUp(key) && isPressed)
     {
@@ -169,11 +164,85 @@ bool RadioButton::isMouseUpM(const int key)
         isUp = false;
     return false;
 }
-bool RadioButton::isMousePressM(const int key)
+bool RadioButtonElement::isMousePressM(const int key)
 {
     if (isMouseHover() && InputManager::isButton(key))
     {
         return true;
     }
     return false;
+}
+
+RadioButton::RadioButton() = default;
+
+RadioButton::RadioButton(TextRenderer &renderer, glm::vec2 position, int y_sep) : UIObject(position, 1.0F, renderer)
+{
+    this->y_sep = y_sep;
+}
+
+RadioButton::~RadioButton() = default;
+
+void RadioButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
+{
+    if (isVisible() && isEnable())
+    {
+        for (auto &element : elements)
+        {
+            element->Draw(spriteRenderer, squareRenderer);
+        }
+    }
+}
+
+void RadioButton::Clear()
+{
+    this->elements.clear();
+    i = 0;
+}
+
+void RadioButton::AddElement(const std::string &text, glm::vec3 buttonColor, glm::vec3 textColor, float scale)
+{
+    RadioButtonElement* r = new RadioButtonElement(text, glm::vec2(position.x, position.y + y_sep * i), *rend, buttonColor, textColor, scale);
+    r->setSize(300, 300);
+    r->setMouseHoverColor(glm::vec3(0.9F));
+	r->setOutlineColor(glm::vec3(0.58F));
+	r->setMouseHoverOutlineColor(glm::vec3(0.9F));
+
+    this->elements.push_back(r);
+
+    i = i + 1;
+}
+
+void RadioButton::Update(const float dt)
+{
+    if (isEnable() && isMouseEvents())
+    {
+        for (auto &element : elements)
+        {
+            element->Update(dt);
+            if (element->isMouseDown() && selectedId != element->getID())
+            {
+
+                element->selected = true;
+                selectedId = element->getID();
+                for (auto &e : elements)
+                {
+                    if (e->getID() != selectedId)
+                    {
+                        e->selected = false;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void RadioButton::ProcessInput()
+{
+    if (isMouseEvents() && isEnable())
+    {
+        for (auto &element : elements)
+        {
+            element->ProcessInput();
+        }
+    }
 }
