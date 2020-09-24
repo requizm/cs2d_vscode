@@ -2,6 +2,7 @@
 #define RADIOBUTTON_H
 
 #include "Label.h"
+#include <functional>
 
 class RadioButtonElement : public Label
 {
@@ -9,7 +10,7 @@ public:
     RadioButtonElement();
     RadioButtonElement(const std::string &text, glm::vec2 position, TextRenderer &textRenderer, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
     ~RadioButtonElement();
-    
+
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
     void Update(const float dt) override;
     void ProcessInput() override;
@@ -35,10 +36,10 @@ public:
     bool isMousePress() override;
 
     bool selected;
-    
-private:
-    
 
+    int index;
+
+private:
     glm::vec3 buttonColor; //secili oldugunu belli eden daire'nin rengi
     glm::vec3 mouseHoverColor;
     glm::vec3 outlineColor;
@@ -52,29 +53,33 @@ private:
     bool isMousePressM(const int key) override;
 };
 
-
-
-
-class RadioButton: UIObject
+class RadioButton : public UIObject
 {
 private:
-    std::vector<RadioButtonElement*> elements;
+    std::vector<RadioButtonElement *> elements;
     int i = 0;
     int y_sep; //aradaki bosluklar
+
+    std::vector<std::function<void()>> listeners;
+
 public:
     RadioButton();
     RadioButton(TextRenderer &renderer, glm::vec2 position, int y_sep);
     ~RadioButton();
 
+    void AddListener(std::function<void()> func);
+
     void Clear();
     void AddElement(const std::string &text, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
-    
+
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
     void Update(const float dt);
     void ProcessInput();
 
-    int selectedId;
-};
+    void Select(int index);
+    RadioButtonElement *GetSelectedElement();
 
+    int selectedIndex = -1;
+};
 
 #endif

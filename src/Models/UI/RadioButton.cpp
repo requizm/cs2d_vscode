@@ -89,7 +89,7 @@ void RadioButtonElement::OnEnable()
 }
 void RadioButtonElement::OnDisable()
 {
-    this->selected = false;
+    //this->selected = false;
 }
 
 void RadioButtonElement::setPosition(const glm::vec2 position)
@@ -193,6 +193,11 @@ void RadioButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRen
     }
 }
 
+void RadioButton::AddListener(std::function<void()> func)
+{
+    listeners.push_back(std::move(func));
+}
+
 void RadioButton::Clear()
 {
     this->elements.clear();
@@ -201,11 +206,13 @@ void RadioButton::Clear()
 
 void RadioButton::AddElement(const std::string &text, glm::vec3 buttonColor, glm::vec3 textColor, float scale)
 {
-    RadioButtonElement* r = new RadioButtonElement(text, glm::vec2(position.x, position.y + y_sep * i), *rend, buttonColor, textColor, scale);
+    RadioButtonElement *r = new RadioButtonElement(text, glm::vec2(position.x, position.y + y_sep * i), *rend, buttonColor, textColor, scale);
     r->setSize(300, 300);
     r->setMouseHoverColor(glm::vec3(0.9F));
-	r->setOutlineColor(glm::vec3(0.58F));
-	r->setMouseHoverOutlineColor(glm::vec3(0.9F));
+    r->setOutlineColor(glm::vec3(0.58F));
+    r->setMouseHoverOutlineColor(glm::vec3(0.9F));
+    r->setParent(this);
+    r->index = i;
 
     this->elements.push_back(r);
 
@@ -216,22 +223,15 @@ void RadioButton::Update(const float dt)
 {
     if (isEnable() && isMouseEvents())
     {
+        int i = 0;
         for (auto &element : elements)
         {
             element->Update(dt);
-            if (element->isMouseDown() && selectedId != element->getID())
+            if (element->isMouseDown())
             {
-
-                element->selected = true;
-                selectedId = element->getID();
-                for (auto &e : elements)
-                {
-                    if (e->getID() != selectedId)
-                    {
-                        e->selected = false;
-                    }
-                }
+                Select(i);
             }
+            i = i + 1;
         }
     }
 }
@@ -244,5 +244,33 @@ void RadioButton::ProcessInput()
         {
             element->ProcessInput();
         }
+    }
+}
+
+void RadioButton::Select(int index)
+{
+    if (selectedIndex != elements.at(index)->index)
+    {
+        for (auto &element : elements)
+        {
+            element->selected = false;
+        }
+        elements.at(index)->selected = true;
+        selectedIndex = elements.at(index)->index;
+
+        for (auto &a : listeners)
+        {
+            a();
+        }
+        return;
+    }
+    //zaten bu secili
+}
+
+RadioButtonElement *RadioButton::GetSelectedElement()
+{
+    if (selectedIndex != -1)
+    {
+        return elements.at(selectedIndex);
     }
 }

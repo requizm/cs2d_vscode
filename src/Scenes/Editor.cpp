@@ -180,12 +180,30 @@ void Editor::Start()
 	this->b_map_save->setOutlineColor(glm::vec3(1.0F));
 	this->b_map_save->setParent(savePanel.get());
 
-	this->radioButton = std::make_shared<RadioButton>(*textRenderer, glm::vec2(300.0F, 300.0F), 30);
+	//tile properties
+	this->tilePropertiesPanel = std::make_shared<Panel>(glm::vec2(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Tile Properties", glm::vec2(400, 400), *textRenderer, true, true, 1.0F, glm::vec3(0.21F), 0.8F);
+	this->tilePropertiesPanel->setMovable(false);
+	this->tilePropertiesPanel->setEnable(false);
+
+	this->b_tileProperties = std::make_shared<Button>("Tile Properties", glm::vec2(10.0F, buildPanel->getSize().y - 35.0F), glm::vec2(30.0F, 15.0F), *textRenderer);
+	this->b_tileProperties->setOutline(true);
+	this->b_tileProperties->setOutlineColor(glm::vec3(0.54));
+	this->b_tileProperties->setLabelColor(glm::vec3(0.54F));
+	this->b_tileProperties->setLabelMouseHoverColor(glm::vec3(0.60F));
+	this->b_tileProperties->setLabelClickColor(glm::vec3(0.60F));
+	this->b_tileProperties->setButtonColor(glm::vec3(0.15F));
+	this->b_tileProperties->setMouseClickColor(glm::vec3(0.30F));
+	this->b_tileProperties->setMouseHoverColor(glm::vec3(0.30F));
+	this->b_tileProperties->setParent(buildPanel.get());
+
+	this->radioButton = std::make_shared<RadioButton>(*textRenderer, glm::vec2(20.0F, 50.0F), 30);
+	this->radioButton->setParent(tilePropertiesPanel.get());
 	this->radioButton->Clear();
-	this->radioButton->AddElement("Test1", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
-	this->radioButton->AddElement("Test2", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
-	this->radioButton->AddElement("Test3", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
-	this->radioButton->AddElement("Test4", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	this->radioButton->AddElement("Wall", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	this->radioButton->AddElement("Obstacle", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	this->radioButton->AddElement("Floor", glm::vec3(0.15F), glm::vec3(0.58F), 1.0F);
+	std::function<void()> t = std::bind(&Editor::SelectedRbChanged, this);
+	this->radioButton->AddListener(t);
 
 	tiles.clear();
 	maps.clear();
@@ -220,9 +238,6 @@ void Editor::Update(const float dt)
 {
 	this->dt += dt;
 
-	//this->test1->Update(dt);
-	this->radioButton->Update(dt);
-
 	this->buildPanel->Update(dt);
 
 	this->newPanel->Update(dt);
@@ -230,6 +245,8 @@ void Editor::Update(const float dt)
 	this->loadPanel->Update(dt);
 
 	this->savePanel->Update(dt);
+
+	this->tilePropertiesPanel->Update(dt);
 
 	if (!mapsUI.empty())
 	{
@@ -275,13 +292,12 @@ void Editor::Update(const float dt)
 
 void Editor::ProcessInput(const float dt)
 {
-	//this->test1->ProcessInput();
-	this->radioButton->ProcessInput();
 	this->buildPanel->ProcessInput();
 	this->newPanel->ProcessInput();
 
 	this->loadPanel->ProcessInput();
 	this->savePanel->ProcessInput();
+	this->tilePropertiesPanel->ProcessInput();
 	if (!mapsUI.empty())
 	{
 		for (std::vector<int>::size_type i = 0; i != mapsUI.size(); i++)
@@ -299,7 +315,7 @@ void Editor::ProcessInput(const float dt)
 				tile->ProcessInput();
 				if (tile->isMouseDown())
 				{
-					selectedTile = *(tile->getTile());
+					selectedTile = (tile->getTile());
 					firstSelect = true;
 				}
 			}
@@ -385,6 +401,12 @@ void Editor::ProcessInput(const float dt)
 		LoadMap(t_load->getText());
 	}
 
+	if (b_tileProperties->isMouseDown())
+	{
+		this->tilePropertiesPanel->setEnable(true);
+		this->radioButton->Select(static_cast<int>(selectedTile->getType()));
+	}
+
 	for (std::vector<int>::size_type i = 0; i != mapsUI.size(); i++)
 	{
 		if (mapsUI[i]->isMouseDown() && mapsUI[i]->isRenderable())
@@ -405,8 +427,10 @@ void Editor::ProcessInput(const float dt)
 		}
 	}
 
-	if (firstSelect && !buildPanel->isPressed && !newPanel->isPressed && !loadPanel->isPressed && !savePanel->isPressed &&
-		!buildPanel->isMouseHover(false) && !newPanel->isMouseHover(false) && !loadPanel->isMouseHover(false) && !savePanel->isMouseHover(false))
+	bool panelsPressed = !buildPanel->isPressed && !newPanel->isPressed && !loadPanel->isPressed && !savePanel->isPressed && !tilePropertiesPanel->isPressed &&
+						 !buildPanel->isMouseHover(false) && !newPanel->isMouseHover(false) && !loadPanel->isMouseHover(false) && !savePanel->isMouseHover(false) && !tilePropertiesPanel->isMouseHover(false);
+
+	if (firstSelect && panelsPressed)
 	{
 		if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT))
 		{
@@ -418,9 +442,9 @@ void Editor::ProcessInput(const float dt)
 			{
 				if (tile.cell == selectedCell)
 				{
-					Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile.sprite, glm::vec2(Game_Parameters::SIZE_TILE), selectedTile.getType(), selectedTile.frame);
+					Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile->sprite, glm::vec2(Game_Parameters::SIZE_TILE), selectedTile->getType(), selectedTile->frame);
 					Button bt = Button(tilee);
-					if (!(selectedTile.frame == tile.button.getTile()->frame))
+					if (!(selectedTile->frame == tile.button.getTile()->frame))
 					{
 						tile.button = bt;
 						/*if (!tile.exist)
@@ -464,6 +488,8 @@ void Editor::Render(const float dt)
 	this->loadPanel->Draw(menuRenderer, squareRenderer);
 
 	this->savePanel->Draw(menuRenderer, squareRenderer);
+
+	this->tilePropertiesPanel->Draw(menuRenderer, squareRenderer);
 	if (!mapsUI.empty())
 	{
 		for (std::vector<int>::size_type i = 0; i != mapsUI.size(); i++)
@@ -476,7 +502,7 @@ void Editor::Render(const float dt)
 	{
 		for (auto &tile : tilesUI)
 		{
-			if (firstSelect && selectedTile.GetID() == tile->getTile()->GetID())
+			if (firstSelect && selectedTile->GetID() == tile->getTile()->GetID())
 			{
 				tile->Draw(menuRenderer, squareRenderer, 0.3F, this->dt, true);
 			}
@@ -490,9 +516,6 @@ void Editor::Render(const float dt)
 			}
 		}
 	}
-
-	//this->test1->Draw(menuRenderer, squareRenderer);
-	this->radioButton->Draw(menuRenderer, squareRenderer);
 }
 
 void Editor::SaveMap()
@@ -524,7 +547,7 @@ void Editor::SaveMap()
 			rapidxml::xml_node<> *node_cellX = doc.allocate_node(rapidxml::node_element, "cellX", cellX);
 			rapidxml::xml_node<> *node_cellY = doc.allocate_node(rapidxml::node_element, "cellY", cellY);
 			rapidxml::xml_node<> *node_tile_type = doc.allocate_node(rapidxml::node_element, "tileType", type);
-			
+
 			node_tile->append_node(node_tile_texture);
 			node_tile->append_node(node_cellX);
 			node_tile->append_node(node_cellY);
@@ -605,6 +628,8 @@ void Editor::NewMap(std::string tileSet, glm::vec2 mapSize)
 		button->independent = true;
 		button->setParent(tilePanel.get(), true);
 		tilesUI.push_back(std::make_shared<Button>(*button));
+		if (i == 0)
+			selectedTile = button->getTile();
 	}
 
 	for (int i = 0; i < mapLimit.x; i++)
@@ -818,4 +843,9 @@ void Editor::B_SaveMap()
 		mapsUI.push_back(std::make_shared<Button>(*bt));
 	}
 	this->savePanel->setEnable(true);
+}
+
+void Editor::SelectedRbChanged()
+{
+	selectedTile->setType((TileTypes)radioButton->GetSelectedElement()->index);
 }

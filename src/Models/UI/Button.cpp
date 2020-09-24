@@ -10,7 +10,7 @@ Button::Button() = default;
 Button::Button(const std::string &text, glm::vec2 position, glm::vec2 size, TextRenderer &renderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->buttonColor = buttonColor;
-	this->setSize(size);
+	this->setSize(renderer.CalculateSize(text, 1.0F) * 1.50F);
 	this->type = ButtonType::DEFAULT;
 	/*this->haveTile = false;
 	this->difColor = false;

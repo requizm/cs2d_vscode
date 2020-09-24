@@ -53,6 +53,8 @@ private:
 	void LoadMap(std::string mapPath);
 	void B_LoadMap();
 
+	void SelectedRbChanged();
+
 	std::shared_ptr<TextRenderer> textRenderer;
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
@@ -70,7 +72,7 @@ private:
 	std::shared_ptr<Panel> loadPanel, load_mapsPanel;
 	std::shared_ptr<Button> b_map_load;
 	std::shared_ptr<TextBox> t_load;
-	
+
 	std::shared_ptr<Panel> savePanel, save_mapsPanel;
 	std::shared_ptr<Button> b_map_save;
 	std::shared_ptr<TextBox> t_save;
@@ -78,7 +80,6 @@ private:
 	std::vector<std::shared_ptr<Button>> mapsUI;
 	int selectedMap = -1;
 
-	std::shared_ptr<RadioButtonElement> test1, test2, test3, test4;
 	std::shared_ptr<RadioButton> radioButton;
 
 	std::vector<std::shared_ptr<Button>> tilesUI;
@@ -87,7 +88,7 @@ private:
 	int maxCellInColumn;
 	int maxCellInRow;
 
-	Tile selectedTile;
+	Tile *selectedTile;
 	bool firstSelect;
 
 	glm::ivec2 mapLimit;
@@ -97,6 +98,9 @@ private:
 	float dt = 0;
 
 	Button b_save, b_new, b_load;
+
+	std::shared_ptr<Panel> tilePropertiesPanel;
+	std::shared_ptr<Button> b_tileProperties;
 
 	std::shared_ptr<Label> l_tile, l_mapSize, l_x;
 	std::shared_ptr<TextBox> t_tile, t_mapSizeX, t_mapSizeY;
