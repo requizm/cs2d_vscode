@@ -554,13 +554,12 @@ void Editor::SaveMap()
 			node_tile->append_node(node_tile_type);
 			node_map->append_node(node_tile);
 
-			delete[] cellX;
-			delete[] cellY;
+			//delete[] cellX;
+			//delete[] cellY;
 			//delete[] frame;
-			delete[] type;
-
-			//Logger::WriteLog("tile: " + std::to_string(i++) + "  bitti");
+			//delete[] type;
 		}
+		
 		char *limitX = doc.allocate_string(std::to_string(mapLimit.x).c_str());
 		char *limitY = doc.allocate_string(std::to_string(mapLimit.y).c_str());
 		char *tile = doc.allocate_string(currentTileSet.c_str());
