@@ -31,6 +31,11 @@
 #include "Util.cpp"
 #include "Weapon.cpp"*/
 
+#include "Core/Math/Vector2.cpp"
+#include "Core/Math/Vector3.cpp"
+#include "Core/Math/Matrix4.cpp"
+#include "Core/Math/Projection.cpp"
+
 #include "Models/GameObject.cpp"
 #include "Models/Player.cpp"
 #include "Models/Shader.cpp"
