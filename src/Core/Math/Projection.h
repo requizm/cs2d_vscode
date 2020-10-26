@@ -160,10 +160,19 @@ public:
         return R;
     }
 
-    //template <typename T>
     static float *value_ptr(Matrix4<float> &m)
     {
         return &(m.values[0]);
+    }
+
+    static float radians(float degrees)
+    {
+        return degrees * (0.01745329251994329576923690768489F);
+    }
+
+    static float degrees(float radians)
+    {
+        return radians * (57.295779513082320876798154814105F);
     }
 };
 

@@ -1,6 +1,5 @@
 #include "Circle.h"
-#include <glm/vec2.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "../../Core/Math/Vector2.h"
 
 Circle::Circle()
 {
@@ -23,7 +22,7 @@ Circle::~Circle() = default;
 void Circle::initEmptyCircle()
 {
     GLuint VBO;
-    glm::vec2 vertices[31];
+    Vector2<float> vertices[31];
     int i;
     int triangleAmount = 30; //# of triangles used to draw circle
     //GLfloat radius = 0.8f; //radius
@@ -31,7 +30,7 @@ void Circle::initEmptyCircle()
     
     for (i = 0; i <= triangleAmount; i++)
     {
-        vertices[i] = glm::vec2(
+        vertices[i] = Vector2<float>(
             (cos(i * twicePi / triangleAmount)),
             (sin(i * twicePi / triangleAmount)));
     }
@@ -52,15 +51,15 @@ void Circle::initEmptyCircle()
 void Circle::initFilledCircle()
 {
     GLuint VBO;
-    glm::vec2 vertices[32];
+    Vector2<float> vertices[32];
     int i;
     int triangleAmount = 30; //# of triangles used to draw circle
     //GLfloat radius = 0.8f; //radius
     GLfloat twicePi = 2.0f * PI;
-    vertices[0] = glm::vec2(0, 0);
+    vertices[0] = Vector2<float>(0, 0);
     for (i = 1; i <= triangleAmount + 1; i++)
     {
-        vertices[i] = glm::vec2(
+        vertices[i] = Vector2<float>(
             (cos(i * twicePi / triangleAmount)),
             (sin(i * twicePi / triangleAmount)));
     }

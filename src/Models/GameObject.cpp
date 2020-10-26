@@ -36,7 +36,7 @@ void GameObject::BuildTransform()
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(globalPosition.x, globalPosition.y, 0.0F));							 // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	model = Projection::translate(model, Vector3(0.5F * globalSize.x, 0.5F * globalSize.y, 0.0F));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(globalRotation), Vector3(0.0F, 0.0F, 1.0F));		 // Then rotate
+	model = Projection::rotate(model, Projection::radians(globalRotation), Vector3(0.0F, 0.0F, 1.0F));		 // Then rotate
 	model = Projection::translate(model, Vector3(-0.5F * globalSize.x, -0.5F * globalSize.y, 0.0F)); // Move origin back
 	model = Projection::scale(model, Vector3(globalSize.x, globalSize.y, 1.0F));
 	SetTransform(model);

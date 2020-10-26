@@ -94,8 +94,8 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 		// Now store character for later use
 		Character character = {
 			texture,
-			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+			Vector2<int>(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+			Vector2<int>(face->glyph->bitmap_left, face->glyph->bitmap_top),
 			static_cast<GLuint>(face->glyph->advance.x)};
 		Characters.insert(std::pair<GLchar, Character>(c, character));
 	}

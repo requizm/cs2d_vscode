@@ -10,7 +10,7 @@ public:
     Utils();
     virtual ~Utils();
 
-    static glm::vec2 WorldToScreen(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::vec3 point);
+   
     static Vector2<float> ScreenToWorld(Vector2<float> view, Vector2<float> point);
     static Vector2<int> PositionToCell(Vector2<float> pos);
     static Vector2<float> CellToPosition(Vector2<int> cell);

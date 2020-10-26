@@ -30,7 +30,7 @@ void SquareRenderer::ui_RenderFilledSquare(Vector2<float> position, Vector2<floa
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
 	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
 	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
 	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
@@ -52,7 +52,7 @@ void SquareRenderer::ui_RenderFilledSquare(Vector2<float> position, Vector2<floa
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
 	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
 	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
 	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
@@ -71,7 +71,7 @@ void SquareRenderer::world_RenderFilledSquare(Vector2<float> position, Vector2<f
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
 	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
 	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
 	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
 	this->squareShader_world.SetMatrix4("model", model);
@@ -166,7 +166,7 @@ void SquareRenderer::ui_RenderLine(Vector2<float> startPos, Vector2<float> endPo
 	{
 		size = Vector2<float>(dif.y, lineSize);
 		dif = dif.Normalize();
-		rotate = glm::degrees(atan2(dif.x, dif.y));
+		rotate = Projection::degrees(atan2(dif.x, dif.y));
 		if (dif.y >= 0)
 			rotate += 90;
 		else
@@ -176,7 +176,7 @@ void SquareRenderer::ui_RenderLine(Vector2<float> startPos, Vector2<float> endPo
 	{
 		size = Vector2<float>(dif.x, lineSize);
 		dif = dif.Normalize();
-		rotate = glm::degrees(atan2(dif.x, dif.y));
+		rotate = Projection::degrees(atan2(dif.x, dif.y));
 		if (dif.x >= 0)
 			rotate -= 90;
 		else
@@ -188,7 +188,7 @@ void SquareRenderer::ui_RenderLine(Vector2<float> startPos, Vector2<float> endPo
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(startPos.x, startPos.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));					   // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(static_cast<float>(rotate)), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::rotate(model, Projection::radians(static_cast<float>(rotate)), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
 	//model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));					   // Move origin back
 	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f)); // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
@@ -211,7 +211,7 @@ void SquareRenderer::world_RenderLine(Vector2<float> startPos, Vector2<float> en
 	{
 		size = Vector2<float>(dif.y, lineSize);
 		dif = dif.Normalize();
-		rotate = glm::degrees(atan2(dif.x, dif.y));
+		rotate = Projection::degrees(atan2(dif.x, dif.y));
 		if (dif.y >= 0)
 			rotate += 90;
 		else
@@ -221,7 +221,7 @@ void SquareRenderer::world_RenderLine(Vector2<float> startPos, Vector2<float> en
 	{
 		size = Vector2<float>(dif.x, lineSize);
 		dif = dif.Normalize();
-		rotate = glm::degrees(atan2(dif.x, dif.y));
+		rotate = Projection::degrees(atan2(dif.x, dif.y));
 		if (dif.x >= 0)
 			rotate -= 90;
 		else
@@ -233,7 +233,7 @@ void SquareRenderer::world_RenderLine(Vector2<float> startPos, Vector2<float> en
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(startPos.x, startPos.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));					   // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(static_cast<float>(rotate)), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::rotate(model, Projection::radians(static_cast<float>(rotate)), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
 	//model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));					   // Move origin back
 	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f)); // Last scale
 	this->squareShader_world.SetMatrix4("model", model);
@@ -254,7 +254,7 @@ void SquareRenderer::ui_RenderEmptySquare(Vector2<float> position, Vector2<float
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
 	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
 	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
 	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
@@ -273,7 +273,7 @@ void SquareRenderer::world_RenderEmptySquare(Vector2<float> position, Vector2<fl
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
 	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
 	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
 	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
 	this->squareShader_world.SetMatrix4("model", model);
@@ -292,7 +292,7 @@ void SquareRenderer::ui_RenderEmptyCircle(Vector2<float> position, Vector2<float
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
 	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
 	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
 	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
@@ -314,7 +314,7 @@ void SquareRenderer::ui_RenderFilledCircle(Vector2<float> position, Vector2<floa
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
 	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, glm::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
 	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
 	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
