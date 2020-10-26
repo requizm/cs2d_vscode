@@ -23,8 +23,8 @@ class Button : public Label
 {
 public:
 	Button();
-	Button(const std::string &text, glm::vec2 position, glm::vec2 size, TextRenderer &renderer, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
-	Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor = false, float scale = 1.0F);
+	Button(const std::string &text, Vector2<float> position, Vector2<float> size, TextRenderer &renderer, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
+	Button(const Sprite &sprite, Vector2<float> position, Vector2<float> size, bool difColor = false, float scale = 1.0F);
 	Button(Tile &tile, float scale = 1.0F);
 	~Button();
 
@@ -38,20 +38,20 @@ public:
 	void Update(const float dt) override;
 	void ProcessInput() override;
 
-	glm::vec2 getPosition() override;
-	glm::vec2 getLocalPosition() override;
-	glm::vec2 getSize() override;
+	Vector2<float> getPosition() override;
+	Vector2<float> getLocalPosition() override;
+	Vector2<float> getSize() override;
 	Tile *getTile();
 
-	void setMouseHoverColor(const glm::vec3 color);
-	void setButtonColor(const glm::vec3 color);
-	void setMouseClickColor(const glm::vec3 color);
-	void setOutlineColor(const glm::vec3 color);
+	void setMouseHoverColor(const Vector3<float> color);
+	void setButtonColor(const Vector3<float> color);
+	void setMouseClickColor(const Vector3<float> color);
+	void setOutlineColor(const Vector3<float> color);
 	void setOutline(const bool value);
 
-	void setMargin(const glm::vec2 value);
+	void setMargin(const Vector2<float> value);
 
-	void setPosition(const glm::vec2 position) override;
+	void setPosition(const Vector2<float> position) override;
 	void setPosition(const int x, const int y) override;
 
 	bool isMouseHover() override;
@@ -65,10 +65,10 @@ protected:
 	Sprite sprite;
 	Square square;
 	Tile tile;
-	glm::vec3 buttonColor;
-	glm::vec3 mouseHoverColor;
-	glm::vec3 mouseclickColor;
-	glm::vec3 currentColor;
+	Vector3<float> buttonColor;
+	Vector3<float> mouseHoverColor;
+	Vector3<float> mouseclickColor;
+	Vector3<float> currentColor;
 
 	bool isMouseHoverM() override;
 	bool isMouseDownM(const int key) override;
@@ -84,8 +84,8 @@ private:
 
 	bool difColor = false;
 
-	glm::vec3 outlineColor;
-	glm::vec2 margin;
+	Vector3<float> outlineColor;
+	Vector2<float> margin;
 	ButtonType type = ButtonType::DEFAULT;
 };
 

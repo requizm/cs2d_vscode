@@ -1,25 +1,25 @@
 #include "Panel.h"
 #include <iostream>
 
-Panel::Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextRenderer &renderer, bool isBackGround, bool opttitles, float scale, glm::vec3 color, float transp) : UIObject(position, size, scale, UIObjectType::PANEL)
+Panel::Panel(Vector2<float> position, const std::string &title, Vector2<float> size, TextRenderer &renderer, bool isBackGround, bool opttitles, float scale, Vector3<float> color, float transp) : UIObject(position, size, scale, UIObjectType::PANEL)
 {
 	this->panelColor = color;
 	this->backGround = isBackGround;
-	this->dragSize = glm::vec2(size.x, 23.0F);
+	this->dragSize = Vector2<float>(size.x, 23.0F);
 	this->opttitles = opttitles;
 	this->trans = transp;
 	this->enable = false;
 	this->movable = false;
 	this->scrollable = false;
 	this->outline = false;
-	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, glm::vec2(20.0F, 20.0F), true);
+	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, Vector2<float>(20.0F, 20.0F), true);
 	escapeButton.setParent(this);
 	escapeButton.independent = true;
 	escapeButton.setPosition(this->size.x - 20.0F, 3.0F);
 	escapeButton.setButtonColor(color);
-	escapeButton.setMouseHoverColor(glm::vec3(0.64F));
-	escapeButton.setMouseClickColor(glm::vec3(1.0F));
-	this->title = Label(title, position, renderer, scale, glm::vec3(1.0F));
+	escapeButton.setMouseHoverColor(Vector3<float>(0.64F));
+	escapeButton.setMouseClickColor(Vector3<float>(1.0F));
+	this->title = Label(title, position, renderer, scale, Vector3<float>(1.0F));
 	this->title.setMouseEvent(false);
 	this->title.setParent(this);
 	this->title.setPosition(static_cast<int>(lineOffset), 4.0F);
@@ -47,7 +47,7 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 		}
 		if (opttitles)
 		{
-			squareRenderer.ui_RenderLine(glm::vec2(getPosition().x + lineOffset, getPosition().y + 23.0F), glm::vec2(getPosition().x  + size.x - lineOffset, getPosition().y + 23.0F), glm::vec3(0.39F), 1.0F, this->trans);
+			squareRenderer.ui_RenderLine(Vector2<float>(getPosition().x + lineOffset, getPosition().y + 23.0F), Vector2<float>(getPosition().x  + size.x - lineOffset, getPosition().y + 23.0F), Vector3<float>(0.39F), 1.0F, this->trans);
 			escapeButton.Draw(spriteRenderer, squareRenderer);
 			title.Draw();
 		}
@@ -84,8 +84,8 @@ void Panel::Update(const float dt)
 			}
 			if (isPressed && click)
 			{
-				glm::vec2 mousePos = InputManager::mousePos;
-				this->setPosition(glm::vec2(mousePos.x - static_cast<float>(deltaX), mousePos.y - static_cast<float>(deltaY)));
+				Vector2<float> mousePos = InputManager::mousePos;
+				this->setPosition(Vector2<float>(mousePos.x - static_cast<float>(deltaX), mousePos.y - static_cast<float>(deltaY)));
 				//std::cout << "hey" << std::endl;
 			}
 			if (!isPressed)
@@ -287,12 +287,12 @@ bool Panel::isMousePressForMouse(const int key)
 	return false;
 }
 
-glm::vec3 Panel::getPanelColor() const
+Vector3<float> Panel::getPanelColor() const
 {
 	return this->panelColor;
 }
 
-glm::vec3 Panel::getOutlineColor() const
+Vector3<float> Panel::getOutlineColor() const
 {
 	return this->outlineColor;
 }
@@ -317,7 +317,7 @@ std::string Panel::getTitle() const
 	return title.getText();
 }
 
-void Panel::setPanelColor(const glm::vec3 color)
+void Panel::setPanelColor(const Vector3<float> color)
 {
 	this->panelColor = color;
 }
@@ -337,7 +337,7 @@ void Panel::setTitle(const std::string &text)
 	this->title.setText(text);
 }
 
-void Panel::setOutlineColor(const glm::vec3 color)
+void Panel::setOutlineColor(const Vector3<float> color)
 {
 	this->outlineColor = color;
 }

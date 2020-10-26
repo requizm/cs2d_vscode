@@ -423,7 +423,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 {
-	InputManager::mousePos = glm::vec2(static_cast<float>(xpos), static_cast<float>(ypos));
+	InputManager::mousePos = Vector2(static_cast<float>(xpos), static_cast<float>(ypos));
 }
 
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
@@ -454,6 +454,6 @@ void character_callback(GLFWwindow *window, unsigned int codepoint)
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
 	//Logger::DebugLog(std::to_string(yoffset));
-	InputManager::scroll = glm::vec2(xoffset, yoffset);
+	InputManager::scroll = Vector2(static_cast<float>(xoffset), static_cast<float>(yoffset));
 	InputManager::scrollYPressed = true;
 }

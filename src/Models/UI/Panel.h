@@ -12,7 +12,7 @@
 class Panel : public UIObject
 {
 public:
-	Panel(glm::vec2 position, const std::string &title, glm::vec2 size, TextRenderer &renderer, bool isBackGround = false, bool opttitles = true, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), float transp = 0.9F);
+	Panel(Vector2<float> position, const std::string &title, Vector2<float> size, TextRenderer &renderer, bool isBackGround = false, bool opttitles = true, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), float transp = 0.9F);
 	Panel();
 	~Panel();
 
@@ -27,24 +27,24 @@ public:
 	bool isMouseUp();
 	bool isMousePress(bool drag);
 
-	glm::vec3 getPanelColor() const;
-	glm::vec3 getOutlineColor() const;
+	Vector3<float> getPanelColor() const;
+	Vector3<float> getOutlineColor() const;
 	bool isBackGround() const;
 	bool isMovable() const;
 	std::string getTitle() const;
 	bool isOutline() const;
 
-	void setPanelColor(const glm::vec3 color);
+	void setPanelColor(const Vector3<float> color);
 	void setBackGround(const bool value);
 	void setMovable(const bool value);
 	void setTitle(const std::string &text);
-	void setOutlineColor(const glm::vec3 color);
+	void setOutlineColor(const Vector3<float> color);
 	void setOutline(const bool value);
 
 protected:
-	glm::vec3 panelColor;
-	glm::vec2 dragSize;
-	glm::vec2 dragPos;
+	Vector3<float> panelColor;
+	Vector2<float> dragSize;
+	Vector2<float> dragPos;
 	Square square = Square(true);
 	Button escapeButton;
 	Label title;
@@ -58,7 +58,7 @@ private:
 	float lineOffset = 20.0F;
 
 	bool outline;
-	glm::vec3 outlineColor;
+	Vector3<float> outlineColor;
 	float trans;
 
 	bool isMouseHoverForDrag();

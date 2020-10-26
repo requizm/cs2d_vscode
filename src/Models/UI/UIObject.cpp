@@ -4,7 +4,7 @@
 
 UIObject::UIObject() = default;
 
-UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer) : enable(true), visible(true),
+UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer) : enable(true), visible(true),
 																							  mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
@@ -18,7 +18,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true),
+UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true),
 																												 mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
@@ -32,7 +32,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale) : enable(true), visible(true),
+UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale) : enable(true), visible(true),
 																	  mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
@@ -45,7 +45,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale) : enable(tru
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type) : enable(true), visible(true),
+UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, UIObjectType type) : enable(true), visible(true),
 																						 mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
@@ -58,7 +58,7 @@ UIObject::UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer) : enable(true), visible(true),
+UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer) : enable(true), visible(true),
 																			  mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
@@ -71,7 +71,7 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer) : en
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true),
+UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true),
 																								 mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
@@ -84,7 +84,7 @@ UIObject::UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIOb
 	this->childs.clear();
 }
 
-UIObject::UIObject(glm::vec2 position, float scale, UIObjectType type) : enable(true), visible(true),
+UIObject::UIObject(Vector2<float> position, float scale, UIObjectType type) : enable(true), visible(true),
 																								 mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
@@ -125,7 +125,7 @@ void UIObject::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRender
 {
 }
 
-void UIObject::setPosition(const glm::vec2 position)
+void UIObject::setPosition(const Vector2<float> position)
 {
 	this->position = position;
 }
@@ -142,17 +142,17 @@ void UIObject::setParentCenterPos()
 		setPosition(parent->getSize().x / 2 - this->getSize().x / 2, parent->getSize().y / 2 - this->getSize().y / 2);
 }
 
-void UIObject::setSize(const glm::vec2 size)
+void UIObject::setSize(const Vector2<float> size)
 {
 	this->size = size;
 }
 
 void UIObject::setSize(const int x, const int y)
 {
-	this->size = glm::vec2(x, y);
+	this->size = Vector2<float>(x, y);
 }
 
-glm::vec2 UIObject::getPosition()
+Vector2<float> UIObject::getPosition()
 {
 	if (isParent())
 	{
@@ -161,7 +161,7 @@ glm::vec2 UIObject::getPosition()
 	return this->position;
 }
 
-glm::vec2 UIObject::getLocalPosition()
+Vector2<float> UIObject::getLocalPosition()
 {
 	if (isParent())
 	{
@@ -170,14 +170,14 @@ glm::vec2 UIObject::getLocalPosition()
 	return this->position;
 }
 
-glm::vec2 UIObject::getSize()
+Vector2<float> UIObject::getSize()
 {
 	return this->size;
 }
 
-glm::vec2 UIObject::getCenterPosition() const
+Vector2<float> UIObject::getCenterPosition() const
 {
-	return glm::vec2(this->position.x + this->size.x / 2, this->position.y + this->size.y / 2);
+	return Vector2<float>(this->position.x + this->size.x / 2, this->position.y + this->size.y / 2);
 }
 
 UIObject *UIObject::getParent() const

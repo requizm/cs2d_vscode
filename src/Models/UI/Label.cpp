@@ -3,35 +3,35 @@
 
 Label::Label() = default;
 
-Label::Label(const std::string &text, glm::vec2 position, float scale, glm::vec3 color, UIObjectType type) : UIObject(position, scale, type), labelSize(glm::vec2(1.0F))
+Label::Label(const std::string &text, Vector2<float> position, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, type), labelSize(Vector2<float>(1.0F))
 {
 	this->labelColor = color;
 	this->text = text;
-	this->labelMouseHoverColor = glm::vec3(0.78F);
-	this->labelClickColor = glm::vec3(1.0F);
+	this->labelMouseHoverColor = Vector3<float>(0.78F);
+	this->labelClickColor = Vector3<float>(1.0F);
 	this->labelCurrentColor = color;
 	//this->labelSize = this->rend->CalculateSize(text, scale);
 } //simdilik kullanilmiyor(muhtemelen hic kullanilmayacak)
 
-Label::Label(const std::string &text, glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(glm::vec2(1.0F))
+Label::Label(const std::string &text, Vector2<float> position, TextRenderer &renderer, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<float>(1.0F))
 {
 	this->labelColor = color;
 	this->text = text;
-	this->labelMouseHoverColor = glm::vec3(0.78F);
-	this->labelClickColor = glm::vec3(1.0F);
+	this->labelMouseHoverColor = Vector3<float>(0.78F);
+	this->labelClickColor = Vector3<float>(1.0F);
 	this->labelCurrentColor = color;
 	this->labelSize = this->rend->CalculateSize(text, scale);
 }
 
-Label::Label(glm::vec2 position, TextRenderer &renderer, float scale, glm::vec3 color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(glm::vec2(1.0F))
+Label::Label(Vector2<float> position, TextRenderer &renderer, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<float>(1.0F))
 {
 	this->labelColor = color;
-	this->labelMouseHoverColor = glm::vec3(0.78F);
-	this->labelClickColor = glm::vec3(1.0F);
+	this->labelMouseHoverColor = Vector3<float>(0.78F);
+	this->labelClickColor = Vector3<float>(1.0F);
 	this->labelCurrentColor = color;
 }
 
-Label::Label(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type) : UIObject(position, size, scale, type)
+Label::Label(Vector2<float> position, Vector2<float> size, float scale, UIObjectType type) : UIObject(position, size, scale, type)
 {
 }
 
@@ -85,7 +85,7 @@ std::string Label::getText() const
 	return this->text;
 }
 
-glm::vec2 Label::getLabelSize() const
+Vector2<float> Label::getLabelSize() const
 {
 	return this->labelSize;
 }
@@ -120,26 +120,26 @@ bool Label::isMousePress()
 	//return isPress;
 }
 
-glm::vec2 Label::getPositionForButton(const bool center)
+Vector2<float> Label::getPositionForButton(const bool center)
 {
 	if (isParent())
 	{
 		if (objType == UIObjectType::BUTTON)
 		{
-			glm::vec2 dif = getSize() - getLabelSize();
+			Vector2<float> dif = getSize() - getLabelSize();
 			dif.y /= 2;
 			if (center)
 			{
 				dif.x /= 2;
 				return parent->getPosition() + this->position + dif;
 			}
-			return parent->getPosition() + this->position + glm::vec2(0.0F, dif.y);
+			return parent->getPosition() + this->position + Vector2<float>(0.0F, dif.y);
 		}
 		return parent->getPosition() + this->position;
 	}
 	if (objType == UIObjectType::BUTTON)
 	{
-		glm::vec2 dif = getSize() - getLabelSize();
+		Vector2<float> dif = getSize() - getLabelSize();
 		dif.y /= 2;
 		if (center)
 		{
@@ -150,32 +150,32 @@ glm::vec2 Label::getPositionForButton(const bool center)
 	return this->position;
 }
 
-glm::vec3 Label::getLabelColor() const
+Vector3<float> Label::getLabelColor() const
 {
 	return this->labelColor;
 }
 
-glm::vec3 Label::getLabelMouseHoverColor() const
+Vector3<float> Label::getLabelMouseHoverColor() const
 {
 	return this->labelMouseHoverColor;
 }
 
-glm::vec3 Label::getLabelClickColor() const
+Vector3<float> Label::getLabelClickColor() const
 {
 	return this->labelClickColor;
 }
 
-void Label::setLabelColor(const glm::vec3 color)
+void Label::setLabelColor(const Vector3<float> color)
 {
 	this->labelColor = color;
 }
 
-void Label::setLabelMouseHoverColor(const glm::vec3 color)
+void Label::setLabelMouseHoverColor(const Vector3<float> color)
 {
 	this->labelMouseHoverColor = color;
 }
 
-void Label::setLabelClickColor(const glm::vec3 color)
+void Label::setLabelClickColor(const Vector3<float> color)
 {
 	this->labelClickColor = color;
 }

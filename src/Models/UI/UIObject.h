@@ -23,13 +23,13 @@ class UIObject
 {
 public:
 	UIObject();
-	UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer);
-	UIObject(glm::vec2 position, glm::vec2 size, float scale, TextRenderer &renderer, UIObjectType type);
-	UIObject(glm::vec2 position, glm::vec2 size, float scale);
-	UIObject(glm::vec2 position, glm::vec2 size, float scale, UIObjectType type);
-	UIObject(glm::vec2 position, float scale, TextRenderer &renderer);
-	UIObject(glm::vec2 position, float scale, TextRenderer &renderer, UIObjectType type);
-	UIObject(glm::vec2 position, float scale, UIObjectType type);
+	UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer);
+	UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer, UIObjectType type);
+	UIObject(Vector2<float> position, Vector2<float> size, float scale);
+	UIObject(Vector2<float> position, Vector2<float> size, float scale, UIObjectType type);
+	UIObject(Vector2<float> position, float scale, TextRenderer &renderer);
+	UIObject(Vector2<float> position, float scale, TextRenderer &renderer, UIObjectType type);
+	UIObject(Vector2<float> position, float scale, UIObjectType type);
 	virtual ~UIObject();
 
 	virtual void Update(const float dt);
@@ -39,10 +39,10 @@ public:
 	virtual void Draw();
 	virtual void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
 
-	virtual glm::vec2 getPosition();
-	virtual glm::vec2 getSize();
-	virtual glm::vec2 getCenterPosition() const;
-	virtual glm::vec2 getLocalPosition();
+	virtual Vector2<float> getPosition();
+	virtual Vector2<float> getSize();
+	virtual Vector2<float> getCenterPosition() const;
+	virtual Vector2<float> getLocalPosition();
 	UIObject *getParent() const;
 	float getScale() const;
 	bool isParent() const;
@@ -54,10 +54,10 @@ public:
 	bool isRenderable(); //scroll'dan dolayi
 	bool isScrollable() const;
 
-	virtual void setPosition(const glm::vec2 position);
+	virtual void setPosition(const Vector2<float> position);
 	virtual void setPosition(const int x, const int y);
 	virtual void setParentCenterPos();
-	virtual void setSize(const glm::vec2 size);
+	virtual void setSize(const Vector2<float> size);
 	virtual void setSize(const int x, const int y);
 	void setScale(const float scale);
 	void setParent(UIObject *uiobject, bool dependParent = true);
@@ -81,9 +81,9 @@ public:
 	std::vector<UIObject *> childs;
 
 protected:
-	glm::vec2 position;
+	Vector2<float> position;
 	float scale;
-	glm::vec2 size;
+	Vector2<float> size;
 	UIObjectType objType;
 	UIObject *parent = nullptr;
 

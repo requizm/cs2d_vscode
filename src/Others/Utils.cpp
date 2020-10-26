@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Game_Parameters.h"
+#include "../Core/Math/Vector2.h"
 
 int Utils::curIndex = 1;
 
@@ -38,23 +39,23 @@ glm::vec2 Utils::WorldToScreen(glm::mat4 viewMatrix,
     return winPos;
 }
 
-glm::vec2 Utils::ScreenToWorld(glm::vec2 view, glm::vec2 point)
+Vector2<float> Utils::ScreenToWorld(Vector2<float> view, Vector2<float> point)
 {
     return (view + point);
 }
 
-glm::ivec2 Utils::PositionToCell(glm::vec2 pos)
+Vector2<int> Utils::PositionToCell(Vector2<float> pos)
 {
     if (pos.x >= 0 && pos.y >= 0)
     {
-        return glm::ivec2((int)pos.x / Game_Parameters::SIZE_TILE, (int)pos.y / Game_Parameters::SIZE_TILE);
+        return Vector2<int>((int)pos.x / Game_Parameters::SIZE_TILE, (int)pos.y / Game_Parameters::SIZE_TILE);
     }
-    return glm::ivec2(-1, -1); //gereksiz
+    return Vector2<int>(-1, -1); //gereksiz
 }
 
-glm::vec2 Utils::CellToPosition(glm::ivec2 cell)
+Vector2<float> Utils::CellToPosition(Vector2<int> cell)
 {
-    return glm::vec2((int)cell.x * Game_Parameters::SIZE_TILE, (int)cell.y * Game_Parameters::SIZE_TILE);
+    return Vector2<float>((int)cell.x * Game_Parameters::SIZE_TILE, (int)cell.y * Game_Parameters::SIZE_TILE);
 }
 
 int Utils::GenerateID()

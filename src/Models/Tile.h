@@ -12,8 +12,8 @@ class Tile :
 {
 public:
 	Tile();
-	Tile(glm::vec2 pos, const Sprite& sprite, glm::vec2 size, TileTypes type, int frame = -1);
-	Tile(glm::vec2 pos, const Sprite& sprite, glm::vec2 size);
+	Tile(Vector2<float> pos, const Sprite& sprite, Vector2<float> size, TileTypes type, int frame = -1);
+	Tile(Vector2<float> pos, const Sprite& sprite, Vector2<float> size);
 
 	void setType(TileTypes type);
 	TileTypes getType() const;

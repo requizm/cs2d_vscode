@@ -3,6 +3,8 @@
 #include "../Others/Logger.h"
 #include "../Managers/InputManager.h"
 #include "../Game.h"
+#include "../Core/Math/Vector2.h"
+#include "../Core/Math/Matrix4.h"
 
 StartGame::StartGame() = default;
 
@@ -28,7 +30,6 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->weapons = weapons;
 
-	
 	this->SetEnable(true);
 }
 
@@ -60,7 +61,7 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::
 		//this->weapons->push_back(std::make_shared<Weapon>(wp));
 //	}
 	//this->weapons = std::make_shared<std::vector<Weapon*>>(&weapons);
-	this->camera = std::make_shared<Camera>(InputManager::Width, InputManager::Height, glm::vec3(0.0f, 0.0f, 3.0f));
+	this->camera = std::make_shared<Camera>(InputManager::Width, InputManager::Height, Vector3<float>(0.0f, 0.0f, 3.0f));
 }*/
 
 void StartGame::Start()
@@ -73,15 +74,17 @@ void StartGame::Start()
 	sprites.push_back(ct1_2);
 	sprites.push_back(ct1_0);
 	sprites.push_back(ct1_1);
-	player = std::make_unique<Player>(glm::vec2(70, 70), sprites);
+	player = std::make_unique<Player>(Vector2<float>(70.0F, 70.0F), sprites);
+
+	//weapons.at(0).SetParent(player.get());
 }
 
 void StartGame::OnEnable()
 {
 	this->Start();
-	
-	player->SetTransform(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
-						 glm::vec2(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
+
+	player->SetTransform(Vector2<float>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
+						 Vector2<float>(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
 	player->setVelocity(500.0F);
 	player->SetMap(&map);
 }
@@ -131,7 +134,7 @@ void StartGame::ProcessInput(const float dt)
 
 void StartGame::Render(const float dt)
 {
-	camera->setPosition(glm::vec2(player->GetPosition().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPosition().y - Game_Parameters::SCREEN_HEIGHT / 2));
+	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
 
 	renderer.SetProjection(camera->cameraMatrix);
 	map.Draw(renderer);

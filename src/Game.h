@@ -60,7 +60,7 @@ private:
 	void initTextures() const;
 	void initMaps();
 	void initRenderers();
-	void initShaders() const;
+	void initShaders();
 	void initMenuSprites();
 };
 

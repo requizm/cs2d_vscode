@@ -8,26 +8,26 @@ class RadioButtonElement : public Label
 {
 public:
     RadioButtonElement();
-    RadioButtonElement(const std::string &text, glm::vec2 position, TextRenderer &textRenderer, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
+    RadioButtonElement(const std::string &text, Vector2<float> position, TextRenderer &textRenderer, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
     ~RadioButtonElement();
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
     void Update(const float dt) override;
     void ProcessInput() override;
 
-    glm::vec2 getPosition() override;
-    glm::vec2 getLocalPosition() override;
-    glm::vec2 getSize() override;
+    Vector2<float> getPosition() override;
+    Vector2<float> getLocalPosition() override;
+    Vector2<float> getSize() override;
 
-    void setMouseHoverColor(const glm::vec3 color);
-    void setButtonColor(const glm::vec3 color);
-    void setMouseHoverOutlineColor(const glm::vec3 color);
-    void setOutlineColor(const glm::vec3 color);
+    void setMouseHoverColor(const Vector3<float> color);
+    void setButtonColor(const Vector3<float> color);
+    void setMouseHoverOutlineColor(const Vector3<float> color);
+    void setOutlineColor(const Vector3<float> color);
 
     void OnEnable() override;
     void OnDisable() override;
 
-    void setPosition(const glm::vec2 position) override;
+    void setPosition(const Vector2<float> position) override;
     void setPosition(const int x, const int y) override;
 
     bool isMouseHover() override;
@@ -40,12 +40,12 @@ public:
     int index;
 
 private:
-    glm::vec3 buttonColor; //secili oldugunu belli eden daire'nin rengi
-    glm::vec3 mouseHoverColor;
-    glm::vec3 outlineColor;
-    glm::vec3 mouseHoverOutlineColor;
-    glm::vec3 currentColor;
-    glm::vec3 currentOutlineColor;
+    Vector3<float> buttonColor; //secili oldugunu belli eden daire'nin rengi
+    Vector3<float> mouseHoverColor;
+    Vector3<float> outlineColor;
+    Vector3<float> mouseHoverOutlineColor;
+    Vector3<float> currentColor;
+    Vector3<float> currentOutlineColor;
 
     bool isMouseHoverM() override;
     bool isMouseDownM(const int key) override;
@@ -64,13 +64,13 @@ private:
 
 public:
     RadioButton();
-    RadioButton(TextRenderer &renderer, glm::vec2 position, int y_sep);
+    RadioButton(TextRenderer &renderer, Vector2<float> position, int y_sep);
     ~RadioButton();
 
     void AddListener(std::function<void()> func);
 
     void Clear();
-    void AddElement(const std::string &text, glm::vec3 buttonColor = glm::vec3(1.0F), glm::vec3 textColor = glm::vec3(0.0F), float scale = 1.0F);
+    void AddElement(const std::string &text, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
     void Update(const float dt);

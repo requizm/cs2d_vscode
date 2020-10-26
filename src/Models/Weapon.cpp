@@ -43,7 +43,7 @@ void Weapon::Update(float dt)
 	}
 	else if (parent != nullptr && weaponType == WeaponType::MAIN)
 	{
-		//this->SetSize(glm::vec2(InputManager::Height / 20, InputManager::Height / 20));
+		//this->SetSize(Vector2<float>(InputManager::Height / 20, InputManager::Height / 20));
 	}*/
 }
 
@@ -56,8 +56,8 @@ void Weapon::SetParent(GameObject *go)
 	Logger::WriteLog("Weapon->SetParent()");
 	parent = go;
 	//parentPositionDelta = localPosition - go->GetPosition();
-	localTransform = glm::inverse(parent->GetTransform()) * globalTransform;
-	this->SetSize(glm::vec2(Game_Parameters::SCREEN_HEIGHT / 20, Game_Parameters::SCREEN_HEIGHT / 20));
+	//localTransform = glm::inverse(parent->GetTransform()) * globalTransform;
+	this->SetSize(Vector2<float>(Game_Parameters::SCREEN_HEIGHT / 20, Game_Parameters::SCREEN_HEIGHT / 20));
 }
 void Weapon::RemoveParent()
 {
@@ -123,7 +123,7 @@ void Weapon::RemoveParent()
 		this->parent = nullptr;
 		if (weaponType == WeaponType::MAIN)
 		{
-			this->SetSize(glm::vec2(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
+			this->SetSize(Vector2<float>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
 		}
 		return;
 	}

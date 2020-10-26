@@ -14,7 +14,7 @@ class Mag :GameObject
 public:
 	Mag() = default;
 
-	Mag(glm::vec2 pos, const Sprite& sprite, const int value, AmmoType type, glm::vec2 size = glm::vec2(Game_Parameters::SCREEN_WIDTH / 26.5, Game_Parameters::SCREEN_WIDTH / 26.5))
+	Mag(Vector2<float> pos, const Sprite& sprite, const int value, AmmoType type, Vector2<float> size = Vector2<float>(Game_Parameters::SCREEN_WIDTH / 26.5F, Game_Parameters::SCREEN_WIDTH / 26.5F))
 		:GameObject(pos, sprite, size)
 	{
 		ammo = value;

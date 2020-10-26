@@ -6,12 +6,12 @@ Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width, GLuint heigh
 	this->texture = texture;
 	if (width == 0)
 	{
-		size = glm::vec2(texture.Width, texture.Height);
+		size = Vector2<int>(texture.Width, texture.Height);
 		initData();
 	}
 	else
 	{
-		size = glm::vec2(width, height);
+		size = Vector2<int>(width, height);
 		initData(x, y, width, height);
 	}
 	//Logger::WriteLog("Sprite->Sprite(texture, " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(width) + ", " + std::to_string(height) + ")");

@@ -15,10 +15,10 @@ class Label : public UIObject
 {
 public:
 	Label();
-	Label(const std::string &text, glm::vec2 position, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), UIObjectType type = UIObjectType::LABEL);
-	Label(const std::string &text, glm::vec2 position, TextRenderer &renderer, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), UIObjectType type = UIObjectType::LABEL);
-	Label(glm::vec2 position, TextRenderer &renderer, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F), UIObjectType type = UIObjectType::LABEL);
-	Label(glm::vec2 position, glm::vec2 size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
+	Label(const std::string &text, Vector2<float> position, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(const std::string &text, Vector2<float> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(Vector2<float> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(Vector2<float> position, Vector2<float> size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
 	~Label();
 
 	virtual void Draw();
@@ -33,15 +33,15 @@ public:
 
 	
 	std::string getText() const;
-	glm::vec2 getLabelSize() const;
-	glm::vec3 getLabelColor() const;
-	glm::vec3 getLabelMouseHoverColor() const;
-	glm::vec3 getLabelClickColor() const;
+	Vector2<float> getLabelSize() const;
+	Vector3<float> getLabelColor() const;
+	Vector3<float> getLabelMouseHoverColor() const;
+	Vector3<float> getLabelClickColor() const;
 
 	virtual void setText(const std::string &text);
-	void setLabelColor(const glm::vec3 color);
-	void setLabelMouseHoverColor(const glm::vec3 color);
-	void setLabelClickColor(const glm::vec3 color);
+	void setLabelColor(const Vector3<float> color);
+	void setLabelMouseHoverColor(const Vector3<float> color);
+	void setLabelClickColor(const Vector3<float> color);
 
 	/**
  	* MouseDown() fonksiyonu ile state'i degistirince, maalesef MouseUp() fonksiyonuna giremiyoruz. 
@@ -51,13 +51,13 @@ public:
  	*/
 	void SimulateUp();
 protected:
-	glm::vec2 labelSize;
+	Vector2<float> labelSize;
 
 	std::string text;
-	glm::vec3 labelClickColor;
-	glm::vec3 labelColor;
-	glm::vec3 labelMouseHoverColor;
-	glm::vec3 labelCurrentColor;
+	Vector3<float> labelClickColor;
+	Vector3<float> labelColor;
+	Vector3<float> labelMouseHoverColor;
+	Vector3<float> labelCurrentColor;
 	
 	/**
 	*Button icindeki text'i render ederken kullanilacak
@@ -67,7 +67,7 @@ protected:
 	/**
 	*Button icindeki text'in pozisyonunu alirken kullanilacak
 	*/
-	glm::vec2 getPositionForButton(const bool center);
+	Vector2<float> getPositionForButton(const bool center);
 
 	virtual bool isMouseHoverM();
 	virtual bool isMouseDownM(const int key);

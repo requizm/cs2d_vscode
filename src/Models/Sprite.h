@@ -15,7 +15,7 @@ public:
 
 	GLuint VAO;
 	Texture2D texture;
-	glm::vec2 size;
+	Vector2<int> size;
 
 private:
 	void initData(GLuint x = 0, GLuint y = 0, GLuint width = 0, GLuint height = 0);

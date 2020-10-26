@@ -38,19 +38,19 @@ void Player::ControllerInput(float dt)
 {
 	if (InputManager::isKey(GLFW_KEY_W))
 	{
-		this->SetPosition(glm::vec2(this->GetPosition().x, this->GetPosition().y - this->velocity * dt));
+		this->SetPosition(Vector2<float>(this->GetPosition().x, this->GetPosition().y - this->velocity * dt));
 	}
 	if (InputManager::isKey(GLFW_KEY_S))
 	{
-		this->SetPosition(glm::vec2(this->GetPosition().x, this->GetPosition().y + this->velocity * dt));
+		this->SetPosition(Vector2<float>(this->GetPosition().x, this->GetPosition().y + this->velocity * dt));
 	}
 	if (InputManager::isKey(GLFW_KEY_A))
 	{
-		this->SetPosition(glm::vec2(this->GetPosition().x - this->velocity * dt, this->GetPosition().y));
+		this->SetPosition(Vector2<float>(this->GetPosition().x - this->velocity * dt, this->GetPosition().y));
 	}
 	if (InputManager::isKey(GLFW_KEY_D))
 	{
-		this->SetPosition(glm::vec2(this->GetPosition().x + this->velocity * dt, this->GetPosition().y));
+		this->SetPosition(Vector2<float>(this->GetPosition().x + this->velocity * dt, this->GetPosition().y));
 	}
 }
 void Player::SlotInput()

@@ -17,7 +17,7 @@ class GameObject
 {
 public:
 	GameObject();
-	GameObject(glm::vec2 pos, const Sprite &sprite, glm::vec2 size, int objType = 2);
+	GameObject(Vector2<float> pos, const Sprite &sprite, Vector2<float> size, int objType = 2);
 	virtual ~GameObject();
 
 	// Draw sprite
@@ -27,15 +27,15 @@ public:
 	virtual void SetParent(GameObject *go);
 	virtual void RemoveParent();
 
-	void SetTransform(glm::mat4 transform);
+	void SetTransform(Matrix4<float> transform);
 
-	void SetTransform(glm::vec2 pos, glm::vec2 size, GLfloat rot = 0.0f);
-	void SetPosition(glm::vec2 pos);
+	void SetTransform(Vector2<float> pos, Vector2<float> size, GLfloat rot = 0.0f);
+	void SetPosition(Vector2<float> pos);
 	void SetPosition(const float x, const float y);
-	void SetSize(glm::vec2 size);
+	void SetSize(Vector2<float> size);
 	void SetRotation(GLfloat rot);
 	void setCellPosition(int x, int y);
-	void setCellPosition(glm::vec2 pos);
+	void setCellPosition(Vector2<float> pos);
 	void setID(int id);
 
 	virtual void Destroy();
@@ -43,10 +43,11 @@ public:
 
 	GameObject GetParentObject();
 	int GetObjectType();
-	glm::mat4 GetTransform();
-	glm::vec2 GetPosition();
+	Matrix4<float> GetTransform();
+	Vector2<float> GetPosition();
+	Vector2<float> GetPositionOfCenter();
 	GLfloat GetRotation();
-	glm::vec2 GetSize();
+	Vector2<float> GetSize();
 	int GetID() const;
 
 	void BuildTransform();
@@ -55,23 +56,23 @@ public:
 	GLboolean IsDestroyed() const;
 	bool IsParent();
 
-	glm::vec2 PositionToCell(glm::vec2 pos);
-	glm::vec2 PositionToCell(float x, float y);
+	Vector2<int> PositionToCell(Vector2<float> pos);
+	Vector2<int> PositionToCell(float x, float y);
 
 	Sprite sprite;
 
 protected:
 	// Object state
-	glm::vec2 localPosition, localSize, Velocity2d;
+	Vector2<float> localPosition, localSize, Velocity2d;
 	GLfloat localRotation;
 
-	glm::vec2 globalPosition, globalSize;
+	Vector2<float> globalPosition, globalSize;
 	GLfloat globalRotation;
 
 	glm::vec2 cellPos;
 
-	glm::mat4 localTransform = glm::mat4(1.0f);
-	glm::mat4 globalTransform = glm::mat4(1.0f);
+	Matrix4<float> localTransform = Matrix4(1.0f);
+	Matrix4<float> globalTransform = Matrix4(1.0f);
 
 	GameObject *parent = nullptr;
 
@@ -80,7 +81,7 @@ protected:
 
 	ObjectType objType;
 
-	glm::vec2 parentPositionDelta;
+	Vector2<float> parentPositionDelta;
 
 	int id;
 

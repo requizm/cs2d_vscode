@@ -7,6 +7,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "../Core/Math/Projection.h"
+#include "../Core/Math/Vector2.h"
+
 // General purpsoe shader object. Compiles from file, generates
 // compile/link-time error messages and hosts several utility
 // functions for easy management.
@@ -25,12 +28,12 @@ public:
 	void    SetFloat(const GLchar* name, GLfloat value, GLboolean useShader = false) const;
 	void    SetInteger(const GLchar* name, GLint value, GLboolean useShader = false) const;
 	void    SetVector2f(const GLchar* name, GLfloat x, GLfloat y, GLboolean useShader = false) const;
-	void    SetVector2f(const GLchar* name, const glm::vec2& value, GLboolean useShader = false) const;
+	void    SetVector2f(const GLchar* name, const Vector2<float>& value, GLboolean useShader = false) const;
 	void    SetVector3f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLboolean useShader = false) const;
-	void    SetVector3f(const GLchar* name, const glm::vec3& value, GLboolean useShader = false) const;
+	void    SetVector3f(const GLchar* name, const Vector3<float>& value, GLboolean useShader = false) const;
 	void    SetVector4f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLboolean useShader = false) const;
 	void    SetVector4f(const GLchar* name, const glm::vec4& value, GLboolean useShader = false) const;
-	void    SetMatrix4(const GLchar* name, const glm::mat4& matrix, GLboolean useShader = false) const;
+	void    SetMatrix4(const GLchar* name, Matrix4<float> matrix, GLboolean useShader = false) const;
 
 	void	UnUse() const;
 private:

@@ -8,8 +8,8 @@ class InputManager
 {
 public:
 	
-	static glm::vec2 mousePos;
-	static glm::vec2 scroll;
+	static Vector2<float> mousePos;
+	static Vector2<float> scroll;
 	static bool scrollYPressed;
 
 	/*static GLboolean Keys[1024];

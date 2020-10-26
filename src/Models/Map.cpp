@@ -52,7 +52,7 @@ void Map::Load(const GLchar *file)
 	for (rapidxml::xml_node<> *child = node->first_node(); child; child = child->next_sibling())
 	{
 		//std::cout << child->first_node("cellY")->value() << std::endl;
-		//tile.SetSize(glm::vec2(Game::Width / 26.5, Game::Width / 26.5));
+		//tile.SetSize(Vector2<float>(Game::Width / 26.5, Game::Width / 26.5));
 		char *x = child->first_node("cellX")->value();
 		char *y = child->first_node("cellY")->value();
 		char *tIndex = child->first_node("tileTexture")->value();
@@ -61,8 +61,8 @@ void Map::Load(const GLchar *file)
 		int cellY = atoi(y);
 		int textureIndex = atoi(tIndex);
 		int tileType = atoi(tType);
-		const glm::vec2 pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
-		const glm::vec2 size(glm::vec2(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
+		const Vector2<float> pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
+		const Vector2<float> size(Vector2<float>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
 		const int xoffset = textureIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const int yoffset = textureIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
@@ -124,8 +124,8 @@ void Map::Init(std::vector<std::vector<GLuint>> tileData) const
 		for (GLuint x = 0; x < tileData[y].size(); x++)
 		{
 
-			const glm::vec2 pos(Game_Parameters::SCREEN_WIDTH / 26.5 * x, Game_Parameters::SCREEN_WIDTH / 26.5 * y);
-			const glm::vec2 size(Game_Parameters::SCREEN_WIDTH / 26.5, Game_Parameters::SCREEN_WIDTH / 26.5);
+			const Vector2<float> pos(Game_Parameters::SCREEN_WIDTH / 26.5F * x, Game_Parameters::SCREEN_WIDTH / 26.5F * y);
+			const Vector2<float> size(Game_Parameters::SCREEN_WIDTH / 26.5F, Game_Parameters::SCREEN_WIDTH / 26.5F);
 			const int yoffset = tileData[y][x] / 17;
 			const Sprite sprite = Sprite(ResourceManager::GetTexture("tile"), tileData[y][x] * 32, yoffset * 32, 32, 32);
 			GameObject go = GameObject(pos, sprite, size);

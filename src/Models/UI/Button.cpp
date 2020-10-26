@@ -2,12 +2,12 @@
 
 Button::Button() = default;
 
-/*Button::Button(Sprite sprite, std::string text, glm::vec2 position, float scale, glm::vec3 textColor) : Label(text, position, scale, textColor)
+/*Button::Button(Sprite sprite, std::string text, Vector2<float> position, float scale, Vector3<float> textColor) : Label(text, position, scale, textColor)
 {
 	this->sprite = sprite;
 }*/
 
-Button::Button(const std::string &text, glm::vec2 position, glm::vec2 size, TextRenderer &renderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
+Button::Button(const std::string &text, Vector2<float> position, Vector2<float> size, TextRenderer &renderer, Vector3<float> buttonColor, Vector3<float> textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->buttonColor = buttonColor;
 	this->setSize(renderer.CalculateSize(text, 1.0F) * 1.50F);
@@ -17,7 +17,7 @@ Button::Button(const std::string &text, glm::vec2 position, glm::vec2 size, Text
 	this->haveSprite = false;*/
 }
 
-Button::Button(const Sprite &sprite, glm::vec2 position, glm::vec2 size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON), haveOutline(false)
+Button::Button(const Sprite &sprite, Vector2<float> position, Vector2<float> size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON), haveOutline(false)
 {
 	this->sprite = sprite;
 	this->difColor = difColor;
@@ -63,14 +63,14 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 			{
 				if (haveOutline)
 				{
-					squareRenderer.ui_RenderFilledSquare(this->getPosition(), glm::vec2(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
-					squareRenderer.ui_RenderEmptySquare(this->getPosition(), glm::vec2(this->getSize().x + margin.x, this->getSize().y + margin.y), this->outlineColor);
-					spriteRenderer.DrawSprite(this->sprite, glm::vec2(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
+					squareRenderer.ui_RenderFilledSquare(this->getPosition(), Vector2<float>(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
+					squareRenderer.ui_RenderEmptySquare(this->getPosition(), Vector2<float>(this->getSize().x + margin.x, this->getSize().y + margin.y), this->outlineColor);
+					spriteRenderer.DrawSprite(this->sprite, Vector2<float>(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
 				}
 				else
 				{
-					squareRenderer.ui_RenderFilledSquare(this->getPosition(), glm::vec2(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
-					spriteRenderer.DrawSprite(this->sprite, glm::vec2(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
+					squareRenderer.ui_RenderFilledSquare(this->getPosition(), Vector2<float>(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
+					spriteRenderer.DrawSprite(this->sprite, Vector2<float>(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
 				}
 			}
 			break;
@@ -151,7 +151,7 @@ void Button::ProcessInput()
 	}
 }
 
-glm::vec2 Button::getPosition()
+Vector2<float> Button::getPosition()
 {
 	if (type == ButtonType::TILE)
 	{
@@ -168,7 +168,7 @@ glm::vec2 Button::getPosition()
 	return this->position;
 }
 
-glm::vec2 Button::getLocalPosition()
+Vector2<float> Button::getLocalPosition()
 {
 	if (type == ButtonType::TILE)
 	{
@@ -185,7 +185,7 @@ glm::vec2 Button::getLocalPosition()
 	return this->position;
 }
 
-glm::vec2 Button::getSize()
+Vector2<float> Button::getSize()
 {
 	if (type == ButtonType::TILE)
 	{
@@ -277,22 +277,22 @@ bool Button::isMousePressM(const int key)
 	return false;
 }
 
-void Button::setMouseHoverColor(const glm::vec3 color)
+void Button::setMouseHoverColor(const Vector3<float> color)
 {
 	this->mouseHoverColor = color;
 }
 
-void Button::setButtonColor(const glm::vec3 color)
+void Button::setButtonColor(const Vector3<float> color)
 {
 	this->buttonColor = color;
 }
 
-void Button::setMouseClickColor(const glm::vec3 color)
+void Button::setMouseClickColor(const Vector3<float> color)
 {
 	this->mouseclickColor = color;
 }
 
-void Button::setOutlineColor(const glm::vec3 color)
+void Button::setOutlineColor(const Vector3<float> color)
 {
 	this->outlineColor = color;
 }
@@ -302,13 +302,13 @@ void Button::setOutline(const bool value)
 	this->haveOutline = value;
 }
 
-void Button::setMargin(const glm::vec2 value)
+void Button::setMargin(const Vector2<float> value)
 {
 	if (haveOutline)
 		this->margin = value;
 }
 
-void Button::setPosition(const glm::vec2 position)
+void Button::setPosition(const Vector2<float> position)
 {
 	if (type == ButtonType::TILE)
 	{

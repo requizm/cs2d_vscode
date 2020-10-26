@@ -12,7 +12,7 @@ class TextBox : public Label
 {
 public:
 	TextBox();
-	TextBox(glm::vec2 position, TextRenderer &renderer, glm::vec2 size, bool isBackGround = false, float scale = 1.0F, glm::vec3 color = glm::vec3(1.0F));
+	TextBox(Vector2<float> position, TextRenderer &renderer, Vector2<float> size, bool isBackGround = false, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F));
 
 	void Update(const float dt) override;
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
@@ -42,7 +42,7 @@ public:
 private:
 	float time = 0.0F;
 	Sprite cursor; //refactor: bunun optimize bir yol oldugundan emin degilim
-	glm::vec3 currentBorderColor, hoverBorderColor, clickBorderColor, borderColor;
+	Vector3<float> currentBorderColor, hoverBorderColor, clickBorderColor, borderColor;
 	bool click = false;
 
 	void InputText(const float dt);

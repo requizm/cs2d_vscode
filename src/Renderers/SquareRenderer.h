@@ -23,20 +23,20 @@ public:
 	Circle filledCircle;
 	//Outline title_line = Outline();
 
-	void ui_RenderFilledSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, bool outline, glm::vec3 borderColor, float borderSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-	void ui_RenderFilledSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-	void world_RenderFilledSquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-	void world_RenderEmptySquareWithLine(glm::vec2 position, glm::vec2 size, glm::vec3 color, float lineSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-	void ui_RenderEmptySquareWithLine(glm::vec2 position, glm::vec2 size, glm::vec3 color, float lineSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderFilledSquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, bool outline, Vector3<float> borderColor, float borderSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderFilledSquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void world_RenderFilledSquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void world_RenderEmptySquareWithLine(Vector2<float> position, Vector2<float> size, Vector3<float> color, float lineSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderEmptySquareWithLine(Vector2<float> position, Vector2<float> size, Vector3<float> color, float lineSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
 
-	void ui_RenderLine(glm::vec2 startPos, glm::vec2 endPos, glm::vec3 color, float lineSize = 1.0F, GLfloat transperancy = 1.0F);
-	void world_RenderLine(glm::vec2 startPos, glm::vec2 endPos, glm::vec3 color, float lineSize = 1.0F, GLfloat transperancy = 1.0F);
-	void ui_RenderEmptySquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-	void world_RenderEmptySquare(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderLine(Vector2<float> startPos, Vector2<float> endPos, Vector3<float> color, float lineSize = 1.0F, GLfloat transperancy = 1.0F);
+	void world_RenderLine(Vector2<float> startPos, Vector2<float> endPos, Vector3<float> color, float lineSize = 1.0F, GLfloat transperancy = 1.0F);
+	void ui_RenderEmptySquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void world_RenderEmptySquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
 
-	void ui_RenderEmptyCircle(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-	void ui_RenderFilledCircle(glm::vec2 position, glm::vec2 size, glm::vec3 color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-	void SetProjection(glm::mat4 proj);
+	void ui_RenderEmptyCircle(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderFilledCircle(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void SetProjection(Matrix4<float> proj);
 };
 
 #endif // SQUARE_RENDERER_H

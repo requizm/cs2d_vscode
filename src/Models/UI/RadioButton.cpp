@@ -2,7 +2,7 @@
 
 RadioButtonElement::RadioButtonElement() = default;
 
-RadioButtonElement::RadioButtonElement(const std::string &text, glm::vec2 position, TextRenderer &textRenderer, glm::vec3 buttonColor, glm::vec3 textColor, float scale)
+RadioButtonElement::RadioButtonElement(const std::string &text, Vector2<float> position, TextRenderer &textRenderer, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
     : Label(text, position, textRenderer, scale, textColor, UIObjectType::RADIOBUTTON), selected(false)
 {
     this->setButtonColor(buttonColor);
@@ -13,12 +13,12 @@ RadioButtonElement::~RadioButtonElement() = default;
 void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
     if (!text.empty())
-        this->rend->RenderText(text, glm::vec2(getPosition().x + labelSize.y / 2 + 2.0F, getPosition().y), scale, labelCurrentColor);
-    squareRenderer.ui_RenderFilledCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2), glm::vec3(0.21F));
-    squareRenderer.ui_RenderEmptyCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2), currentOutlineColor);
+        this->rend->RenderText(text, Vector2<float>(getPosition().x + labelSize.y / 2 + 2.0F, getPosition().y), scale, labelCurrentColor);
+    squareRenderer.ui_RenderFilledCircle(Vector2<float>(getPosition().x, getPosition().y + labelSize.y / 2), Vector2<float>(labelSize.y / 2), Vector3<float>(0.21F));
+    squareRenderer.ui_RenderEmptyCircle(Vector2<float>(getPosition().x, getPosition().y + labelSize.y / 2), Vector2<float>(labelSize.y / 2), currentOutlineColor);
     if (selected)
     {
-        squareRenderer.ui_RenderFilledCircle(glm::vec2(getPosition().x, getPosition().y + labelSize.y / 2), glm::vec2(labelSize.y / 2 - labelSize.y / 4), currentColor);
+        squareRenderer.ui_RenderFilledCircle(Vector2<float>(getPosition().x, getPosition().y + labelSize.y / 2), Vector2<float>(labelSize.y / 2 - labelSize.y / 4), currentColor);
     }
 }
 
@@ -45,41 +45,41 @@ void RadioButtonElement::ProcessInput()
     isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 }
 
-glm::vec2 RadioButtonElement::getPosition()
+Vector2<float> RadioButtonElement::getPosition()
 {
     if (isParent())
         return this->position + parent->getPosition();
     return this->position;
 }
-glm::vec2 RadioButtonElement::getLocalPosition()
+Vector2<float> RadioButtonElement::getLocalPosition()
 {
     if (isParent())
         return this->position - parent->getPosition();
-    return glm::vec2(0.0F);
+    return Vector2<float>(0.0F);
 }
-glm::vec2 RadioButtonElement::getSize()
+Vector2<float> RadioButtonElement::getSize()
 {
-    glm::vec2 ps;
+    Vector2<float> ps;
     ps.x = (getPosition().x + labelSize.y / 2 + 2.0F + labelSize.x) - (getPosition().x - labelSize.y / 2);
     ps.y = labelSize.y;
     return ps;
 }
 
-void RadioButtonElement::setMouseHoverColor(const glm::vec3 color)
+void RadioButtonElement::setMouseHoverColor(const Vector3<float> color)
 {
     this->mouseHoverColor = color;
 }
 
-void RadioButtonElement::setButtonColor(const glm::vec3 color)
+void RadioButtonElement::setButtonColor(const Vector3<float> color)
 {
     this->buttonColor = color;
 }
 
-void RadioButtonElement::setMouseHoverOutlineColor(const glm::vec3 color)
+void RadioButtonElement::setMouseHoverOutlineColor(const Vector3<float> color)
 {
     this->mouseHoverOutlineColor = color;
 }
-void RadioButtonElement::setOutlineColor(const glm::vec3 color)
+void RadioButtonElement::setOutlineColor(const Vector3<float> color)
 {
     this->outlineColor = color;
 }
@@ -92,7 +92,7 @@ void RadioButtonElement::OnDisable()
     //this->selected = false;
 }
 
-void RadioButtonElement::setPosition(const glm::vec2 position)
+void RadioButtonElement::setPosition(const Vector2<float> position)
 {
     this->position = position;
 }
@@ -175,7 +175,7 @@ bool RadioButtonElement::isMousePressM(const int key)
 
 RadioButton::RadioButton() = default;
 
-RadioButton::RadioButton(TextRenderer &renderer, glm::vec2 position, int y_sep) : UIObject(position, 1.0F, renderer)
+RadioButton::RadioButton(TextRenderer &renderer, Vector2<float> position, int y_sep) : UIObject(position, 1.0F, renderer)
 {
     this->y_sep = y_sep;
 }
@@ -204,13 +204,13 @@ void RadioButton::Clear()
     i = 0;
 }
 
-void RadioButton::AddElement(const std::string &text, glm::vec3 buttonColor, glm::vec3 textColor, float scale)
+void RadioButton::AddElement(const std::string &text, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
 {
-    RadioButtonElement *r = new RadioButtonElement(text, glm::vec2(position.x, position.y + y_sep * i), *rend, buttonColor, textColor, scale);
+    RadioButtonElement *r = new RadioButtonElement(text, Vector2<float>(position.x, position.y + y_sep * i), *rend, buttonColor, textColor, scale);
     r->setSize(300, 300);
-    r->setMouseHoverColor(glm::vec3(0.9F));
-    r->setOutlineColor(glm::vec3(0.58F));
-    r->setMouseHoverOutlineColor(glm::vec3(0.9F));
+    r->setMouseHoverColor(Vector3<float>(0.9F));
+    r->setOutlineColor(Vector3<float>(0.58F));
+    r->setMouseHoverOutlineColor(Vector3<float>(0.9F));
     r->setParent(this);
     r->index = i;
 

@@ -2,8 +2,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-glm::vec2 InputManager::mousePos;
-glm::vec2 InputManager::scroll;
+Vector2<float> InputManager::mousePos;
+Vector2<float> InputManager::scroll;
 bool InputManager::scrollYPressed;
 
 /*GLboolean InputManager::Keys[1024];

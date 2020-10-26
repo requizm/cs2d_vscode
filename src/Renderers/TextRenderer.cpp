@@ -9,7 +9,7 @@ TextRenderer::TextRenderer(GLuint width, GLuint height)
 	// Load and configure shader
 	this->TextShader = ResourceManager::GetShader("text");
 	this->TextShader.Use();
-	this->TextShader.SetMatrix4("projection", glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f));
+	this->TextShader.SetMatrix4("projection", Projection::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f));
 	this->TextShader.SetInteger("text", 0);
 	// Configure VAO/VBO for texture quads
 	glGenVertexArrays(1, &this->VAO);
@@ -24,7 +24,7 @@ TextRenderer::TextRenderer(GLuint width, GLuint height)
 	this->TextShader.UnUse();
 }
 
-TextRenderer::TextRenderer(GLuint width, GLuint height, glm::mat4 camera)
+TextRenderer::TextRenderer(GLuint width, GLuint height, Matrix4<float> camera)
 {
 	// Load and configure shader
 	this->TextShader = ResourceManager::LoadShader("../resources/shaders/textVertex.txt", "../resources/shaders/textFragment.txt", nullptr, "text");
@@ -105,7 +105,7 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 	FT_Done_FreeType(ft);
 }
 
-void TextRenderer::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)
+void TextRenderer::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, Vector3<float> color)
 {
 	// Activate corresponding render state
 	this->TextShader.Use();
@@ -150,7 +150,7 @@ void TextRenderer::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat sc
 	this->TextShader.UnUse();
 }
 
-void TextRenderer::RenderText(std::string text, glm::vec2 position, GLfloat scale, glm::vec3 color)
+void TextRenderer::RenderText(std::string text, Vector2<float> position, GLfloat scale, Vector3<float> color)
 {
 	// Activate corresponding render state
 	this->TextShader.Use();
@@ -247,7 +247,7 @@ void TextRenderer::RenderLabel(Label *label)
 	//label->size.y = 12;
 }*/
 
-glm::vec2 TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
+Vector2<float> TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
 {
 	//GLfloat startX = 0;
 	float xPo = 0;
@@ -263,7 +263,7 @@ glm::vec2 TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
 		// Now advance cursors for next glyph
 		xPo += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
 	}
-	return glm::vec2(xPo, 12);
+	return Vector2<float>(xPo, 12);
 }
 /*
 void TextRenderer::RenderButton(Button *button)

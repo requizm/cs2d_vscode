@@ -29,15 +29,15 @@ public:
 	GLuint VAO, VBO;
 	// Constructor
 	TextRenderer(GLuint width, GLuint height);
-	TextRenderer(GLuint width, GLuint height, glm::mat4 camera);
+	TextRenderer(GLuint width, GLuint height, Matrix4<float> camera);
 	TextRenderer();
 	// Pre-compiles a list of characters from the given font
 	void Load(std::string font, GLuint fontSize);
 	// Renders a string of text using the precompiled list of characters
-	void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color = glm::vec3(1.0f));
-	void RenderText(std::string text, glm::vec2 position, GLfloat scale, glm::vec3 color = glm::vec3(1.0f));
+	void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, Vector3<float> color = Vector3<float>(1.0f));
+	void RenderText(std::string text, Vector2<float> position, GLfloat scale, Vector3<float> color = Vector3<float>(1.0f));
 	//void RenderLabel(Label *label);
-	glm::vec2 CalculateSize(const std::string &text, GLfloat scale);
+	Vector2<float> CalculateSize(const std::string &text, GLfloat scale);
 	//void RenderButton(Button *button);
 private:
 	// Render state

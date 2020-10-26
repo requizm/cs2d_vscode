@@ -8,7 +8,12 @@ public:
     Matrix4(T v)
     {
         for (int i = 0; i < 16; i++)
-            values[i] = v;
+        {
+            if (i == 0 || i == 5 || i == 10 || i == 15)
+                values[i] = v;
+            else
+                values[i] = 0;
+        }
     }
 
     Matrix4()
@@ -114,7 +119,6 @@ public:
         return temp;
     }
 
-private:
     T values[16];
 };
 

@@ -12,7 +12,7 @@ Game::Game(const GLuint width, const GLuint height)
 {
 	//camera = std::make_unique<Camera>(width, height);
 	//camera = Camera(static_cast<int>(width), static_cast<int>(height));
-	//camera = Camera(width, height, glm::vec3(0.0f, 0.0f, 3.0f));
+	//camera = Camera(width, height, Vector3<float>(0.0f, 0.0f, 3.0f));
 	//InputManager::Width = width;
 	//InputManager::Height = height;
 	Logger::WriteLog("Game->Game(width, height)");
@@ -90,7 +90,7 @@ void Game::Render(const float dt)
 		Game::scene.Render(dt);
 		break;
 	}
-	menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos, glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
+	menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos, Vector2<float>(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
 }
 
 void Game::NewGame()
@@ -114,29 +114,29 @@ void Game::NewGame()
 	Sprite machete = Sprite(ResourceManager::GetTexture("machete"));*/
 
 	std::shared_ptr<Weapon> main1 = std::make_shared<Weapon>(
-		glm::vec2(65.0f, 65.0f), awp, awp_d, "awp", WeaponType::MAIN, 30, 20, 10, 10);
+		Vector2<float>(65.0f, 65.0f), awp, awp_d, "awp", WeaponType::MAIN, 30, 20, 10, 10);
 	std::shared_ptr<Weapon> main2 = std::make_shared<Weapon>(
-		glm::vec2(10.0f, 10.0f), famas, famas_d, "famas", WeaponType::MAIN, 30, 20, 10, 10);
+		Vector2<float>(10.0f, 10.0f), famas, famas_d, "famas", WeaponType::MAIN, 30, 20, 10, 10);
 	std::shared_ptr<Weapon> main3 = std::make_shared<Weapon>(
-		glm::vec2(12.0f, 20.0f), ak47, ak47_d, "ak47", WeaponType::MAIN, 30, 20, 10, 10);
+		Vector2<float>(12.0f, 20.0f), ak47, ak47_d, "ak47", WeaponType::MAIN, 30, 20, 10, 10);
 	/*Weapon* pistol1 = new Weapon(
-		glm::vec2(170.0f, 30.0f), deagle, deagle_d, "deagle", WeaponType::PISTOL, 30, 20, 10, 10
+		Vector2<float>(170.0f, 30.0f), deagle, deagle_d, "deagle", WeaponType::PISTOL, 30, 20, 10, 10
 	);
 	Weapon* pistol2 = new Weapon(
-		glm::vec2(260.0f, 30.0f), usp, usp_d, "usp", WeaponType::PISTOL, 30, 20, 10, 10
+		Vector2<float>(260.0f, 30.0f), usp, usp_d, "usp", WeaponType::PISTOL, 30, 20, 10, 10
 	);
 	Weapon* pistol3 = new Weapon(
-		glm::vec2(320.0f, 30.0f), fiveseven, fiveseven_d, "fiveseven", WeaponType::PISTOL, 30, 20, 10, 10
+		Vector2<float>(320.0f, 30.0f), fiveseven, fiveseven_d, "fiveseven", WeaponType::PISTOL, 30, 20, 10, 10
 	);
 	Weapon* pistol4 = new Weapon(
-		glm::vec2(20.0f, 90.0f), glock, glock_d, "glock", WeaponType::PISTOL, 30, 20, 10, 10
+		Vector2<float>(20.0f, 90.0f), glock, glock_d, "glock", WeaponType::PISTOL, 30, 20, 10, 10
 	);
 
 	Weapon* knife1 = new Weapon(
-		glm::vec2(20.0f, 150.0f), knife, knife, "knife", WeaponType::KNIFE, 30, 20, 10, 10
+		Vector2<float>(20.0f, 150.0f), knife, knife, "knife", WeaponType::KNIFE, 30, 20, 10, 10
 	);
 	Weapon* knife2 = new Weapon(
-		glm::vec2(20.0f, 210.0f), machete, machete, "machete", WeaponType::KNIFE, 30, 20, 10, 10
+		Vector2<float>(20.0f, 210.0f), machete, machete, "machete", WeaponType::KNIFE, 30, 20, 10, 10
 	);*/
 
 	weapons.push_back(*main1.get());
@@ -183,7 +183,7 @@ void Game::initTextures() const
 	ResourceManager::LoadTexture("../resources/textures/gui_icons.png", GL_TRUE, "gui_icons");
 }
 
-void Game::initShaders() const
+void Game::initShaders()
 {
 	Logger::WriteLog("Game->initShaders()");
 	ResourceManager::LoadShader("../resources/shaders/textVertex.txt", "../resources/shaders/textFragment.txt", nullptr, "text");
@@ -193,9 +193,9 @@ void Game::initShaders() const
 	ResourceManager::GetShader("sprite").Use();
 	ResourceManager::GetShader("sprite").SetInteger("image", 0);
 	ResourceManager::GetShader("sprite").UnUse();
-
+	//Matrix4 za = Projection::ortho(0.0f, static_cast<GLfloat>(Game_Parameters::SCREEN_WIDTH), static_cast<GLfloat>(Game_Parameters::SCREEN_HEIGHT), 0.0f);
 	ResourceManager::GetShader("menu").Use();
-	ResourceManager::GetShader("menu").SetMatrix4("projection", glm::ortho(0.0f, static_cast<GLfloat>(Game_Parameters::SCREEN_WIDTH), static_cast<GLfloat>(Game_Parameters::SCREEN_HEIGHT), 0.0f), GL_TRUE);
+	ResourceManager::GetShader("menu").SetMatrix4("projection", Projection::ortho(0.0f, static_cast<float>(Game_Parameters::SCREEN_WIDTH), static_cast<float>(Game_Parameters::SCREEN_HEIGHT), 0.0f), GL_TRUE);
 	ResourceManager::GetShader("menu").SetInteger("image", 0);
 	ResourceManager::GetShader("menu").UnUse();
 }

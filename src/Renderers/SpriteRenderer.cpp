@@ -11,22 +11,37 @@ SpriteRenderer::SpriteRenderer() = default;
 
 SpriteRenderer::~SpriteRenderer() = default;
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, GLfloat rotate, bool drawCenter,
+void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, GLfloat rotate, bool drawCenter,
 								GLfloat shineFactor, bool isSelected, GLfloat time)
 {
 	// Prepare transformations
 	this->shader.Use();
-	glm::mat4 model = glm::mat4(1.0);
+	Matrix4 model = Matrix4(1.0F);
 	if (drawCenter)
-		model = glm::translate(model, glm::vec3(position.x - size.x / 2, position.y - size.y / 2, 0.0F));
+		model = Projection::translate(model, Vector3(position.x - size.x / 2, position.y - size.y / 2, 0.0F));
 	else
-		model = glm::translate(model, glm::vec3(position.x, position.y, 0.0F));
+		model = Projection::translate(model, Vector3(position.x, position.y, 0.0F));
 	// First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
-	//model = glm::translate(model, glm::vec3(position.x, position.y, 0.0f));
-	model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));   // Move origin of rotation to center of quad
-	model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));  // Then rotate
-	model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = glm::scale(model, glm::vec3(size, 1.0f));								// Last scale
+	//model = glm::translate(model, Vector3(position.x, position.y, 0.0f));
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
+	model = Projection::rotate(model, glm::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0F));					 // Last scale
+
+	glm::mat4 ab = glm::mat4(1.0F);
+	if (drawCenter)
+		ab = glm::translate(ab, glm::vec3(position.x - size.x / 2, position.y - size.y / 2, 0.0F));
+	else
+		ab = glm::translate(ab, glm::vec3(position.x, position.y, 0.0F));
+	// First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
+	//ab = glm::translate(ab, glm::vec3(position.x, position.y, 0.0f));
+	ab = glm::translate(ab, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
+	ab = glm::rotate(ab, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));	 // Then rotate
+	ab = glm::translate(ab, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
+	ab = glm::scale(ab, glm::vec3(size.x, size.y, 1.0F));					 // Last scale
+
+	
+
 
 	this->shader.SetMatrix4("model", model);
 	this->shader.SetInteger("overrideColor", 0);
@@ -47,23 +62,23 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::vec2 position, glm::v
 	this->shader.UnUse();
 }
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::vec2 position, glm::vec2 size, glm::vec3 color, bool drawCenter,
+void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, Vector3<float> color, bool drawCenter,
 								GLfloat rotate, GLfloat shineFactor, bool isSelected)
 {
 	//rotate = rotate * static_cast<GLfloat>(PI) / static_cast<GLfloat>(180);
 	// Prepare transformations
 	this->shader.Use();
-	glm::mat4 model = glm::mat4(1.0);
+	Matrix4 model = Matrix4(1.0F);
 	if (drawCenter)
-		model = glm::translate(model, glm::vec3(position.x - size.x / 2, position.y - size.y / 2, 0.0F));
+		model = Projection::translate(model, Vector3(position.x - size.x / 2, position.y - size.y / 2, 0.0F));
 	else
-		model = glm::translate(model, glm::vec3(position.x, position.y, 0.0F));
+		model = Projection::translate(model, Vector3(position.x, position.y, 0.0F));
 	// First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
-	//model = glm::translate(model, glm::vec3(position.x, position.y, 0.0f));
-	model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));   // Move origin of rotation to center of quad
-	model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));  // Then rotate
-	model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = glm::scale(model, glm::vec3(size, 1.0f));								// Last scale
+	//model = glm::translate(model, Vector3(position.x, position.y, 0.0f));
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	// Move origin of rotation to center of quad
+	model = Projection::rotate(model, glm::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	// Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));								// Last scale
 
 	this->shader.SetMatrix4("model", model);
 	this->shader.SetInteger("overrideColor", 1);
@@ -79,7 +94,7 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::vec2 position, glm::v
 	this->shader.UnUse();
 }
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::mat4 model)
+void SpriteRenderer::DrawSprite(const Sprite &sprite, Matrix4<float> model)
 {
 	this->shader.Use();
 	this->shader.SetMatrix4("model", model);
@@ -92,7 +107,7 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, glm::mat4 model)
 	this->shader.UnUse();
 }
 
-void SpriteRenderer::SetProjection(glm::mat4 projection)
+void SpriteRenderer::SetProjection(Matrix4<float> projection)
 {
 	this->shader.Use();
 	this->shader.SetMatrix4("projection", projection);

@@ -3,17 +3,17 @@
 
 TextBox::TextBox() = default;
 
-TextBox::TextBox(glm::vec2 position, TextRenderer &renderer, glm::vec2 size, bool isBackGround, float scale /*= 1.0F*/, glm::vec3 color /*= glm::vec3(1.0F)*/) : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
+TextBox::TextBox(Vector2<float> position, TextRenderer &renderer, Vector2<float> size, bool isBackGround, float scale /*= 1.0F*/, Vector3<float> color /*= Vector3<float>(1.0F)*/) : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
 {
 	this->editable = true;
 	this->editMode = false;
 	this->isBackGround = isBackGround;
 	cursor = Sprite(ResourceManager::GetTexture("textcursor"));
 	this->size = size;
-	labelClickColor = glm::vec3(1.0F);
-	clickBorderColor = glm::vec3(1.0F);
-	borderColor = glm::vec3(0.6F);
-	hoverBorderColor = glm::vec3(0.78F);
+	labelClickColor = Vector3<float>(1.0F);
+	clickBorderColor = Vector3<float>(1.0F);
+	borderColor = Vector3<float>(0.6F);
+	hoverBorderColor = Vector3<float>(0.78F);
 	currentBorderColor = borderColor;
 	square = Square(true);
 }
@@ -28,12 +28,12 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRendere
 	if (isVisible() && isEnable())
 	{
 		if (isBackGround)
-			squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), glm::vec3(0.15F), true, currentBorderColor, 1.0F, 1.0F);
+			squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), Vector3<float>(0.15F), true, currentBorderColor, 1.0F, 1.0F);
 		if (editMode)
 		{
 			if (time <= 0.5F)
 			{
-				spriteRenderer.DrawSprite(cursor, glm::vec2(getPosition().x - 2.0F + labelSize.x, getPosition().y + 2.0F), glm::vec2(8.0F, 16.0F));
+				spriteRenderer.DrawSprite(cursor, Vector2<float>(getPosition().x - 2.0F + labelSize.x, getPosition().y + 2.0F), Vector2<float>(8.0F, 16.0F));
 			}
 			else if (time >= 1.0F)
 			{

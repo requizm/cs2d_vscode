@@ -11,9 +11,9 @@ public:
     virtual ~Utils();
 
     static glm::vec2 WorldToScreen(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::vec3 point);
-    static glm::vec2 ScreenToWorld(glm::vec2 view, glm::vec2 point);
-    static glm::ivec2 PositionToCell(glm::vec2 pos);
-    static glm::vec2 CellToPosition(glm::ivec2 cell);
+    static Vector2<float> ScreenToWorld(Vector2<float> view, Vector2<float> point);
+    static Vector2<int> PositionToCell(Vector2<float> pos);
+    static Vector2<float> CellToPosition(Vector2<int> cell);
     static int GenerateID();
     static bool TryStringToInt(const char *s);
     static int StringToInt(const char *s);

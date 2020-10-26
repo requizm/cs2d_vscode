@@ -24,15 +24,15 @@ void Menu::Start()
 	this->textRenderer->Load("../resources/fonts/liberationsans.ttf", 16);
 	squareRenderer = SquareRenderer(true);
 
-	this->l_console = std::make_shared<Label>("Console", glm::vec2(10.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 50.0F), *textRenderer, 0.8F, glm::vec3(0.55F));
-	this->l_newgame = std::make_shared<Label>("New Game", glm::vec2(10.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 20.0F), *textRenderer, 1.0F, glm::vec3(0.58F));
-	this->l_options = std::make_shared<Label>("Options", glm::vec2(10.0F, Game_Parameters::SCREEN_HEIGHT / 2), *textRenderer, 1.0F, glm::vec3(0.58F));
-	this->l_editor = std::make_shared<Label>("Editor", glm::vec2(10.0F, Game_Parameters::SCREEN_HEIGHT / 2 + 20.0F), *textRenderer, 1.0F, glm::vec3(0.58F));
+	this->l_console = std::make_shared<Label>("Console", Vector2<float>(10.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 50.0F), *textRenderer, 0.8F, Vector3<float>(0.55F));
+	this->l_newgame = std::make_shared<Label>("New Game", Vector2<float>(10.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 20.0F), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	this->l_options = std::make_shared<Label>("Options", Vector2<float>(10.0F, Game_Parameters::SCREEN_HEIGHT / 2), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	this->l_editor = std::make_shared<Label>("Editor", Vector2<float>(10.0F, Game_Parameters::SCREEN_HEIGHT / 2 + 20.0F), *textRenderer, 1.0F, Vector3<float>(0.58F));
 
-	this->panel = std::make_shared<Panel>(glm::vec2(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", glm::vec2(420.0F, 450.0F), *textRenderer, true, true, 1.0F, glm::vec3(0.21F));
+	this->panel = std::make_shared<Panel>(Vector2<float>(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", Vector2<float>(420.0F, 450.0F), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
 	this->panel->setMovable(true);
 	
-	this->t_test = std::make_shared<TextBox>(glm::vec2(20.0F, 20.0F), *textRenderer, glm::vec2(100.0F, 20.0F), true, 1.0F, glm::vec3(0.58F));
+	this->t_test = std::make_shared<TextBox>(Vector2<float>(20.0F, 20.0F), *textRenderer, Vector2<float>(100.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
 	this->t_test->setParent(panel.get());
 	this->t_test->setParentCenterPos();
 	
@@ -105,11 +105,11 @@ void Menu::Render(const float dt)
 		case 2:
 			break;
 		case 3:
-			menuRenderer.DrawSprite(menuSprites[3], glm::vec2(0.0F), glm::vec2(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT));
+			menuRenderer.DrawSprite(menuSprites[3], Vector2<float>(0.0F), Vector2<float>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT));
 			break;
 		}
 	}
-	//menuRenderer.DrawSprite(menuSprites["mouseSprite"], glm::vec2(InputManager::mousePos.x, InputManager::mousePos.y), glm::vec2(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
+	//menuRenderer.DrawSprite(menuSprites["mouseSprite"], Vector2<float>(InputManager::mousePos.x, InputManager::mousePos.y), Vector2<float>(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
 	l_options->Draw();
 	l_editor->Draw();
 	l_console->Draw();

@@ -17,16 +17,16 @@ public:
 	{
 		this->objType = ObjectType::PLAYER;
 
-		this->lastMousePos = glm::vec2(0, 0);
+		this->lastMousePos = Vector2(0.0F, 0.0F);
 	}
 
-	Player(const glm::vec2 pos, const std::vector<Sprite> &sprites, const glm::vec2 size = glm::vec2(Game_Parameters::SCREEN_HEIGHT / 15, Game_Parameters::SCREEN_HEIGHT / 15), int maxHealth = 100) : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER), map(nullptr), velocity(0.0F)
+	Player(const Vector2<float> pos, const std::vector<Sprite> &sprites, const Vector2<float> size = Vector2<float>(Game_Parameters::SCREEN_HEIGHT / 15, Game_Parameters::SCREEN_HEIGHT / 15), int maxHealth = 100) : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER), map(nullptr), velocity(0.0F)
 	{
 		this->maxHealth = maxHealth;
 		this->health = maxHealth;
 		this->sprites = sprites;
 
-		this->lastMousePos = glm::vec2(0, 0);
+		this->lastMousePos = Vector2(0.0F, 0.0F);
 	}
 
 	~Player();
@@ -55,7 +55,7 @@ private:
 
 	Map *map;
 
-	glm::vec2 lastMousePos;
+	Vector2<float> lastMousePos;
 
 	int currentIndex = 0;
 	std::vector<Sprite> sprites;

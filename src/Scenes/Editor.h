@@ -12,14 +12,14 @@ struct ButtonTile
 {
 	Button button;
 	bool exist;
-	glm::ivec2 cell;
-	ButtonTile(glm::ivec2 cell)
+	Vector2<int> cell;
+	ButtonTile(Vector2<int> cell)
 	{
 		this->cell = cell;
 		this->exist = false;
 	}
 
-	ButtonTile(Button &button, glm::ivec2 cell)
+	ButtonTile(Button &button, Vector2<int> cell)
 	{
 		this->button = button;
 		this->cell = cell;
@@ -47,7 +47,7 @@ private:
 	void SaveMap();
 	void B_SaveMap();
 
-	void NewMap(std::string tileSet, glm::vec2 mapSize);
+	void NewMap(std::string tileSet, Vector2<int> mapSize);
 	bool B_NewMap();
 
 	void LoadMap(std::string mapPath);
@@ -61,7 +61,7 @@ private:
 
 	SpriteRenderer worldRenderer;
 	std::shared_ptr<Camera> camera;
-	glm::vec2 position;
+	Vector2<float> position;
 
 	std::shared_ptr<Panel> controlPanel;
 	std::shared_ptr<Panel> buildPanel;
@@ -83,7 +83,7 @@ private:
 	std::shared_ptr<RadioButton> radioButton;
 
 	std::vector<std::shared_ptr<Button>> tilesUI;
-	glm::ivec2 texture;
+	Vector2<int> texture;
 	int tileCount;
 	int maxCellInColumn;
 	int maxCellInRow;
@@ -91,7 +91,7 @@ private:
 	Tile *selectedTile;
 	bool firstSelect;
 
-	glm::ivec2 mapLimit;
+	Vector2<int> mapLimit;
 	std::vector<ButtonTile> tiles;
 
 	bool enable = false;
@@ -109,7 +109,7 @@ private:
 	std::string currentTileSet;
 	std::string currentName;
 
-	glm::vec3 cell_yellow;
-	glm::vec3 mouse_yellow;
+	Vector3<float> cell_yellow;
+	Vector3<float> mouse_yellow;
 };
 #endif
