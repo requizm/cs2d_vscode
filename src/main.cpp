@@ -6,6 +6,7 @@
 #include "Others/Logger.h"
 #include "Managers/InputManager.h"
 #include <memory>
+#include <windows.h>
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
@@ -21,6 +22,7 @@ std::unique_ptr<Game> cs2d(std::make_unique<Game>());
 
 int main(int argc, char *argv[])
 {
+	//FreeConsole();
 	int mouse_key;
 	//Logger::Start();
 	glfwInit();

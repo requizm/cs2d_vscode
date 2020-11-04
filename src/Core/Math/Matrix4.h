@@ -1,6 +1,8 @@
 #ifndef MATRIX4_H
 #define MATRIX4_H
 
+#include <glm/gtc/type_ptr.hpp>
+
 template <typename T>
 class Matrix4
 {
@@ -63,17 +65,20 @@ public:
         return temp;
     }
 
-    Matrix4 operator*(Matrix4 const &obj)
+    Matrix4 operator*(Matrix4 &obj)
     {
-        Matrix4 o = obj;
         Matrix4 temp;
+        Matrix4 m1 = this->Clone();
+
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                temp.Get(i + 1, j + 1) = 0;
+                temp.Get(j + 1, i + 1) = 0.0F;
                 for (int k = 0; k < 4; k++)
-                    temp.Get(i + 1, j + 1) += this->Get(i + 1, k + 1) * o.Get(k + 1, j + 1);
+                {
+                    temp.Get(j + 1, i + 1) = temp.Get(j + 1, i + 1) + m1.Get(k + 1, i + 1) * obj.Get(j + 1, k + 1);
+                }
             }
         }
         return temp;
@@ -117,6 +122,34 @@ public:
             temp[i] = temp[i] / obj;
         }
         return temp;
+    }
+
+    bool operator==(Matrix4 &obj)
+    {
+        Matrix4 temp = Clone();
+
+        for (int i = 0; i < 16; i++)
+        {
+            if (obj[i] != temp[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool operator!=(Matrix4 &obj)
+    {
+        Matrix4 temp = Clone();
+
+        for (int i = 0; i < 16; i++)
+        {
+            if (obj[i] != temp[i])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     T values[16];

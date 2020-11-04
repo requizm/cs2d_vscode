@@ -35,7 +35,7 @@ public:
 	void SetSize(Vector2<float> size);
 	void SetRotation(GLfloat rot);
 	void setCellPosition(int x, int y);
-	void setCellPosition(Vector2<float> pos);
+	void setCellPosition(Vector2<int> pos);
 	void setID(int id);
 
 	virtual void Destroy();

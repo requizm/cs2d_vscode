@@ -3,6 +3,7 @@
 #include <memory>
 #include "../Models/Camera.h"
 #include "../Renderers/SpriteRenderer.h"
+#include "../Renderers/TextRenderer.h"
 #include "../Models/Player.h"
 #include "../Managers/ResourceManager.h"
 
@@ -24,10 +25,13 @@ public:
 	
 	void SetEnable(const bool value);
 private:
+	
+
 	Map map;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera;
 	SpriteRenderer renderer;
+	std::shared_ptr<TextRenderer> textRenderer;
 	std::vector<Weapon> weapons;
 	bool enable = false;
 };

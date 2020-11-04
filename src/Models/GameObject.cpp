@@ -34,24 +34,22 @@ void GameObject::DrawModel(SpriteRenderer &renderer)
 void GameObject::BuildTransform()
 {
 	Matrix4 model = Matrix4(1.0F);
-	model = Projection::translate(model, Vector3(globalPosition.x, globalPosition.y, 0.0F));							 // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
-	model = Projection::translate(model, Vector3(0.5F * globalSize.x, 0.5F * globalSize.y, 0.0F));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(globalRotation), Vector3(0.0F, 0.0F, 1.0F));		 // Then rotate
-	model = Projection::translate(model, Vector3(-0.5F * globalSize.x, -0.5F * globalSize.y, 0.0F)); // Move origin back
+	model = Projection::translate(model, Vector3(globalPosition.x, globalPosition.y, 0.0F));
+	model = Projection::translate(model, Vector3(0.5F * globalSize.x, 0.5F * globalSize.y, 0.0F));	   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(globalRotation), Vector3(0.0F, 0.0F, 1.0F)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5F * globalSize.x, -0.5F * globalSize.y, 0.0F));   // Move origin back
 	model = Projection::scale(model, Vector3(globalSize.x, globalSize.y, 1.0F));
 	SetTransform(model);
 }
 
 Matrix4<float> GameObject::GetTransform()
 {
-	BuildTransform();
 	if (IsParent())
 	{
-		return globalTransform * parent->GetTransform();
+		return parent->GetTransform() * localTransform;
 	}
 	//Logger::WriteLog("GameObject->GetTransform() " + glm::to_string(localTransform) + "");
-	//return globalTransform;
-	return localTransform;
+	return globalTransform;
 }
 
 Vector2<float> GameObject::GetPosition()
@@ -71,18 +69,30 @@ Vector2<float> GameObject::GetSize()
 
 void GameObject::SetTransform(Matrix4<float> transform)
 {
-	globalTransform = transform;
-	localTransform = transform;
-
 	if (IsParent())
 	{
-		//localTransform = glm::inverse(parent->GetTransform()) * transform;
-		//m_mLocalTransform = parent->GetTransform().InvertedTR() * mGlobal;
+		localTransform = Projection::inverse(parent->GetTransform()) * globalTransform;
+		/*glm::mat4 temp = glm::inverse(glm::make_mat4(parent->GetTransform().values)) * glm::make_mat4(globalTransform.values);
+		localTransform.values[0] = temp[0][0];
+		localTransform.values[1] = temp[0][1];
+		localTransform.values[2] = temp[0][2];
+		localTransform.values[3] = temp[0][3];
+		localTransform.values[4] = temp[1][0];
+		localTransform.values[5] = temp[1][1];
+		localTransform.values[6] = temp[1][2];
+		localTransform.values[7] = temp[1][3];
+		localTransform.values[8] = temp[2][0];
+		localTransform.values[9] = temp[2][1];
+		localTransform.values[10] = temp[2][2];
+		localTransform.values[11] = temp[2][3];
+		localTransform.values[12] = temp[3][0];
+		localTransform.values[13] = temp[3][1];
+		localTransform.values[14] = temp[3][2];
+		localTransform.values[15] = temp[3][3];*/
 		return;
 	}
 	//Logger::WriteLog("GameObject->SetTransform() " + glm::to_string(transform) + "");
-	//globalTransform = transform;
-	//localTransform = transform;
+	globalTransform = transform;
 }
 
 void GameObject::SetParent(GameObject *go)
@@ -152,6 +162,15 @@ void GameObject::SetRotation(GLfloat rot)
 	//Logger::WriteLog("GameObject->SetRotation(" + std::to_string(rot) + ")");
 }
 
+void GameObject::setCellPosition(int x, int y)
+{
+	SetPosition(x * Game_Parameters::SIZE_TILE, y * Game_Parameters::SIZE_TILE);
+}
+void GameObject::setCellPosition(Vector2<int> pos)
+{
+	SetPosition(pos.x * Game_Parameters::SIZE_TILE, pos.y * Game_Parameters::SIZE_TILE);
+}
+
 GameObject GameObject::GetParentObject()
 {
 	Logger::WriteLog("" + GetObjectTypeString() + "->GetParentObject()");
@@ -211,7 +230,6 @@ GLboolean GameObject::IsCollision() const
 Vector2<int> GameObject::PositionToCell(Vector2<float> pos)
 {
 	return Vector2<int>((int)(pos.x / Game_Parameters::SIZE_TILE), (int)(pos.y / Game_Parameters::SIZE_TILE));
-	
 }
 Vector2<int> GameObject::PositionToCell(float x, float y)
 {

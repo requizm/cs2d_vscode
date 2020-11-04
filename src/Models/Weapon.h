@@ -52,6 +52,7 @@ public:
 		if (weaponType == WeaponType::MAIN)
 		{
 			this->SetSize(Vector2<float>(Game_Parameters::SIZE_TILE * 2, Game_Parameters::SIZE_TILE));
+			this->SetPosition(GetPosition().x - Game_Parameters::SIZE_TILE / 2, GetPosition().y);
 		}
 
 		else if (weaponType == WeaponType::PISTOL)

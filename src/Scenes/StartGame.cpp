@@ -1,6 +1,7 @@
 #include "StartGame.h"
 #include "../Others/Game_Parameters.h"
 #include "../Others/Logger.h"
+#include "../Others/Utils.h"
 #include "../Managers/InputManager.h"
 #include "../Game.h"
 #include "../Core/Math/Vector2.h"
@@ -29,6 +30,8 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::
 	//this->renderer = std::make_shared<SpriteRenderer>();,
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->weapons = weapons;
+	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
+	this->textRenderer->Load("../resources/fonts/liberationsans.ttf", 20);
 
 	this->SetEnable(true);
 }
@@ -75,8 +78,6 @@ void StartGame::Start()
 	sprites.push_back(ct1_0);
 	sprites.push_back(ct1_1);
 	player = std::make_unique<Player>(Vector2<float>(70.0F, 70.0F), sprites);
-
-	//weapons.at(0).SetParent(player.get());
 }
 
 void StartGame::OnEnable()
@@ -108,8 +109,6 @@ void StartGame::Update(const float dt)
 {
 	player->Update(dt);
 	//player->DoCollision(weapons);
-	//GameObject a = weapons->at(5);
-	//Weapon b = a;
 }
 
 void StartGame::ProcessInput(const float dt)
@@ -135,7 +134,6 @@ void StartGame::ProcessInput(const float dt)
 void StartGame::Render(const float dt)
 {
 	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
-
 	renderer.SetProjection(camera->cameraMatrix);
 	map.Draw(renderer);
 	int temp = weapons.size();
@@ -144,6 +142,12 @@ void StartGame::Render(const float dt)
 		this->weapons.at(i).DrawModel(this->renderer);
 	}
 	player->DrawModel(renderer);
+
+	Vector2 p = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
+	this->textRenderer->RenderText("mouse: " + std::to_string(p.x) + " - " + std::to_string(p.y), Vector2(700.0F, 15.0F), 1.0F, 0.5F);
+	this->textRenderer->RenderText("player matrix: " + std::to_string(player->GetTransform().values[12]) + " - " + std::to_string(player->GetTransform().values[13]), Vector2(700.0F, 45.0F), 1.0F, 0.5F);
+	this->textRenderer->RenderText("player pos: " + player->GetPosition().ToString(), Vector2(700.0F, 75.0F), 1.0F, 0.5F);
+	this->textRenderer->RenderText("player cell: " + player->PositionToCell(player->GetPositionOfCenter()).ToString(), Vector2(700.0F, 105.0F), 1.0F, 0.5F);
 
 	//label->Draw(*textRenderer);
 

@@ -2,6 +2,7 @@
 #define VECTOR2_H
 
 #include <math.h>
+#include <string>
 
 template <typename T>
 class Vector2
@@ -100,6 +101,11 @@ public:
     Vector2 operator/(T obj)
     {
         return Vector2(x / obj, y / obj);
+    }
+
+    std::string ToString()
+    {
+        return std::string(std::to_string(x) + " - " + std::to_string(y));
     }
 };
 
