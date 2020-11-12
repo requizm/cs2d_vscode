@@ -630,25 +630,25 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>2</cellX>
 		<cellY>5</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>2</cellX>
 		<cellY>6</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>2</cellX>
 		<cellY>7</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>2</cellX>
 		<cellY>8</cellY>
 		<tileType>2</tileType>
@@ -912,31 +912,31 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>2</tileTexture>
+		<tileTexture>0</tileTexture>
 		<cellX>3</cellX>
 		<cellY>2</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>2</tileTexture>
+		<tileTexture>0</tileTexture>
 		<cellX>3</cellX>
 		<cellY>3</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>2</tileTexture>
+		<tileTexture>0</tileTexture>
 		<cellX>3</cellX>
 		<cellY>4</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>2</tileTexture>
+		<tileTexture>0</tileTexture>
 		<cellX>3</cellX>
 		<cellY>5</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>2</tileTexture>
+		<tileTexture>0</tileTexture>
 		<cellX>3</cellX>
 		<cellY>6</cellY>
 		<tileType>2</tileType>
@@ -954,7 +954,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>3</cellX>
 		<cellY>9</cellY>
 		<tileType>2</tileType>
@@ -1242,13 +1242,13 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>2</tileTexture>
+		<tileTexture>0</tileTexture>
 		<cellX>4</cellX>
 		<cellY>7</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>2</tileTexture>
+		<tileTexture>0</tileTexture>
 		<cellX>4</cellX>
 		<cellY>8</cellY>
 		<tileType>2</tileType>
@@ -2148,7 +2148,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>7</cellX>
 		<cellY>8</cellY>
 		<tileType>2</tileType>
@@ -2448,7 +2448,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>8</cellX>
 		<cellY>8</cellY>
 		<tileType>2</tileType>
@@ -2742,13 +2742,13 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>9</cellX>
 		<cellY>7</cellY>
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>9</cellX>
 		<cellY>8</cellY>
 		<tileType>2</tileType>
@@ -3024,7 +3024,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>10</cellX>
 		<cellY>4</cellY>
 		<tileType>2</tileType>
@@ -3042,7 +3042,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>10</cellX>
 		<cellY>7</cellY>
 		<tileType>2</tileType>
@@ -3318,7 +3318,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>11</cellX>
 		<cellY>3</cellY>
 		<tileType>2</tileType>
@@ -3342,7 +3342,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>11</cellX>
 		<cellY>7</cellY>
 		<tileType>2</tileType>
@@ -3912,7 +3912,7 @@
 		<tileType>2</tileType>
 	</tile>
 	<tile>
-		<tileTexture>0</tileTexture>
+		<tileTexture>1</tileTexture>
 		<cellX>13</cellX>
 		<cellY>2</cellY>
 		<tileType>2</tileType>
@@ -15001,7 +15001,7 @@
 	</tile>
 </map>
 <info>
-	<name>tmm</name>
+	<name>bruh</name>
 	<tileSet>cs2dnorm</tileSet>
 	<mapLimitX>50</mapLimitX>
 	<mapLimitY>50</mapLimitY>

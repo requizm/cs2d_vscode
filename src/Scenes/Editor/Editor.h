@@ -2,30 +2,14 @@
 #define EDITOR_H
 
 #include <vector>
-#include "../Models/UI/Panel.h"
-#include "../Models/UI/TextBox.h"
-#include "../Models/UI/RadioButton.h"
-#include "../Models/Camera.h"
-#include "../Models/Tile.h"
+#include "../../Models/UI/Panel.h"
+#include "../../Models/UI/TextBox.h"
+#include "../../Models/UI/RadioButton.h"
+#include "../../Models/Camera.h"
+#include "../../Models/Tile.h"
+#include "SaveLoadSystem.h"
+#include "NewMapSystem.h"
 
-struct ButtonTile
-{
-	Button button;
-	bool exist;
-	Vector2<int> cell;
-	ButtonTile(Vector2<int> cell)
-	{
-		this->cell = cell;
-		this->exist = false;
-	}
-
-	ButtonTile(Button &button, Vector2<int> cell)
-	{
-		this->button = button;
-		this->cell = cell;
-		this->exist = true;
-	}
-};
 
 class Editor
 {
@@ -44,15 +28,6 @@ public:
 	void SetEnable(const bool value);
 
 private:
-	void SaveMap();
-	void B_SaveMap();
-
-	void NewMap(std::string tileSet, Vector2<int> mapSize);
-	bool B_NewMap();
-
-	void LoadMap(std::string mapPath);
-	void B_LoadMap();
-
 	void SelectedRbChanged();
 
 	std::shared_ptr<TextRenderer> textRenderer;
@@ -67,18 +42,9 @@ private:
 	std::shared_ptr<Panel> buildPanel;
 	std::shared_ptr<Panel> tilePanel;
 
-	std::shared_ptr<Panel> newPanel;
+	NewMapSystem NewMap;
 
-	std::shared_ptr<Panel> loadPanel, load_mapsPanel;
-	std::shared_ptr<Button> b_map_load;
-	std::shared_ptr<TextBox> t_load;
-
-	std::shared_ptr<Panel> savePanel, save_mapsPanel;
-	std::shared_ptr<Button> b_map_save;
-	std::shared_ptr<TextBox> t_save;
-
-	std::vector<std::shared_ptr<Button>> mapsUI;
-	int selectedMap = -1;
+	SaveLoadSystem SaveLoad;
 
 	std::shared_ptr<RadioButton> radioButton;
 
@@ -102,10 +68,8 @@ private:
 	std::shared_ptr<Panel> tilePropertiesPanel;
 	std::shared_ptr<Button> b_tileProperties;
 
-	std::shared_ptr<Label> l_tile, l_mapSize, l_x;
-	std::shared_ptr<TextBox> t_tile, t_mapSizeX, t_mapSizeY;
-	std::shared_ptr<Button> b_okey, b_cancel;
-	std::vector<std::string> maps;
+	std::shared_ptr<Button> b_cancel;
+
 	std::string currentTileSet;
 	std::string currentName;
 

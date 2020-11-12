@@ -23,6 +23,20 @@ void Logger::DebugLog(const std::string &msg)
 
     std::cout << "time: " << time << "message: " << msg << "\n\n\n";
 }
+/*
+void Logger::DebugLog(bool msg)
+{
+    auto start = std::chrono::system_clock::now();
+    // Some computation here
+    auto end = std::chrono::system_clock::now();
+
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+    char *time = std::ctime(&end_time);
+
+    std::string res = msg ? "true" : "false";
+
+    std::cout << "time: " << time << "message: " << res << "\n\n\n";
+}*/
 
 void Logger::WriteLog(const std::string &msg)
 {

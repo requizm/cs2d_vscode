@@ -46,3 +46,7 @@ github_deploy_key
 github_deploy_key.pub
 
 log.txt
+
+*.trace
+
+bin/glewinfo.txt

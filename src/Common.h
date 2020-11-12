@@ -70,7 +70,10 @@
 
 #include "Scenes/StartGame.cpp"
 #include "Scenes/Menu.cpp"
-#include "Scenes/Editor.cpp"
+#include "Scenes/Editor/Editor.cpp"
+#include "Scenes/Editor/SaveLoadSystem.cpp"
+#include "Scenes/Editor/NewMapSystem.cpp"
+#include "Scenes/Editor/ButtonTile.cpp"
 
 #include "Game.cpp"
 

@@ -12,7 +12,7 @@
 #include "Managers/ResourceManager.h"
 #include "Others/Game_Parameters.h"
 #include "Scenes/Menu.h"
-#include "Scenes/Editor.h"
+#include "Scenes/Editor/Editor.h"
 
 class Game
 {
