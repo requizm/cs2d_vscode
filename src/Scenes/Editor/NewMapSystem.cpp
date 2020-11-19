@@ -34,6 +34,11 @@ bool NewMapSystem::isEditMode()
     return t_mapSizeX->editMode || t_mapSizeY->editMode || t_tile->editMode;
 }
 
+bool NewMapSystem::isMouseHover()
+{
+    return newPanel->isMouseHover(false);
+}
+
 NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<float> &pos, bool &fSelect,
                                   Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
                                   std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell)

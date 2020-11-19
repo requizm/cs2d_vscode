@@ -74,6 +74,7 @@
 #include "Scenes/Editor/SaveLoadSystem.cpp"
 #include "Scenes/Editor/NewMapSystem.cpp"
 #include "Scenes/Editor/ButtonTile.cpp"
+#include "Scenes/Editor/Entities/Env_Item.cpp"
 
 #include "Game.cpp"
 

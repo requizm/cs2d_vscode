@@ -9,6 +9,7 @@
 #include "../../Models/Tile.h"
 #include "SaveLoadSystem.h"
 #include "NewMapSystem.h"
+#include "Entities/Env_Item.h"
 
 
 class Editor
@@ -75,5 +76,7 @@ private:
 
 	Vector3<float> cell_yellow;
 	Vector3<float> mouse_yellow;
+
+	Env_Item item_0;
 };
 #endif

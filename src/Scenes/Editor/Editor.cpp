@@ -180,6 +180,9 @@ void Editor::Start()
 	this->SaveLoad.b_map_save->setOutlineColor(Vector3<float>(1.0F));
 	this->SaveLoad.b_map_save->setParent(SaveLoad.savePanel.get());
 
+	//env_item
+
+
 	//tile properties
 	this->tilePropertiesPanel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Tile Properties", Vector2<float>(400, 400), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
 	this->tilePropertiesPanel->setMovable(false);
@@ -205,8 +208,7 @@ void Editor::Start()
 	std::function<void()> t = std::bind(&Editor::SelectedRbChanged, this);
 	this->radioButton->AddListener(t);
 
-	tiles.clear();
-	SaveLoad.Start();
+	item_0 = Env_Item(3);
 }
 
 void Editor::OnEnable()
@@ -238,13 +240,9 @@ void Editor::SetEnable(const bool value)
 void Editor::Update(const float dt)
 {
 	this->dt += dt;
-
 	this->buildPanel->Update(dt);
-
 	this->NewMap.Update(dt);
-
 	this->tilePropertiesPanel->Update(dt);
-
 	SaveLoad.Update(dt);
 
 	if (InputManager::scrollYPressed && tilePanel->isScrollable())
@@ -266,7 +264,6 @@ void Editor::Update(const float dt)
 	}
 }
 
-bool ona = false;
 void Editor::ProcessInput(const float dt)
 {
 	this->buildPanel->ProcessInput();
@@ -334,7 +331,7 @@ void Editor::ProcessInput(const float dt)
 	if (NewMap.b_okey->isMouseDown())
 	{
 		NewMapResult r = NewMap.B_NewMap(this->dt, position, firstSelect, mapLimit, texture,
-								   tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
+										 tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
 
 		if (!r.tiles.empty() && !r.tilesUI.empty())
 		{
@@ -430,13 +427,14 @@ void Editor::Render(const float dt)
 
 		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1.cell), Vector2<float>(Game_Parameters::SIZE_TILE), cell_yellow);
 
-		if (!f && ms == tile_1.cell && !NewMap.newPanel->isMouseHover(false) && !buildPanel->isMouseHover(false) && !SaveLoad.loadPanel->isMouseHover(false) && !SaveLoad.savePanel->isMouseHover(false))
+		if (!f && ms == tile_1.cell && !NewMap.isMouseHover() && !buildPanel->isMouseHover(false) && !SaveLoad.isMouseHover())
 		{
 			f = true;
 			Vector2<float> pos = Utils::CellToPosition(tile_1.cell);
 			squareRenderer.world_RenderEmptySquareWithLine(pos, Vector2<float>(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
 		}
 	}
+	item_0.Render(worldRenderer, menuRenderer, squareRenderer, this->dt);
 	//ui
 	this->buildPanel->Draw(menuRenderer, squareRenderer);
 
@@ -450,10 +448,6 @@ void Editor::Render(const float dt)
 	{
 		for (auto &tile : tilesUI)
 		{
-			if(ona)
-			{
-				//Logger::DebugLog("a");
-			}
 			if (firstSelect && selectedTile->GetID() == tile->getTile()->GetID())
 			{
 				tile->Draw(menuRenderer, squareRenderer, 0.3F, this->dt, true);
@@ -464,10 +458,6 @@ void Editor::Render(const float dt)
 			}
 			else
 			{
-				if (ona)
-				{
-					//Logger::DebugLog("a");
-				}
 				tile->Draw(menuRenderer, squareRenderer);
 			}
 		}

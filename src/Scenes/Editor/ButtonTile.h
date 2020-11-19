@@ -2,6 +2,7 @@
 #define BUTTONTILE_H
 
 #include "../../Models/UI/Button.h"
+#include "Entities/Env_Item.h"
 
 struct ButtonTile
 {

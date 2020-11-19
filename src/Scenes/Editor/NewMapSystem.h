@@ -25,6 +25,7 @@ public:
 
     bool isPressedOrHover();
     bool isEditMode();
+    bool isMouseHover();
 
     NewMapResult NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<float> &pos, bool &fSelect,
                         Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,

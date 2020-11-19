@@ -16,10 +16,14 @@ void main()
 {	
 	if(overrideColor)
 	{
-		vec4 texColor = texture(image, TexCoords);
-		if(texColor.w == 1.0)
+		vec4 texColor = texture(image, TexCoords) * vec4(uniformColor, 1);
+		if(selectedTile)
 		{
-			texColor = vec4(uniformColor, 1.0);
+			texColor.xyz += texColor.xyz * (1.0 - sin(time * 7.0));
+		}
+		else
+		{
+			texColor.xyz += (texColor.xyz * shineFactor);
 		}
 		color = vec4(texColor);
 	}

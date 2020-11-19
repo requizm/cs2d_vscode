@@ -47,7 +47,7 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, V
 }
 
 void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, Vector3<float> color, bool drawCenter,
-								GLfloat rotate, GLfloat shineFactor, bool isSelected)
+								GLfloat rotate, GLfloat shineFactor, bool isSelected, float time)
 {
 	//rotate = rotate * static_cast<GLfloat>(PI) / static_cast<GLfloat>(180);
 	// Prepare transformations
@@ -66,6 +66,12 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, V
 	this->shader.SetMatrix4("model", model);
 	this->shader.SetInteger("overrideColor", 1);
 	this->shader.SetVector3f("uniformColor", color);
+	this->shader.SetFloat("shineFactor", shineFactor);
+	this->shader.SetInteger("selectedTile", isSelected);
+	if (isSelected)
+	{
+		this->shader.SetFloat("time", time);
+	}
 	//this->shader.SetInteger("selectedTile", isSelected); // gerek yok, buraya girmeyecek bile
 	//this->shader.SetFloat("shineFactor", shineFactor); // gerek yok, buraya girmeyecek bile
 	glActiveTexture(GL_TEXTURE0);

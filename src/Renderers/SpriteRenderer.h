@@ -29,7 +29,7 @@ public:
 	GLfloat shineFactor = 0.0F, bool isSelected = false, GLfloat time = 0.0F);
 	
 	void DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, Vector3<float> color, bool drawCenter = false, 
-	GLfloat rotate = 0.0F, GLfloat shineFactor = 0.0F, bool isSelected = false);
+	GLfloat rotate = 0.0F, GLfloat shineFactor = 0.0F, bool isSelected = false, float time = 0.0F);
 
 	void DrawSprite(const Sprite &sprite, Matrix4<float> model);
 	void SetProjection(Matrix4<float> projection);

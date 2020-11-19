@@ -15,10 +15,6 @@ SaveLoadSystem::~SaveLoadSystem()
 
 void SaveLoadSystem::Start()
 {
-    save_mapsUI.clear();
-    load_mapsUI.clear();
-    load_mapsPanel->childs.clear();
-    save_mapsPanel->childs.clear();
 }
 void SaveLoadSystem::ProcessInput()
 {
@@ -371,6 +367,11 @@ bool SaveLoadSystem::isPressedOrHover()
 bool SaveLoadSystem::isEditMode()
 {
     return t_load->editMode || t_save->editMode;
+}
+
+bool SaveLoadSystem::isMouseHover()
+{
+    return loadPanel->isMouseHover(false) || savePanel->isMouseHover(false);
 }
 
 std::vector<std::string> SaveLoadSystem::getMapNames()

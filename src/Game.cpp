@@ -160,6 +160,7 @@ void Game::initTextures() const
 	ResourceManager::LoadTexture("../resources/textures/weapons/ak47_d.png", GL_TRUE, "ak47_d");
 	ResourceManager::LoadTexture("../resources/textures/weapons/famas.png", GL_TRUE, "famas");
 	ResourceManager::LoadTexture("../resources/textures/weapons/famas_d.png", GL_TRUE, "famas_d");
+	ResourceManager::LoadTexture("../resources/textures/bulb.png", GL_TRUE, "bulb");
 	/*ResourceManager::LoadTexture("../resources/textures/weapons/deagle.png", GL_TRUE, "deagle");
 	ResourceManager::LoadTexture("../resources/textures/weapons/deagle_d.png", GL_TRUE, "deagle_d");
 	ResourceManager::LoadTexture("../resources/textures/weapons/fiveseven.png", GL_TRUE, "fiveseven");

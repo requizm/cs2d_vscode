@@ -39,6 +39,7 @@ public:
     //both
     bool isPressedOrHover();
     bool isEditMode();
+    bool isMouseHover();
 
 private:
     std::vector<std::string> getMapNames();
