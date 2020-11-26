@@ -20,7 +20,7 @@ public:
 
     void Start();
     void ProcessInput();
-    void Update(const float dt);
+    void Update();
     void Render(SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer);
 
     bool isPressedOrHover();

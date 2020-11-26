@@ -14,7 +14,7 @@ public:
 	TextBox();
 	TextBox(Vector2<float> position, TextRenderer &renderer, Vector2<float> size, bool isBackGround = false, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F));
 
-	void Update(const float dt) override;
+	void Update() override;
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
 
 	void OnEnable() override;
@@ -45,7 +45,7 @@ private:
 	Vector3<float> currentBorderColor, hoverBorderColor, clickBorderColor, borderColor;
 	bool click = false;
 
-	void InputText(const float dt);
+	void InputText();
 };
 
 #endif //TEXTBOX_H

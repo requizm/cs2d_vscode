@@ -87,6 +87,9 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Matrix4<float> model)
 {
 	this->shader.Use();
 	this->shader.SetMatrix4("model", model);
+	this->shader.SetInteger("overrideColor", false);
+	this->shader.SetFloat("shineFactor", 0);
+	this->shader.SetInteger("selectedTile", false);
 	glActiveTexture(GL_TEXTURE0);
 	sprite.texture.Bind();
 

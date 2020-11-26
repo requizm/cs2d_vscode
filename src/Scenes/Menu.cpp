@@ -59,16 +59,16 @@ void Menu::SetEnable(const bool value)
 		OnDisable();
 }
 
-void Menu::Update(const float dt)
+void Menu::Update()
 {
-	l_options->Update(dt);
-	l_console->Update(dt);
-	l_editor->Update(dt);
-	l_newgame->Update(dt);
-	panel->Update(dt);
+	l_options->Update();
+	l_console->Update();
+	l_editor->Update();
+	l_newgame->Update();
+	panel->Update();
 }
 
-void Menu::ProcessInput(const float dt)
+void Menu::ProcessInput()
 {
 	l_options->ProcessInput();
 	l_console->ProcessInput();
@@ -92,7 +92,7 @@ void Menu::ProcessInput(const float dt)
 	}
 }
 
-void Menu::Render(const float dt)
+void Menu::Render()
 {
 	for (int i = 0; i < 4; i++)
 	{

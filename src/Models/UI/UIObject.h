@@ -32,7 +32,7 @@ public:
 	UIObject(Vector2<float> position, float scale, UIObjectType type);
 	virtual ~UIObject();
 
-	virtual void Update(const float dt);
+	virtual void Update();
 	virtual void OnEnable();
 	virtual void OnDisable();
 	virtual void ProcessInput();

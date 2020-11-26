@@ -16,7 +16,7 @@ Editor::Editor()
 	this->maxCellInRow = 0;
 	this->position = Vector2(0.0F);
 	this->firstSelect = false;
-	this->dt = 0.0F;
+	this->time = 0.0F;
 	mapLimit = Vector2<int>(0);
 	this->texture = Vector2<int>(0);
 }
@@ -31,7 +31,7 @@ Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRe
 	this->maxCellInRow = 0;
 	this->position = Vector2(0.0F);
 	this->firstSelect = false;
-	this->dt = 0.0F;
+	this->time = 0.0F;
 	mapLimit = Vector2<int>(0);
 	this->texture = Vector2<int>(0);
 
@@ -103,6 +103,28 @@ void Editor::Start()
 	b_save.setMouseClickColor(Vector3<float>(0.30F));
 	b_save.setMouseHoverColor(Vector3<float>(0.30F));
 	b_save.setParent(controlPanel.get());
+
+	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 16, 16, 16); //save_sprite
+	pos = Vector2<float>(0.0F, 25.0F);
+	b_tiles = Button(sprite, pos, Vector2<float>(16.0F));
+	b_tiles.setOutline(true);
+	b_tiles.setOutlineColor(Vector3<float>(0.45));
+	b_tiles.setMargin(Vector2<float>(8, 8));
+	b_tiles.setButtonColor(Vector3<float>(0.15F));
+	b_tiles.setMouseClickColor(Vector3<float>(0.30F));
+	b_tiles.setMouseHoverColor(Vector3<float>(0.30F));
+	b_tiles.setParent(controlPanel.get());
+
+	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 16, 16, 16); //save_sprite
+	pos = Vector2<float>(30.0F, 25.0F);
+	b_objects = Button(sprite, pos, Vector2<float>(16.0F));
+	b_objects.setOutline(true);
+	b_objects.setOutlineColor(Vector3<float>(0.45));
+	b_objects.setMargin(Vector2<float>(8, 8));
+	b_objects.setButtonColor(Vector3<float>(0.15F));
+	b_objects.setMouseClickColor(Vector3<float>(0.30F));
+	b_objects.setMouseHoverColor(Vector3<float>(0.30F));
+	b_objects.setParent(controlPanel.get());
 
 	//yeni harita paneli
 	this->NewMap.newPanel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", Vector2<float>(400, 135), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
@@ -182,7 +204,6 @@ void Editor::Start()
 
 	//env_item
 
-
 	//tile properties
 	this->tilePropertiesPanel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Tile Properties", Vector2<float>(400, 400), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
 	this->tilePropertiesPanel->setMovable(false);
@@ -209,13 +230,25 @@ void Editor::Start()
 	this->radioButton->AddListener(t);
 
 	item_0 = Env_Item(3);
+	item_0.p_panel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Entity Options", Vector2<float>(400, 200), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
+	item_0.p_panel->setMovable(false);
+	item_0.p_panel->setEnable(true);
+
+	item_0.b_okay = std::make_shared<Button>("Okay", Vector2<float>(50.0F, 105.0F), Vector2<float>(60.0F, 20.0F), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+	item_0.b_okay->setMouseClickColor(Vector3<float>(0.30F));
+	item_0.b_okay->setMouseHoverColor(Vector3<float>(0.30F));
+	item_0.b_okay->setLabelMouseHoverColor(Vector3<float>(0.58F));
+	item_0.b_okay->setLabelClickColor(Vector3<float>(1.0F));
+	item_0.b_okay->setOutline(true);
+	item_0.b_okay->setOutlineColor(Vector3<float>(1.0F));
+	item_0.b_okay->setParent(item_0.p_panel.get());
 }
 
 void Editor::OnEnable()
 {
 	currentTileSet = "cs2dnorm";
 	Start();
-	NewMapResult r = NewMap.NewMap("cs2dnorm", Vector2<int>(50), this->dt, position, firstSelect, mapLimit, texture,
+	NewMapResult r = NewMap.NewMap("cs2dnorm", Vector2<int>(50), this->time, position, firstSelect, mapLimit, texture,
 								   tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
 	tiles = r.tiles;
 	tilesUI = r.tilesUI;
@@ -237,13 +270,14 @@ void Editor::SetEnable(const bool value)
 		OnDisable();
 }
 
-void Editor::Update(const float dt)
+void Editor::Update()
 {
-	this->dt += dt;
-	this->buildPanel->Update(dt);
-	this->NewMap.Update(dt);
-	this->tilePropertiesPanel->Update(dt);
-	SaveLoad.Update(dt);
+	this->time += Timer::DeltaTime;
+	this->buildPanel->Update();
+	this->NewMap.Update();
+	this->tilePropertiesPanel->Update();
+	SaveLoad.Update();
+	item_0.p_panel->Update();
 
 	if (InputManager::scrollYPressed && tilePanel->isScrollable())
 	{
@@ -264,12 +298,13 @@ void Editor::Update(const float dt)
 	}
 }
 
-void Editor::ProcessInput(const float dt)
+void Editor::ProcessInput()
 {
 	this->buildPanel->ProcessInput();
 	this->NewMap.ProcessInput();
 	this->tilePropertiesPanel->ProcessInput();
 	SaveLoad.ProcessInput();
+	item_0.p_panel->ProcessInput();
 
 	if (!tilesUI.empty())
 	{
@@ -307,19 +342,19 @@ void Editor::ProcessInput(const float dt)
 	{
 		if (InputManager::isKey(GLFW_KEY_W))
 		{
-			this->position = Vector2(this->position.x, this->position.y - Game_Parameters::SCREEN_HEIGHT * dt);
+			this->position = Vector2(this->position.x, this->position.y - Game_Parameters::SCREEN_HEIGHT * Timer::DeltaTime);
 		}
 		if (InputManager::isKey(GLFW_KEY_S))
 		{
-			this->position = Vector2(this->position.x, this->position.y + Game_Parameters::SCREEN_HEIGHT * dt);
+			this->position = Vector2(this->position.x, this->position.y + Game_Parameters::SCREEN_HEIGHT * Timer::DeltaTime);
 		}
 		if (InputManager::isKey(GLFW_KEY_A))
 		{
-			this->position = Vector2(this->position.x - Game_Parameters::SCREEN_HEIGHT * dt, this->position.y);
+			this->position = Vector2(this->position.x - Game_Parameters::SCREEN_HEIGHT * Timer::DeltaTime, this->position.y);
 		}
 		if (InputManager::isKey(GLFW_KEY_D))
 		{
-			this->position = Vector2(this->position.x + Game_Parameters::SCREEN_HEIGHT * dt, this->position.y);
+			this->position = Vector2(this->position.x + Game_Parameters::SCREEN_HEIGHT * Timer::DeltaTime, this->position.y);
 		}
 	}
 
@@ -330,7 +365,7 @@ void Editor::ProcessInput(const float dt)
 
 	if (NewMap.b_okey->isMouseDown())
 	{
-		NewMapResult r = NewMap.B_NewMap(this->dt, position, firstSelect, mapLimit, texture,
+		NewMapResult r = NewMap.B_NewMap(this->time, position, firstSelect, mapLimit, texture,
 										 tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
 
 		if (!r.tiles.empty() && !r.tilesUI.empty())
@@ -368,7 +403,7 @@ void Editor::ProcessInput(const float dt)
 
 	if (SaveLoad.b_map_load->isMouseDown())
 	{
-		this->dt = 0.0F;
+		this->time = 0.0F;
 		this->position = Vector2<float>(0.0F - buildPanel->getSize().x, 0.0F);
 		firstSelect = false;
 		tiles = SaveLoad.LoadMap(SaveLoad.t_load->getText(), mapLimit, currentTileSet);
@@ -412,7 +447,7 @@ void Editor::ProcessInput(const float dt)
 	}
 }
 
-void Editor::Render(const float dt)
+void Editor::Render()
 {
 	camera->setPosition(position);
 
@@ -434,7 +469,7 @@ void Editor::Render(const float dt)
 			squareRenderer.world_RenderEmptySquareWithLine(pos, Vector2<float>(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
 		}
 	}
-	item_0.Render(worldRenderer, menuRenderer, squareRenderer, this->dt);
+	item_0.Render(worldRenderer, menuRenderer, squareRenderer, this->time);
 	//ui
 	this->buildPanel->Draw(menuRenderer, squareRenderer);
 
@@ -450,11 +485,11 @@ void Editor::Render(const float dt)
 		{
 			if (firstSelect && selectedTile->GetID() == tile->getTile()->GetID())
 			{
-				tile->Draw(menuRenderer, squareRenderer, 0.3F, this->dt, true);
+				tile->Draw(menuRenderer, squareRenderer, 0.3F, true, this->time);
 			}
 			else if (tile->isMouseHover())
 			{
-				tile->Draw(menuRenderer, squareRenderer, 0.3F, this->dt, false);
+				tile->Draw(menuRenderer, squareRenderer, 0.3F, false, this->time);
 			}
 			else
 			{

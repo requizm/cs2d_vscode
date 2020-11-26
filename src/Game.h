@@ -22,9 +22,9 @@ public:
 	virtual ~Game();
 
 	void Init();
-	void Update(const float dt);
-	void Render(const float dt);
-	void ProcessInput(const float dt);
+	void Update();
+	void Render();
+	void ProcessInput();
 	void NewGame();
 
 	static void SetGameState(GameState state);

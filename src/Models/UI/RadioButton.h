@@ -12,7 +12,7 @@ public:
     ~RadioButtonElement();
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
-    void Update(const float dt) override;
+    void Update() override;
     void ProcessInput() override;
 
     Vector2<float> getPosition() override;
@@ -73,7 +73,7 @@ public:
     void AddElement(const std::string &text, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
-    void Update(const float dt);
+    void Update();
     void ProcessInput();
 
     void Select(int index);

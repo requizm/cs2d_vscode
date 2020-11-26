@@ -4,6 +4,7 @@
 #include "Managers/ResourceManager.h"
 #include "Others/Game_Parameters.h"
 #include "Others/Logger.h"
+#include "Others/Timer.h"
 #include "Managers/InputManager.h"
 #include <memory>
 #include <windows.h>
@@ -117,7 +118,6 @@ int main(int argc, char *argv[])
 	}
 #pragma endregion
 	// DeltaTime variables
-	float deltaTime = 0.0F;
 	float lastFrame = 0.0F;
 
 	int nbFrames = 0;
@@ -125,8 +125,9 @@ int main(int argc, char *argv[])
 	while (!glfwWindowShouldClose(window))
 	{
 		const float currentFrame = static_cast<float>(glfwGetTime());
-		deltaTime = currentFrame - lastFrame;
+		Timer::DeltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
+
 		glfwPollEvents();
 		/*time += deltaTime;
 		nbFrames++;
@@ -323,17 +324,17 @@ int main(int argc, char *argv[])
 
 #pragma endregion
 		// Manage user input
-		cs2d->ProcessInput(deltaTime);
+		cs2d->ProcessInput();
 		//Logger::DebugLog(std::to_string(Game_Parameters::SCREEN_WIDTH));
 		//Logger::DebugLog(std::to_string(Game_Parameters::SCREEN_HEIGHT));
 		// Update Game state
-		cs2d->Update(deltaTime);
+		cs2d->Update();
 
 		// Render
 		glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		cs2d->Render(deltaTime);
+		cs2d->Render();
 
 #pragma region input_1
 		//mouse

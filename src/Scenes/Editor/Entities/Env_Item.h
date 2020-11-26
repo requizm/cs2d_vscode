@@ -19,8 +19,8 @@ public:
     Sprite sp;
 
     void ProcessInput();
-    void Update(const float dt);
-    void Render(SpriteRenderer &worldRenderer, SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer, float dt);
+    void Update();
+    void Render(SpriteRenderer &worldRenderer, SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer, float time);
 
     int getId();
     void SetId(int id);

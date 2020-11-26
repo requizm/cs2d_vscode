@@ -18,9 +18,9 @@ TextBox::TextBox(Vector2<float> position, TextRenderer &renderer, Vector2<float>
 	square = Square(true);
 }
 
-void TextBox::Update(const float dt)
+void TextBox::Update()
 {
-	InputText(dt);
+	InputText();
 }
 
 void TextBox::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
@@ -129,7 +129,7 @@ bool TextBox::isMousePressM(const int key)
 	return false;
 }
 
-void TextBox::InputText(const float dt)
+void TextBox::InputText()
 {
 	if (editable && isEnable())
 	{
@@ -143,7 +143,7 @@ void TextBox::InputText(const float dt)
 
 		if (editMode)
 		{
-			time += dt;
+			time += Timer::DeltaTime;
 			if (InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT) && !isMouseHover())
 			{
 				this->labelCurrentColor = labelColor;

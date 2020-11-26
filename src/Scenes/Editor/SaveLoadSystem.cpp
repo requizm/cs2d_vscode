@@ -80,23 +80,23 @@ void SaveLoadSystem::ProcessInput()
     }
 }
 
-void SaveLoadSystem::Update(const float dt)
+void SaveLoadSystem::Update()
 {
-    savePanel->Update(dt);
-    loadPanel->Update(dt);
+    savePanel->Update();
+    loadPanel->Update();
 
     if (savePanel->isEnable() && !save_mapsUI.empty())
     {
         for (std::vector<int>::size_type i = 0; i != save_mapsUI.size(); i++)
         {
-            save_mapsUI[i]->Update(dt);
+            save_mapsUI[i]->Update();
         }
     }
     if (loadPanel->isEnable() && !load_mapsUI.empty())
     {
         for (std::vector<int>::size_type i = 0; i != load_mapsUI.size(); i++)
         {
-            load_mapsUI[i]->Update(dt);
+            load_mapsUI[i]->Update();
         }
     }
     if (InputManager::scrollYPressed)

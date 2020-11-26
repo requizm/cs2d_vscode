@@ -84,7 +84,7 @@ public:
 
 	void Draw(SpriteRenderer &renderer) override;
 	void DrawModel(SpriteRenderer &renderer) override;
-	void Update(float dt);
+	void Update();
 
 	void SetParent(GameObject *go) override;
 	void RemoveParent() override;

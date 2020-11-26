@@ -16,9 +16,9 @@ void NewMapSystem::ProcessInput()
 {
     newPanel->ProcessInput();
 }
-void NewMapSystem::Update(const float dt)
+void NewMapSystem::Update()
 {
-    newPanel->Update(dt);
+    newPanel->Update();
 }
 void NewMapSystem::Render(SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer)
 {

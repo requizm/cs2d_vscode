@@ -99,7 +99,7 @@ UIObject::UIObject(Vector2<float> position, float scale, UIObjectType type) : en
 UIObject::~UIObject() = default;
 
 bool onenabletrigger = false;
-void UIObject::Update(const float dt)
+void UIObject::Update()
 {
 }
 

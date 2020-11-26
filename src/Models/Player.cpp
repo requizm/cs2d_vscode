@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../Managers/InputManager.h"
 #include "../Others/Logger.h"
+#include "../Others/Timer.h"
 
 #define PI 3.14159265
 
@@ -16,7 +17,7 @@ void Player::DrawModel(SpriteRenderer &renderer)
 
 Player::~Player() = default;
 
-void Player::Update(float dt)
+void Player::Update()
 {
 	if (lastMousePos != InputManager::mousePos)
 	{
@@ -28,29 +29,29 @@ void Player::Update(float dt)
 	}
 }
 
-void Player::ProcessInput(float dt)
+void Player::ProcessInput()
 {
-	ControllerInput(dt);
+	ControllerInput();
 	SlotInput();
 }
 
-void Player::ControllerInput(float dt)
+void Player::ControllerInput()
 {
 	if (InputManager::isKey(GLFW_KEY_W))
 	{
-		this->SetPosition(Vector2<float>(this->GetPosition().x, this->GetPosition().y - this->velocity * dt));
+		this->SetPosition(Vector2<float>(this->GetPosition().x, this->GetPosition().y - this->velocity * Timer::DeltaTime));
 	}
 	if (InputManager::isKey(GLFW_KEY_S))
 	{
-		this->SetPosition(Vector2<float>(this->GetPosition().x, this->GetPosition().y + this->velocity * dt));
+		this->SetPosition(Vector2<float>(this->GetPosition().x, this->GetPosition().y + this->velocity * Timer::DeltaTime));
 	}
 	if (InputManager::isKey(GLFW_KEY_A))
 	{
-		this->SetPosition(Vector2<float>(this->GetPosition().x - this->velocity * dt, this->GetPosition().y));
+		this->SetPosition(Vector2<float>(this->GetPosition().x - this->velocity * Timer::DeltaTime, this->GetPosition().y));
 	}
 	if (InputManager::isKey(GLFW_KEY_D))
 	{
-		this->SetPosition(Vector2<float>(this->GetPosition().x + this->velocity * dt, this->GetPosition().y));
+		this->SetPosition(Vector2<float>(this->GetPosition().x + this->velocity * Timer::DeltaTime, this->GetPosition().y));
 	}
 }
 void Player::SlotInput()

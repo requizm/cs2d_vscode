@@ -19,9 +19,9 @@ public:
 	void Start();
 	void OnEnable();
 	void OnDisable();
-	void Update(const float dt);
-	void ProcessInput(const float dt);
-	void Render(const float dt);
+	void Update();
+	void ProcessInput();
+	void Render();
 	
 	void SetEnable(const bool value);
 private:

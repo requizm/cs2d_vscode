@@ -49,7 +49,7 @@ void Label::DrawForButton(const bool center)
 		this->rend->RenderText(text, getPositionForButton(center), scale, labelCurrentColor);
 }
 
-void Label::Update(const float dt)
+void Label::Update()
 {
 	if (isEnable() && isMouseEvents())
 	{

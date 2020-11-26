@@ -105,13 +105,13 @@ void StartGame::SetEnable(const bool value)
 		OnDisable();
 }
 
-void StartGame::Update(const float dt)
+void StartGame::Update()
 {
-	player->Update(dt);
+	player->Update();
 	//player->DoCollision(weapons);
 }
 
-void StartGame::ProcessInput(const float dt)
+void StartGame::ProcessInput()
 {
 	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
 	{
@@ -128,10 +128,10 @@ void StartGame::ProcessInput(const float dt)
 	{
 		this->weapons.at(1).RemoveParent();
 	}
-	player->ProcessInput(dt);
+	player->ProcessInput();
 }
 
-void StartGame::Render(const float dt)
+void StartGame::Render()
 {
 	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
 	renderer.SetProjection(camera->cameraMatrix);

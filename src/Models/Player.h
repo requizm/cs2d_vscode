@@ -34,8 +34,8 @@ public:
 	void setIndex(int index);
 	void Draw(SpriteRenderer &renderer) override;
 	void DrawModel(SpriteRenderer &renderer) override;
-	void Update(float dt);
-	void ProcessInput(float dt);
+	void Update();
+	void ProcessInput();
 	void SetMap(Map *map);
 	void setSelectFalse();
 	void setVelocity(const float velocity);
@@ -61,7 +61,7 @@ private:
 	std::vector<Sprite> sprites;
 
 	void SlotInput();
-	void ControllerInput(float dt);
+	void ControllerInput();
 };
 
 #endif // !PLAYER_H

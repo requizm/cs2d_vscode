@@ -35,7 +35,7 @@ void Weapon::DrawModel(SpriteRenderer &renderer)
 	}
 }
 
-void Weapon::Update(float dt)
+void Weapon::Update()
 {
 	/*if (parent == nullptr && weaponType == WeaponType::MAIN)
 	{

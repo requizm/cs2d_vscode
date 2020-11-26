@@ -23,7 +23,7 @@ public:
 
 	virtual void Draw();
 
-	virtual void Update(const float dt);
+	virtual void Update();
 	virtual void ProcessInput();
 
 	virtual bool isMouseHover();

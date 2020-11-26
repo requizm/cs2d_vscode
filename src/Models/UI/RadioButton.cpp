@@ -22,7 +22,7 @@ void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &sq
     }
 }
 
-void RadioButtonElement::Update(const float dt)
+void RadioButtonElement::Update()
 {
     if (isMouseHover())
     {
@@ -219,14 +219,14 @@ void RadioButton::AddElement(const std::string &text, Vector3<float> buttonColor
     i = i + 1;
 }
 
-void RadioButton::Update(const float dt)
+void RadioButton::Update()
 {
     if (isEnable() && isMouseEvents())
     {
         int i = 0;
         for (auto &element : elements)
         {
-            element->Update(dt);
+            element->Update();
             if (element->isMouseDown())
             {
                 Select(i);

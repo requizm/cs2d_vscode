@@ -33,9 +33,9 @@ public:
 	/**
  	* Bu fonksiyon sadece editor'deki uiButton'lar icin kullanilacak!
  	*/
-	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, float dt, bool selected);
+	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, bool selected, float time);
 	void Draw() override;
-	void Update(const float dt) override;
+	void Update() override;
 	void ProcessInput() override;
 
 	Vector2<float> getPosition() override;

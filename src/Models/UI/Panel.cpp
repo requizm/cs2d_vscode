@@ -67,7 +67,7 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 int deltaX;
 int deltaY;
 bool click = false;
-void Panel::Update(const float dt)
+void Panel::Update()
 {
 	if (isEnable())
 	{
@@ -93,14 +93,14 @@ void Panel::Update(const float dt)
 		}
 		if (opttitles)
 		{
-			escapeButton.Update(dt);
+			escapeButton.Update();
 		}
 	}
 	for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
 	{
 		if (!(childs[i]->independent))
 		{
-			childs[i]->Update(dt);
+			childs[i]->Update();
 		}
 	}
 }

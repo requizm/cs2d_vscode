@@ -81,14 +81,14 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 	}
 }
 
-void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, float dt, bool selected)
+void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, bool selected, float time)
 {
 	if (isVisible() && isEnable() && isRenderable())
 	{
 		switch (type)
 		{
 		case ButtonType::TILE:
-			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize(), 0.0F, false, shine, selected, dt);
+			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize(), 0.0F, false, shine, selected, time);
 		}
 	}
 }
@@ -101,7 +101,7 @@ void Button::Draw()
 	}
 }
 
-void Button::Update(const float dt)
+void Button::Update()
 {
 
 	if (isEnable() && isMouseEvents())

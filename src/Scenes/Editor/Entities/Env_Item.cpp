@@ -9,6 +9,7 @@ Env_Item::Env_Item(int id)
 
 Env_Item::Env_Item()
 {
+
 }
 
 Env_Item::~Env_Item()
@@ -17,14 +18,16 @@ Env_Item::~Env_Item()
 
 void Env_Item::ProcessInput()
 {
+    p_panel->ProcessInput();
 }
-void Env_Item::Update(const float dt)
+void Env_Item::Update()
 {
+    p_panel->Update();
 }
-void Env_Item::Render(SpriteRenderer &worldRenderer, SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer, float dt)
+void Env_Item::Render(SpriteRenderer &worldRenderer, SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer, float time)
 {
     worldRenderer.DrawSprite(sp, Vector2<float>(Game_Parameters::SIZE_TILE / 2 - Game_Parameters::SIZE_TILE / 4), Vector2<float>(Game_Parameters::SIZE_TILE / 2),
-                             Vector3<float>(0.5F, 1.0F, 0.0F), false, 0.0F, 0.15F, true, dt);
+                             Vector3<float>(0.5F, 1.0F, 0.0F), false, 0.0F, 0.15F, true, time);
     p_panel->Draw(menuRenderer, squareRenderer);
 }
 

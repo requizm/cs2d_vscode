@@ -22,9 +22,9 @@ public:
 	void Start();
 	void OnEnable();
 	void OnDisable();
-	void Update(const float dt);
-	void ProcessInput(const float dt);
-	void Render(const float dt);
+	void Update();
+	void ProcessInput();
+	void Render();
 
 	void SetEnable(const bool value);
 
@@ -62,9 +62,9 @@ private:
 	std::vector<ButtonTile> tiles;
 
 	bool enable = false;
-	float dt = 0;
+	float time = 0;
 
-	Button b_save, b_new, b_load;
+	Button b_save, b_new, b_load, b_objects, b_tiles;
 
 	std::shared_ptr<Panel> tilePropertiesPanel;
 	std::shared_ptr<Button> b_tileProperties;

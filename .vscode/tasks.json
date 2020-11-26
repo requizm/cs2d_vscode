@@ -19,7 +19,7 @@
                 "-lglfw3",
                 "-lopengl32",
                 "-lfreetype",
-                "-Wall",
+                "-w",
                 "-std=c++17"
             ],
             "group": {

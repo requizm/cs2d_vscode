@@ -44,50 +44,50 @@ void Game::Init()
 	NewGame();
 }
 
-void Game::Update(float dt)
+void Game::Update()
 {
 	switch (Game::state)
 	{
 	case GameState::MENU:
-		Game::menu.Update(dt);
+		Game::menu.Update();
 		break;
 	case GameState::EDITOR:
-		Game::editor.Update(dt);
+		Game::editor.Update();
 		break;
 	case GameState::INGAME:
-		Game::scene.Update(dt);
+		Game::scene.Update();
 		break;
 	}
 }
 
-void Game::ProcessInput(float dt)
+void Game::ProcessInput()
 {
 	switch (Game::state)
 	{
 	case GameState::MENU:
-		Game::menu.ProcessInput(dt);
+		Game::menu.ProcessInput();
 		break;
 	case GameState::EDITOR:
-		Game::editor.ProcessInput(dt);
+		Game::editor.ProcessInput();
 		break;
 	case GameState::INGAME:
-		Game::scene.ProcessInput(dt);
+		Game::scene.ProcessInput();
 		break;
 	}
 }
 
-void Game::Render(const float dt)
+void Game::Render()
 {
 	switch (Game::state)
 	{
 	case GameState::MENU:
-		Game::menu.Render(dt);
+		Game::menu.Render();
 		break;
 	case GameState::EDITOR:
-		Game::editor.Render(dt);
+		Game::editor.Render();
 		break;
 	case GameState::INGAME:
-		Game::scene.Render(dt);
+		Game::scene.Render();
 		break;
 	}
 	menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos, Vector2<float>(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
