@@ -1,11 +1,11 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "Game.h"
-#include "Managers/ResourceManager.h"
-#include "Others/Game_Parameters.h"
-#include "Others/Logger.h"
-#include "Others/Timer.h"
-#include "Managers/InputManager.h"
+#include "Game.hpp"
+#include "Managers/ResourceManager.hpp"
+#include "Others/Game_Parameters.hpp"
+#include "Others/Logger.hpp"
+#include "Others/Timer.hpp"
+#include "Managers/InputManager.hpp"
 #include <memory>
 #include <windows.h>
 

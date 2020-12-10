@@ -1,4 +1,4 @@
-#include "Mag.h"
+#include "Mag.hpp"
 
 void Mag::takeAmmo(const int value)
 {

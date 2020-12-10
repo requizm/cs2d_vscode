@@ -1,10 +1,10 @@
 #ifndef NEWMAPSYSTEM_H
 #define NEWMAPSYSTEM_H
 
-#include "../../Models/UI/Panel.h"
-#include "../../Models/UI/TextBox.h"
+#include "../../Models/UI/Panel.hpp"
+#include "../../Models/UI/TextBox.hpp"
 #include <memory>
-#include "ButtonTile.h"
+#include "ButtonTile.hpp"
 
 struct NewMapResult
 {

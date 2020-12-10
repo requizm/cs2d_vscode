@@ -1,5 +1,5 @@
-#include "NewMapSystem.h"
-#include "../../Others/Utils.h"
+#include "NewMapSystem.hpp"
+#include "../../Others/Utils.hpp"
 
 NewMapSystem::NewMapSystem(/* args */)
 {

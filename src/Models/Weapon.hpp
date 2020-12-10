@@ -1,10 +1,10 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include "GameObject.h"
-#include "../Others/Game_Parameters.h"
-#include "../Others/Logger.h"
-#include "Mag.h"
+#include "GameObject.hpp"
+#include "../Others/Game_Parameters.hpp"
+#include "../Others/Logger.hpp"
+#include "Mag.hpp"
 
 enum WeaponType
 {

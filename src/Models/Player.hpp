@@ -1,11 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "GameObject.h"
-#include "Tile.h"
-#include "Map.h"
-#include "Weapon.h"
-#include "../Others/Game_Parameters.h"
+#include "GameObject.hpp"
+#include "Tile.hpp"
+#include "Map.hpp"
+#include "Weapon.hpp"
+#include "../Others/Game_Parameters.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>

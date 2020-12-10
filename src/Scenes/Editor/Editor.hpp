@@ -2,14 +2,14 @@
 #define EDITOR_H
 
 #include <vector>
-#include "../../Models/UI/Panel.h"
-#include "../../Models/UI/TextBox.h"
-#include "../../Models/UI/RadioButton.h"
-#include "../../Models/Camera.h"
-#include "../../Models/Tile.h"
-#include "SaveLoadSystem.h"
-#include "NewMapSystem.h"
-#include "Entities/Env_Item.h"
+#include "../../Models/UI/Panel.hpp"
+#include "../../Models/UI/TextBox.hpp"
+#include "../../Models/UI/RadioButton.hpp"
+#include "../../Models/Camera.hpp"
+#include "../../Models/Tile.hpp"
+#include "SaveLoadSystem.hpp"
+#include "NewMapSystem.hpp"
+#include "Entities/Env_Item.hpp"
 
 enum SelectedMode
 {
@@ -22,7 +22,15 @@ class Editor
 public:
 	Editor();
 	Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer);
-	virtual ~Editor();
+	~Editor();
+
+	void Initialize(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer);
+
+	static Editor &instance()
+	{
+		static Editor INSTANCE;
+		return INSTANCE;
+	}
 
 	void Start();
 	void OnEnable();
@@ -33,10 +41,22 @@ public:
 
 	void SetEnable(const bool value);
 
+	std::shared_ptr<TextRenderer> textRenderer;
+	std::shared_ptr<Panel> controlPanel;
+	std::shared_ptr<Panel> buildPanel;
+	std::shared_ptr<Panel> tilePanel, objectPanel;
+
+	std::vector<Env_Item*> env_items;
+
+	std::string currentTileSet;
+
+	Vector2<int> mapLimit;
+	std::vector<ButtonTile> tiles;
+
 private:
 	void SelectedRbChanged();
 
-	std::shared_ptr<TextRenderer> textRenderer;
+	
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
 
@@ -46,12 +66,7 @@ private:
 
 	SelectedMode selectedMode;
 
-	std::shared_ptr<Panel> controlPanel;
-	std::shared_ptr<Panel> buildPanel;
-	std::shared_ptr<Panel> tilePanel, objectPanel;
-
 	std::vector<std::shared_ptr<Button>> objects_ui;
-	
 
 	NewMapSystem NewMap;
 
@@ -68,8 +83,7 @@ private:
 	Tile *selectedTile;
 	bool firstSelect;
 
-	Vector2<int> mapLimit;
-	std::vector<ButtonTile> tiles;
+	
 
 	bool enable = false;
 	float time = 0;
@@ -81,7 +95,7 @@ private:
 
 	std::shared_ptr<Button> b_cancel;
 
-	std::string currentTileSet;
+	
 	std::string currentName;
 
 	Vector3<float> cell_yellow;

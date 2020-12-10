@@ -1,4 +1,4 @@
-#include "Game_Parameters.h"
+#include "Game_Parameters.hpp"
 #include <fstream>
 #include <string>
 #include <math.h> // pow()

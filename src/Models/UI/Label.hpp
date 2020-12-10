@@ -3,11 +3,11 @@
 
 #include <string>
 
-#include "../../Managers/InputManager.h"
-#include "../../Others/Logger.h"
+#include "../../Managers/InputManager.hpp"
+#include "../../Others/Logger.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "UIObject.h"
+#include "UIObject.hpp"
 
 //class TextRenderer;
 

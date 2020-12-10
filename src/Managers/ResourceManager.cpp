@@ -1,4 +1,4 @@
-#include "ResourceManager.h"
+#include "ResourceManager.hpp"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -7,7 +7,7 @@
 #define STB_IMAGE_STATIC
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
-#include "../Others/Logger.h"
+#include "../Others/Logger.hpp"
 
 // Instantiate static variables
 std::map<std::string, Texture2D>    ResourceManager::Textures;

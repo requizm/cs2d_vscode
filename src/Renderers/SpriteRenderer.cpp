@@ -1,5 +1,5 @@
-#include "SpriteRenderer.h"
-#include "../Models/Texture.h"
+#include "SpriteRenderer.hpp"
+#include "../Models/Texture.hpp"
 
 #define PI 3.14159265
 SpriteRenderer::SpriteRenderer(const Shader shader)

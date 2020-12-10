@@ -1,11 +1,11 @@
-#include "StartGame.h"
-#include "../Others/Game_Parameters.h"
-#include "../Others/Logger.h"
-#include "../Others/Utils.h"
-#include "../Managers/InputManager.h"
-#include "../Game.h"
-#include "../Core/Math/Vector2.h"
-#include "../Core/Math/Matrix4.h"
+#include "StartGame.hpp"
+#include "../Others/Game_Parameters.hpp"
+#include "../Others/Logger.hpp"
+#include "../Others/Utils.hpp"
+#include "../Managers/InputManager.hpp"
+#include "../Game.hpp"
+#include "../Core/Math/Vector2.hpp"
+#include "../Core/Math/Matrix4.hpp"
 
 StartGame::StartGame() = default;
 

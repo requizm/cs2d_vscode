@@ -3,10 +3,10 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "../Models/UI/Square.h"
-#include "../Models/UI/Circle.h"
-#include "../Models/Shader.h"
-#include "../Models/UI/Outline.h"
+#include "../Models/UI/Square.hpp"
+#include "../Models/UI/Circle.hpp"
+#include "../Models/Shader.hpp"
+#include "../Models/UI/Outline.hpp"
 
 class SquareRenderer
 {

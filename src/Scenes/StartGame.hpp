@@ -1,11 +1,11 @@
 #ifndef SCENE_H
 #define SCENE_H
 #include <memory>
-#include "../Models/Camera.h"
-#include "../Renderers/SpriteRenderer.h"
-#include "../Renderers/TextRenderer.h"
-#include "../Models/Player.h"
-#include "../Managers/ResourceManager.h"
+#include "../Models/Camera.hpp"
+#include "../Renderers/SpriteRenderer.hpp"
+#include "../Renderers/TextRenderer.hpp"
+#include "../Models/Player.hpp"
+#include "../Managers/ResourceManager.hpp"
 
 class StartGame
 {

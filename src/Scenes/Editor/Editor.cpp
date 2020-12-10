@@ -1,13 +1,13 @@
-#include "Editor.h"
+#include "Editor.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <dirent.h>
 #include "rapidxml-1.13/rapidxml.hpp"
 #include "rapidxml-1.13/rapidxml_print.hpp"
-#include "../../Others/Game_Parameters.h"
-#include "../../Others/Utils.h"
-#include "../../Game.h"
+#include "../../Others/Game_Parameters.hpp"
+#include "../../Others/Utils.hpp"
+#include "../../Game.hpp"
 
 Editor::Editor()
 {
@@ -40,7 +40,29 @@ Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRe
 	//this->SetEnable(true);
 }
 
-Editor::~Editor() = default;
+Editor::~Editor()
+{
+	for(std::vector<Env_Item*>::size_type i = 0; i != env_items.size(); i++)
+	{
+		delete env_items[i];
+	}
+}
+
+void Editor::Initialize(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer) 
+{
+	this->menuRenderer = menuRenderer;
+	this->worldRenderer = worldRenderer;
+
+	this->tileCount = 0;
+	this->maxCellInColumn = 0;
+	this->maxCellInRow = 0;
+	this->position = Vector2(0.0F);
+	this->firstSelect = false;
+	this->time = 0.0F;
+	this->mapLimit = Vector2<int>(0);
+	this->texture = Vector2<int>(0);
+	this->selectedMode = SelectedMode::TILE_MOD;
+}
 
 void Editor::Start()
 {
@@ -87,6 +109,7 @@ void Editor::Start()
 	bt->setParent(objectPanel.get(), false);
 	bt->independent = true;
 	bt->center = false;
+	objects_ui.clear();
 	objects_ui.push_back(std::make_shared<Button>(*bt));
 
 	Sprite sprite;
@@ -250,7 +273,7 @@ void Editor::Start()
 	std::function<void()> t = std::bind(&Editor::SelectedRbChanged, this);
 	this->radioButton->AddListener(t);
 
-	item_0 = Env_Item(*tilePanel, *controlPanel, *textRenderer);
+	item_0.Initialize();
 
 	this->selectedMode = SelectedMode::TILE_MOD;
 }
@@ -288,7 +311,14 @@ void Editor::Update()
 	this->NewMap.Update();
 	this->tilePropertiesPanel->Update();
 	SaveLoad.Update();
-	objects_ui.at(0)->Update();
+	if(objects_ui.empty())
+	{
+		Logger::DebugLog("bos");
+	}
+	else
+	{
+		objects_ui.at(0)->Update();
+	}
 	item_0.p_panel->Update();
 
 	if (InputManager::scrollYPressed && selectedMode == SelectedMode::TILE_MOD && tilePanel->isScrollable())
@@ -401,17 +431,17 @@ void Editor::ProcessInput()
 
 	if (b_save.isMouseDown())
 	{
-		SaveLoad.B_SaveMap(*textRenderer);
+		SaveLoad.B_SaveMap();
 	}
 
 	if (SaveLoad.b_map_save->isMouseDown())
 	{
-		SaveLoad.SaveMap(tiles, mapLimit, currentTileSet);
+		SaveLoad.SaveMap();
 	}
 
 	if (b_load.isMouseDown())
 	{
-		SaveLoad.B_LoadMap(*textRenderer);
+		SaveLoad.B_LoadMap();
 	}
 
 	if (b_objects.isMouseDown())
@@ -431,7 +461,7 @@ void Editor::ProcessInput()
 		this->time = 0.0F;
 		this->position = Vector2<float>(0.0F - buildPanel->getSize().x, 0.0F);
 		firstSelect = false;
-		tiles = SaveLoad.LoadMap(SaveLoad.t_load->getText(), mapLimit, currentTileSet);
+		tiles = SaveLoad.LoadMap(SaveLoad.t_load->getText());
 	}
 
 	if (b_tileProperties->isMouseDown())

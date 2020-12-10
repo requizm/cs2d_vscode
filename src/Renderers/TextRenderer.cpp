@@ -1,4 +1,4 @@
-#include "TextRenderer.h"
+#include "TextRenderer.hpp"
 #include <iostream>
 
 #include <ft2build.h>

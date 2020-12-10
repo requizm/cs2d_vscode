@@ -5,8 +5,8 @@
 //#include <glm/glm.hpp>
 //#include <glm/gtc/matrix_transform.hpp>
 
-#include "../Models/Shader.h"
-#include "../Models/Sprite.h"
+#include "../Models/Shader.hpp"
+#include "../Models/Sprite.hpp"
 
 class SpriteRenderer
 {

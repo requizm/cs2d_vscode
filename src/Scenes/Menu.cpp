@@ -1,6 +1,6 @@
-#include "Menu.h"
-#include "../Game.h"
-#include "../Others/Logger.h"
+#include "Menu.hpp"
+#include "../Game.hpp"
+#include "../Others/Logger.hpp"
 
 Menu::Menu() = default;
 

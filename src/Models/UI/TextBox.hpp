@@ -1,10 +1,10 @@
 #ifndef TEXTBOX_H
 #define TEXTBOX_H
 
-#include "Label.h"
-#include "../../Renderers/SquareRenderer.h"
-#include "../../Renderers/SpriteRenderer.h"
-#include "../Sprite.h"
+#include "Label.hpp"
+#include "../../Renderers/SquareRenderer.hpp"
+#include "../../Renderers/SpriteRenderer.hpp"
+#include "../Sprite.hpp"
 
 //class SpriteRenderer;
 

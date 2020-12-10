@@ -3,9 +3,9 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "../Others/Logger.h"
-#include "../Core/Math/Projection.h"
-#include "../Core/Math/Vector2.h"
+#include "../Others/Logger.hpp"
+#include "../Core/Math/Projection.hpp"
+#include "../Core/Math/Vector2.hpp"
 #include <../include/glm/gtx/string_cast.hpp>
 
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL

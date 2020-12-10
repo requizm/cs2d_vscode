@@ -1,7 +1,7 @@
-#include "Player.h"
-#include "../Managers/InputManager.h"
-#include "../Others/Logger.h"
-#include "../Others/Timer.h"
+#include "Player.hpp"
+#include "../Managers/InputManager.hpp"
+#include "../Others/Logger.hpp"
+#include "../Others/Timer.hpp"
 
 #define PI 3.14159265
 

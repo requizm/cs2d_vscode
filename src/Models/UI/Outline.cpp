@@ -1,4 +1,4 @@
-#include "Outline.h"
+#include "Outline.hpp"
 
 Outline::Outline() : VAO(0)
 {

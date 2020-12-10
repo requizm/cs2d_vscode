@@ -1,7 +1,7 @@
-#include "SquareRenderer.h"
-#include "../Managers/ResourceManager.h"
-#include "../Managers/InputManager.h"
-#include "../Others/Game_Parameters.h"
+#include "SquareRenderer.hpp"
+#include "../Managers/ResourceManager.hpp"
+#include "../Managers/InputManager.hpp"
+#include "../Others/Game_Parameters.hpp"
 
 SquareRenderer::SquareRenderer()
 {

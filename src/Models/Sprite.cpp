@@ -1,5 +1,5 @@
-#include "Sprite.h"
-#include "../Others/Logger.h"
+#include "Sprite.hpp"
+#include "../Others/Logger.hpp"
 
 Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width, GLuint height) : VAO(0)
 {

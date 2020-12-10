@@ -7,17 +7,17 @@
 #include <memory>
 #include <iostream>
 
-#include "../Models/Sprite.h"
-#include "../Renderers/SpriteRenderer.h"
-#include "../Renderers/TextRenderer.h"
-#include "../Managers/InputManager.h"
-#include "../Others/Game_Parameters.h"
+#include "../Models/Sprite.hpp"
+#include "../Renderers/SpriteRenderer.hpp"
+#include "../Renderers/TextRenderer.hpp"
+#include "../Managers/InputManager.hpp"
+#include "../Others/Game_Parameters.hpp"
 
-#include "../Models/UI/Label.h"
-#include "../Models/UI/TextBox.h"
-#include "../Models/UI/Panel.h"
+#include "../Models/UI/Label.hpp"
+#include "../Models/UI/TextBox.hpp"
+#include "../Models/UI/Panel.hpp"
 
-//#include "ButtonRenderer.h"
+//#include "ButtonRenderer.hpp"
 
 class Menu
 {

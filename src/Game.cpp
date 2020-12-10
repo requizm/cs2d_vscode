@@ -1,11 +1,10 @@
-#include "Game.h"
-#include "Others/Logger.h"
+#include "Game.hpp"
+#include "Others/Logger.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 GameState Game::state;
 Menu Game::menu;
-Editor Game::editor;
 StartGame Game::scene;
 
 Game::Game(const GLuint width, const GLuint height)
@@ -40,7 +39,7 @@ void Game::Init()
 	initMaps();
 	initMenuSprites();
 	Game::menu = Menu(menuSprites, menuRenderer);
-	Game::editor = Editor(menuRenderer, spriteRenderer);
+	Editor::instance().Initialize(menuRenderer, spriteRenderer);
 	NewGame();
 }
 
@@ -52,7 +51,7 @@ void Game::Update()
 		Game::menu.Update();
 		break;
 	case GameState::EDITOR:
-		Game::editor.Update();
+		Editor::instance().Update();
 		break;
 	case GameState::INGAME:
 		Game::scene.Update();
@@ -68,7 +67,7 @@ void Game::ProcessInput()
 		Game::menu.ProcessInput();
 		break;
 	case GameState::EDITOR:
-		Game::editor.ProcessInput();
+		Editor::instance().ProcessInput();
 		break;
 	case GameState::INGAME:
 		Game::scene.ProcessInput();
@@ -84,7 +83,7 @@ void Game::Render()
 		Game::menu.Render();
 		break;
 	case GameState::EDITOR:
-		Game::editor.Render();
+		Editor::instance().Render();
 		break;
 	case GameState::INGAME:
 		Game::scene.Render();
@@ -238,7 +237,7 @@ void Game::SetGameState(GameState state)
 		Game::menu.SetEnable(false);
 		break;
 	case GameState::EDITOR:
-		Game::editor.SetEnable(false);
+		Editor::instance().SetEnable(false);
 		break;
 	case GameState::INGAME:
 		Game::scene.SetEnable(false);
@@ -251,7 +250,7 @@ void Game::SetGameState(GameState state)
 		Game::menu.SetEnable(true);
 		break;
 	case GameState::EDITOR:
-		Game::editor.SetEnable(true);
+		Editor::instance().SetEnable(true);
 		break;
 	case GameState::INGAME:
 		Game::scene.SetEnable(true);

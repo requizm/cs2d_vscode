@@ -4,8 +4,8 @@
 #include <map>
 #include <string>
 #include <GL/glew.h>
-#include "../Models/Texture.h"
-#include "../Models/Shader.h"
+#include "../Models/Texture.hpp"
+#include "../Models/Shader.hpp"
 // A static singleton ResourceManager class that hosts several
 // functions to load Textures and Shaders. Each loaded texture
 // and/or shader is also stored for future reference by string

@@ -3,8 +3,8 @@
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-//#include "Label.h"
-#include "../Managers/ResourceManager.h"
+//#include "Label.hpp"
+#include "../Managers/ResourceManager.hpp"
 
 //class Label;
 

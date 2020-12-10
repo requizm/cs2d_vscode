@@ -21,9 +21,9 @@ file(GLOB_RECURSE HEADER_FILES
 	${CMAKE_SOURCE_DIR}/src/*.hpp)
 	
 #list(REMOVE_ITEM SOURCE_FILES "src/Common.cpp")
-#list(REMOVE_ITEM HEADER_FILES "src/Common.h")
+#list(REMOVE_ITEM HEADER_FILES "src/Common.hpp")
 list(FILTER SOURCE_FILES EXCLUDE REGEX ".*src/Common.cpp$")
-list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.h$")
+list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.hpp$")
 	
 # Define the executable
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})

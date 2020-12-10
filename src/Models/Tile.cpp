@@ -1,4 +1,4 @@
-#include "Tile.h"
+#include "Tile.hpp"
 
 Tile::Tile() : type(TileTypes::FLOOR), frame(-1), GameObject()
 {

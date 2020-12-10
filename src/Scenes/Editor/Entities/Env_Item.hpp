@@ -1,23 +1,24 @@
 #ifndef ENVITEM_H
 #define ENVITEM_H
 
-#include "../../../Models/UI/Panel.h"
-#include "../../../Models/UI/TextBox.h"
+#include "../../../Models/UI/Panel.hpp"
+#include "../../../Models/UI/TextBox.hpp"
 
 class Env_Item
 {
 private:
-    int item_id = 0; // 0=ak47   1=m4a1 ..
-    int obj_id = 0;
+    int item_id = 0; // 0=null  1=ak47   2=m4a1 ..
+    int obj_id=0;
     Vector2<float> position;
     Vector2<float> size;
+    Sprite sp;
 
 public:
     Env_Item();
-    Env_Item(Panel &tilePanel, Panel &controlPanel, TextRenderer &textRenderer);
+    Env_Item(int id, Vector2<float> position);
     ~Env_Item();
-
-    Sprite sp;
+    
+    void Initialize();
 
     void ProcessInput();
     void Update();

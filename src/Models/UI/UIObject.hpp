@@ -2,10 +2,10 @@
 #define UIOBJECT_H
 
 #include <glm/glm.hpp>
-#include "../../Renderers/TextRenderer.h"
-#include "../../Renderers/SquareRenderer.h"
-#include "../../Renderers/SpriteRenderer.h"
-#include "../../Others/Logger.h"
+#include "../../Renderers/TextRenderer.hpp"
+#include "../../Renderers/SquareRenderer.hpp"
+#include "../../Renderers/SpriteRenderer.hpp"
+#include "../../Others/Logger.hpp"
 #include <memory>
 
 enum class UIObjectType

@@ -1,11 +1,11 @@
-#include "Map.h"
+#include "Map.hpp"
 #include <fstream>
 #include <sstream>
 #include <math.h> // pow()
 #include "rapidxml-1.13/rapidxml.hpp"
-#include "../Managers/ResourceManager.h"
-#include "../Others/Game_Parameters.h"
-#include "../Others/Logger.h"
+#include "../Managers/ResourceManager.hpp"
+#include "../Others/Game_Parameters.hpp"
+#include "../Others/Logger.hpp"
 
 Map::Map() = default;
 

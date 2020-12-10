@@ -2,17 +2,17 @@
 #define GAME_H
 
 #include <GL/glew.h>
-#include "Renderers/SpriteRenderer.h"
-#include "Models/GameObject.h"
-#include "Models/Map.h"
-#include "Models/Camera.h"
-#include "Models/Player.h"
+#include "Renderers/SpriteRenderer.hpp"
+#include "Models/GameObject.hpp"
+#include "Models/Map.hpp"
+#include "Models/Camera.hpp"
+#include "Models/Player.hpp"
 #include <memory>
-#include "Scenes/StartGame.h"
-#include "Managers/ResourceManager.h"
-#include "Others/Game_Parameters.h"
-#include "Scenes/Menu.h"
-#include "Scenes/Editor/Editor.h"
+#include "Scenes/StartGame.hpp"
+#include "Managers/ResourceManager.hpp"
+#include "Others/Game_Parameters.hpp"
+#include "Scenes/Menu.hpp"
+#include "Scenes/Editor/Editor.hpp"
 
 class Game
 {

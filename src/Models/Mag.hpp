@@ -1,8 +1,8 @@
 #ifndef MAG_H
 #define MAG_H
 
-#include "GameObject.h"
-#include "../Others/Game_Parameters.h"
+#include "GameObject.hpp"
+#include "../Others/Game_Parameters.hpp"
 
 enum AmmoType
 {

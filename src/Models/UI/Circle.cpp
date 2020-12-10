@@ -1,5 +1,5 @@
-#include "Circle.h"
-#include "../../Core/Math/Vector2.h"
+#include "Circle.hpp"
+#include "../../Core/Math/Vector2.hpp"
 
 Circle::Circle()
 {

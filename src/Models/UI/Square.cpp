@@ -1,4 +1,4 @@
-#include "Square.h"
+#include "Square.hpp"
 #include <glm/vec2.hpp>
 #include <glm/gtc/type_ptr.hpp>
 

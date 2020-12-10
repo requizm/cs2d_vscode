@@ -1,4 +1,4 @@
-#include "Label.h"
+#include "Label.hpp"
 #include <iostream>
 
 Label::Label() = default;

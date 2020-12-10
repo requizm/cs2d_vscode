@@ -7,8 +7,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../Core/Math/Projection.h"
-#include "../Core/Math/Vector2.h"
+#include "../Core/Math/Projection.hpp"
+#include "../Core/Math/Vector2.hpp"
 
 // General purpsoe shader object. Compiles from file, generates
 // compile/link-time error messages and hosts several utility

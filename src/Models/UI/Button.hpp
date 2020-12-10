@@ -1,12 +1,12 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "../../Renderers/SpriteRenderer.h"
-#include "../../Renderers/SquareRenderer.h"
-#include "Label.h"
-#include "Square.h"
-#include "../Sprite.h"
-#include "../Tile.h"
+#include "../../Renderers/SpriteRenderer.hpp"
+#include "../../Renderers/SquareRenderer.hpp"
+#include "Label.hpp"
+#include "Square.hpp"
+#include "../Sprite.hpp"
+#include "../Tile.hpp"
 
 //class ButtonRenderer;
 //class TextRenderer;

@@ -1,4 +1,5 @@
-#include "SaveLoadSystem.h"
+#include "SaveLoadSystem.hpp"
+#include "Editor.hpp"
 #include <fstream>
 #include <sstream>
 #include <dirent.h>
@@ -163,15 +164,16 @@ void SaveLoadSystem::Render(SpriteRenderer &menuRenderer, SquareRenderer &square
     }
 }
 
-void SaveLoadSystem::SaveMap(std::vector<ButtonTile> &tiles, Vector2<int> &mLimit, std::string &tSet)
+void SaveLoadSystem::SaveMap()
 {
-    if (!tiles.empty() && !t_save->getText().empty())
+    if (!Editor::instance().tiles.empty() && !t_save->getText().empty())
     {
+        
         rapidxml::xml_document<> doc;
         rapidxml::xml_node<> *node_map = doc.allocate_node(rapidxml::node_element, "map");
         Logger::WriteLog("xml_node olusturuldu");
         //int i = 0;
-        for (auto &tile : tiles)
+        for (auto &tile : Editor::instance().tiles)
         {
             //Logger::WriteLog("tile: " + std::to_string(i) + "  basladi");
             rapidxml::xml_node<> *node_tile = doc.allocate_node(rapidxml::node_element, "tile");
@@ -179,6 +181,8 @@ void SaveLoadSystem::SaveMap(std::vector<ButtonTile> &tiles, Vector2<int> &mLimi
             char *cellY = doc.allocate_string(std::to_string(tile.cell.y).c_str());
             char *frame = doc.allocate_string(std::to_string(tile.button.getTile()->frame).c_str());
             char *type = doc.allocate_string(std::to_string((int)tile.button.getTile()->getType()).c_str());
+            char *itemId = doc.allocate_string(std::to_string(tile.item.getId()).c_str());
+
             rapidxml::xml_node<> *node_tile_texture;
 
             node_tile_texture = doc.allocate_node(rapidxml::node_element, "tileTexture", frame);
@@ -186,12 +190,15 @@ void SaveLoadSystem::SaveMap(std::vector<ButtonTile> &tiles, Vector2<int> &mLimi
             rapidxml::xml_node<> *node_cellX = doc.allocate_node(rapidxml::node_element, "cellX", cellX);
             rapidxml::xml_node<> *node_cellY = doc.allocate_node(rapidxml::node_element, "cellY", cellY);
             rapidxml::xml_node<> *node_tile_type = doc.allocate_node(rapidxml::node_element, "tileType", type);
+            rapidxml::xml_node<> *node_item_id = doc.allocate_node(rapidxml::node_element, "itemID", itemId);
 
             node_tile->append_node(node_tile_texture);
             node_tile->append_node(node_cellX);
             node_tile->append_node(node_cellY);
             node_tile->append_node(node_tile_type);
+            node_tile->append_node(node_item_id);
             node_map->append_node(node_tile);
+            
 
             //delete[] cellX;
             //delete[] cellY;
@@ -199,9 +206,9 @@ void SaveLoadSystem::SaveMap(std::vector<ButtonTile> &tiles, Vector2<int> &mLimi
             //delete[] type;
         }
 
-        char *limitX = doc.allocate_string(std::to_string(mLimit.x).c_str());
-        char *limitY = doc.allocate_string(std::to_string(mLimit.y).c_str());
-        char *tile = doc.allocate_string(tSet.c_str());
+        char *limitX = doc.allocate_string(std::to_string(Editor::instance().mapLimit.x).c_str());
+        char *limitY = doc.allocate_string(std::to_string(Editor::instance().mapLimit.y).c_str());
+        char *tile = doc.allocate_string(Editor::instance().currentTileSet.c_str());
         char *name = doc.allocate_string(t_save->getText().c_str());
         rapidxml::xml_node<> *node_info = doc.allocate_node(rapidxml::node_element, "info");
         rapidxml::xml_node<> *node_name = doc.allocate_node(rapidxml::node_element, "name", name);
@@ -234,7 +241,7 @@ void SaveLoadSystem::SaveMap(std::vector<ButtonTile> &tiles, Vector2<int> &mLimi
         savePanel->setEnable(false);
     }
 }
-void SaveLoadSystem::B_SaveMap(TextRenderer &textRenderer)
+void SaveLoadSystem::B_SaveMap()
 {
     save_mapsUI.clear();
     save_mapsPanel->childs.clear();
@@ -244,7 +251,7 @@ void SaveLoadSystem::B_SaveMap(TextRenderer &textRenderer)
 
     for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
     {
-        Button *bt = new Button(maps[i], Vector2<float>(0.0F, static_cast<float>(i * 20)), Vector2<float>(save_mapsPanel->getSize().x, 20.0F), textRenderer, Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
+        Button *bt = new Button(maps[i], Vector2<float>(0.0F, static_cast<float>(i * 20)), Vector2<float>(save_mapsPanel->getSize().x, 20.0F), *Editor::instance().textRenderer, Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
         bt->setMouseClickColor(Vector3<float>(0.35F));
         bt->setMouseHoverColor(Vector3<float>(0.25F));
         bt->setLabelMouseHoverColor(Vector3<float>(1.0F));
@@ -258,7 +265,7 @@ void SaveLoadSystem::B_SaveMap(TextRenderer &textRenderer)
     this->savePanel->setEnable(true);
 }
 
-std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName, Vector2<int> &mLimit, std::string &tSet)
+std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName)
 {
     std::vector<ButtonTile> tiles;
 
@@ -286,11 +293,11 @@ std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName, Vector2<int
     strcpy(codeChar, codeString.c_str());
     doc.parse<0>(codeChar);
     this->t_save->setText(doc.first_node("info")->first_node("name")->value());
-    tSet = doc.first_node("info")->first_node("tileSet")->value();
+    Editor::instance().currentTileSet = doc.first_node("info")->first_node("tileSet")->value();
     char *mapx = doc.first_node("info")->first_node("mapLimitX")->value();
     char *mapy = doc.first_node("info")->first_node("mapLimitY")->value();
-    mLimit.x = atoi(mapx);
-    mLimit.y = atoi(mapy);
+    Editor::instance().mapLimit.x = atoi(mapx);
+    Editor::instance().mapLimit.y = atoi(mapy);
     rapidxml::xml_node<> *node = doc.first_node("map");
     //std::cout << node->first_node("tile")->first_node("cellX")->next_sibling()->name() << std::endl;
     int i = 0;
@@ -302,18 +309,20 @@ std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName, Vector2<int
         char *y = child->first_node("cellY")->value();
         char *tIndex = child->first_node("tileTexture")->value();
         char *tType = child->first_node("tileType")->value();
+        char *tItemId = child->first_node("itemID")->value();
         int cellX = atoi(x);
         int cellY = atoi(y);
         int textureIndex = atoi(tIndex);
         int tileType = atoi(tType);
+        int itemId = atoi(tItemId);
         const Vector2<float> pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
         const Vector2<float> size(Vector2<float>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
-        const int xoffset = textureIndex % (ResourceManager::GetTexture(tSet).Width / 32);
-        const int yoffset = textureIndex / (ResourceManager::GetTexture(tSet).Width / 32);
-        const Sprite sprite = Sprite(ResourceManager::GetTexture(tSet), (xoffset)*32, yoffset * 32, 32, 32);
+        const int xoffset = textureIndex % (ResourceManager::GetTexture(Editor::instance().currentTileSet).Width / 32);
+        const int yoffset = textureIndex / (ResourceManager::GetTexture(Editor::instance().currentTileSet).Width / 32);
+        const Sprite sprite = Sprite(ResourceManager::GetTexture(Editor::instance().currentTileSet), (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes(tileType), textureIndex);
         Button b = Button(tile);
-        ButtonTile t = ButtonTile(b, Vector2<int>(cellX, cellY));
+        ButtonTile t = ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
         tiles.push_back(t);
 
         delete[] x;
@@ -328,7 +337,7 @@ std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName, Vector2<int
 
     return tiles;
 }
-void SaveLoadSystem::B_LoadMap(TextRenderer &textRenderer)
+void SaveLoadSystem::B_LoadMap()
 {
     load_mapsUI.clear();
     load_mapsPanel->childs.clear();
@@ -338,7 +347,7 @@ void SaveLoadSystem::B_LoadMap(TextRenderer &textRenderer)
 
     for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
     {
-        Button *bt = new Button(maps[i], Vector2<float>(0.0F, static_cast<float>(i * 20)), Vector2<float>(load_mapsPanel->getSize().x, 20.0F), textRenderer, Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
+        Button *bt = new Button(maps[i], Vector2<float>(0.0F, static_cast<float>(i * 20)), Vector2<float>(load_mapsPanel->getSize().x, 20.0F), *Editor::instance().textRenderer, Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
         bt->setMouseClickColor(Vector3<float>(0.35F));
         bt->setMouseHoverColor(Vector3<float>(0.25F));
         bt->setLabelMouseHoverColor(Vector3<float>(1.0F));

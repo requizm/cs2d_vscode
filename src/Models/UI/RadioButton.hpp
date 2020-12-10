@@ -1,7 +1,7 @@
 #ifndef RADIOBUTTON_H
 #define RADIOBUTTON_H
 
-#include "Label.h"
+#include "Label.hpp"
 #include <functional>
 
 class RadioButtonElement : public Label

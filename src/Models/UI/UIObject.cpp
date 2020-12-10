@@ -1,5 +1,5 @@
-#include "UIObject.h"
-#include "../../Others/Utils.h"
+#include "UIObject.hpp"
+#include "../../Others/Utils.hpp"
 #include <algorithm>
 
 UIObject::UIObject() = default;

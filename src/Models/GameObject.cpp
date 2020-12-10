@@ -1,8 +1,8 @@
-#include "GameObject.h"
+#include "GameObject.hpp"
 #include <glm/gtx/string_cast.hpp>
-#include "../Others/Logger.h"
-#include "../Others/Game_Parameters.h"
-#include "../Others/Utils.h"
+#include "../Others/Logger.hpp"
+#include "../Others/Game_Parameters.hpp"
+#include "../Others/Utils.hpp"
 
 GameObject::GameObject()
 	: globalPosition(0.0F, 0.0F), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0.0F), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT)

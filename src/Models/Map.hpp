@@ -3,9 +3,9 @@
 
 #include <vector>
 #include <GL/glew.h>
-#include "../Renderers/SpriteRenderer.h"
-#include "../Models/Tile.h"
-//#include "InputManager.h"
+#include "../Renderers/SpriteRenderer.hpp"
+#include "../Models/Tile.hpp"
+//#include "InputManager.hpp"
 
 class Map
 {
