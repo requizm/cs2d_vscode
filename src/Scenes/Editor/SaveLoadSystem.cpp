@@ -180,14 +180,8 @@ void SaveLoadSystem::SaveMap(std::vector<ButtonTile> &tiles, Vector2<int> &mLimi
             char *frame = doc.allocate_string(std::to_string(tile.button.getTile()->frame).c_str());
             char *type = doc.allocate_string(std::to_string((int)tile.button.getTile()->getType()).c_str());
             rapidxml::xml_node<> *node_tile_texture;
-            /*if (!tile.exist)
-			{
-				node_tile_texture = doc.allocate_node(rapidxml::node_element, "tileTexture", "0");
-			}*/
-            //else
-            //{
+
             node_tile_texture = doc.allocate_node(rapidxml::node_element, "tileTexture", frame);
-            //}
 
             rapidxml::xml_node<> *node_cellX = doc.allocate_node(rapidxml::node_element, "cellX", cellX);
             rapidxml::xml_node<> *node_cellY = doc.allocate_node(rapidxml::node_element, "cellY", cellY);

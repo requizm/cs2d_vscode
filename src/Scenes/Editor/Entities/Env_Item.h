@@ -7,13 +7,14 @@
 class Env_Item
 {
 private:
-    int id; //item'in id numarası. objelerin unique id'si ile karistirmayin
+    int item_id = 0; // 0=ak47   1=m4a1 ..
+    int obj_id = 0;
     Vector2<float> position;
     Vector2<float> size;
 
 public:
     Env_Item();
-    Env_Item(int id);
+    Env_Item(Panel &tilePanel, Panel &controlPanel, TextRenderer &textRenderer);
     ~Env_Item();
 
     Sprite sp;

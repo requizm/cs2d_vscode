@@ -17,8 +17,9 @@ Editor::Editor()
 	this->position = Vector2(0.0F);
 	this->firstSelect = false;
 	this->time = 0.0F;
-	mapLimit = Vector2<int>(0);
+	this->mapLimit = Vector2<int>(0);
 	this->texture = Vector2<int>(0);
+	this->selectedMode = SelectedMode::TILE_MOD;
 }
 
 Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer)
@@ -32,8 +33,9 @@ Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRe
 	this->position = Vector2(0.0F);
 	this->firstSelect = false;
 	this->time = 0.0F;
-	mapLimit = Vector2<int>(0);
+	this->mapLimit = Vector2<int>(0);
 	this->texture = Vector2<int>(0);
+	this->selectedMode = SelectedMode::TILE_MOD;
 
 	//this->SetEnable(true);
 }
@@ -67,6 +69,25 @@ void Editor::Start()
 	this->tilePanel->setOutline(true);
 	this->tilePanel->setOutlineColor(Vector3<float>(0.47F));
 	this->tilePanel->setParent(buildPanel.get());
+
+	this->objectPanel = std::make_shared<Panel>(Vector2<float>(5.0F, 75.0F), "Object Panel", Vector2<float>(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
+	this->objectPanel->setEnable(false);
+	this->objectPanel->setMovable(false);
+	this->objectPanel->setScrollable(true);
+	this->objectPanel->setOutline(true);
+	this->objectPanel->setOutlineColor(Vector3<float>(0.47F));
+	this->objectPanel->setParent(buildPanel.get());
+
+	Button *bt = new Button("Env_Item", Vector2<float>(0.0F, static_cast<float>(0 * 20)), Vector2<float>(objectPanel->getSize().x, 20.0F), *textRenderer, Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
+	bt->setMouseClickColor(Vector3<float>(0.35F));
+	bt->setMouseHoverColor(Vector3<float>(0.25F));
+	bt->setLabelMouseHoverColor(Vector3<float>(1.0F));
+	bt->setLabelClickColor(Vector3<float>(1.0F));
+	bt->setOutline(false);
+	bt->setParent(objectPanel.get(), false);
+	bt->independent = true;
+	bt->center = false;
+	objects_ui.push_back(std::make_shared<Button>(*bt));
 
 	Sprite sprite;
 	Vector2<float> pos;
@@ -229,19 +250,9 @@ void Editor::Start()
 	std::function<void()> t = std::bind(&Editor::SelectedRbChanged, this);
 	this->radioButton->AddListener(t);
 
-	item_0 = Env_Item(3);
-	item_0.p_panel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Entity Options", Vector2<float>(400, 200), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
-	item_0.p_panel->setMovable(false);
-	item_0.p_panel->setEnable(true);
+	item_0 = Env_Item(*tilePanel, *controlPanel, *textRenderer);
 
-	item_0.b_okay = std::make_shared<Button>("Okay", Vector2<float>(50.0F, 105.0F), Vector2<float>(60.0F, 20.0F), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-	item_0.b_okay->setMouseClickColor(Vector3<float>(0.30F));
-	item_0.b_okay->setMouseHoverColor(Vector3<float>(0.30F));
-	item_0.b_okay->setLabelMouseHoverColor(Vector3<float>(0.58F));
-	item_0.b_okay->setLabelClickColor(Vector3<float>(1.0F));
-	item_0.b_okay->setOutline(true);
-	item_0.b_okay->setOutlineColor(Vector3<float>(1.0F));
-	item_0.b_okay->setParent(item_0.p_panel.get());
+	this->selectedMode = SelectedMode::TILE_MOD;
 }
 
 void Editor::OnEnable()
@@ -277,9 +288,10 @@ void Editor::Update()
 	this->NewMap.Update();
 	this->tilePropertiesPanel->Update();
 	SaveLoad.Update();
+	objects_ui.at(0)->Update();
 	item_0.p_panel->Update();
 
-	if (InputManager::scrollYPressed && tilePanel->isScrollable())
+	if (InputManager::scrollYPressed && selectedMode == SelectedMode::TILE_MOD && tilePanel->isScrollable())
 	{
 		if (!tilesUI.empty())
 		{
@@ -303,7 +315,8 @@ void Editor::ProcessInput()
 	this->buildPanel->ProcessInput();
 	this->NewMap.ProcessInput();
 	this->tilePropertiesPanel->ProcessInput();
-	SaveLoad.ProcessInput();
+	this->SaveLoad.ProcessInput();
+	this->objects_ui.at(0)->ProcessInput();
 	item_0.p_panel->ProcessInput();
 
 	if (!tilesUI.empty())
@@ -401,6 +414,18 @@ void Editor::ProcessInput()
 		SaveLoad.B_LoadMap(*textRenderer);
 	}
 
+	if (b_objects.isMouseDown())
+	{
+		tilePanel->setEnable(false);
+		objectPanel->setEnable(true);
+	}
+
+	if (b_tiles.isMouseDown())
+	{
+		objectPanel->setEnable(false);
+		tilePanel->setEnable(true);
+	}
+
 	if (SaveLoad.b_map_load->isMouseDown())
 	{
 		this->time = 0.0F;
@@ -436,10 +461,6 @@ void Editor::ProcessInput()
 					if (!(selectedTile->frame == tile.button.getTile()->frame))
 					{
 						tile.button = bt;
-						/*if (!tile.exist)
-						{
-							tile.exist = true;
-						}*/
 					}
 				}
 			}
@@ -497,6 +518,8 @@ void Editor::Render()
 			}
 		}
 	}
+	if (objectPanel->isEnable())
+		objects_ui.at(0)->Draw(menuRenderer, squareRenderer);
 }
 
 void Editor::SelectedRbChanged()

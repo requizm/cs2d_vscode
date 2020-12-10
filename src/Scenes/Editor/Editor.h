@@ -11,6 +11,11 @@
 #include "NewMapSystem.h"
 #include "Entities/Env_Item.h"
 
+enum SelectedMode
+{
+	TILE_MOD,
+	OBJECT_MOD
+};
 
 class Editor
 {
@@ -39,9 +44,14 @@ private:
 	std::shared_ptr<Camera> camera;
 	Vector2<float> position;
 
+	SelectedMode selectedMode;
+
 	std::shared_ptr<Panel> controlPanel;
 	std::shared_ptr<Panel> buildPanel;
-	std::shared_ptr<Panel> tilePanel;
+	std::shared_ptr<Panel> tilePanel, objectPanel;
+
+	std::vector<std::shared_ptr<Button>> objects_ui;
+	
 
 	NewMapSystem NewMap;
 
