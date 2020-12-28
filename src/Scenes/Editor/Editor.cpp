@@ -223,6 +223,8 @@ void Editor::Start()
 	this->SaveLoad.b_map_load->setOutline(true);
 	this->SaveLoad.b_map_load->setOutlineColor(Vector3<float>(1.0F));
 	this->SaveLoad.b_map_load->setParent(SaveLoad.loadPanel.get());
+	std::function<void(Button *, Button *)> loadListChanged = std::bind(&SaveLoadSystem::LoadListChanged, &this->SaveLoad, std::placeholders::_1, std::placeholders::_2);
+	this->SaveLoad.load_listMaps->AddListener(loadListChanged);
 
 	//harita save paneli
 	this->SaveLoad.savePanel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Save Panel", Vector2<float>(400, 200), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
@@ -247,6 +249,8 @@ void Editor::Start()
 	this->SaveLoad.b_map_save->setOutline(true);
 	this->SaveLoad.b_map_save->setOutlineColor(Vector3<float>(1.0F));
 	this->SaveLoad.b_map_save->setParent(SaveLoad.savePanel.get());
+	std::function<void(Button *, Button *)> saveListChanged = std::bind(&SaveLoadSystem::SaveListChanged, &this->SaveLoad, std::placeholders::_1, std::placeholders::_2);
+	this->SaveLoad.load_listMaps->AddListener(saveListChanged);
 
 	//env_item
 
@@ -266,14 +270,14 @@ void Editor::Start()
 	this->b_tileProperties->setMouseHoverColor(Vector3<float>(0.30F));
 	this->b_tileProperties->setParent(buildPanel.get());
 
-	this->radioButton = std::make_shared<RadioButton>(*textRenderer, Vector2<float>(20.0F, 50.0F), 30);
-	this->radioButton->setParent(tilePropertiesPanel.get());
-	this->radioButton->Clear();
-	this->radioButton->AddElement("Wall", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-	this->radioButton->AddElement("Obstacle", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-	this->radioButton->AddElement("Floor", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-	std::function<void()> t = std::bind(&Editor::SelectedRbChanged, this);
-	this->radioButton->AddListener(t);
+	this->rb_tileProperties = std::make_shared<RadioButton>(*textRenderer, Vector2<float>(20.0F, 50.0F), 30);
+	this->rb_tileProperties->setParent(tilePropertiesPanel.get());
+	this->rb_tileProperties->Clear();
+	this->rb_tileProperties->AddElement("Wall", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+	this->rb_tileProperties->AddElement("Obstacle", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+	this->rb_tileProperties->AddElement("Floor", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+	std::function<void(RadioButtonElement *, RadioButtonElement *)> t = std::bind(&Editor::SelectedRbChanged, this, std::placeholders::_1, std::placeholders::_2);
+	this->rb_tileProperties->AddListener(t);
 
 	item_0.Initialize();
 
@@ -360,7 +364,7 @@ void Editor::ProcessInput()
 				tile->ProcessInput();
 				if (tile->isMouseDown())
 				{
-					selectedTile = (tile->getTile());
+					selectedTile = tile->getTile();
 					firstSelect = true;
 				}
 			}
@@ -469,7 +473,7 @@ void Editor::ProcessInput()
 	if (b_tileProperties->isMouseDown())
 	{
 		this->tilePropertiesPanel->setEnable(true);
-		this->radioButton->Select(static_cast<int>(selectedTile->getType()));
+		this->rb_tileProperties->Select(static_cast<int>(selectedTile->getType()));
 	}
 
 	bool panelsPressed = !buildPanel->isPressed && !tilePropertiesPanel->isPressed &&
@@ -554,7 +558,7 @@ void Editor::Render()
 		objects_ui.at(0)->Draw(menuRenderer, squareRenderer);
 }
 
-void Editor::SelectedRbChanged()
+void Editor::SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n)
 {
-	selectedTile->setType((TileTypes)radioButton->GetSelectedElement()->index);
+	selectedTile->setType((TileTypes)n->getIndex());
 }

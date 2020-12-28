@@ -54,7 +54,7 @@ public:
 	std::vector<ButtonTile> tiles;
 
 private:
-	void SelectedRbChanged();
+	void SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n);
 
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
@@ -70,8 +70,6 @@ private:
 	NewMapSystem NewMap;
 
 	SaveLoadSystem SaveLoad;
-
-	std::shared_ptr<RadioButton> radioButton;
 
 	std::vector<std::shared_ptr<Button>> tilesUI;
 	Vector2<int> texture;
@@ -89,6 +87,7 @@ private:
 
 	std::shared_ptr<Panel> tilePropertiesPanel;
 	std::shared_ptr<Button> b_tileProperties;
+	std::shared_ptr<RadioButton> rb_tileProperties;
 
 	std::shared_ptr<Button> b_cancel;
 

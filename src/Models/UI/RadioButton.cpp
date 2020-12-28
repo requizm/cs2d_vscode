@@ -2,10 +2,11 @@
 
 RadioButtonElement::RadioButtonElement() = default;
 
-RadioButtonElement::RadioButtonElement(const std::string &text, Vector2<float> position, TextRenderer &textRenderer, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
+RadioButtonElement::RadioButtonElement(const std::string &text, Vector2<float> position, TextRenderer &textRenderer, int index, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
     : Label(text, position, textRenderer, scale, textColor, UIObjectType::RADIOBUTTON), selected(false)
 {
     this->setButtonColor(buttonColor);
+    this->index = index;
 }
 
 RadioButtonElement::~RadioButtonElement() = default;
@@ -63,6 +64,11 @@ Vector2<float> RadioButtonElement::getSize()
     ps.x = (getPosition().x + labelSize.y / 2 + 2.0F + labelSize.x) - (getPosition().x - labelSize.y / 2);
     ps.y = labelSize.y;
     return ps;
+}
+
+int RadioButtonElement::getIndex()
+{
+    return this->index;
 }
 
 void RadioButtonElement::setMouseHoverColor(const Vector3<float> color)
@@ -199,7 +205,7 @@ void RadioButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRen
     }
 }
 
-void RadioButton::AddListener(std::function<void()> func)
+void RadioButton::AddListener(std::function<void(RadioButtonElement *, RadioButtonElement *)> func)
 {
     listeners.push_back(std::move(func));
 }
@@ -212,32 +218,22 @@ void RadioButton::Clear()
 
 void RadioButton::AddElement(const std::string &text, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
 {
-    RadioButtonElement *r = new RadioButtonElement(text, Vector2<float>(position.x, position.y + y_sep * i), *rend, buttonColor, textColor, scale);
+    RadioButtonElement *r = new RadioButtonElement(text, Vector2<float>(position.x, position.y + y_sep * i), *rend, i++, buttonColor, textColor, scale);
     r->setSize(300, 300);
     r->setMouseHoverColor(Vector3<float>(0.9F));
     r->setOutlineColor(Vector3<float>(0.58F));
     r->setMouseHoverOutlineColor(Vector3<float>(0.9F));
     r->setParent(this);
-    r->index = i;
-
     this->elements.push_back(r);
-
-    i = i + 1;
 }
 
 void RadioButton::Update()
 {
     if (isEnable() && isMouseEvents())
     {
-        int i = 0;
-        for (auto &element : elements)
+        for (std::vector<int>::size_type i = 0; i != elements.size(); i++)
         {
-            element->Update();
-            if (element->isMouseDown())
-            {
-                Select(i);
-            }
-            i = i + 1;
+            elements[i]->Update();
         }
     }
 }
@@ -246,32 +242,50 @@ void RadioButton::ProcessInput()
 {
     if (isMouseEvents() && isEnable())
     {
-        for (auto &element : elements)
+        for (std::vector<int>::size_type i = 0; i != elements.size(); i++)
         {
-            element->ProcessInput();
+            elements[i]->ProcessInput();
+            if (elements[i]->isMouseDown() && selectedIndex != i)
+            {
+                int old = selectedIndex;
+                if (selectedIndex != -1)
+                {
+                    elements[selectedIndex]->selected = false;
+                }
+
+                elements[i]->selected = true;
+                selectedIndex = i;
+
+                for (auto &f : listeners)
+                {
+                    try
+                    {
+                        f(elements[old], elements[selectedIndex]);
+                    }
+                    catch (const std::exception &e)
+                    {
+                        f(nullptr, elements[selectedIndex]);
+                    }
+                }
+                break;
+            }
         }
     }
 }
 
 void RadioButton::Select(int index)
 {
-    if (selectedIndex != elements.at(index)->index)
+    if (selectedIndex != index)
     {
+        int old = selectedIndex;
         if (selectedIndex != -1)
         {
-            elements.at(selectedIndex)->selected = false;
+            elements[selectedIndex]->selected = false;
         }
 
         elements.at(index)->selected = true;
-        selectedIndex = elements.at(index)->index;
-
-        for (auto &a : listeners)
-        {
-            a();
-        }
-        return;
+        selectedIndex = index;
     }
-    //zaten bu secili
 }
 
 RadioButtonElement *RadioButton::GetSelectedElement()

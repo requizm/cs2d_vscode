@@ -3,6 +3,8 @@
 
 #include "Panel.hpp"
 
+#include <functional>
+
 class ListItem : UIObject
 {
 public:
@@ -11,8 +13,9 @@ public:
     ~ListItem();
 
     void AddItem(std::string &text);
-
     void Clear();
+
+    void AddListener(std::function<void(Button *, Button *)> func);
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
     void ProcessInput() override;
@@ -24,6 +27,8 @@ private:
     int selectedIndex = -1;
 
     int i = 0;
+
+    std::vector<std::function<void(Button *, Button *)>> listeners;
 };
 
 #endif // !LISTITEM_H

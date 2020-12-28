@@ -279,3 +279,13 @@ std::vector<std::string> SaveLoadSystem::getMapNames()
         perror("could not open directory");
     }
 }
+
+void SaveLoadSystem::SaveListChanged(Button *old, Button *n)
+{
+    t_save->setText(n->getText());
+}
+
+void SaveLoadSystem::LoadListChanged(Button *old, Button *n)
+{
+    t_load->setText(n->getText());
+}

@@ -34,6 +34,12 @@ void ListItem::AddItem(std::string &text)
 void ListItem::Clear()
 {
     items.clear();
+    i = 0;
+}
+
+void ListItem::AddListener(std::function<void(Button *, Button *)> func)
+{
+    listeners.push_back(std::move(func));
 }
 
 void ListItem::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
@@ -50,8 +56,9 @@ void ListItem::ProcessInput()
     for (std::vector<int>::size_type i = 0; i != items.size(); i++)
     {
         items[i]->ProcessInput();
-        if (items[i]->isMouseDown() && items[i]->isRenderable())
+        if (items[i]->isMouseDown() && items[i]->isRenderable() && i != selectedIndex)
         {
+            int old = selectedIndex;
             if (selectedIndex != -1)
             {
                 items[selectedIndex]->setButtonColor(Vector3<float>(0.21F));
@@ -62,6 +69,18 @@ void ListItem::ProcessInput()
             items[i]->setMouseHoverColor(Vector3<float>(0.35F));
             items[i]->setLabelColor(Vector3<float>(1.0F));
             selectedIndex = i;
+
+            for (auto &f : listeners)
+            {
+                try
+                {
+                    f(items[old], items[selectedIndex]);
+                }
+                catch (const std::exception &e)
+                {
+                    f(nullptr, items[selectedIndex]);
+                }
+            }
             break;
         }
     }

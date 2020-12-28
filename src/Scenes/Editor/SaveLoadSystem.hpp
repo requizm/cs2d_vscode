@@ -24,6 +24,7 @@ public:
     //save
     void SaveMap();
     void B_SaveMap();
+    void SaveListChanged(Button *old, Button *n);
     std::shared_ptr<Panel> savePanel, save_mapsPanel;
     std::shared_ptr<Button> b_map_save;
     std::shared_ptr<TextBox> t_save;
@@ -32,6 +33,7 @@ public:
     //load
     std::vector<ButtonTile> LoadMap(std::string mapName);
     void B_LoadMap();
+    void LoadListChanged(Button *old, Button *n);
     std::shared_ptr<Panel> loadPanel, load_mapsPanel;
     std::shared_ptr<Button> b_map_load;
     std::shared_ptr<TextBox> t_load;

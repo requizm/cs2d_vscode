@@ -8,7 +8,7 @@ class RadioButtonElement : public Label
 {
 public:
     RadioButtonElement();
-    RadioButtonElement(const std::string &text, Vector2<float> position, TextRenderer &textRenderer, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
+    RadioButtonElement(const std::string &text, Vector2<float> position, TextRenderer &textRenderer, int index, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
     ~RadioButtonElement();
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
@@ -18,6 +18,7 @@ public:
     Vector2<float> getPosition() override;
     Vector2<float> getLocalPosition() override;
     Vector2<float> getSize() override;
+    int getIndex();
 
     void setMouseHoverColor(const Vector3<float> color);
     void setButtonColor(const Vector3<float> color);
@@ -37,7 +38,7 @@ public:
 
     bool selected;
 
-    int index;
+    
 
 private:
     Vector3<float> buttonColor; //secili oldugunu belli eden daire'nin rengi
@@ -46,6 +47,7 @@ private:
     Vector3<float> mouseHoverOutlineColor;
     Vector3<float> currentColor;
     Vector3<float> currentOutlineColor;
+    int index;
 
     bool isMouseHoverM() override;
     bool isMouseDownM(const int key) override;
@@ -60,14 +62,14 @@ private:
     int i = 0;
     int y_sep; //aradaki bosluklar
 
-    std::vector<std::function<void()>> listeners;
+    std::vector<std::function<void(RadioButtonElement*, RadioButtonElement*)>> listeners;
 
 public:
     RadioButton();
     RadioButton(TextRenderer &renderer, Vector2<float> position, int y_sep);
     ~RadioButton();
 
-    void AddListener(std::function<void()> func);
+    void AddListener(std::function<void(RadioButtonElement*, RadioButtonElement*)> func);
 
     void Clear();
     void AddElement(const std::string &text, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
