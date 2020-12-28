@@ -9,7 +9,7 @@ class Square
 {
 public:
 	Square();
-	Square(bool init);
+	void init();
 	~Square();
 
 	GLuint VAO;

@@ -10,6 +10,5 @@ public:
 	~Outline();
 	GLuint VAO;
 	void initData();
-	
 };
 #endif // OUTLINE_H

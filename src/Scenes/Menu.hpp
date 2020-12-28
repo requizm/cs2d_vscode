@@ -42,13 +42,13 @@ public:
 	SquareRenderer squareRenderer;
 
 	std::shared_ptr<Label> l_console, l_quickplay, l_newgame, l_options, l_editor;
-	
+
 	std::shared_ptr<TextBox> t_test;
 
 	std::shared_ptr<Panel> panel;
 
 private:
-	bool enable =false;
+	bool enable = false;
 };
 
 #endif // MENU_H

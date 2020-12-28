@@ -23,51 +23,7 @@ public:
 		this->width = width;
 		this->height = height;
 
-		//cameraMatrix = glm::ortho(0.0f, static_cast<float>(width),
-		//						  static_cast<float>(height), 0.0f, -1.0f, 1.0f);
-
-		cameraMatrix = Projection::ortho(0.0f, static_cast<float>(width),
-										   static_cast<float>(height), 0.0f, -1.0f, 1.0f);
-
-		//matrix = Projection::translate(matrix, Vector3(150.0F, 150.0F, 0.0F));
-		//cameraMatrix = glm::translate(cameraMatrix, glm::vec3(150.0F, 150.0F, 0.0F));
-
-		//matrix = Projection::rotate(matrix, 0.5F, Vector3(0.0F, 0.F, 1.0F));
-		//cameraMatrix = glm::rotate(cameraMatrix,  0.5F, glm::vec3(0.0F, 0.0F, 1.0F));
-
-		/*matrix = Projection::scale(matrix, Vector3(1.5F, 0.6F, 0.0F));
-		cameraMatrix = glm::scale(cameraMatrix, glm::vec3(1.5F, 0.6F, 0.0F));
-
-		Logger::DebugLog(glm::to_string(cameraMatrix));
-
-		Logger::DebugLog("ikinciye bakalim");
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				Logger::DebugLog(std::to_string(matrix.Get(i + 1, j + 1)));
-			}
-		}
-		bool b = true;
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				if(matrix.Get(i + 1, j + 1) != cameraMatrix[i][j])
-				{
-					b = false;
-				}
-			}
-		}
-
-		if(b)
-			Logger::DebugLog("tamamen ayni!");
-		else
-		{
-			Logger::DebugLog("farkli!");
-		}*/
-		
-
+		cameraMatrix = Projection::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 	};
 	Matrix4<float> cameraMatrix;
 

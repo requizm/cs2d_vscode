@@ -31,11 +31,10 @@ void Menu::Start()
 
 	this->panel = std::make_shared<Panel>(Vector2<float>(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", Vector2<float>(420.0F, 450.0F), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
 	this->panel->setMovable(true);
-	
+
 	this->t_test = std::make_shared<TextBox>(Vector2<float>(20.0F, 20.0F), *textRenderer, Vector2<float>(100.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
 	this->t_test->setParent(panel.get());
 	this->t_test->setParentCenterPos();
-	
 }
 
 void Menu::OnEnable()

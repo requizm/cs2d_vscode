@@ -12,6 +12,17 @@ class TextBox : public Label
 {
 public:
 	TextBox();
+
+	/**
+	 * @brief Construct a new TextBox 
+	 * 
+	 * @param position 
+	 * @param renderer 
+	 * @param size 
+	 * @param isBackGround false
+	 * @param scale 1.0F
+	 * @param color Vector3<float>(1.0F)
+	 */
 	TextBox(Vector2<float> position, TextRenderer &renderer, Vector2<float> size, bool isBackGround = false, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F));
 
 	void Update() override;
@@ -35,9 +46,6 @@ public:
 	bool editable;
 	bool editMode;
 	bool isBackGround;
-
-	Square square;
-
 
 private:
 	float time = 0.0F;

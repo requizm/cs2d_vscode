@@ -17,6 +17,15 @@ class GameObject
 {
 public:
 	GameObject();
+
+	/**
+	 * @brief Construct a new Game Object object
+	 * 
+	 * @param pos 
+	 * @param sprite 
+	 * @param size 
+	 * @param objType 2(ObjectType::GAMEOBJECT)
+	 */
 	GameObject(Vector2<float> pos, const Sprite &sprite, Vector2<float> size, int objType = 2);
 	virtual ~GameObject();
 
@@ -41,7 +50,7 @@ public:
 	virtual void Destroy();
 	virtual void OnDestroy();
 
-	GameObject GetParentObject();
+	GameObject* GetParent();
 	int GetObjectType();
 	Matrix4<float> GetTransform();
 	Vector2<float> GetPosition();

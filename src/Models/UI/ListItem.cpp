@@ -25,7 +25,7 @@ void ListItem::AddItem(std::string &text)
     bt->setLabelMouseHoverColor(Vector3<float>(1.0F));
     bt->setLabelClickColor(Vector3<float>(1.0F));
     bt->setOutline(false);
-    bt->setParent(panel, false);
+    bt->setParent(panel, true);
     bt->independent = true;
     bt->center = false;
     items.push_back(bt);
@@ -44,69 +44,77 @@ void ListItem::AddListener(std::function<void(Button *, Button *)> func)
 
 void ListItem::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
-    //panel->Draw(spriteRenderer, squareRenderer);
-    for (auto &item : items)
+    if (isVisible() && isEnable())
     {
-        item->Draw(spriteRenderer, squareRenderer);
+        for (auto &item : items)
+        {
+            item->Draw(spriteRenderer, squareRenderer);
+        }
     }
 }
 
 void ListItem::ProcessInput()
 {
-    for (std::vector<int>::size_type i = 0; i != items.size(); i++)
+    if (isMouseEvents() && isEnable())
     {
-        items[i]->ProcessInput();
-        if (items[i]->isMouseDown() && items[i]->isRenderable() && i != selectedIndex)
+        for (std::vector<int>::size_type i = 0; i != items.size(); i++)
         {
-            int old = selectedIndex;
-            if (selectedIndex != -1)
+            items[i]->ProcessInput();
+            if (items[i]->isMouseDown() && items[i]->isRenderable() && i != selectedIndex)
             {
-                items[selectedIndex]->setButtonColor(Vector3<float>(0.21F));
-                items[selectedIndex]->setMouseHoverColor(Vector3<float>(0.25F));
-                items[selectedIndex]->setLabelColor(Vector3<float>(0.58F));
-            }
-            items[i]->setButtonColor(Vector3<float>(0.35F));
-            items[i]->setMouseHoverColor(Vector3<float>(0.35F));
-            items[i]->setLabelColor(Vector3<float>(1.0F));
-            selectedIndex = i;
+                int old = selectedIndex;
+                if (selectedIndex != -1)
+                {
+                    items[selectedIndex]->setButtonColor(Vector3<float>(0.21F));
+                    items[selectedIndex]->setMouseHoverColor(Vector3<float>(0.25F));
+                    items[selectedIndex]->setLabelColor(Vector3<float>(0.58F));
+                }
+                items[i]->setButtonColor(Vector3<float>(0.35F));
+                items[i]->setMouseHoverColor(Vector3<float>(0.35F));
+                items[i]->setLabelColor(Vector3<float>(1.0F));
+                selectedIndex = i;
 
-            for (auto &f : listeners)
-            {
-                try
+                for (auto &f : listeners)
                 {
-                    f(items[old], items[selectedIndex]);
+                    try
+                    {
+                        f(items[old], items[selectedIndex]);
+                    }
+                    catch (const std::exception &e)
+                    {
+                        f(nullptr, items[selectedIndex]);
+                    }
                 }
-                catch (const std::exception &e)
-                {
-                    f(nullptr, items[selectedIndex]);
-                }
+                break;
             }
-            break;
         }
     }
 }
 
 void ListItem::Update()
 {
-    for (std::vector<int>::size_type i = 0; i != items.size(); i++)
+    if (isMouseEvents() && isEnable())
     {
-        items[i]->Update();
-    }
-    if (panel->isScrollable() || InputManager::scrollYPressed)
-    {
-        if (!items.empty())
+        for (std::vector<int>::size_type i = 0; i != items.size(); i++)
         {
-            bool check_1 = items.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
-            bool check_2 = items.at(items.size() - 1)->getLocalPosition().y == panel->getSize().y && InputManager::scroll.y < 0;
-
-            if (!check_1 && !check_2)
+            items[i]->Update();
+        }
+        if (panel->isScrollable() || InputManager::scrollYPressed)
+        {
+            if (!items.empty())
             {
-                for (auto &tile : items)
+                bool check_1 = items.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
+                bool check_2 = items.at(items.size() - 1)->getLocalPosition().y == panel->getSize().y && InputManager::scroll.y < 0;
+
+                if (!check_1 && !check_2)
                 {
-                    tile->setPosition(tile->getLocalPosition().x, tile->getLocalPosition().y + InputManager::scroll.y * 20);
+                    for (auto &tile : items)
+                    {
+                        tile->setPosition(tile->getLocalPosition().x, tile->getLocalPosition().y + InputManager::scroll.y * 20);
+                    }
                 }
             }
+            InputManager::scrollYPressed = false;
         }
-        InputManager::scrollYPressed = false;
     }
 }

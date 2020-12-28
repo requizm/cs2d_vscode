@@ -171,10 +171,10 @@ void GameObject::setCellPosition(Vector2<int> pos)
 	SetPosition(pos.x * Game_Parameters::SIZE_TILE, pos.y * Game_Parameters::SIZE_TILE);
 }
 
-GameObject GameObject::GetParentObject()
+GameObject* GameObject::GetParent()
 {
 	Logger::WriteLog("" + GetObjectTypeString() + "->GetParentObject()");
-	return *parent;
+	return parent;
 }
 
 int GameObject::GetObjectType()

@@ -2,19 +2,11 @@
 
 Button::Button() = default;
 
-/*Button::Button(Sprite sprite, std::string text, Vector2<float> position, float scale, Vector3<float> textColor) : Label(text, position, scale, textColor)
-{
-	this->sprite = sprite;
-}*/
-
 Button::Button(const std::string &text, Vector2<float> position, Vector2<float> size, TextRenderer &renderer, Vector3<float> buttonColor, Vector3<float> textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->buttonColor = buttonColor;
 	this->setSize(renderer.CalculateSize(text, 1.0F) * 1.50F);
 	this->type = ButtonType::DEFAULT;
-	/*this->haveTile = false;
-	this->difColor = false;
-	this->haveSprite = false;*/
 }
 
 Button::Button(const Sprite &sprite, Vector2<float> position, Vector2<float> size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON), haveOutline(false)
@@ -22,16 +14,12 @@ Button::Button(const Sprite &sprite, Vector2<float> position, Vector2<float> siz
 	this->sprite = sprite;
 	this->difColor = difColor;
 	this->type = ButtonType::SPRITE;
-	/*this->haveTile = false;
-	this->haveSprite = true;*/
 }
 
 Button::Button(Tile &tile, float scale) : Label(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->tile = tile;
 	this->type = ButtonType::TILE;
-	/*this->haveTile = true;
-	this->haveSprite = false;*/
 }
 
 Button::~Button() = default;

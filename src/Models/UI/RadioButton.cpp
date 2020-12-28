@@ -223,7 +223,7 @@ void RadioButton::AddElement(const std::string &text, Vector3<float> buttonColor
     r->setMouseHoverColor(Vector3<float>(0.9F));
     r->setOutlineColor(Vector3<float>(0.58F));
     r->setMouseHoverOutlineColor(Vector3<float>(0.9F));
-    r->setParent(this);
+    r->setParent(this, true);
     this->elements.push_back(r);
 }
 

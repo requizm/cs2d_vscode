@@ -3,10 +3,8 @@
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-//#include "Label.hpp"
 #include "../Managers/ResourceManager.hpp"
 
-//class Label;
 
 /// Holds all state information relevant to a character as loaded using FreeType
 struct Character {

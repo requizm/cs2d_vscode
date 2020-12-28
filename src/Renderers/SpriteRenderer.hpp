@@ -21,26 +21,39 @@ public:
 	//void DrawSprite(Texture2D texture, Vector2<float> position, Vector2<float> size = Vector2<float>(10, 10), GLfloat rotate = 0.0f);
 
 	/**
- 	* Does stuff
- 	* @param {GLfloat} shineFactor : sadece editor'deki tile'larin parlamasi icin
-	* @param {bool} isSelected : sadece editor'deki secili tile'larin parlamasi icin
- 	*/
-	void DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, GLfloat rotate = 0.0F, bool drawCenter = false,
-	GLfloat shineFactor = 0.0F, bool isSelected = false, GLfloat time = 0.0F);
-	
-	void DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, Vector3<float> color, bool drawCenter = false, 
-	GLfloat rotate = 0.0F, GLfloat shineFactor = 0.0F, bool isSelected = false, float time = 0.0F);
+	 * @brief Draw original sprite color, if you wanna shining object, you should change {isSelect=true} and {time=(system.time)}
+	 * 
+	 * @param sprite 
+	 * @param position 
+	 * @param size 
+	 * @param rotate 0.0F
+	 * @param drawCenter false
+	 * @param shineFactor 0.0F 
+	 * @param isSelected false
+	 * @param time 0.0F
+	 */
+	void DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, GLfloat rotate = 0.0F, bool drawCenter = false, GLfloat shineFactor = 0.0F, bool isSelected = false, GLfloat time = 0.0F);
+
+	/**
+	 * @brief Draw replaced sprite color, if you wanna shining object, you should change {isSelect=true} and {time=(system.time)}
+	 * 
+	 * @param sprite 
+	 * @param position 
+	 * @param size 
+	 * @param color 
+	 * @param drawCenter false
+	 * @param rotate 0.0F
+	 * @param shineFactor 0.0F
+	 * @param isSelected false
+	 * @param time 0.0F
+	 */
+	void DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, Vector3<float> color, bool drawCenter = false, GLfloat rotate = 0.0F, GLfloat shineFactor = 0.0F, bool isSelected = false, float time = 0.0F);
 
 	void DrawSprite(const Sprite &sprite, Matrix4<float> model);
 	void SetProjection(Matrix4<float> projection);
 
 private:
-	// Render state
 	Shader shader;
-	//GLuint quadVAO;
-	//Texture2D quadTexture;
-
-	//void initData(GLuint x = NULL, GLuint y = NULL, GLuint width = NULL, GLuint height = NULL);
 };
 
 #endif

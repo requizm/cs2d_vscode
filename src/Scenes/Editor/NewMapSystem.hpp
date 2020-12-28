@@ -31,7 +31,7 @@ public:
                         Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
                         std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell);
     NewMapResult B_NewMap(float &dt, Vector2<float> &pos, bool &fSelect, Vector2<int> &mLimit,
-                          Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel, 
+                          Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
                           std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell);
 
     std::shared_ptr<Panel> newPanel;

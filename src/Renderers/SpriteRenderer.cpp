@@ -11,8 +11,7 @@ SpriteRenderer::SpriteRenderer() = default;
 
 SpriteRenderer::~SpriteRenderer() = default;
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, GLfloat rotate, bool drawCenter,
-								GLfloat shineFactor, bool isSelected, GLfloat time)
+void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, GLfloat rotate, bool drawCenter, GLfloat shineFactor, bool isSelected, GLfloat time)
 {
 	// Prepare transformations
 	this->shader.Use();
@@ -22,10 +21,10 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, V
 	else
 		model = Projection::translate(model, Vector3(position.x, position.y, 0.0F));
 	// First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
-	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
-	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = Projection::scale(model, Vector3(size.x, size.y, 1.0F));					 // Last scale
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));		   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));	   // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0F));						   // Last scale
 
 	this->shader.SetMatrix4("model", model);
 	this->shader.SetInteger("overrideColor", 0);
@@ -46,8 +45,7 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, V
 	this->shader.UnUse();
 }
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, Vector3<float> color, bool drawCenter,
-								GLfloat rotate, GLfloat shineFactor, bool isSelected, float time)
+void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, Vector3<float> color, bool drawCenter, GLfloat rotate, GLfloat shineFactor, bool isSelected, float time)
 {
 	//rotate = rotate * static_cast<GLfloat>(PI) / static_cast<GLfloat>(180);
 	// Prepare transformations
@@ -58,10 +56,10 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<float> position, V
 	else
 		model = Projection::translate(model, Vector3(position.x, position.y, 0.0F));
 	// First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
-	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	// Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	// Then rotate
-	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));								// Last scale
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));		   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));	   // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));						   // Last scale
 
 	this->shader.SetMatrix4("model", model);
 	this->shader.SetInteger("overrideColor", 1);

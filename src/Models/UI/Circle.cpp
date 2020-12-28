@@ -5,9 +5,9 @@ Circle::Circle()
 {
 }
 
-Circle::Circle(bool empty)
+Circle::Circle(bool fill)
 {
-    if (empty)
+    if (!fill)
     {
         initEmptyCircle();
     }
@@ -27,7 +27,7 @@ void Circle::initEmptyCircle()
     int triangleAmount = 30; //# of triangles used to draw circle
     //GLfloat radius = 0.8f; //radius
     GLfloat twicePi = 2.0f * PI;
-    
+
     for (i = 0; i <= triangleAmount; i++)
     {
         vertices[i] = Vector2<float>(

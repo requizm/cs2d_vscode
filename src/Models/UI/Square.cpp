@@ -8,10 +8,9 @@ Square::Square() : VAO(0)
 {
 }
 
-Square::Square(bool init)
+void Square::init()
 {
-	if (init)
-		initData();
+	initData();
 }
 
 Square::~Square() = default;
@@ -48,4 +47,3 @@ void Square::initData()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
-

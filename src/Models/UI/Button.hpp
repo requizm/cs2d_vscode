@@ -4,27 +4,52 @@
 #include "../../Renderers/SpriteRenderer.hpp"
 #include "../../Renderers/SquareRenderer.hpp"
 #include "Label.hpp"
-#include "Square.hpp"
 #include "../Sprite.hpp"
 #include "../Tile.hpp"
 
-//class ButtonRenderer;
-//class TextRenderer;
-//class SquareRenderer;
 
 enum ButtonType
 {
 	DEFAULT, //standart buton
-	TILE,	//editor'deki build tile'ları gibi
-	SPRITE   //editor'deki save button'u gibi
+	TILE,	 //editor'deki build tile'ları gibi
+	SPRITE	 //editor'deki save button'u gibi
 };
 
 class Button : public Label
 {
 public:
 	Button();
+
+	/**
+	 * @brief Construct a new Default Button also RadioButton and ListItem elements
+	 * 
+	 * @param text 
+	 * @param position 
+	 * @param size 
+	 * @param renderer 
+	 * @param buttonColor Vector3<float>(1.0F)
+	 * @param textColor Vector3<float>(0.0F)
+	 * @param scale 1.0F
+	 */
 	Button(const std::string &text, Vector2<float> position, Vector2<float> size, TextRenderer &renderer, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
+
+	/**
+	 * @brief Construct a new Sprite Button
+	 * 
+	 * @param sprite 
+	 * @param position 
+	 * @param size 
+	 * @param difColor false
+	 * @param scale 1.0F
+	 */
 	Button(const Sprite &sprite, Vector2<float> position, Vector2<float> size, bool difColor = false, float scale = 1.0F);
+
+	/**
+	 * @brief Construct a new Tile Button for tile objects
+	 * 
+	 * @param tile 
+	 * @param scale 1.0F
+	 */
 	Button(Tile &tile, float scale = 1.0F);
 	~Button();
 
@@ -63,7 +88,6 @@ public:
 
 protected:
 	Sprite sprite;
-	Square square;
 	Tile tile;
 	Vector3<float> buttonColor;
 	Vector3<float> mouseHoverColor;

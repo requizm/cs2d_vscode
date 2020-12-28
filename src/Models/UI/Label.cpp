@@ -3,16 +3,6 @@
 
 Label::Label() = default;
 
-Label::Label(const std::string &text, Vector2<float> position, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, type), labelSize(Vector2<float>(1.0F))
-{
-	this->labelColor = color;
-	this->text = text;
-	this->labelMouseHoverColor = Vector3<float>(0.78F);
-	this->labelClickColor = Vector3<float>(1.0F);
-	this->labelCurrentColor = color;
-	//this->labelSize = this->rend->CalculateSize(text, scale);
-} //simdilik kullanilmiyor(muhtemelen hic kullanilmayacak)
-
 Label::Label(const std::string &text, Vector2<float> position, TextRenderer &renderer, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<float>(1.0F))
 {
 	this->labelColor = color;
@@ -178,11 +168,6 @@ void Label::setLabelMouseHoverColor(const Vector3<float> color)
 void Label::setLabelClickColor(const Vector3<float> color)
 {
 	this->labelClickColor = color;
-}
-
-void Label::SimulateUp()
-{
-	this->isDown = false;
 }
 
 bool Label::isMouseHoverM()

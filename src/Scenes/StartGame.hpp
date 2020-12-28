@@ -22,11 +22,10 @@ public:
 	void Update();
 	void ProcessInput();
 	void Render();
-	
-	void SetEnable(const bool value);
-private:
-	
 
+	void SetEnable(const bool value);
+
+private:
 	Map map;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera;

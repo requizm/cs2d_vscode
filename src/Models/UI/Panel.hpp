@@ -12,6 +12,19 @@
 class Panel : public UIObject
 {
 public:
+	/**
+	 * @brief Construct a new Panel
+	 * 
+	 * @param position 
+	 * @param title 
+	 * @param size 
+	 * @param renderer 
+	 * @param isBackGround false
+	 * @param opttitles true
+	 * @param scale 1.0F
+	 * @param color Vector3<float>(1.0F)
+	 * @param transp 0.9F
+	 */
 	Panel(Vector2<float> position, const std::string &title, Vector2<float> size, TextRenderer &renderer, bool isBackGround = false, bool opttitles = true, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), float transp = 0.9F);
 	Panel();
 	~Panel();
@@ -45,7 +58,6 @@ protected:
 	Vector3<float> panelColor;
 	Vector2<float> dragSize;
 	Vector2<float> dragPos;
-	Square square = Square(true);
 	Button escapeButton;
 	Label title;
 	bool opttitles;

@@ -15,7 +15,6 @@ TextBox::TextBox(Vector2<float> position, TextRenderer &renderer, Vector2<float>
 	borderColor = Vector3<float>(0.6F);
 	hoverBorderColor = Vector3<float>(0.78F);
 	currentBorderColor = borderColor;
-	square = Square(true);
 }
 
 void TextBox::Update()

@@ -15,9 +15,9 @@ SquareRenderer::SquareRenderer(bool init)
 	this->squareShader_ui.SetMatrix4("projection", Projection::ortho(0.0f, static_cast<float>(Game_Parameters::SCREEN_WIDTH), static_cast<float>(Game_Parameters::SCREEN_HEIGHT), 0.0f, -1.0f, 1.0f));
 	this->squareShader_ui.UnUse();
 	outline.initData();
-	square = Square(true);
-	emptyCircle = Circle(true);
-	filledCircle = Circle(false);
+	square.init();
+	emptyCircle = Circle(false);
+	filledCircle = Circle(true);
 }
 
 SquareRenderer::~SquareRenderer() = default;
@@ -29,10 +29,10 @@ void SquareRenderer::ui_RenderFilledSquare(Vector2<float> position, Vector2<floa
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
-	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
-	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));		   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));	   // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));						   // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
 	this->squareShader_ui.SetVector3f("colorUniform", color);
 	this->squareShader_ui.SetFloat("trans", transperancy);
@@ -51,10 +51,10 @@ void SquareRenderer::ui_RenderFilledSquare(Vector2<float> position, Vector2<floa
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
-	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
-	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));		   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));	   // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));						   // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
 	this->squareShader_ui.SetVector3f("colorUniform", color);
 	this->squareShader_ui.SetFloat("trans", transperancy);
@@ -70,10 +70,10 @@ void SquareRenderer::world_RenderFilledSquare(Vector2<float> position, Vector2<f
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
-	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
-	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));		   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));	   // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));						   // Last scale
 	this->squareShader_world.SetMatrix4("model", model);
 	this->squareShader_world.SetVector3f("colorUniform", color);
 	this->squareShader_world.SetFloat("trans", transperancy);
@@ -85,36 +85,23 @@ void SquareRenderer::world_RenderFilledSquare(Vector2<float> position, Vector2<f
 
 void SquareRenderer::world_RenderEmptySquareWithLine(Vector2<float> position, Vector2<float> size, Vector3<float> color, float lineSize, GLfloat transperancy, GLfloat rotate)
 {
-	//Vector2<float> pos, siz;
 	Vector2<float> startPos, endPos;
 	//sol kenar
-	/*pos = Vector2<float>(position.x - lineSize, position.y);
-	siz = Vector2<float>(lineSize * 2, size.y);
-	this->world_RenderFilledSquare(pos, siz, color, transperancy, rotate);*/
 	startPos = position;
 	endPos = Vector2<float>(position.x, position.y + size.y);
 	this->world_RenderLine(startPos, endPos, color, lineSize, transperancy);
 
 	//ust kenar
-	/*pos = Vector2<float>(position.x, position.y - lineSize);
-	siz = Vector2<float>(size.x, lineSize * 2);
-	this->world_RenderFilledSquare(pos, siz, color, transperancy, rotate);*/
 	startPos = position;
 	endPos = Vector2<float>(position.x + size.x, position.y);
 	this->world_RenderLine(startPos, endPos, color, lineSize, transperancy);
 
 	//sag kenar
-	/*pos = Vector2<float>(position.x + size.x - lineSize, position.y);
-	siz = Vector2<float>(lineSize * 2, size.y);
-	this->world_RenderFilledSquare(pos, siz, color, transperancy, rotate);*/
 	startPos = Vector2<float>(position.x + size.x, position.y);
 	endPos = Vector2<float>(position.x + size.x, position.y + size.y);
 	this->world_RenderLine(startPos, endPos, color, lineSize, transperancy);
 
 	//alt kenar
-	/*pos = Vector2<float>(position.x, position.y + size.y - lineSize);
-	siz = Vector2<float>(size.x, lineSize * 2);
-	this->world_RenderFilledSquare(pos, siz, color, transperancy, rotate);*/
 	startPos = Vector2<float>(position.x, position.y + size.y);
 	endPos = Vector2<float>(position.x + size.x, position.y + size.y);
 	this->world_RenderLine(startPos, endPos, color, lineSize, transperancy);
@@ -122,36 +109,23 @@ void SquareRenderer::world_RenderEmptySquareWithLine(Vector2<float> position, Ve
 
 void SquareRenderer::ui_RenderEmptySquareWithLine(Vector2<float> position, Vector2<float> size, Vector3<float> color, float lineSize, GLfloat transperancy, GLfloat rotate)
 {
-	//Vector2<float> pos, siz;
 	Vector2<float> startPos, endPos;
 	//sol kenar
-	/*pos = Vector2<float>(position.x - lineSize, position.y);
-	siz = Vector2<float>(lineSize * 2, size.y);
-	this->world_RenderFilledSquare(pos, siz, color, transperancy, rotate);*/
 	startPos = position;
 	endPos = Vector2<float>(position.x, position.y + size.y);
 	this->ui_RenderLine(startPos, endPos, color, lineSize, transperancy);
 
 	//ust kenar
-	/*pos = Vector2<float>(position.x, position.y - lineSize);
-	siz = Vector2<float>(size.x, lineSize * 2);
-	this->world_RenderFilledSquare(pos, siz, color, transperancy, rotate);*/
 	startPos = position;
 	endPos = Vector2<float>(position.x + size.x, position.y);
 	this->ui_RenderLine(startPos, endPos, color, lineSize, transperancy);
 
 	//sag kenar
-	/*pos = Vector2<float>(position.x + size.x - lineSize, position.y);
-	siz = Vector2<float>(lineSize * 2, size.y);
-	this->world_RenderFilledSquare(pos, siz, color, transperancy, rotate);*/
 	startPos = Vector2<float>(position.x + size.x, position.y);
 	endPos = Vector2<float>(position.x + size.x, position.y + size.y);
 	this->ui_RenderLine(startPos, endPos, color, lineSize, transperancy);
 
 	//alt kenar
-	/*pos = Vector2<float>(position.x, position.y + size.y - lineSize);
-	siz = Vector2<float>(size.x, lineSize * 2);
-	this->world_RenderFilledSquare(pos, siz, color, transperancy, rotate);*/
 	startPos = Vector2<float>(position.x, position.y + size.y);
 	endPos = Vector2<float>(position.x + size.x, position.y + size.y);
 	this->ui_RenderLine(startPos, endPos, color, lineSize, transperancy);
@@ -253,10 +227,10 @@ void SquareRenderer::ui_RenderEmptySquare(Vector2<float> position, Vector2<float
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
-	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
-	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));		   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));	   // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));						   // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
 	this->squareShader_ui.SetVector3f("colorUniform", color);
 	this->squareShader_ui.SetFloat("trans", transperancy);
@@ -272,10 +246,10 @@ void SquareRenderer::world_RenderEmptySquare(Vector2<float> position, Vector2<fl
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
-	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
-	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));		   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));	   // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));						   // Last scale
 	this->squareShader_world.SetMatrix4("model", model);
 	this->squareShader_world.SetVector3f("colorUniform", color);
 	this->squareShader_world.SetFloat("trans", transperancy);
@@ -291,10 +265,10 @@ void SquareRenderer::ui_RenderEmptyCircle(Vector2<float> position, Vector2<float
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
-	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
-	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));		   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));	   // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));						   // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
 	this->squareShader_ui.SetVector3f("colorUniform", color);
 	this->squareShader_ui.SetFloat("trans", transperancy);
@@ -313,10 +287,10 @@ void SquareRenderer::ui_RenderFilledCircle(Vector2<float> position, Vector2<floa
 	Matrix4 model = Matrix4(1.0F);
 	model = Projection::translate(model, Vector3(position.x, position.y, 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
-	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));	 // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f));	 // Then rotate
-	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));					 // Last scale
+	model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f * size.y, 0.0f));		   // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(rotate), Vector3(0.0f, 0.0f, 1.0f)); // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * size.x, -0.5f * size.y, 0.0f));	   // Move origin back
+	model = Projection::scale(model, Vector3(size.x, size.y, 1.0f));						   // Last scale
 	this->squareShader_ui.SetMatrix4("model", model);
 	this->squareShader_ui.SetVector3f("colorUniform", color);
 	this->squareShader_ui.SetFloat("trans", transperancy);

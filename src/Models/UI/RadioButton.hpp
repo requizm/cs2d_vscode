@@ -8,6 +8,18 @@ class RadioButtonElement : public Label
 {
 public:
     RadioButtonElement();
+
+    /**
+     * @brief Construct a new Radio Button Element object
+     * 
+     * @param text 
+     * @param position 
+     * @param textRenderer 
+     * @param index 
+     * @param buttonColor Vector3<float>(1.0F)
+     * @param textColor Vector3<float>(0.0F)
+     * @param scale 1.0F
+     */
     RadioButtonElement(const std::string &text, Vector2<float> position, TextRenderer &textRenderer, int index, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
     ~RadioButtonElement();
 
@@ -38,8 +50,6 @@ public:
 
     bool selected;
 
-    
-
 private:
     Vector3<float> buttonColor; //secili oldugunu belli eden daire'nin rengi
     Vector3<float> mouseHoverColor;
@@ -62,14 +72,14 @@ private:
     int i = 0;
     int y_sep; //aradaki bosluklar
 
-    std::vector<std::function<void(RadioButtonElement*, RadioButtonElement*)>> listeners;
+    std::vector<std::function<void(RadioButtonElement *, RadioButtonElement *)>> listeners;
 
 public:
     RadioButton();
     RadioButton(TextRenderer &renderer, Vector2<float> position, int y_sep);
     ~RadioButton();
 
-    void AddListener(std::function<void(RadioButtonElement*, RadioButtonElement*)> func);
+    void AddListener(std::function<void(RadioButtonElement *, RadioButtonElement *)> func);
 
     void Clear();
     void AddElement(const std::string &text, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);

@@ -15,9 +15,38 @@ class Label : public UIObject
 {
 public:
 	Label();
-	Label(const std::string &text, Vector2<float> position, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+
+	/**
+	 * @brief Construct a new Label
+	 * 
+	 * @param text 
+	 * @param position 
+	 * @param renderer 
+	 * @param scale 1.0F
+	 * @param color Vector3<float>(1.0F)
+	 * @param type UIObjectType::LABEL
+	 */
 	Label(const std::string &text, Vector2<float> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+
+	/**
+	 * @brief Construct a new Label for TextBox
+	 * 
+	 * @param position 
+	 * @param renderer 
+	 * @param scale 1.0F
+	 * @param color Vector3<float>(1.0F)
+	 * @param type UIObjectType::LABEL
+	 */
 	Label(Vector2<float> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+
+	/**
+	 * @brief Construct a new Label for TileButton and SpriteButton
+	 * 
+	 * @param position 
+	 * @param size 
+	 * @param scale 1.0F
+	 * @param type UIObjectType::LABEL
+	 */
 	Label(Vector2<float> position, Vector2<float> size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
 	~Label();
 
@@ -31,7 +60,6 @@ public:
 	virtual bool isMouseUp();
 	virtual bool isMousePress();
 
-	
 	std::string getText() const;
 	Vector2<float> getLabelSize() const;
 	Vector3<float> getLabelColor() const;
@@ -43,13 +71,6 @@ public:
 	void setLabelMouseHoverColor(const Vector3<float> color);
 	void setLabelClickColor(const Vector3<float> color);
 
-	/**
- 	* MouseDown() fonksiyonu ile state'i degistirince, maalesef MouseUp() fonksiyonuna giremiyoruz. 
-	* Bu sefer de tekrar eski state'e gelince, bir defaya mahsus MouseDown() fonksiyonu calismiyor. 
-	* Cunku state ilk degisirken MouseUp() fonksiyonuna giremedigimiz icin durumu resetleyememistik.
-	* Bu fonksiyon, state degisikliklerinden sonra kullanilmalidir.  
- 	*/
-	void SimulateUp();
 protected:
 	Vector2<float> labelSize;
 
@@ -58,15 +79,9 @@ protected:
 	Vector3<float> labelColor;
 	Vector3<float> labelMouseHoverColor;
 	Vector3<float> labelCurrentColor;
-	
-	/**
-	*Button icindeki text'i render ederken kullanilacak
-	*/
+
 	void DrawForButton(const bool center);
 
-	/**
-	*Button icindeki text'in pozisyonunu alirken kullanilacak
-	*/
 	Vector2<float> getPositionForButton(const bool center);
 
 	virtual bool isMouseHoverM();
@@ -76,7 +91,7 @@ protected:
 
 private:
 	void SetMouseState(bool &variable, bool value);
-	
+
 	bool isHover = false;
 };
 

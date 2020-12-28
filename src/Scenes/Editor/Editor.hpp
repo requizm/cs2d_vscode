@@ -65,7 +65,7 @@ private:
 
 	SelectedMode selectedMode;
 
-	std::vector<std::shared_ptr<Button>> objects_ui;
+	std::shared_ptr<ListItem> objects_ui;
 
 	NewMapSystem NewMap;
 

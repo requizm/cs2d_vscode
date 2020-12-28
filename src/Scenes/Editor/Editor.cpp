@@ -100,17 +100,10 @@ void Editor::Start()
 	this->objectPanel->setOutlineColor(Vector3<float>(0.47F));
 	this->objectPanel->setParent(buildPanel.get());
 
-	Button *bt = new Button("Env_Item", Vector2<float>(0.0F, static_cast<float>(0 * 20)), Vector2<float>(objectPanel->getSize().x, 20.0F), *textRenderer, Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
-	bt->setMouseClickColor(Vector3<float>(0.35F));
-	bt->setMouseHoverColor(Vector3<float>(0.25F));
-	bt->setLabelMouseHoverColor(Vector3<float>(1.0F));
-	bt->setLabelClickColor(Vector3<float>(1.0F));
-	bt->setOutline(false);
-	bt->setParent(objectPanel.get(), false);
-	bt->independent = true;
-	bt->center = false;
-	objects_ui.clear();
-	objects_ui.push_back(std::make_shared<Button>(*bt));
+	objects_ui = std::make_unique<ListItem>(this->objectPanel.get());
+	objects_ui->Clear();
+	std::string a = "Env_Item";
+	objects_ui->AddItem(a);
 
 	Sprite sprite;
 	Vector2<float> pos;
@@ -317,14 +310,7 @@ void Editor::Update()
 	this->NewMap.Update();
 	this->tilePropertiesPanel->Update();
 	SaveLoad.Update();
-	if (objects_ui.empty())
-	{
-		Logger::DebugLog("bos");
-	}
-	else
-	{
-		objects_ui.at(0)->Update();
-	}
+	objects_ui->Update();
 	item_0.p_panel->Update();
 
 	if (InputManager::scrollYPressed && selectedMode == SelectedMode::TILE_MOD && tilePanel->isScrollable())
@@ -352,7 +338,7 @@ void Editor::ProcessInput()
 	this->NewMap.ProcessInput();
 	this->tilePropertiesPanel->ProcessInput();
 	this->SaveLoad.ProcessInput();
-	this->objects_ui.at(0)->ProcessInput();
+	this->objects_ui->ProcessInput();
 	item_0.p_panel->ProcessInput();
 
 	if (!tilesUI.empty())
@@ -554,8 +540,7 @@ void Editor::Render()
 			}
 		}
 	}
-	if (objectPanel->isEnable())
-		objects_ui.at(0)->Draw(menuRenderer, squareRenderer);
+	objects_ui->Draw(menuRenderer, squareRenderer);
 }
 
 void Editor::SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n)
