@@ -180,7 +180,13 @@ RadioButton::RadioButton(TextRenderer &renderer, Vector2<float> position, int y_
     this->y_sep = y_sep;
 }
 
-RadioButton::~RadioButton() = default;
+RadioButton::~RadioButton()
+{
+    for (auto &element : elements)
+    {
+        delete element;
+    }
+}
 
 void RadioButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
@@ -251,10 +257,11 @@ void RadioButton::Select(int index)
 {
     if (selectedIndex != elements.at(index)->index)
     {
-        for (auto &element : elements)
+        if (selectedIndex != -1)
         {
-            element->selected = false;
+            elements.at(selectedIndex)->selected = false;
         }
+
         elements.at(index)->selected = true;
         selectedIndex = elements.at(index)->index;
 

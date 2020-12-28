@@ -21,7 +21,7 @@ public:
 	void OnEnable() override;
 	void OnDisable() override;
 	void ProcessInput() override;
-	
+
 	bool isMouseHover(bool drag);
 	bool isMouseDown(bool drag);
 	bool isMouseUp();

@@ -15,7 +15,8 @@ enum class UIObjectType
 	TEXTBOX,
 	BUTTON,
 	PANEL,
-	RADIOBUTTON
+	RADIOBUTTON,
+	LISTITEM
 };
 //class TextRenderer;
 
@@ -80,6 +81,8 @@ public:
 
 	std::vector<UIObject *> childs;
 
+	TextRenderer *rend = nullptr;
+
 protected:
 	Vector2<float> position;
 	float scale;
@@ -87,7 +90,6 @@ protected:
 	UIObjectType objType;
 	UIObject *parent = nullptr;
 
-	TextRenderer *rend = nullptr;
 	int id = 0;
 
 	/**

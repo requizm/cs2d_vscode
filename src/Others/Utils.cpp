@@ -19,6 +19,7 @@ Vector2<float> Utils::ScreenToWorld(Vector2<float> view, Vector2<float> point)
     return (view + point);
 }
 
+
 Vector2<int> Utils::PositionToCell(Vector2<float> pos)
 {
     if (pos.x >= 0 && pos.y >= 0)

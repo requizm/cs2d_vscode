@@ -46,7 +46,7 @@ public:
 	std::shared_ptr<Panel> buildPanel;
 	std::shared_ptr<Panel> tilePanel, objectPanel;
 
-	std::vector<Env_Item*> env_items;
+	std::vector<Env_Item *> env_items;
 
 	std::string currentTileSet;
 
@@ -56,7 +56,6 @@ public:
 private:
 	void SelectedRbChanged();
 
-	
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
 
@@ -83,8 +82,6 @@ private:
 	Tile *selectedTile;
 	bool firstSelect;
 
-	
-
 	bool enable = false;
 	float time = 0;
 
@@ -95,7 +92,6 @@ private:
 
 	std::shared_ptr<Button> b_cancel;
 
-	
 	std::string currentName;
 
 	Vector3<float> cell_yellow;

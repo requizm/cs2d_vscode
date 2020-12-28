@@ -26,6 +26,7 @@
 #include "Models/UI/Outline.cpp"
 #include "Models/UI/Panel.cpp"
 #include "Models/UI/RadioButton.cpp"
+#include "Models/UI/ListItem.cpp"
 
 #include "Renderers/SpriteRenderer.cpp"
 #include "Renderers/TextRenderer.cpp"

@@ -5,7 +5,7 @@
 UIObject::UIObject() = default;
 
 UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer) : enable(true), visible(true),
-																							  mouseEvents(true), scrollable(false), dependParent(false)
+																										mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
@@ -19,7 +19,7 @@ UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, Te
 }
 
 UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true),
-																												 mouseEvents(true), scrollable(false), dependParent(false)
+																														   mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
@@ -33,7 +33,7 @@ UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, Te
 }
 
 UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale) : enable(true), visible(true),
-																	  mouseEvents(true), scrollable(false), dependParent(false)
+																				mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
@@ -46,7 +46,7 @@ UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale) : 
 }
 
 UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, UIObjectType type) : enable(true), visible(true),
-																						 mouseEvents(true), scrollable(false), dependParent(false)
+																								   mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
@@ -59,7 +59,7 @@ UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, UI
 }
 
 UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer) : enable(true), visible(true),
-																			  mouseEvents(true), scrollable(false), dependParent(false)
+																				   mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
@@ -72,7 +72,7 @@ UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer)
 }
 
 UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true),
-																								 mouseEvents(true), scrollable(false), dependParent(false)
+																									  mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
@@ -85,7 +85,7 @@ UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer,
 }
 
 UIObject::UIObject(Vector2<float> position, float scale, UIObjectType type) : enable(true), visible(true),
-																								 mouseEvents(true), scrollable(false), dependParent(false)
+																			  mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");

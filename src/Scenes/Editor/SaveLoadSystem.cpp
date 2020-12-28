@@ -24,60 +24,12 @@ void SaveLoadSystem::ProcessInput()
 
     if (savePanel->isEnable())
     {
-        if (!save_mapsUI.empty())
-        {
-            for (std::vector<int>::size_type i = 0; i != save_mapsUI.size(); i++)
-            {
-                save_mapsUI[i]->ProcessInput();
-            }
-            for (std::vector<int>::size_type i = 0; i != save_mapsUI.size(); i++)
-            {
-                if (save_mapsUI[i]->isMouseDown() && save_mapsUI[i]->isRenderable())
-                {
-                    if (selectedMap != -1)
-                    {
-                        save_mapsUI.at(selectedMap)->setButtonColor(Vector3<float>(0.21F));
-                        save_mapsUI.at(selectedMap)->setMouseHoverColor(Vector3<float>(0.25F));
-                        save_mapsUI.at(selectedMap)->setLabelColor(Vector3<float>(0.58F));
-                    }
-                    save_mapsUI[i]->setButtonColor(Vector3<float>(0.35F));
-                    save_mapsUI[i]->setMouseHoverColor(Vector3<float>(0.35F));
-                    save_mapsUI[i]->setLabelColor(Vector3<float>(1.0F));
-                    t_save->setText(save_mapsUI[i]->getText());
-                    selectedMap = i;
-                    break;
-                }
-            }
-        }
+        save_listMaps->ProcessInput();
     }
 
     if (loadPanel->isEnable())
     {
-        if (!load_mapsUI.empty())
-        {
-            for (std::vector<int>::size_type i = 0; i != load_mapsUI.size(); i++)
-            {
-                load_mapsUI[i]->ProcessInput();
-            }
-            for (std::vector<int>::size_type i = 0; i != load_mapsUI.size(); i++)
-            {
-                if (load_mapsUI[i]->isMouseDown() && load_mapsUI[i]->isRenderable())
-                {
-                    if (selectedMap != -1)
-                    {
-                        load_mapsUI.at(selectedMap)->setButtonColor(Vector3<float>(0.21F));
-                        load_mapsUI.at(selectedMap)->setMouseHoverColor(Vector3<float>(0.25F));
-                        load_mapsUI.at(selectedMap)->setLabelColor(Vector3<float>(0.58F));
-                    }
-                    load_mapsUI[i]->setButtonColor(Vector3<float>(0.35F));
-                    load_mapsUI[i]->setMouseHoverColor(Vector3<float>(0.35F));
-                    load_mapsUI[i]->setLabelColor(Vector3<float>(1.0F));
-                    t_load->setText(load_mapsUI[i]->getText());
-                    selectedMap = i;
-                    break;
-                }
-            }
-        }
+        load_listMaps->ProcessInput();
     }
 }
 
@@ -86,56 +38,13 @@ void SaveLoadSystem::Update()
     savePanel->Update();
     loadPanel->Update();
 
-    if (savePanel->isEnable() && !save_mapsUI.empty())
+    if (savePanel->isEnable())
     {
-        for (std::vector<int>::size_type i = 0; i != save_mapsUI.size(); i++)
-        {
-            save_mapsUI[i]->Update();
-        }
+        save_listMaps->Update();
     }
-    if (loadPanel->isEnable() && !load_mapsUI.empty())
+    if (loadPanel->isEnable())
     {
-        for (std::vector<int>::size_type i = 0; i != load_mapsUI.size(); i++)
-        {
-            load_mapsUI[i]->Update();
-        }
-    }
-    if (InputManager::scrollYPressed)
-    {
-        if (savePanel->isEnable() && save_mapsPanel->isScrollable())
-        {
-            if (!save_mapsUI.empty())
-            {
-                bool check_1 = save_mapsUI.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
-                bool check_2 = save_mapsUI.at(save_mapsUI.size() - 1)->getLocalPosition().y == save_mapsPanel->getSize().y && InputManager::scroll.y < 0;
-
-                if (!check_1 && !check_2)
-                {
-                    for (auto &tile : save_mapsUI)
-                    {
-                        tile->setPosition(tile->getLocalPosition().x, tile->getLocalPosition().y + InputManager::scroll.y * 20);
-                    }
-                }
-            }
-            InputManager::scrollYPressed = false;
-        }
-        if (loadPanel->isEnable() && load_mapsPanel->isScrollable())
-        {
-            if (!load_mapsUI.empty())
-            {
-                bool check_1 = load_mapsUI.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
-                bool check_2 = load_mapsUI.at(load_mapsUI.size() - 1)->getLocalPosition().y == load_mapsPanel->getSize().y && InputManager::scroll.y < 0;
-
-                if (!check_1 && !check_2)
-                {
-                    for (auto &tile : load_mapsUI)
-                    {
-                        tile->setPosition(tile->getLocalPosition().x, tile->getLocalPosition().y + InputManager::scroll.y * 20);
-                    }
-                }
-            }
-            InputManager::scrollYPressed = false;
-        }
+        load_listMaps->Update();
     }
 }
 void SaveLoadSystem::Render(SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer)
@@ -144,23 +53,11 @@ void SaveLoadSystem::Render(SpriteRenderer &menuRenderer, SquareRenderer &square
     loadPanel->Draw(menuRenderer, squareRenderer);
     if (savePanel->isEnable())
     {
-        if (!save_mapsUI.empty())
-        {
-            for (std::vector<int>::size_type i = 0; i != save_mapsUI.size(); i++)
-            {
-                save_mapsUI[i]->Draw(menuRenderer, squareRenderer);
-            }
-        }
+        save_listMaps->Draw(menuRenderer, squareRenderer);
     }
     if (loadPanel->isEnable())
     {
-        if (!load_mapsUI.empty())
-        {
-            for (std::vector<int>::size_type i = 0; i != load_mapsUI.size(); i++)
-            {
-                load_mapsUI[i]->Draw(menuRenderer, squareRenderer);
-            }
-        }
+        load_listMaps->Draw(menuRenderer, squareRenderer);
     }
 }
 
@@ -168,7 +65,7 @@ void SaveLoadSystem::SaveMap()
 {
     if (!Editor::instance().tiles.empty() && !t_save->getText().empty())
     {
-        
+
         rapidxml::xml_document<> doc;
         rapidxml::xml_node<> *node_map = doc.allocate_node(rapidxml::node_element, "map");
         Logger::WriteLog("xml_node olusturuldu");
@@ -198,7 +95,6 @@ void SaveLoadSystem::SaveMap()
             node_tile->append_node(node_tile_type);
             node_tile->append_node(node_item_id);
             node_map->append_node(node_tile);
-            
 
             //delete[] cellX;
             //delete[] cellY;
@@ -243,24 +139,13 @@ void SaveLoadSystem::SaveMap()
 }
 void SaveLoadSystem::B_SaveMap()
 {
-    save_mapsUI.clear();
-    save_mapsPanel->childs.clear();
-    selectedMap = -1;
+    save_listMaps->Clear();
 
     std::vector<std::string> maps = getMapNames();
 
     for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
     {
-        Button *bt = new Button(maps[i], Vector2<float>(0.0F, static_cast<float>(i * 20)), Vector2<float>(save_mapsPanel->getSize().x, 20.0F), *Editor::instance().textRenderer, Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
-        bt->setMouseClickColor(Vector3<float>(0.35F));
-        bt->setMouseHoverColor(Vector3<float>(0.25F));
-        bt->setLabelMouseHoverColor(Vector3<float>(1.0F));
-        bt->setLabelClickColor(Vector3<float>(1.0F));
-        bt->setOutline(false);
-        bt->setParent(save_mapsPanel.get(), false);
-        bt->independent = true;
-        bt->center = false;
-        save_mapsUI.push_back(std::make_shared<Button>(*bt));
+        save_listMaps->AddItem(maps[i]);
     }
     this->savePanel->setEnable(true);
 }
@@ -339,24 +224,13 @@ std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName)
 }
 void SaveLoadSystem::B_LoadMap()
 {
-    load_mapsUI.clear();
-    load_mapsPanel->childs.clear();
-    selectedMap = -1;
+    load_listMaps->Clear();
 
     std::vector<std::string> maps = getMapNames();
 
     for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
     {
-        Button *bt = new Button(maps[i], Vector2<float>(0.0F, static_cast<float>(i * 20)), Vector2<float>(load_mapsPanel->getSize().x, 20.0F), *Editor::instance().textRenderer, Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
-        bt->setMouseClickColor(Vector3<float>(0.35F));
-        bt->setMouseHoverColor(Vector3<float>(0.25F));
-        bt->setLabelMouseHoverColor(Vector3<float>(1.0F));
-        bt->setLabelClickColor(Vector3<float>(1.0F));
-        bt->setOutline(false);
-        bt->setParent(load_mapsPanel.get(), false);
-        bt->independent = true;
-        bt->center = false;
-        load_mapsUI.push_back(std::make_shared<Button>(*bt));
+        load_listMaps->AddItem(maps[i]);
     }
     this->loadPanel->setEnable(true);
 }
