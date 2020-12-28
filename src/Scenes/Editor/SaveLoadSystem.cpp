@@ -65,7 +65,6 @@ void SaveLoadSystem::SaveMap()
 {
     if (!Editor::instance().tiles.empty() && !t_save->getText().empty())
     {
-
         rapidxml::xml_document<> doc;
         rapidxml::xml_node<> *node_map = doc.allocate_node(rapidxml::node_element, "map");
         Logger::WriteLog("xml_node olusturuldu");

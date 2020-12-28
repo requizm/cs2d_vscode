@@ -91,7 +91,6 @@ void Button::Draw()
 
 void Button::Update()
 {
-
 	if (isEnable() && isMouseEvents())
 	{
 		if (type == ButtonType::DEFAULT && !text.empty())

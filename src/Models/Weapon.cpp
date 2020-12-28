@@ -10,7 +10,6 @@ void Weapon::Draw(SpriteRenderer &renderer)
 	}
 	else if (this->selected)
 	{
-
 		renderer.DrawSprite(this->sprites[0], this->globalPosition, this->globalSize, this->globalRotation);
 	}
 	else
@@ -37,14 +36,6 @@ void Weapon::DrawModel(SpriteRenderer &renderer)
 
 void Weapon::Update()
 {
-	/*if (parent == nullptr && weaponType == WeaponType::MAIN)
-	{
-		
-	}
-	else if (parent != nullptr && weaponType == WeaponType::MAIN)
-	{
-		//this->SetSize(Vector2<float>(InputManager::Height / 20, InputManager::Height / 20));
-	}*/
 }
 
 void Weapon::SetParent(GameObject *go)

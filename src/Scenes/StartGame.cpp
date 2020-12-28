@@ -117,9 +117,6 @@ void StartGame::ProcessInput()
 	{
 		Game::SetGameState(GameState::MENU);
 	}
-	if (InputManager::isKeyUp(GLFW_KEY_ESCAPE))
-	{
-	}
 	if (InputManager::isKeyDown(GLFW_KEY_Q))
 	{
 		this->weapons.at(1).SetParent(player.get());

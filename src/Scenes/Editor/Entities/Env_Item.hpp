@@ -8,7 +8,7 @@ class Env_Item
 {
 private:
     int item_id = 0; // 0=null  1=ak47   2=m4a1 ..
-    int obj_id=0;
+    int obj_id = 0;
     Vector2<float> position;
     Vector2<float> size;
     Sprite sp;
@@ -17,7 +17,7 @@ public:
     Env_Item();
     Env_Item(int id, Vector2<float> position);
     ~Env_Item();
-    
+
     void Initialize();
 
     void ProcessInput();

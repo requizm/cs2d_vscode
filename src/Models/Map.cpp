@@ -81,37 +81,6 @@ void Map::Draw(SpriteRenderer &renderer)
 	}
 }
 
-/*
-void Map::Load(const GLchar * file)
-{
-	this->Tiles.clear();
-	// Load from file
-	GLuint tileCode;
-	std::string line;
-	std::ifstream fstream(file);
-	std::vector<std::vector<GLuint>> tileData;
-	if (fstream)
-	{
-		while (std::getline(fstream, line)) // Read each line from level file
-		{
-			std::istringstream sstream(line);
-			std::vector<GLuint> row;
-			while (sstream >> tileCode) // Read each word seperated by spaces
-				row.push_back(tileCode);
-			tileData.push_back(row);
-		}
-		if (!tileData.empty())
-			this->Init(tileData);
-	}
-}
-
-void Map::Draw(SpriteRenderer & renderer)
-{
-	for (GameObject &tile : Sprites)
-		if (!tile.IsDestroyed())
-			tile.Draw(renderer);
-}
-*/
 void Map::Init(std::vector<std::vector<GLuint>> tileData) const
 {
 	Logger::WriteLog("Map->Init() " + this->name + "");
@@ -123,7 +92,6 @@ void Map::Init(std::vector<std::vector<GLuint>> tileData) const
 	{
 		for (GLuint x = 0; x < tileData[y].size(); x++)
 		{
-
 			const Vector2<float> pos(Game_Parameters::SCREEN_WIDTH / 26.5F * x, Game_Parameters::SCREEN_WIDTH / 26.5F * y);
 			const Vector2<float> size(Game_Parameters::SCREEN_WIDTH / 26.5F, Game_Parameters::SCREEN_WIDTH / 26.5F);
 			const int yoffset = tileData[y][x] / 17;

@@ -45,7 +45,6 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRendere
 
 void TextBox::OnEnable()
 {
-	
 }
 
 void TextBox::OnDisable()

@@ -41,7 +41,6 @@ void RadioButtonElement::Update()
 
 void RadioButtonElement::ProcessInput()
 {
-
     isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
     isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 }
