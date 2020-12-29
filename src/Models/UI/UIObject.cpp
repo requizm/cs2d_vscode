@@ -4,7 +4,7 @@
 
 UIObject::UIObject() = default;
 
-UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
+UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale, TextRenderer &renderer) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
@@ -17,7 +17,7 @@ UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, Te
 	this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
+UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + ", TextRenderer");
@@ -30,7 +30,7 @@ UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, Te
 	this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
+UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
@@ -42,7 +42,7 @@ UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale) : 
 	this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, UIObjectType type) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
+UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale, UIObjectType type) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + "), size(" + std::to_string(size.x) + "," + std::to_string(size.y) + "), " + std::to_string(scale) + "");
@@ -54,7 +54,7 @@ UIObject::UIObject(Vector2<float> position, Vector2<float> size, float scale, UI
 	this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
+UIObject::UIObject(Vector2<int> position, float scale, TextRenderer &renderer) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = UIObjectType::UIOBJECT;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->" + GetObjectTypeString() + "(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
@@ -66,7 +66,7 @@ UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer)
 	this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
+UIObject::UIObject(Vector2<int> position, float scale, TextRenderer &renderer, UIObjectType type) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
@@ -78,7 +78,7 @@ UIObject::UIObject(Vector2<float> position, float scale, TextRenderer &renderer,
 	this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<float> position, float scale, UIObjectType type) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
+UIObject::UIObject(Vector2<int> position, float scale, UIObjectType type) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
 {
 	this->objType = type;
 	//Logger::WriteLog("" + GetObjectTypeString() + "->UIObject(pos(" + std::to_string(position.x) + "," + std::to_string(position.y) + ")," + std::to_string(scale) + ", TextRenderer");
@@ -118,7 +118,7 @@ void UIObject::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRender
 {
 }
 
-void UIObject::setPosition(const Vector2<float> position)
+void UIObject::setPosition(const Vector2<int> position)
 {
 	this->position = position;
 }
@@ -135,17 +135,17 @@ void UIObject::setParentCenterPos()
 		setPosition(parent->getSize().x / 2 - this->getSize().x / 2, parent->getSize().y / 2 - this->getSize().y / 2);
 }
 
-void UIObject::setSize(const Vector2<float> size)
+void UIObject::setSize(const Vector2<int> size)
 {
 	this->size = size;
 }
 
 void UIObject::setSize(const int x, const int y)
 {
-	this->size = Vector2<float>(x, y);
+	this->size = Vector2<int>(x, y);
 }
 
-Vector2<float> UIObject::getPosition()
+Vector2<int> UIObject::getPosition()
 {
 	if (isParent())
 	{
@@ -154,7 +154,7 @@ Vector2<float> UIObject::getPosition()
 	return this->position;
 }
 
-Vector2<float> UIObject::getLocalPosition()
+Vector2<int> UIObject::getLocalPosition()
 {
 	if (isParent())
 	{
@@ -163,14 +163,14 @@ Vector2<float> UIObject::getLocalPosition()
 	return this->position;
 }
 
-Vector2<float> UIObject::getSize()
+Vector2<int> UIObject::getSize()
 {
 	return this->size;
 }
 
-Vector2<float> UIObject::getCenterPosition() const
+Vector2<int> UIObject::getCenterPosition() const
 {
-	return Vector2<float>(this->position.x + this->size.x / 2, this->position.y + this->size.y / 2);
+	return Vector2<int>(this->position.x + this->size.x / 2, this->position.y + this->size.y / 2);
 }
 
 UIObject *UIObject::getParent() const

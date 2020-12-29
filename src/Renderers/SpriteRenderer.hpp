@@ -26,13 +26,13 @@ public:
 	 * @param sprite 
 	 * @param position 
 	 * @param size 
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 * @param drawCenter false
 	 * @param shineFactor 0.0F 
 	 * @param isSelected false
 	 * @param time 0.0F
 	 */
-	void DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, GLfloat rotate = 0.0F, bool drawCenter = false, GLfloat shineFactor = 0.0F, bool isSelected = false, GLfloat time = 0.0F);
+	void DrawSprite(const Sprite &sprite, Vector2<int> position, Vector2<int> size, int rotate = 0.0F, bool drawCenter = false, GLfloat shineFactor = 0.0F, bool isSelected = false, GLfloat time = 0.0F);
 
 	/**
 	 * @brief Draw replaced sprite color, if you wanna shining object, you should change {isSelect=true} and {time=(system.time)}
@@ -42,12 +42,12 @@ public:
 	 * @param size 
 	 * @param color 
 	 * @param drawCenter false
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 * @param shineFactor 0.0F
 	 * @param isSelected false
 	 * @param time 0.0F
 	 */
-	void DrawSprite(const Sprite &sprite, Vector2<float> position, Vector2<float> size, Vector3<float> color, bool drawCenter = false, GLfloat rotate = 0.0F, GLfloat shineFactor = 0.0F, bool isSelected = false, float time = 0.0F);
+	void DrawSprite(const Sprite &sprite, Vector2<int> position, Vector2<int> size, Vector3<float> color, bool drawCenter = false, int rotate = 0, GLfloat shineFactor = 0.0F, bool isSelected = false, float time = 0.0F);
 
 	void DrawSprite(const Sprite &sprite, Matrix4<float> model);
 	void SetProjection(Matrix4<float> projection);

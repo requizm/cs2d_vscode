@@ -22,10 +22,10 @@ public:
 	 * @param isBackGround false
 	 * @param opttitles true
 	 * @param scale 1.0F
-	 * @param color Vector3<float>(1.0F)
+	 * @param color Vector3<int>(1)
 	 * @param transp 0.9F
 	 */
-	Panel(Vector2<float> position, const std::string &title, Vector2<float> size, TextRenderer &renderer, bool isBackGround = false, bool opttitles = true, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), float transp = 0.9F);
+	Panel(Vector2<int> position, const std::string &title, Vector2<int> size, TextRenderer &renderer, bool isBackGround = false, bool opttitles = true, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), float transp = 0.9F);
 	Panel();
 	~Panel();
 
@@ -56,8 +56,8 @@ public:
 
 protected:
 	Vector3<float> panelColor;
-	Vector2<float> dragSize;
-	Vector2<float> dragPos;
+	Vector2<int> dragSize;
+	Vector2<int> dragPos;
 	Button escapeButton;
 	Label title;
 	bool opttitles;
@@ -67,7 +67,7 @@ protected:
 private:
 	bool isDownForDrag = false;
 
-	float lineOffset = 20.0F;
+	int lineOffset = 20;
 
 	bool outline;
 	Vector3<float> outlineColor;

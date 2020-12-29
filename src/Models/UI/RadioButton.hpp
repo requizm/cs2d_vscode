@@ -20,16 +20,16 @@ public:
      * @param textColor Vector3<float>(0.0F)
      * @param scale 1.0F
      */
-    RadioButtonElement(const std::string &text, Vector2<float> position, TextRenderer &textRenderer, int index, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
+    RadioButtonElement(const std::string &text, Vector2<int> position, TextRenderer &textRenderer, int index, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
     ~RadioButtonElement();
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
     void Update() override;
     void ProcessInput() override;
 
-    Vector2<float> getPosition() override;
-    Vector2<float> getLocalPosition() override;
-    Vector2<float> getSize() override;
+    Vector2<int> getPosition() override;
+    Vector2<int> getLocalPosition() override;
+    Vector2<int> getSize() override;
     int getIndex();
 
     void setMouseHoverColor(const Vector3<float> color);
@@ -40,7 +40,7 @@ public:
     void OnEnable() override;
     void OnDisable() override;
 
-    void setPosition(const Vector2<float> position) override;
+    void setPosition(const Vector2<int> position) override;
     void setPosition(const int x, const int y) override;
 
     bool isMouseHover() override;
@@ -76,7 +76,7 @@ private:
 
 public:
     RadioButton();
-    RadioButton(TextRenderer &renderer, Vector2<float> position, int y_sep);
+    RadioButton(TextRenderer &renderer, Vector2<int> position, int y_sep);
     ~RadioButton();
 
     void AddListener(std::function<void(RadioButtonElement *, RadioButtonElement *)> func);

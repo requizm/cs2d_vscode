@@ -3,7 +3,7 @@
 
 TextBox::TextBox() = default;
 
-TextBox::TextBox(Vector2<float> position, TextRenderer &renderer, Vector2<float> size, bool isBackGround, float scale /*= 1.0F*/, Vector3<float> color /*= Vector3<float>(1.0F)*/) : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
+TextBox::TextBox(Vector2<int> position, TextRenderer &renderer, Vector2<int> size, bool isBackGround, float scale /*= 1.0F*/, Vector3<float> color /*= Vector3<float>(1.0F)*/) : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
 {
 	this->editable = true;
 	this->editMode = false;
@@ -32,7 +32,7 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRendere
 		{
 			if (time <= 0.5F)
 			{
-				spriteRenderer.DrawSprite(cursor, Vector2<float>(getPosition().x - 2.0F + labelSize.x, getPosition().y + 2.0F), Vector2<float>(8.0F, 16.0F));
+				spriteRenderer.DrawSprite(cursor, Vector2<int>(getPosition().x - 2.0F + labelSize.x, getPosition().y + 2.0F), Vector2<int>(8, 16));
 			}
 			else if (time >= 1.0F)
 			{

@@ -13,7 +13,7 @@ class Game_Parameters
 public:
     static int SCREEN_WIDTH;
     static int SCREEN_HEIGHT;
-    static float SIZE_TILE;
+    static int SIZE_TILE;
 
     Game_Parameters();
     ~Game_Parameters();

@@ -77,15 +77,15 @@ void StartGame::Start()
 	sprites.push_back(ct1_2);
 	sprites.push_back(ct1_0);
 	sprites.push_back(ct1_1);
-	player = std::make_unique<Player>(Vector2<float>(70.0F, 70.0F), sprites);
+	player = std::make_unique<Player>(Vector2<int>(70, 70), sprites);
 }
 
 void StartGame::OnEnable()
 {
 	this->Start();
 
-	player->SetTransform(Vector2<float>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
-						 Vector2<float>(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
+	player->SetTransform(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
+						 Vector2<int>(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
 	player->setVelocity(500.0F);
 	player->SetMap(&map);
 }
@@ -141,10 +141,10 @@ void StartGame::Render()
 	player->DrawModel(renderer);
 
 	Vector2 p = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
-	this->textRenderer->RenderText("mouse: " + std::to_string(p.x) + " - " + std::to_string(p.y), Vector2(700.0F, 15.0F), 1.0F, 0.5F);
-	this->textRenderer->RenderText("player matrix: " + std::to_string(player->GetTransform().values[12]) + " - " + std::to_string(player->GetTransform().values[13]), Vector2(700.0F, 45.0F), 1.0F, 0.5F);
-	this->textRenderer->RenderText("player pos: " + player->GetPosition().ToString(), Vector2(700.0F, 75.0F), 1.0F, 0.5F);
-	this->textRenderer->RenderText("player cell: " + player->PositionToCell(player->GetPositionOfCenter()).ToString(), Vector2(700.0F, 105.0F), 1.0F, 0.5F);
+	this->textRenderer->RenderText("mouse: " + std::to_string(p.x) + " - " + std::to_string(p.y), Vector2(700, 15), 1.0F, 0.5F);
+	this->textRenderer->RenderText("player matrix: " + std::to_string(player->GetTransform().values[12]) + " - " + std::to_string(player->GetTransform().values[13]), Vector2(700, 45), 1.0F, 0.5F);
+	this->textRenderer->RenderText("player pos: " + player->GetPosition().ToString(), Vector2(700, 75), 1.0F, 0.5F);
+	this->textRenderer->RenderText("player cell: " + Utils::PositionToCell(player->GetPositionOfCenter()).ToString(), Vector2(700, 105), 1.0F, 0.5F);
 
 	//label->Draw(*textRenderer);
 

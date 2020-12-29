@@ -26,7 +26,7 @@ public:
 	 * @param color Vector3<float>(1.0F)
 	 * @param type UIObjectType::LABEL
 	 */
-	Label(const std::string &text, Vector2<float> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
 
 	/**
 	 * @brief Construct a new Label for TextBox
@@ -37,7 +37,7 @@ public:
 	 * @param color Vector3<float>(1.0F)
 	 * @param type UIObjectType::LABEL
 	 */
-	Label(Vector2<float> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(Vector2<int> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
 
 	/**
 	 * @brief Construct a new Label for TileButton and SpriteButton
@@ -47,7 +47,7 @@ public:
 	 * @param scale 1.0F
 	 * @param type UIObjectType::LABEL
 	 */
-	Label(Vector2<float> position, Vector2<float> size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
+	Label(Vector2<int> position, Vector2<int> size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
 	~Label();
 
 	virtual void Draw();
@@ -61,7 +61,7 @@ public:
 	virtual bool isMousePress();
 
 	std::string getText() const;
-	Vector2<float> getLabelSize() const;
+	Vector2<int> getLabelSize() const;
 	Vector3<float> getLabelColor() const;
 	Vector3<float> getLabelMouseHoverColor() const;
 	Vector3<float> getLabelClickColor() const;
@@ -72,7 +72,7 @@ public:
 	void setLabelClickColor(const Vector3<float> color);
 
 protected:
-	Vector2<float> labelSize;
+	Vector2<int> labelSize;
 
 	std::string text;
 	Vector3<float> labelClickColor;
@@ -82,7 +82,7 @@ protected:
 
 	void DrawForButton(const bool center);
 
-	Vector2<float> getPositionForButton(const bool center);
+	Vector2<int> getPositionForButton(const bool center);
 
 	virtual bool isMouseHoverM();
 	virtual bool isMouseDownM(const int key);

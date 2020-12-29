@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-Vector2<float> InputManager::mousePos;
+Vector2<int> InputManager::mousePos;
 Vector2<float> InputManager::scroll;
 bool InputManager::scrollYPressed;
 

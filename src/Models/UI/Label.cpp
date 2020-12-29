@@ -3,7 +3,7 @@
 
 Label::Label() = default;
 
-Label::Label(const std::string &text, Vector2<float> position, TextRenderer &renderer, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<float>(1.0F))
+Label::Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
 {
 	this->labelColor = color;
 	this->text = text;
@@ -13,7 +13,7 @@ Label::Label(const std::string &text, Vector2<float> position, TextRenderer &ren
 	this->labelSize = this->rend->CalculateSize(text, scale);
 }
 
-Label::Label(Vector2<float> position, TextRenderer &renderer, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<float>(1.0F))
+Label::Label(Vector2<int> position, TextRenderer &renderer, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
 {
 	this->labelColor = color;
 	this->labelMouseHoverColor = Vector3<float>(0.78F);
@@ -21,7 +21,7 @@ Label::Label(Vector2<float> position, TextRenderer &renderer, float scale, Vecto
 	this->labelCurrentColor = color;
 }
 
-Label::Label(Vector2<float> position, Vector2<float> size, float scale, UIObjectType type) : UIObject(position, size, scale, type)
+Label::Label(Vector2<int> position, Vector2<int> size, float scale, UIObjectType type) : UIObject(position, size, scale, type)
 {
 }
 
@@ -75,7 +75,7 @@ std::string Label::getText() const
 	return this->text;
 }
 
-Vector2<float> Label::getLabelSize() const
+Vector2<int> Label::getLabelSize() const
 {
 	return this->labelSize;
 }
@@ -110,26 +110,26 @@ bool Label::isMousePress()
 	//return isPress;
 }
 
-Vector2<float> Label::getPositionForButton(const bool center)
+Vector2<int> Label::getPositionForButton(const bool center)
 {
 	if (isParent())
 	{
 		if (objType == UIObjectType::BUTTON)
 		{
-			Vector2<float> dif = getSize() - getLabelSize();
+			Vector2<int> dif = getSize() - getLabelSize();
 			dif.y /= 2;
 			if (center)
 			{
 				dif.x /= 2;
 				return parent->getPosition() + this->position + dif;
 			}
-			return parent->getPosition() + this->position + Vector2<float>(0.0F, dif.y);
+			return parent->getPosition() + this->position + Vector2<int>(0, dif.y);
 		}
 		return parent->getPosition() + this->position;
 	}
 	if (objType == UIObjectType::BUTTON)
 	{
-		Vector2<float> dif = getSize() - getLabelSize();
+		Vector2<int> dif = getSize() - getLabelSize();
 		dif.y /= 2;
 		if (center)
 		{

@@ -26,7 +26,7 @@ public:
 	 * @param size 
 	 * @param objType 2(ObjectType::GAMEOBJECT)
 	 */
-	GameObject(Vector2<float> pos, const Sprite &sprite, Vector2<float> size, int objType = 2);
+	GameObject(Vector2<int> pos, const Sprite &sprite, Vector2<int> size, int objType = 2);
 	virtual ~GameObject();
 
 	// Draw sprite
@@ -38,11 +38,11 @@ public:
 
 	void SetTransform(Matrix4<float> transform);
 
-	void SetTransform(Vector2<float> pos, Vector2<float> size, GLfloat rot = 0.0f);
-	void SetPosition(Vector2<float> pos);
-	void SetPosition(const float x, const float y);
-	void SetSize(Vector2<float> size);
-	void SetRotation(GLfloat rot);
+	void SetTransform(Vector2<int> pos, Vector2<int> size, int rot = 0);
+	void SetPosition(Vector2<int> pos);
+	void SetPosition(const int x, const int y);
+	void SetSize(Vector2<int> size);
+	void SetRotation(int rot);
 	void setCellPosition(int x, int y);
 	void setCellPosition(Vector2<int> pos);
 	void setID(int id);
@@ -53,10 +53,10 @@ public:
 	GameObject* GetParent();
 	int GetObjectType();
 	Matrix4<float> GetTransform();
-	Vector2<float> GetPosition();
-	Vector2<float> GetPositionOfCenter();
-	GLfloat GetRotation();
-	Vector2<float> GetSize();
+	Vector2<int> GetPosition();
+	Vector2<int> GetPositionOfCenter();
+	int GetRotation();
+	Vector2<int> GetSize();
 	int GetID() const;
 
 	void BuildTransform();
@@ -65,20 +65,15 @@ public:
 	GLboolean IsDestroyed() const;
 	bool IsParent();
 
-	Vector2<int> PositionToCell(Vector2<float> pos);
-	Vector2<int> PositionToCell(float x, float y);
-
 	Sprite sprite;
 
 protected:
 	// Object state
-	Vector2<float> localPosition, localSize, Velocity2d;
-	GLfloat localRotation;
+	Vector2<int> localPosition, localSize, Velocity2d;
+	int localRotation;
 
-	Vector2<float> globalPosition, globalSize;
-	GLfloat globalRotation;
-
-	glm::vec2 cellPos;
+	Vector2<int> globalPosition, globalSize;
+	int globalRotation;
 
 	Matrix4<float> localTransform = Matrix4(1.0f);
 	Matrix4<float> globalTransform = Matrix4(1.0f);
@@ -90,7 +85,7 @@ protected:
 
 	ObjectType objType;
 
-	Vector2<float> parentPositionDelta;
+	Vector2<int> parentPositionDelta;
 
 	int id;
 

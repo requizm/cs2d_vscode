@@ -8,7 +8,7 @@ ListItem::ListItem(Panel *panel) : UIObject(panel->getPosition(), panel->getScal
 
 ListItem::ListItem() : UIObject()
 {
-    this->position = Vector2<float>(0.0F);
+    this->position = Vector2<int>(0);
     this->scale = 0.0F;
 }
 
@@ -22,7 +22,7 @@ ListItem::~ListItem()
 
 void ListItem::AddItem(std::string &text)
 {
-    Button *bt = new Button(text, Vector2<float>(0.0F, static_cast<float>(i++ * 20)), Vector2<float>(panel->getSize().x, 20.0F), *(panel->rend), Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
+    Button *bt = new Button(text, Vector2<int>(0.0F, static_cast<int>(i++ * 20)), Vector2<int>(panel->getSize().x, 20.0F), *(panel->rend), Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
     bt->setMouseClickColor(Vector3<float>(0.35F));
     bt->setMouseHoverColor(Vector3<float>(0.25F));
     bt->setLabelMouseHoverColor(Vector3<float>(1.0F));
@@ -107,8 +107,8 @@ void ListItem::Update()
             if (!items.empty())
             {
                 bool check_1 = items.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
-                float itemLocalPos = items.at(items.size() - 1)->getLocalPosition().y;
-                float panelSize = panel->getSize().y;
+                int itemLocalPos = items.at(items.size() - 1)->getLocalPosition().y;
+                int panelSize = panel->getSize().y;
                 bool check_2 = items.at(items.size() - 1)->getLocalPosition().y + 20.0F <= panel->getSize().y && InputManager::scroll.y < 0;
 
                 if (!check_1 && !check_2)

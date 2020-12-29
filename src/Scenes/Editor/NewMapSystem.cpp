@@ -39,7 +39,7 @@ bool NewMapSystem::isMouseHover()
     return newPanel->isMouseHover(false);
 }
 
-NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<float> &pos, bool &fSelect,
+NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
                                   Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
                                   std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell)
 {
@@ -47,7 +47,7 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, flo
     NewMapResult res;
 
     dt = 0.0F;
-    pos = Vector2<float>(0.0F - bPanel->getSize().x, 0.0F);
+    pos = Vector2<int>(0 - bPanel->getSize().x, 0);
 
     fSelect = false;
     mLimit = mapSize;
@@ -63,8 +63,8 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, flo
     {
         const int xPos = 32 * (curIndex % maxCell);
         const int yPos = 32 * (curIndex / maxCell);
-        const Vector2<float> pos(xPos, yPos);
-        const Vector2<float> size(Vector2<float>(32, 32));
+        const Vector2<int> pos(xPos, yPos);
+        const Vector2<int> size(Vector2<int>(32, 32));
         const int xoffset = curIndex % (ResourceManager::GetTexture(tileSet).Width / 32);
         const int yoffset = curIndex / (ResourceManager::GetTexture(tileSet).Width / 32);
         const Sprite sprite = Sprite(ResourceManager::GetTexture(tileSet), (xoffset)*32, yoffset * 32, 32, 32);
@@ -88,7 +88,7 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, flo
 
     return res;
 }
-NewMapResult NewMapSystem::B_NewMap(float &dt, Vector2<float> &pos, bool &fSelect, Vector2<int> &mLimit, Vector2<int> &texture,
+NewMapResult NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit, Vector2<int> &texture,
                                     int &tCount, std::shared_ptr<Panel> &tPanel, std::shared_ptr<Panel> &bPanel, Tile &sTile,
                                     int maxCell)
 {

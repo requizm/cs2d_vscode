@@ -12,10 +12,10 @@
 class Camera
 {
 public:
-	Vector2<float> view;
+	Vector2<int> view;
 
 	Camera() : view(0, 0), height(0), width(0), needX(0), needY(0), cameraMatrix(Matrix4(1.0F)){};
-	Camera(int width, int height, Vector2<float> pos = Vector2(0.0F))
+	Camera(int width, int height, Vector2<int> pos = Vector2(0))
 	{
 		needX = 0;
 		needY = 0;
@@ -45,13 +45,13 @@ public:
 		needUpdate = true;*/
 	}
 
-	void setPosition(Vector2<float> newPos)
+	void setPosition(Vector2<int> newPos)
 	{
-		needX = newPos.x - view.x;
-		needY = newPos.y - view.y;
+		needX = static_cast<float>(newPos.x - view.x);
+		needY = static_cast<float>(newPos.y - view.y);
 		needUpdate = true;
-		view.x += needX;
-		view.y += needY;
+		view.x += static_cast<int>(needX);
+		view.y += static_cast<int>(needY);
 
 		update();
 	}

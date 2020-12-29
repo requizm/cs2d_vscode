@@ -39,19 +39,19 @@ void Player::ControllerInput()
 {
 	if (InputManager::isKey(GLFW_KEY_W))
 	{
-		this->SetPosition(Vector2<float>(this->GetPosition().x, this->GetPosition().y - this->velocity * Timer::DeltaTime));
+		this->SetPosition(Vector2<int>(this->GetPosition().x, this->GetPosition().y - this->velocity * Timer::DeltaTime));
 	}
 	if (InputManager::isKey(GLFW_KEY_S))
 	{
-		this->SetPosition(Vector2<float>(this->GetPosition().x, this->GetPosition().y + this->velocity * Timer::DeltaTime));
+		this->SetPosition(Vector2<int>(this->GetPosition().x, this->GetPosition().y + this->velocity * Timer::DeltaTime));
 	}
 	if (InputManager::isKey(GLFW_KEY_A))
 	{
-		this->SetPosition(Vector2<float>(this->GetPosition().x - this->velocity * Timer::DeltaTime, this->GetPosition().y));
+		this->SetPosition(Vector2<int>(this->GetPosition().x - this->velocity * Timer::DeltaTime, this->GetPosition().y));
 	}
 	if (InputManager::isKey(GLFW_KEY_D))
 	{
-		this->SetPosition(Vector2<float>(this->GetPosition().x + this->velocity * Timer::DeltaTime, this->GetPosition().y));
+		this->SetPosition(Vector2<int>(this->GetPosition().x + this->velocity * Timer::DeltaTime, this->GetPosition().y));
 	}
 }
 void Player::SlotInput()
@@ -64,7 +64,7 @@ void Player::SetMap(Map *map)
 	this->map = map;
 }
 
-void Player::setVelocity(const float velocity)
+void Player::setVelocity(const int velocity)
 {
 	Logger::WriteLog("Player->SetVelocity(" + std::to_string(velocity) + ")");
 	this->velocity = velocity;
@@ -90,7 +90,7 @@ void Player::Destroy()
 	isDestroyed = true;
 }
 
-float Player::getVelocity() const
+int Player::getVelocity() const
 {
 	Logger::WriteLog("Player->takeDamage(" + std::to_string(velocity) + ")");
 	return velocity;

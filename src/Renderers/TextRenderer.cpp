@@ -105,7 +105,7 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 	FT_Done_FreeType(ft);
 }
 
-void TextRenderer::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, Vector3<float> color)
+void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale, Vector3<float> color)
 {
 	// Activate corresponding render state
 	this->TextShader.Use();
@@ -150,7 +150,7 @@ void TextRenderer::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat sc
 	this->TextShader.UnUse();
 }
 
-void TextRenderer::RenderText(std::string text, Vector2<float> position, GLfloat scale, Vector3<float> color)
+void TextRenderer::RenderText(std::string text, Vector2<int> position, GLfloat scale, Vector3<float> color)
 {
 	// Activate corresponding render state
 	this->TextShader.Use();
@@ -247,7 +247,7 @@ void TextRenderer::RenderLabel(Label *label)
 	//label->size.y = 12;
 }*/
 
-Vector2<float> TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
+Vector2<int> TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
 {
 	//GLfloat startX = 0;
 	float xPo = 0;
@@ -263,7 +263,7 @@ Vector2<float> TextRenderer::CalculateSize(const std::string &text, GLfloat scal
 		// Now advance cursors for next glyph
 		xPo += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
 	}
-	return Vector2<float>(xPo, 12);
+	return Vector2<int>(static_cast<int>(xPo), 12);
 }
 /*
 void TextRenderer::RenderButton(Button *button)

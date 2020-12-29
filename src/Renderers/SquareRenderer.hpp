@@ -32,9 +32,9 @@ public:
 	 * @param borderColor 
 	 * @param borderSize 
 	 * @param transperancy 1.0F
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 */
-	void ui_RenderFilledSquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, bool outline, Vector3<float> borderColor, float borderSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderFilledSquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, bool outline, Vector3<float> borderColor, float borderSize, GLfloat transperancy = 1.0F, int rotate = 0);
 
 	/**
 	 * @brief 
@@ -43,9 +43,9 @@ public:
 	 * @param size 
 	 * @param color 
 	 * @param transperancy 1.0F
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 */
-	void ui_RenderFilledSquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderFilledSquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy = 1.0F, int rotate = 0);
 
 	/**
 	 * @brief 
@@ -54,21 +54,9 @@ public:
 	 * @param size 
 	 * @param color 
 	 * @param transperancy 1.0F
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 */
-	void world_RenderFilledSquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
-
-	/**
-	 * @brief 
-	 * 
-	 * @param position 
-	 * @param size 
-	 * @param color 
-	 * @param lineSize 
-	 * @param transperancy 1.0F
-	 * @param rotate 0.0F
-	 */
-	void world_RenderEmptySquareWithLine(Vector2<float> position, Vector2<float> size, Vector3<float> color, float lineSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void world_RenderFilledSquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy = 1.0F, int rotate = 0);
 
 	/**
 	 * @brief 
@@ -78,9 +66,21 @@ public:
 	 * @param color 
 	 * @param lineSize 
 	 * @param transperancy 1.0F
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 */
-	void ui_RenderEmptySquareWithLine(Vector2<float> position, Vector2<float> size, Vector3<float> color, float lineSize, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void world_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, Vector3<float> color, float lineSize, GLfloat transperancy = 1.0F, int rotate = 0);
+
+	/**
+	 * @brief 
+	 * 
+	 * @param position 
+	 * @param size 
+	 * @param color 
+	 * @param lineSize 
+	 * @param transperancy 1.0F
+	 * @param rotate 0
+	 */
+	void ui_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, Vector3<float> color, float lineSize, GLfloat transperancy = 1.0F, int rotate = 0);
 
 	/**
 	 * @brief 
@@ -91,7 +91,7 @@ public:
 	 * @param lineSize 1.0F
 	 * @param transperancy 0.0F
 	 */
-	void ui_RenderLine(Vector2<float> startPos, Vector2<float> endPos, Vector3<float> color, float lineSize = 1.0F, GLfloat transperancy = 1.0F);
+	void ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos, Vector3<float> color, float lineSize = 1.0F, GLfloat transperancy = 1.0F);
 
 	/**
 	 * @brief 
@@ -102,7 +102,7 @@ public:
 	 * @param lineSize 1.0F
 	 * @param transperancy 1.0F
 	 */
-	void world_RenderLine(Vector2<float> startPos, Vector2<float> endPos, Vector3<float> color, float lineSize = 1.0F, GLfloat transperancy = 1.0F);
+	void world_RenderLine(Vector2<int> startPos, Vector2<int> endPos, Vector3<float> color, float lineSize = 1.0F, GLfloat transperancy = 1.0F);
 
 	/**
 	 * @brief 
@@ -111,9 +111,9 @@ public:
 	 * @param size 
 	 * @param color 
 	 * @param transperancy 1.0F
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 */
-	void ui_RenderEmptySquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderEmptySquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy = 1.0F, int rotate = 0);
 
 	/**
 	 * @brief 
@@ -122,9 +122,9 @@ public:
 	 * @param size 
 	 * @param color 
 	 * @param transperancy 1.0F
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 */
-	void world_RenderEmptySquare(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void world_RenderEmptySquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy = 1.0F, int rotate = 0);
 
 	/**
 	 * @brief 
@@ -133,9 +133,9 @@ public:
 	 * @param size 
 	 * @param color 
 	 * @param transperancy 1.0F
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 */
-	void ui_RenderEmptyCircle(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderEmptyCircle(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy = 1.0F, int rotate = 0);
 
 	/**
 	 * @brief 
@@ -144,9 +144,9 @@ public:
 	 * @param size 
 	 * @param color 
 	 * @param transperancy 1.0F
-	 * @param rotate 0.0F
+	 * @param rotate 0
 	 */
-	void ui_RenderFilledCircle(Vector2<float> position, Vector2<float> size, Vector3<float> color, GLfloat transperancy = 1.0F, GLfloat rotate = 0.0F);
+	void ui_RenderFilledCircle(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy = 1.0F, int rotate = 0);
 
 	void SetProjection(Matrix4<float> proj);
 };

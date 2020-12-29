@@ -76,7 +76,7 @@ void Weapon::SetParent(GameObject *go)
 
 	//parentPositionDelta = localPosition - go->GetPosition();
 	//localTransform = glm::inverse(parent->GetTransform()) * globalTransform;
-	//this->SetSize(Vector2<float>(Game_Parameters::SCREEN_HEIGHT / 20, Game_Parameters::SCREEN_HEIGHT / 20));
+	//this->SetSize(Vector2<int>(Game_Parameters::SCREEN_HEIGHT / 20, Game_Parameters::SCREEN_HEIGHT / 20));
 }
 void Weapon::RemoveParent()
 {
@@ -85,12 +85,12 @@ void Weapon::RemoveParent()
 		Logger::WriteLog("Weapon->RemoveParent()");
 		Vector2 t = parent->GetPositionOfCenter();
 		this->parent = nullptr;
-		setCellPosition(PositionToCell(t));
+		setCellPosition(Utils::PositionToCell(t));
 		this->SetPosition(GetPosition().x - Game_Parameters::SIZE_TILE / 2, GetPosition().y);
 
 		/*if (weaponType == WeaponType::MAIN)
 		{
-			this->SetSize(Vector2<float>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
+			this->SetSize(Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
 		}*/
 		return;
 	}

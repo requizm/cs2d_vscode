@@ -23,7 +23,7 @@ public:
 	 * @param scale 1.0F
 	 * @param color Vector3<float>(1.0F)
 	 */
-	TextBox(Vector2<float> position, TextRenderer &renderer, Vector2<float> size, bool isBackGround = false, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F));
+	TextBox(Vector2<int> position, TextRenderer &renderer, Vector2<int> size, bool isBackGround = false, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F));
 
 	void Update() override;
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);

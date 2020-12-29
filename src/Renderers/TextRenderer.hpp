@@ -32,10 +32,10 @@ public:
 	// Pre-compiles a list of characters from the given font
 	void Load(std::string font, GLuint fontSize);
 	// Renders a string of text using the precompiled list of characters
-	void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, Vector3<float> color = Vector3<float>(1.0f));
-	void RenderText(std::string text, Vector2<float> position, GLfloat scale, Vector3<float> color = Vector3<float>(1.0f));
+	void RenderText(std::string text, int x, int y, GLfloat scale, Vector3<float> color = Vector3<float>(1.0f));
+	void RenderText(std::string text, Vector2<int> position, GLfloat scale, Vector3<float> color = Vector3<float>(1.0f));
 	//void RenderLabel(Label *label);
-	Vector2<float> CalculateSize(const std::string &text, GLfloat scale);
+	Vector2<int> CalculateSize(const std::string &text, GLfloat scale);
 	//void RenderButton(Button *button);
 private:
 	// Render state

@@ -12,8 +12,8 @@ class Tile :
 {
 public:
 	Tile();
-	Tile(Vector2<float> pos, const Sprite& sprite, Vector2<float> size, TileTypes type, int frame = -1);
-	Tile(Vector2<float> pos, const Sprite& sprite, Vector2<float> size);
+	Tile(Vector2<int> pos, const Sprite& sprite, Vector2<int> size, TileTypes type, int frame = -1);
+	Tile(Vector2<int> pos, const Sprite& sprite, Vector2<int> size);
 
 	void setType(TileTypes type);
 	TileTypes getType() const;

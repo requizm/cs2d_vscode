@@ -89,7 +89,7 @@ void Game::Render()
 		Game::scene.Render();
 		break;
 	}
-	menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos, Vector2<float>(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
+	menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos, Vector2<int>(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
 }
 
 void Game::NewGame()
@@ -113,29 +113,29 @@ void Game::NewGame()
 	Sprite machete = Sprite(ResourceManager::GetTexture("machete"));*/
 
 	std::shared_ptr<Weapon> main1 = std::make_shared<Weapon>(
-		Vector2<float>(65.0f, 65.0f), awp, awp_d, "awp", WeaponType::MAIN, 30, 20, 10, 10);
+		Vector2<int>(65, 65), awp, awp_d, "awp", WeaponType::MAIN, 30, 20, 10, 10);
 	std::shared_ptr<Weapon> main2 = std::make_shared<Weapon>(
-		Vector2<float>(10.0f, 10.0f), famas, famas_d, "famas", WeaponType::MAIN, 30, 20, 10, 10);
+		Vector2<int>(10, 10), famas, famas_d, "famas", WeaponType::MAIN, 30, 20, 10, 10);
 	std::shared_ptr<Weapon> main3 = std::make_shared<Weapon>(
-		Vector2<float>(12.0f, 20.0f), ak47, ak47_d, "ak47", WeaponType::MAIN, 30, 20, 10, 10);
+		Vector2<int>(12, 20), ak47, ak47_d, "ak47", WeaponType::MAIN, 30, 20, 10, 10);
 	/*Weapon* pistol1 = new Weapon(
-		Vector2<float>(170.0f, 30.0f), deagle, deagle_d, "deagle", WeaponType::PISTOL, 30, 20, 10, 10
+		Vector2<int>(170.0f, 30.0f), deagle, deagle_d, "deagle", WeaponType::PISTOL, 30, 20, 10, 10
 	);
 	Weapon* pistol2 = new Weapon(
-		Vector2<float>(260.0f, 30.0f), usp, usp_d, "usp", WeaponType::PISTOL, 30, 20, 10, 10
+		Vector2<int>(260.0f, 30.0f), usp, usp_d, "usp", WeaponType::PISTOL, 30, 20, 10, 10
 	);
 	Weapon* pistol3 = new Weapon(
-		Vector2<float>(320.0f, 30.0f), fiveseven, fiveseven_d, "fiveseven", WeaponType::PISTOL, 30, 20, 10, 10
+		Vector2<int>(320.0f, 30.0f), fiveseven, fiveseven_d, "fiveseven", WeaponType::PISTOL, 30, 20, 10, 10
 	);
 	Weapon* pistol4 = new Weapon(
-		Vector2<float>(20.0f, 90.0f), glock, glock_d, "glock", WeaponType::PISTOL, 30, 20, 10, 10
+		Vector2<int>(20.0f, 90.0f), glock, glock_d, "glock", WeaponType::PISTOL, 30, 20, 10, 10
 	);
 
 	Weapon* knife1 = new Weapon(
-		Vector2<float>(20.0f, 150.0f), knife, knife, "knife", WeaponType::KNIFE, 30, 20, 10, 10
+		Vector2<int>(20.0f, 150.0f), knife, knife, "knife", WeaponType::KNIFE, 30, 20, 10, 10
 	);
 	Weapon* knife2 = new Weapon(
-		Vector2<float>(20.0f, 210.0f), machete, machete, "machete", WeaponType::KNIFE, 30, 20, 10, 10
+		Vector2<int>(20.0f, 210.0f), machete, machete, "machete", WeaponType::KNIFE, 30, 20, 10, 10
 	);*/
 
 	weapons.push_back(*main1.get());

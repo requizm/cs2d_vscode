@@ -5,13 +5,13 @@
 #include "../Others/Utils.hpp"
 
 GameObject::GameObject()
-	: globalPosition(0.0F, 0.0F), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0.0F), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT)
+	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT)
 {
 	this->setID(Utils::GenerateID());
 }
 
-GameObject::GameObject(Vector2<float> pos, const Sprite &sprite, Vector2<float> size, int objType)
-	: globalPosition(pos), globalSize(size), globalRotation(0.0F), sprite(sprite), isCollision(false), isDestroyed(false), localRotation(0.0F), localPosition(pos)
+GameObject::GameObject(Vector2<int> pos, const Sprite &sprite, Vector2<int> size, int objType)
+	: globalPosition(pos), globalSize(size), globalRotation(0), sprite(sprite), isCollision(false), isDestroyed(false), localRotation(0), localPosition(pos)
 {
 	this->objType = (ObjectType)objType;
 	this->setID(Utils::GenerateID());
@@ -34,11 +34,11 @@ void GameObject::DrawModel(SpriteRenderer &renderer)
 void GameObject::BuildTransform()
 {
 	Matrix4 model = Matrix4(1.0F);
-	model = Projection::translate(model, Vector3(globalPosition.x, globalPosition.y, 0.0F));
-	model = Projection::translate(model, Vector3(0.5F * globalSize.x, 0.5F * globalSize.y, 0.0F));	   // Move origin of rotation to center of quad
-	model = Projection::rotate(model, Projection::radians(globalRotation), Vector3(0.0F, 0.0F, 1.0F)); // Then rotate
-	model = Projection::translate(model, Vector3(-0.5F * globalSize.x, -0.5F * globalSize.y, 0.0F));   // Move origin back
-	model = Projection::scale(model, Vector3(globalSize.x, globalSize.y, 1.0F));
+	model = Projection::translate(model, Vector3(static_cast<float>(globalPosition.x), static_cast<float>(globalPosition.y), 0.0F));
+	model = Projection::translate(model, Vector3(0.5F * static_cast<float>(globalSize.x), 0.5F * static_cast<float>(globalSize.y), 0.0F));	 // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(static_cast<float>(globalRotation)), Vector3(0.0F, 0.0F, 1.0F));					 // Then rotate
+	model = Projection::translate(model, Vector3(-0.5F * static_cast<float>(globalSize.x), -0.5F * static_cast<float>(globalSize.y), 0.0F)); // Move origin back
+	model = Projection::scale(model, Vector3(static_cast<float>(globalSize.x), static_cast<float>(globalSize.y), 1.0F));
 	SetTransform(model);
 }
 
@@ -52,17 +52,17 @@ Matrix4<float> GameObject::GetTransform()
 	return globalTransform;
 }
 
-Vector2<float> GameObject::GetPosition()
+Vector2<int> GameObject::GetPosition()
 {
 	return globalPosition;
 }
 
-Vector2<float> GameObject::GetPositionOfCenter()
+Vector2<int> GameObject::GetPositionOfCenter()
 {
-	return Vector2<float>(GetPosition().x + GetSize().x / 2, GetPosition().y + GetSize().y / 2);
+	return Vector2<int>(GetPosition().x + GetSize().x / 2, GetPosition().y + GetSize().y / 2);
 }
 
-Vector2<float> GameObject::GetSize()
+Vector2<int> GameObject::GetSize()
 {
 	return globalSize;
 }
@@ -123,7 +123,7 @@ void GameObject::setID(int id)
 	this->id = id;
 }
 
-void GameObject::SetTransform(Vector2<float> pos, Vector2<float> size, GLfloat rot)
+void GameObject::SetTransform(Vector2<int> pos, Vector2<int> size, int rot)
 {
 	this->globalSize = size;
 	this->globalRotation = rot;
@@ -131,7 +131,7 @@ void GameObject::SetTransform(Vector2<float> pos, Vector2<float> size, GLfloat r
 	Logger::WriteLog("" + GetObjectTypeString() + "->SetTransform() ->pos(" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + "), size(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ") rot(" + std::to_string(rot) + ") ");
 }
 
-void GameObject::SetPosition(const Vector2<float> pos)
+void GameObject::SetPosition(const Vector2<int> pos)
 {
 	this->globalPosition = pos;
 	//localPosition = pos;
@@ -139,23 +139,23 @@ void GameObject::SetPosition(const Vector2<float> pos)
 	//Logger::WriteLog("GameObject->SetPosition(" + std::to_string(pos.x) + " " + std::to_string(pos.y) + ")");
 }
 
-void GameObject::SetPosition(const float x, const float y)
+void GameObject::SetPosition(const int x, const int y)
 {
-	this->globalPosition = Vector2<float>(x, y);
+	this->globalPosition = Vector2<int>(x, y);
 	/*localPosition.x = x;
 	localPosition.y = y;*/
 	BuildTransform();
 	//Logger::WriteLog("GameObject->SetPosition(" + std::to_string(x) + ", " + std::to_string(y) + " )");
 }
 
-void GameObject::SetSize(Vector2<float> size)
+void GameObject::SetSize(Vector2<int> size)
 {
 	this->globalSize = size;
 	BuildTransform();
 	Logger::WriteLog("" + GetObjectTypeString() + "->SetSize(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ")");
 }
 
-void GameObject::SetRotation(GLfloat rot)
+void GameObject::SetRotation(int rot)
 {
 	this->globalRotation = rot;
 	BuildTransform();
@@ -171,7 +171,7 @@ void GameObject::setCellPosition(Vector2<int> pos)
 	SetPosition(pos.x * Game_Parameters::SIZE_TILE, pos.y * Game_Parameters::SIZE_TILE);
 }
 
-GameObject* GameObject::GetParent()
+GameObject *GameObject::GetParent()
 {
 	Logger::WriteLog("" + GetObjectTypeString() + "->GetParentObject()");
 	return parent;
@@ -225,15 +225,6 @@ GLboolean GameObject::IsCollision() const
 {
 	//Logger::WriteLog("GameObject->IsCollision() " + std::to_string(isCollision) + "");
 	return isCollision;
-}
-
-Vector2<int> GameObject::PositionToCell(Vector2<float> pos)
-{
-	return Vector2<int>((int)(pos.x / Game_Parameters::SIZE_TILE), (int)(pos.y / Game_Parameters::SIZE_TILE));
-}
-Vector2<int> GameObject::PositionToCell(float x, float y)
-{
-	return Vector2<int>((int)(x / Game_Parameters::SIZE_TILE), (int)(y / Game_Parameters::SIZE_TILE));
 }
 
 std::string GameObject::GetObjectTypeString()

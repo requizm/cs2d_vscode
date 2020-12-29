@@ -13,23 +13,23 @@ Utils::Utils()
 
 Utils::~Utils() = default;
 
-Vector2<float> Utils::ScreenToWorld(Vector2<float> view, Vector2<float> point)
+Vector2<int> Utils::ScreenToWorld(Vector2<int> view, Vector2<int> point)
 {
     return (view + point);
 }
 
-Vector2<int> Utils::PositionToCell(Vector2<float> pos)
+Vector2<int> Utils::PositionToCell(Vector2<int> pos)
 {
     if (pos.x >= 0 && pos.y >= 0)
     {
-        return Vector2<int>(static_cast<int>(pos.x / Game_Parameters::SIZE_TILE), static_cast<int>(pos.y / Game_Parameters::SIZE_TILE));
+        return Vector2<int>(pos.x / Game_Parameters::SIZE_TILE, pos.y / Game_Parameters::SIZE_TILE);
     }
     return Vector2<int>(-1, -1); //gereksiz
 }
 
-Vector2<float> Utils::CellToPosition(Vector2<int> cell)
+Vector2<int> Utils::CellToPosition(Vector2<int> cell)
 {
-    return Vector2<float>((static_cast<float>(cell.x)) * Game_Parameters::SIZE_TILE, (static_cast<float>(cell.y)) * Game_Parameters::SIZE_TILE);
+    return Vector2<int>(cell.x * Game_Parameters::SIZE_TILE, cell.y * Game_Parameters::SIZE_TILE);
 }
 
 int Utils::GenerateID()

@@ -1,18 +1,18 @@
 #include "Panel.hpp"
 #include <iostream>
 
-Panel::Panel(Vector2<float> position, const std::string &title, Vector2<float> size, TextRenderer &renderer, bool isBackGround, bool opttitles, float scale, Vector3<float> color, float transp) : UIObject(position, size, scale, renderer, UIObjectType::PANEL)
+Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size, TextRenderer &renderer, bool isBackGround, bool opttitles, float scale, Vector3<float> color, float transp) : UIObject(position, size, scale, renderer, UIObjectType::PANEL)
 {
 	this->panelColor = color;
 	this->backGround = isBackGround;
-	this->dragSize = Vector2<float>(size.x, 23.0F);
+	this->dragSize = Vector2<int>(size.x, 23.0F);
 	this->opttitles = opttitles;
 	this->trans = transp;
 	this->enable = false;
 	this->movable = false;
 	this->scrollable = false;
 	this->outline = false;
-	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, Vector2<float>(20.0F, 20.0F), true);
+	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, Vector2<int>(20, 20), true);
 	escapeButton.setParent(this);
 	escapeButton.independent = true;
 	escapeButton.setPosition(this->size.x - 20.0F, 3.0F);
@@ -47,7 +47,7 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 		}
 		if (opttitles)
 		{
-			squareRenderer.ui_RenderLine(Vector2<float>(getPosition().x + lineOffset, getPosition().y + 23.0F), Vector2<float>(getPosition().x + size.x - lineOffset, getPosition().y + 23.0F), Vector3<float>(0.39F), 1.0F, this->trans);
+			squareRenderer.ui_RenderLine(Vector2<int>(getPosition().x + lineOffset, getPosition().y + 23.0F), Vector2<int>(getPosition().x + size.x - lineOffset, getPosition().y + 23.0F), Vector3<float>(0.39F), 1.0F, this->trans);
 			escapeButton.Draw(spriteRenderer, squareRenderer);
 			title.Draw();
 		}
@@ -84,8 +84,8 @@ void Panel::Update()
 			}
 			if (isPressed && click)
 			{
-				Vector2<float> mousePos = InputManager::mousePos;
-				this->setPosition(Vector2<float>(mousePos.x - static_cast<float>(deltaX), mousePos.y - static_cast<float>(deltaY)));
+				Vector2<int> mousePos = InputManager::mousePos;
+				this->setPosition(Vector2<int>(mousePos.x - deltaX, mousePos.y - deltaY));
 				//std::cout << "hey" << std::endl;
 			}
 			if (!isPressed)

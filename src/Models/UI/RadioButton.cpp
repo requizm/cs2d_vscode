@@ -2,7 +2,7 @@
 
 RadioButtonElement::RadioButtonElement() = default;
 
-RadioButtonElement::RadioButtonElement(const std::string &text, Vector2<float> position, TextRenderer &textRenderer, int index, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
+RadioButtonElement::RadioButtonElement(const std::string &text, Vector2<int> position, TextRenderer &textRenderer, int index, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
     : Label(text, position, textRenderer, scale, textColor, UIObjectType::RADIOBUTTON), selected(false)
 {
     this->setButtonColor(buttonColor);
@@ -14,12 +14,12 @@ RadioButtonElement::~RadioButtonElement() = default;
 void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
     if (!text.empty())
-        this->rend->RenderText(text, Vector2<float>(getPosition().x + labelSize.y / 2 + 2.0F, getPosition().y), scale, labelCurrentColor);
-    squareRenderer.ui_RenderFilledCircle(Vector2<float>(getPosition().x, getPosition().y + labelSize.y / 2), Vector2<float>(labelSize.y / 2), Vector3<float>(0.21F));
-    squareRenderer.ui_RenderEmptyCircle(Vector2<float>(getPosition().x, getPosition().y + labelSize.y / 2), Vector2<float>(labelSize.y / 2), currentOutlineColor);
+        this->rend->RenderText(text, Vector2<int>(getPosition().x + labelSize.y / 2 + 2.0F, getPosition().y), scale, labelCurrentColor);
+    squareRenderer.ui_RenderFilledCircle(Vector2<int>(getPosition().x, getPosition().y + labelSize.y / 2), Vector2<int>(labelSize.y / 2), Vector3<float>(0.21F));
+    squareRenderer.ui_RenderEmptyCircle(Vector2<int>(getPosition().x, getPosition().y + labelSize.y / 2), Vector2<int>(labelSize.y / 2), currentOutlineColor);
     if (selected)
     {
-        squareRenderer.ui_RenderFilledCircle(Vector2<float>(getPosition().x, getPosition().y + labelSize.y / 2), Vector2<float>(labelSize.y / 2 - labelSize.y / 4), currentColor);
+        squareRenderer.ui_RenderFilledCircle(Vector2<int>(getPosition().x, getPosition().y + labelSize.y / 2), Vector2<int>(labelSize.y / 2 - labelSize.y / 4), currentColor);
     }
 }
 
@@ -45,22 +45,22 @@ void RadioButtonElement::ProcessInput()
     isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 }
 
-Vector2<float> RadioButtonElement::getPosition()
+Vector2<int> RadioButtonElement::getPosition()
 {
     if (isParent())
         return this->position + parent->getPosition();
     return this->position;
 }
-Vector2<float> RadioButtonElement::getLocalPosition()
+Vector2<int> RadioButtonElement::getLocalPosition()
 {
     if (isParent())
         return this->position - parent->getPosition();
-    return Vector2<float>(0.0F);
+    return Vector2<int>(0);
 }
-Vector2<float> RadioButtonElement::getSize()
+Vector2<int> RadioButtonElement::getSize()
 {
-    Vector2<float> ps;
-    ps.x = (getPosition().x + labelSize.y / 2 + 2.0F + labelSize.x) - (getPosition().x - labelSize.y / 2);
+    Vector2<int> ps;
+    ps.x = (getPosition().x + labelSize.y / 2 + 2 + labelSize.x) - (getPosition().x - labelSize.y / 2);
     ps.y = labelSize.y;
     return ps;
 }
@@ -97,7 +97,7 @@ void RadioButtonElement::OnDisable()
     //this->selected = false;
 }
 
-void RadioButtonElement::setPosition(const Vector2<float> position)
+void RadioButtonElement::setPosition(const Vector2<int> position)
 {
     this->position = position;
 }
@@ -180,7 +180,7 @@ bool RadioButtonElement::isMousePressM(const int key)
 
 RadioButton::RadioButton() = default;
 
-RadioButton::RadioButton(TextRenderer &renderer, Vector2<float> position, int y_sep) : UIObject(position, 1.0F, renderer)
+RadioButton::RadioButton(TextRenderer &renderer, Vector2<int> position, int y_sep) : UIObject(position, 1.0F, renderer)
 {
     this->y_sep = y_sep;
 }
@@ -217,7 +217,7 @@ void RadioButton::Clear()
 
 void RadioButton::AddElement(const std::string &text, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
 {
-    RadioButtonElement *r = new RadioButtonElement(text, Vector2<float>(position.x, position.y + y_sep * i), *rend, i++, buttonColor, textColor, scale);
+    RadioButtonElement *r = new RadioButtonElement(text, Vector2<int>(position.x, position.y + y_sep * i), *rend, i++, buttonColor, textColor, scale);
     r->setSize(300, 300);
     r->setMouseHoverColor(Vector3<float>(0.9F));
     r->setOutlineColor(Vector3<float>(0.58F));

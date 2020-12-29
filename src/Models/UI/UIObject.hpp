@@ -24,13 +24,13 @@ class UIObject
 {
 public:
 	UIObject();
-	UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer);
-	UIObject(Vector2<float> position, Vector2<float> size, float scale, TextRenderer &renderer, UIObjectType type);
-	UIObject(Vector2<float> position, Vector2<float> size, float scale);
-	UIObject(Vector2<float> position, Vector2<float> size, float scale, UIObjectType type);
-	UIObject(Vector2<float> position, float scale, TextRenderer &renderer);
-	UIObject(Vector2<float> position, float scale, TextRenderer &renderer, UIObjectType type);
-	UIObject(Vector2<float> position, float scale, UIObjectType type);
+	UIObject(Vector2<int> position, Vector2<int> size, float scale, TextRenderer &renderer);
+	UIObject(Vector2<int> position, Vector2<int> size, float scale, TextRenderer &renderer, UIObjectType type);
+	UIObject(Vector2<int> position, Vector2<int> size, float scale);
+	UIObject(Vector2<int> position, Vector2<int> size, float scale, UIObjectType type);
+	UIObject(Vector2<int> position, float scale, TextRenderer &renderer);
+	UIObject(Vector2<int> position, float scale, TextRenderer &renderer, UIObjectType type);
+	UIObject(Vector2<int> position, float scale, UIObjectType type);
 	virtual ~UIObject();
 
 	virtual void Update();
@@ -40,10 +40,10 @@ public:
 	virtual void Draw();
 	virtual void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
 
-	virtual Vector2<float> getPosition();
-	virtual Vector2<float> getSize();
-	virtual Vector2<float> getCenterPosition() const;
-	virtual Vector2<float> getLocalPosition();
+	virtual Vector2<int> getPosition();
+	virtual Vector2<int> getSize();
+	virtual Vector2<int> getCenterPosition() const;
+	virtual Vector2<int> getLocalPosition();
 	UIObject *getParent() const;
 	float getScale() const;
 	bool isParent() const;
@@ -55,10 +55,10 @@ public:
 	bool isRenderable(); //scroll'dan dolayi
 	bool isScrollable() const;
 
-	virtual void setPosition(const Vector2<float> position);
+	virtual void setPosition(const Vector2<int> position);
 	virtual void setPosition(const int x, const int y);
 	virtual void setParentCenterPos();
-	virtual void setSize(const Vector2<float> size);
+	virtual void setSize(const Vector2<int> size);
 	virtual void setSize(const int x, const int y);
 	void setScale(const float scale);
 	void setParent(UIObject *uiobject, bool dependParent = true);
@@ -84,9 +84,9 @@ public:
 	TextRenderer *rend = nullptr;
 
 protected:
-	Vector2<float> position;
+	Vector2<int> position;
 	float scale;
-	Vector2<float> size;
+	Vector2<int> size;
 	UIObjectType objType;
 	UIObject *parent = nullptr;
 

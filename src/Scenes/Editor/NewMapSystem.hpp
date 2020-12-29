@@ -27,10 +27,10 @@ public:
     bool isEditMode();
     bool isMouseHover();
 
-    NewMapResult NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<float> &pos, bool &fSelect,
+    NewMapResult NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
                         Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
                         std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell);
-    NewMapResult B_NewMap(float &dt, Vector2<float> &pos, bool &fSelect, Vector2<int> &mLimit,
+    NewMapResult B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit,
                           Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
                           std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell);
 

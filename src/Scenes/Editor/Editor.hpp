@@ -65,7 +65,7 @@ private:
 
 	SpriteRenderer worldRenderer;
 
-	Vector2<float> position;
+	Vector2<int> position;
 
 	std::shared_ptr<ListItem> objects_ui;
 

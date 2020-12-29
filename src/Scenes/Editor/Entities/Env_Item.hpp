@@ -9,15 +9,15 @@ class Env_Item
 private:
     int item_id = 0; // 0=null  1=ak47   2=m4a1 ..
     int obj_id = 0;
-    Vector2<float> position;
-    Vector2<float> size;
+    Vector2<int> position;
+    Vector2<int> size;
     Sprite sp;
 
     std::shared_ptr<Button> button;
 
 public:
     Env_Item();
-    Env_Item(int id, Vector2<float> position);
+    Env_Item(int id, Vector2<int> position);
     ~Env_Item();
 
     void Initialize();
@@ -29,7 +29,7 @@ public:
     int getId();
     void SetId(int id);
 
-    Vector2<float> getPosition();
+    Vector2<int> getPosition();
 
     bool isPressedOrHover();
 

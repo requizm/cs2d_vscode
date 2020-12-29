@@ -170,7 +170,7 @@ std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName)
     for (rapidxml::xml_node<> *child = node->first_node(); child; child = child->next_sibling())
     {
         //std::cout << child->first_node("cellY")->value() << std::endl;
-        //tile.SetSize(Vector2<float>(Game::Width / 26.5, Game::Width / 26.5));
+        //tile.SetSize(Vector2<int>(Game::Width / 26.5, Game::Width / 26.5));
         char *x = child->first_node("cellX")->value();
         char *y = child->first_node("cellY")->value();
         char *tIndex = child->first_node("tileTexture")->value();
@@ -181,8 +181,8 @@ std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName)
         int textureIndex = atoi(tIndex);
         int tileType = atoi(tType);
         int itemId = atoi(tItemId);
-        const Vector2<float> pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
-        const Vector2<float> size(Vector2<float>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
+        const Vector2<int> pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
+        const Vector2<int> size(Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
         const int xoffset = textureIndex % (ResourceManager::GetTexture(Editor::instance().currentTileSet).Width / 32);
         const int yoffset = textureIndex / (ResourceManager::GetTexture(Editor::instance().currentTileSet).Width / 32);
         const Sprite sprite = Sprite(ResourceManager::GetTexture(Editor::instance().currentTileSet), (xoffset)*32, yoffset * 32, 32, 32);

@@ -61,8 +61,8 @@ void Map::Load(const GLchar *file)
 		int cellY = atoi(y);
 		int textureIndex = atoi(tIndex);
 		int tileType = atoi(tType);
-		const Vector2<float> pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
-		const Vector2<float> size(Vector2<float>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
+		const Vector2<int> pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
+		const Vector2<int> size(Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
 		const int xoffset = textureIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const int yoffset = textureIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
@@ -92,8 +92,8 @@ void Map::Init(std::vector<std::vector<GLuint>> tileData) const
 	{
 		for (GLuint x = 0; x < tileData[y].size(); x++)
 		{
-			const Vector2<float> pos(Game_Parameters::SCREEN_WIDTH / 26.5F * x, Game_Parameters::SCREEN_WIDTH / 26.5F * y);
-			const Vector2<float> size(Game_Parameters::SCREEN_WIDTH / 26.5F, Game_Parameters::SCREEN_WIDTH / 26.5F);
+			const Vector2<int> pos(Game_Parameters::SCREEN_WIDTH / 26 * x, Game_Parameters::SCREEN_WIDTH / 26 * y);
+			const Vector2<int> size(Game_Parameters::SCREEN_WIDTH / 26, Game_Parameters::SCREEN_WIDTH / 26);
 			const int yoffset = tileData[y][x] / 17;
 			const Sprite sprite = Sprite(ResourceManager::GetTexture("tile"), tileData[y][x] * 32, yoffset * 32, 32, 32);
 			GameObject go = GameObject(pos, sprite, size);

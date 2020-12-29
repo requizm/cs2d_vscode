@@ -2,14 +2,14 @@
 
 Button::Button() = default;
 
-Button::Button(const std::string &text, Vector2<float> position, Vector2<float> size, TextRenderer &renderer, Vector3<float> buttonColor, Vector3<float> textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
+Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, Vector3<float> buttonColor, Vector3<float> textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->buttonColor = buttonColor;
 	this->setSize(renderer.CalculateSize(text, 1.0F) * 1.50F);
 	this->type = ButtonType::DEFAULT;
 }
 
-Button::Button(const Sprite &sprite, Vector2<float> position, Vector2<float> size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON), haveOutline(false)
+Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON), haveOutline(false)
 {
 	this->sprite = sprite;
 	this->difColor = difColor;
@@ -51,14 +51,14 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 			{
 				if (haveOutline)
 				{
-					squareRenderer.ui_RenderFilledSquare(this->getPosition(), Vector2<float>(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
-					squareRenderer.ui_RenderEmptySquare(this->getPosition(), Vector2<float>(this->getSize().x + margin.x, this->getSize().y + margin.y), this->outlineColor);
-					spriteRenderer.DrawSprite(this->sprite, Vector2<float>(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
+					squareRenderer.ui_RenderFilledSquare(this->getPosition(), Vector2<int>(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
+					squareRenderer.ui_RenderEmptySquare(this->getPosition(), Vector2<int>(this->getSize().x + margin.x, this->getSize().y + margin.y), this->outlineColor);
+					spriteRenderer.DrawSprite(this->sprite, Vector2<int>(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
 				}
 				else
 				{
-					squareRenderer.ui_RenderFilledSquare(this->getPosition(), Vector2<float>(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
-					spriteRenderer.DrawSprite(this->sprite, Vector2<float>(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
+					squareRenderer.ui_RenderFilledSquare(this->getPosition(), Vector2<int>(this->getSize().x + margin.x, this->getSize().y + margin.y), this->currentColor);
+					spriteRenderer.DrawSprite(this->sprite, Vector2<int>(this->getPosition().x + margin.x / 2, this->getPosition().y + margin.y / 2), this->getSize());
 				}
 			}
 			break;
@@ -66,7 +66,7 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize());
 			break;
 		case ButtonType::ENV_OBJ:
-			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition() + Game_Parameters::SIZE_TILE / 4, this->getSize() / 2);
+			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition() + Game_Parameters::SIZE_TILE / 4, this->getSize() / Vector2<int>(2));
 			break;
 		}
 	}
@@ -141,7 +141,7 @@ void Button::ProcessInput()
 	}
 }
 
-Vector2<float> Button::getPosition()
+Vector2<int> Button::getPosition()
 {
 	if (type == ButtonType::TILE || type == ButtonType::ENV_OBJ)
 	{
@@ -158,7 +158,7 @@ Vector2<float> Button::getPosition()
 	return this->position;
 }
 
-Vector2<float> Button::getLocalPosition()
+Vector2<int> Button::getLocalPosition()
 {
 	if (type == ButtonType::TILE)
 	{
@@ -175,7 +175,7 @@ Vector2<float> Button::getLocalPosition()
 	return this->position;
 }
 
-Vector2<float> Button::getSize()
+Vector2<int> Button::getSize()
 {
 	if (type == ButtonType::TILE || type == ButtonType::ENV_OBJ)
 	{
@@ -297,13 +297,13 @@ void Button::setOutline(const bool value)
 	this->haveOutline = value;
 }
 
-void Button::setMargin(const Vector2<float> value)
+void Button::setMargin(const Vector2<int> value)
 {
 	if (haveOutline)
 		this->margin = value;
 }
 
-void Button::setPosition(const Vector2<float> position)
+void Button::setPosition(const Vector2<int> position)
 {
 	if (type == ButtonType::TILE)
 	{

@@ -7,13 +7,12 @@
 #include "../Sprite.hpp"
 #include "../Tile.hpp"
 
-
 enum ButtonType
 {
 	DEFAULT, //standart button
 	TILE,	 //editor'deki build tile'ları gibi
 	SPRITE,	 //editor'deki save button'ı gibi
-	ENV_OBJ //editor'deki env objesi gibi
+	ENV_OBJ	 //editor'deki env objesi gibi
 };
 
 class Button : public Label
@@ -28,11 +27,11 @@ public:
 	 * @param position 
 	 * @param size 
 	 * @param renderer 
-	 * @param buttonColor Vector3<float>(1.0F)
-	 * @param textColor Vector3<float>(0.0F)
+	 * @param buttonColor Vector3<int>(1.0F)
+	 * @param textColor Vector3<int>(0.0F)
 	 * @param scale 1.0F
 	 */
-	Button(const std::string &text, Vector2<float> position, Vector2<float> size, TextRenderer &renderer, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
+	Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
 
 	/**
 	 * @brief Construct a new Sprite Button
@@ -43,7 +42,7 @@ public:
 	 * @param difColor false
 	 * @param scale 1.0F
 	 */
-	Button(const Sprite &sprite, Vector2<float> position, Vector2<float> size, bool difColor = false, float scale = 1.0F);
+	Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, bool difColor = false, float scale = 1.0F);
 
 	/**
 	 * @brief Construct a new Tile Button for tile objects
@@ -64,9 +63,9 @@ public:
 	void Update() override;
 	void ProcessInput() override;
 
-	Vector2<float> getPosition() override;
-	Vector2<float> getLocalPosition() override;
-	Vector2<float> getSize() override;
+	Vector2<int> getPosition() override;
+	Vector2<int> getLocalPosition() override;
+	Vector2<int> getSize() override;
 	Tile *getTile();
 
 	void setMouseHoverColor(const Vector3<float> color);
@@ -75,9 +74,9 @@ public:
 	void setOutlineColor(const Vector3<float> color);
 	void setOutline(const bool value);
 
-	void setMargin(const Vector2<float> value);
+	void setMargin(const Vector2<int> value);
 
-	void setPosition(const Vector2<float> position) override;
+	void setPosition(const Vector2<int> position) override;
 	void setPosition(const int x, const int y) override;
 
 	bool isMouseHover() override;
@@ -102,8 +101,6 @@ protected:
 	bool isMouseUpM(const int key) override;
 	bool isMousePressM(const int key) override;
 
-	
-
 private:
 	//bool isDown = false;
 
@@ -114,7 +111,7 @@ private:
 	bool difColor = false;
 
 	Vector3<float> outlineColor;
-	Vector2<float> margin;
+	Vector2<int> margin;
 	ButtonType type = ButtonType::DEFAULT;
 };
 

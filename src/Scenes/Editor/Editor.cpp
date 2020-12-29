@@ -14,7 +14,7 @@ Editor::Editor()
 	this->tileCount = 0;
 	this->maxCellInColumn = 0;
 	this->maxCellInRow = 0;
-	this->position = Vector2(0.0F);
+	this->position = Vector2(0);
 	this->firstSelect = false;
 	this->time = 0.0F;
 	this->mapLimit = Vector2<int>(0);
@@ -30,7 +30,7 @@ Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRe
 	this->tileCount = 0;
 	this->maxCellInColumn = 0;
 	this->maxCellInRow = 0;
-	this->position = Vector2(0.0F);
+	this->position = Vector2(0);
 	this->firstSelect = false;
 	this->time = 0.0F;
 	this->mapLimit = Vector2<int>(0);
@@ -56,7 +56,7 @@ void Editor::Initialize(const SpriteRenderer &menuRenderer, const SpriteRenderer
 	this->tileCount = 0;
 	this->maxCellInColumn = 0;
 	this->maxCellInRow = 0;
-	this->position = Vector2(0.0F);
+	this->position = Vector2(0);
 	this->firstSelect = false;
 	this->time = 0.0F;
 	this->mapLimit = Vector2<int>(0);
@@ -75,16 +75,16 @@ void Editor::Start()
 	this->maxCellInColumn = 5;
 	this->maxCellInRow = (Game_Parameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32 + 1;
 
-	this->buildPanel = std::make_shared<Panel>(Vector2<float>(0.0F, 0.0F), "Build Panel", Vector2<float>(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
+	this->buildPanel = std::make_shared<Panel>(Vector2<int>(0, 0), "Build Panel", Vector2<int>(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
 	this->buildPanel->setMovable(false);
 	this->buildPanel->setEnable(true);
 
-	this->controlPanel = std::make_shared<Panel>(Vector2<float>(5.0F, 5.0F), "Control Panel", Vector2<float>(32 * maxCellInColumn, 32 * 2 - 11), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
+	this->controlPanel = std::make_shared<Panel>(Vector2<int>(5, 5), "Control Panel", Vector2<int>(32 * maxCellInColumn, 32 * 2 - 11), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
 	this->controlPanel->setMovable(false);
 	this->controlPanel->setEnable(true);
 	this->controlPanel->setParent(buildPanel.get());
 
-	this->tilePanel = std::make_shared<Panel>(Vector2<float>(5.0F, 75.0F), "Tile Panel", Vector2<float>(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
+	this->tilePanel = std::make_shared<Panel>(Vector2<int>(5, 75), "Tile Panel", Vector2<int>(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
 	this->tilePanel->setEnable(true);
 	this->tilePanel->setMovable(false);
 	this->tilePanel->setScrollable(true);
@@ -92,7 +92,7 @@ void Editor::Start()
 	this->tilePanel->setOutlineColor(Vector3<float>(0.47F));
 	this->tilePanel->setParent(buildPanel.get());
 
-	this->objectPanel = std::make_shared<Panel>(Vector2<float>(5.0F, 75.0F), "Object Panel", Vector2<float>(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
+	this->objectPanel = std::make_shared<Panel>(Vector2<int>(5, 75), "Object Panel", Vector2<int>(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
 	this->objectPanel->setEnable(false);
 	this->objectPanel->setMovable(false);
 	this->objectPanel->setScrollable(true);
@@ -106,85 +106,85 @@ void Editor::Start()
 	objects_ui->AddItem(a);
 
 	Sprite sprite;
-	Vector2<float> pos;
+	Vector2<int> pos;
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16, 16); //new_sprite
-	pos = Vector2<float>(0.0F);
-	b_new = Button(sprite, pos, Vector2<float>(16.0F));
+	pos = Vector2<int>(0);
+	b_new = Button(sprite, pos, Vector2<int>(16));
 	b_new.setOutline(true);
 	b_new.setOutlineColor(Vector3<float>(0.45));
-	b_new.setMargin(Vector2<float>(8, 8));
+	b_new.setMargin(Vector2<int>(8, 8));
 	b_new.setButtonColor(Vector3<float>(0.15F));
 	b_new.setMouseClickColor(Vector3<float>(0.30F));
 	b_new.setMouseHoverColor(Vector3<float>(0.30F));
 	b_new.setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16, 16); //load_sprite
-	pos = Vector2<float>(30.0F, 0.0F);
-	b_load = Button(sprite, pos, Vector2<float>(16.0F));
+	pos = Vector2<int>(30, 0);
+	b_load = Button(sprite, pos, Vector2<int>(16));
 	b_load.setOutline(true);
 	b_load.setOutlineColor(Vector3<float>(0.45));
-	b_load.setMargin(Vector2<float>(8, 8));
+	b_load.setMargin(Vector2<int>(8, 8));
 	b_load.setButtonColor(Vector3<float>(0.15F));
 	b_load.setMouseClickColor(Vector3<float>(0.30F));
 	b_load.setMouseHoverColor(Vector3<float>(0.30F));
 	b_load.setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16, 16); //save_sprite
-	pos = Vector2<float>(60.0F, 0.0F);
-	b_save = Button(sprite, pos, Vector2<float>(16.0F));
+	pos = Vector2<int>(60, 0);
+	b_save = Button(sprite, pos, Vector2<int>(16));
 	b_save.setOutline(true);
 	b_save.setOutlineColor(Vector3<float>(0.45));
-	b_save.setMargin(Vector2<float>(8, 8));
+	b_save.setMargin(Vector2<int>(8, 8));
 	b_save.setButtonColor(Vector3<float>(0.15F));
 	b_save.setMouseClickColor(Vector3<float>(0.30F));
 	b_save.setMouseHoverColor(Vector3<float>(0.30F));
 	b_save.setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 16, 16, 16); //save_sprite
-	pos = Vector2<float>(0.0F, 25.0F);
-	b_tiles = Button(sprite, pos, Vector2<float>(16.0F));
+	pos = Vector2<int>(0, 25);
+	b_tiles = Button(sprite, pos, Vector2<int>(16));
 	b_tiles.setOutline(true);
 	b_tiles.setOutlineColor(Vector3<float>(0.45));
-	b_tiles.setMargin(Vector2<float>(8, 8));
+	b_tiles.setMargin(Vector2<int>(8, 8));
 	b_tiles.setButtonColor(Vector3<float>(0.15F));
 	b_tiles.setMouseClickColor(Vector3<float>(0.30F));
 	b_tiles.setMouseHoverColor(Vector3<float>(0.30F));
 	b_tiles.setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 16, 16, 16); //save_sprite
-	pos = Vector2<float>(30.0F, 25.0F);
-	b_objects = Button(sprite, pos, Vector2<float>(16.0F));
+	pos = Vector2<int>(30, 25);
+	b_objects = Button(sprite, pos, Vector2<int>(16));
 	b_objects.setOutline(true);
 	b_objects.setOutlineColor(Vector3<float>(0.45));
-	b_objects.setMargin(Vector2<float>(8, 8));
+	b_objects.setMargin(Vector2<int>(8, 8));
 	b_objects.setButtonColor(Vector3<float>(0.15F));
 	b_objects.setMouseClickColor(Vector3<float>(0.30F));
 	b_objects.setMouseHoverColor(Vector3<float>(0.30F));
 	b_objects.setParent(controlPanel.get());
 
 	//yeni harita paneli
-	this->NewMap.newPanel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", Vector2<float>(400, 135), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
+	this->NewMap.newPanel = std::make_shared<Panel>(Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", Vector2<int>(400, 135), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
 	this->NewMap.newPanel->setMovable(false);
 	this->NewMap.newPanel->setEnable(false);
 
-	NewMap.t_mapSizeX = std::make_shared<TextBox>(Vector2<float>(180.0F, 40.0F), *textRenderer, Vector2<float>(60.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
+	NewMap.t_mapSizeX = std::make_shared<TextBox>(Vector2<int>(180, 40), *textRenderer, Vector2<int>(60, 20), true, 1.0F, Vector3<float>(0.58F));
 	NewMap.t_mapSizeX->setParent(NewMap.newPanel.get());
-	NewMap.t_mapSizeY = std::make_shared<TextBox>(Vector2<float>(250.0F, 40.0F), *textRenderer, Vector2<float>(60.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
+	NewMap.t_mapSizeY = std::make_shared<TextBox>(Vector2<int>(250, 40), *textRenderer, Vector2<int>(60, 20), true, 1.0F, Vector3<float>(0.58F));
 	NewMap.t_mapSizeY->setParent(NewMap.newPanel.get());
-	NewMap.t_tile = std::make_shared<TextBox>(Vector2<float>(180.0F, 65.0F), *textRenderer, Vector2<float>(120.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
+	NewMap.t_tile = std::make_shared<TextBox>(Vector2<int>(180, 65), *textRenderer, Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F));
 	NewMap.t_tile->setParent(NewMap.newPanel.get());
 
-	NewMap.l_mapSize = std::make_shared<Label>("Map Size", Vector2<float>(40.0F, 40.0F), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	NewMap.l_mapSize = std::make_shared<Label>("Map Size", Vector2<int>(40, 40), *textRenderer, 1.0F, Vector3<float>(0.58F));
 	NewMap.l_mapSize->setParent(NewMap.newPanel.get());
 	NewMap.l_mapSize->setMouseEvent(false);
-	NewMap.l_x = std::make_shared<Label>("x", Vector2<float>(240.0F, 40.0F), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	NewMap.l_x = std::make_shared<Label>("x", Vector2<int>(240, 40), *textRenderer, 1.0F, Vector3<float>(0.58F));
 	NewMap.l_x->setParent(NewMap.newPanel.get());
 	NewMap.l_x->setMouseEvent(false);
-	NewMap.l_tile = std::make_shared<Label>("Tileset", Vector2<float>(40.0F, 65.0F), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	NewMap.l_tile = std::make_shared<Label>("Tileset", Vector2<int>(40, 65), *textRenderer, 1.0F, Vector3<float>(0.58F));
 	NewMap.l_tile->setParent(NewMap.newPanel.get());
 	NewMap.l_tile->setMouseEvent(false);
-	NewMap.b_okey = std::make_shared<Button>("Okay", Vector2<float>(50.0F, 105.0F), Vector2<float>(60.0F, 20.0F), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+	NewMap.b_okey = std::make_shared<Button>("Okay", Vector2<int>(50, 105), Vector2<int>(60, 20), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
 	NewMap.b_okey->setMouseClickColor(Vector3<float>(0.30F));
 	NewMap.b_okey->setMouseHoverColor(Vector3<float>(0.30F));
 	NewMap.b_okey->setLabelMouseHoverColor(Vector3<float>(0.58F));
@@ -194,10 +194,10 @@ void Editor::Start()
 	NewMap.b_okey->setParent(NewMap.newPanel.get());
 
 	//harita yukle paneli
-	this->SaveLoad.loadPanel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Load Panel", Vector2<float>(400, 200), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
+	this->SaveLoad.loadPanel = std::make_shared<Panel>(Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Load Panel", Vector2<int>(400, 200), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
 	this->SaveLoad.loadPanel->setMovable(false);
 	this->SaveLoad.loadPanel->setEnable(false);
-	this->SaveLoad.load_mapsPanel = std::make_shared<Panel>(Vector2<float>(20, 60), "Map Panel", Vector2<float>(300, 100), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
+	this->SaveLoad.load_mapsPanel = std::make_shared<Panel>(Vector2<int>(20, 60), "Map Panel", Vector2<int>(300, 100), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
 	this->SaveLoad.load_mapsPanel->setMovable(false);
 	this->SaveLoad.load_mapsPanel->setEnable(false);
 	this->SaveLoad.load_mapsPanel->setScrollable(true);
@@ -208,9 +208,9 @@ void Editor::Start()
 	this->SaveLoad.load_mapsPanel->setParentCenterPos();
 	this->SaveLoad.load_listMaps = std::make_shared<ListItem>(this->SaveLoad.load_mapsPanel.get());
 	//this->SaveLoad.load_listMaps->setParent(this->SaveLoad.load_mapsPanel.get(), true);
-	this->SaveLoad.t_load = std::make_shared<TextBox>(Vector2<float>(20.0F, 170.0F), *textRenderer, Vector2<float>(120.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
+	this->SaveLoad.t_load = std::make_shared<TextBox>(Vector2<int>(20, 170), *textRenderer, Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F));
 	this->SaveLoad.t_load->setParent(SaveLoad.loadPanel.get());
-	this->SaveLoad.b_map_load = std::make_shared<Button>("Load", Vector2<float>(180.0F, 170.0F), Vector2<float>(60.0F, 20.0F), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+	this->SaveLoad.b_map_load = std::make_shared<Button>("Load", Vector2<int>(180, 170), Vector2<int>(60, 20), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
 	this->SaveLoad.b_map_load->setMouseClickColor(Vector3<float>(0.30F));
 	this->SaveLoad.b_map_load->setMouseHoverColor(Vector3<float>(0.30F));
 	this->SaveLoad.b_map_load->setLabelMouseHoverColor(Vector3<float>(0.58F));
@@ -222,10 +222,10 @@ void Editor::Start()
 	this->SaveLoad.load_listMaps->AddListener(loadListChanged);
 
 	//harita save paneli
-	this->SaveLoad.savePanel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Save Panel", Vector2<float>(400, 200), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
+	this->SaveLoad.savePanel = std::make_shared<Panel>(Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Save Panel", Vector2<int>(400, 200), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
 	this->SaveLoad.savePanel->setMovable(false);
 	this->SaveLoad.savePanel->setEnable(false);
-	this->SaveLoad.save_mapsPanel = std::make_shared<Panel>(Vector2<float>(20, 60), "Map Panel", Vector2<float>(300, 100), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
+	this->SaveLoad.save_mapsPanel = std::make_shared<Panel>(Vector2<int>(20, 60), "Map Panel", Vector2<int>(300, 100), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
 	this->SaveLoad.save_mapsPanel->setMovable(false);
 	this->SaveLoad.save_mapsPanel->setEnable(false);
 	this->SaveLoad.save_mapsPanel->setScrollable(true);
@@ -236,9 +236,9 @@ void Editor::Start()
 	this->SaveLoad.save_mapsPanel->setParentCenterPos();
 	this->SaveLoad.save_listMaps = std::make_shared<ListItem>(this->SaveLoad.save_mapsPanel.get());
 	//this->SaveLoad.save_listMaps->setParent(this->SaveLoad.save_mapsPanel.get(), true);
-	this->SaveLoad.t_save = std::make_shared<TextBox>(Vector2<float>(20.0F, 170.0F), *textRenderer, Vector2<float>(120.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
+	this->SaveLoad.t_save = std::make_shared<TextBox>(Vector2<int>(20, 170), *textRenderer, Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F));
 	this->SaveLoad.t_save->setParent(SaveLoad.savePanel.get());
-	this->SaveLoad.b_map_save = std::make_shared<Button>("Save", Vector2<float>(180.0F, 170.0F), Vector2<float>(60.0F, 20.0F), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+	this->SaveLoad.b_map_save = std::make_shared<Button>("Save", Vector2<int>(180, 170), Vector2<int>(60, 20), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
 	this->SaveLoad.b_map_save->setMouseClickColor(Vector3<float>(0.30F));
 	this->SaveLoad.b_map_save->setMouseHoverColor(Vector3<float>(0.30F));
 	this->SaveLoad.b_map_save->setLabelMouseHoverColor(Vector3<float>(0.58F));
@@ -252,11 +252,11 @@ void Editor::Start()
 	//env_item
 
 	//tile properties
-	this->tilePropertiesPanel = std::make_shared<Panel>(Vector2<float>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Tile Properties", Vector2<float>(400, 400), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
+	this->tilePropertiesPanel = std::make_shared<Panel>(Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Tile Properties", Vector2<int>(400, 400), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
 	this->tilePropertiesPanel->setMovable(false);
 	this->tilePropertiesPanel->setEnable(false);
 
-	this->b_tileProperties = std::make_shared<Button>("Tile Properties", Vector2<float>(10.0F, buildPanel->getSize().y - 35.0F), Vector2<float>(30.0F, 15.0F), *textRenderer);
+	this->b_tileProperties = std::make_shared<Button>("Tile Properties", Vector2<int>(10, buildPanel->getSize().y - 35), Vector2<int>(30, 15), *textRenderer);
 	this->b_tileProperties->setOutline(true);
 	this->b_tileProperties->setOutlineColor(Vector3<float>(0.54));
 	this->b_tileProperties->setLabelColor(Vector3<float>(0.54F));
@@ -267,7 +267,7 @@ void Editor::Start()
 	this->b_tileProperties->setMouseHoverColor(Vector3<float>(0.30F));
 	this->b_tileProperties->setParent(buildPanel.get());
 
-	this->rb_tileProperties = std::make_shared<RadioButton>(*textRenderer, Vector2<float>(20.0F, 50.0F), 30);
+	this->rb_tileProperties = std::make_shared<RadioButton>(*textRenderer, Vector2<int>(20, 50), 30);
 	this->rb_tileProperties->setParent(tilePropertiesPanel.get());
 	this->rb_tileProperties->Clear();
 	this->rb_tileProperties->AddElement("Wall", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
@@ -386,19 +386,19 @@ void Editor::ProcessInput()
 	{
 		if (InputManager::isKey(GLFW_KEY_W))
 		{
-			this->position = Vector2(this->position.x, this->position.y - Game_Parameters::SCREEN_HEIGHT * Timer::DeltaTime);
+			this->position = Vector2(this->position.x, this->position.y - static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime));
 		}
 		if (InputManager::isKey(GLFW_KEY_S))
 		{
-			this->position = Vector2(this->position.x, this->position.y + Game_Parameters::SCREEN_HEIGHT * Timer::DeltaTime);
+			this->position = Vector2(this->position.x, this->position.y + static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime));
 		}
 		if (InputManager::isKey(GLFW_KEY_A))
 		{
-			this->position = Vector2(this->position.x - Game_Parameters::SCREEN_HEIGHT * Timer::DeltaTime, this->position.y);
+			this->position = Vector2(this->position.x - static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
 		}
 		if (InputManager::isKey(GLFW_KEY_D))
 		{
-			this->position = Vector2(this->position.x + Game_Parameters::SCREEN_HEIGHT * Timer::DeltaTime, this->position.y);
+			this->position = Vector2(this->position.x + static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
 		}
 	}
 
@@ -462,7 +462,7 @@ void Editor::ProcessInput()
 	if (SaveLoad.b_map_load->isMouseDown())
 	{
 		this->time = 0.0F;
-		this->position = Vector2<float>(0.0F - buildPanel->getSize().x, 0.0F);
+		this->position = Vector2<int>(0 - buildPanel->getSize().x, 0);
 		firstSelect = false;
 		tiles = SaveLoad.LoadMap(SaveLoad.t_load->getText());
 	}
@@ -500,7 +500,7 @@ void Editor::ProcessInput()
 				{
 					if (tile.cell == selectedCell)
 					{
-						Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile->sprite, Vector2<float>(Game_Parameters::SIZE_TILE), selectedTile->getType(), selectedTile->frame);
+						Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile->sprite, Vector2<int>(Game_Parameters::SIZE_TILE), selectedTile->getType(), selectedTile->frame);
 						Button bt = Button(tilee);
 						if (!(selectedTile->frame == tile.button.getTile()->frame))
 						{
@@ -551,7 +551,7 @@ void Editor::Render()
 	{
 		tile_1.button.Draw(worldRenderer, squareRenderer);
 
-		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1.cell), Vector2<float>(Game_Parameters::SIZE_TILE), cell_yellow);
+		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1.cell), Vector2<int>(Game_Parameters::SIZE_TILE), cell_yellow);
 
 		bool env_Item_Panel = false;
 		for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
@@ -565,8 +565,8 @@ void Editor::Render()
 		if (!f && ms == tile_1.cell && !NewMap.isMouseHover() && !buildPanel->isMouseHover(false) && !SaveLoad.isMouseHover() && !env_Item_Panel)
 		{
 			f = true;
-			Vector2<float> pos = Utils::CellToPosition(tile_1.cell);
-			squareRenderer.world_RenderEmptySquareWithLine(pos, Vector2<float>(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
+			Vector2<int> pos = Utils::CellToPosition(tile_1.cell);
+			squareRenderer.world_RenderEmptySquareWithLine(pos, Vector2<int>(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
 		}
 	}
 	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)

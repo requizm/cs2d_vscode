@@ -7,7 +7,7 @@
 class InputManager
 {
 public:
-	static Vector2<float> mousePos;
+	static Vector2<int> mousePos;
 	static Vector2<float> scroll;
 	static bool scrollYPressed;
 
