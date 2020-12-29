@@ -5,7 +5,8 @@ Button::Button() = default;
 Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, Vector3<float> buttonColor, Vector3<float> textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->buttonColor = buttonColor;
-	this->setSize(renderer.CalculateSize(text, 1.0F) * 1.50F);
+	Vector2<int> nSize = renderer.CalculateSize(text, 1.0F);
+	this->setSize(Vector2<int>(static_cast<int>(static_cast<float>(nSize.x) * 1.5F), static_cast<int>(static_cast<float>(nSize.y) * 1.5F)));
 	this->type = ButtonType::DEFAULT;
 }
 
