@@ -1,4 +1,5 @@
 #include "ListItem.hpp"
+#include "../../Scenes/Editor/Editor.hpp"
 
 ListItem::ListItem(Panel *panel) : UIObject(panel->getPosition(), panel->getScale(), *(panel->rend))
 {
@@ -99,12 +100,14 @@ void ListItem::Update()
         {
             items[i]->Update();
         }
-        if (panel->isScrollable() || InputManager::scrollYPressed)
+        if (Editor::instance().selectedMode == SelectedMode::OBJECT_MOD && InputManager::scrollYPressed && panel->isScrollable())
         {
             if (!items.empty())
             {
                 bool check_1 = items.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
-                bool check_2 = items.at(items.size() - 1)->getLocalPosition().y == panel->getSize().y && InputManager::scroll.y < 0;
+                float itemLocalPos = items.at(items.size() - 1)->getLocalPosition().y;
+                float panelSize = panel->getSize().y;
+                bool check_2 = items.at(items.size() - 1)->getLocalPosition().y + 20.0F <= panel->getSize().y && InputManager::scroll.y < 0;
 
                 if (!check_1 && !check_2)
                 {
@@ -117,4 +120,9 @@ void ListItem::Update()
             InputManager::scrollYPressed = false;
         }
     }
+}
+
+int ListItem::getSelectedIndex() 
+{
+    return selectedIndex;
 }

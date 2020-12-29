@@ -21,6 +21,8 @@ public:
     void ProcessInput() override;
     void Update() override;
 
+    int getSelectedIndex();
+
 private:
     Panel *panel;
     std::vector<Button *> items;

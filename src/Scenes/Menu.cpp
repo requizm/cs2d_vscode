@@ -21,7 +21,7 @@ void Menu::Start()
 {
 	Logger::WriteLog("Menu::Start()");
 	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
-	this->textRenderer->Load("../resources/fonts/liberationsans.ttf", 16);
+	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 16);
 	squareRenderer = SquareRenderer(true);
 
 	this->l_console = std::make_shared<Label>("Console", Vector2<float>(10.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 50.0F), *textRenderer, 0.8F, Vector3<float>(0.55F));

@@ -2,18 +2,44 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "(32)build",
             "type": "shell",
             "command": "g++",
             "args": [
                 "-I${workspaceFolder}\\include",
-                "-L${workspaceFolder}\\lib",
+                "-L${workspaceFolder}\\lib\\32",
                 "-g",
                 "${workspaceFolder}\\src\\main.cpp",
                 "${workspaceFolder}\\src\\Common.cpp",
                 "-o",
-                "${workspaceFolder}\\bin\\main",
-                "${workspaceFolder}\\lib\\libglfw3dll.a",
+                "${workspaceFolder}\\bin\\32\\main",
+                "${workspaceFolder}\\lib\\32\\libglfw3dll.a",
+                "-lglew32s",
+                "-lglew32",
+                "-lglfw3",
+                "-lopengl32",
+                "-lfreetype",
+                "-w",
+                "-std=c++17"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "(64)build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-I${workspaceFolder}\\include",
+                "-L${workspaceFolder}\\lib\\64",
+                "-g",
+                "${workspaceFolder}\\src\\main.cpp",
+                "${workspaceFolder}\\src\\Common.cpp",
+                "-o",
+                "${workspaceFolder}\\bin\\64\\main",
+                "${workspaceFolder}\\lib\\64\\libglfw3dll.a",
                 "-lglew32s",
                 "-lglew32",
                 "-lglfw3",

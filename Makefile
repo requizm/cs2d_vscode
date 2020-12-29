@@ -1,10 +1,11 @@
 CXX      := g++
 CXXFLAGS := -w -std=c++17
-LDFLAGS  := -L./lib
+
+LDFLAGS  := -L./lib/32
 LIB_F = -lglew32s -lglew32 -lglfw3 -lopengl32 -lfreetype
 BUILD    := ./build
 OBJ_DIR  := $(BUILD)/objects
-APP_DIR  := ./bin
+APP_DIR  := ./bin/64
 TARGET   := main
 INCLUDE  := -I./include
 SRC_DIR := src/
@@ -23,7 +24,7 @@ $(OBJ_DIR)/%.o: %.cpp
 
 $(APP_DIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p $(@D)
-	$(CXX) $(INCLUDE) $(LDFLAGS) -g ./src/main.cpp ./src/Common.cpp -o $(APP_DIR)/$(TARGET) ./lib/libglfw3dll.a $(OBJECTS) $(LIB_F) $(CXXFLAGS)
+	$(CXX) $(INCLUDE) $(LDFLAGS) -g ./src/main.cpp ./src/Common.cpp -o $(APP_DIR)/$(TARGET) ./lib/64/libglfw3dll.a $(OBJECTS) $(LIB_F) $(CXXFLAGS)
 
 .PHONY: all build clean debug release
 

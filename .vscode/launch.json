@@ -5,14 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": " Build and Debug",
+            "name": " (32)Build and Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\bin\\main.exe",
+            "program": "${workspaceFolder}\\bin\\64\\main.exe",
             "args": [],
             "targetArchitecture": "x86",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\bin",
+            "cwd": "${workspaceFolder}\\bin\\32",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
@@ -24,17 +24,17 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "build"
+            "preLaunchTask": "(32)build"
         },
         {
-            "name": "Debug",
+            "name": "(32)Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\bin\\main.exe",
+            "program": "${workspaceFolder}\\bin\\32\\main.exe",
             "args": [],
             "targetArchitecture": "x86",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\bin",
+            "cwd": "${workspaceFolder}\\bin\\32",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
@@ -48,18 +48,47 @@
             "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe"
         },
         {
-            "name": " Run",
+            "name": " (64)Build and Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\bin\\main.exe",
+            "program": "${workspaceFolder}\\bin\\64\\main.exe",
             "args": [],
-            "targetArchitecture": "x86",
+            "targetArchitecture": "x64",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\bin",
+            "cwd": "${workspaceFolder}\\bin\\64",
             "environment": [],
             "externalConsole": true,
-            "logging": { "engineLogging": true },
-            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe"
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "(64)build"
+        },
+        {
+            "name": "(64)Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\bin\\64\\main.exe",
+            "args": [],
+            "targetArchitecture": "x64",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}\\bin\\64",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "C:\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gdb.exe"
         }
     ]
 }

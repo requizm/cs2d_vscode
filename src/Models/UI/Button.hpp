@@ -10,9 +10,10 @@
 
 enum ButtonType
 {
-	DEFAULT, //standart buton
+	DEFAULT, //standart button
 	TILE,	 //editor'deki build tile'ları gibi
-	SPRITE	 //editor'deki save button'u gibi
+	SPRITE,	 //editor'deki save button'ı gibi
+	ENV_OBJ //editor'deki env objesi gibi
 };
 
 class Button : public Label
@@ -84,6 +85,8 @@ public:
 	bool isMouseUp() override;
 	bool isMousePress() override;
 
+	void setType(ButtonType type);
+
 	bool center = true;
 
 protected:
@@ -98,6 +101,8 @@ protected:
 	bool isMouseDownM(const int key) override;
 	bool isMouseUpM(const int key) override;
 	bool isMousePressM(const int key) override;
+
+	
 
 private:
 	//bool isDown = false;

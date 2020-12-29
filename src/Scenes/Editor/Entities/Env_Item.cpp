@@ -27,7 +27,7 @@ void Env_Item::Initialize()
     p_panel->setMovable(false);
     p_panel->setEnable(false);
 
-    b_okay = std::make_shared<Button>("Okay", Vector2<float>(50.0F, 105.0F), Vector2<float>(60.0F, 20.0F), *(Editor::instance().textRenderer), Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    b_okay = std::make_shared<Button>("Okay", Vector2<float>(330.0F, 170.0F), Vector2<float>(60.0F, 20.0F), *(Editor::instance().textRenderer), Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
     b_okay->setMouseClickColor(Vector3<float>(0.30F));
     b_okay->setMouseHoverColor(Vector3<float>(0.30F));
     b_okay->setLabelMouseHoverColor(Vector3<float>(0.58F));
@@ -36,23 +36,44 @@ void Env_Item::Initialize()
     b_okay->setOutlineColor(Vector3<float>(1.0F));
     b_okay->setParent(p_panel.get());
 
-    this->obj_id = Utils::GenerateID();
+    t_id = std::make_shared<TextBox>(Vector2<float>(300.0F, 40.0F), *(Editor::instance().textRenderer), Vector2<float>(60.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
+    t_id->setParent(p_panel.get());
 
-    Editor::instance().env_items.push_back(this);
+    Tile t = Tile(position, sp, Vector2<float>(Game_Parameters::SIZE_TILE));
+    button = std::make_shared<Button>(t);
+    button->setType(ButtonType::ENV_OBJ);
+
+    if (item_id != 0)
+    {
+        Editor::instance().env_items.push_back(this);
+        t_id->setText(std::to_string(item_id));
+    }
 }
 
 void Env_Item::ProcessInput()
 {
     p_panel->ProcessInput();
+
+    if (Editor::instance().selectedMode == SelectedMode::OBJECT_MOD && InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+    {
+        Vector2<float> sw = Utils::ScreenToWorld(Editor::instance().camera->view, InputManager::mousePos);
+        Vector2<int> c = Utils::PositionToCell(position);
+        Vector2<int> d = Utils::PositionToCell(sw);
+        if (d == c)
+        {
+            p_panel->setEnable(true);
+        }
+    }
 }
 void Env_Item::Update()
 {
     p_panel->Update();
+    //button.Update();
 }
 void Env_Item::Render(SpriteRenderer &worldRenderer, SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer, float time)
 {
-    worldRenderer.DrawSprite(sp, Vector2<float>(position + Game_Parameters::SIZE_TILE / 2 - Game_Parameters::SIZE_TILE / 4), Vector2<float>(Game_Parameters::SIZE_TILE / 2),
-                             Vector3<float>(0.5F, 1.0F, 0.0F), false, 0.0F, 0.15F, true, time);
+    button->Draw(worldRenderer, squareRenderer);
+    /*worldRenderer.DrawSprite(sp, Vector2<float>(position + Game_Parameters::SIZE_TILE / 4), Vector2<float>(Game_Parameters::SIZE_TILE / 2), Vector3<float>(0.5F, 1.0F, 0.0F), false, 0.0F, 0.15F, true, time);*/
     p_panel->Draw(menuRenderer, squareRenderer);
 }
 
@@ -63,4 +84,14 @@ int Env_Item::getId()
 void Env_Item::SetId(int id)
 {
     this->item_id = id;
+}
+
+Vector2<float> Env_Item::getPosition()
+{
+    return position;
+}
+
+bool Env_Item::isPressedOrHover()
+{
+    return p_panel->isPressed || p_panel->isMouseHover(false);
 }

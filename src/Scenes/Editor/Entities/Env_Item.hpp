@@ -13,6 +13,8 @@ private:
     Vector2<float> size;
     Sprite sp;
 
+    std::shared_ptr<Button> button;
+
 public:
     Env_Item();
     Env_Item(int id, Vector2<float> position);
@@ -26,6 +28,10 @@ public:
 
     int getId();
     void SetId(int id);
+
+    Vector2<float> getPosition();
+
+    bool isPressedOrHover();
 
     std::shared_ptr<Panel> p_panel;
     std::shared_ptr<Button> b_okay, b_tile;

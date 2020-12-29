@@ -22,7 +22,6 @@ public:
 
 private:
 	TileTypes type;
-
 };
 
 #endif

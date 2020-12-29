@@ -67,7 +67,7 @@ void Editor::Initialize(const SpriteRenderer &menuRenderer, const SpriteRenderer
 void Editor::Start()
 {
 	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
-	this->textRenderer->Load("../resources/fonts/liberationsans.ttf", 16);
+	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 16);
 	this->squareRenderer = SquareRenderer(true);
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->mouse_yellow = Vector3<float>(0.73F, 0.73F, 0.0F);
@@ -272,6 +272,7 @@ void Editor::Start()
 	std::function<void(RadioButtonElement *, RadioButtonElement *)> t = std::bind(&Editor::SelectedRbChanged, this, std::placeholders::_1, std::placeholders::_2);
 	this->rb_tileProperties->AddListener(t);
 
+	item_0.SetId(1);
 	item_0.Initialize();
 
 	this->selectedMode = SelectedMode::TILE_MOD;
@@ -311,7 +312,10 @@ void Editor::Update()
 	this->tilePropertiesPanel->Update();
 	SaveLoad.Update();
 	objects_ui->Update();
-	item_0.p_panel->Update();
+	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+	{
+		env_items[i]->Update();
+	}
 
 	if (InputManager::scrollYPressed && selectedMode == SelectedMode::TILE_MOD && tilePanel->isScrollable())
 	{
@@ -339,7 +343,6 @@ void Editor::ProcessInput()
 	this->tilePropertiesPanel->ProcessInput();
 	this->SaveLoad.ProcessInput();
 	this->objects_ui->ProcessInput();
-	item_0.p_panel->ProcessInput();
 
 	if (!tilesUI.empty())
 	{
@@ -440,12 +443,14 @@ void Editor::ProcessInput()
 	{
 		tilePanel->setEnable(false);
 		objectPanel->setEnable(true);
+		selectedMode = SelectedMode::OBJECT_MOD;
 	}
 
 	if (b_tiles.isMouseDown())
 	{
 		objectPanel->setEnable(false);
 		tilePanel->setEnable(true);
+		selectedMode = SelectedMode::TILE_MOD;
 	}
 
 	if (SaveLoad.b_map_load->isMouseDown())
@@ -462,31 +467,73 @@ void Editor::ProcessInput()
 		this->rb_tileProperties->Select(static_cast<int>(selectedTile->getType()));
 	}
 
-	bool panelsPressed = !buildPanel->isPressed && !tilePropertiesPanel->isPressed &&
-						 !buildPanel->isMouseHover(false) && !NewMap.isPressedOrHover() &&
-						 !tilePropertiesPanel->isMouseHover(false) && !SaveLoad.isPressedOrHover();
+	bool panelsPressed = buildPanel->isPressed && tilePropertiesPanel->isPressed &&
+						 buildPanel->isMouseHover(false) && NewMap.isPressedOrHover() &&
+						 tilePropertiesPanel->isMouseHover(false) && SaveLoad.isPressedOrHover();
 
-	if (firstSelect && panelsPressed)
+	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
 	{
-		if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT))
+		if (env_items[i]->isPressedOrHover())
 		{
-			Vector2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
-			//Logger::DebugLog("pos: " + std::to_string(wd.x) + " - " + std::to_string(wd.y));
-			Vector2 selectedCell = Utils::PositionToCell(wd);
-			//Logger::DebugLog("pos: " + std::to_string(selectedCell.x) + " - " + std::to_string(selectedCell.y));
-			for (auto &tile : tiles)
+			panelsPressed = true;
+			break;
+		}
+	}
+
+	if (selectedMode == SelectedMode::TILE_MOD)
+	{
+		if (firstSelect && !panelsPressed)
+		{
+			if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT))
 			{
-				if (tile.cell == selectedCell)
+				Vector2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
+				//Logger::DebugLog("pos: " + std::to_string(wd.x) + " - " + std::to_string(wd.y));
+				Vector2 selectedCell = Utils::PositionToCell(wd);
+				//Logger::DebugLog("pos: " + std::to_string(selectedCell.x) + " - " + std::to_string(selectedCell.y));
+				for (auto &tile : tiles)
 				{
-					Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile->sprite, Vector2<float>(Game_Parameters::SIZE_TILE), selectedTile->getType(), selectedTile->frame);
-					Button bt = Button(tilee);
-					if (!(selectedTile->frame == tile.button.getTile()->frame))
+					if (tile.cell == selectedCell)
 					{
-						tile.button = bt;
+						Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile->sprite, Vector2<float>(Game_Parameters::SIZE_TILE), selectedTile->getType(), selectedTile->frame);
+						Button bt = Button(tilee);
+						if (!(selectedTile->frame == tile.button.getTile()->frame))
+						{
+							tile.button = bt;
+						}
 					}
 				}
 			}
 		}
+	}
+	else if (selectedMode == SelectedMode::OBJECT_MOD)
+	{
+		if (!panelsPressed)
+		{
+			if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT) && objects_ui->getSelectedIndex() == 0)
+			{
+				Vector2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
+				//Logger::DebugLog("pos: " + std::to_string(wd.x) + " - " + std::to_string(wd.y));
+				Vector2 selectedCell = Utils::PositionToCell(wd);
+				//Logger::DebugLog("pos: " + std::to_string(selectedCell.x) + " - " + std::to_string(selectedCell.y));
+				for (auto &tile : tiles)
+				{
+					if (tile.cell == selectedCell)
+					{
+						if (tile.item.getId() == 0)
+						{
+							Env_Item *a = new Env_Item(1, Utils::CellToPosition(selectedCell));
+							tile.item = *a;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+	{
+		env_items[i]->ProcessInput();
 	}
 }
 
@@ -512,7 +559,11 @@ void Editor::Render()
 			squareRenderer.world_RenderEmptySquareWithLine(pos, Vector2<float>(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
 		}
 	}
-	item_0.Render(worldRenderer, menuRenderer, squareRenderer, this->time);
+	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+	{
+		env_items[i]->Render(worldRenderer, menuRenderer, squareRenderer, this->time);
+	}
+
 	//ui
 	this->buildPanel->Draw(menuRenderer, squareRenderer);
 

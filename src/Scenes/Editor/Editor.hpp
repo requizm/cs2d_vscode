@@ -53,6 +53,10 @@ public:
 	Vector2<int> mapLimit;
 	std::vector<ButtonTile> tiles;
 
+	std::shared_ptr<Camera> camera;
+
+	SelectedMode selectedMode;
+
 private:
 	void SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n);
 
@@ -60,10 +64,8 @@ private:
 	SquareRenderer squareRenderer;
 
 	SpriteRenderer worldRenderer;
-	std::shared_ptr<Camera> camera;
-	Vector2<float> position;
 
-	SelectedMode selectedMode;
+	Vector2<float> position;
 
 	std::shared_ptr<ListItem> objects_ui;
 

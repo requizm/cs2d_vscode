@@ -27,7 +27,7 @@ TextRenderer::TextRenderer(GLuint width, GLuint height)
 TextRenderer::TextRenderer(GLuint width, GLuint height, Matrix4<float> camera)
 {
 	// Load and configure shader
-	this->TextShader = ResourceManager::LoadShader("../resources/shaders/textVertex.txt", "../resources/shaders/textFragment.txt", nullptr, "text");
+	this->TextShader = ResourceManager::LoadShader("../../resources/shaders/textVertex.txt", "../../resources/shaders/textFragment.txt", nullptr, "text");
 	this->TextShader.Use();
 	this->TextShader.SetMatrix4("projection", camera, GL_TRUE);
 	this->TextShader.SetInteger("text", 0);

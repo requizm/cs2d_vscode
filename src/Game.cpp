@@ -142,6 +142,7 @@ void Game::NewGame()
 	weapons.push_back(*main2.get());
 	weapons.push_back(*main3.get());
 
+
 	Game::scene = StartGame(maps[0], spriteRenderer, weapons);
 }
 
@@ -149,46 +150,46 @@ void Game::initTextures() const
 {
 	Logger::WriteLog("Game->initTextures()");
 	//tiles
-	ResourceManager::LoadTexture("../resources/textures/tiles/cs2dnorm.png", GL_TRUE, "cs2dnorm");
+	ResourceManager::LoadTexture("../../resources/textures/tiles/cs2dnorm.png", GL_TRUE, "cs2dnorm");
 
 	//weapons
-	ResourceManager::LoadTexture("../resources/textures/player/ct1.png", GL_TRUE, "ct1");
-	ResourceManager::LoadTexture("../resources/textures/weapons/awp.png", GL_TRUE, "awp");
-	ResourceManager::LoadTexture("../resources/textures/weapons/awp_d.png", GL_TRUE, "awp_d");
-	ResourceManager::LoadTexture("../resources/textures/weapons/ak47.png", GL_TRUE, "ak47");
-	ResourceManager::LoadTexture("../resources/textures/weapons/ak47_d.png", GL_TRUE, "ak47_d");
-	ResourceManager::LoadTexture("../resources/textures/weapons/famas.png", GL_TRUE, "famas");
-	ResourceManager::LoadTexture("../resources/textures/weapons/famas_d.png", GL_TRUE, "famas_d");
-	ResourceManager::LoadTexture("../resources/textures/bulb.png", GL_TRUE, "bulb");
-	/*ResourceManager::LoadTexture("../resources/textures/weapons/deagle.png", GL_TRUE, "deagle");
-	ResourceManager::LoadTexture("../resources/textures/weapons/deagle_d.png", GL_TRUE, "deagle_d");
-	ResourceManager::LoadTexture("../resources/textures/weapons/fiveseven.png", GL_TRUE, "fiveseven");
-	ResourceManager::LoadTexture("../resources/textures/weapons/fiveseven_d.png", GL_TRUE, "fiveseven_d");
-	ResourceManager::LoadTexture("../resources/textures/weapons/elite.png", GL_TRUE, "elite");
-	ResourceManager::LoadTexture("../resources/textures/weapons/elite_d.png", GL_TRUE, "elite_d");
-	ResourceManager::LoadTexture("../resources/textures/weapons/usp.png", GL_TRUE, "usp");
-	ResourceManager::LoadTexture("../resources/textures/weapons/usp_d.png", GL_TRUE, "usp_d");
-	ResourceManager::LoadTexture("../resources/textures/weapons/knife.png", GL_TRUE, "knife");
-	ResourceManager::LoadTexture("../resources/textures/weapons/machete.png", GL_TRUE, "machete");*/
+	ResourceManager::LoadTexture("../../resources/textures/player/ct1.png", GL_TRUE, "ct1");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/awp.png", GL_TRUE, "awp");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/awp_d.png", GL_TRUE, "awp_d");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/ak47.png", GL_TRUE, "ak47");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/ak47_d.png", GL_TRUE, "ak47_d");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/famas.png", GL_TRUE, "famas");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/famas_d.png", GL_TRUE, "famas_d");
+	ResourceManager::LoadTexture("../../resources/textures/bulb.png", GL_TRUE, "bulb");
+	/*ResourceManager::LoadTexture("../../resources/textures/weapons/deagle.png", GL_TRUE, "deagle");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/deagle_d.png", GL_TRUE, "deagle_d");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/fiveseven.png", GL_TRUE, "fiveseven");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/fiveseven_d.png", GL_TRUE, "fiveseven_d");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/elite.png", GL_TRUE, "elite");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/elite_d.png", GL_TRUE, "elite_d");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/usp.png", GL_TRUE, "usp");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/usp_d.png", GL_TRUE, "usp_d");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/knife.png", GL_TRUE, "knife");
+	ResourceManager::LoadTexture("../../resources/textures/weapons/machete.png", GL_TRUE, "machete");*/
 
 	//menuitems
-	ResourceManager::LoadTexture("../resources/textures/pointer.png", GL_TRUE, "pointer");
-	ResourceManager::LoadTexture("../resources/textures/cs2d.png", GL_TRUE, "cs2d");
-	ResourceManager::LoadTexture("../resources/textures/gametitle.png", GL_TRUE, "gametitle");
-	ResourceManager::LoadTexture("../resources/textures/unrealsoftware.png", GL_TRUE, "unrealsoftware");
-	ResourceManager::LoadTexture("../resources/textures/splash.png", GL_FALSE, "splash");
-	ResourceManager::LoadTexture("../resources/textures/cursor-spec.png", GL_TRUE, "textcursor");
+	ResourceManager::LoadTexture("../../resources/textures/pointer.png", GL_TRUE, "pointer");
+	ResourceManager::LoadTexture("../../resources/textures/cs2d.png", GL_TRUE, "cs2d");
+	ResourceManager::LoadTexture("../../resources/textures/gametitle.png", GL_TRUE, "gametitle");
+	ResourceManager::LoadTexture("../../resources/textures/unrealsoftware.png", GL_TRUE, "unrealsoftware");
+	ResourceManager::LoadTexture("../../resources/textures/splash.png", GL_FALSE, "splash");
+	ResourceManager::LoadTexture("../../resources/textures/cursor-spec.png", GL_TRUE, "textcursor");
 
 	//GUIIcons
-	ResourceManager::LoadTexture("../resources/textures/gui_icons.png", GL_TRUE, "gui_icons");
+	ResourceManager::LoadTexture("../../resources/textures/gui_icons.png", GL_TRUE, "gui_icons");
 }
 
 void Game::initShaders()
 {
 	Logger::WriteLog("Game->initShaders()");
-	ResourceManager::LoadShader("../resources/shaders/textVertex.txt", "../resources/shaders/textFragment.txt", nullptr, "text");
-	ResourceManager::LoadShader("../resources/shaders/spriteVertex.txt", "../resources/shaders/spriteFragment.txt", nullptr, "sprite");
-	ResourceManager::LoadShader("../resources/shaders/spriteVertex.txt", "../resources/shaders/spriteFragment.txt", nullptr, "menu");
+	ResourceManager::LoadShader("../../resources/shaders/textVertex.txt", "../../resources/shaders/textFragment.txt", nullptr, "text");
+	ResourceManager::LoadShader("../../resources/shaders/spriteVertex.txt", "../../resources/shaders/spriteFragment.txt", nullptr, "sprite");
+	ResourceManager::LoadShader("../../resources/shaders/spriteVertex.txt", "../../resources/shaders/spriteFragment.txt", nullptr, "menu");
 
 	ResourceManager::GetShader("sprite").Use();
 	ResourceManager::GetShader("sprite").SetInteger("image", 0);
@@ -218,7 +219,7 @@ void Game::initMaps()
 {
 	Logger::WriteLog("Game->initMaps()");
 	maps = std::vector<Map>();
-	const Map test_map = Map("../resources/levels/one.xml", "test_one");
+	const Map test_map = Map("../../resources/levels/one.xml", "test_one");
 	maps.push_back(test_map);
 }
 

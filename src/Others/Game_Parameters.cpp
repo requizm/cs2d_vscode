@@ -15,7 +15,7 @@ Game_Parameters::~Game_Parameters() = default;
 
 void Game_Parameters::LoadParameters()
 {
-    std::ifstream file("../resources/content/gameparameters.txt");
+    std::ifstream file("../../resources/content/gameparameters.txt");
 
     if (!file)
     {

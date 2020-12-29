@@ -71,7 +71,7 @@ void Panel::Update()
 {
 	if (isEnable())
 	{
-		if (mouseEvents && isMovable())
+		if (isMouseEvents() && isMovable())
 		{
 			if (!click && (opttitles && !escapeButton.isPressed) || (!opttitles && !click))
 			{

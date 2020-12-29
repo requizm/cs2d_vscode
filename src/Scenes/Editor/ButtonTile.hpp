@@ -9,6 +9,7 @@ struct ButtonTile
     Button button;
     Vector2<int> cell;
     Env_Item item;
+
     ButtonTile(Vector2<int> cell)
     {
         this->cell = cell;

@@ -31,7 +31,7 @@ StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->weapons = weapons;
 	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
-	this->textRenderer->Load("../resources/fonts/liberationsans.ttf", 20);
+	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 20);
 
 	this->SetEnable(true);
 }

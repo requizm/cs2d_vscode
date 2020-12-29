@@ -117,7 +117,7 @@ void SaveLoadSystem::SaveMap()
         doc.append_node(node_map);
         doc.append_node(node_info);
         std::ofstream fileC;
-        std::string a("../resources/levels/" + t_save->getText() + ".xml");
+        std::string a("../../resources/levels/" + t_save->getText() + ".xml");
         fileC.open(a.c_str());
         if (!fileC)
         {
@@ -156,7 +156,7 @@ std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName)
     InputManager::scroll.y = 0.0F;
     this->loadPanel->setEnable(false);
 
-    mapName = "../resources/levels/" + mapName + ".xml";
+    mapName = "../../resources/levels/" + mapName + ".xml";
     std::string codeString;
     std::ifstream fileC(mapName.c_str());
     if (!fileC)
@@ -256,7 +256,7 @@ std::vector<std::string> SaveLoadSystem::getMapNames()
 
     DIR *dir;
     struct dirent *ent;
-    if ((dir = opendir("../resources/levels")) != NULL)
+    if ((dir = opendir("../../resources/levels")) != NULL)
     {
         /* print all the files and directories within directory */
         while ((ent = readdir(dir)) != NULL)

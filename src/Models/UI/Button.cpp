@@ -65,6 +65,9 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 		case ButtonType::TILE:
 			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize());
 			break;
+		case ButtonType::ENV_OBJ:
+			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition() + Game_Parameters::SIZE_TILE / 4, this->getSize() / 2);
+			break;
 		}
 	}
 }
@@ -140,7 +143,7 @@ void Button::ProcessInput()
 
 Vector2<float> Button::getPosition()
 {
-	if (type == ButtonType::TILE)
+	if (type == ButtonType::TILE || type == ButtonType::ENV_OBJ)
 	{
 		if (isParent())
 		{
@@ -174,7 +177,7 @@ Vector2<float> Button::getLocalPosition()
 
 Vector2<float> Button::getSize()
 {
-	if (type == ButtonType::TILE)
+	if (type == ButtonType::TILE || type == ButtonType::ENV_OBJ)
 	{
 		return tile.GetSize();
 	}
@@ -262,6 +265,11 @@ bool Button::isMousePressM(const int key)
 		return true;
 	}
 	return false;
+}
+
+void Button::setType(ButtonType type)
+{
+	this->type = type;
 }
 
 void Button::setMouseHoverColor(const Vector3<float> color)
