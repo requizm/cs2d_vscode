@@ -97,7 +97,5 @@ private:
 
 	Vector3<float> cell_yellow;
 	Vector3<float> mouse_yellow;
-
-	Env_Item item_0;
 };
 #endif

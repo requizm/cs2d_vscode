@@ -6,8 +6,10 @@ ListItem::ListItem(Panel *panel) : UIObject(panel->getPosition(), panel->getScal
     this->panel = panel;
 }
 
-ListItem::ListItem()
+ListItem::ListItem() : UIObject()
 {
+    this->position = Vector2<float>(0.0F);
+    this->scale = 0.0F;
 }
 
 ListItem::~ListItem()
@@ -45,7 +47,7 @@ void ListItem::AddListener(std::function<void(Button *, Button *)> func)
 
 void ListItem::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
-    if (isVisible() && isEnable())
+    if (panel->isEnable())
     {
         for (auto &item : items)
         {
@@ -56,7 +58,7 @@ void ListItem::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRender
 
 void ListItem::ProcessInput()
 {
-    if (isMouseEvents() && isEnable())
+    if (panel->isMouseEvents() && panel->isEnable())
     {
         for (std::vector<int>::size_type i = 0; i != items.size(); i++)
         {
@@ -94,7 +96,7 @@ void ListItem::ProcessInput()
 
 void ListItem::Update()
 {
-    if (isMouseEvents() && isEnable())
+    if (panel->isMouseEvents() && panel->isEnable())
     {
         for (std::vector<int>::size_type i = 0; i != items.size(); i++)
         {
@@ -122,7 +124,7 @@ void ListItem::Update()
     }
 }
 
-int ListItem::getSelectedIndex() 
+int ListItem::getSelectedIndex()
 {
     return selectedIndex;
 }

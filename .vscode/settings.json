@@ -61,7 +61,13 @@
         "codecvt": "cpp",
         "filesystem": "cpp",
         "optional": "cpp",
-        "bit": "cpp"
+        "bit": "cpp",
+        "list": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "cSpell.words": [
+        "INGAME",
+        "Lfloat",
+        "deagle"
+    ]
 }

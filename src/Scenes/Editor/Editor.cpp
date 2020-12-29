@@ -42,9 +42,9 @@ Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRe
 
 Editor::~Editor()
 {
-	for (std::vector<int>::size_type i = 0; i != env_items.size(); i++)
+	for (auto e : env_items)
 	{
-		delete env_items[i];
+		delete e;
 	}
 }
 
@@ -202,10 +202,12 @@ void Editor::Start()
 	this->SaveLoad.load_mapsPanel->setEnable(false);
 	this->SaveLoad.load_mapsPanel->setScrollable(true);
 	this->SaveLoad.load_mapsPanel->setOutline(true);
+	this->SaveLoad.load_mapsPanel->setVisible(true);
 	this->SaveLoad.load_mapsPanel->setOutlineColor(Vector3<float>(0.47F));
-	this->SaveLoad.load_mapsPanel->setParent(SaveLoad.loadPanel.get(), false);
+	this->SaveLoad.load_mapsPanel->setParent(SaveLoad.loadPanel.get(), true);
 	this->SaveLoad.load_mapsPanel->setParentCenterPos();
 	this->SaveLoad.load_listMaps = std::make_shared<ListItem>(this->SaveLoad.load_mapsPanel.get());
+	//this->SaveLoad.load_listMaps->setParent(this->SaveLoad.load_mapsPanel.get(), true);
 	this->SaveLoad.t_load = std::make_shared<TextBox>(Vector2<float>(20.0F, 170.0F), *textRenderer, Vector2<float>(120.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
 	this->SaveLoad.t_load->setParent(SaveLoad.loadPanel.get());
 	this->SaveLoad.b_map_load = std::make_shared<Button>("Load", Vector2<float>(180.0F, 170.0F), Vector2<float>(60.0F, 20.0F), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
@@ -228,10 +230,12 @@ void Editor::Start()
 	this->SaveLoad.save_mapsPanel->setEnable(false);
 	this->SaveLoad.save_mapsPanel->setScrollable(true);
 	this->SaveLoad.save_mapsPanel->setOutline(true);
+	this->SaveLoad.save_mapsPanel->setVisible(true);
 	this->SaveLoad.save_mapsPanel->setOutlineColor(Vector3<float>(0.47F));
-	this->SaveLoad.save_mapsPanel->setParent(SaveLoad.savePanel.get(), false);
+	this->SaveLoad.save_mapsPanel->setParent(SaveLoad.savePanel.get(), true);
 	this->SaveLoad.save_mapsPanel->setParentCenterPos();
 	this->SaveLoad.save_listMaps = std::make_shared<ListItem>(this->SaveLoad.save_mapsPanel.get());
+	//this->SaveLoad.save_listMaps->setParent(this->SaveLoad.save_mapsPanel.get(), true);
 	this->SaveLoad.t_save = std::make_shared<TextBox>(Vector2<float>(20.0F, 170.0F), *textRenderer, Vector2<float>(120.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
 	this->SaveLoad.t_save->setParent(SaveLoad.savePanel.get());
 	this->SaveLoad.b_map_save = std::make_shared<Button>("Save", Vector2<float>(180.0F, 170.0F), Vector2<float>(60.0F, 20.0F), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
@@ -243,7 +247,7 @@ void Editor::Start()
 	this->SaveLoad.b_map_save->setOutlineColor(Vector3<float>(1.0F));
 	this->SaveLoad.b_map_save->setParent(SaveLoad.savePanel.get());
 	std::function<void(Button *, Button *)> saveListChanged = std::bind(&SaveLoadSystem::SaveListChanged, &this->SaveLoad, std::placeholders::_1, std::placeholders::_2);
-	this->SaveLoad.load_listMaps->AddListener(saveListChanged);
+	this->SaveLoad.save_listMaps->AddListener(saveListChanged);
 
 	//env_item
 
@@ -271,9 +275,6 @@ void Editor::Start()
 	this->rb_tileProperties->AddElement("Floor", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
 	std::function<void(RadioButtonElement *, RadioButtonElement *)> t = std::bind(&Editor::SelectedRbChanged, this, std::placeholders::_1, std::placeholders::_2);
 	this->rb_tileProperties->AddListener(t);
-
-	item_0.SetId(1);
-	item_0.Initialize();
 
 	this->selectedMode = SelectedMode::TILE_MOD;
 }
@@ -358,6 +359,11 @@ void Editor::ProcessInput()
 				}
 			}
 		}
+	}
+
+	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+	{
+		env_items[i]->ProcessInput();
 	}
 
 	/*for (std::vector<int>::size_type i = 0; i != newMap.newPanel->childs.size(); i++)
@@ -467,9 +473,9 @@ void Editor::ProcessInput()
 		this->rb_tileProperties->Select(static_cast<int>(selectedTile->getType()));
 	}
 
-	bool panelsPressed = buildPanel->isPressed && tilePropertiesPanel->isPressed &&
-						 buildPanel->isMouseHover(false) && NewMap.isPressedOrHover() &&
-						 tilePropertiesPanel->isMouseHover(false) && SaveLoad.isPressedOrHover();
+	bool panelsPressed = buildPanel->isPressed || tilePropertiesPanel->isPressed ||
+						 buildPanel->isMouseHover(false) || NewMap.isPressedOrHover() ||
+						 tilePropertiesPanel->isMouseHover(false) || SaveLoad.isPressedOrHover();
 
 	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
 	{
@@ -530,11 +536,6 @@ void Editor::ProcessInput()
 			}
 		}
 	}
-
-	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
-	{
-		env_items[i]->ProcessInput();
-	}
 }
 
 void Editor::Render()
@@ -552,7 +553,16 @@ void Editor::Render()
 
 		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1.cell), Vector2<float>(Game_Parameters::SIZE_TILE), cell_yellow);
 
-		if (!f && ms == tile_1.cell && !NewMap.isMouseHover() && !buildPanel->isMouseHover(false) && !SaveLoad.isMouseHover())
+		bool env_Item_Panel = false;
+		for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+		{
+			if (env_items[i]->isPressedOrHover())
+			{
+				env_Item_Panel = true;
+				break;
+			}
+		}
+		if (!f && ms == tile_1.cell && !NewMap.isMouseHover() && !buildPanel->isMouseHover(false) && !SaveLoad.isMouseHover() && !env_Item_Panel)
 		{
 			f = true;
 			Vector2<float> pos = Utils::CellToPosition(tile_1.cell);

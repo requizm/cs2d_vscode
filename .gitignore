@@ -29,9 +29,19 @@
 
 sonar-project.properties
 src/.scannerwork/report-task.txt
-bin/main.exe
-bin/log.txt
-bin/visualinfo.txt
+
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+
 build/*
 tracy/*
 *.pb
@@ -48,5 +58,3 @@ github_deploy_key.pub
 log.txt
 
 *.trace
-
-bin/glewinfo.txt

@@ -22,15 +22,8 @@ void SaveLoadSystem::ProcessInput()
     savePanel->ProcessInput();
     loadPanel->ProcessInput();
 
-    if (savePanel->isEnable())
-    {
-        save_listMaps->ProcessInput();
-    }
-
-    if (loadPanel->isEnable())
-    {
-        load_listMaps->ProcessInput();
-    }
+    save_listMaps->ProcessInput();
+    load_listMaps->ProcessInput();
 }
 
 void SaveLoadSystem::Update()
@@ -38,27 +31,16 @@ void SaveLoadSystem::Update()
     savePanel->Update();
     loadPanel->Update();
 
-    if (savePanel->isEnable())
-    {
-        save_listMaps->Update();
-    }
-    if (loadPanel->isEnable())
-    {
-        load_listMaps->Update();
-    }
+    save_listMaps->Update();
+    load_listMaps->Update();
 }
 void SaveLoadSystem::Render(SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer)
 {
     savePanel->Draw(menuRenderer, squareRenderer);
     loadPanel->Draw(menuRenderer, squareRenderer);
-    if (savePanel->isEnable())
-    {
-        save_listMaps->Draw(menuRenderer, squareRenderer);
-    }
-    if (loadPanel->isEnable())
-    {
-        load_listMaps->Draw(menuRenderer, squareRenderer);
-    }
+
+    save_listMaps->Draw(menuRenderer, squareRenderer);
+    load_listMaps->Draw(menuRenderer, squareRenderer);
 }
 
 void SaveLoadSystem::SaveMap()

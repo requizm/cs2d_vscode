@@ -34,7 +34,7 @@ public:
     bool isPressedOrHover();
 
     std::shared_ptr<Panel> p_panel;
-    std::shared_ptr<Button> b_okay, b_tile;
+    std::shared_ptr<Button> b_okay, b_cancel;
     std::shared_ptr<TextBox> t_id;
 };
 

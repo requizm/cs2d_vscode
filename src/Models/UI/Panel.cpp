@@ -47,7 +47,7 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 		}
 		if (opttitles)
 		{
-			squareRenderer.ui_RenderLine(Vector2<float>(getPosition().x + lineOffset, getPosition().y + 23.0F), Vector2<float>(getPosition().x  + size.x - lineOffset, getPosition().y + 23.0F), Vector3<float>(0.39F), 1.0F, this->trans);
+			squareRenderer.ui_RenderLine(Vector2<float>(getPosition().x + lineOffset, getPosition().y + 23.0F), Vector2<float>(getPosition().x + size.x - lineOffset, getPosition().y + 23.0F), Vector3<float>(0.39F), 1.0F, this->trans);
 			escapeButton.Draw(spriteRenderer, squareRenderer);
 			title.Draw();
 		}
@@ -107,27 +107,30 @@ void Panel::Update()
 
 void Panel::ProcessInput()
 {
-	escapeButton.ProcessInput();
-	if (isMouseEvents())
+	if (isEnable())
 	{
-		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
-		if (escapeButton.isMouseUp() && opttitles)
+		escapeButton.ProcessInput();
+		if (isMouseEvents())
 		{
-			this->setEnable(false);
+			isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
+			if (escapeButton.isMouseUp() && opttitles)
+			{
+				this->setEnable(false);
+			}
+			if (isMovable())
+			{
+				isMouseDownForDrag(GLFW_MOUSE_BUTTON_LEFT);
+			}
+			else
+			{
+				isMouseDownForMouse(GLFW_MOUSE_BUTTON_LEFT);
+			}
 		}
-		if (isMovable())
+		for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
 		{
-			isMouseDownForDrag(GLFW_MOUSE_BUTTON_LEFT);
+			if (!childs[i]->independent)
+				childs[i]->ProcessInput();
 		}
-		else
-		{
-			isMouseDownForMouse(GLFW_MOUSE_BUTTON_LEFT);
-		}
-	}
-	for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
-	{
-		if (!childs[i]->independent)
-			childs[i]->ProcessInput();
 	}
 }
 

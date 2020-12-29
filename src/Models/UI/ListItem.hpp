@@ -5,7 +5,7 @@
 
 #include <functional>
 
-class ListItem : UIObject
+class ListItem : public UIObject
 {
 public:
     ListItem(Panel *panel);

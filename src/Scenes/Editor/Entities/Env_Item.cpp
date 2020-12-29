@@ -36,6 +36,15 @@ void Env_Item::Initialize()
     b_okay->setOutlineColor(Vector3<float>(1.0F));
     b_okay->setParent(p_panel.get());
 
+    b_cancel = std::make_shared<Button>("Cancel", Vector2<float>(260.0F, 170.0F), Vector2<float>(60.0F, 20.0F), *(Editor::instance().textRenderer), Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    b_cancel->setMouseClickColor(Vector3<float>(0.30F));
+    b_cancel->setMouseHoverColor(Vector3<float>(0.30F));
+    b_cancel->setLabelMouseHoverColor(Vector3<float>(0.58F));
+    b_cancel->setLabelClickColor(Vector3<float>(1.0F));
+    b_cancel->setOutline(true);
+    b_cancel->setOutlineColor(Vector3<float>(1.0F));
+    b_cancel->setParent(p_panel.get());
+
     t_id = std::make_shared<TextBox>(Vector2<float>(300.0F, 40.0F), *(Editor::instance().textRenderer), Vector2<float>(60.0F, 20.0F), true, 1.0F, Vector3<float>(0.58F));
     t_id->setParent(p_panel.get());
 
@@ -46,7 +55,6 @@ void Env_Item::Initialize()
     if (item_id != 0)
     {
         Editor::instance().env_items.push_back(this);
-        t_id->setText(std::to_string(item_id));
     }
 }
 
@@ -62,7 +70,17 @@ void Env_Item::ProcessInput()
         if (d == c)
         {
             p_panel->setEnable(true);
+            t_id->setText(std::to_string(item_id));
         }
+    }
+    if (b_okay->isMouseDown())
+    {
+        item_id = atoi(t_id->getText().c_str());
+        p_panel->setEnable(false);
+    }
+    else if (b_cancel->isMouseDown())
+    {
+        p_panel->setEnable(false);
     }
 }
 void Env_Item::Update()
