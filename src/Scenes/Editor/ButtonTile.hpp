@@ -8,7 +8,7 @@ struct ButtonTile
 {
     Button button;
     Vector2<int> cell;
-    Env_Item item;
+    std::shared_ptr<Env_Item> item;
 
     ButtonTile(Vector2<int> cell)
     {
@@ -25,7 +25,7 @@ struct ButtonTile
     {
         this->button = button;
         this->cell = cell;
-        item = Env_Item(item_id, button.getPosition());
+        item = std::make_shared<Env_Item>(item_id, button.getPosition());
     }
 };
 

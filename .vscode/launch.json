@@ -8,7 +8,7 @@
             "name": " (32)Build and Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\bin\\64\\main.exe",
+            "program": "${workspaceFolder}\\bin\\32\\main.exe",
             "args": [],
             "targetArchitecture": "x86",
             "stopAtEntry": false,

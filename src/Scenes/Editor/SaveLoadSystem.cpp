@@ -59,7 +59,7 @@ void SaveLoadSystem::SaveMap()
             char *cellY = doc.allocate_string(std::to_string(tile.cell.y).c_str());
             char *frame = doc.allocate_string(std::to_string(tile.button.getTile()->frame).c_str());
             char *type = doc.allocate_string(std::to_string((int)tile.button.getTile()->getType()).c_str());
-            char *itemId = doc.allocate_string(std::to_string(tile.item.getId()).c_str());
+            char *itemId = doc.allocate_string(std::to_string(tile.item->getId()).c_str());
 
             rapidxml::xml_node<> *node_tile_texture;
 
@@ -191,15 +191,15 @@ std::vector<ButtonTile> SaveLoadSystem::LoadMap(std::string mapName)
         ButtonTile t = ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
         tiles.push_back(t);
 
-        delete[] x;
-        delete[] y;
-        delete[] tIndex;
-        delete[] tType;
+        /*delete x;
+        delete y;
+        delete tIndex;
+        delete tType;*/
     }
 
-    delete[] codeChar;
-    delete[] mapx;
-    delete[] mapy;
+    /*delete codeChar;
+    delete mapx;
+    delete mapy;*/
 
     return tiles;
 }

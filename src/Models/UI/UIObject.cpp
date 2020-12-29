@@ -104,6 +104,9 @@ void UIObject::OnEnable()
 void UIObject::OnDisable()
 {
 	//Logger::WriteLog("" + GetObjectTypeString() + "->OnDisable()");
+	this->isPressed = false;
+	this->isUp = false;
+	this->isDown = false;
 }
 
 void UIObject::ProcessInput()

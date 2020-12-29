@@ -42,10 +42,6 @@ Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRe
 
 Editor::~Editor()
 {
-	for (auto e : env_items)
-	{
-		delete e;
-	}
 }
 
 void Editor::Initialize(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer)
@@ -277,6 +273,8 @@ void Editor::Start()
 	this->rb_tileProperties->AddListener(t);
 
 	this->selectedMode = SelectedMode::TILE_MOD;
+
+	this->env_items.clear();
 }
 
 void Editor::OnEnable()
@@ -359,11 +357,6 @@ void Editor::ProcessInput()
 				}
 			}
 		}
-	}
-
-	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
-	{
-		env_items[i]->ProcessInput();
 	}
 
 	/*for (std::vector<int>::size_type i = 0; i != newMap.newPanel->childs.size(); i++)
@@ -463,6 +456,7 @@ void Editor::ProcessInput()
 	{
 		this->time = 0.0F;
 		this->position = Vector2<int>(0 - buildPanel->getSize().x, 0);
+		env_items.clear();
 		firstSelect = false;
 		tiles = SaveLoad.LoadMap(SaveLoad.t_load->getText());
 	}
@@ -484,6 +478,11 @@ void Editor::ProcessInput()
 			panelsPressed = true;
 			break;
 		}
+	}
+
+	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+	{
+		env_items[i]->ProcessInput();
 	}
 
 	if (selectedMode == SelectedMode::TILE_MOD)
@@ -515,7 +514,7 @@ void Editor::ProcessInput()
 	{
 		if (!panelsPressed)
 		{
-			if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT) && objects_ui->getSelectedIndex() == 0)
+			if (InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT) && objects_ui->getSelectedIndex() == 0)
 			{
 				Vector2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
 				//Logger::DebugLog("pos: " + std::to_string(wd.x) + " - " + std::to_string(wd.y));
@@ -525,10 +524,10 @@ void Editor::ProcessInput()
 				{
 					if (tile.cell == selectedCell)
 					{
-						if (tile.item.getId() == 0)
+						if (tile.item->getId() == 0)
 						{
 							Env_Item *a = new Env_Item(1, Utils::CellToPosition(selectedCell));
-							tile.item = *a;
+							tile.item = std::make_shared<Env_Item>(*a);
 							break;
 						}
 					}

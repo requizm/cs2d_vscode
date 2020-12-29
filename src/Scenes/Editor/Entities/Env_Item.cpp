@@ -62,27 +62,33 @@ void Env_Item::ProcessInput()
 {
     p_panel->ProcessInput();
 
-    if (Editor::instance().selectedMode == SelectedMode::OBJECT_MOD && InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+    if (!p_panel->isEnable())
     {
-        Vector2<int> sw = Utils::ScreenToWorld(Editor::instance().camera->view, InputManager::mousePos);
-        int a = Game_Parameters::SIZE_TILE;
-        Vector2<int> b = position / Vector2<int>(a);
-        Vector2<int> c = Utils::PositionToCell(position);
-        Vector2<int> d = Utils::PositionToCell(sw);
-        if (d == c)
+        if (Editor::instance().selectedMode == SelectedMode::OBJECT_MOD && InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT))
         {
-            p_panel->setEnable(true);
-            t_id->setText(std::to_string(item_id));
+            Vector2<int> sw = Utils::ScreenToWorld(Editor::instance().camera->view, InputManager::mousePos);
+            int a = Game_Parameters::SIZE_TILE;
+            Vector2<int> b = position / Vector2<int>(a);
+            Vector2<int> c = Utils::PositionToCell(position);
+            Vector2<int> d = Utils::PositionToCell(sw);
+            if (d == c)
+            {
+                p_panel->setEnable(true);
+                t_id->setText(std::to_string(item_id));
+            }
         }
     }
-    if (b_okay->isMouseDown())
+    else if (p_panel->isEnable())
     {
-        item_id = atoi(t_id->getText().c_str());
-        p_panel->setEnable(false);
-    }
-    else if (b_cancel->isMouseDown())
-    {
-        p_panel->setEnable(false);
+        if (b_okay->isMouseDown())
+        {
+            item_id = atoi(t_id->getText().c_str());
+            p_panel->setEnable(false);
+        }
+        else if (b_cancel->isMouseDown())
+        {
+            p_panel->setEnable(false);
+        }
     }
 }
 void Env_Item::Update()

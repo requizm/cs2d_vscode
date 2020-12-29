@@ -153,6 +153,9 @@ void Panel::OnDisable()
 		title.setEnable(false);
 		escapeButton.setVisible(false);
 		title.setVisible(false);
+		this->isPressed = false;
+		this->isDown = false;
+		this->isUp = false;
 	}
 }
 
