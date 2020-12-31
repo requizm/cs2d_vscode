@@ -3,7 +3,7 @@
 
 TextBox::TextBox() = default;
 
-TextBox::TextBox(Vector2<int> position, TextRenderer &renderer, Vector2<int> size, bool isBackGround, float scale /*= 1.0F*/, Vector3<float> color /*= Vector3<float>(1.0F)*/) : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
+TextBox::TextBox(Vector2<int> position, TextRenderer &renderer, Vector2<int> size, bool isBackGround, float scale /*= 1.0F*/, const Vector3<float> &color /*= Vector3<float>(1.0F)*/) : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
 {
 	this->editable = true;
 	this->editMode = false;

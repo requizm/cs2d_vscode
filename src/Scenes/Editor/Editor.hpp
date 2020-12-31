@@ -79,7 +79,7 @@ private:
 	int maxCellInColumn;
 	int maxCellInRow;
 
-	Tile *selectedTile;
+	Tile *selectedTile = nullptr;
 	bool firstSelect;
 
 	bool enable = false;

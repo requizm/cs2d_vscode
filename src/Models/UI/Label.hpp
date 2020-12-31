@@ -26,7 +26,7 @@ public:
 	 * @param color Vector3<float>(1.0F)
 	 * @param type UIObjectType::LABEL
 	 */
-	Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale = 1.0F, const Vector3<float> &color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
 
 	/**
 	 * @brief Construct a new Label for TextBox
@@ -37,7 +37,7 @@ public:
 	 * @param color Vector3<float>(1.0F)
 	 * @param type UIObjectType::LABEL
 	 */
-	Label(Vector2<int> position, TextRenderer &renderer, float scale = 1.0F, Vector3<float> color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(Vector2<int> position, TextRenderer &renderer, float scale = 1.0F, const Vector3<float> &color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
 
 	/**
 	 * @brief Construct a new Label for TileButton and SpriteButton
@@ -50,10 +50,10 @@ public:
 	Label(Vector2<int> position, Vector2<int> size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
 	~Label();
 
-	virtual void Draw();
+	virtual void Draw() override;
 
-	virtual void Update();
-	virtual void ProcessInput();
+	virtual void Update() override;
+	virtual void ProcessInput() override;
 
 	virtual bool isMouseHover();
 	virtual bool isMouseDown();
@@ -67,9 +67,9 @@ public:
 	Vector3<float> getLabelClickColor() const;
 
 	virtual void setText(const std::string &text);
-	void setLabelColor(const Vector3<float> color);
-	void setLabelMouseHoverColor(const Vector3<float> color);
-	void setLabelClickColor(const Vector3<float> color);
+	void setLabelColor(const Vector3<float> &color);
+	void setLabelMouseHoverColor(const Vector3<float> &color);
+	void setLabelClickColor(const Vector3<float> &color);
 
 protected:
 	Vector2<int> labelSize;

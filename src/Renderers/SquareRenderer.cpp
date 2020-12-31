@@ -22,7 +22,7 @@ SquareRenderer::SquareRenderer(bool init)
 
 SquareRenderer::~SquareRenderer() = default;
 
-void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, bool outline, Vector3<float> borderColor, float borderSize, GLfloat transperancy, int rotate)
+void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, bool outline, const Vector3<float> &borderColor, float borderSize, GLfloat transperancy, int rotate)
 {
 	// Prepare transformations
 	this->squareShader_ui.Use();
@@ -45,7 +45,7 @@ void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position, Vector2<int> s
 		ui_RenderEmptySquareWithLine(position, size, borderColor, borderSize / 2, transperancy, rotate);
 }
 
-void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy, int rotate)
+void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
 {
 	this->squareShader_ui.Use();
 	Matrix4 model = Matrix4(1.0F);
@@ -64,7 +64,7 @@ void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position, Vector2<int> s
 	this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::world_RenderFilledSquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy, int rotate)
+void SquareRenderer::world_RenderFilledSquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
 {
 	this->squareShader_world.Use();
 	Matrix4 model = Matrix4(1.0F);
@@ -83,7 +83,7 @@ void SquareRenderer::world_RenderFilledSquare(Vector2<int> position, Vector2<int
 	this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::world_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, Vector3<float> color, float lineSize, GLfloat transperancy, int rotate)
+void SquareRenderer::world_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, float lineSize, GLfloat transperancy, int rotate)
 {
 	Vector2<int> startPos, endPos;
 	//sol kenar
@@ -107,7 +107,7 @@ void SquareRenderer::world_RenderEmptySquareWithLine(Vector2<int> position, Vect
 	this->world_RenderLine(startPos, endPos, color, lineSize, transperancy);
 }
 
-void SquareRenderer::ui_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, Vector3<float> color, float lineSize, GLfloat transperancy, int rotate)
+void SquareRenderer::ui_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, float lineSize, GLfloat transperancy, int rotate)
 {
 	Vector2<int> startPos, endPos;
 	//sol kenar
@@ -131,7 +131,7 @@ void SquareRenderer::ui_RenderEmptySquareWithLine(Vector2<int> position, Vector2
 	this->ui_RenderLine(startPos, endPos, color, lineSize, transperancy);
 }
 
-void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos, Vector3<float> color, float lineSize, GLfloat transperancy)
+void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos, const Vector3<float> &color, float lineSize, GLfloat transperancy)
 {
 	Vector2<int> size;
 	int rotate = 0;
@@ -176,7 +176,7 @@ void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos, V
 	this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::world_RenderLine(Vector2<int> startPos, Vector2<int> endPos, Vector3<float> color, float lineSize, GLfloat transperancy)
+void SquareRenderer::world_RenderLine(Vector2<int> startPos, Vector2<int> endPos, const Vector3<float> &color, float lineSize, GLfloat transperancy)
 {
 	Vector2<int> size;
 	int rotate = 0;
@@ -221,7 +221,7 @@ void SquareRenderer::world_RenderLine(Vector2<int> startPos, Vector2<int> endPos
 	this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy, int rotate)
+void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
 {
 	this->squareShader_ui.Use();
 	Matrix4 model = Matrix4(1.0F);
@@ -240,7 +240,7 @@ void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position, Vector2<int> si
 	this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::world_RenderEmptySquare(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy, int rotate)
+void SquareRenderer::world_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
 {
 	this->squareShader_world.Use();
 	Matrix4 model = Matrix4(1.0F);
@@ -259,7 +259,7 @@ void SquareRenderer::world_RenderEmptySquare(Vector2<int> position, Vector2<int>
 	this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::ui_RenderEmptyCircle(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy, int rotate)
+void SquareRenderer::ui_RenderEmptyCircle(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
 {
 	this->squareShader_ui.Use();
 	Matrix4 model = Matrix4(1.0F);
@@ -281,7 +281,7 @@ void SquareRenderer::ui_RenderEmptyCircle(Vector2<int> position, Vector2<int> si
 	this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::ui_RenderFilledCircle(Vector2<int> position, Vector2<int> size, Vector3<float> color, GLfloat transperancy, int rotate)
+void SquareRenderer::ui_RenderFilledCircle(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
 {
 	this->squareShader_ui.Use();
 	Matrix4 model = Matrix4(1.0F);

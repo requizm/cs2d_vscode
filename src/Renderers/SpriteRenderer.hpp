@@ -47,7 +47,7 @@ public:
 	 * @param isSelected false
 	 * @param time 0.0F
 	 */
-	void DrawSprite(const Sprite &sprite, Vector2<int> position, Vector2<int> size, Vector3<float> color, bool drawCenter = false, int rotate = 0, GLfloat shineFactor = 0.0F, bool isSelected = false, float time = 0.0F);
+	void DrawSprite(const Sprite &sprite, Vector2<int> position, Vector2<int> size, const Vector3<float> &color, bool drawCenter = false, int rotate = 0, GLfloat shineFactor = 0.0F, bool isSelected = false, float time = 0.0F);
 
 	void DrawSprite(const Sprite &sprite, Matrix4<float> model);
 	void SetProjection(Matrix4<float> projection);

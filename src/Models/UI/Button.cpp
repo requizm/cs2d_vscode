@@ -2,7 +2,7 @@
 
 Button::Button() = default;
 
-Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, Vector3<float> buttonColor, Vector3<float> textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
+Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, const Vector3<float> &buttonColor, const Vector3<float> &textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->buttonColor = buttonColor;
 	Vector2<int> nSize = renderer.CalculateSize(text, 1.0F);
@@ -273,22 +273,22 @@ void Button::setType(ButtonType type)
 	this->type = type;
 }
 
-void Button::setMouseHoverColor(const Vector3<float> color)
+void Button::setMouseHoverColor(const Vector3<float> &color)
 {
 	this->mouseHoverColor = color;
 }
 
-void Button::setButtonColor(const Vector3<float> color)
+void Button::setButtonColor(const Vector3<float> &color)
 {
 	this->buttonColor = color;
 }
 
-void Button::setMouseClickColor(const Vector3<float> color)
+void Button::setMouseClickColor(const Vector3<float> &color)
 {
 	this->mouseclickColor = color;
 }
 
-void Button::setOutlineColor(const Vector3<float> color)
+void Button::setOutlineColor(const Vector3<float> &color)
 {
 	this->outlineColor = color;
 }

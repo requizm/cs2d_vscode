@@ -36,7 +36,7 @@ public:
 	virtual void SetParent(GameObject *go);
 	virtual void RemoveParent();
 
-	void SetTransform(Matrix4<float> transform);
+	void SetTransform(const Matrix4<float> &transform);
 
 	void SetTransform(Vector2<int> pos, Vector2<int> size, int rot = 0);
 	void SetPosition(Vector2<int> pos);
@@ -50,7 +50,7 @@ public:
 	virtual void Destroy();
 	virtual void OnDestroy();
 
-	GameObject* GetParent();
+	GameObject *GetParent();
 	int GetObjectType();
 	Matrix4<float> GetTransform();
 	Vector2<int> GetPosition();

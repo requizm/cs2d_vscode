@@ -27,11 +27,11 @@ public:
 	 * @param position 
 	 * @param size 
 	 * @param renderer 
-	 * @param buttonColor Vector3<int>(1.0F)
-	 * @param textColor Vector3<int>(0.0F)
+	 * @param buttonColor Vector3<float>(1.0F)
+	 * @param textColor Vector3<float>(0.0F)
 	 * @param scale 1.0F
 	 */
-	Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
+	Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, const Vector3<float> &buttonColor = Vector3<float>(1.0F), const Vector3<float> &textColor = Vector3<float>(0.0F), float scale = 1.0F);
 
 	/**
 	 * @brief Construct a new Sprite Button
@@ -68,10 +68,10 @@ public:
 	Vector2<int> getSize() override;
 	Tile *getTile();
 
-	void setMouseHoverColor(const Vector3<float> color);
-	void setButtonColor(const Vector3<float> color);
-	void setMouseClickColor(const Vector3<float> color);
-	void setOutlineColor(const Vector3<float> color);
+	void setMouseHoverColor(const Vector3<float> &color);
+	void setButtonColor(const Vector3<float> &color);
+	void setMouseClickColor(const Vector3<float> &color);
+	void setOutlineColor(const Vector3<float> &color);
 	void setOutline(const bool value);
 
 	void setMargin(const Vector2<int> value);

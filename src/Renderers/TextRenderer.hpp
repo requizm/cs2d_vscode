@@ -5,13 +5,13 @@
 #include <glm/glm.hpp>
 #include "../Managers/ResourceManager.hpp"
 
-
 /// Holds all state information relevant to a character as loaded using FreeType
-struct Character {
-	GLuint TextureID;   // ID handle of the glyph texture
-	Vector2<int> Size;    // Size of glyph
+struct Character
+{
+	GLuint TextureID;	  // ID handle of the glyph texture
+	Vector2<int> Size;	  // Size of glyph
 	Vector2<int> Bearing; // Offset from baseline to left/top of glyph
-	GLuint Advance;     // Horizontal offset to advance to next glyph
+	GLuint Advance;		  // Horizontal offset to advance to next glyph
 };
 
 // A renderer class for rendering text displayed by a font loaded using the
@@ -32,8 +32,8 @@ public:
 	// Pre-compiles a list of characters from the given font
 	void Load(std::string font, GLuint fontSize);
 	// Renders a string of text using the precompiled list of characters
-	void RenderText(std::string text, int x, int y, GLfloat scale, Vector3<float> color = Vector3<float>(1.0f));
-	void RenderText(std::string text, Vector2<int> position, GLfloat scale, Vector3<float> color = Vector3<float>(1.0f));
+	void RenderText(std::string text, int x, int y, GLfloat scale, const Vector3<float> &color = Vector3<float>(1.0f));
+	void RenderText(std::string text, Vector2<int> position, GLfloat scale, const Vector3<float> &color = Vector3<float>(1.0f));
 	//void RenderLabel(Label *label);
 	Vector2<int> CalculateSize(const std::string &text, GLfloat scale);
 	//void RenderButton(Button *button);

@@ -3,7 +3,7 @@
 
 Label::Label() = default;
 
-Label::Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
+Label::Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale, const Vector3<float> &color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
 {
 	this->labelColor = color;
 	this->text = text;
@@ -13,7 +13,7 @@ Label::Label(const std::string &text, Vector2<int> position, TextRenderer &rende
 	this->labelSize = this->rend->CalculateSize(text, scale);
 }
 
-Label::Label(Vector2<int> position, TextRenderer &renderer, float scale, Vector3<float> color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
+Label::Label(Vector2<int> position, TextRenderer &renderer, float scale, const Vector3<float> &color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
 {
 	this->labelColor = color;
 	this->labelMouseHoverColor = Vector3<float>(0.78F);
@@ -155,17 +155,17 @@ Vector3<float> Label::getLabelClickColor() const
 	return this->labelClickColor;
 }
 
-void Label::setLabelColor(const Vector3<float> color)
+void Label::setLabelColor(const Vector3<float> &color)
 {
 	this->labelColor = color;
 }
 
-void Label::setLabelMouseHoverColor(const Vector3<float> color)
+void Label::setLabelMouseHoverColor(const Vector3<float> &color)
 {
 	this->labelMouseHoverColor = color;
 }
 
-void Label::setLabelClickColor(const Vector3<float> color)
+void Label::setLabelClickColor(const Vector3<float> &color)
 {
 	this->labelClickColor = color;
 }

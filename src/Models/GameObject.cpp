@@ -67,7 +67,7 @@ Vector2<int> GameObject::GetSize()
 	return globalSize;
 }
 
-void GameObject::SetTransform(Matrix4<float> transform)
+void GameObject::SetTransform(const Matrix4<float> &transform)
 {
 	if (IsParent())
 	{

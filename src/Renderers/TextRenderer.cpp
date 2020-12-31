@@ -105,7 +105,7 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 	FT_Done_FreeType(ft);
 }
 
-void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale, Vector3<float> color)
+void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale, const Vector3<float> &color)
 {
 	// Activate corresponding render state
 	this->TextShader.Use();
@@ -150,7 +150,7 @@ void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale, Vec
 	this->TextShader.UnUse();
 }
 
-void TextRenderer::RenderText(std::string text, Vector2<int> position, GLfloat scale, Vector3<float> color)
+void TextRenderer::RenderText(std::string text, Vector2<int> position, GLfloat scale, const Vector3<float> &color)
 {
 	// Activate corresponding render state
 	this->TextShader.Use();

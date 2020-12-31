@@ -24,7 +24,7 @@ public:
     int getSelectedIndex();
 
 private:
-    Panel *panel;
+    Panel *panel = nullptr;
     std::vector<Button *> items;
     int selectedIndex = -1;
 

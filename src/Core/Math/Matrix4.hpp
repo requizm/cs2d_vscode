@@ -45,7 +45,7 @@ public:
         return values[i];
     }
 
-    Matrix4 operator+(Matrix4 const &obj)
+    Matrix4 operator+(const Matrix4 &obj)
     {
         Matrix4 temp = Clone();
         for (int i = 0; i < 16; i++)
@@ -55,7 +55,7 @@ public:
         return temp;
     }
 
-    Matrix4 operator-(Matrix4 const &obj)
+    Matrix4 operator-(const Matrix4 &obj)
     {
         Matrix4 temp = Clone();
         for (int i = 0; i < 16; i++)
@@ -124,7 +124,7 @@ public:
         return temp;
     }
 
-    bool operator==(Matrix4 &obj)
+    bool operator==(const Matrix4 &obj)
     {
         Matrix4 temp = Clone();
 
@@ -138,7 +138,7 @@ public:
         return true;
     }
 
-    bool operator!=(Matrix4 &obj)
+    bool operator!=(const Matrix4 &obj)
     {
         Matrix4 temp = Clone();
 

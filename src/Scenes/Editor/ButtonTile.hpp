@@ -13,6 +13,7 @@ struct ButtonTile
     ButtonTile(Vector2<int> cell)
     {
         this->cell = cell;
+        item = std::make_shared<Env_Item>(0, Utils::CellToPosition(cell));
     }
 
     ButtonTile(Button &button, Vector2<int> cell)

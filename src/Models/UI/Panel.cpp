@@ -1,7 +1,7 @@
 #include "Panel.hpp"
 #include <iostream>
 
-Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size, TextRenderer &renderer, bool isBackGround, bool opttitles, float scale, Vector3<float> color, float transp) : UIObject(position, size, scale, renderer, UIObjectType::PANEL)
+Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size, TextRenderer &renderer, bool isBackGround, bool opttitles, float scale, const Vector3<float> &color, float transp) : UIObject(position, size, scale, renderer, UIObjectType::PANEL)
 {
 	this->panelColor = color;
 	this->backGround = isBackGround;
@@ -323,7 +323,7 @@ std::string Panel::getTitle() const
 	return title.getText();
 }
 
-void Panel::setPanelColor(const Vector3<float> color)
+void Panel::setPanelColor(const Vector3<float> &color)
 {
 	this->panelColor = color;
 }
@@ -343,7 +343,7 @@ void Panel::setTitle(const std::string &text)
 	this->title.setText(text);
 }
 
-void Panel::setOutlineColor(const Vector3<float> color)
+void Panel::setOutlineColor(const Vector3<float> &color)
 {
 	this->outlineColor = color;
 }

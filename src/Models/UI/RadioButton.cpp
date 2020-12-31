@@ -2,7 +2,7 @@
 
 RadioButtonElement::RadioButtonElement() = default;
 
-RadioButtonElement::RadioButtonElement(const std::string &text, Vector2<int> position, TextRenderer &textRenderer, int index, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
+RadioButtonElement::RadioButtonElement(const std::string &text, Vector2<int> position, TextRenderer &textRenderer, int index, const Vector3<float> &buttonColor, const Vector3<float> &textColor, float scale)
     : Label(text, position, textRenderer, scale, textColor, UIObjectType::RADIOBUTTON), selected(false)
 {
     this->setButtonColor(buttonColor);
@@ -70,21 +70,21 @@ int RadioButtonElement::getIndex()
     return this->index;
 }
 
-void RadioButtonElement::setMouseHoverColor(const Vector3<float> color)
+void RadioButtonElement::setMouseHoverColor(const Vector3<float> &color)
 {
     this->mouseHoverColor = color;
 }
 
-void RadioButtonElement::setButtonColor(const Vector3<float> color)
+void RadioButtonElement::setButtonColor(const Vector3<float> &color)
 {
     this->buttonColor = color;
 }
 
-void RadioButtonElement::setMouseHoverOutlineColor(const Vector3<float> color)
+void RadioButtonElement::setMouseHoverOutlineColor(const Vector3<float> &color)
 {
     this->mouseHoverOutlineColor = color;
 }
-void RadioButtonElement::setOutlineColor(const Vector3<float> color)
+void RadioButtonElement::setOutlineColor(const Vector3<float> &color)
 {
     this->outlineColor = color;
 }
@@ -215,7 +215,7 @@ void RadioButton::Clear()
     i = 0;
 }
 
-void RadioButton::AddElement(const std::string &text, Vector3<float> buttonColor, Vector3<float> textColor, float scale)
+void RadioButton::AddElement(const std::string &text, const Vector3<float> &buttonColor, const Vector3<float> &textColor, float scale)
 {
     RadioButtonElement *r = new RadioButtonElement(text, Vector2<int>(position.x, position.y + y_sep * i), *rend, i++, buttonColor, textColor, scale);
     r->setSize(300, 300);

@@ -45,7 +45,7 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position, Vec
 	this->shader.UnUse();
 }
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position, Vector2<int> size, Vector3<float> color, bool drawCenter, int rotate, GLfloat shineFactor, bool isSelected, float time)
+void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position, Vector2<int> size, const Vector3<float> &color, bool drawCenter, int rotate, GLfloat shineFactor, bool isSelected, float time)
 {
 	//rotate = rotate * static_cast<GLfloat>(PI) / static_cast<GLfloat>(180);
 	// Prepare transformations

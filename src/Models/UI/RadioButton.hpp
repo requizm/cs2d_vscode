@@ -20,10 +20,10 @@ public:
      * @param textColor Vector3<float>(0.0F)
      * @param scale 1.0F
      */
-    RadioButtonElement(const std::string &text, Vector2<int> position, TextRenderer &textRenderer, int index, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
+    RadioButtonElement(const std::string &text, Vector2<int> position, TextRenderer &textRenderer, int index, const Vector3<float> &buttonColor = Vector3<float>(1.0F), const Vector3<float> &textColor = Vector3<float>(0.0F), float scale = 1.0F);
     ~RadioButtonElement();
 
-    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
+    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
     void Update() override;
     void ProcessInput() override;
 
@@ -32,10 +32,10 @@ public:
     Vector2<int> getSize() override;
     int getIndex();
 
-    void setMouseHoverColor(const Vector3<float> color);
-    void setButtonColor(const Vector3<float> color);
-    void setMouseHoverOutlineColor(const Vector3<float> color);
-    void setOutlineColor(const Vector3<float> color);
+    void setMouseHoverColor(const Vector3<float> &color);
+    void setButtonColor(const Vector3<float> &color);
+    void setMouseHoverOutlineColor(const Vector3<float> &color);
+    void setOutlineColor(const Vector3<float> &color);
 
     void OnEnable() override;
     void OnDisable() override;
@@ -82,11 +82,11 @@ public:
     void AddListener(std::function<void(RadioButtonElement *, RadioButtonElement *)> func);
 
     void Clear();
-    void AddElement(const std::string &text, Vector3<float> buttonColor = Vector3<float>(1.0F), Vector3<float> textColor = Vector3<float>(0.0F), float scale = 1.0F);
+    void AddElement(const std::string &text, const Vector3<float> &buttonColor = Vector3<float>(1.0F), const Vector3<float> &textColor = Vector3<float>(0.0F), float scale = 1.0F);
 
-    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
-    void Update();
-    void ProcessInput();
+    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
+    void Update() override;
+    void ProcessInput() override;
 
     void Select(int index);
     RadioButtonElement *GetSelectedElement();
