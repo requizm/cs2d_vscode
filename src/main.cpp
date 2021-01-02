@@ -405,22 +405,12 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 	// When a user presses the escape key, we set the WindowShouldClose property to true, closing the application
 	if (key == GLFW_KEY_F1 && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
-	/*if (key >= 0 && key < 1024)
-	{
-		if (action == GLFW_PRESS)
-		{
-			InputManager::Keys[key] = GL_TRUE;
-			InputManager::KeysUp[key] = GL_FALSE;
-			InputManager::downTrigger[key] = GL_TRUE;
-		}
 
-		else if (action == GLFW_RELEASE)
-		{
-			InputManager::Keys[key] = GL_FALSE;
-			InputManager::KeysProcessed[key] = GL_FALSE;
-			InputManager::KeysUp[key] = GL_TRUE;
-			InputManager::upTrigger[key] = GL_TRUE;
-		}
+	/*if (action == GLFW_PRESS)
+	{
+	}
+	else if (action == GLFW_RELEASE)
+	{
 	}*/
 }
 
@@ -431,22 +421,14 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
-	/*if (button >= 0 && button < 8)
+	if (action == GLFW_PRESS)
 	{
-		if (action == GLFW_PRESS)
-		{
-			InputManager::mouseKeys[button] = GL_TRUE;
-			InputManager::mouseKeysUp[button] = GL_FALSE;
-			InputManager::mouseDownTrigger[button] = GL_TRUE;
-		}
-		else if (action == GLFW_RELEASE)
-		{
-			InputManager::mouseKeys[button] = GL_FALSE;
-			InputManager::mouseKeysProcessed[button] = GL_FALSE;
-			InputManager::mouseKeysUp[button] = GL_TRUE;
-			InputManager::mouseUpTrigger[button] = GL_TRUE;
-		}
-	}*/
+		InputManager::onMouseDown(button);
+	}
+	if (action == GLFW_RELEASE)
+	{
+		InputManager::onMouseUp(button);
+	}
 }
 
 void character_callback(GLFWwindow *window, unsigned int codepoint)

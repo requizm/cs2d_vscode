@@ -11,6 +11,15 @@ Label::Label(const std::string &text, Vector2<int> position, TextRenderer &rende
 	this->labelClickColor = Vector3<float>(1.0F);
 	this->labelCurrentColor = color;
 	this->labelSize = this->rend->CalculateSize(text, scale);
+
+	if (type == UIObjectType::LABEL)
+	{
+		mDown = std::bind(&onMouseDown, this);
+		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+
+		mUp = std::bind(&onMouseUp, this);
+		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+	}
 }
 
 Label::Label(Vector2<int> position, TextRenderer &renderer, float scale, const Vector3<float> &color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
@@ -25,7 +34,14 @@ Label::Label(Vector2<int> position, Vector2<int> size, float scale, UIObjectType
 {
 }
 
-Label::~Label() = default;
+Label::~Label()
+{
+	if (GetObjectTypeString() == "Label")
+	{
+		InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+		InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+	}
+}
 
 void Label::Draw()
 {
@@ -45,15 +61,11 @@ void Label::Update()
 	{
 		if (!text.empty())
 		{
-			if (isMousePress())
-			{
-				labelCurrentColor = labelClickColor;
-			}
-			else if (isMouseHover())
+			if (!isPressed && isMouseHover())
 			{
 				labelCurrentColor = labelMouseHoverColor;
 			}
-			else
+			else if (!isPressed)
 			{
 				labelCurrentColor = labelColor;
 			}
@@ -226,4 +238,43 @@ bool Label::isMousePressM(const int key)
 void Label::SetMouseState(bool &variable, bool value)
 {
 	variable = value;
+}
+
+void Label::onMouseDown()
+{
+	if (isEnable() && isMouseHover())
+	{
+		labelCurrentColor = labelClickColor;
+		isPressed = true;
+		for (auto &f : listenersDown)
+		{
+			f();
+		}
+	}
+}
+
+void Label::onMouseUp()
+{
+	if (isPressed)
+	{
+		if (isEnable() && isMouseHover())
+		{
+			labelCurrentColor = labelColor;
+			for (auto &f : listenersUp)
+			{
+				f();
+			}
+		}
+		isPressed = false;
+	}
+}
+
+void Label::addListenerDown(std::function<void()> func)
+{
+	listenersDown.push_back(std::move(func));
+}
+
+void Label::addListenerUp(std::function<void()> func)
+{
+	listenersUp.push_back(std::move(func));
 }

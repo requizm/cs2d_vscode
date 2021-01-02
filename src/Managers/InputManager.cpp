@@ -1,6 +1,7 @@
 #include "InputManager.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <algorithm>
 
 Vector2<int> InputManager::mousePos;
 Vector2<float> InputManager::scroll;
@@ -31,6 +32,9 @@ GLboolean InputManager::oldKeyUp[350];
 GLboolean InputManager::oldKeyDown[350];
 
 wchar_t InputManager::keycode;
+
+std::map<int, std::vector<EventF>> InputManager::m_Callbacks_Down;
+std::map<int, std::vector<EventF>> InputManager::m_Callbacks_Up;
 
 InputManager::InputManager() = default;
 
@@ -107,4 +111,71 @@ bool InputManager::isButtonUp(int key)
 	}
 	return false;*/
 	return InputManager::mouseUp[key];
+}
+
+void InputManager::addListenerDown(int key, std::function<void()> callback, int id)
+{
+	InputManager::m_Callbacks_Down[key].push_back(EventF(callback, id));
+}
+
+void InputManager::addListenerUp(int key, std::function<void()> callback, int id)
+{
+	InputManager::m_Callbacks_Up[key].push_back(EventF(callback, id));
+}
+
+void InputManager::removeListenerDown(int key, std::function<void()> callback, int id)
+{
+	for (auto &pair : m_Callbacks_Down)
+	{
+		if (pair.first == key)
+		{
+			for (std::vector<int>::size_type i = 0; i < pair.second.size(); i++)
+			{
+				if (pair.second[i].id == id)
+				{
+					pair.second.erase(pair.second.begin() + i);
+				}
+			}
+		}
+	}
+}
+
+void InputManager::removeListenerUp(int key, std::function<void()> callback, int id)
+{
+	for (auto &pair : m_Callbacks_Up)
+	{
+		if (pair.first == key)
+		{
+			for (std::vector<int>::size_type i = 0; i < pair.second.size(); i++)
+			{
+				if (pair.second[i].id == id)
+				{
+					pair.second.erase(pair.second.begin() + i);
+				}
+			}
+		}
+	}
+}
+
+void InputManager::onMouseDown(int key)
+{
+	for (auto &callback : m_Callbacks_Down[key])
+	{
+		callback.event();
+	}
+}
+void InputManager::onMouseUp(int key)
+{
+	for (auto &callback : m_Callbacks_Up[key])
+	{
+		callback.event();
+	}
+}
+
+template <typename T, typename... U>
+size_t InputManager::getAddress(std::function<T(U...)> f)
+{
+	typedef T(fnType)(U...);
+	fnType **fnPointer = f.template target<fnType *>();
+	return (size_t)*fnPointer;
 }

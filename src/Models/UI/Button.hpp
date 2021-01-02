@@ -30,8 +30,9 @@ public:
 	 * @param buttonColor Vector3<float>(1.0F)
 	 * @param textColor Vector3<float>(0.0F)
 	 * @param scale 1.0F
+	 * @param type UIObjectType::BUTTON
 	 */
-	Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, const Vector3<float> &buttonColor = Vector3<float>(1.0F), const Vector3<float> &textColor = Vector3<float>(0.0F), float scale = 1.0F);
+	Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, const Vector3<float> &buttonColor = Vector3<float>(1.0F), const Vector3<float> &textColor = Vector3<float>(0.0F), float scale = 1.0F, UIObjectType type = UIObjectType::BUTTON);
 
 	/**
 	 * @brief Construct a new Sprite Button
@@ -41,8 +42,9 @@ public:
 	 * @param size 
 	 * @param difColor false
 	 * @param scale 1.0F
+	 * @param type UIObjectType::BUTTON
 	 */
-	Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, bool difColor = false, float scale = 1.0F);
+	Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, bool difColor = false, float scale = 1.0F, UIObjectType type = UIObjectType::BUTTON);
 
 	/**
 	 * @brief Construct a new Tile Button for tile objects
@@ -100,6 +102,9 @@ protected:
 	bool isMouseDownM(const int key) override;
 	bool isMouseUpM(const int key) override;
 	bool isMousePressM(const int key) override;
+
+	void onMouseDown() override;
+	void onMouseUp() override;
 
 private:
 	//bool isDown = false;

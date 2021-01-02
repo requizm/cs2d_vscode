@@ -89,10 +89,20 @@ protected:
 	virtual bool isMouseUpM(const int key);
 	virtual bool isMousePressM(const int key);
 
+	virtual void onMouseDown();
+	virtual void onMouseUp();
+	void addListenerDown(std::function<void()> func);
+	void addListenerUp(std::function<void()> func);
+
+	std::vector<std::function<void()>> listenersDown, listenersUp;
+
 private:
 	void SetMouseState(bool &variable, bool value);
 
 	bool isHover = false;
+
+	std::function<void()> mDown;
+	std::function<void()> mUp;
 };
 
 #endif // LABEL_H

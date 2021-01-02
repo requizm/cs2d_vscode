@@ -3,7 +3,7 @@
 
 Button::Button() = default;
 
-Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, const Vector3<float> &buttonColor, const Vector3<float> &textColor, float scale) : Label(text, position, renderer, scale, textColor, UIObjectType::BUTTON), difColor(false), haveOutline(false)
+Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, const Vector3<float> &buttonColor, const Vector3<float> &textColor, float scale, UIObjectType type) : Label(text, position, renderer, scale, textColor, type), difColor(false), haveOutline(false)
 {
 	this->buttonColor = buttonColor;
 	Vector2<int> nSize = renderer.CalculateSize(text, 1.0F);
@@ -11,7 +11,7 @@ Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size
 	this->type = ButtonType::DEFAULT;
 }
 
-Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, bool difColor, float scale) : Label(position, size, scale, UIObjectType::BUTTON), haveOutline(false)
+Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, bool difColor, float scale, UIObjectType type) : Label(position, size, scale, type), haveOutline(false)
 {
 	this->sprite = sprite;
 	this->difColor = difColor;
@@ -267,6 +267,35 @@ bool Button::isMousePressM(const int key)
 		return true;
 	}
 	return false;
+}
+
+void Button::onMouseDown()
+{
+	if (isEnable() && isMouseHover())
+	{
+		labelCurrentColor = labelClickColor;
+		isPressed = true;
+		for (auto &f : listenersDown)
+		{
+			f();
+		}
+	}
+}
+
+void Button::onMouseUp()
+{
+	if (isPressed)
+	{
+		if (isEnable() && isMouseHover())
+		{
+			labelCurrentColor = labelColor;
+			for (auto &f : listenersUp)
+			{
+				f();
+			}
+		}
+		isPressed = false;
+	}
 }
 
 void Button::setType(ButtonType type)

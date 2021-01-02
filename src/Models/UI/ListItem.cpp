@@ -22,7 +22,7 @@ ListItem::~ListItem()
 
 void ListItem::AddItem(std::string &text)
 {
-    Button *bt = new Button(text, Vector2<int>(0.0F, static_cast<int>(i++ * 20)), Vector2<int>(panel->getSize().x, 20.0F), *(panel->rend), Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F);
+    Button *bt = new Button(text, Vector2<int>(0.0F, static_cast<int>(i++ * 20)), Vector2<int>(panel->getSize().x, 20.0F), *(panel->rend), Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F, UIObjectType::LISTITEM);
     bt->setMouseClickColor(Vector3<float>(0.35F));
     bt->setMouseHoverColor(Vector3<float>(0.25F));
     bt->setLabelMouseHoverColor(Vector3<float>(1.0F));

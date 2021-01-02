@@ -2,7 +2,22 @@
 #define EVENTMANAGER_H
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/vec2.hpp>
+#include <functional>
+#include <map>
+#include "../Core/Math/Vector2.hpp"
+#include "../Others/Utils.hpp"
+
+struct EventF
+{
+public:
+	std::function<void()> event;
+	int id;
+	EventF(std::function<void()> func, int id)
+	{
+		event = func;
+		this->id = id;
+	}
+};
 
 class InputManager
 {
@@ -47,6 +62,21 @@ public:
 	static bool isButton(int key);
 	static bool isButtonDown(int key);
 	static bool isButtonUp(int key);
+
+	static void addListenerDown(int key, std::function<void()> callback, int id);
+	static void addListenerUp(int key, std::function<void()> callback, int id);
+
+	static void removeListenerDown(int key, std::function<void()> callback, int id);
+	static void removeListenerUp(int key, std::function<void()> callback, int id);
+
+	static void onMouseDown(int key);
+	static void onMouseUp(int key);
+
+	static std::map<int, std::vector<EventF>> m_Callbacks_Down;
+	static std::map<int, std::vector<EventF>> m_Callbacks_Up;
+
+	template <typename T, typename... U>
+	static size_t getAddress(std::function<T(U...)> f);
 };
 
 #endif

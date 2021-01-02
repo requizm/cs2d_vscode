@@ -19,7 +19,7 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
 	escapeButton.setButtonColor(color);
 	escapeButton.setMouseHoverColor(Vector3<float>(0.64F));
 	escapeButton.setMouseClickColor(Vector3<float>(1.0F));
-	this->title = Label(title, position, renderer, scale, Vector3<float>(1.0F));
+	this->title = Label(title, position, renderer, scale, Vector3<float>(1.0F), UIObjectType::PANEL);
 	this->title.setMouseEvent(false);
 	this->title.setParent(this);
 	this->title.setPosition(static_cast<int>(lineOffset), 4.0F);
