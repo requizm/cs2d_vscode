@@ -7,6 +7,7 @@
 #include "rapidxml-1.13/rapidxml_print.hpp"
 #include "../../Others/Game_Parameters.hpp"
 #include "../../Others/Utils.hpp"
+#include "../../Others/Timer.hpp"
 #include "../../Game.hpp"
 
 Editor::Editor()

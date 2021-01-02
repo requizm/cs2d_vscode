@@ -51,6 +51,7 @@ public:
             return z;
             break;
         default:
+            return x;
             break;
         }
     }

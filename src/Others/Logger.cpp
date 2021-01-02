@@ -40,13 +40,13 @@ void Logger::DebugLog(bool msg)
 
 void Logger::WriteLog(const std::string &msg)
 {
-    Start();
+    /*Logger::Start();
     auto start = std::chrono::system_clock::now();
     auto end = std::chrono::system_clock::now();
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
     char *time = std::ctime(&end_time);
     Logger::outfile << "time: " << time << "message: " << msg << "\n\n";
-    Stop();
+    Logger::Stop();*/
 }
 
 void Logger::Start()

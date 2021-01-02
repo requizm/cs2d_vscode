@@ -293,4 +293,5 @@ RadioButtonElement *RadioButton::GetSelectedElement()
     {
         return elements.at(selectedIndex);
     }
+    return nullptr;
 }

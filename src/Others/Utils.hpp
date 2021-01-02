@@ -1,8 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "../Core/Math/Vector2.hpp"
 
 class Utils
 {

@@ -1,5 +1,6 @@
 #include "SaveLoadSystem.hpp"
 #include "Editor.hpp"
+#include "../../Others/Game_Parameters.hpp"
 #include <fstream>
 #include <sstream>
 #include <dirent.h>
@@ -253,12 +254,12 @@ std::vector<std::string> SaveLoadSystem::getMapNames()
             }
         }
         closedir(dir);
-        return maps;
     }
     else
     {
         perror("could not open directory");
     }
+    return maps;
 }
 
 void SaveLoadSystem::SaveListChanged(Button *old, Button *n)

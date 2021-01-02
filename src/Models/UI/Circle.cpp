@@ -1,6 +1,8 @@
 #include "Circle.hpp"
 #include "../../Core/Math/Vector2.hpp"
 
+#define PI 3.14159265
+
 Circle::Circle()
 {
 }

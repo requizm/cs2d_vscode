@@ -1,4 +1,5 @@
 #include "Button.hpp"
+#include "../../Others/Game_Parameters.hpp"
 
 Button::Button() = default;
 
