@@ -16,7 +16,8 @@ enum class UIObjectType
 	BUTTON,
 	PANEL,
 	RADIOBUTTON,
-	LISTITEM
+	LISTITEM,
+	ENV_ITEM
 };
 //class TextRenderer;
 

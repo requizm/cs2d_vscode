@@ -18,7 +18,7 @@ Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, b
 	this->btn_type = ButtonType::SPRITE;
 }
 
-Button::Button(Tile &tile, float scale) : Label(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::BUTTON), difColor(false), haveOutline(false)
+Button::Button(Tile &tile, float scale, UIObjectType type) : Label(tile.GetPosition(), tile.GetSize(), scale, type), difColor(false), haveOutline(false)
 {
 	this->tile = tile;
 	this->btn_type = ButtonType::TILE;
@@ -90,7 +90,7 @@ void Button::Update()
 {
 	if (isEnable() && isMouseEvents())
 	{
-		if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE)
+		if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE || ButtonType::TILE)
 		{
 			if (!isPressed && isMouseHover())
 			{
@@ -110,8 +110,8 @@ void Button::ProcessInput()
 {
 	if (isMouseEvents())
 	{
-		isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
-		isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
+		//isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
+		//isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
 	}
 }
 
@@ -167,12 +167,23 @@ bool Button::isMouseHover()
 
 bool Button::isMouseDown()
 {
-	return this->isDown;
+	//return isDown;
+	if (downTrigger && isPressed)
+	{
+		downTrigger = false;
+		return true;
+	}
+	return false;
 }
 
 bool Button::isMouseUp()
 {
-	return this->isUp;
+	if (upTrigger && !isPressed)
+	{
+		upTrigger = false;
+		return true;
+	}
+	return false;
 }
 
 bool Button::isMousePress()
@@ -245,11 +256,13 @@ void Button::onMouseDown()
 {
 	if (isEnable() && isMouseHover())
 	{
-		if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE)
+		if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE || btn_type == ButtonType::TILE)
 		{
 			labelCurrentColor = labelClickColor;
 			currentColor = mouseclickColor;
 		}
+		upTrigger = false;
+		downTrigger = true;
 		isPressed = true;
 		for (auto &f : listenersDown)
 		{
@@ -264,16 +277,18 @@ void Button::onMouseUp()
 	{
 		if (isEnable() && isMouseHover())
 		{
-			if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE)
+			if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE || btn_type == ButtonType::TILE)
 			{
 				labelCurrentColor = labelColor;
 				currentColor = buttonColor;
-			}
+						}
 			for (auto &f : listenersUp)
 			{
 				f();
 			}
 		}
+		upTrigger = true;
+		downTrigger = false;
 		isPressed = false;
 	}
 }

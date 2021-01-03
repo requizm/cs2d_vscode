@@ -12,7 +12,7 @@ Label::Label(const std::string &text, Vector2<int> position, TextRenderer &rende
 	this->labelCurrentColor = color;
 	this->labelSize = this->rend->CalculateSize(text, scale);
 
-	if (type != UIObjectType::PANEL && type != UIObjectType::UIOBJECT)
+	if (type != UIObjectType::PANEL && type != UIObjectType::UIOBJECT && type != UIObjectType::ENV_ITEM)
 	{
 		mDown = std::bind(&onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -32,6 +32,14 @@ Label::Label(Vector2<int> position, TextRenderer &renderer, float scale, const V
 
 Label::Label(Vector2<int> position, Vector2<int> size, float scale, UIObjectType type) : UIObject(position, size, scale, type)
 {
+	if (type != UIObjectType::PANEL && type != UIObjectType::UIOBJECT && type != UIObjectType::ENV_ITEM)
+	{
+		mDown = std::bind(&onMouseDown, this);
+		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+
+		mUp = std::bind(&onMouseUp, this);
+		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+	}
 }
 
 Label::~Label()
@@ -107,7 +115,13 @@ bool Label::isMouseHover()
 bool Label::isMouseDown()
 {
 	//return isMouseDownM(key);
-	return isDown;
+	//return isDown;
+	if (downTrigger && isPressed)
+	{
+		downTrigger = false;
+		return true;
+	}
+	return false;
 }
 
 bool Label::isMouseUp()
@@ -244,6 +258,7 @@ void Label::onMouseDown()
 {
 	if (isEnable() && isMouseHover())
 	{
+		downTrigger = true;
 		labelCurrentColor = labelClickColor;
 		isPressed = true;
 		for (auto &f : listenersDown)

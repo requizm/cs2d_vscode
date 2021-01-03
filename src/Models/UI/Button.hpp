@@ -51,8 +51,9 @@ public:
 	 * 
 	 * @param tile 
 	 * @param scale 1.0F
+	 * @param type UIObjectType::BUTTON
 	 */
-	Button(Tile &tile, float scale = 1.0F);
+	Button(Tile &tile, float scale = 1.0F, UIObjectType type = UIObjectType::BUTTON);
 	~Button();
 
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;

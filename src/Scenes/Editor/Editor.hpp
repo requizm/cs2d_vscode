@@ -85,7 +85,7 @@ private:
 	bool enable = false;
 	float time = 0;
 
-	Button b_save, b_new, b_load, b_objects, b_tiles;
+	std::shared_ptr<Button> b_save, b_new, b_load, b_objects, b_tiles;
 
 	std::shared_ptr<Panel> tilePropertiesPanel;
 	std::shared_ptr<Button> b_tileProperties;

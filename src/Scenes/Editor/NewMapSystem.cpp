@@ -39,12 +39,11 @@ bool NewMapSystem::isMouseHover()
     return newPanel->isMouseHover(false);
 }
 
-NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
-                                  Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
-                                  std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell)
+NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
+                                   Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
+                                   std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell)
 {
-    //NewMapResult *res = new NewMapResult();
-    NewMapResult res;
+    NewMapResult *res = new NewMapResult();
 
     dt = 0.0F;
     pos = Vector2<int>(0 - bPanel->getSize().x, 0);
@@ -72,7 +71,7 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, flo
         Button *button = new Button(tile);
         button->independent = true;
         button->setParent(tPanel.get(), true);
-        res.tilesUI.push_back(std::make_shared<Button>(*button));
+        res->tilesUI.push_back(std::make_shared<Button>(*button));
     }
 
     for (int i = 0; i < mLimit.x; i++)
@@ -82,15 +81,15 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, flo
             ButtonTile t = ButtonTile(Vector2<int>(i, j));
             t.button.getTile()->frame = 0;
             t.button.getTile()->setType(TileTypes::FLOOR);
-            res.tiles.push_back(t);
+            res->tiles.push_back(t);
         }
     }
 
     return res;
 }
-NewMapResult NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit, Vector2<int> &texture,
-                                    int &tCount, std::shared_ptr<Panel> &tPanel, std::shared_ptr<Panel> &bPanel, Tile &sTile,
-                                    int maxCell)
+NewMapResult *NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit, Vector2<int> &texture,
+                                     int &tCount, std::shared_ptr<Panel> &tPanel, std::shared_ptr<Panel> &bPanel, Tile &sTile,
+                                     int maxCell)
 {
     std::string sizeX = t_mapSizeX->getText();
     std::string sizeY = t_mapSizeY->getText();
@@ -101,17 +100,17 @@ NewMapResult NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect,
     if (sizeX.empty() || sizeY.empty() || tileSet.empty())
     {
         Logger::DebugLog("BOS");
-        return NewMapResult();
+        return new NewMapResult();
     }
     if (ResourceManager::GetTexture(tileSet).Width == 0)
     {
         Logger::DebugLog("BOYLE BIR TEXTURE YOK");
-        return NewMapResult();
+        return new NewMapResult();
     }
     if (!Utils::TryStringToInt(sizeX.c_str()) || !Utils::TryStringToInt(sizeY.c_str()))
     {
         Logger::DebugLog("BUNLAR SAYI DEGIL");
-        return NewMapResult();
+        return new NewMapResult();
     }
 
     int isizeX = Utils::StringToInt(sizeX.c_str());
@@ -120,7 +119,7 @@ NewMapResult NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect,
     if (isizeX <= 0 || isizeY <= 0)
     {
         Logger::DebugLog("BUNLAR NEGATIF");
-        return NewMapResult();
+        return new NewMapResult();
     }
     return NewMap(tileSet, Vector2<int>(isizeX, isizeY), dt, pos, fSelect, mLimit, texture, tCount, tPanel, bPanel, sTile, maxCell);
 }

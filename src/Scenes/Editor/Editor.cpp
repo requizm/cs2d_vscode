@@ -107,58 +107,58 @@ void Editor::Start()
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16, 16); //new_sprite
 	pos = Vector2<int>(0);
-	b_new = Button(sprite, pos, Vector2<int>(16));
-	b_new.setOutline(true);
-	b_new.setOutlineColor(Vector3<float>(0.45));
-	b_new.setMargin(Vector2<int>(8, 8));
-	b_new.setButtonColor(Vector3<float>(0.15F));
-	b_new.setMouseClickColor(Vector3<float>(0.30F));
-	b_new.setMouseHoverColor(Vector3<float>(0.30F));
-	b_new.setParent(controlPanel.get());
+	b_new = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_new->setOutline(true);
+	b_new->setOutlineColor(Vector3<float>(0.45));
+	b_new->setMargin(Vector2<int>(8, 8));
+	b_new->setButtonColor(Vector3<float>(0.15F));
+	b_new->setMouseClickColor(Vector3<float>(0.30F));
+	b_new->setMouseHoverColor(Vector3<float>(0.30F));
+	b_new->setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16, 16); //load_sprite
 	pos = Vector2<int>(30, 0);
-	b_load = Button(sprite, pos, Vector2<int>(16));
-	b_load.setOutline(true);
-	b_load.setOutlineColor(Vector3<float>(0.45));
-	b_load.setMargin(Vector2<int>(8, 8));
-	b_load.setButtonColor(Vector3<float>(0.15F));
-	b_load.setMouseClickColor(Vector3<float>(0.30F));
-	b_load.setMouseHoverColor(Vector3<float>(0.30F));
-	b_load.setParent(controlPanel.get());
+	b_load = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_load->setOutline(true);
+	b_load->setOutlineColor(Vector3<float>(0.45));
+	b_load->setMargin(Vector2<int>(8, 8));
+	b_load->setButtonColor(Vector3<float>(0.15F));
+	b_load->setMouseClickColor(Vector3<float>(0.30F));
+	b_load->setMouseHoverColor(Vector3<float>(0.30F));
+	b_load->setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16, 16); //save_sprite
 	pos = Vector2<int>(60, 0);
-	b_save = Button(sprite, pos, Vector2<int>(16));
-	b_save.setOutline(true);
-	b_save.setOutlineColor(Vector3<float>(0.45));
-	b_save.setMargin(Vector2<int>(8, 8));
-	b_save.setButtonColor(Vector3<float>(0.15F));
-	b_save.setMouseClickColor(Vector3<float>(0.30F));
-	b_save.setMouseHoverColor(Vector3<float>(0.30F));
-	b_save.setParent(controlPanel.get());
+	b_save = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_save->setOutline(true);
+	b_save->setOutlineColor(Vector3<float>(0.45));
+	b_save->setMargin(Vector2<int>(8, 8));
+	b_save->setButtonColor(Vector3<float>(0.15F));
+	b_save->setMouseClickColor(Vector3<float>(0.30F));
+	b_save->setMouseHoverColor(Vector3<float>(0.30F));
+	b_save->setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 16, 16, 16); //save_sprite
 	pos = Vector2<int>(0, 25);
-	b_tiles = Button(sprite, pos, Vector2<int>(16));
-	b_tiles.setOutline(true);
-	b_tiles.setOutlineColor(Vector3<float>(0.45));
-	b_tiles.setMargin(Vector2<int>(8, 8));
-	b_tiles.setButtonColor(Vector3<float>(0.15F));
-	b_tiles.setMouseClickColor(Vector3<float>(0.30F));
-	b_tiles.setMouseHoverColor(Vector3<float>(0.30F));
-	b_tiles.setParent(controlPanel.get());
+	b_tiles = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_tiles->setOutline(true);
+	b_tiles->setOutlineColor(Vector3<float>(0.45));
+	b_tiles->setMargin(Vector2<int>(8, 8));
+	b_tiles->setButtonColor(Vector3<float>(0.15F));
+	b_tiles->setMouseClickColor(Vector3<float>(0.30F));
+	b_tiles->setMouseHoverColor(Vector3<float>(0.30F));
+	b_tiles->setParent(controlPanel.get());
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 16, 16, 16); //save_sprite
 	pos = Vector2<int>(30, 25);
-	b_objects = Button(sprite, pos, Vector2<int>(16));
-	b_objects.setOutline(true);
-	b_objects.setOutlineColor(Vector3<float>(0.45));
-	b_objects.setMargin(Vector2<int>(8, 8));
-	b_objects.setButtonColor(Vector3<float>(0.15F));
-	b_objects.setMouseClickColor(Vector3<float>(0.30F));
-	b_objects.setMouseHoverColor(Vector3<float>(0.30F));
-	b_objects.setParent(controlPanel.get());
+	b_objects = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_objects->setOutline(true);
+	b_objects->setOutlineColor(Vector3<float>(0.45));
+	b_objects->setMargin(Vector2<int>(8, 8));
+	b_objects->setButtonColor(Vector3<float>(0.15F));
+	b_objects->setMouseClickColor(Vector3<float>(0.30F));
+	b_objects->setMouseHoverColor(Vector3<float>(0.30F));
+	b_objects->setParent(controlPanel.get());
 
 	//yeni harita paneli
 	this->NewMap.newPanel = std::make_shared<Panel>(Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", Vector2<int>(400, 135), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
@@ -282,10 +282,10 @@ void Editor::OnEnable()
 {
 	currentTileSet = "cs2dnorm";
 	Start();
-	NewMapResult r = NewMap.NewMap("cs2dnorm", Vector2<int>(50), this->time, position, firstSelect, mapLimit, texture,
-								   tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
-	tiles = r.tiles;
-	tilesUI = r.tilesUI;
+	NewMapResult *r = NewMap.NewMap("cs2dnorm", Vector2<int>(50), this->time, position, firstSelect, mapLimit, texture,
+									tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
+	tiles = r->tiles;
+	tilesUI = r->tilesUI;
 	selectedTile = tilesUI.at(0).get()->getTile();
 }
 
@@ -348,7 +348,7 @@ void Editor::ProcessInput()
 	{
 		if (tile->isRenderable())
 		{
-			tile->ProcessInput();
+			//tile->ProcessInput();
 			if (tile->isMouseDown())
 			{
 				selectedTile = tile->getTile();
@@ -400,14 +400,14 @@ void Editor::ProcessInput()
 
 	if (NewMap.b_okey->isMouseDown())
 	{
-		NewMapResult r = NewMap.B_NewMap(this->time, position, firstSelect, mapLimit, texture,
-										 tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
+		NewMapResult *r = NewMap.B_NewMap(this->time, position, firstSelect, mapLimit, texture,
+										  tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
 
-		if (!r.tiles.empty() && !r.tilesUI.empty())
+		if (!r->tiles.empty() && !r->tilesUI.empty())
 		{
 			NewMap.newPanel->setEnable(false);
-			tiles = r.tiles;
-			tilesUI = r.tilesUI;
+			tiles = r->tiles;
+			tilesUI = r->tilesUI;
 			selectedTile = tilesUI.at(0).get()->getTile();
 		}
 		else
@@ -416,12 +416,12 @@ void Editor::ProcessInput()
 		}
 	}
 
-	if (b_new.isMouseDown())
+	if (b_new->isMouseDown())
 	{
 		this->NewMap.newPanel->setEnable(true);
 	}
 
-	if (b_save.isMouseDown())
+	if (b_save->isMouseDown())
 	{
 		SaveLoad.B_SaveMap();
 	}
@@ -431,19 +431,19 @@ void Editor::ProcessInput()
 		SaveLoad.SaveMap();
 	}
 
-	if (b_load.isMouseDown())
+	if (b_load->isMouseDown())
 	{
 		SaveLoad.B_LoadMap();
 	}
 
-	if (b_objects.isMouseDown())
+	if (b_objects->isMouseDown())
 	{
 		tilePanel->setEnable(false);
 		objectPanel->setEnable(true);
 		selectedMode = SelectedMode::OBJECT_MOD;
 	}
 
-	if (b_tiles.isMouseDown())
+	if (b_tiles->isMouseDown())
 	{
 		objectPanel->setEnable(false);
 		tilePanel->setEnable(true);

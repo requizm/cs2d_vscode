@@ -58,7 +58,7 @@ protected:
 	Vector3<float> panelColor;
 	Vector2<int> dragSize;
 	Vector2<int> dragPos;
-	Button escapeButton;
+	std::shared_ptr<Button> escapeButton;
 	Label title;
 	bool opttitles;
 	bool backGround;

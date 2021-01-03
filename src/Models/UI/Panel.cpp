@@ -12,13 +12,13 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
 	this->movable = false;
 	this->scrollable = false;
 	this->outline = false;
-	escapeButton = Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, Vector2<int>(20, 20), true);
-	escapeButton.setParent(this);
-	escapeButton.independent = true;
-	escapeButton.setPosition(this->size.x - 20.0F, 3.0F);
-	escapeButton.setButtonColor(color);
-	escapeButton.setMouseHoverColor(Vector3<float>(0.64F));
-	escapeButton.setMouseClickColor(Vector3<float>(1.0F));
+	escapeButton = std::make_shared<Button>(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, Vector2<int>(20, 20), true);
+	escapeButton->setParent(this);
+	escapeButton->independent = true;
+	escapeButton->setPosition(this->size.x - 20.0F, 3.0F);
+	escapeButton->setButtonColor(color);
+	escapeButton->setMouseHoverColor(Vector3<float>(0.64F));
+	escapeButton->setMouseClickColor(Vector3<float>(1.0F));
 	this->title = Label(title, position, renderer, scale, Vector3<float>(1.0F), UIObjectType::PANEL);
 	this->title.setMouseEvent(false);
 	this->title.setParent(this);
@@ -48,7 +48,7 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 		if (opttitles)
 		{
 			squareRenderer.ui_RenderLine(Vector2<int>(getPosition().x + lineOffset, getPosition().y + 23.0F), Vector2<int>(getPosition().x + size.x - lineOffset, getPosition().y + 23.0F), Vector3<float>(0.39F), 1.0F, this->trans);
-			escapeButton.Draw(spriteRenderer, squareRenderer);
+			escapeButton->Draw(spriteRenderer, squareRenderer);
 			title.Draw();
 		}
 	}
@@ -73,7 +73,7 @@ void Panel::Update()
 	{
 		if (isMouseEvents() && isMovable())
 		{
-			if (!click && (opttitles && !escapeButton.isPressed) || (!opttitles && !click))
+			if (!click && (opttitles && !escapeButton->isPressed) || (!opttitles && !click))
 			{
 				if (isMouseDown(true))
 				{
@@ -93,7 +93,7 @@ void Panel::Update()
 		}
 		if (opttitles)
 		{
-			escapeButton.Update();
+			escapeButton->Update();
 		}
 	}
 	for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
@@ -109,11 +109,11 @@ void Panel::ProcessInput()
 {
 	if (isEnable())
 	{
-		escapeButton.ProcessInput();
+		escapeButton->ProcessInput();
 		if (isMouseEvents())
 		{
 			isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
-			if (escapeButton.isMouseUp() && opttitles)
+			if (escapeButton->isMouseUp() && opttitles)
 			{
 				this->setEnable(false);
 			}
@@ -138,9 +138,9 @@ void Panel::OnEnable()
 {
 	if (opttitles)
 	{
-		escapeButton.setEnable(true);
+		escapeButton->setEnable(true);
 		title.setEnable(true);
-		escapeButton.setVisible(true);
+		escapeButton->setVisible(true);
 		title.setVisible(true);
 	}
 }
@@ -149,9 +149,9 @@ void Panel::OnDisable()
 {
 	if (opttitles)
 	{
-		escapeButton.setEnable(false);
+		escapeButton->setEnable(false);
 		title.setEnable(false);
-		escapeButton.setVisible(false);
+		escapeButton->setVisible(false);
 		title.setVisible(false);
 		this->isPressed = false;
 		this->isDown = false;

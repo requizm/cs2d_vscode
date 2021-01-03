@@ -96,6 +96,9 @@ protected:
 
 	std::vector<std::function<void()>> listenersDown, listenersUp;
 
+	bool downTrigger = false;
+	bool upTrigger = false;
+
 private:
 	void SetMouseState(bool &variable, bool value);
 

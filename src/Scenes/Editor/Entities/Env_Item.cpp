@@ -49,7 +49,7 @@ void Env_Item::Initialize()
     t_id->setParent(p_panel.get());
 
     Tile t = Tile(position, sp, Vector2<int>(Game_Parameters::SIZE_TILE));
-    button = std::make_shared<Button>(t);
+    button = std::make_shared<Button>(t, 1.0F, UIObjectType::ENV_ITEM);
     button->setType(ButtonType::ENV_OBJ);
 
     if (item_id != 0)
