@@ -117,7 +117,7 @@ private:
 
 	Vector3<float> outlineColor;
 	Vector2<int> margin;
-	ButtonType type = ButtonType::DEFAULT;
+	ButtonType btn_type = ButtonType::DEFAULT;
 };
 
 #endif // BUTTON_H

@@ -344,18 +344,15 @@ void Editor::ProcessInput()
 	this->SaveLoad.ProcessInput();
 	this->objects_ui->ProcessInput();
 
-	if (!tilesUI.empty())
+	for (auto &tile : tilesUI)
 	{
-		for (auto &tile : tilesUI)
+		if (tile->isRenderable())
 		{
-			if (tile->isRenderable())
+			tile->ProcessInput();
+			if (tile->isMouseDown())
 			{
-				tile->ProcessInput();
-				if (tile->isMouseDown())
-				{
-					selectedTile = tile->getTile();
-					firstSelect = true;
-				}
+				selectedTile = tile->getTile();
+				firstSelect = true;
 			}
 		}
 	}

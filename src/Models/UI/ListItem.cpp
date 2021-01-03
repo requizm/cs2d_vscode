@@ -102,13 +102,11 @@ void ListItem::Update()
         {
             items[i]->Update();
         }
-        if (Editor::instance().selectedMode == SelectedMode::OBJECT_MOD && InputManager::scrollYPressed && panel->isScrollable())
+        if (InputManager::scrollYPressed && panel->isScrollable())
         {
             if (!items.empty())
             {
                 bool check_1 = items.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
-                int itemLocalPos = items.at(items.size() - 1)->getLocalPosition().y;
-                int panelSize = panel->getSize().y;
                 bool check_2 = items.at(items.size() - 1)->getLocalPosition().y + 20.0F <= panel->getSize().y && InputManager::scroll.y < 0;
 
                 if (!check_1 && !check_2)

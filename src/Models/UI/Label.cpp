@@ -12,7 +12,7 @@ Label::Label(const std::string &text, Vector2<int> position, TextRenderer &rende
 	this->labelCurrentColor = color;
 	this->labelSize = this->rend->CalculateSize(text, scale);
 
-	if (type == UIObjectType::LABEL)
+	if (type != UIObjectType::PANEL && type != UIObjectType::UIOBJECT)
 	{
 		mDown = std::bind(&onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -36,7 +36,7 @@ Label::Label(Vector2<int> position, Vector2<int> size, float scale, UIObjectType
 
 Label::~Label()
 {
-	if (GetObjectTypeString() == "Label")
+	if (objType != UIObjectType::PANEL && objType != UIObjectType::UIOBJECT)
 	{
 		InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 		InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);

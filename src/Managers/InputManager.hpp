@@ -14,8 +14,8 @@ public:
 	int id;
 	EventF(std::function<void()> func, int id)
 	{
-		event = func;
 		this->id = id;
+		event = func;
 	}
 };
 

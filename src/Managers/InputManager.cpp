@@ -134,6 +134,7 @@ void InputManager::removeListenerDown(int key, std::function<void()> callback, i
 				if (pair.second[i].id == id)
 				{
 					pair.second.erase(pair.second.begin() + i);
+					break;
 				}
 			}
 		}
@@ -151,6 +152,7 @@ void InputManager::removeListenerUp(int key, std::function<void()> callback, int
 				if (pair.second[i].id == id)
 				{
 					pair.second.erase(pair.second.begin() + i);
+					break;
 				}
 			}
 		}

@@ -8,20 +8,20 @@ Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size
 	this->buttonColor = buttonColor;
 	Vector2<int> nSize = renderer.CalculateSize(text, 1.0F);
 	this->setSize(Vector2<int>(static_cast<int>(static_cast<float>(nSize.x) * 1.5F), static_cast<int>(static_cast<float>(nSize.y) * 1.5F)));
-	this->type = ButtonType::DEFAULT;
+	this->btn_type = ButtonType::DEFAULT;
 }
 
 Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, bool difColor, float scale, UIObjectType type) : Label(position, size, scale, type), haveOutline(false)
 {
 	this->sprite = sprite;
 	this->difColor = difColor;
-	this->type = ButtonType::SPRITE;
+	this->btn_type = ButtonType::SPRITE;
 }
 
 Button::Button(Tile &tile, float scale) : Label(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::BUTTON), difColor(false), haveOutline(false)
 {
 	this->tile = tile;
-	this->type = ButtonType::TILE;
+	this->btn_type = ButtonType::TILE;
 }
 
 Button::~Button() = default;
@@ -30,20 +30,12 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 {
 	if (isVisible() && isEnable() && isRenderable())
 	{
-		switch (type)
+		switch (btn_type)
 		{
 		case ButtonType::DEFAULT:
-			if (haveOutline)
-			{
-				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, true, outlineColor, 1.0F, 1.0F, 0.0F);
-			}
-			else
-			{
-				squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, false, outlineColor, 1.0F, 1.0F, 0.0F);
-			}
+			squareRenderer.ui_RenderFilledSquare(this->getPosition(), this->getSize(), currentColor, haveOutline, outlineColor, 1.0F, 1.0F, 0.0F);
 			Label::DrawForButton(center);
 			break;
-
 		case ButtonType::SPRITE:
 			if (difColor)
 			{
@@ -78,7 +70,7 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 {
 	if (isVisible() && isEnable() && isRenderable())
 	{
-		switch (type)
+		switch (btn_type)
 		{
 		case ButtonType::TILE:
 			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize(), 0.0F, false, shine, selected, time);
@@ -98,37 +90,17 @@ void Button::Update()
 {
 	if (isEnable() && isMouseEvents())
 	{
-		if (type == ButtonType::DEFAULT && !text.empty())
+		if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE)
 		{
-			if (isMousePress())
-			{
-				currentColor = mouseclickColor;
-				labelCurrentColor = labelClickColor;
-			}
-			else if (isMouseHover())
+			if (!isPressed && isMouseHover())
 			{
 				currentColor = mouseHoverColor;
 				labelCurrentColor = labelMouseHoverColor;
 			}
-			else
+			else if (!isPressed)
 			{
 				currentColor = buttonColor;
 				labelCurrentColor = labelColor;
-			}
-		}
-		else if (type == ButtonType::SPRITE)
-		{
-			if (isMousePress())
-			{
-				currentColor = mouseclickColor;
-			}
-			else if (isMouseHover())
-			{
-				currentColor = mouseHoverColor;
-			}
-			else
-			{
-				currentColor = buttonColor;
 			}
 		}
 	}
@@ -145,7 +117,7 @@ void Button::ProcessInput()
 
 Vector2<int> Button::getPosition()
 {
-	if (type == ButtonType::TILE || type == ButtonType::ENV_OBJ)
+	if (btn_type == ButtonType::TILE || btn_type == ButtonType::ENV_OBJ)
 	{
 		if (isParent())
 		{
@@ -162,7 +134,7 @@ Vector2<int> Button::getPosition()
 
 Vector2<int> Button::getLocalPosition()
 {
-	if (type == ButtonType::TILE)
+	if (btn_type == ButtonType::TILE)
 	{
 		if (isParent())
 		{
@@ -179,7 +151,7 @@ Vector2<int> Button::getLocalPosition()
 
 Vector2<int> Button::getSize()
 {
-	if (type == ButtonType::TILE || type == ButtonType::ENV_OBJ)
+	if (btn_type == ButtonType::TILE || btn_type == ButtonType::ENV_OBJ)
 	{
 		return tile.GetSize();
 	}
@@ -273,7 +245,11 @@ void Button::onMouseDown()
 {
 	if (isEnable() && isMouseHover())
 	{
-		labelCurrentColor = labelClickColor;
+		if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE)
+		{
+			labelCurrentColor = labelClickColor;
+			currentColor = mouseclickColor;
+		}
 		isPressed = true;
 		for (auto &f : listenersDown)
 		{
@@ -288,7 +264,11 @@ void Button::onMouseUp()
 	{
 		if (isEnable() && isMouseHover())
 		{
-			labelCurrentColor = labelColor;
+			if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE)
+			{
+				labelCurrentColor = labelColor;
+				currentColor = buttonColor;
+			}
 			for (auto &f : listenersUp)
 			{
 				f();
@@ -300,7 +280,7 @@ void Button::onMouseUp()
 
 void Button::setType(ButtonType type)
 {
-	this->type = type;
+	this->btn_type = type;
 }
 
 void Button::setMouseHoverColor(const Vector3<float> &color)
@@ -336,7 +316,7 @@ void Button::setMargin(const Vector2<int> value)
 
 void Button::setPosition(const Vector2<int> position)
 {
-	if (type == ButtonType::TILE)
+	if (btn_type == ButtonType::TILE)
 	{
 		this->tile.SetPosition(position);
 	}
@@ -346,7 +326,7 @@ void Button::setPosition(const Vector2<int> position)
 
 void Button::setPosition(const int x, const int y)
 {
-	if (type == ButtonType::TILE)
+	if (btn_type == ButtonType::TILE)
 	{
 		this->tile.SetPosition(x, y);
 	}
