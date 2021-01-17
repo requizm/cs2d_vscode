@@ -121,13 +121,19 @@ int main(int argc, char *argv[])
 #pragma endregion
 	// DeltaTime variables
 	float lastFrame = 0.0F;
+	float time = 0.0F;
 	while (!glfwWindowShouldClose(window))
 	{
 		const float currentFrame = static_cast<float>(glfwGetTime());
 		Timer::DeltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
+		time += Timer::DeltaTime;
 		glfwPollEvents();
 		nbFrames++;
+		if (time >= 1.0F)
+		{
+			nbFrames = 0;
+		}
 
 #pragma region input_0
 		int newState;
