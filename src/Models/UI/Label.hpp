@@ -11,6 +11,11 @@
 
 //class TextRenderer;
 
+enum LabelType {
+	CLICKABLE,
+	NOT_CLICKABLE
+};
+
 class Label : public UIObject
 {
 public:
@@ -26,7 +31,7 @@ public:
 	 * @param color Vector3<float>(1.0F)
 	 * @param type UIObjectType::LABEL
 	 */
-	Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale = 1.0F, const Vector3<float> &color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL);
+	Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale = 1.0F, const Vector3<float> &color = Vector3<float>(1.0F), UIObjectType type = UIObjectType::LABEL, LabelType ltype = LabelType::CLICKABLE);
 
 	/**
 	 * @brief Construct a new Label for TextBox
@@ -47,7 +52,7 @@ public:
 	 * @param scale 1.0F
 	 * @param type UIObjectType::LABEL
 	 */
-	Label(Vector2<int> position, Vector2<int> size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL);
+	Label(Vector2<int> position, Vector2<int> size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL, LabelType ltype = LabelType::CLICKABLE);
 	~Label();
 
 	virtual void Draw() override;
@@ -99,13 +104,15 @@ protected:
 	bool downTrigger = false;
 	bool upTrigger = false;
 
+	std::function<void()> mDown;
+	std::function<void()> mUp;
+
 private:
 	void SetMouseState(bool &variable, bool value);
 
 	bool isHover = false;
 
-	std::function<void()> mDown;
-	std::function<void()> mUp;
+	LabelType labelType;
 };
 
 #endif // LABEL_H

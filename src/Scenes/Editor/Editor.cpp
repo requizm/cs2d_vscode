@@ -172,13 +172,13 @@ void Editor::Start()
 	NewMap.t_tile = std::make_shared<TextBox>(Vector2<int>(180, 65), *textRenderer, Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F));
 	NewMap.t_tile->setParent(NewMap.newPanel.get());
 
-	NewMap.l_mapSize = std::make_shared<Label>("Map Size", Vector2<int>(40, 40), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	NewMap.l_mapSize = std::make_shared<Label>("Map Size", Vector2<int>(40, 40), *textRenderer, 1.0F, Vector3<float>(0.58F), UIObjectType::LABEL, LabelType::NOT_CLICKABLE);
 	NewMap.l_mapSize->setParent(NewMap.newPanel.get());
 	NewMap.l_mapSize->setMouseEvent(false);
-	NewMap.l_x = std::make_shared<Label>("x", Vector2<int>(240, 40), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	NewMap.l_x = std::make_shared<Label>("x", Vector2<int>(240, 40), *textRenderer, 1.0F, Vector3<float>(0.58F), UIObjectType::LABEL, LabelType::NOT_CLICKABLE);
 	NewMap.l_x->setParent(NewMap.newPanel.get());
 	NewMap.l_x->setMouseEvent(false);
-	NewMap.l_tile = std::make_shared<Label>("Tileset", Vector2<int>(40, 65), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	NewMap.l_tile = std::make_shared<Label>("Tileset", Vector2<int>(40, 65), *textRenderer, 1.0F, Vector3<float>(0.58F), UIObjectType::LABEL, LabelType::NOT_CLICKABLE);
 	NewMap.l_tile->setParent(NewMap.newPanel.get());
 	NewMap.l_tile->setMouseEvent(false);
 	NewMap.b_okey = std::make_shared<Button>("Okay", Vector2<int>(50, 105), Vector2<int>(60, 20), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
@@ -286,11 +286,16 @@ void Editor::OnEnable()
 									tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
 	tiles = r->tiles;
 	tilesUI = r->tilesUI;
-	selectedTile = tilesUI.at(0).get()->getTile();
+	selectedTile = tilesUI.at(0)->getTile();
 }
 
 void Editor::OnDisable()
 {
+	for (auto &tile : tilesUI)
+	{
+		delete tile;
+	}
+	tilesUI.clear();
 }
 
 void Editor::SetEnable(const bool value)
@@ -408,7 +413,7 @@ void Editor::ProcessInput()
 			NewMap.newPanel->setEnable(false);
 			tiles = r->tiles;
 			tilesUI = r->tilesUI;
-			selectedTile = tilesUI.at(0).get()->getTile();
+			selectedTile = tilesUI.at(0)->getTile();
 		}
 		else
 		{
@@ -502,6 +507,7 @@ void Editor::ProcessInput()
 						if (!(selectedTile->frame == tile.button.getTile()->frame))
 						{
 							tile.button = bt;
+							break;
 						}
 					}
 				}

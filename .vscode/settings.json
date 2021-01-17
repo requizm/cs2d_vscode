@@ -64,10 +64,7 @@
         "bit": "cpp",
         "list": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Disabled",
-    "cSpell.words": [
-        "INGAME",
-        "Lfloat",
-        "deagle"
+    "c-cpp-flylint.excludeFromWorkspacePaths": [
+        "include\\**"
     ]
 }

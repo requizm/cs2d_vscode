@@ -1,5 +1,6 @@
 #include "Button.hpp"
 #include "../../Others/Game_Parameters.hpp"
+#include <iostream>
 
 Button::Button() = default;
 
@@ -9,6 +10,16 @@ Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size
 	Vector2<int> nSize = renderer.CalculateSize(text, 1.0F);
 	this->setSize(Vector2<int>(static_cast<int>(static_cast<float>(nSize.x) * 1.5F), static_cast<int>(static_cast<float>(nSize.y) * 1.5F)));
 	this->btn_type = ButtonType::DEFAULT;
+
+	if (type == UIObjectType::BUTTON || type == UIObjectType::LISTITEM || type == UIObjectType::RADIOBUTTON)
+	{
+		//std::cout << "Address: " << &downTrigger << std::endl;
+		mDown = std::bind(&onMouseDown, this);
+		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+
+		mUp = std::bind(&onMouseUp, this);
+		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+	}
 }
 
 Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, bool difColor, float scale, UIObjectType type) : Label(position, size, scale, type), haveOutline(false)
@@ -16,15 +27,42 @@ Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, b
 	this->sprite = sprite;
 	this->difColor = difColor;
 	this->btn_type = ButtonType::SPRITE;
+
+	if (type == UIObjectType::BUTTON || type == UIObjectType::LISTITEM || type == UIObjectType::RADIOBUTTON)
+	{
+		//std::cout << "Address: " << &downTrigger << std::endl;
+		mDown = std::bind(&onMouseDown, this);
+		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+
+		mUp = std::bind(&onMouseUp, this);
+		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+	}
 }
 
-Button::Button(Tile &tile, float scale, UIObjectType type) : Label(tile.GetPosition(), tile.GetSize(), scale, type), difColor(false), haveOutline(false)
+Button::Button(Tile &tile, float scale, UIObjectType type) : Label(tile.GetPosition(), tile.GetSize(), scale, type, LabelType::NOT_CLICKABLE), difColor(false), haveOutline(false)
 {
 	this->tile = tile;
 	this->btn_type = ButtonType::TILE;
+
+	if (type == UIObjectType::BUTTON || type == UIObjectType::LISTITEM || type == UIObjectType::RADIOBUTTON)
+	{
+		//std::cout << "Address: " << &downTrigger << std::endl;
+		mDown = std::bind(&onMouseDown, this);
+		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+
+		mUp = std::bind(&onMouseUp, this);
+		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+	}
 }
 
-Button::~Button() = default;
+Button::~Button()
+{
+	if (objType == UIObjectType::BUTTON || objType == UIObjectType::LISTITEM || objType == UIObjectType::RADIOBUTTON)
+	{
+		InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+		InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+	}
+}
 
 void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
@@ -281,7 +319,7 @@ void Button::onMouseUp()
 			{
 				labelCurrentColor = labelColor;
 				currentColor = buttonColor;
-						}
+			}
 			for (auto &f : listenersUp)
 			{
 				f();
@@ -296,6 +334,11 @@ void Button::onMouseUp()
 void Button::setType(ButtonType type)
 {
 	this->btn_type = type;
+}
+
+void Button::setTile(Tile tile)
+{
+	this->tile = tile;
 }
 
 void Button::setMouseHoverColor(const Vector3<float> &color)

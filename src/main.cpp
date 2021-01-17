@@ -21,10 +21,12 @@ std::unique_ptr<Game> cs2d(std::make_unique<Game>());
 
 //Game cs2d(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+int nbFrames = 0;
+int upFrames = 0;
+
 int main(int argc, char *argv[])
 {
 	//FreeConsole();
-	int mouse_key;
 	//Logger::Start();
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -119,24 +121,14 @@ int main(int argc, char *argv[])
 #pragma endregion
 	// DeltaTime variables
 	float lastFrame = 0.0F;
-
-	int nbFrames = 0;
-	//float time = 0.0F;
 	while (!glfwWindowShouldClose(window))
 	{
 		const float currentFrame = static_cast<float>(glfwGetTime());
 		Timer::DeltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-
 		glfwPollEvents();
-		/*time += deltaTime;
 		nbFrames++;
-		if (time >= 1.0F)
-		{
-			Logger::DebugLog(std::to_string(nbFrames));
-			nbFrames = 0;
-			time = 0.0F;
-		}*/
+
 #pragma region input_0
 		int newState;
 		//mouse
@@ -421,13 +413,16 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
-	if (action == GLFW_PRESS)
+	if (action == GLFW_RELEASE && upFrames != nbFrames)
 	{
-		InputManager::onMouseDown(button);
-	}
-	if (action == GLFW_RELEASE)
-	{
+		Logger::DebugLog("frame no: " + std::to_string(nbFrames) + "  up");
 		InputManager::onMouseUp(button);
+	}
+	else if (action == GLFW_PRESS)
+	{
+		Logger::DebugLog("frame no: " + std::to_string(nbFrames) + "  down");
+		InputManager::onMouseDown(button);
+		upFrames = nbFrames;
 	}
 }
 

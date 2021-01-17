@@ -3,7 +3,7 @@
 
 Label::Label() = default;
 
-Label::Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale, const Vector3<float> &color, UIObjectType type) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
+Label::Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale, const Vector3<float> &color, UIObjectType type, LabelType ltype) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
 {
 	this->labelColor = color;
 	this->text = text;
@@ -11,8 +11,9 @@ Label::Label(const std::string &text, Vector2<int> position, TextRenderer &rende
 	this->labelClickColor = Vector3<float>(1.0F);
 	this->labelCurrentColor = color;
 	this->labelSize = this->rend->CalculateSize(text, scale);
+	this->labelType = ltype;
 
-	if (type != UIObjectType::PANEL && type != UIObjectType::UIOBJECT && type != UIObjectType::ENV_ITEM)
+	if (type == UIObjectType::LABEL && ltype == LabelType::CLICKABLE)
 	{
 		mDown = std::bind(&onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -30,9 +31,10 @@ Label::Label(Vector2<int> position, TextRenderer &renderer, float scale, const V
 	this->labelCurrentColor = color;
 }
 
-Label::Label(Vector2<int> position, Vector2<int> size, float scale, UIObjectType type) : UIObject(position, size, scale, type)
+Label::Label(Vector2<int> position, Vector2<int> size, float scale, UIObjectType type, LabelType ltype) : UIObject(position, size, scale, type)
 {
-	if (type != UIObjectType::PANEL && type != UIObjectType::UIOBJECT && type != UIObjectType::ENV_ITEM)
+	this->labelType = ltype;
+	if (type == UIObjectType::LABEL && ltype == LabelType::CLICKABLE)
 	{
 		mDown = std::bind(&onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -44,7 +46,7 @@ Label::Label(Vector2<int> position, Vector2<int> size, float scale, UIObjectType
 
 Label::~Label()
 {
-	if (objType != UIObjectType::PANEL && objType != UIObjectType::UIOBJECT)
+	if (objType == UIObjectType::LABEL && labelType == LabelType::CLICKABLE)
 	{
 		InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 		InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);

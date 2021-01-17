@@ -73,7 +73,7 @@ private:
 
 	SaveLoadSystem SaveLoad;
 
-	std::vector<std::shared_ptr<Button>> tilesUI;
+	std::vector<Button*> tilesUI;
 	Vector2<int> texture;
 	int tileCount;
 	int maxCellInColumn;

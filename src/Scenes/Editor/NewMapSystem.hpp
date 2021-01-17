@@ -8,7 +8,7 @@
 
 struct NewMapResult
 {
-    std::vector<std::shared_ptr<Button>> tilesUI;
+    std::vector<Button*> tilesUI;
     std::vector<ButtonTile> tiles;
 };
 

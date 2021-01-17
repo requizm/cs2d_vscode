@@ -71,7 +71,7 @@ NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, fl
         Button *button = new Button(tile);
         button->independent = true;
         button->setParent(tPanel.get(), true);
-        res->tilesUI.push_back(std::make_shared<Button>(*button));
+        res->tilesUI.push_back(button);
     }
 
     for (int i = 0; i < mLimit.x; i++)

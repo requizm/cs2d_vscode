@@ -88,6 +88,7 @@ public:
 	bool isMousePress() override;
 
 	void setType(ButtonType type);
+	void setTile(Tile tile);
 
 	bool center = true;
 
@@ -118,6 +119,7 @@ private:
 
 	Vector3<float> outlineColor;
 	Vector2<int> margin;
+	int a = 9988;
 	ButtonType btn_type = ButtonType::DEFAULT;
 };
 
