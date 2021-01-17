@@ -7,6 +7,14 @@ NewMapSystem::NewMapSystem(/* args */)
 
 NewMapSystem::~NewMapSystem()
 {
+    delete l_tile;
+    delete l_mapSize;
+    delete l_x;
+    delete t_tile;
+    delete t_mapSizeX;
+    delete t_mapSizeY;
+    delete b_okey;
+    delete newPanel;
 }
 
 void NewMapSystem::Start()
@@ -40,8 +48,8 @@ bool NewMapSystem::isMouseHover()
 }
 
 NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
-                                   Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
-                                   std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell)
+                                   Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, Panel *tPanel,
+                                   Panel *bPanel, Tile &sTile, int maxCell)
 {
     NewMapResult *res = new NewMapResult();
 
@@ -70,7 +78,7 @@ NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, fl
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
         Button *button = new Button(tile);
         button->independent = true;
-        button->setParent(tPanel.get(), true);
+        button->setParent(tPanel, true);
         res->tilesUI.push_back(button);
     }
 
@@ -78,9 +86,9 @@ NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, fl
     {
         for (int j = 0; j < mLimit.y; j++)
         {
-            ButtonTile t = ButtonTile(Vector2<int>(i, j));
-            t.button.getTile()->frame = 0;
-            t.button.getTile()->setType(TileTypes::FLOOR);
+            ButtonTile *t = new ButtonTile(Vector2<int>(i, j));
+            t->button->getTile()->frame = 0;
+            t->button->getTile()->setType(TileTypes::FLOOR);
             res->tiles.push_back(t);
         }
     }
@@ -88,7 +96,7 @@ NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, fl
     return res;
 }
 NewMapResult *NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit, Vector2<int> &texture,
-                                     int &tCount, std::shared_ptr<Panel> &tPanel, std::shared_ptr<Panel> &bPanel, Tile &sTile,
+                                     int &tCount, Panel *tPanel, Panel *bPanel, Tile &sTile,
                                      int maxCell)
 {
     std::string sizeX = t_mapSizeX->getText();

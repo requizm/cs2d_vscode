@@ -3,7 +3,9 @@
 
 #include "../../Others/Timer.hpp"
 
-TextBox::TextBox() = default;
+TextBox::TextBox() : Label()
+{
+}
 
 TextBox::TextBox(Vector2<int> position, TextRenderer &renderer, Vector2<int> size, bool isBackGround, float scale /*= 1.0F*/, const Vector3<float> &color /*= Vector3<float>(1.0F)*/) : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
 {
@@ -17,6 +19,11 @@ TextBox::TextBox(Vector2<int> position, TextRenderer &renderer, Vector2<int> siz
 	borderColor = Vector3<float>(0.6F);
 	hoverBorderColor = Vector3<float>(0.78F);
 	currentBorderColor = borderColor;
+}
+
+TextBox::~TextBox()
+{
+	UIObject::removeParent();
 }
 
 void TextBox::Update()

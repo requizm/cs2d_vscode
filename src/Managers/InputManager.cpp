@@ -161,6 +161,7 @@ void InputManager::removeListenerUp(int key, std::function<void()> callback, int
 
 void InputManager::onMouseDown(int key)
 {
+	Logger::DebugLog("listener count: " + std::to_string(ObjectManager::listenerObjCount));
 	for (auto &callback : m_Callbacks_Down[key])
 	{
 		callback.event();

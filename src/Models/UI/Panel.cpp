@@ -26,9 +26,14 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
 	this->title.independent = true;
 }
 
-Panel::Panel() = default;
+Panel::Panel() : UIObject()
+{
+}
 
-Panel::~Panel() = default;
+Panel::~Panel()
+{
+	UIObject::removeParent();
+}
 
 void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {

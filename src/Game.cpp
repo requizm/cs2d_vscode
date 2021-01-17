@@ -5,10 +5,12 @@
 #include <iostream>
 
 GameState Game::state;
+GameState Game::oldState;
 Menu Game::menu;
 StartGame Game::scene;
 
-Game::Game(const GLuint width, const GLuint height) {
+Game::Game(const GLuint width, const GLuint height)
+{
     //camera = std::make_unique<Camera>(width, height);
     //camera = Camera(static_cast<int>(width), static_cast<int>(height));
     //camera = Camera(width, height, Vector3<float>(0.0f, 0.0f, 3.0f));
@@ -19,16 +21,17 @@ Game::Game(const GLuint width, const GLuint height) {
     Game::state = GameState::MENU;
 }
 
-Game::Game() {
+Game::Game()
+{
     Logger::WriteLog("Game->Game()");
     Game_Parameters::LoadParameters();
     Game::state = GameState::MENU;
 }
 
-Game::~Game()
-= default;
+Game::~Game() = default;
 
-void Game::Init() {
+void Game::Init()
+{
     Logger::WriteLog("Game->Init()");
     initTextures();
     initShaders();
@@ -40,52 +43,59 @@ void Game::Init() {
     NewGame();
 }
 
-void Game::Update() {
-    switch (Game::state) {
-        case GameState::MENU:
-            Game::menu.Update();
-            break;
-        case GameState::EDITOR:
-            Editor::instance().Update();
-            break;
-        case GameState::INGAME:
-            Game::scene.Update();
-            break;
+void Game::Update()
+{
+    switch (Game::state)
+    {
+    case GameState::MENU:
+        Game::menu.Update();
+        break;
+    case GameState::EDITOR:
+        Editor::instance().Update();
+        break;
+    case GameState::INGAME:
+        Game::scene.Update();
+        break;
     }
 }
 
-void Game::ProcessInput() {
-    switch (Game::state) {
-        case GameState::MENU:
-            Game::menu.ProcessInput();
-            break;
-        case GameState::EDITOR:
-            Editor::instance().ProcessInput();
-            break;
-        case GameState::INGAME:
-            Game::scene.ProcessInput();
-            break;
+void Game::ProcessInput()
+{
+    switch (Game::state)
+    {
+    case GameState::MENU:
+        Game::menu.ProcessInput();
+        break;
+    case GameState::EDITOR:
+        Editor::instance().ProcessInput();
+        break;
+    case GameState::INGAME:
+        Game::scene.ProcessInput();
+        break;
     }
 }
 
-void Game::Render() {
-    switch (Game::state) {
-        case GameState::MENU:
-            Game::menu.Render();
-            break;
-        case GameState::EDITOR:
-            Editor::instance().Render();
-            break;
-        case GameState::INGAME:
-            Game::scene.Render();
-            break;
+void Game::Render()
+{
+    switch (Game::state)
+    {
+    case GameState::MENU:
+        Game::menu.Render();
+        break;
+    case GameState::EDITOR:
+        Editor::instance().Render();
+        break;
+    case GameState::INGAME:
+        Game::scene.Render();
+        break;
     }
     menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos,
                             Vector2<int>(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0,
                             true);
 }
 
-void Game::NewGame() {
+void Game::NewGame()
+{
     Logger::WriteLog("Game->NewGame()");
     Sprite awp = Sprite(ResourceManager::GetTexture("awp"));
     Sprite awp_d = Sprite(ResourceManager::GetTexture("awp_d"));
@@ -105,11 +115,11 @@ void Game::NewGame() {
     Sprite machete = Sprite(ResourceManager::GetTexture("machete"));*/
 
     std::shared_ptr<Weapon> main1 = std::make_shared<Weapon>(
-            Vector2<int>(65, 65), awp, awp_d, "awp", WeaponType::MAIN, 30, 20, 10, 10);
+        Vector2<int>(65, 65), awp, awp_d, "awp", WeaponType::MAIN, 30, 20, 10, 10);
     std::shared_ptr<Weapon> main2 = std::make_shared<Weapon>(
-            Vector2<int>(10, 10), famas, famas_d, "famas", WeaponType::MAIN, 30, 20, 10, 10);
+        Vector2<int>(10, 10), famas, famas_d, "famas", WeaponType::MAIN, 30, 20, 10, 10);
     std::shared_ptr<Weapon> main3 = std::make_shared<Weapon>(
-            Vector2<int>(12, 20), ak47, ak47_d, "ak47", WeaponType::MAIN, 30, 20, 10, 10);
+        Vector2<int>(12, 20), ak47, ak47_d, "ak47", WeaponType::MAIN, 30, 20, 10, 10);
     /*Weapon* pistol1 = new Weapon(
         Vector2<int>(170.0f, 30.0f), deagle, deagle_d, "deagle", WeaponType::PISTOL, 30, 20, 10, 10
     );
@@ -134,11 +144,11 @@ void Game::NewGame() {
     weapons.push_back(*main2.get());
     weapons.push_back(*main3.get());
 
-
     Game::scene = StartGame(maps[0], spriteRenderer, weapons);
 }
 
-void Game::initTextures() const {
+void Game::initTextures() const
+{
     Logger::WriteLog("Game->initTextures()");
     //tiles
     ResourceManager::LoadTexture("../../resources/textures/tiles/cs2dnorm.png", GL_TRUE, "cs2dnorm");
@@ -175,7 +185,8 @@ void Game::initTextures() const {
     ResourceManager::LoadTexture("../../resources/textures/gui_icons.png", GL_TRUE, "gui_icons");
 }
 
-void Game::initShaders() {
+void Game::initShaders()
+{
     Logger::WriteLog("Game->initShaders()");
     ResourceManager::LoadShader("../../resources/shaders/textVertex.txt", "../../resources/shaders/textFragment.txt",
                                 nullptr, "text");
@@ -189,15 +200,13 @@ void Game::initShaders() {
     ResourceManager::GetShader("sprite").UnUse();
     //Matrix4 za = Projection::ortho(0.0f, static_cast<GLfloat>(Game_Parameters::SCREEN_WIDTH), static_cast<GLfloat>(Game_Parameters::SCREEN_HEIGHT), 0.0f);
     ResourceManager::GetShader("menu").Use();
-    ResourceManager::GetShader("menu").SetMatrix4("projection", Projection::ortho(0.0f,
-                                                                                  static_cast<float>(Game_Parameters::SCREEN_WIDTH),
-                                                                                  static_cast<float>(Game_Parameters::SCREEN_HEIGHT),
-                                                                                  0.0f), GL_TRUE);
+    ResourceManager::GetShader("menu").SetMatrix4("projection", Projection::ortho(0.0f, static_cast<float>(Game_Parameters::SCREEN_WIDTH), static_cast<float>(Game_Parameters::SCREEN_HEIGHT), 0.0f), GL_TRUE);
     ResourceManager::GetShader("menu").SetInteger("image", 0);
     ResourceManager::GetShader("menu").UnUse();
 }
 
-void Game::initMenuSprites() {
+void Game::initMenuSprites()
+{
     Logger::WriteLog("Game->initMenuSprites()");
     Sprite cs2d = Sprite(ResourceManager::GetTexture("cs2d"));
     Sprite unrealsoftware = Sprite(ResourceManager::GetTexture("unrealsoftware"));
@@ -210,47 +219,54 @@ void Game::initMenuSprites() {
     menuSprites[3] = splash;
 }
 
-void Game::initMaps() {
+void Game::initMaps()
+{
     Logger::WriteLog("Game->initMaps()");
     maps = std::vector<Map>();
     const Map test_map = Map("../../resources/levels/one.xml", "test_one");
     maps.push_back(test_map);
 }
 
-void Game::initRenderers() {
+void Game::initRenderers()
+{
     Logger::WriteLog("Game->initRenderers()");
     spriteRenderer = SpriteRenderer(ResourceManager::GetShader("sprite"));
     menuRenderer = SpriteRenderer(ResourceManager::GetShader("menu"));
 }
 
-void Game::SetGameState(GameState state) {
-    switch (Game::state) {
-        case GameState::MENU:
-            Game::menu.SetEnable(false);
-            break;
-        case GameState::EDITOR:
-            Editor::instance().SetEnable(false);
-            break;
-        case GameState::INGAME:
-            Game::scene.SetEnable(false);
-            break;
+void Game::SetGameState(GameState state)
+{
+    switch (Game::state)
+    {
+    case GameState::MENU:
+        Game::menu.SetEnable(false);
+        break;
+    case GameState::EDITOR:
+        Editor::instance().SetEnable(false);
+        break;
+    case GameState::INGAME:
+        Game::scene.SetEnable(false);
+        break;
     }
 
-    switch (state) {
-        case GameState::MENU:
-            Game::menu.SetEnable(true);
-            break;
-        case GameState::EDITOR:
-            Editor::instance().SetEnable(true);
-            break;
-        case GameState::INGAME:
-            Game::scene.SetEnable(true);
-            break;
+    switch (state)
+    {
+    case GameState::MENU:
+        Game::menu.SetEnable(true);
+        break;
+    case GameState::EDITOR:
+        Editor::instance().SetEnable(true);
+        break;
+    case GameState::INGAME:
+        Game::scene.SetEnable(true);
+        break;
     }
 
+    oldState = Game::state;
     Game::state = state;
 }
 
-GameState Game::GetGameState() {
+GameState Game::GetGameState()
+{
     return Game::state;
 }

@@ -1,7 +1,10 @@
 #include "Label.hpp"
 #include <iostream>
+#include "../../Managers/ObjectManager.hpp"
 
-Label::Label() = default;
+Label::Label() : UIObject()
+{
+}
 
 Label::Label(const std::string &text, Vector2<int> position, TextRenderer &renderer, float scale, const Vector3<float> &color, UIObjectType type, LabelType ltype) : UIObject(position, scale, renderer, type), labelSize(Vector2<int>(1))
 {
@@ -20,6 +23,7 @@ Label::Label(const std::string &text, Vector2<int> position, TextRenderer &rende
 
 		mUp = std::bind(&onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+		//ObjectManager::listenerObjCount++;
 	}
 }
 
@@ -41,6 +45,7 @@ Label::Label(Vector2<int> position, Vector2<int> size, float scale, UIObjectType
 
 		mUp = std::bind(&onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+		//ObjectManager::listenerObjCount++;
 	}
 }
 
@@ -50,7 +55,9 @@ Label::~Label()
 	{
 		InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 		InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+		ObjectManager::listenerObjCount--;
 	}
+	UIObject::removeParent();
 }
 
 void Label::Draw()

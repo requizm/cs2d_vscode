@@ -25,19 +25,19 @@ public:
     void SaveMap();
     void B_SaveMap();
     void SaveListChanged(Button *old, Button *n);
-    std::shared_ptr<Panel> savePanel, save_mapsPanel;
-    std::shared_ptr<Button> b_map_save;
-    std::shared_ptr<TextBox> t_save;
-    std::shared_ptr<ListItem> save_listMaps;
+    Panel *savePanel, *save_mapsPanel;
+    Button *b_map_save;
+    TextBox *t_save;
+    ListItem *save_listMaps;
 
     //load
-    std::vector<ButtonTile> LoadMap(std::string mapName);
+    std::vector<ButtonTile*> LoadMap(std::string mapName);
     void B_LoadMap();
     void LoadListChanged(Button *old, Button *n);
-    std::shared_ptr<Panel> loadPanel, load_mapsPanel;
-    std::shared_ptr<Button> b_map_load;
-    std::shared_ptr<TextBox> t_load;
-    std::shared_ptr<ListItem> load_listMaps;
+    Panel *loadPanel, *load_mapsPanel;
+    Button *b_map_load;
+    TextBox *t_load;
+    ListItem *load_listMaps;
 
     //both
     bool isPressedOrHover();

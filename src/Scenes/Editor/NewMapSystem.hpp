@@ -8,8 +8,8 @@
 
 struct NewMapResult
 {
-    std::vector<Button*> tilesUI;
-    std::vector<ButtonTile> tiles;
+    std::vector<Button *> tilesUI;
+    std::vector<ButtonTile*> tiles;
 };
 
 class NewMapSystem
@@ -27,17 +27,17 @@ public:
     bool isEditMode();
     bool isMouseHover();
 
-    NewMapResult* NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
-                        Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
-                        std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell);
-    NewMapResult* B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit,
-                          Vector2<int> &texture, int &tCount, std::shared_ptr<Panel> &tPanel,
-                          std::shared_ptr<Panel> &bPanel, Tile &sTile, int maxCell);
+    NewMapResult *NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
+                         Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, Panel *tPanel,
+                         Panel *bPanel, Tile &sTile, int maxCell);
+    NewMapResult *B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit,
+                           Vector2<int> &texture, int &tCount, Panel *tPanel,
+                           Panel *bPanel, Tile &sTile, int maxCell);
 
-    std::shared_ptr<Panel> newPanel;
-    std::shared_ptr<Label> l_tile, l_mapSize, l_x;
-    std::shared_ptr<TextBox> t_tile, t_mapSizeX, t_mapSizeY;
-    std::shared_ptr<Button> b_okey;
+    Panel *newPanel;
+    Label *l_tile, *l_mapSize, *l_x;
+    TextBox *t_tile, *t_mapSizeX, *t_mapSizeY;
+    Button *b_okey;
 };
 
 #endif

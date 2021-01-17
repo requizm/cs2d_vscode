@@ -1,8 +1,11 @@
 #include "Button.hpp"
 #include "../../Others/Game_Parameters.hpp"
 #include <iostream>
+#include "../../Managers/ObjectManager.hpp"
 
-Button::Button() = default;
+Button::Button() : Label()
+{
+}
 
 Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size, TextRenderer &renderer, const Vector3<float> &buttonColor, const Vector3<float> &textColor, float scale, UIObjectType type) : Label(text, position, renderer, scale, textColor, type), difColor(false), haveOutline(false)
 {
@@ -13,12 +16,15 @@ Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size
 
 	if (type == UIObjectType::BUTTON || type == UIObjectType::LISTITEM || type == UIObjectType::RADIOBUTTON)
 	{
+		
 		//std::cout << "Address: " << &downTrigger << std::endl;
 		mDown = std::bind(&onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
 		mUp = std::bind(&onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+
+		ObjectManager::listenerObjCount++;
 	}
 }
 
@@ -36,6 +42,7 @@ Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, b
 
 		mUp = std::bind(&onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+		ObjectManager::listenerObjCount++;
 	}
 }
 
@@ -52,6 +59,7 @@ Button::Button(Tile &tile, float scale, UIObjectType type) : Label(tile.GetPosit
 
 		mUp = std::bind(&onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+		ObjectManager::listenerObjCount++;
 	}
 }
 
@@ -61,7 +69,9 @@ Button::~Button()
 	{
 		InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 		InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+		ObjectManager::listenerObjCount--;
 	}
+	UIObject::removeParent();
 }
 
 void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)

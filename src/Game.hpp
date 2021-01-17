@@ -31,6 +31,7 @@ public:
 	static GameState GetGameState();
 
 	static GameState state;
+	static GameState oldState;
 
 private:
 	//std::unique_ptr<SpriteRenderer> renderer;

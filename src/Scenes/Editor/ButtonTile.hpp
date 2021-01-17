@@ -5,29 +5,57 @@
 #include "Entities/Env_Item.hpp"
 #include "../../Others/Utils.hpp"
 
-struct ButtonTile
+class ButtonTile
 {
-    Button button;
+public:
+    Button *button = nullptr;
     Vector2<int> cell;
-    std::shared_ptr<Env_Item> item;
+    Env_Item *item = nullptr;
+    bool init = false;
+
+    ButtonTile() = default;
 
     ButtonTile(Vector2<int> cell)
     {
+        this->item = new Env_Item(0, Utils::CellToPosition(cell));
         this->cell = cell;
-        item = std::make_shared<Env_Item>(0, Utils::CellToPosition(cell));
+        this->button = new Button();
     }
 
-    ButtonTile(Button &button, Vector2<int> cell)
+    ButtonTile(Button *button, Vector2<int> cell)
     {
-        this->button = button;
         this->cell = cell;
+        this->button = button;
     }
 
-    ButtonTile(int item_id, Button &button, Vector2<int> cell)
+    ButtonTile(int item_id, Button *button, Vector2<int> cell)
     {
-        this->button = button;
+        this->item = new Env_Item(item_id, button->getPosition());
         this->cell = cell;
-        item = std::make_shared<Env_Item>(item_id, button.getPosition());
+        this->button = button;
+    }
+
+    ~ButtonTile()
+    {
+        delete button;
+    }
+
+    void SetButton(Button *bt)
+    {
+        if (this->button != nullptr)
+        {
+            delete this->button;
+        }
+        this->button = bt;
+    }
+
+    void SetItem(Env_Item *item)
+    {
+        if (this->item != nullptr)
+        {
+            delete this->item;
+        }
+        this->item = item;
     }
 };
 

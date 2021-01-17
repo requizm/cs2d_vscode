@@ -18,6 +18,7 @@ ListItem::~ListItem()
     {
         delete item;
     }
+    UIObject::removeParent();;
 }
 
 void ListItem::AddItem(std::string &text)

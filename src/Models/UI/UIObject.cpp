@@ -2,7 +2,15 @@
 #include "../../Others/Utils.hpp"
 #include <algorithm>
 
-UIObject::UIObject() = default;
+UIObject::UIObject() : enable(false), visible(false), mouseEvents(false), scrollable(false), dependParent(false)
+{
+	this->objType = UIObjectType::UIOBJECT;
+
+	this->position = Vector2<int>(0);
+	this->scale = 1.0F;
+	this->size = Vector2<int>(0);
+	this->rend = nullptr;
+}
 
 UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale, TextRenderer &renderer) : enable(true), visible(true), mouseEvents(true), scrollable(false), dependParent(false)
 {
@@ -211,15 +219,18 @@ void UIObject::setParent(UIObject *uiobject, bool dependParent)
 
 void UIObject::removeParent()
 {
-	for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
+	if (isParent())
 	{
-		if (parent->childs[i]->getID() == this->getID())
+		for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
 		{
-			parent->childs.erase(parent->childs.begin() + i);
-			break;
+			if (parent->childs[i]->getID() == this->getID())
+			{
+				parent->childs.erase(parent->childs.begin() + i);
+				break;
+			}
 		}
+		this->parent = nullptr;
 	}
-	this->parent = nullptr;
 }
 
 void UIObject::setVisible(const bool value)

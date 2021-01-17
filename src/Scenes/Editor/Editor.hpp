@@ -42,16 +42,16 @@ public:
 	void SetEnable(const bool value);
 
 	std::shared_ptr<TextRenderer> textRenderer;
-	std::shared_ptr<Panel> controlPanel;
-	std::shared_ptr<Panel> buildPanel;
-	std::shared_ptr<Panel> tilePanel, objectPanel;
+	Panel *controlPanel;
+	Panel *buildPanel;
+	Panel *tilePanel, *objectPanel;
 
 	std::vector<Env_Item *> env_items;
 
 	std::string currentTileSet;
 
 	Vector2<int> mapLimit;
-	std::vector<ButtonTile> tiles;
+	std::vector<ButtonTile*> tiles;
 
 	std::shared_ptr<Camera> camera;
 
@@ -67,13 +67,13 @@ private:
 
 	Vector2<int> position;
 
-	std::shared_ptr<ListItem> objects_ui;
+	ListItem* objects_ui;
 
-	NewMapSystem NewMap;
+	NewMapSystem *NewMap;
 
-	SaveLoadSystem SaveLoad;
+	SaveLoadSystem *SaveLoad;
 
-	std::vector<Button*> tilesUI;
+	std::vector<Button *> tilesUI;
 	Vector2<int> texture;
 	int tileCount;
 	int maxCellInColumn;
@@ -87,11 +87,11 @@ private:
 
 	std::shared_ptr<Button> b_save, b_new, b_load, b_objects, b_tiles;
 
-	std::shared_ptr<Panel> tilePropertiesPanel;
-	std::shared_ptr<Button> b_tileProperties;
-	std::shared_ptr<RadioButton> rb_tileProperties;
+	Panel *tilePropertiesPanel;
+	Button *b_tileProperties;
+	RadioButton *rb_tileProperties;
 
-	std::shared_ptr<Button> b_cancel;
+	Button *b_cancel;
 
 	std::string currentName;
 

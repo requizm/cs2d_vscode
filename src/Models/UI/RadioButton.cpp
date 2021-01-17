@@ -1,6 +1,8 @@
 #include "RadioButton.hpp"
 
-RadioButtonElement::RadioButtonElement() = default;
+RadioButtonElement::RadioButtonElement() : Label()
+{
+}
 
 RadioButtonElement::RadioButtonElement(const std::string &text, Vector2<int> position, TextRenderer &textRenderer, int index, const Vector3<float> &buttonColor, const Vector3<float> &textColor, float scale)
     : Label(text, position, textRenderer, scale, textColor, UIObjectType::RADIOBUTTON), selected(false)
@@ -9,7 +11,9 @@ RadioButtonElement::RadioButtonElement(const std::string &text, Vector2<int> pos
     this->index = index;
 }
 
-RadioButtonElement::~RadioButtonElement() = default;
+RadioButtonElement::~RadioButtonElement()
+{
+}
 
 void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
@@ -191,6 +195,7 @@ RadioButton::~RadioButton()
     {
         delete element;
     }
+    UIObject::removeParent();
 }
 
 void RadioButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)

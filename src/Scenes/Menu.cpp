@@ -78,11 +78,13 @@ void Menu::ProcessInput()
 	if (l_editor->isMouseDown())
 	{
 		Game::SetGameState(GameState::EDITOR);
+		return;
 	}
 
 	if (l_newgame->isMouseDown())
 	{
 		Game::SetGameState(GameState::INGAME);
+		return;
 	}
 
 	if (l_options->isMouseDown())
