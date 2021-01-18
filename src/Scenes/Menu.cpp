@@ -24,16 +24,16 @@ void Menu::Start()
 	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 16);
 	squareRenderer = SquareRenderer(true);
 
-	this->l_console = std::make_shared<Label>("Console", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 - 50), *textRenderer, 0.8F, Vector3<float>(0.55F));
-	this->l_newgame = std::make_shared<Label>("New Game", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 - 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
-	this->l_options = std::make_shared<Label>("Options", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2), *textRenderer, 1.0F, Vector3<float>(0.58F));
-	this->l_editor = std::make_shared<Label>("Editor", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 + 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	this->l_console = new Label("Console", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 - 50), *textRenderer, 0.8F, Vector3<float>(0.55F));
+	this->l_newgame = new Label("New Game", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 - 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	this->l_options = new Label("Options", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	this->l_editor = new Label("Editor", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 + 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
 
-	this->panel = std::make_shared<Panel>(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", Vector2<int>(420, 450), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
+	this->panel = new Panel(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", Vector2<int>(420, 450), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
 	this->panel->setMovable(true);
 
-	this->t_test = std::make_shared<TextBox>(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20), true, 1.0F, Vector3<float>(0.58F));
-	this->t_test->setParent(panel.get());
+	this->t_test = new TextBox(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20), true, 1.0F, Vector3<float>(0.58F));
+	this->t_test->setParent(panel);
 	this->t_test->setParentCenterPos();
 }
 
@@ -45,6 +45,14 @@ void Menu::OnEnable()
 
 void Menu::OnDisable()
 {
+	delete l_console;
+	delete l_newgame;
+	delete l_options;
+	delete l_editor;
+
+	delete t_test;
+
+	delete panel;
 }
 
 void Menu::SetEnable(const bool value)

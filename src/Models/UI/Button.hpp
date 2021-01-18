@@ -54,7 +54,7 @@ public:
 	 * @param type UIObjectType::BUTTON
 	 */
 	Button(Tile &tile, float scale = 1.0F, UIObjectType type = UIObjectType::BUTTON);
-	~Button();
+	virtual ~Button();
 
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
 
@@ -63,7 +63,7 @@ public:
  	*/
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, bool selected, float time);
 	void Draw() override;
-	void Update() override;
+	virtual void Update() override;
 	void ProcessInput() override;
 
 	Vector2<int> getPosition() override;
@@ -105,8 +105,10 @@ protected:
 	bool isMouseUpM(const int key) override;
 	bool isMousePressM(const int key) override;
 
-	void onMouseDown() override;
-	void onMouseUp() override;
+	virtual void onMouseDown() override;
+	virtual void onMouseUp() override;
+
+	ButtonType btn_type = ButtonType::DEFAULT;
 
 private:
 	//bool isDown = false;
@@ -120,7 +122,7 @@ private:
 	Vector3<float> outlineColor;
 	Vector2<int> margin;
 	int a = 9988;
-	ButtonType btn_type = ButtonType::DEFAULT;
+	
 };
 
 #endif // BUTTON_H

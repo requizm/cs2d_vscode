@@ -14,9 +14,8 @@ Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size
 	this->setSize(Vector2<int>(static_cast<int>(static_cast<float>(nSize.x) * 1.5F), static_cast<int>(static_cast<float>(nSize.y) * 1.5F)));
 	this->btn_type = ButtonType::DEFAULT;
 
-	if (type == UIObjectType::BUTTON || type == UIObjectType::LISTITEM || type == UIObjectType::RADIOBUTTON)
+	if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
 	{
-		
 		//std::cout << "Address: " << &downTrigger << std::endl;
 		mDown = std::bind(&onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -34,7 +33,7 @@ Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, b
 	this->difColor = difColor;
 	this->btn_type = ButtonType::SPRITE;
 
-	if (type == UIObjectType::BUTTON || type == UIObjectType::LISTITEM || type == UIObjectType::RADIOBUTTON)
+	if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
 	{
 		//std::cout << "Address: " << &downTrigger << std::endl;
 		mDown = std::bind(&onMouseDown, this);
@@ -51,7 +50,7 @@ Button::Button(Tile &tile, float scale, UIObjectType type) : Label(tile.GetPosit
 	this->tile = tile;
 	this->btn_type = ButtonType::TILE;
 
-	if (type == UIObjectType::BUTTON || type == UIObjectType::LISTITEM || type == UIObjectType::RADIOBUTTON)
+	if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
 	{
 		//std::cout << "Address: " << &downTrigger << std::endl;
 		mDown = std::bind(&onMouseDown, this);
@@ -65,7 +64,7 @@ Button::Button(Tile &tile, float scale, UIObjectType type) : Label(tile.GetPosit
 
 Button::~Button()
 {
-	if (objType == UIObjectType::BUTTON || objType == UIObjectType::LISTITEM || objType == UIObjectType::RADIOBUTTON)
+	if (objType == UIObjectType::BUTTON || objType == UIObjectType::RADIOBUTTON)
 	{
 		InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 		InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);

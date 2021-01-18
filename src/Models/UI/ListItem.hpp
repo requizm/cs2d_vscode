@@ -5,6 +5,22 @@
 
 #include <functional>
 
+class ListItemElement : public Button
+{
+public:
+    ListItemElement(Button *btn);
+    ~ListItemElement();
+
+    void Update() override;
+
+    bool selected = false;
+
+protected:
+    void onMouseDown() override;
+    void onMouseUp() override;
+
+};
+
 class ListItem : public UIObject
 {
 public:
@@ -25,7 +41,7 @@ public:
 
 private:
     Panel *panel = nullptr;
-    std::vector<Button *> items;
+    std::vector<ListItemElement *> items;
     int selectedIndex = -1;
 
     int i = 0;

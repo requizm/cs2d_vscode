@@ -9,6 +9,7 @@
 #include "../../Others/Utils.hpp"
 #include "../../Others/Timer.hpp"
 #include "../../Game.hpp"
+#include "../../Managers/ObjectManager.hpp"
 
 Editor::Editor()
 {
@@ -102,12 +103,14 @@ void Editor::Start()
 	std::string a = "Env_Item";
 	objects_ui->AddItem(a);
 
+	Logger::DebugLog("Ana Paneller olustu: " + std::to_string(ObjectManager::listenerObjCount));
+
 	Sprite sprite;
 	Vector2<int> pos;
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16, 16); //new_sprite
 	pos = Vector2<int>(0);
-	b_new = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_new = new Button(sprite, pos, Vector2<int>(16));
 	b_new->setOutline(true);
 	b_new->setOutlineColor(Vector3<float>(0.45));
 	b_new->setMargin(Vector2<int>(8, 8));
@@ -118,7 +121,7 @@ void Editor::Start()
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16, 16); //load_sprite
 	pos = Vector2<int>(30, 0);
-	b_load = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_load = new Button(sprite, pos, Vector2<int>(16));
 	b_load->setOutline(true);
 	b_load->setOutlineColor(Vector3<float>(0.45));
 	b_load->setMargin(Vector2<int>(8, 8));
@@ -129,7 +132,7 @@ void Editor::Start()
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16, 16); //save_sprite
 	pos = Vector2<int>(60, 0);
-	b_save = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_save = new Button(sprite, pos, Vector2<int>(16));
 	b_save->setOutline(true);
 	b_save->setOutlineColor(Vector3<float>(0.45));
 	b_save->setMargin(Vector2<int>(8, 8));
@@ -140,7 +143,7 @@ void Editor::Start()
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 16, 16, 16); //save_sprite
 	pos = Vector2<int>(0, 25);
-	b_tiles = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_tiles = new Button(sprite, pos, Vector2<int>(16));
 	b_tiles->setOutline(true);
 	b_tiles->setOutlineColor(Vector3<float>(0.45));
 	b_tiles->setMargin(Vector2<int>(8, 8));
@@ -151,7 +154,7 @@ void Editor::Start()
 
 	sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 16, 16, 16); //save_sprite
 	pos = Vector2<int>(30, 25);
-	b_objects = std::make_shared<Button>(sprite, pos, Vector2<int>(16));
+	b_objects = new Button(sprite, pos, Vector2<int>(16));
 	b_objects->setOutline(true);
 	b_objects->setOutlineColor(Vector3<float>(0.45));
 	b_objects->setMargin(Vector2<int>(8, 8));
@@ -159,6 +162,8 @@ void Editor::Start()
 	b_objects->setMouseClickColor(Vector3<float>(0.30F));
 	b_objects->setMouseHoverColor(Vector3<float>(0.30F));
 	b_objects->setParent(controlPanel);
+
+	Logger::DebugLog("Butonlar olustu: " + std::to_string(ObjectManager::listenerObjCount));
 
 	//yeni harita paneli
 	this->NewMap = new NewMapSystem();
@@ -190,6 +195,8 @@ void Editor::Start()
 	NewMap->b_okey->setOutline(true);
 	NewMap->b_okey->setOutlineColor(Vector3<float>(1.0F));
 	NewMap->b_okey->setParent(NewMap->newPanel);
+
+	Logger::DebugLog("New Map olustu: " + std::to_string(ObjectManager::listenerObjCount));
 
 	//harita yukle paneli
 	this->SaveLoad = new SaveLoadSystem();
@@ -248,7 +255,10 @@ void Editor::Start()
 	std::function<void(Button *, Button *)> saveListChanged = std::bind(&SaveLoadSystem::SaveListChanged, this->SaveLoad, std::placeholders::_1, std::placeholders::_2);
 	this->SaveLoad->save_listMaps->AddListener(saveListChanged);
 
+	Logger::DebugLog("Harita save ve load olustu: " + std::to_string(ObjectManager::listenerObjCount));
+
 	//env_item
+	envItemManager = new Env_Item_Manager();
 
 	//tile properties
 	this->tilePropertiesPanel = new Panel(Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "Tile Properties", Vector2<int>(400, 400), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
@@ -275,6 +285,8 @@ void Editor::Start()
 	std::function<void(RadioButtonElement *, RadioButtonElement *)> t = std::bind(&Editor::SelectedRbChanged, this, std::placeholders::_1, std::placeholders::_2);
 	this->rb_tileProperties->AddListener(t);
 
+	Logger::DebugLog("Tile properties olustu: " + std::to_string(ObjectManager::listenerObjCount));
+
 	this->selectedMode = SelectedMode::TILE_MOD;
 }
 
@@ -283,7 +295,7 @@ void Editor::OnEnable()
 	currentTileSet = "cs2dnorm";
 	Start();
 	NewMapResult *r = NewMap->NewMap("cs2dnorm", Vector2<int>(50), this->time, position, firstSelect, mapLimit, texture,
-									 tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
+									 tileCount, tilePanel, buildPanel, maxCellInColumn);
 	tiles = r->tiles;
 	tilesUI = r->tilesUI;
 	selectedTile = tilesUI.at(0)->getTile();
@@ -291,6 +303,7 @@ void Editor::OnEnable()
 
 void Editor::OnDisable()
 {
+	selectedTile = nullptr;
 	for (auto &tile : tilesUI)
 	{
 		delete tile;
@@ -308,6 +321,8 @@ void Editor::OnDisable()
 	env_items.clear();
 	tilesUI.clear();
 
+	delete envItemManager;
+
 	delete NewMap;
 	delete SaveLoad;
 	delete b_cancel;
@@ -316,7 +331,14 @@ void Editor::OnDisable()
 	delete tilePropertiesPanel;
 	delete objects_ui;
 
-	delete tilePanel, objectPanel;
+	delete b_save;
+	delete b_new;
+	delete b_load;
+	delete b_objects;
+	delete b_tiles;
+
+	delete tilePanel;
+	delete objectPanel;
 	delete controlPanel;
 	delete buildPanel;
 }
@@ -338,6 +360,7 @@ void Editor::Update()
 	this->buildPanel->Update();
 	this->NewMap->Update();
 	this->tilePropertiesPanel->Update();
+	envItemManager->Update();
 	SaveLoad->Update();
 	objects_ui->Update();
 	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
@@ -369,6 +392,7 @@ void Editor::ProcessInput()
 	this->buildPanel->ProcessInput();
 	this->NewMap->ProcessInput();
 	this->tilePropertiesPanel->ProcessInput();
+	envItemManager->ProcessInput();
 	this->SaveLoad->ProcessInput();
 	this->objects_ui->ProcessInput();
 
@@ -430,7 +454,7 @@ void Editor::ProcessInput()
 	if (NewMap->b_okey->isMouseDown())
 	{
 		NewMapResult *r = NewMap->B_NewMap(this->time, position, firstSelect, mapLimit, texture,
-										   tileCount, tilePanel, buildPanel, *selectedTile, maxCellInColumn);
+										   tileCount, tilePanel, buildPanel, maxCellInColumn);
 
 		if (!r->tiles.empty() && !r->tilesUI.empty())
 		{
@@ -483,10 +507,11 @@ void Editor::ProcessInput()
 	{
 		this->time = 0.0F;
 		this->position = Vector2<int>(0 - buildPanel->getSize().x, 0);
+		std::string newMapName = SaveLoad->t_load->getText();
 		OnDisable();
 		OnEnable();
+		tiles = SaveLoad->LoadMap(newMapName);
 		firstSelect = false;
-		tiles = SaveLoad->LoadMap(SaveLoad->t_load->getText());
 	}
 
 	if (b_tileProperties->isMouseDown())
@@ -497,20 +522,38 @@ void Editor::ProcessInput()
 
 	bool panelsPressed = buildPanel->isPressed || tilePropertiesPanel->isPressed ||
 						 buildPanel->isMouseHover(false) || NewMap->isPressedOrHover() ||
-						 tilePropertiesPanel->isMouseHover(false) || SaveLoad->isPressedOrHover();
+						 tilePropertiesPanel->isMouseHover(false) || SaveLoad->isPressedOrHover() || envItemManager->isPressedOrHover();
 
 	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
 	{
-		if (env_items[i]->isPressedOrHover())
+		if (!envItemManager->p_panel->isEnable())
 		{
-			panelsPressed = true;
-			break;
+			if (selectedMode == SelectedMode::OBJECT_MOD && InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+			{
+				Vector2<int> sw = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
+				Vector2<int> c = Utils::PositionToCell(env_items[i]->getPosition());
+				Vector2<int> d = Utils::PositionToCell(sw);
+				if (d == c)
+				{
+					envItemManager->p_panel->setEnable(true);
+					envItemManager->t_id->setText(std::to_string(env_items[i]->getId()));
+					selectedItem = env_items[i];
+				}
+			}
 		}
 	}
 
-	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+	if (envItemManager->p_panel->isEnable())
 	{
-		env_items[i]->ProcessInput();
+		if (envItemManager->b_okay->isMouseDown())
+		{
+			selectedItem->SetId(atoi(envItemManager->t_id->getText().c_str()));
+			envItemManager->p_panel->setEnable(false);
+		}
+		else if (envItemManager->b_cancel->isMouseDown())
+		{
+			envItemManager->p_panel->setEnable(false);
+		}
 	}
 
 	if (selectedMode == SelectedMode::TILE_MOD)
@@ -581,16 +624,7 @@ void Editor::Render()
 
 		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1->cell), Vector2<int>(Game_Parameters::SIZE_TILE), cell_yellow);
 
-		bool env_Item_Panel = false;
-		for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
-		{
-			if (env_items[i]->isPressedOrHover())
-			{
-				env_Item_Panel = true;
-				break;
-			}
-		}
-		if (!f && ms == tile_1->cell && !NewMap->isMouseHover() && !buildPanel->isMouseHover(false) && !SaveLoad->isMouseHover() && !env_Item_Panel)
+		if (!f && ms == tile_1->cell && !NewMap->isMouseHover() && !buildPanel->isMouseHover(false) && !SaveLoad->isMouseHover() && !envItemManager->isPressedOrHover())
 		{
 			f = true;
 			Vector2<int> pos = Utils::CellToPosition(tile_1->cell);
@@ -608,6 +642,8 @@ void Editor::Render()
 	this->NewMap->Render(menuRenderer, squareRenderer);
 
 	this->tilePropertiesPanel->Draw(menuRenderer, squareRenderer);
+
+	envItemManager->Draw(menuRenderer, squareRenderer);
 
 	SaveLoad->Render(menuRenderer, squareRenderer);
 

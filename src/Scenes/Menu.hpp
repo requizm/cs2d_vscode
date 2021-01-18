@@ -41,11 +41,11 @@ public:
 	SpriteRenderer menuRenderer;
 	SquareRenderer squareRenderer;
 
-	std::shared_ptr<Label> l_console, l_quickplay, l_newgame, l_options, l_editor;
+	Label *l_console, *l_quickplay, *l_newgame, *l_options, *l_editor;
 
-	std::shared_ptr<TextBox> t_test;
+	TextBox *t_test;
 
-	std::shared_ptr<Panel> panel;
+	Panel *panel;
 
 private:
 	bool enable = false;

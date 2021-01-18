@@ -13,7 +13,7 @@ private:
     Vector2<int> size;
     Sprite sp;
 
-    std::shared_ptr<Button> button;
+    Button *button;
 
 public:
     Env_Item();
@@ -30,12 +30,23 @@ public:
     void SetId(int id);
 
     Vector2<int> getPosition();
+};
+
+class Env_Item_Manager
+{
+public:
+    Env_Item_Manager();
+    ~Env_Item_Manager();
+
+    void Update();
+    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
+    void ProcessInput();
+
+    Panel *p_panel;
+    Button *b_okay, *b_cancel;
+    TextBox *t_id;
 
     bool isPressedOrHover();
-
-    std::shared_ptr<Panel> p_panel;
-    std::shared_ptr<Button> b_okay, b_cancel;
-    std::shared_ptr<TextBox> t_id;
 };
 
 #endif

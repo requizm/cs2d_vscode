@@ -74,7 +74,8 @@ void SaveLoadSystem::SaveMap()
             char *cellY = doc.allocate_string(std::to_string(tile->cell.y).c_str());
             char *frame = doc.allocate_string(std::to_string(tile->button->getTile()->frame).c_str());
             char *type = doc.allocate_string(std::to_string((int)tile->button->getTile()->getType()).c_str());
-            char *itemId = doc.allocate_string(std::to_string(tile->item->getId()).c_str());
+            int item_id = tile->item != nullptr ? tile->item->getId() : 0;
+            char *itemId = doc.allocate_string(std::to_string(item_id).c_str());
 
             rapidxml::xml_node<> *node_tile_texture;
 
@@ -146,9 +147,9 @@ void SaveLoadSystem::B_SaveMap()
     this->savePanel->setEnable(true);
 }
 
-std::vector<ButtonTile*> SaveLoadSystem::LoadMap(std::string mapName)
+std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string mapName)
 {
-    std::vector<ButtonTile*> tiles;
+    std::vector<ButtonTile *> tiles;
 
     InputManager::scroll.y = 0.0F;
     this->loadPanel->setEnable(false);
@@ -203,7 +204,16 @@ std::vector<ButtonTile*> SaveLoadSystem::LoadMap(std::string mapName)
         const Sprite sprite = Sprite(ResourceManager::GetTexture(Editor::instance().currentTileSet), (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes(tileType), textureIndex);
         Button *b = new Button(tile);
-        ButtonTile *t = new ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
+        ButtonTile *t = nullptr;
+        if (itemId == 0)
+        {
+            t = new ButtonTile(b, Vector2<int>(cellX, cellY));
+        }
+        else
+        {
+            t = new ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
+        }
+
         tiles.push_back(t);
 
         /*delete x;

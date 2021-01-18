@@ -47,11 +47,12 @@ public:
 	Panel *tilePanel, *objectPanel;
 
 	std::vector<Env_Item *> env_items;
+	Env_Item_Manager *envItemManager;
 
 	std::string currentTileSet;
 
 	Vector2<int> mapLimit;
-	std::vector<ButtonTile*> tiles;
+	std::vector<ButtonTile *> tiles;
 
 	std::shared_ptr<Camera> camera;
 
@@ -67,7 +68,7 @@ private:
 
 	Vector2<int> position;
 
-	ListItem* objects_ui;
+	ListItem *objects_ui;
 
 	NewMapSystem *NewMap;
 
@@ -80,12 +81,13 @@ private:
 	int maxCellInRow;
 
 	Tile *selectedTile = nullptr;
+	Env_Item *selectedItem = nullptr;
 	bool firstSelect;
 
 	bool enable = false;
 	float time = 0;
 
-	std::shared_ptr<Button> b_save, b_new, b_load, b_objects, b_tiles;
+	Button *b_save, *b_new, *b_load, *b_objects, *b_tiles;
 
 	Panel *tilePropertiesPanel;
 	Button *b_tileProperties;

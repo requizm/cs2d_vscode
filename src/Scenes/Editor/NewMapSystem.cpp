@@ -1,5 +1,6 @@
 #include "NewMapSystem.hpp"
 #include "../../Others/Utils.hpp"
+#include "../../Managers/ObjectManager.hpp"
 
 NewMapSystem::NewMapSystem(/* args */)
 {
@@ -49,7 +50,7 @@ bool NewMapSystem::isMouseHover()
 
 NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
                                    Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, Panel *tPanel,
-                                   Panel *bPanel, Tile &sTile, int maxCell)
+                                   Panel *bPanel, int maxCell)
 {
     NewMapResult *res = new NewMapResult();
 
@@ -93,11 +94,12 @@ NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, fl
         }
     }
 
+    Logger::DebugLog("Map seyleri olustu: " + std::to_string(ObjectManager::listenerObjCount));
+
     return res;
 }
 NewMapResult *NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit, Vector2<int> &texture,
-                                     int &tCount, Panel *tPanel, Panel *bPanel, Tile &sTile,
-                                     int maxCell)
+                                     int &tCount, Panel *tPanel, Panel *bPanel, int maxCell)
 {
     std::string sizeX = t_mapSizeX->getText();
     std::string sizeY = t_mapSizeY->getText();
@@ -129,5 +131,5 @@ NewMapResult *NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect
         Logger::DebugLog("BUNLAR NEGATIF");
         return new NewMapResult();
     }
-    return NewMap(tileSet, Vector2<int>(isizeX, isizeY), dt, pos, fSelect, mLimit, texture, tCount, tPanel, bPanel, sTile, maxCell);
+    return NewMap(tileSet, Vector2<int>(isizeX, isizeY), dt, pos, fSelect, mLimit, texture, tCount, tPanel, bPanel, maxCell);
 }

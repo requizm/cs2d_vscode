@@ -12,7 +12,7 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
 	this->movable = false;
 	this->scrollable = false;
 	this->outline = false;
-	escapeButton = std::make_shared<Button>(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, Vector2<int>(20, 20), true);
+	escapeButton = new Button(Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16), position, Vector2<int>(20, 20), true);
 	escapeButton->setParent(this);
 	escapeButton->independent = true;
 	escapeButton->setPosition(this->size.x - 20.0F, 3.0F);
@@ -32,6 +32,7 @@ Panel::Panel() : UIObject()
 
 Panel::~Panel()
 {
+	delete escapeButton;
 	UIObject::removeParent();
 }
 

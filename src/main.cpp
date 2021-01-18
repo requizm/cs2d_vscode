@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 		nbFrames++;
 		if (time >= 1.0F)
 		{
-			nbFrames = 0;
+			//nbFrames = 0;
 		}
 
 #pragma region input_0
@@ -421,12 +421,12 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
 	if (action == GLFW_RELEASE && upFrames != nbFrames)
 	{
-		Logger::DebugLog("frame no: " + std::to_string(nbFrames) + "  up");
+		//Logger::DebugLog("frame no: " + std::to_string(nbFrames) + "  up");
 		InputManager::onMouseUp(button);
 	}
 	else if (action == GLFW_PRESS)
 	{
-		Logger::DebugLog("frame no: " + std::to_string(nbFrames) + "  down");
+		//Logger::DebugLog("frame no: " + std::to_string(nbFrames) + "  down");
 		InputManager::onMouseDown(button);
 		upFrames = nbFrames;
 	}

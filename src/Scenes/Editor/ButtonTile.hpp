@@ -17,7 +17,6 @@ public:
 
     ButtonTile(Vector2<int> cell)
     {
-        this->item = new Env_Item(0, Utils::CellToPosition(cell));
         this->cell = cell;
         this->button = new Button();
     }

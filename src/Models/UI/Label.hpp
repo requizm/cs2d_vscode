@@ -53,7 +53,7 @@ public:
 	 * @param type UIObjectType::LABEL
 	 */
 	Label(Vector2<int> position, Vector2<int> size, float scale = 1.0F, UIObjectType type = UIObjectType::LABEL, LabelType ltype = LabelType::CLICKABLE);
-	~Label();
+	virtual ~Label();
 
 	virtual void Draw() override;
 

@@ -25,7 +25,7 @@ public:
 	 */
 	TextBox(Vector2<int> position, TextRenderer &renderer, Vector2<int> size, bool isBackGround = false, float scale = 1.0F, const Vector3<float> &color = Vector3<float>(1.0F));
 
-	~TextBox();
+	virtual ~TextBox();
 
 	void Update() override;
 	void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
