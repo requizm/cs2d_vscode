@@ -223,7 +223,7 @@ void Game::initMaps()
 {
     Logger::WriteLog("Game->initMaps()");
     maps = std::vector<Map>();
-    const Map test_map = Map("../../resources/levels/one.xml", "test_one");
+    const Map test_map = Map("../../resources/levels/hadiyav.xml", "test_one");
     maps.push_back(test_map);
 }
 
