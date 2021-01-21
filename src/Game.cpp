@@ -5,9 +5,6 @@
 #include <iostream>
 
 GameState Game::state;
-GameState Game::oldState;
-Menu Game::menu;
-StartGame Game::scene;
 
 Game::Game(const GLuint width, const GLuint height)
 {
@@ -38,7 +35,7 @@ void Game::Init()
     initRenderers();
     initMaps();
     initMenuSprites();
-    Game::menu = Menu(menuSprites, menuRenderer);
+    Menu::instance().Initialize(menuSprites, menuRenderer);
     Editor::instance().Initialize(menuRenderer, spriteRenderer);
     NewGame();
 }
@@ -48,13 +45,13 @@ void Game::Update()
     switch (Game::state)
     {
     case GameState::MENU:
-        Game::menu.Update();
+        Menu::instance().Update();
         break;
     case GameState::EDITOR:
         Editor::instance().Update();
         break;
     case GameState::INGAME:
-        Game::scene.Update();
+        StartGame::instance().Update();
         break;
     }
 }
@@ -64,13 +61,13 @@ void Game::ProcessInput()
     switch (Game::state)
     {
     case GameState::MENU:
-        Game::menu.ProcessInput();
+        Menu::instance().ProcessInput();
         break;
     case GameState::EDITOR:
         Editor::instance().ProcessInput();
         break;
     case GameState::INGAME:
-        Game::scene.ProcessInput();
+        StartGame::instance().ProcessInput();
         break;
     }
 }
@@ -80,13 +77,13 @@ void Game::Render()
     switch (Game::state)
     {
     case GameState::MENU:
-        Game::menu.Render();
+        Menu::instance().Render();
         break;
     case GameState::EDITOR:
         Editor::instance().Render();
         break;
     case GameState::INGAME:
-        Game::scene.Render();
+        StartGame::instance().Render();
         break;
     }
     menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos,
@@ -143,8 +140,6 @@ void Game::NewGame()
     weapons.push_back(*main1.get());
     weapons.push_back(*main2.get());
     weapons.push_back(*main3.get());
-
-    Game::scene = StartGame(maps[0], spriteRenderer, weapons);
 }
 
 void Game::initTextures() const
@@ -239,30 +234,28 @@ void Game::SetGameState(GameState state)
     switch (Game::state)
     {
     case GameState::MENU:
-        Game::menu.SetEnable(false);
+        Menu::instance().SetEnable(false);
         break;
     case GameState::EDITOR:
         Editor::instance().SetEnable(false);
         break;
     case GameState::INGAME:
-        Game::scene.SetEnable(false);
+        StartGame::instance().SetEnable(false);
         break;
     }
 
     switch (state)
     {
     case GameState::MENU:
-        Game::menu.SetEnable(true);
+        Menu::instance().SetEnable(true);
         break;
     case GameState::EDITOR:
         Editor::instance().SetEnable(true);
         break;
     case GameState::INGAME:
-        Game::scene.SetEnable(true);
+        StartGame::instance().SetEnable(true);
         break;
     }
-
-    oldState = Game::state;
     Game::state = state;
 }
 

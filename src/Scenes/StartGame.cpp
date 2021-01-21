@@ -9,63 +9,17 @@
 
 StartGame::StartGame() = default;
 
-StartGame::StartGame(const Map &map, const SpriteRenderer &renderer)
+void StartGame::Initialize(const Map &map)
 {
 	Logger::WriteLog("StartGame->StartGame()");
-	//this->weapons = std::make_shared<std::vector<Weapon *>>(nullptr);
 	this->map = map;
-	this->renderer = renderer;
-	//this->renderer = std::make_shared<SpriteRenderer>();,
+	this->renderer = SpriteRenderer(ResourceManager::GetShader("sprite"));
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
-
-	this->SetEnable(true);
-}
-
-StartGame::StartGame(const Map &map, const SpriteRenderer &renderer, const std::vector<Weapon> &weapons)
-{
-	Logger::WriteLog("StartGame->StartGame()");
-	//this->weapons = std::make_shared<std::vector<Weapon *>>(nullptr);
-	this->map = map;
-	this->renderer = renderer;
-	//this->renderer = std::make_shared<SpriteRenderer>();,
-	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
-	this->weapons = weapons;
 	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
 	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 20);
 
 	this->SetEnable(true);
 }
-
-/*StartGame::StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer, std::vector<GameObject*> gameobjects)
-{
-	this->weapons = weapons;
-	this->map = map;
-	this->renderer = std::make_shared<SpriteRenderer>(*renderer);
-	//this->renderer = std::make_shared<SpriteRenderer>();
-	//for (std::vector<int>::size_type i = 0; i != weapons->size(); i++)
-//	{
-	//	Weapon *wp = &weapons->at(i);
-		//this->weapons.push_back(wp);
-//	}
-	//this->weapons = std::make_shared<std::vector<Weapon*>>(&weapons);
-	this->camera = std::make_shared<Camera>(static_cast<int>(InputManager::Width), static_cast<int>(InputManager::Height));
-	this->gameobjects = std::make_shared<std::vector<GameObject*>>(gameobjects);
-}*/
-
-/*StartGame::StartGame(Map *map, std::vector<std::shared_ptr<Weapon>> *weapons, SpriteRenderer *renderer)
-{
-	this->weapons = weapons;
-	this->map = map;
-	this->renderer = std::make_shared<SpriteRenderer>(*renderer);
-	//this->renderer = std::make_shared<SpriteRenderer>();
-//	for (std::vector<int>::size_type i = 0; i != weapons->size(); i++)
-	//{
-		//Weapon *wp = &weapons->at(i);
-		//this->weapons->push_back(std::make_shared<Weapon>(wp));
-//	}
-	//this->weapons = std::make_shared<std::vector<Weapon*>>(&weapons);
-	this->camera = std::make_shared<Camera>(InputManager::Width, InputManager::Height, Vector3<float>(0.0f, 0.0f, 3.0f));
-}*/
 
 void StartGame::Start()
 {
@@ -116,14 +70,15 @@ void StartGame::ProcessInput()
 	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
 	{
 		Game::SetGameState(GameState::MENU);
+		return;
 	}
 	if (InputManager::isKeyDown(GLFW_KEY_Q))
 	{
-		this->weapons.at(1).SetParent(player.get());
+		//this->weapons.at(1).SetParent(player.get());
 	}
 	if (InputManager::isKeyDown(GLFW_KEY_E))
 	{
-		this->weapons.at(1).RemoveParent();
+		//this->weapons.at(1).RemoveParent();
 	}
 	player->ProcessInput();
 }
@@ -133,11 +88,11 @@ void StartGame::Render()
 	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
 	renderer.SetProjection(camera->cameraMatrix);
 	map.Draw(renderer);
-	int temp = weapons.size();
+	/*int temp = weapons.size();
 	for (int i = 0; i < temp; i++)
 	{
 		this->weapons.at(i).DrawModel(this->renderer);
-	}
+	}*/
 	player->DrawModel(renderer);
 
 	Vector2 p = Utils::ScreenToWorld(camera->view, InputManager::mousePos);

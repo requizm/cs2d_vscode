@@ -31,7 +31,6 @@ public:
 	static GameState GetGameState();
 
 	static GameState state;
-	static GameState oldState;
 
 private:
 	//std::unique_ptr<SpriteRenderer> renderer;
@@ -51,9 +50,6 @@ private:
 	//std::vector<std::shared_ptr<Weapon>> weapons;
 	//std::vector<std::shared_ptr<Sprite>> pointers;
 	Sprite mouseSprite;
-	static StartGame scene;
-	static Menu menu;
-	static Editor editor;
 
 	Sprite menuSprites[4];
 

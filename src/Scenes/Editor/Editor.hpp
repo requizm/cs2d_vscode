@@ -21,7 +21,6 @@ class Editor
 {
 public:
 	Editor();
-	Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer);
 	~Editor();
 
 	void Initialize(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer);

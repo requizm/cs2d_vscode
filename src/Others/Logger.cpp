@@ -14,14 +14,14 @@ std::ofstream Logger::outfile;
 
 void Logger::DebugLog(const std::string &msg)
 {
-    auto start = std::chrono::system_clock::now();
-    // Some computation here
+    /*auto start = std::chrono::system_clock::now();
+
     auto end = std::chrono::system_clock::now();
 
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
     char *time = std::ctime(&end_time);
 
-    std::cout << "time: " << time << "message: " << msg << "\n\n\n";
+    std::cout << "time: " << time << "message: " << msg << "\n\n\n";*/
 }
 /*
 void Logger::DebugLog(bool msg)

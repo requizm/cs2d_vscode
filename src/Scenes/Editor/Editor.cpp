@@ -24,24 +24,6 @@ Editor::Editor()
 	this->selectedMode = SelectedMode::TILE_MOD;
 }
 
-Editor::Editor(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer)
-{
-	this->menuRenderer = menuRenderer;
-	this->worldRenderer = worldRenderer;
-
-	this->tileCount = 0;
-	this->maxCellInColumn = 0;
-	this->maxCellInRow = 0;
-	this->position = Vector2(0);
-	this->firstSelect = false;
-	this->time = 0.0F;
-	this->mapLimit = Vector2<int>(0);
-	this->texture = Vector2<int>(0);
-	this->selectedMode = SelectedMode::TILE_MOD;
-
-	//this->SetEnable(true);
-}
-
 Editor::~Editor()
 {
 }
@@ -536,7 +518,7 @@ void Editor::ProcessInput()
 				if (d == c)
 				{
 					envItemManager->p_panel->setEnable(true);
-					envItemManager->t_id->setText(std::to_string(env_items[i]->getId()));
+					envItemManager->t_id->setText(std::to_string(env_items[i]->getItemID()));
 					selectedItem = env_items[i];
 				}
 			}
@@ -547,11 +529,33 @@ void Editor::ProcessInput()
 	{
 		if (envItemManager->b_okay->isMouseDown())
 		{
-			selectedItem->SetId(atoi(envItemManager->t_id->getText().c_str()));
+			selectedItem->setItemID(atoi(envItemManager->t_id->getText().c_str()));
 			envItemManager->p_panel->setEnable(false);
 		}
 		else if (envItemManager->b_cancel->isMouseDown())
 		{
+			envItemManager->p_panel->setEnable(false);
+		}
+		else if (envItemManager->b_delete->isMouseDown())
+		{
+			for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+			{
+				if (env_items[i]->getObjID() == selectedItem->getObjID())
+				{
+					for (std::vector<int>::size_type j = 0; j < tiles.size(); j++)
+					{
+						if (tiles[j]->item != nullptr && tiles[j]->item->getObjID() == selectedItem->getObjID())
+						{
+							tiles[j]->item = nullptr;
+							break;
+						}
+					}
+					delete env_items[i];
+					env_items.erase(env_items.begin() + i);
+					selectedItem = nullptr;
+					break;
+				}
+			}
 			envItemManager->p_panel->setEnable(false);
 		}
 	}

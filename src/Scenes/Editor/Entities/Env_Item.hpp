@@ -8,7 +8,7 @@ class Env_Item
 {
 private:
     int item_id = 0; // 0=null  1=ak47   2=m4a1 ..
-    int obj_id = 0;
+
     Vector2<int> position;
     Vector2<int> size;
     Sprite sp;
@@ -16,6 +16,7 @@ private:
     Button *button;
 
 public:
+    int obj_id = 0;
     Env_Item();
     Env_Item(int id, Vector2<int> position);
     ~Env_Item();
@@ -26,8 +27,26 @@ public:
     void Update();
     void Render(SpriteRenderer &worldRenderer, SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer, float time);
 
-    int getId();
-    void SetId(int id);
+    /**
+     * @brief Get Item ID
+     * 
+     * @return int 
+     */
+    int getItemID();
+
+    /**
+     * @brief Set Item ID
+     * 
+     * @param id 
+     */
+    void setItemID(int id);
+
+    /**
+     * @brief Get Obj ID
+     * 
+     * @return int 
+     */
+    int getObjID();
 
     Vector2<int> getPosition();
 };
@@ -43,7 +62,7 @@ public:
     void ProcessInput();
 
     Panel *p_panel;
-    Button *b_okay, *b_cancel;
+    Button *b_okay, *b_cancel, *b_delete;
     TextBox *t_id;
 
     bool isPressedOrHover();

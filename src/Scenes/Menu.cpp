@@ -4,17 +4,6 @@
 
 Menu::Menu() = default;
 
-Menu::Menu(Sprite menuSprites[4], const SpriteRenderer &menuRenderer)
-{
-	Logger::WriteLog("Menu::Menu(menuSprites[4], menuRenderer)");
-	for (int i = 0; i < 4; i++)
-	{
-		this->menuSprites[i] = menuSprites[i];
-	}
-	this->menuRenderer = menuRenderer;
-	this->SetEnable(true);
-}
-
 Menu::~Menu() = default;
 
 void Menu::Start()
@@ -29,18 +18,57 @@ void Menu::Start()
 	this->l_options = new Label("Options", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2), *textRenderer, 1.0F, Vector3<float>(0.58F));
 	this->l_editor = new Label("Editor", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 + 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
 
-	this->panel = new Panel(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", Vector2<int>(420, 450), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
-	this->panel->setMovable(true);
+	this->optionsPanel = new Panel(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", Vector2<int>(420, 450), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
+	this->optionsPanel->setMovable(true);
 
 	this->t_test = new TextBox(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20), true, 1.0F, Vector3<float>(0.58F));
-	this->t_test->setParent(panel);
+	this->t_test->setParent(optionsPanel);
 	this->t_test->setParentCenterPos();
+
+	this->newPanel = new Panel(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "New Game", Vector2<int>(420, 450), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
+	this->newPanel->setMovable(true);
+
+	this->mapsPanel = new Panel(Vector2<int>(100, 100), "Maps", Vector2<int>(120, 200), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F));
+	this->mapsPanel->setMovable(false);
+	this->mapsPanel->setScrollable(true);
+	this->mapsPanel->setOutline(true);
+	this->mapsPanel->setVisible(true);
+	this->mapsPanel->setOutlineColor(Vector3<float>(0.47F));
+	this->mapsPanel->setParent(newPanel, true);
+	this->mapNames = new ListItem(mapsPanel);
+
+	this->t_mapName = new TextBox(Vector2<int>(100, 320), *textRenderer, Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F));
+	this->t_mapName->setParent(newPanel, true);
+
+	this->b_newGame = new Button("Start", Vector2<int>(240, 320), Vector2<int>(60, 20), *textRenderer, Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+	this->b_newGame->setMouseClickColor(Vector3<float>(0.30F));
+	this->b_newGame->setMouseHoverColor(Vector3<float>(0.30F));
+	this->b_newGame->setLabelMouseHoverColor(Vector3<float>(0.58F));
+	this->b_newGame->setLabelClickColor(Vector3<float>(1.0F));
+	this->b_newGame->setOutline(true);
+	this->b_newGame->setOutlineColor(Vector3<float>(1.0F));
+	this->b_newGame->setParent(newPanel, true);
+
+	std::function<void(Button *, Button *)> mapChange = std::bind(&Menu::selectedMapChange, this, std::placeholders::_1, std::placeholders::_2);
+	this->mapNames->AddListener(mapChange);
+}
+
+void Menu::Initialize(Sprite menuSprites[4], const SpriteRenderer &menuRenderer)
+{
+	Logger::WriteLog("Menu::Menu(menuSprites[4], menuRenderer)");
+	for (int i = 0; i < 4; i++)
+	{
+		this->menuSprites[i] = menuSprites[i];
+	}
+	this->menuRenderer = menuRenderer;
+	this->SetEnable(true);
 }
 
 void Menu::OnEnable()
 {
 	this->Start();
-	panel->setEnable(false);
+	this->optionsPanel->setEnable(false);
+	this->mapsPanel->setEnable(false);
 }
 
 void Menu::OnDisable()
@@ -51,8 +79,14 @@ void Menu::OnDisable()
 	delete l_editor;
 
 	delete t_test;
+	delete optionsPanel;
 
-	delete panel;
+	delete mapNames;
+
+	delete t_mapName;
+	delete b_newGame;
+	delete mapsPanel;
+	delete newPanel;
 }
 
 void Menu::SetEnable(const bool value)
@@ -72,7 +106,9 @@ void Menu::Update()
 	l_console->Update();
 	l_editor->Update();
 	l_newgame->Update();
-	panel->Update();
+	optionsPanel->Update();
+	newPanel->Update();
+	mapNames->Update();
 }
 
 void Menu::ProcessInput()
@@ -81,7 +117,9 @@ void Menu::ProcessInput()
 	l_console->ProcessInput();
 	l_editor->ProcessInput();
 	l_newgame->ProcessInput();
-	panel->ProcessInput();
+	optionsPanel->ProcessInput();
+	newPanel->ProcessInput();
+	mapNames->ProcessInput();
 
 	if (l_editor->isMouseDown())
 	{
@@ -91,13 +129,26 @@ void Menu::ProcessInput()
 
 	if (l_newgame->isMouseDown())
 	{
+		mapNames->Clear();
+		std::vector<std::string> maps = getMapNames();
+		for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
+		{
+			mapNames->AddItem(maps[i]);
+		}
+		newPanel->setEnable(true);
+	}
+
+	if (b_newGame->isMouseDown())
+	{
+		std::string mName = "../../resources/levels/" + t_mapName->getText() + ".xml";
+		StartGame::instance().Initialize(Map(mName.c_str(), "z"));
 		Game::SetGameState(GameState::INGAME);
 		return;
 	}
 
 	if (l_options->isMouseDown())
 	{
-		panel->setEnable(true);
+		optionsPanel->setEnable(true);
 	}
 }
 
@@ -124,6 +175,13 @@ void Menu::Render()
 	l_console->Draw();
 	l_newgame->Draw();
 	//button->Draw(*squareRenderer);
-	panel->Draw(menuRenderer, squareRenderer);
+	optionsPanel->Draw(menuRenderer, squareRenderer);
+	newPanel->Draw(menuRenderer, squareRenderer);
+	mapNames->Draw(menuRenderer, squareRenderer);
 	//t_test->Draw(menuRenderer, squareRenderer);
+}
+
+void Menu::selectedMapChange(Button *old, Button *n)
+{
+	t_mapName->setText(n->getText());
 }

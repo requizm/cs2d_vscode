@@ -26,7 +26,7 @@ int upFrames = 0;
 
 int main(int argc, char *argv[])
 {
-	//FreeConsole();
+	FreeConsole();
 	//Logger::Start();
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -393,7 +393,7 @@ int main(int argc, char *argv[])
 
 	// Delete all resources as loaded using the resource manager
 	ResourceManager::Clear();
-
+	glfwDestroyWindow(window);
 	glfwTerminate();
 	//Logger::Stop();
 	return 0;

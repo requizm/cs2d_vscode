@@ -20,7 +20,9 @@
                 "-lopengl32",
                 "-lfreetype",
                 "-w",
-                "-std=c++17"
+                "-std=c++17",
+                "-static-libgcc",
+                "-static-libstdc++"
             ],
             "group": {
                 "kind": "build",
@@ -49,7 +51,9 @@
                 "-lopengl32",
                 "-lfreetype",
                 "-w",
-                "-std=c++17"
+                "-std=c++17",
+                "-static-libgcc",
+                "-static-libstdc++"
             ],
             "group": {
                 "kind": "build",

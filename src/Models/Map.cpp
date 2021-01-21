@@ -26,7 +26,7 @@ Map::~Map() = default;
 void Map::Load(const GLchar *file)
 {
 	std::string codeString;
-	this->Tiles.clear();
+	this->tiles.clear();
 	std::ifstream fileC(file);
 	if (!fileC)
 	{
@@ -57,27 +57,38 @@ void Map::Load(const GLchar *file)
 		char *y = child->first_node("cellY")->value();
 		char *tIndex = child->first_node("tileTexture")->value();
 		char *tType = child->first_node("tileType")->value();
+		char *iNo = child->first_node("itemID")->value();
 		int cellX = atoi(x);
 		int cellY = atoi(y);
 		int textureIndex = atoi(tIndex);
 		int tileType = atoi(tType);
+		int itemId = atoi(iNo);
 		const Vector2<int> pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
 		const Vector2<int> size(Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
 		const int xoffset = textureIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const int yoffset = textureIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
 		Tile tile = Tile(pos, sprite, size, TileTypes(tileType));
-		Tiles.push_back(tile);
+		tiles.push_back(tile);
+		if (itemId != 0)
+		{
+			Weapon w = Weapon(pos, ResourceManager::GetTexture("ak47"), ResourceManager::GetTexture("ak47_d"), "ak47", WeaponType::MAIN, 90, 90, 30, 30);
+			weapons.push_back(w);
+		}
 	}
 
 	delete[] codeChar;
 }
 void Map::Draw(SpriteRenderer &renderer)
 {
-	for (GameObject &tile : Tiles)
+	for (GameObject &tile : tiles)
 	{
 		if (!tile.IsDestroyed())
 			tile.DrawModel(renderer);
+	}
+	for (Weapon &weapon : weapons)
+	{
+		weapon.DrawModel(renderer);
 	}
 }
 

@@ -11,11 +11,16 @@ class StartGame
 {
 public:
 	StartGame();
-	StartGame(const Map &map, const SpriteRenderer &renderer);
-	StartGame(const Map &map, const SpriteRenderer &renderer, const std::vector<Weapon> &weapons);
-	//StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer, std::vector<GameObject*> gameobjects);
-	//StartGame(Map* map, std::vector<std::shared_ptr<Weapon>>* weapons, SpriteRenderer* renderer);
 	~StartGame();
+
+	void Initialize(const Map &map);
+
+	static StartGame &instance()
+	{
+		static StartGame INSTANCE;
+		return INSTANCE;
+	}
+
 	void Start();
 	void OnEnable();
 	void OnDisable();

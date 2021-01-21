@@ -74,7 +74,7 @@ void SaveLoadSystem::SaveMap()
             char *cellY = doc.allocate_string(std::to_string(tile->cell.y).c_str());
             char *frame = doc.allocate_string(std::to_string(tile->button->getTile()->frame).c_str());
             char *type = doc.allocate_string(std::to_string((int)tile->button->getTile()->getType()).c_str());
-            int item_id = tile->item != nullptr ? tile->item->getId() : 0;
+            int item_id = tile->item != nullptr ? tile->item->getItemID() : 0;
             char *itemId = doc.allocate_string(std::to_string(item_id).c_str());
 
             rapidxml::xml_node<> *node_tile_texture;

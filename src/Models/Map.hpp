@@ -5,12 +5,15 @@
 #include <GL/glew.h>
 #include "../Renderers/SpriteRenderer.hpp"
 #include "../Models/Tile.hpp"
+#include "../Models/Weapon.hpp"
+
 //#include "InputManager.hpp"
 
 class Map
 {
 public:
-	std::vector<Tile> Tiles;
+	std::vector<Tile> tiles;
+	std::vector<Weapon> weapons;
 
 	Map();
 	Map(const GLchar* file, const std::string& name);
