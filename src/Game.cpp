@@ -35,8 +35,8 @@ void Game::Init()
     initRenderers();
     initMaps();
     initMenuSprites();
-    Menu::instance().Initialize(menuSprites, menuRenderer);
-    Editor::instance().Initialize(menuRenderer, spriteRenderer);
+    Menu::instance().Initialize(menuSprites);
+    Editor::instance().Initialize();
     NewGame();
 }
 

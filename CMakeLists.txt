@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 project(cs2d_vscode)
 
 
-set(CMAKE_C_COMPILER C:/ProgramData/chocolatey/bin/gcc.exe)
-set(CMAKE_CXX_COMPILER C:/ProgramData/chocolatey/bin/g++.exe)
 set(CMAKE_CXX_STANDARD 17)
 enable_language(CXX)
 
@@ -28,21 +26,7 @@ list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.hpp$")
 # Define the executable
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
-# We need a CMAKE_DIR with some code to find external dependencies
-#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
-#######################################
-# LOOK for the packages that we need! #
-#######################################
-
-# OpenGL
-#find_package(OpenGL REQUIRED)
-
-# FREETYPE
-#find_package(Freetype REQUIRED)
-
-# GLAD
-#add_library(GLAD "include/glad.c")
 
 # Put all libraries into a variable
 set(LIBS ${CMAKE_SOURCE_DIR}/lib/64/libglfw3dll.a glew32s glew32 glfw3 opengl32 freetype)
@@ -56,10 +40,4 @@ include_directories(
 # Define the link libraries
 target_link_libraries(${PROJECT_NAME} ${LIBS})
 
-# Copy dlls
-#if(WIN32)
-#	add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-#		COMMAND ${CMAKE_COMMAND} -E copy_directory
-#		"${PROJECT_SOURCE_DIR}/dlls"
-#		$<TARGET_FILE_DIR:${PROJECT_NAME}>)
-#endif()
+

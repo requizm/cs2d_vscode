@@ -9,13 +9,13 @@
 
 StartGame::StartGame() = default;
 
-void StartGame::Initialize(const Map &map)
+void StartGame::Initialize(const std::string &mapName)
 {
 	Logger::WriteLog("StartGame->StartGame()");
-	this->map = map;
-	this->renderer = SpriteRenderer(ResourceManager::GetShader("sprite"));
-	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
-	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
+	this->map = new Map(mapName.c_str(), mapName.c_str());
+	this->renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+	this->camera = new Camera(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
+	this->textRenderer = new TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
 	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 20);
 
 	this->SetEnable(true);
@@ -31,7 +31,7 @@ void StartGame::Start()
 	sprites.push_back(ct1_2);
 	sprites.push_back(ct1_0);
 	sprites.push_back(ct1_1);
-	player = std::make_unique<Player>(Vector2<int>(70, 70), sprites);
+	player = new Player(Vector2<int>(70, 70), sprites);
 }
 
 void StartGame::OnEnable()
@@ -41,11 +41,16 @@ void StartGame::OnEnable()
 	player->SetTransform(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
 						 Vector2<int>(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
 	player->setVelocity(500.0F);
-	player->SetMap(&map);
+	player->SetMap(map);
 }
 
 void StartGame::OnDisable()
 {
+	delete renderer;
+	delete textRenderer;
+	delete map;
+	delete player;
+	delete camera;
 }
 
 void StartGame::SetEnable(const bool value)
@@ -86,14 +91,14 @@ void StartGame::ProcessInput()
 void StartGame::Render()
 {
 	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
-	renderer.SetProjection(camera->cameraMatrix);
-	map.Draw(renderer);
+	renderer->SetProjection(camera->cameraMatrix);
+	map->Draw(*renderer);
 	/*int temp = weapons.size();
 	for (int i = 0; i < temp; i++)
 	{
 		this->weapons.at(i).DrawModel(this->renderer);
 	}*/
-	player->DrawModel(renderer);
+	player->DrawModel(*renderer);
 
 	Vector2 p = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
 	this->textRenderer->RenderText("mouse: " + std::to_string(p.x) + " - " + std::to_string(p.y), Vector2(700, 15), 1.0F, 0.5F);

@@ -23,7 +23,7 @@ public:
 	Editor();
 	~Editor();
 
-	void Initialize(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer);
+	void Initialize();
 
 	static Editor &instance()
 	{
@@ -60,10 +60,10 @@ public:
 private:
 	void SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n);
 
-	SpriteRenderer menuRenderer;
-	SquareRenderer squareRenderer;
+	SpriteRenderer *menuRenderer;
+	SquareRenderer *squareRenderer;
 
-	SpriteRenderer worldRenderer;
+	SpriteRenderer *worldRenderer;
 
 	Vector2<int> position;
 

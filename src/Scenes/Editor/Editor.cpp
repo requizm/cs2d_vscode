@@ -28,11 +28,8 @@ Editor::~Editor()
 {
 }
 
-void Editor::Initialize(const SpriteRenderer &menuRenderer, const SpriteRenderer &worldRenderer)
+void Editor::Initialize()
 {
-	this->menuRenderer = menuRenderer;
-	this->worldRenderer = worldRenderer;
-
 	this->tileCount = 0;
 	this->maxCellInColumn = 0;
 	this->maxCellInRow = 0;
@@ -46,9 +43,11 @@ void Editor::Initialize(const SpriteRenderer &menuRenderer, const SpriteRenderer
 
 void Editor::Start()
 {
+	this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
+	this->worldRenderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
 	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 16);
-	this->squareRenderer = SquareRenderer(true);
+	this->squareRenderer = new SquareRenderer(true);
 	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->mouse_yellow = Vector3<float>(0.73F, 0.73F, 0.0F);
 	this->cell_yellow = Vector3<float>(0.15F, 0.15F, 0.0F);
@@ -323,6 +322,10 @@ void Editor::OnDisable()
 	delete objectPanel;
 	delete controlPanel;
 	delete buildPanel;
+
+	delete menuRenderer;
+	delete squareRenderer;
+	delete worldRenderer;
 }
 
 void Editor::SetEnable(const bool value)
@@ -617,39 +620,39 @@ void Editor::Render()
 {
 	camera->setPosition(position);
 
-	worldRenderer.SetProjection(camera->cameraMatrix);
-	squareRenderer.SetProjection(camera->cameraMatrix);
+	worldRenderer->SetProjection(camera->cameraMatrix);
+	squareRenderer->SetProjection(camera->cameraMatrix);
 
 	Vector2<int> ms = Utils::PositionToCell(Utils::ScreenToWorld(camera->view, InputManager::mousePos));
 	bool f = false;
 	for (auto &tile_1 : tiles)
 	{
-		tile_1->button->Draw(worldRenderer, squareRenderer);
+		tile_1->button->Draw(*worldRenderer, *squareRenderer);
 
-		squareRenderer.world_RenderEmptySquare(Utils::CellToPosition(tile_1->cell), Vector2<int>(Game_Parameters::SIZE_TILE), cell_yellow);
+		squareRenderer->world_RenderEmptySquare(Utils::CellToPosition(tile_1->cell), Vector2<int>(Game_Parameters::SIZE_TILE), cell_yellow);
 
 		if (!f && ms == tile_1->cell && !NewMap->isMouseHover() && !buildPanel->isMouseHover(false) && !SaveLoad->isMouseHover() && !envItemManager->isPressedOrHover())
 		{
 			f = true;
 			Vector2<int> pos = Utils::CellToPosition(tile_1->cell);
-			squareRenderer.world_RenderEmptySquareWithLine(pos, Vector2<int>(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
+			squareRenderer->world_RenderEmptySquareWithLine(pos, Vector2<int>(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
 		}
 	}
 	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
 	{
-		env_items[i]->Render(worldRenderer, menuRenderer, squareRenderer, this->time);
+		env_items[i]->Render(*worldRenderer, *menuRenderer, *squareRenderer, this->time);
 	}
 
 	//ui
-	this->buildPanel->Draw(menuRenderer, squareRenderer);
+	this->buildPanel->Draw(*menuRenderer, *squareRenderer);
 
-	this->NewMap->Render(menuRenderer, squareRenderer);
+	this->NewMap->Render(*menuRenderer, *squareRenderer);
 
-	this->tilePropertiesPanel->Draw(menuRenderer, squareRenderer);
+	this->tilePropertiesPanel->Draw(*menuRenderer, *squareRenderer);
 
-	envItemManager->Draw(menuRenderer, squareRenderer);
+	envItemManager->Draw(*menuRenderer, *squareRenderer);
 
-	SaveLoad->Render(menuRenderer, squareRenderer);
+	SaveLoad->Render(*menuRenderer, *squareRenderer);
 
 	if (!tilesUI.empty())
 	{
@@ -657,19 +660,19 @@ void Editor::Render()
 		{
 			if (firstSelect && selectedTile->GetID() == tile->getTile()->GetID())
 			{
-				tile->Draw(menuRenderer, squareRenderer, 0.3F, true, this->time);
+				tile->Draw(*menuRenderer, *squareRenderer, 0.3F, true, this->time);
 			}
 			else if (tile->isMouseHover())
 			{
-				tile->Draw(menuRenderer, squareRenderer, 0.3F, false, this->time);
+				tile->Draw(*menuRenderer, *squareRenderer, 0.3F, false, this->time);
 			}
 			else
 			{
-				tile->Draw(menuRenderer, squareRenderer);
+				tile->Draw(*menuRenderer, *squareRenderer);
 			}
 		}
 	}
-	objects_ui->Draw(menuRenderer, squareRenderer);
+	objects_ui->Draw(*menuRenderer, *squareRenderer);
 }
 
 void Editor::SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n)

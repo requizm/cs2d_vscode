@@ -9,9 +9,10 @@ Menu::~Menu() = default;
 void Menu::Start()
 {
 	Logger::WriteLog("Menu::Start()");
-	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
+	this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
+	this->textRenderer = new TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
 	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 16);
-	squareRenderer = SquareRenderer(true);
+	this->squareRenderer = new SquareRenderer(true);
 
 	this->l_console = new Label("Console", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 - 50), *textRenderer, 0.8F, Vector3<float>(0.55F));
 	this->l_newgame = new Label("New Game", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 - 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
@@ -53,14 +54,14 @@ void Menu::Start()
 	this->mapNames->AddListener(mapChange);
 }
 
-void Menu::Initialize(Sprite menuSprites[4], const SpriteRenderer &menuRenderer)
+void Menu::Initialize(Sprite menuSprites[4])
 {
 	Logger::WriteLog("Menu::Menu(menuSprites[4], menuRenderer)");
 	for (int i = 0; i < 4; i++)
 	{
 		this->menuSprites[i] = menuSprites[i];
 	}
-	this->menuRenderer = menuRenderer;
+
 	this->SetEnable(true);
 }
 
@@ -87,6 +88,11 @@ void Menu::OnDisable()
 	delete b_newGame;
 	delete mapsPanel;
 	delete newPanel;
+
+	delete textRenderer;
+
+	delete menuRenderer;
+	delete squareRenderer;
 }
 
 void Menu::SetEnable(const bool value)
@@ -141,7 +147,7 @@ void Menu::ProcessInput()
 	if (b_newGame->isMouseDown())
 	{
 		std::string mName = "../../resources/levels/" + t_mapName->getText() + ".xml";
-		StartGame::instance().Initialize(Map(mName.c_str(), "z"));
+		StartGame::instance().Initialize(mName);
 		Game::SetGameState(GameState::INGAME);
 		return;
 	}
@@ -165,7 +171,7 @@ void Menu::Render()
 		case 2:
 			break;
 		case 3:
-			menuRenderer.DrawSprite(menuSprites[3], Vector2<int>(0), Vector2<int>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT));
+			menuRenderer->DrawSprite(menuSprites[3], Vector2<int>(0), Vector2<int>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT));
 			break;
 		}
 	}
@@ -175,9 +181,9 @@ void Menu::Render()
 	l_console->Draw();
 	l_newgame->Draw();
 	//button->Draw(*squareRenderer);
-	optionsPanel->Draw(menuRenderer, squareRenderer);
-	newPanel->Draw(menuRenderer, squareRenderer);
-	mapNames->Draw(menuRenderer, squareRenderer);
+	optionsPanel->Draw(*menuRenderer, *squareRenderer);
+	newPanel->Draw(*menuRenderer, *squareRenderer);
+	mapNames->Draw(*menuRenderer, *squareRenderer);
 	//t_test->Draw(menuRenderer, squareRenderer);
 }
 

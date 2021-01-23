@@ -35,7 +35,7 @@ public:
 		return INSTANCE;
 	}
 
-	void Initialize(Sprite menuSprites[4], const SpriteRenderer &menuRenderer);
+	void Initialize(Sprite menuSprites[4]);
 
 	void OnEnable();
 	void OnDisable();
@@ -47,10 +47,10 @@ public:
 	void SetEnable(const bool value);
 
 	Sprite menuSprites[4];
-	std::shared_ptr<TextRenderer> textRenderer;
+	TextRenderer *textRenderer;
 
-	SpriteRenderer menuRenderer;
-	SquareRenderer squareRenderer;
+	SpriteRenderer *menuRenderer;
+	SquareRenderer *squareRenderer;
 
 	Label *l_console = nullptr;
 	Label *l_quickplay = nullptr;

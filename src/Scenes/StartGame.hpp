@@ -13,7 +13,7 @@ public:
 	StartGame();
 	~StartGame();
 
-	void Initialize(const Map &map);
+	void Initialize(const std::string &mapName);
 
 	static StartGame &instance()
 	{
@@ -31,11 +31,11 @@ public:
 	void SetEnable(const bool value);
 
 private:
-	Map map;
-	std::shared_ptr<Player> player;
-	std::shared_ptr<Camera> camera;
-	SpriteRenderer renderer;
-	std::shared_ptr<TextRenderer> textRenderer;
+	Map *map;
+	Player *player;
+	Camera *camera;
+	SpriteRenderer *renderer;
+	TextRenderer *textRenderer;
 	std::vector<Weapon> weapons;
 	bool enable = false;
 };
