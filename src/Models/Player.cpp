@@ -39,19 +39,71 @@ void Player::ControllerInput()
 {
 	if (InputManager::isKey(GLFW_KEY_W))
 	{
-		this->SetPosition(Vector2<int>(this->GetPosition().x, this->GetPosition().y - this->velocity * Timer::DeltaTime));
+		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y - this->velocity * Timer::DeltaTime);
+		Tile *newTile = map->GetTileByPosition(Vector2<int>(newPos.x + this->GetSize().x / 2, newPos.y + this->GetSize().y / 2 - this->GetSize().y / 2));
+		if (newTile != nullptr)
+		{
+			TileTypes newType = newTile->getType();
+			if (newType == TileTypes::WALL || newType == TileTypes::OBSTACLE)
+			{
+				int a = 2;
+			}
+			else
+			{
+				this->SetPosition(newPos);
+			}
+		}
 	}
 	if (InputManager::isKey(GLFW_KEY_S))
 	{
-		this->SetPosition(Vector2<int>(this->GetPosition().x, this->GetPosition().y + this->velocity * Timer::DeltaTime));
+		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y + this->velocity * Timer::DeltaTime);
+		Tile *newTile = map->GetTileByPosition(Vector2<int>(newPos.x + this->GetSize().x / 2, newPos.y + this->GetSize().y / 2 + this->GetSize().y / 2));
+		if (newTile != nullptr)
+		{
+			TileTypes newType = newTile->getType();
+			if (newType == TileTypes::WALL || newType == TileTypes::OBSTACLE)
+			{
+				int a = 2;
+			}
+			else
+			{
+				this->SetPosition(newPos);
+			}
+		}
 	}
 	if (InputManager::isKey(GLFW_KEY_A))
 	{
-		this->SetPosition(Vector2<int>(this->GetPosition().x - this->velocity * Timer::DeltaTime, this->GetPosition().y));
+		Vector2<int> newPos = Vector2<int>(this->GetPosition().x - this->velocity * Timer::DeltaTime, this->GetPosition().y);
+		Tile *newTile = map->GetTileByPosition(Vector2<int>(newPos.x + this->GetSize().x / 2 - this->GetSize().x / 2, newPos.y + this->GetSize().y / 2));
+		if (newTile != nullptr)
+		{
+			TileTypes newType = newTile->getType();
+			if (newType == TileTypes::WALL || newType == TileTypes::OBSTACLE)
+			{
+				int a = 2;
+			}
+			else
+			{
+				this->SetPosition(newPos);
+			}
+		}
 	}
 	if (InputManager::isKey(GLFW_KEY_D))
 	{
-		this->SetPosition(Vector2<int>(this->GetPosition().x + this->velocity * Timer::DeltaTime, this->GetPosition().y));
+		Vector2<int> newPos = Vector2<int>(this->GetPosition().x + this->velocity * Timer::DeltaTime, this->GetPosition().y);
+		Tile *newTile = map->GetTileByPosition(Vector2<int>(newPos.x + this->GetSize().x / 2 + this->GetSize().x / 2, newPos.y + this->GetSize().y / 2));
+
+		if (newTile != nullptr)
+		{
+			TileTypes newType = newTile->getType();
+			if (newType == TileTypes::WALL || newType == TileTypes::OBSTACLE)
+			{
+						}
+			else
+			{
+				this->SetPosition(newPos);
+			}
+		}
 	}
 }
 void Player::SlotInput()

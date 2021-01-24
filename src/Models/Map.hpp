@@ -17,19 +17,23 @@ public:
 
 	Map();
 	Map(const GLchar* file, const std::string& name);
-	Map(const GLchar* file);
 	~Map();
 
 	std::string GetName() const;
-	//Tile* getTile(int cellX, int cellY);
 
-	// Render level
 	void Draw(SpriteRenderer& renderer);
 
+	Tile* GetTileByCell(int x, int y);
+	Tile* GetTileByCell(Vector2<int> cellPos);
+
+	Tile* GetTileByPosition(int x, int y);
+	Tile* GetTileByPosition(Vector2<int> position);
+
 private:
-	void Init(std::vector<std::vector<GLuint>> tileData) const;
 	void Load(const GLchar* file);
 	std::string name;
+
+	Vector2<int> mapLimit;
 };
 
 #endif // MAP_H
