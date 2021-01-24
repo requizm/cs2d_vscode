@@ -10,6 +10,14 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+enum MoveDirection
+{
+	TOP,
+	BOTTOM,
+	RIGHT,
+	LEFT
+};
+
 class Player : public GameObject
 {
 public:
@@ -20,7 +28,7 @@ public:
 		this->lastMousePos = Vector2(0, 0);
 	}
 
-	Player(const Vector2<int> pos, const std::vector<Sprite> &sprites, const Vector2<int> size = Vector2<int>(Game_Parameters::SCREEN_HEIGHT / 15, Game_Parameters::SCREEN_HEIGHT / 15), int maxHealth = 100) : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER), map(nullptr), velocity(0.0F)
+	Player(const Vector2<int> pos, const std::vector<Sprite> &sprites, const Vector2<int> size = Vector2<int>(static_cast<int>(static_cast<float>(Game_Parameters::SIZE_TILE) * 0.9F)), int maxHealth = 100) : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER), map(nullptr), velocity(0.0F)
 	{
 		this->maxHealth = maxHealth;
 		this->health = maxHealth;
@@ -62,6 +70,8 @@ private:
 
 	void SlotInput();
 	void ControllerInput();
+
+	bool CheckCollision(Vector2<int> pos, MoveDirection direction);
 };
 
 #endif // !PLAYER_H

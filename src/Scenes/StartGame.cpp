@@ -39,7 +39,7 @@ void StartGame::OnEnable()
 	this->Start();
 
 	player->SetTransform(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
-						 Vector2<int>(Game_Parameters::SCREEN_HEIGHT / 18, Game_Parameters::SCREEN_HEIGHT / 18), 0.0F);
+						 Vector2<int>(static_cast<int>(static_cast<float>(Game_Parameters::SIZE_TILE) * 0.9F)), 0.0F);
 	player->setVelocity(500.0F);
 	player->SetMap(map);
 }

@@ -40,71 +40,96 @@ void Player::ControllerInput()
 	if (InputManager::isKey(GLFW_KEY_W))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y - this->velocity * Timer::DeltaTime);
-		Tile *newTile = map->GetTileByPosition(Vector2<int>(newPos.x + this->GetSize().x / 2, newPos.y + this->GetSize().y / 2 - this->GetSize().y / 2));
-		if (newTile != nullptr)
+		if (!CheckCollision(newPos, MoveDirection::TOP))
 		{
-			TileTypes newType = newTile->getType();
-			if (newType == TileTypes::WALL || newType == TileTypes::OBSTACLE)
-			{
-				int a = 2;
-			}
-			else
-			{
-				this->SetPosition(newPos);
-			}
+			this->SetPosition(newPos);
 		}
 	}
 	if (InputManager::isKey(GLFW_KEY_S))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y + this->velocity * Timer::DeltaTime);
-		Tile *newTile = map->GetTileByPosition(Vector2<int>(newPos.x + this->GetSize().x / 2, newPos.y + this->GetSize().y / 2 + this->GetSize().y / 2));
-		if (newTile != nullptr)
+		if (!CheckCollision(newPos, MoveDirection::BOTTOM))
 		{
-			TileTypes newType = newTile->getType();
-			if (newType == TileTypes::WALL || newType == TileTypes::OBSTACLE)
-			{
-				int a = 2;
-			}
-			else
-			{
-				this->SetPosition(newPos);
-			}
+			this->SetPosition(newPos);
 		}
 	}
 	if (InputManager::isKey(GLFW_KEY_A))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x - this->velocity * Timer::DeltaTime, this->GetPosition().y);
-		Tile *newTile = map->GetTileByPosition(Vector2<int>(newPos.x + this->GetSize().x / 2 - this->GetSize().x / 2, newPos.y + this->GetSize().y / 2));
-		if (newTile != nullptr)
+		if (!CheckCollision(newPos, MoveDirection::LEFT))
 		{
-			TileTypes newType = newTile->getType();
-			if (newType == TileTypes::WALL || newType == TileTypes::OBSTACLE)
-			{
-				int a = 2;
-			}
-			else
-			{
-				this->SetPosition(newPos);
-			}
+			this->SetPosition(newPos);
 		}
 	}
 	if (InputManager::isKey(GLFW_KEY_D))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x + this->velocity * Timer::DeltaTime, this->GetPosition().y);
-		Tile *newTile = map->GetTileByPosition(Vector2<int>(newPos.x + this->GetSize().x / 2 + this->GetSize().x / 2, newPos.y + this->GetSize().y / 2));
-
-		if (newTile != nullptr)
+		if (!CheckCollision(newPos, MoveDirection::RIGHT))
 		{
-			TileTypes newType = newTile->getType();
-			if (newType == TileTypes::WALL || newType == TileTypes::OBSTACLE)
-			{
-						}
-			else
-			{
-				this->SetPosition(newPos);
-			}
+			this->SetPosition(newPos);
 		}
 	}
+}
+
+bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
+{
+	Tile *newTile;
+
+	Vector2<int> posCenter = Vector2<int>(pos.x + this->GetSize().x / 2, pos.y + this->GetSize().y / 2);
+
+	switch (direction)
+	{
+	case MoveDirection::RIGHT:
+		newTile = map->GetTileByPosition(posCenter.x + this->GetSize().x / 2, posCenter.y - this->GetSize().y / 2);
+		if (newTile == nullptr)
+			return true;
+		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
+			return true;
+		newTile = map->GetTileByPosition(posCenter.x + this->GetSize().x / 2, posCenter.y + this->GetSize().y / 2);
+		if (newTile == nullptr)
+			return true;
+		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
+			return true;
+		break;
+	case MoveDirection::LEFT:
+		newTile = map->GetTileByPosition(posCenter.x - this->GetSize().x / 2, posCenter.y - this->GetSize().y / 2);
+		if (newTile == nullptr)
+			return true;
+		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
+			return true;
+		newTile = map->GetTileByPosition(posCenter.x - this->GetSize().x / 2, posCenter.y + this->GetSize().y / 2);
+		if (newTile == nullptr)
+			return true;
+		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
+			return true;
+		break;
+	case MoveDirection::TOP:
+		newTile = map->GetTileByPosition(posCenter.x + this->GetSize().x / 2, posCenter.y - this->GetSize().y / 2);
+		if (newTile == nullptr)
+			return true;
+		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
+			return true;
+		newTile = map->GetTileByPosition(posCenter.x - this->GetSize().x / 2, posCenter.y - this->GetSize().y / 2);
+		if (newTile == nullptr)
+			return true;
+		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
+			return true;
+		break;
+	case MoveDirection::BOTTOM:
+		newTile = map->GetTileByPosition(posCenter.x + this->GetSize().x / 2, posCenter.y + this->GetSize().y / 2);
+		if (newTile == nullptr)
+			return true;
+		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
+			return true;
+		newTile = map->GetTileByPosition(posCenter.x - this->GetSize().x / 2, posCenter.y + this->GetSize().y / 2);
+		if (newTile == nullptr)
+			return true;
+		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
+			return true;
+		break;
+	}
+
+	return false;
 }
 void Player::SlotInput()
 {
