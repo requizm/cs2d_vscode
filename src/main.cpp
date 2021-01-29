@@ -122,6 +122,8 @@ int main(int argc, char *argv[])
 	// DeltaTime variables
 	float lastFrame = 0.0F;
 	float time = 0.0F;
+	InputManager::m_fps = 0;
+	int fps = 0;
 	while (!glfwWindowShouldClose(window))
 	{
 		const float currentFrame = static_cast<float>(glfwGetTime());
@@ -130,8 +132,12 @@ int main(int argc, char *argv[])
 		time += Timer::DeltaTime;
 		glfwPollEvents();
 		nbFrames++;
+		fps++;
 		if (time >= 1.0F)
 		{
+			InputManager::m_fps = fps;
+			time = 0.0F;
+			fps = 0;
 			//nbFrames = 0;
 		}
 

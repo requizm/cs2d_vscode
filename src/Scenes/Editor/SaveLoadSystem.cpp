@@ -92,11 +92,6 @@ void SaveLoadSystem::SaveMap()
             node_tile->append_node(node_tile_type);
             node_tile->append_node(node_item_id);
             node_map->append_node(node_tile);
-
-            //delete[] cellX;
-            //delete[] cellY;
-            //delete[] frame;
-            //delete[] type;
         }
 
         char *limitX = doc.allocate_string(std::to_string(Editor::instance().mapLimit.x).c_str());
@@ -126,11 +121,7 @@ void SaveLoadSystem::SaveMap()
         }
         fileC << doc;
         fileC.close();
-        delete[] limitX;
-        delete[] limitY;
-        delete[] name;
-        delete[] tile;
-        //delete[] node_map;
+
         savePanel->setEnable(false);
     }
 }
@@ -215,16 +206,9 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string mapName)
         }
 
         tiles.push_back(t);
-
-        /*delete x;
-        delete y;
-        delete tIndex;
-        delete tType;*/
     }
 
-    /*delete codeChar;
-    delete mapx;
-    delete mapy;*/
+    delete codeChar;
 
     return tiles;
 }

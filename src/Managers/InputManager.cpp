@@ -32,6 +32,7 @@ GLboolean InputManager::oldKeyUp[350];
 GLboolean InputManager::oldKeyDown[350];
 
 wchar_t InputManager::keycode;
+int InputManager::m_fps = 0;
 
 std::map<int, std::vector<EventF>> InputManager::m_Callbacks_Down;
 std::map<int, std::vector<EventF>> InputManager::m_Callbacks_Up;

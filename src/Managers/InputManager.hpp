@@ -6,6 +6,9 @@
 #include <map>
 #include "../Core/Math/Vector2.hpp"
 #include "../Others/Utils.hpp"
+#include "ResourceManager.hpp"
+#include "ObjectManager.hpp"
+#include "../Others/Logger.hpp"
 
 struct EventF
 {
@@ -51,6 +54,8 @@ public:
 	static GLboolean oldKeyDown[350];
 
 	static wchar_t keycode;
+
+	static int m_fps;
 	InputManager();
 
 	//static void processKey(int key);

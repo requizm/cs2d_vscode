@@ -105,6 +105,7 @@ void StartGame::Render()
 	this->textRenderer->RenderText("player matrix: " + std::to_string(player->GetTransform().values[12]) + " - " + std::to_string(player->GetTransform().values[13]), Vector2(700, 45), 1.0F, 0.5F);
 	this->textRenderer->RenderText("player pos: " + player->GetPosition().ToString(), Vector2(700, 75), 1.0F, 0.5F);
 	this->textRenderer->RenderText("player cell: " + Utils::PositionToCell(player->GetPositionOfCenter()).ToString(), Vector2(700, 105), 1.0F, 0.5F);
+	this->textRenderer->RenderText("fps: " + std::to_string(InputManager::m_fps), Vector2(700, 135), 1.0F, 0.5F);
 
 	//label->Draw(*textRenderer);
 

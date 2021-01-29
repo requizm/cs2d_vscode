@@ -74,15 +74,7 @@ void Map::Load(const GLchar *file)
 			Weapon w = Weapon(pos, ResourceManager::GetTexture("ak47"), ResourceManager::GetTexture("ak47_d"), "ak47", WeaponType::MAIN, 90, 90, 30, 30);
 			weapons.push_back(w);
 		}
-		delete x;
-		delete y;
-		delete tIndex;
-		delete tType;
-		delete iNo;
 	}
-	delete node;
-	delete mapx;
-	delete mapy;
 	delete[] codeChar;
 }
 void Map::Draw(SpriteRenderer &renderer)

@@ -4,7 +4,7 @@
         {
             "label": "(32)build",
             "type": "shell",
-            "command": "C:\\MinGW\\bin\\g++.exe",
+            "command": "C:\\mingw32\\bin\\g++.exe",
             "args": [
                 "-I${workspaceFolder}\\include",
                 "-L${workspaceFolder}\\lib\\32",
@@ -29,13 +29,13 @@
                 "isDefault": true
             },
             "options": {
-                "cwd": "C:\\MinGW\\bin"
+                "cwd": "C:\\mingw32\\bin"
             }
         },
         {
             "label": "(64)build",
             "type": "shell",
-            "command": "C:\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe",
+            "command": "C:\\mingw64\\bin\\g++.exe",
             "args": [
                 "-I${workspaceFolder}\\include",
                 "-L${workspaceFolder}\\lib\\64",
@@ -60,7 +60,7 @@
                 "isDefault": true
             },
             "options": {
-                "cwd": "C:\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin"
+                "cwd": "C:\\mingw64\\bin"
             }
         }
     ]
