@@ -12,8 +12,8 @@
 class Map
 {
 public:
-	std::vector<Tile> tiles;
-	std::vector<Weapon> weapons;
+	std::vector<Tile*> tiles;
+	std::vector<Weapon*> weapons;
 
 	Map();
 	Map(const GLchar* file, const std::string& name);

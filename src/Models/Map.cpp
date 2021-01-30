@@ -16,7 +16,19 @@ Map::Map(const GLchar *file, const std::string &name)
 	//Logger::WriteLog("GameObject->Destroy()");
 }
 
-Map::~Map() = default;
+Map::~Map()
+{
+	for (auto &tile : tiles)
+	{
+		delete tile;
+	}
+	tiles.clear();
+	for (auto &weapon : weapons)
+	{
+		delete weapon;
+	}
+	weapons.clear();
+}
 
 void Map::Load(const GLchar *file)
 {
@@ -67,11 +79,11 @@ void Map::Load(const GLchar *file)
 		const int xoffset = textureIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const int yoffset = textureIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);
-		Tile tile = Tile(pos, sprite, size, TileTypes(tileType));
+		Tile *tile = new Tile(pos, sprite, size, TileTypes(tileType));
 		tiles.push_back(tile);
 		if (itemId != 0)
 		{
-			Weapon w = Weapon(pos, ResourceManager::GetTexture("ak47"), ResourceManager::GetTexture("ak47_d"), "ak47", WeaponType::MAIN, 90, 90, 30, 30);
+			Weapon *w = new Weapon(pos, ResourceManager::GetTexture("ak47"), ResourceManager::GetTexture("ak47_d"), "ak47", WeaponType::MAIN, 90, 90, 30, 30);
 			weapons.push_back(w);
 		}
 	}
@@ -79,14 +91,14 @@ void Map::Load(const GLchar *file)
 }
 void Map::Draw(SpriteRenderer &renderer)
 {
-	for (GameObject &tile : tiles)
+	for (auto &tile : tiles)
 	{
-		if (!tile.IsDestroyed())
-			tile.DrawModel(renderer);
+		if (!tile->IsDestroyed())
+			tile->DrawModel(renderer);
 	}
-	for (Weapon &weapon : weapons)
+	for (auto &weapon : weapons)
 	{
-		weapon.DrawModel(renderer);
+		weapon->DrawModel(renderer);
 	}
 }
 
@@ -97,7 +109,7 @@ Tile *Map::GetTileByCell(int x, int y)
 		return nullptr;
 	}
 	int tileIndex = (x * this->mapLimit.x) + y;
-	return &tiles.at(tileIndex);
+	return tiles.at(tileIndex);
 }
 
 Tile *Map::GetTileByCell(Vector2<int> cellPos)
@@ -107,7 +119,7 @@ Tile *Map::GetTileByCell(Vector2<int> cellPos)
 		return nullptr;
 	}
 	int tileIndex = (cellPos.x * this->mapLimit.x) + cellPos.y;
-	return &tiles.at(tileIndex);
+	return tiles.at(tileIndex);
 }
 
 Tile *Map::GetTileByPosition(int x, int y)
