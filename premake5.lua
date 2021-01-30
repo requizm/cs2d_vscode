@@ -14,6 +14,9 @@ project "cs2d_vscode"
    includedirs { "include/" }
 	
    links { "glew32", "glfw3", "opengl32", "gdi32", "freetype" }
+   
+   architecture "x86"
+   optimize "Speed"
 
    filter "configurations:Release"
       defines { "NDEBUG" }
