@@ -43,6 +43,7 @@ src/.scannerwork/report-task.txt
 
 
 build/*
+bin/Release
 tracy/*
 *.pb
 .scannerwork/.sonar_lock
@@ -56,5 +57,10 @@ github_deploy_key
 github_deploy_key.pub
 
 log.txt
+glewinfo.txt
+glewinfo.exe
+visualinfo.exe
+cs2d_vscode.make
+Makefile
 
 *.trace

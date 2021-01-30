@@ -20,7 +20,6 @@
                 "-lgdi32",
                 "-w",
                 "-std=c++17",
-                "-static-libgcc",
                 "-static-libstdc++"
             ],
             "group": {
@@ -50,7 +49,6 @@
                 "-lgdi32",
                 "-w",
                 "-std=c++17",
-                "-static-libgcc",
                 "-static-libstdc++"
             ],
             "group": {
