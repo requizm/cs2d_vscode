@@ -1,6 +1,6 @@
 #include "Square.hpp"
-#include <glm/vec2.hpp>
-#include <glm/gtc/type_ptr.hpp>
+
+
 
 #define PI 3.14159265
 

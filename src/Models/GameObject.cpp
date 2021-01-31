@@ -1,5 +1,4 @@
 #include "GameObject.hpp"
-#include <glm/gtx/string_cast.hpp>
 #include "../Others/Logger.hpp"
 #include "../Others/Game_Parameters.hpp"
 #include "../Others/Utils.hpp"

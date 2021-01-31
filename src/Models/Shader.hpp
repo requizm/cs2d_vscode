@@ -4,8 +4,8 @@
 #include <string>
 
 #include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
+
+
 
 #include "../Core/Math/Projection.hpp"
 #include "../Core/Math/Vector2.hpp"
@@ -32,7 +32,7 @@ public:
 	void    SetVector3f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLboolean useShader = false) const;
 	void    SetVector3f(const GLchar* name, const Vector3<float>& value, GLboolean useShader = false) const;
 	void    SetVector4f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLboolean useShader = false) const;
-	void    SetVector4f(const GLchar* name, const glm::vec4& value, GLboolean useShader = false) const;
+	//void    SetVector4f(const GLchar* name, const glm::vec4& value, GLboolean useShader = false) const;
 	void    SetMatrix4(const GLchar* name, Matrix4<float> matrix, GLboolean useShader = false) const;
 
 	void	UnUse() const;

@@ -1,7 +1,7 @@
 #ifndef SQUARE_RENDERER_H
 #define SQUARE_RENDERER_H
 #include <GL/glew.h>
-#include <glm/glm.hpp>
+
 
 #include "../Models/UI/Square.hpp"
 #include "../Models/UI/Circle.hpp"

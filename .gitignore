@@ -43,7 +43,10 @@ src/.scannerwork/report-task.txt
 
 
 build/*
-bin/Release
+CMakeFiles/**
+bin/32/**
+bin/64/**
+bin/Release/cs2d_vscode.exe
 tracy/*
 *.pb
 .scannerwork/.sonar_lock
@@ -62,5 +65,7 @@ glewinfo.exe
 visualinfo.exe
 cs2d_vscode.make
 Makefile
+cmake_install.cmake
+CMakeCache.txt
 
 *.trace

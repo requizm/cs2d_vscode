@@ -2,7 +2,7 @@
 #define GAMEOBJECT_H
 
 #include <GL/glew.h>
-#include <glm/glm.hpp>
+
 #include "../Renderers/SpriteRenderer.hpp"
 
 enum class ObjectType

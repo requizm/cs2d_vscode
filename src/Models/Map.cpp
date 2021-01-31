@@ -1,6 +1,7 @@
 #include "Map.hpp"
 #include <fstream>
 #include <sstream>
+#include <cstring>
 #include <math.h> // pow()
 #include "rapidxml-1.13/rapidxml.hpp"
 #include "../Managers/ResourceManager.hpp"

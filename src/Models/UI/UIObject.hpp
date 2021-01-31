@@ -1,7 +1,7 @@
 #ifndef UIOBJECT_H
 #define UIOBJECT_H
 
-#include <glm/glm.hpp>
+
 #include "../../Renderers/TextRenderer.hpp"
 #include "../../Renderers/SquareRenderer.hpp"
 #include "../../Renderers/SpriteRenderer.hpp"

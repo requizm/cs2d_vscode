@@ -2,7 +2,6 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include <soil/SOIL.h>
 #include <vector>
 #define STB_IMAGE_STATIC
 #define STB_IMAGE_IMPLEMENTATION

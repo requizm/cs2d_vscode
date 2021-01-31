@@ -2,7 +2,7 @@
 #define TEXT_RENDERER_H
 
 #include <GL/glew.h>
-#include <glm/glm.hpp>
+
 #include "../Managers/ResourceManager.hpp"
 
 /// Holds all state information relevant to a character as loaded using FreeType

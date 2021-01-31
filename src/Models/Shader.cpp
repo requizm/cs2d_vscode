@@ -76,10 +76,10 @@ void Shader::SetVector4f(const GLchar *name, GLfloat x, GLfloat y, GLfloat z, GL
 {
 	glUniform4f(glGetUniformLocation(this->ID, name), x, y, z, w);
 }
-void Shader::SetVector4f(const GLchar *name, const glm::vec4 &value, GLboolean useShader) const
+/*void Shader::SetVector4f(const GLchar *name, const glm::vec4 &value, GLboolean useShader) const
 {
 	glUniform4f(glGetUniformLocation(this->ID, name), value.x, value.y, value.z, value.w);
-}
+}*/
 void Shader::SetMatrix4(const GLchar *name, Matrix4<float> matrix, GLboolean useShader) const
 {
 	glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, GL_FALSE, Projection::value_ptr(matrix));

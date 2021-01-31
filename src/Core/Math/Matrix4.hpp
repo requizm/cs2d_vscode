@@ -1,7 +1,7 @@
 #ifndef MATRIX4_H
 #define MATRIX4_H
 
-#include <glm/gtc/type_ptr.hpp>
+
 
 template <typename T>
 class Matrix4
