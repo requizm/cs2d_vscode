@@ -47,6 +47,7 @@ CMakeFiles/**
 bin/32/**
 bin/64/**
 bin/Release/cs2d_vscode.exe
+bin/Debug/cs2d_vscode.exe
 tracy/*
 *.pb
 .scannerwork/.sonar_lock

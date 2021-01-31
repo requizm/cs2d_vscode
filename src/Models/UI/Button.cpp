@@ -17,10 +17,10 @@ Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size
 	if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
 	{
 		//std::cout << "Address: " << &downTrigger << std::endl;
-		mDown = std::bind(&onMouseDown, this);
+		mDown = std::bind(&Button::onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
-		mUp = std::bind(&onMouseUp, this);
+		mUp = std::bind(&Button::onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
 
 		ObjectManager::listenerObjCount++;
@@ -36,10 +36,10 @@ Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, b
 	if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
 	{
 		//std::cout << "Address: " << &downTrigger << std::endl;
-		mDown = std::bind(&onMouseDown, this);
+		mDown = std::bind(&Button::onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
-		mUp = std::bind(&onMouseUp, this);
+		mUp = std::bind(&Button::onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
 		ObjectManager::listenerObjCount++;
 	}
@@ -53,10 +53,10 @@ Button::Button(Tile &tile, float scale, UIObjectType type) : Label(tile.GetPosit
 	if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
 	{
 		//std::cout << "Address: " << &downTrigger << std::endl;
-		mDown = std::bind(&onMouseDown, this);
+		mDown = std::bind(&Button::onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
-		mUp = std::bind(&onMouseUp, this);
+		mUp = std::bind(&Button::onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
 		ObjectManager::listenerObjCount++;
 	}

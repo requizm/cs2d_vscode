@@ -18,10 +18,10 @@ Label::Label(const std::string &text, Vector2<int> position, TextRenderer &rende
 
 	if ((objType == UIObjectType::LABEL && labelType == LabelType::CLICKABLE) || objType == UIObjectType::RADIOBUTTON)
 	{
-		mDown = std::bind(&onMouseDown, this);
+		mDown = std::bind(&Label::onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
-		mUp = std::bind(&onMouseUp, this);
+		mUp = std::bind(&Label::onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
 		ObjectManager::listenerObjCount++;
 	}
@@ -40,10 +40,10 @@ Label::Label(Vector2<int> position, Vector2<int> size, float scale, UIObjectType
 	this->labelType = ltype;
 	if ((objType == UIObjectType::LABEL && labelType == LabelType::CLICKABLE) || objType == UIObjectType::RADIOBUTTON)
 	{
-		mDown = std::bind(&onMouseDown, this);
+		mDown = std::bind(&Label::onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
-		mUp = std::bind(&onMouseUp, this);
+		mUp = std::bind(&Label::onMouseUp, this);
 		InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
 		ObjectManager::listenerObjCount++;
 	}
