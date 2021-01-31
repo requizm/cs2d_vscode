@@ -13,14 +13,14 @@ gcc version 8.1.0 (i686-win32-dwarf-rev0, Built by MinGW-W64 project)
 Thread model: win32  
 gcc version 8.1.0 (x86_64-win32-seh-rev0, Built by MinGW-W64 project)  
   
-  ___
+___
   
 ### How To Build  
 - If you are going to use a different compiler than *Mingw64*, don't forget to download the [glfw lib](https://www.glfw.org/download) file and put it in *lib/32*.
 - You can use build tools such as [cmake](https://cmake.org/) or [premake](https://premake.github.io/). But i suggest [premake](https://premake.github.io/).
 - Don't forget to put *freetype.dll* and *glew32.dll* files in *bin/Release*.
   
-  ___
+___
   
 ### Used Libraries  
 - [glfw 3.3.2](https://github.com/glfw/glfw)
