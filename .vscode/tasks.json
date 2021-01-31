@@ -20,7 +20,8 @@
                 "-lgdi32",
                 "-w",
                 "-std=c++17",
-                "-static-libstdc++"
+                "-static-libstdc++",
+                "-static-libgcc"
             ],
             "group": {
                 "kind": "build",
