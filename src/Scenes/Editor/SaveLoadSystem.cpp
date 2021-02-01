@@ -3,7 +3,7 @@
 #include "../../Others/Game_Parameters.hpp"
 #include <fstream>
 #include <sstream>
-#include <dirent.h>
+#include <dirent/dirent.h>
 #include "rapidxml-1.13/rapidxml.hpp"
 #include "rapidxml-1.13/rapidxml_print.hpp"
 

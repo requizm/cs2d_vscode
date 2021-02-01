@@ -8,7 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <dirent.h>
+#include <dirent/dirent.h>
 
 #include "../Models/Sprite.hpp"
 #include "../Renderers/SpriteRenderer.hpp"
