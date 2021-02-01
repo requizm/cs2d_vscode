@@ -34,5 +34,3 @@ ___
   
 ___
   
-### License  
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode?ref=badge_shield)
