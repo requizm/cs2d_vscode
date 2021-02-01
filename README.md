@@ -32,9 +32,7 @@ ___
 - [stb_image](https://github.com/nothings/stb)
 - [rapidxml 1.13](http://rapidxml.sourceforge.net/)
   
+___
   
-  
-  
-  
-## License
+### License  
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode?ref=badge_large)
