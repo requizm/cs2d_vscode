@@ -1,5 +1,6 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/requizm/cs2d_vscode/badge)](https://www.codefactor.io/repository/github/requizm/cs2d_vscode)
 
+**WIP**
 **Only avaible for Windows**  
 
 ### Mingw-w64 Configurations  
