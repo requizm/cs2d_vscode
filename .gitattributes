@@ -36,16 +36,5 @@
 *.app   binary
 
 * linguist-vendored
-*.txt linguist-vendored=false
-*.png linguist-vendored=false
-*.bmp linguist-vendored=false
-*.lua linguist-vendored=false
-*.a linguist-vendored=false
-*.dll linguist-vendored=false
-*.exe linguist-vendored=false
-*.lib linguist-vendored=false
-*.json linguist-vendored=false
-*.xml linguist-vendored=false
-*.ttf linguist-vendored=false
-*.h linguist-vendored=false
-*.c linguist-vendored=false
+*.hpp linguist-vendored=false
+*.cpp linguist-vendored=false
