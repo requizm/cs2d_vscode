@@ -1,4 +1,6 @@
-[![CodeFactor](https://www.codefactor.io/repository/github/requizm/cs2d_vscode/badge)](https://www.codefactor.io/repository/github/requizm/cs2d_vscode)
+[![CodeFactor](https://www.codefactor.io/repository/github/requizm/cs2d_vscode/badge)](https://www.codefactor.io/repository/github/requizm/cs2d_vscode)  
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode?ref=badge_large)
 
 **Only avaible for Windows**  
 
