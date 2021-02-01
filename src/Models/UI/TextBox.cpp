@@ -158,7 +158,7 @@ void TextBox::InputText()
 				editMode = false;
 			}
 
-			if (InputManager::isKeyDown(GLFW_KEY_BACKSPACE))
+			if (InputManager::isKeyDown(KeyboardKeys::KEY_BACKSPACE))
 			{
 				if (!text.empty())
 				{

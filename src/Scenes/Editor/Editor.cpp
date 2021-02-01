@@ -412,25 +412,25 @@ void Editor::ProcessInput()
 
 	if (!passMovement)
 	{
-		if (InputManager::isKey(GLFW_KEY_W))
+		if (InputManager::isKey(KeyboardKeys::KEY_W))
 		{
 			this->position = Vector2(this->position.x, this->position.y - static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime));
 		}
-		if (InputManager::isKey(GLFW_KEY_S))
+		if (InputManager::isKey(KeyboardKeys::KEY_S))
 		{
 			this->position = Vector2(this->position.x, this->position.y + static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime));
 		}
-		if (InputManager::isKey(GLFW_KEY_A))
+		if (InputManager::isKey(KeyboardKeys::KEY_A))
 		{
 			this->position = Vector2(this->position.x - static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
 		}
-		if (InputManager::isKey(GLFW_KEY_D))
+		if (InputManager::isKey(KeyboardKeys::KEY_D))
 		{
 			this->position = Vector2(this->position.x + static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
 		}
 	}
 
-	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
+	if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
 	{
 		Game::SetGameState(GameState::MENU);
 		return;

@@ -72,16 +72,16 @@ void StartGame::Update()
 
 void StartGame::ProcessInput()
 {
-	if (InputManager::isKeyDown(GLFW_KEY_ESCAPE))
+	if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
 	{
 		Game::SetGameState(GameState::MENU);
 		return;
 	}
-	if (InputManager::isKeyDown(GLFW_KEY_Q))
+	if (InputManager::isKeyDown(KeyboardKeys::KEY_Q))
 	{
 		//this->weapons.at(1).SetParent(player.get());
 	}
-	if (InputManager::isKeyDown(GLFW_KEY_E))
+	if (InputManager::isKeyDown(KeyboardKeys::KEY_E))
 	{
 		//this->weapons.at(1).RemoveParent();
 	}

@@ -37,7 +37,7 @@ void Player::ProcessInput()
 
 void Player::ControllerInput()
 {
-	if (InputManager::isKey(GLFW_KEY_W))
+	if (InputManager::isKey(KeyboardKeys::KEY_W))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y - this->velocity * Timer::DeltaTime);
 		if (!CheckCollision(newPos, MoveDirection::TOP))
@@ -45,7 +45,7 @@ void Player::ControllerInput()
 			this->SetPosition(newPos);
 		}
 	}
-	if (InputManager::isKey(GLFW_KEY_S))
+	if (InputManager::isKey(KeyboardKeys::KEY_S))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y + this->velocity * Timer::DeltaTime);
 		if (!CheckCollision(newPos, MoveDirection::BOTTOM))
@@ -53,7 +53,7 @@ void Player::ControllerInput()
 			this->SetPosition(newPos);
 		}
 	}
-	if (InputManager::isKey(GLFW_KEY_A))
+	if (InputManager::isKey(KeyboardKeys::KEY_A))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x - this->velocity * Timer::DeltaTime, this->GetPosition().y);
 		if (!CheckCollision(newPos, MoveDirection::LEFT))
@@ -61,7 +61,7 @@ void Player::ControllerInput()
 			this->SetPosition(newPos);
 		}
 	}
-	if (InputManager::isKey(GLFW_KEY_D))
+	if (InputManager::isKey(KeyboardKeys::KEY_D))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x + this->velocity * Timer::DeltaTime, this->GetPosition().y);
 		if (!CheckCollision(newPos, MoveDirection::RIGHT))

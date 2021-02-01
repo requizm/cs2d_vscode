@@ -35,6 +35,7 @@
 #include "Managers/ResourceManager.cpp"
 #include "Managers/InputManager.cpp"
 #include "Managers/ObjectManager.cpp"
+#include "Managers/Input/InputStructs.cpp"
 
 #include "Others/Game_Parameters.cpp"
 #include "Others/Logger.cpp"
