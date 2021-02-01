@@ -34,3 +34,7 @@
 *.exe   binary
 *.out   binary
 *.app   binary
+
+* linguist-vendored
+*.hpp linguist-vendored=false
+*.cpp linguist-vendored=false
