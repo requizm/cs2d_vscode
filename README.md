@@ -1,6 +1,5 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/requizm/cs2d_vscode/badge)](https://www.codefactor.io/repository/github/requizm/cs2d_vscode)  
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode?ref=badge_large)
+
 
 **WIP**  
 **Only avaible for Windows**  
@@ -32,3 +31,10 @@ ___
 - [freetype 2.10.4](https://gitlab.freedesktop.org/freetype/freetype)
 - [stb_image](https://github.com/nothings/stb)
 - [rapidxml 1.13](http://rapidxml.sourceforge.net/)
+  
+  
+  
+  
+  
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Frequizm%2Fcs2d_vscode?ref=badge_large)
