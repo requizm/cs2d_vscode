@@ -1,7 +1,5 @@
 #include "Square.hpp"
 
-
-
 #define PI 3.14159265
 
 Square::Square() : VAO(0)

@@ -13,7 +13,7 @@ project "cs2d_vscode"
    libdirs { "lib/32"}
    includedirs { "include/" }
 	
-   links { "glew32", "glfw3", "opengl32", "gdi32", "freetype" }
+   links { "glew32", "glfw3", "opengl32", "gdi32", "freetype"}
    linkoptions { '-static-libstdc++', '-static-libgcc' }
    
    architecture "x86"

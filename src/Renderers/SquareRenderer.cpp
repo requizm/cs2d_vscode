@@ -1,7 +1,4 @@
 #include "SquareRenderer.hpp"
-#include "../Managers/ResourceManager.hpp"
-#include "../Managers/InputManager.hpp"
-#include "../Others/Game_Parameters.hpp"
 
 SquareRenderer::SquareRenderer()
 {

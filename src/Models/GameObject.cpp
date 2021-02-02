@@ -1,7 +1,4 @@
 #include "GameObject.hpp"
-#include "../Others/Logger.hpp"
-#include "../Others/Game_Parameters.hpp"
-#include "../Others/Utils.hpp"
 
 GameObject::GameObject()
 	: globalPosition(0, 0), globalSize(1, 1), globalRotation(0.0F), isCollision(false), isDestroyed(false), localRotation(0), localPosition(0, 0), localSize(1, 1), objType(ObjectType::GAMEOBJECT)

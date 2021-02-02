@@ -1,12 +1,14 @@
 #ifndef UIOBJECT_H
 #define UIOBJECT_H
 
+#include <algorithm>
+#include <memory>
 
 #include "../../Renderers/TextRenderer.hpp"
 #include "../../Renderers/SquareRenderer.hpp"
 #include "../../Renderers/SpriteRenderer.hpp"
 #include "../../Others/Logger.hpp"
-#include <memory>
+#include "../../Others/Utils.hpp"
 
 enum class UIObjectType
 {

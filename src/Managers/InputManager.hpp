@@ -1,9 +1,12 @@
 #ifndef EVENTMANAGER_H
 #define EVENTMANAGER_H
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <functional>
+#include <algorithm>
 #include <map>
+
 #include "../Core/Math/Vector2.hpp"
 #include "../Others/Utils.hpp"
 #include "ResourceManager.hpp"

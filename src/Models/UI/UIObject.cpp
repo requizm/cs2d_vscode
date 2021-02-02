@@ -1,6 +1,4 @@
 #include "UIObject.hpp"
-#include "../../Others/Utils.hpp"
-#include <algorithm>
 
 UIObject::UIObject() : enable(false), visible(false), mouseEvents(false), scrollable(false), dependParent(false)
 {

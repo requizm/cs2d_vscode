@@ -1,12 +1,15 @@
 #ifndef SQUARE_RENDERER_H
 #define SQUARE_RENDERER_H
-#include <GL/glew.h>
 
+#include <GL/glew.h>
 
 #include "../Models/UI/Square.hpp"
 #include "../Models/UI/Circle.hpp"
-#include "../Models/Shader.hpp"
 #include "../Models/UI/Outline.hpp"
+#include "../Models/Shader.hpp"
+#include "../Managers/ResourceManager.hpp"
+#include "../Managers/InputManager.hpp"
+#include "../Others/Game_Parameters.hpp"
 
 class SquareRenderer
 {

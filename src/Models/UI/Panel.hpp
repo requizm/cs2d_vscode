@@ -1,13 +1,14 @@
 #ifndef PANEL_H
 #define PANEL_H
 
-#include "UIObject.hpp"
-#include "../../Renderers/SquareRenderer.hpp"
-#include "../../Renderers/SpriteRenderer.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "../../Managers/InputManager.hpp"
+
+#include "UIObject.hpp"
 #include "Button.hpp"
+#include "../../Renderers/SquareRenderer.hpp"
+#include "../../Renderers/SpriteRenderer.hpp"
+#include "../../Managers/InputManager.hpp"
 
 class Panel : public UIObject
 {

@@ -2,8 +2,10 @@
 #define SPRITE_H
 
 #include <GL/glew.h>
+
 #include "Texture.hpp"
 #include "../Core/Math/Vector2.hpp"
+#include "../Others/Logger.hpp"
 
 class Sprite
 {

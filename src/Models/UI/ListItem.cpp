@@ -1,6 +1,4 @@
 #include "ListItem.hpp"
-#include "../../Scenes/Editor/Editor.hpp"
-#include "../../Managers/ObjectManager.hpp"
 
 ListItem::ListItem(Panel* panel) : UIObject(panel->getPosition(), panel->getScale(), *(panel->rend))
 {

@@ -1,6 +1,10 @@
 #ifndef GAME_PARAMETERS_H
 #define GAME_PARAMETERS_H
 
+#include <fstream>
+#include <string>
+#include <math.h> // pow()
+
 enum GameState
 {
     MENU,

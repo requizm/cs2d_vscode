@@ -1,7 +1,4 @@
 #include "Game_Parameters.hpp"
-#include <fstream>
-#include <string>
-#include <math.h> // pow()
 
 int Game_Parameters::SCREEN_WIDTH;
 int Game_Parameters::SCREEN_HEIGHT;
@@ -39,5 +36,5 @@ void Game_Parameters::LoadParameters()
         }
     }
 
-    Game_Parameters::SIZE_TILE =  static_cast<int>((powf(((Game_Parameters::SCREEN_HEIGHT * Game_Parameters::SCREEN_WIDTH) / (26.5f * (float)15)), 0.5f)));
+    Game_Parameters::SIZE_TILE = static_cast<int>((powf(((Game_Parameters::SCREEN_HEIGHT * Game_Parameters::SCREEN_WIDTH) / (26.5f * (float)15)), 0.5f)));
 }

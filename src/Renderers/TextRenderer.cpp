@@ -1,5 +1,4 @@
 #include "TextRenderer.hpp"
-#include <iostream>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -53,11 +52,20 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 	// Then initialize and load the FreeType library
 	FT_Library ft;
 	if (FT_Init_FreeType(&ft)) // All functions return a value different than 0 whenever an error occurred
-		std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+	{
+#ifdef DEBUG
+		LOG_ERROR("ERROR::FREETYPE: Could not init FreeType Library");
+#endif // DEBUG
+	}
+
 	// Load font as face
 	FT_Face face;
 	if (FT_New_Face(ft, font.c_str(), 0, &face))
-		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+	{
+#ifdef DEBUG
+		LOG_ERROR("ERROR::FREETYPE: Failed to load font");
+#endif // DEBUG
+	}
 	// Set size to load glyphs as
 	FT_Set_Pixel_Sizes(face, 0, fontSize);
 	// Disable byte-alignment restriction
@@ -68,7 +76,9 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 		// Load character glyph
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
 		{
-			std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+#ifdef DEBUG
+			LOG_ERROR("ERROR::FREETYTPE: Failed to load Glyph");
+#endif // DEBUG
 			continue;
 		}
 		// Generate texture

@@ -1,9 +1,4 @@
 #include "Utils.hpp"
-#include <GL/glew.h>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include "Game_Parameters.hpp"
-#include "../Core/Math/Vector2.hpp"
 
 int Utils::curIndex = 1;
 

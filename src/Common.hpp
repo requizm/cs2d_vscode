@@ -5,6 +5,7 @@
 #include "Core/Math/Vector3.cpp"
 #include "Core/Math/Matrix4.cpp"
 #include "Core/Math/Projection.cpp"
+#include "Core/Loader/XMLLoader.cpp"
 
 #include "Models/GameObject.cpp"
 #include "Models/Player.cpp"

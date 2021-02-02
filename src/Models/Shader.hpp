@@ -1,11 +1,8 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <string>
-
 #include <GL/glew.h>
-
-
+#include <string>
 
 #include "../Core/Math/Projection.hpp"
 #include "../Core/Math/Vector2.hpp"

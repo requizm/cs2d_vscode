@@ -1,15 +1,4 @@
 #include "Editor.hpp"
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <dirent/dirent.h>
-#include "rapidxml-1.13/rapidxml.hpp"
-#include "rapidxml-1.13/rapidxml_print.hpp"
-#include "../../Others/Game_Parameters.hpp"
-#include "../../Others/Utils.hpp"
-#include "../../Others/Timer.hpp"
-#include "../../Game.hpp"
-#include "../../Managers/ObjectManager.hpp"
 
 Editor::Editor()
 {
@@ -84,8 +73,6 @@ void Editor::Start()
 	std::string a = "Env_Item";
 	objects_ui->AddItem(a);
 
-	Logger::DebugLog("Ana Paneller olustu: " + std::to_string(ObjectManager::listenerObjCount));
-
 	Sprite sprite;
 	Vector2<int> pos;
 
@@ -144,8 +131,6 @@ void Editor::Start()
 	b_objects->setMouseHoverColor(Vector3<float>(0.30F));
 	b_objects->setParent(controlPanel);
 
-	Logger::DebugLog("Butonlar olustu: " + std::to_string(ObjectManager::listenerObjCount));
-
 	//yeni harita paneli
 	this->NewMap = new NewMapSystem();
 	this->NewMap->newPanel = new Panel(Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y), "New Map", Vector2<int>(400, 135), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
@@ -176,8 +161,6 @@ void Editor::Start()
 	NewMap->b_okey->setOutline(true);
 	NewMap->b_okey->setOutlineColor(Vector3<float>(1.0F));
 	NewMap->b_okey->setParent(NewMap->newPanel);
-
-	Logger::DebugLog("New Map olustu: " + std::to_string(ObjectManager::listenerObjCount));
 
 	//harita yukle paneli
 	this->SaveLoad = new SaveLoadSystem();
@@ -236,8 +219,6 @@ void Editor::Start()
 	std::function<void(Button *, Button *)> saveListChanged = std::bind(&SaveLoadSystem::SaveListChanged, this->SaveLoad, std::placeholders::_1, std::placeholders::_2);
 	this->SaveLoad->save_listMaps->AddListener(saveListChanged);
 
-	Logger::DebugLog("Harita save ve load olustu: " + std::to_string(ObjectManager::listenerObjCount));
-
 	//env_item
 	envItemManager = new Env_Item_Manager();
 
@@ -265,8 +246,6 @@ void Editor::Start()
 	this->rb_tileProperties->AddElement("Floor", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
 	std::function<void(RadioButtonElement *, RadioButtonElement *)> t = std::bind(&Editor::SelectedRbChanged, this, std::placeholders::_1, std::placeholders::_2);
 	this->rb_tileProperties->AddListener(t);
-
-	Logger::DebugLog("Tile properties olustu: " + std::to_string(ObjectManager::listenerObjCount));
 
 	this->selectedMode = SelectedMode::TILE_MOD;
 }
@@ -570,9 +549,7 @@ void Editor::ProcessInput()
 			if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT))
 			{
 				Vector2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
-				//Logger::DebugLog("pos: " + std::to_string(wd.x) + " - " + std::to_string(wd.y));
 				Vector2 selectedCell = Utils::PositionToCell(wd);
-				//Logger::DebugLog("pos: " + std::to_string(selectedCell.x) + " - " + std::to_string(selectedCell.y));
 				for (auto &tile : tiles)
 				{
 					if (tile->cell == selectedCell)
@@ -596,9 +573,7 @@ void Editor::ProcessInput()
 			if (InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT) && objects_ui->getSelectedIndex() == 0)
 			{
 				Vector2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
-				//Logger::DebugLog("pos: " + std::to_string(wd.x) + " - " + std::to_string(wd.y));
 				Vector2 selectedCell = Utils::PositionToCell(wd);
-				//Logger::DebugLog("pos: " + std::to_string(selectedCell.x) + " - " + std::to_string(selectedCell.y));
 				for (auto &tile : tiles)
 				{
 					if (tile->cell == selectedCell)

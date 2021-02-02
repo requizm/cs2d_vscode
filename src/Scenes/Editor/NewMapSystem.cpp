@@ -1,8 +1,6 @@
 #include "NewMapSystem.hpp"
-#include "../../Others/Utils.hpp"
-#include "../../Managers/ObjectManager.hpp"
 
-NewMapSystem::NewMapSystem(/* args */)
+NewMapSystem::NewMapSystem()
 {
 }
 
@@ -94,8 +92,6 @@ NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, fl
         }
     }
 
-    Logger::DebugLog("Map seyleri olustu: " + std::to_string(ObjectManager::listenerObjCount));
-
     return res;
 }
 NewMapResult *NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit, Vector2<int> &texture,
@@ -104,22 +100,28 @@ NewMapResult *NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect
     std::string sizeX = t_mapSizeX->getText();
     std::string sizeY = t_mapSizeY->getText();
     std::string tileSet = t_tile->getText();
-    Logger::DebugLog(tileSet);
-    Logger::DebugLog(sizeX);
-    Logger::DebugLog(sizeY);
     if (sizeX.empty() || sizeY.empty() || tileSet.empty())
     {
-        Logger::DebugLog("BOS");
+#ifdef DEBUG
+        LOG_ERROR("BOS");
+#endif // DEBUG
+
         return new NewMapResult();
     }
     if (ResourceManager::GetTexture(tileSet).Width == 0)
     {
-        Logger::DebugLog("BOYLE BIR TEXTURE YOK");
+#ifdef DEBUG
+        LOG_ERROR("BOYLE BIR TEXTURE YOK");
+#endif // DEBUG
+
         return new NewMapResult();
     }
     if (!Utils::TryStringToInt(sizeX.c_str()) || !Utils::TryStringToInt(sizeY.c_str()))
     {
-        Logger::DebugLog("BUNLAR SAYI DEGIL");
+#ifdef DEBUG
+        LOG_ERROR("BUNLAR SAYI DEGIL");
+#endif // DEBUG
+
         return new NewMapResult();
     }
 
@@ -128,7 +130,10 @@ NewMapResult *NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect
 
     if (isizeX <= 0 || isizeY <= 0)
     {
-        Logger::DebugLog("BUNLAR NEGATIF");
+#ifdef DEBUG
+        LOG_ERROR("BUNLAR NEGATIF");
+#endif // DEBUG
+
         return new NewMapResult();
     }
     return NewMap(tileSet, Vector2<int>(isizeX, isizeY), dt, pos, fSelect, mLimit, texture, tCount, tPanel, bPanel, maxCell);

@@ -1,7 +1,4 @@
 #include "InputManager.hpp"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <algorithm>
 
 Vector2<int> InputManager::mousePos;
 Vector2<float> InputManager::scroll;
@@ -101,7 +98,6 @@ void InputManager::removeListenerUp(int key, std::function<void()> callback, int
 
 void InputManager::onMouseDown(int key)
 {
-	//Logger::DebugLog("listener count: " + std::to_string(ObjectManager::listenerObjCount));
 	for (auto &callback : m_Callbacks_Down[key])
 	{
 		callback.event();

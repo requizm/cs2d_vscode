@@ -1,7 +1,6 @@
 #include "TextBox.hpp"
-#include <iostream>
 
-#include "../../Others/Timer.hpp"
+
 
 TextBox::TextBox() : Label()
 {

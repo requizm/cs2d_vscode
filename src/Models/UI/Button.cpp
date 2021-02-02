@@ -1,7 +1,5 @@
 #include "Button.hpp"
-#include "../../Others/Game_Parameters.hpp"
-#include <iostream>
-#include "../../Managers/ObjectManager.hpp"
+
 
 Button::Button() : Label()
 {
@@ -16,7 +14,6 @@ Button::Button(const std::string &text, Vector2<int> position, Vector2<int> size
 
 	if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
 	{
-		//std::cout << "Address: " << &downTrigger << std::endl;
 		mDown = std::bind(&Button::onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
@@ -35,7 +32,6 @@ Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size, b
 
 	if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
 	{
-		//std::cout << "Address: " << &downTrigger << std::endl;
 		mDown = std::bind(&Button::onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
@@ -52,7 +48,6 @@ Button::Button(Tile &tile, float scale, UIObjectType type) : Label(tile.GetPosit
 
 	if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
 	{
-		//std::cout << "Address: " << &downTrigger << std::endl;
 		mDown = std::bind(&Button::onMouseDown, this);
 		InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 

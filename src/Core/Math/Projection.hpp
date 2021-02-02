@@ -1,10 +1,10 @@
 #ifndef PROJECTION_H
 #define PROJECTION_H
 
-#include "Matrix4.hpp"
-#include "Vector3.hpp"
 #include <math.h>
 
+#include "Matrix4.hpp"
+#include "Vector3.hpp"
 class Projection
 {
 public:

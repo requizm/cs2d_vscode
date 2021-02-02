@@ -1,6 +1,4 @@
 #include "Menu.hpp"
-#include "../Game.hpp"
-#include "../Others/Logger.hpp"
 
 Menu::Menu() = default;
 

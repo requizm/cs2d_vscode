@@ -1,10 +1,7 @@
 #ifndef SPRITE_RENDERER_H
 #define SPRITE_RENDERER_H
 
-//#include <GL/glew.h>
-//
-//
-
+#include "../Models/Texture.hpp"
 #include "../Models/Shader.hpp"
 #include "../Models/Sprite.hpp"
 

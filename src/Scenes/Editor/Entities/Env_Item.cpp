@@ -1,7 +1,4 @@
 #include "Env_Item.hpp"
-#include "../../../Others/Game_Parameters.hpp"
-#include "../../../Others/Utils.hpp"
-#include "../Editor.hpp"
 
 Env_Item::Env_Item()
 {
@@ -56,7 +53,7 @@ void Env_Item::setItemID(int id)
     this->item_id = id;
 }
 
-int Env_Item::getObjID() 
+int Env_Item::getObjID()
 {
     return this->obj_id;
 }

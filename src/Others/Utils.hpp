@@ -1,6 +1,11 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+#include "Game_Parameters.hpp"
+#include "../Core/Math/Vector2.hpp"
 #include "../Core/Math/Vector2.hpp"
 
 class Utils

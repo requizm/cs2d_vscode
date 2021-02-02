@@ -1,17 +1,17 @@
 #ifndef LABEL_H
 #define LABEL_H
 
-#include <string>
-
-#include "../../Managers/InputManager.hpp"
-#include "../../Others/Logger.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <string>
+
 #include "UIObject.hpp"
+#include "../../Others/Logger.hpp"
+#include "../../Managers/InputManager.hpp"
+#include "../../Managers/ObjectManager.hpp"
 
-//class TextRenderer;
-
-enum LabelType {
+enum LabelType
+{
 	CLICKABLE,
 	NOT_CLICKABLE
 };

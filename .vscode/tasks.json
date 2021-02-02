@@ -18,10 +18,12 @@
                 "-lopengl32",
                 "-lfreetype",
                 "-lgdi32",
+                "-lspdlog",
                 "-w",
                 "-std=c++17",
                 "-static-libstdc++",
-                "-static-libgcc"
+                "-static-libgcc",
+                "-DDEBUG"
             ],
             "group": {
                 "kind": "build",

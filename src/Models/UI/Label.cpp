@@ -1,6 +1,4 @@
 #include "Label.hpp"
-#include <iostream>
-#include "../../Managers/ObjectManager.hpp"
 
 Label::Label() : UIObject()
 {

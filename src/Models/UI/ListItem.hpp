@@ -1,9 +1,9 @@
 #ifndef LISTITEM_H
 #define LISTITEM_H
 
-#include "Panel.hpp"
-
 #include <functional>
+
+#include "Panel.hpp"
 
 class ListItemElement : public Button
 {
@@ -18,7 +18,6 @@ public:
 protected:
     void onMouseDown() override;
     void onMouseUp() override;
-
 };
 
 class ListItem : public UIObject
@@ -49,4 +48,4 @@ private:
     std::vector<std::function<void(Button *, Button *)>> listeners;
 };
 
-#endif // !LISTITEM_H
+#endif // LISTITEM_H

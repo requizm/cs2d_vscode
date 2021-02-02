@@ -1,5 +1,4 @@
 #include "Panel.hpp"
-#include <iostream>
 
 Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size, TextRenderer &renderer, bool isBackGround, bool opttitles, float scale, const Vector3<float> &color, float transp) : UIObject(position, size, scale, renderer, UIObjectType::PANEL)
 {

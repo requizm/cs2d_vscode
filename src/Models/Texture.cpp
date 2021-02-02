@@ -1,5 +1,4 @@
 #include "Texture.hpp"
-#include <iostream>
 
 Texture2D::Texture2D()
 	: Width(0), Height(0), Internal_Format(GL_RGB), Image_Format(GL_RGB), Wrap_S(GL_CLAMP_TO_EDGE), Wrap_T(GL_CLAMP_TO_EDGE), Filter_Min(GL_NEAREST), Filter_Max(GL_NEAREST)
@@ -7,7 +6,7 @@ Texture2D::Texture2D()
 	glGenTextures(1, &this->ID);
 }
 
-void Texture2D::Generate(const GLuint width, const GLuint height, unsigned char* data)
+void Texture2D::Generate(const GLuint width, const GLuint height, unsigned char *data)
 {
 	this->Width = width;
 	this->Height = height;
@@ -24,7 +23,7 @@ void Texture2D::Generate(const GLuint width, const GLuint height, unsigned char*
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture2D::Generate(GLuint width, GLuint height, GLubyte(*data)[1][4], bool isBlack)
+void Texture2D::Generate(GLuint width, GLuint height, GLubyte (*data)[1][4], bool isBlack)
 {
 	if (isBlack)
 	{
@@ -47,7 +46,7 @@ void Texture2D::Generate(GLuint width, GLuint height, GLubyte(*data)[1][4], bool
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture2D::Generate(bool isAlpha, const GLuint width, const GLuint height, unsigned char* data)
+void Texture2D::Generate(bool isAlpha, const GLuint width, const GLuint height, unsigned char *data)
 {
 	this->Width = width;
 	this->Height = height;

@@ -1,14 +1,18 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
+
 #include "GameObject.hpp"
 #include "Tile.hpp"
 #include "Map.hpp"
 #include "Weapon.hpp"
+#include "../Managers/InputManager.hpp"
+#include "../Others/Logger.hpp"
+#include "../Others/Timer.hpp"
 #include "../Others/Game_Parameters.hpp"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
 
 enum MoveDirection
 {

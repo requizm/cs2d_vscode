@@ -1,5 +1,4 @@
 #include "Sprite.hpp"
-#include "../Others/Logger.hpp"
 
 Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width, GLuint height) : VAO(0)
 {
@@ -14,7 +13,6 @@ Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width, GLuint heigh
 		size = Vector2<int>(width, height);
 		initData(x, y, width, height);
 	}
-	//Logger::WriteLog("Sprite->Sprite(texture, " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(width) + ", " + std::to_string(height) + ")");
 }
 
 Sprite::Sprite() = default;

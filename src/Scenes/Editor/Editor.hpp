@@ -1,15 +1,27 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include <dirent/dirent.h>
 #include <vector>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 #include "../../Models/UI/Panel.hpp"
 #include "../../Models/UI/TextBox.hpp"
 #include "../../Models/UI/RadioButton.hpp"
+#include "../../Models/UI/ListItem.hpp"
 #include "../../Models/Camera.hpp"
 #include "../../Models/Tile.hpp"
+#include "../../Others/Game_Parameters.hpp"
+#include "../../Others/Utils.hpp"
+#include "../../Others/Timer.hpp"
+#include "../../Managers/ObjectManager.hpp"
+#include "Entities/Env_Item.hpp"
 #include "SaveLoadSystem.hpp"
 #include "NewMapSystem.hpp"
-#include "Entities/Env_Item.hpp"
+
+#include "../../Game.hpp"
 
 enum SelectedMode
 {

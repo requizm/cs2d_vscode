@@ -1,7 +1,5 @@
 #include "Shader.hpp"
 
-#include <iostream>
-
 Shader::Shader() : ID(0)
 {
 }
@@ -100,9 +98,9 @@ void Shader::checkCompileErrors(GLuint object, const std::string &type) const
 		if (!success)
 		{
 			glGetShaderInfoLog(object, 1024, NULL, infoLog);
-			std::cout << "| ERROR::SHADER: Compile-time error: Type: " << type << "\n"
-					  << infoLog << "\n -- --------------------------------------------------- -- "
-					  << std::endl;
+#ifdef DEBUG
+			LOG_ERROR("ERROR::SHADER: Compile-time error: Type: " + type + "\n" + infoLog);
+#endif // DEBUG
 		}
 	}
 	else
@@ -111,9 +109,9 @@ void Shader::checkCompileErrors(GLuint object, const std::string &type) const
 		if (!success)
 		{
 			glGetProgramInfoLog(object, 1024, NULL, infoLog);
-			std::cout << "| ERROR::Shader: Link-time error: Type: " << type << "\n"
-					  << infoLog << "\n -- --------------------------------------------------- -- "
-					  << std::endl;
+#ifdef DEBUG
+			LOG_ERROR("ERROR::Shader: Link-time error: Type: " + type + "\n" + infoLog);
+#endif // DEBUG
 		}
 	}
 }

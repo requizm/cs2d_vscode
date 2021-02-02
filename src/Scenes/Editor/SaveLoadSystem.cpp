@@ -1,11 +1,4 @@
 #include "SaveLoadSystem.hpp"
-#include "Editor.hpp"
-#include "../../Others/Game_Parameters.hpp"
-#include <fstream>
-#include <sstream>
-#include <dirent/dirent.h>
-#include "rapidxml-1.13/rapidxml.hpp"
-#include "rapidxml-1.13/rapidxml_print.hpp"
 
 SaveLoadSystem::SaveLoadSystem()
 {
@@ -68,7 +61,6 @@ void SaveLoadSystem::SaveMap()
         //int i = 0;
         for (auto &tile : Editor::instance().tiles)
         {
-            //Logger::WriteLog("tile: " + std::to_string(i) + "  basladi");
             rapidxml::xml_node<> *node_tile = doc.allocate_node(rapidxml::node_element, "tile");
             char *cellX = doc.allocate_string(std::to_string(tile->cell.x).c_str());
             char *cellY = doc.allocate_string(std::to_string(tile->cell.y).c_str());
@@ -115,7 +107,10 @@ void SaveLoadSystem::SaveMap()
         if (!fileC)
         {
             std::string str = a + "dosyasi acilamadi";
-            Logger::DebugLog(str);
+#ifdef DEBUG
+            LOG_ERROR(str);
+#endif // DEBUG
+
             Logger::WriteLog(str);
             exit(EXIT_FAILURE);
         }
@@ -138,7 +133,7 @@ void SaveLoadSystem::B_SaveMap()
     this->savePanel->setEnable(true);
 }
 
-std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string mapName)
+std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
 {
     std::vector<ButtonTile *> tiles;
 
@@ -146,32 +141,15 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string mapName)
     this->loadPanel->setEnable(false);
 
     mapName = "../../resources/levels/" + mapName + ".xml";
-    std::string codeString;
-    std::ifstream fileC(mapName.c_str());
-    if (!fileC)
-    {
-        std::string str = "dosya acilamadi: ";
-        str += mapName.c_str();
-        Logger::DebugLog(str);
-        Logger::WriteLog(str);
-        exit(EXIT_FAILURE);
-    }
+    XMLLoader loader = XMLLoader(mapName);
 
-    std::stringstream fileStream;
-    fileStream << fileC.rdbuf();
-    fileC.close();
-    codeString = fileStream.str();
-    rapidxml::xml_document<> doc;
-    char *codeChar = new char[codeString.length() + 1];
-    strcpy(codeChar, codeString.c_str());
-    doc.parse<0>(codeChar);
-    this->t_save->setText(doc.first_node("info")->first_node("name")->value());
-    Editor::instance().currentTileSet = doc.first_node("info")->first_node("tileSet")->value();
-    char *mapx = doc.first_node("info")->first_node("mapLimitX")->value();
-    char *mapy = doc.first_node("info")->first_node("mapLimitY")->value();
+    this->t_save->setText(loader.GetDoc().first_node("info")->first_node("name")->value());
+    Editor::instance().currentTileSet = loader.GetDoc().first_node("info")->first_node("tileSet")->value();
+    char *mapx = loader.GetDoc().first_node("info")->first_node("mapLimitX")->value();
+    char *mapy = loader.GetDoc().first_node("info")->first_node("mapLimitY")->value();
     Editor::instance().mapLimit.x = atoi(mapx);
     Editor::instance().mapLimit.y = atoi(mapy);
-    rapidxml::xml_node<> *node = doc.first_node("map");
+    rapidxml::xml_node<> *node = loader.GetDoc().first_node("map");
     //std::cout << node->first_node("tile")->first_node("cellX")->next_sibling()->name() << std::endl;
     int i = 0;
     for (rapidxml::xml_node<> *child = node->first_node(); child; child = child->next_sibling())
@@ -207,8 +185,6 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string mapName)
 
         tiles.push_back(t);
     }
-
-    delete codeChar;
 
     return tiles;
 }

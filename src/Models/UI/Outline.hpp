@@ -1,7 +1,7 @@
 #ifndef OUTLINE_H
 #define OUTLINE_H
-#include <GL/glew.h>
 
+#include <GL/glew.h>
 
 class Outline
 {

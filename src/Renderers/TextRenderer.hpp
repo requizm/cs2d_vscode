@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 
 #include "../Managers/ResourceManager.hpp"
+#include "../Others/Logger.hpp"
 
 /// Holds all state information relevant to a character as loaded using FreeType
 struct Character

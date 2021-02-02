@@ -1,8 +1,6 @@
 #ifndef MATRIX4_H
 #define MATRIX4_H
 
-
-
 template <typename T>
 class Matrix4
 {

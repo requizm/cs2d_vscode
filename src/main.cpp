@@ -4,10 +4,10 @@
 
 #include "Game.hpp"
 #include "Managers/ResourceManager.hpp"
+#include "Managers/InputManager.hpp"
 #include "Others/Game_Parameters.hpp"
 #include "Others/Logger.hpp"
 #include "Others/Timer.hpp"
-#include "Managers/InputManager.hpp"
 #include "Window.hpp"
 
 std::unique_ptr<Game> cs2d = std::make_unique<Game>(Game());
@@ -23,6 +23,12 @@ int main(int argc, char *argv[])
 
 	// Initialize game
 	cs2d->Init();
+
+#ifdef DEBUG
+	LOG_ERROR("cum");
+#endif // DEBUG
+
+	Logger::WriteLog("cum");
 
 	// DeltaTime variables
 	float lastFrame = 0.0F;
@@ -59,5 +65,6 @@ int main(int argc, char *argv[])
 
 	ResourceManager::Destroy();
 	window.Destroy();
+	Logger::StopApp();
 	return 0;
 }

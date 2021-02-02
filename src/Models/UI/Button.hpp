@@ -1,11 +1,13 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "../../Renderers/SpriteRenderer.hpp"
-#include "../../Renderers/SquareRenderer.hpp"
 #include "Label.hpp"
 #include "../Sprite.hpp"
 #include "../Tile.hpp"
+#include "../../Renderers/SpriteRenderer.hpp"
+#include "../../Renderers/SquareRenderer.hpp"
+#include "../../Others/Game_Parameters.hpp"
+#include "../../Managers/ObjectManager.hpp"
 
 enum ButtonType
 {
@@ -122,7 +124,6 @@ private:
 	Vector3<float> outlineColor;
 	Vector2<int> margin;
 	int a = 9988;
-	
 };
 
 #endif // BUTTON_H

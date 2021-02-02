@@ -4,6 +4,9 @@
 #include <GL/glew.h>
 
 #include "../Renderers/SpriteRenderer.hpp"
+#include "../Others/Logger.hpp"
+#include "../Others/Game_Parameters.hpp"
+#include "../Others/Utils.hpp"
 
 enum class ObjectType
 {

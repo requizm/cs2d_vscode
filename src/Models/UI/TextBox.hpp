@@ -2,11 +2,10 @@
 #define TEXTBOX_H
 
 #include "Label.hpp"
+#include "../Sprite.hpp"
 #include "../../Renderers/SquareRenderer.hpp"
 #include "../../Renderers/SpriteRenderer.hpp"
-#include "../Sprite.hpp"
-
-//class SpriteRenderer;
+#include "../../Others/Timer.hpp"
 
 class TextBox : public Label
 {

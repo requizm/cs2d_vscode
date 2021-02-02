@@ -1,12 +1,4 @@
 #include "Map.hpp"
-#include <fstream>
-#include <sstream>
-#include <cstring>
-#include <math.h> // pow()
-#include "rapidxml-1.13/rapidxml.hpp"
-#include "../Managers/ResourceManager.hpp"
-#include "../Others/Game_Parameters.hpp"
-#include "../Others/Logger.hpp"
 
 Map::Map() = default;
 
@@ -33,32 +25,16 @@ Map::~Map()
 
 void Map::Load(const GLchar *file)
 {
-	std::string codeString;
 	this->tiles.clear();
-	std::ifstream fileC(file);
-	if (!fileC)
-	{
-		std::string str = "dosya acilamadi: ";
-		str += file;
-		Logger::DebugLog(str);
-		Logger::WriteLog(str);
-		exit(EXIT_FAILURE);
-	}
+	std::string str(file);
+	XMLLoader loader = XMLLoader(str);
 
-	std::stringstream fileStream;
-	fileStream << fileC.rdbuf();
-	fileC.close();
-	codeString = fileStream.str();
-	rapidxml::xml_document<> doc;
-	char *codeChar = new char[codeString.length() + 1];
-	strcpy(codeChar, codeString.c_str());
-	doc.parse<0>(codeChar);
-	this->name = doc.first_node("info")->first_node("name")->value();
-	char *mapx = doc.first_node("info")->first_node("mapLimitX")->value();
-	char *mapy = doc.first_node("info")->first_node("mapLimitY")->value();
+	this->name = loader.GetDoc().first_node("info")->first_node("name")->value();
+	char *mapx = loader.GetDoc().first_node("info")->first_node("mapLimitX")->value();
+	char *mapy = loader.GetDoc().first_node("info")->first_node("mapLimitY")->value();
 	this->mapLimit.x = atoi(mapx);
 	this->mapLimit.y = atoi(mapy);
-	rapidxml::xml_node<> *node = doc.first_node("map");
+	rapidxml::xml_node<> *node = loader.GetDoc().first_node("map");
 	//std::cout << node->first_node("tile")->first_node("cellX")->next_sibling()->name() << std::endl;
 	int i = 0;
 	for (rapidxml::xml_node<> *child = node->first_node(); child; child = child->next_sibling())
@@ -88,7 +64,6 @@ void Map::Load(const GLchar *file)
 			weapons.push_back(w);
 		}
 	}
-	delete[] codeChar;
 }
 void Map::Draw(SpriteRenderer &renderer)
 {

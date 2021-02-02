@@ -2,26 +2,25 @@
 #define MENU_H
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <dirent/dirent.h>
 #include <map>
 #include <string.h>
 #include <memory>
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <dirent/dirent.h>
 
+#include "../Game.hpp"
 #include "../Models/Sprite.hpp"
-#include "../Renderers/SpriteRenderer.hpp"
-#include "../Renderers/TextRenderer.hpp"
-#include "../Managers/InputManager.hpp"
-#include "../Others/Game_Parameters.hpp"
-
 #include "../Models/UI/Label.hpp"
 #include "../Models/UI/TextBox.hpp"
 #include "../Models/UI/Panel.hpp"
 #include "../Models/UI/ListItem.hpp"
-
-//#include "ButtonRenderer.hpp"
+#include "../Renderers/SpriteRenderer.hpp"
+#include "../Renderers/TextRenderer.hpp"
+#include "../Managers/InputManager.hpp"
+#include "../Others/Game_Parameters.hpp"
+#include "../Others/Logger.hpp"
 
 class Menu
 {
