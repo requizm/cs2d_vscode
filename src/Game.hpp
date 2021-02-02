@@ -17,7 +17,6 @@
 class Game
 {
 public:
-	Game(GLuint width, GLuint height);
 	Game();
 	~Game();
 

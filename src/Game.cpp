@@ -6,22 +6,9 @@
 
 GameState Game::state;
 
-Game::Game(const GLuint width, const GLuint height)
-{
-    //camera = std::make_unique<Camera>(width, height);
-    //camera = Camera(static_cast<int>(width), static_cast<int>(height));
-    //camera = Camera(width, height, Vector3<float>(0.0f, 0.0f, 3.0f));
-    //InputManager::Width = width;
-    //InputManager::Height = height;
-    Logger::WriteLog("Game->Game(width, height)");
-    Game_Parameters::LoadParameters();
-    Game::state = GameState::MENU;
-}
-
 Game::Game()
 {
     Logger::WriteLog("Game->Game()");
-    Game_Parameters::LoadParameters();
     Game::state = GameState::MENU;
 }
 
