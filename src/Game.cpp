@@ -1,8 +1,6 @@
 #include "Game.hpp"
-#include "Others/Logger.hpp"
 
 
-#include <iostream>
 
 GameState Game::state;
 

@@ -3,11 +3,6 @@
 #include <memory>
 
 #include "Game.hpp"
-#include "Managers/ResourceManager.hpp"
-#include "Managers/InputManager.hpp"
-#include "Others/Game_Parameters.hpp"
-#include "Others/Logger.hpp"
-#include "Others/Timer.hpp"
 #include "Window.hpp"
 
 std::unique_ptr<Game> cs2d = std::make_unique<Game>(Game());
