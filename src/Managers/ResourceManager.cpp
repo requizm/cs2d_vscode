@@ -9,10 +9,10 @@
 #include "../Others/Logger.hpp"
 
 // Instantiate static variables
-std::map<std::string, Texture2D>    ResourceManager::Textures;
-std::map<std::string, Shader>       ResourceManager::Shaders;
+std::map<std::string, Texture2D> ResourceManager::Textures;
+std::map<std::string, Shader> ResourceManager::Shaders;
 
-Shader ResourceManager::LoadShader(const GLchar* vShaderFile, const GLchar* fShaderFile, const GLchar* gShaderFile, std::string name)
+Shader ResourceManager::LoadShader(const GLchar *vShaderFile, const GLchar *fShaderFile, const GLchar *gShaderFile, std::string name)
 {
 	Shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);
 	return Shaders[name];
@@ -23,7 +23,7 @@ Shader ResourceManager::GetShader(std::string name)
 	return Shaders[name];
 }
 
-Texture2D ResourceManager::LoadTexture(const GLchar* file, const GLboolean alpha, const std::string name)
+Texture2D ResourceManager::LoadTexture(const GLchar *file, const GLboolean alpha, const std::string name)
 {
 	Textures[name] = loadTextureFromFile(file, alpha);
 	return Textures[name];
@@ -34,7 +34,7 @@ Texture2D ResourceManager::GetTexture(std::string name)
 	return Textures[name];
 }
 
-void ResourceManager::Clear()
+void ResourceManager::Destroy()
 {
 	// (Properly) delete all shaders
 	for (auto iter : Shaders)
@@ -44,7 +44,7 @@ void ResourceManager::Clear()
 		glDeleteTextures(1, &iter.second.ID);
 }
 
-Shader ResourceManager::loadShaderFromFile(const GLchar * vShaderFile, const GLchar * fShaderFile, const GLchar * gShaderFile)
+Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile, const GLchar *gShaderFile)
 {
 	// 1. Retrieve the vertex/fragment source code from filePath
 	std::string vertexCode;
@@ -80,16 +80,16 @@ Shader ResourceManager::loadShaderFromFile(const GLchar * vShaderFile, const GLc
 	{
 		std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
 	}
-	const GLchar* vShaderCode = vertexCode.c_str();
-	const GLchar* fShaderCode = fragmentCode.c_str();
-	const GLchar* gShaderCode = geometryCode.c_str();
+	const GLchar *vShaderCode = vertexCode.c_str();
+	const GLchar *fShaderCode = fragmentCode.c_str();
+	const GLchar *gShaderCode = geometryCode.c_str();
 	// 2. Now create shader object from source code
 	Shader shader;
 	shader.Compile(vShaderCode, fShaderCode, gShaderFile != nullptr ? gShaderCode : nullptr);
 	return shader;
 }
 
-Texture2D ResourceManager::loadTextureFromFile(const GLchar * file, GLboolean alpha)
+Texture2D ResourceManager::loadTextureFromFile(const GLchar *file, GLboolean alpha)
 {
 	// Create Texture object
 	Texture2D texture;
@@ -103,17 +103,17 @@ Texture2D ResourceManager::loadTextureFromFile(const GLchar * file, GLboolean al
 	/*unsigned asd= SOIL_load_OGL_texture(file, SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MULTIPLY_ALPHA);*/
-		//unsigned char* image = SOIL_load_image(file, &width, &height, &channels, texture.Image_Format == GL_RGBA ? SOIL_LOAD_RGBA : SOIL_LOAD_RGB);
-	unsigned char* image;
+	//unsigned char* image = SOIL_load_image(file, &width, &height, &channels, texture.Image_Format == GL_RGBA ? SOIL_LOAD_RGBA : SOIL_LOAD_RGB);
+	unsigned char *image;
 	if (alpha)
 		image = stbi_load(file, &width, &height, &channels, STBI_rgb_alpha);
 	else
 		image = stbi_load(file, &width, &height, &channels, STBI_rgb);
-	
-	if(!image)
+
+	if (!image)
 	{
-		 Logger::DebugLog("Texture yuklenmedi!");
-		 perror("Error open imagefile");
+		Logger::DebugLog("Texture yuklenmedi!");
+		perror("Error open imagefile");
 	}
 	// Now generate texture
 	//SOIL_last_result();

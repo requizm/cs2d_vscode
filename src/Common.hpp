@@ -51,5 +51,6 @@
 #include "Scenes/Editor/Entities/Env_Item.cpp"
 
 #include "Game.cpp"
+#include "Window.cpp"
 
 #endif
