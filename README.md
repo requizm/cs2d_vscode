@@ -31,6 +31,7 @@ ___
 - [freetype 2.10.4](https://gitlab.freedesktop.org/freetype/freetype)
 - [stb_image](https://github.com/nothings/stb)
 - [rapidxml 1.13](http://rapidxml.sourceforge.net/)
+- [spdlog 1.8.2](https://github.com/gabime/spdlog)
   
 ___
   
