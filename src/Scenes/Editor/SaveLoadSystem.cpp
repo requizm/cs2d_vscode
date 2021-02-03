@@ -1,4 +1,5 @@
 #include "SaveLoadSystem.hpp"
+#include "Editor.hpp"
 
 SaveLoadSystem::SaveLoadSystem()
 {

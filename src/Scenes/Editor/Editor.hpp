@@ -14,12 +14,11 @@
 #include "../../Models/Camera.hpp"
 #include "../../Models/Tile.hpp"
 #include "../../Others/Game_Parameters.hpp"
-#include "../../Others/Utils.hpp"
 #include "../../Others/Timer.hpp"
 #include "../../Managers/ObjectManager.hpp"
-#include "Entities/Env_Item.hpp"
 #include "SaveLoadSystem.hpp"
 #include "NewMapSystem.hpp"
+#include "Entities/Env_Item.hpp"
 
 #include "../../Game.hpp"
 

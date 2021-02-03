@@ -13,7 +13,6 @@
 #include "../../Models/UI/TextBox.hpp"
 #include "../../Models/UI/ListItem.hpp"
 #include "ButtonTile.hpp"
-#include "Editor.hpp"
 #include "../../Others/Game_Parameters.hpp"
 #include "../../Core/Loader/XMLLoader.hpp"
 

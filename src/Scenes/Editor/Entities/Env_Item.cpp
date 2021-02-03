@@ -1,5 +1,7 @@
 #include "Env_Item.hpp"
 
+#include "../Editor.hpp"
+
 Env_Item::Env_Item()
 {
 }

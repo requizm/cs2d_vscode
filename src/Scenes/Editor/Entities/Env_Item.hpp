@@ -1,7 +1,6 @@
 #ifndef ENVITEM_H
 #define ENVITEM_H
 
-#include "../Editor.hpp"
 #include "../../../Models/UI/Panel.hpp"
 #include "../../../Models/UI/TextBox.hpp"
 #include "../../../Others/Game_Parameters.hpp"
