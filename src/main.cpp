@@ -7,8 +7,6 @@
 
 std::unique_ptr<Game> cs2d = std::make_unique<Game>(Game());
 
-int nbFrames = 0;
-
 int main(int argc, char *argv[])
 {
 	//FreeConsole();
@@ -18,12 +16,6 @@ int main(int argc, char *argv[])
 
 	// Initialize game
 	cs2d->Init();
-
-#ifdef DEBUG
-	LOG_ERROR("cum");
-#endif // DEBUG
-
-	Logger::WriteLog("cum");
 
 	// DeltaTime variables
 	float lastFrame = 0.0F;
@@ -37,14 +29,12 @@ int main(int argc, char *argv[])
 		Timer::DeltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		time += Timer::DeltaTime;
-		nbFrames++;
 		fps++;
 		if (time >= 1.0F)
 		{
 			InputManager::m_fps = fps;
 			time = 0.0F;
 			fps = 0;
-			//nbFrames = 0;
 		}
 
 		InputManager::UpdateMouse(window.GetWindow());
