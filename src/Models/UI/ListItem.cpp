@@ -132,7 +132,8 @@ int ListItem::getSelectedIndex()
 
 ListItemElement::ListItemElement(Button* btn) : Button(*btn)
 {
-	//std::cout << "Address: " << &downTrigger << std::endl;
+	this->btn = btn;
+
 	mDown = std::bind(&ListItemElement::onMouseDown, this);
 	InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
@@ -146,6 +147,8 @@ ListItemElement::~ListItemElement()
 	InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 	InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
 	ObjectManager::listenerObjCount--;
+	UIObject::removeParent();
+	delete btn;
 }
 
 void ListItemElement::Update()

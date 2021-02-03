@@ -9,7 +9,7 @@
 
 StartGame::StartGame() = default;
 
-void StartGame::Initialize(const std::string &mapName)
+void StartGame::Initialize(const std::string & mapName)
 {
 	Logger::WriteLog("StartGame->StartGame()");
 	this->map = new Map(mapName.c_str(), mapName.c_str());
@@ -39,18 +39,28 @@ void StartGame::OnEnable()
 	this->Start();
 
 	player->SetTransform(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
-						 Vector2<int>(static_cast<int>(static_cast<float>(Game_Parameters::SIZE_TILE) * 0.9F)), 0.0F);
+		Vector2<int>(static_cast<int>(static_cast<float>(Game_Parameters::SIZE_TILE) * 0.9F)), 0.0F);
 	player->setVelocity(500.0F);
 	player->SetMap(map);
 }
 
 void StartGame::OnDisable()
 {
-	delete renderer;
-	delete textRenderer;
-	delete map;
-	delete player;
-	delete camera;
+	if (renderer != nullptr)
+		delete renderer;
+	renderer = nullptr;
+	if (textRenderer != nullptr)
+		delete textRenderer;
+	textRenderer = nullptr;
+	if (map != nullptr)
+		delete map;
+	map = nullptr;
+	if (player != nullptr)
+		delete player;
+	player = nullptr;
+	if (camera != nullptr)
+		delete camera;
+	camera = nullptr;
 }
 
 void StartGame::SetEnable(const bool value)
@@ -112,4 +122,6 @@ void StartGame::Render()
 	//button->Draw(*squareRenderer, *buttonRenderer, *textRenderer);
 }
 
-StartGame::~StartGame() = default;
+StartGame::~StartGame() {
+	OnDisable();
+}

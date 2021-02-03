@@ -15,6 +15,7 @@ Editor::Editor()
 
 Editor::~Editor()
 {
+	OnDisable();
 }
 
 void Editor::Initialize()
@@ -188,7 +189,7 @@ void Editor::Start()
 	this->SaveLoad->b_map_load->setOutline(true);
 	this->SaveLoad->b_map_load->setOutlineColor(Vector3<float>(1.0F));
 	this->SaveLoad->b_map_load->setParent(SaveLoad->loadPanel);
-	std::function<void(Button *, Button *)> loadListChanged = std::bind(&SaveLoadSystem::LoadListChanged, this->SaveLoad, std::placeholders::_1, std::placeholders::_2);
+	std::function<void(Button*, Button*)> loadListChanged = std::bind(&SaveLoadSystem::LoadListChanged, this->SaveLoad, std::placeholders::_1, std::placeholders::_2);
 	this->SaveLoad->load_listMaps->AddListener(loadListChanged);
 
 	//harita save paneli
@@ -216,7 +217,7 @@ void Editor::Start()
 	this->SaveLoad->b_map_save->setOutline(true);
 	this->SaveLoad->b_map_save->setOutlineColor(Vector3<float>(1.0F));
 	this->SaveLoad->b_map_save->setParent(SaveLoad->savePanel);
-	std::function<void(Button *, Button *)> saveListChanged = std::bind(&SaveLoadSystem::SaveListChanged, this->SaveLoad, std::placeholders::_1, std::placeholders::_2);
+	std::function<void(Button*, Button*)> saveListChanged = std::bind(&SaveLoadSystem::SaveListChanged, this->SaveLoad, std::placeholders::_1, std::placeholders::_2);
 	this->SaveLoad->save_listMaps->AddListener(saveListChanged);
 
 	//env_item
@@ -244,7 +245,7 @@ void Editor::Start()
 	this->rb_tileProperties->AddElement("Wall", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
 	this->rb_tileProperties->AddElement("Obstacle", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
 	this->rb_tileProperties->AddElement("Floor", Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-	std::function<void(RadioButtonElement *, RadioButtonElement *)> t = std::bind(&Editor::SelectedRbChanged, this, std::placeholders::_1, std::placeholders::_2);
+	std::function<void(RadioButtonElement*, RadioButtonElement*)> t = std::bind(&Editor::SelectedRbChanged, this, std::placeholders::_1, std::placeholders::_2);
 	this->rb_tileProperties->AddListener(t);
 
 	this->selectedMode = SelectedMode::TILE_MOD;
@@ -253,58 +254,125 @@ void Editor::Start()
 void Editor::OnEnable()
 {
 	currentTileSet = "cs2dnorm";
+	if (tils != nullptr)
+	{
+		for (auto tile : tils->tiles)
+		{
+			delete tile;
+		}
+		tils->tiles.clear();
+		for (auto tile : tils->tilesUI)
+		{
+			delete tile;
+		}
+		tils->tilesUI.clear();
+		delete tils;
+	}
 	Start();
-	NewMapResult *r = NewMap->NewMap("cs2dnorm", Vector2<int>(50), this->time, position, firstSelect, mapLimit, texture,
-									 tileCount, tilePanel, buildPanel, maxCellInColumn);
-	tiles = r->tiles;
-	tilesUI = r->tilesUI;
-	selectedTile = tilesUI.at(0)->getTile();
+	tils = nullptr;
+	tils = new NewMapResult();
+	NewMapResult r = NewMap->NewMap("cs2dnorm", Vector2<int>(50), this->time, position, firstSelect, mapLimit, texture,
+		tileCount, tilePanel, buildPanel, maxCellInColumn);
+	tils->tiles = r.tiles;
+	tils->tilesUI = r.tilesUI;
+	selectedTile = tils->tilesUI.at(0)->getTile();
 }
 
 void Editor::OnDisable()
 {
 	selectedTile = nullptr;
-	for (auto &tile : tilesUI)
-	{
-		delete tile;
-	}
-	for (auto &env : env_items)
-	{
-		delete env;
-	}
-	for (auto &tile : tiles)
-	{
-		delete tile;
-	}
 
-	tiles.clear();
+	for (auto& env : env_items)
+	{
+		if (env != nullptr)
+			delete env;
+	}
+	if (tils != nullptr)
+	{
+		for (auto tile : tils->tiles)
+		{
+			delete tile;
+		}
+		tils->tiles.clear();
+		for (auto tile : tils->tilesUI)
+		{
+			delete tile;
+		}
+		tils->tilesUI.clear();
+		delete tils;
+	}
+	tils = nullptr;
+
+	if (objects_ui != nullptr)
+		delete objects_ui;
+	objects_ui = nullptr;
+
 	env_items.clear();
-	tilesUI.clear();
 
-	delete envItemManager;
+	if (envItemManager != nullptr)
+		delete envItemManager;
+	envItemManager = nullptr;
 
-	delete NewMap;
-	delete SaveLoad;
-	delete b_cancel;
-	delete rb_tileProperties;
-	delete b_tileProperties;
-	delete tilePropertiesPanel;
-	delete objects_ui;
+	if (NewMap != nullptr)
+		delete NewMap;
+	NewMap = nullptr;
+	if (SaveLoad != nullptr)
+		delete SaveLoad;
+	SaveLoad = nullptr;
+	if (b_cancel != nullptr)
+		delete b_cancel;
+	b_cancel = nullptr;
+	if (rb_tileProperties != nullptr)
+		delete rb_tileProperties;
+	rb_tileProperties = nullptr;
+	if (b_tileProperties != nullptr)
+		delete b_tileProperties;
+	b_tileProperties = nullptr;
+	if (tilePropertiesPanel != nullptr)
+		delete tilePropertiesPanel;
+	tilePropertiesPanel = nullptr;
+	if (objects_ui != nullptr)
+		delete objects_ui;
+	objects_ui = nullptr;
 
-	delete b_save;
-	delete b_new;
-	delete b_load;
-	delete b_objects;
-	delete b_tiles;
+	if (b_save != nullptr)
+		delete b_save;
+	b_save = nullptr;
+	if (b_new != nullptr)
+		delete b_new;
+	b_new = nullptr;
+	if (b_load != nullptr)
+		delete b_load;
+	b_load = nullptr;
+	if (b_objects != nullptr)
+		delete b_objects;
+	b_objects = nullptr;
+	if (b_tiles != nullptr)
+		delete b_tiles;
+	b_tiles = nullptr;
 
-	delete tilePanel;
-	delete objectPanel;
-	delete controlPanel;
-	delete buildPanel;
+	if (tilePanel != nullptr)
+		delete tilePanel;
+	tilePanel = nullptr;
+	if (objectPanel != nullptr)
+		delete objectPanel;
+	objectPanel = nullptr;
+	if (controlPanel != nullptr)
+		delete controlPanel;
+	controlPanel = nullptr;
+	if (buildPanel != nullptr)
+		delete buildPanel;
+	buildPanel = nullptr;
 
-	delete menuRenderer;
-	delete squareRenderer;
-	delete worldRenderer;
+	if (menuRenderer != nullptr)
+		delete menuRenderer;
+	menuRenderer = nullptr;
+	if (squareRenderer != nullptr)
+		delete squareRenderer;
+	squareRenderer = nullptr;
+	if (worldRenderer != nullptr)
+		delete worldRenderer;
+	worldRenderer = nullptr;
 }
 
 void Editor::SetEnable(const bool value)
@@ -334,14 +402,14 @@ void Editor::Update()
 
 	if (InputManager::scrollYPressed && selectedMode == SelectedMode::TILE_MOD && tilePanel->isScrollable())
 	{
-		if (!tilesUI.empty())
+		if (!tils->tilesUI.empty())
 		{
-			bool check_1 = tilesUI.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
-			bool check_2 = tilesUI.at(tileCount - 1)->getLocalPosition().y == maxCellInRow * 32 && InputManager::scroll.y < 0;
+			bool check_1 = tils->tilesUI.at(0)->getLocalPosition().y == 0 && InputManager::scroll.y > 0;
+			bool check_2 = tils->tilesUI.at(tileCount - 1)->getLocalPosition().y == maxCellInRow * 32 && InputManager::scroll.y < 0;
 
 			if (!check_1 && !check_2)
 			{
-				for (auto &tile : tilesUI)
+				for (auto& tile : tils->tilesUI)
 				{
 					tile->setPosition(tile->getLocalPosition().x, tile->getLocalPosition().y + InputManager::scroll.y * 32);
 				}
@@ -360,7 +428,7 @@ void Editor::ProcessInput()
 	this->SaveLoad->ProcessInput();
 	this->objects_ui->ProcessInput();
 
-	for (auto &tile : tilesUI)
+	for (auto& tile : tils->tilesUI)
 	{
 		if (tile->isRenderable())
 		{
@@ -417,19 +485,48 @@ void Editor::ProcessInput()
 
 	if (NewMap->b_okey->isMouseDown())
 	{
-		NewMapResult *r = NewMap->B_NewMap(this->time, position, firstSelect, mapLimit, texture,
-										   tileCount, tilePanel, buildPanel, maxCellInColumn);
+		NewMapResult t = NewMap->B_NewMap(this->time, position, firstSelect, mapLimit, texture,
+			tileCount, tilePanel, buildPanel, maxCellInColumn);
 
-		if (!r->tiles.empty() && !r->tilesUI.empty())
+		if (!t.tiles.empty() && !t.tilesUI.empty())
 		{
+			if (tils != nullptr)
+			{
+				for (auto tile : tils->tiles)
+				{
+					delete tile;
+				}
+				tils->tiles.clear();
+				for (auto tile : tils->tilesUI)
+				{
+					delete tile;
+				}
+				tils->tilesUI.clear();
+				delete tils;
+			}
+			tils = nullptr;
 			NewMap->newPanel->setEnable(false);
-			tiles = r->tiles;
-			tilesUI = r->tilesUI;
-			selectedTile = tilesUI.at(0)->getTile();
+			tils = new NewMapResult();
+			tils->tiles = t.tiles;
+			tils->tilesUI = t.tilesUI;
 		}
 		else
 		{
-			//oops
+
+			for (auto tile : t.tiles)
+			{
+				delete tile;
+			}
+			t.tiles.clear();
+			for (auto tile : t.tilesUI)
+			{
+				delete tile;
+			}
+			t.tilesUI.clear();
+			//delete t;
+
+		//t = nullptr;
+		//oops
 		}
 	}
 
@@ -474,8 +571,18 @@ void Editor::ProcessInput()
 		std::string newMapName = SaveLoad->t_load->getText();
 		OnDisable();
 		OnEnable();
-		tiles = SaveLoad->LoadMap(newMapName);
-		firstSelect = false;
+		currentTileSet = "cs2dnorm";
+		if (tils != nullptr)
+		{
+			for (auto tile : tils->tiles)
+			{
+				delete tile;
+			}
+			tils->tiles.clear();
+		}
+
+		tils->tiles = SaveLoad->LoadMap(newMapName);
+		selectedTile = tils->tilesUI.at(0)->getTile();
 	}
 
 	if (b_tileProperties->isMouseDown())
@@ -485,8 +592,8 @@ void Editor::ProcessInput()
 	}
 
 	bool panelsPressed = buildPanel->isPressed || tilePropertiesPanel->isPressed ||
-						 buildPanel->isMouseHover(false) || NewMap->isPressedOrHover() ||
-						 tilePropertiesPanel->isMouseHover(false) || SaveLoad->isPressedOrHover() || envItemManager->isPressedOrHover();
+		buildPanel->isMouseHover(false) || NewMap->isPressedOrHover() ||
+		tilePropertiesPanel->isMouseHover(false) || SaveLoad->isPressedOrHover() || envItemManager->isPressedOrHover();
 
 	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
 	{
@@ -524,11 +631,11 @@ void Editor::ProcessInput()
 			{
 				if (env_items[i]->getObjID() == selectedItem->getObjID())
 				{
-					for (std::vector<int>::size_type j = 0; j < tiles.size(); j++)
+					for (std::vector<int>::size_type j = 0; j < tils->tiles.size(); j++)
 					{
-						if (tiles[j]->item != nullptr && tiles[j]->item->getObjID() == selectedItem->getObjID())
+						if (tils->tiles[j]->item != nullptr && tils->tiles[j]->item->getObjID() == selectedItem->getObjID())
 						{
-							tiles[j]->item = nullptr;
+							tils->tiles[j]->item = nullptr;
 							break;
 						}
 					}
@@ -550,14 +657,14 @@ void Editor::ProcessInput()
 			{
 				Vector2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
 				Vector2 selectedCell = Utils::PositionToCell(wd);
-				for (auto &tile : tiles)
+				for (auto& tile : tils->tiles)
 				{
 					if (tile->cell == selectedCell)
 					{
 						Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile->sprite, Vector2<int>(Game_Parameters::SIZE_TILE), selectedTile->getType(), selectedTile->frame);
-						Button *bt = new Button(tilee);
 						if (!(selectedTile->frame == tile->button->getTile()->frame))
 						{
+							Button* bt = new Button(tilee);
 							tile->SetButton(bt);
 							break;
 						}
@@ -574,13 +681,13 @@ void Editor::ProcessInput()
 			{
 				Vector2 wd = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
 				Vector2 selectedCell = Utils::PositionToCell(wd);
-				for (auto &tile : tiles)
+				for (auto& tile : tils->tiles)
 				{
 					if (tile->cell == selectedCell)
 					{
 						if (tile->item == nullptr)
 						{
-							Env_Item *a = new Env_Item(1, Utils::CellToPosition(selectedCell));
+							Env_Item* a = new Env_Item(1, Utils::CellToPosition(selectedCell));
 							tile->SetItem(a);
 							break;
 						}
@@ -600,7 +707,7 @@ void Editor::Render()
 
 	Vector2<int> ms = Utils::PositionToCell(Utils::ScreenToWorld(camera->view, InputManager::mousePos));
 	bool f = false;
-	for (auto &tile_1 : tiles)
+	for (auto& tile_1 : tils->tiles)
 	{
 		tile_1->button->Draw(*worldRenderer, *squareRenderer);
 
@@ -629,9 +736,9 @@ void Editor::Render()
 
 	SaveLoad->Render(*menuRenderer, *squareRenderer);
 
-	if (!tilesUI.empty())
+	if (!tils->tilesUI.empty())
 	{
-		for (auto &tile : tilesUI)
+		for (auto& tile : tils->tilesUI)
 		{
 			if (firstSelect && selectedTile->GetID() == tile->getTile()->GetID())
 			{
@@ -650,7 +757,7 @@ void Editor::Render()
 	objects_ui->Draw(*menuRenderer, *squareRenderer);
 }
 
-void Editor::SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n)
+void Editor::SelectedRbChanged(RadioButtonElement* old, RadioButtonElement* n)
 {
 	selectedTile->setType((TileTypes)n->getIndex());
 }

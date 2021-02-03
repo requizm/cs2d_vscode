@@ -2,7 +2,9 @@
 
 Menu::Menu() = default;
 
-Menu::~Menu() = default;
+Menu::~Menu() {
+	OnDisable();
+}
 
 void Menu::Start()
 {
@@ -48,7 +50,7 @@ void Menu::Start()
 	this->b_newGame->setOutlineColor(Vector3<float>(1.0F));
 	this->b_newGame->setParent(newPanel, true);
 
-	std::function<void(Button *, Button *)> mapChange = std::bind(&Menu::selectedMapChange, this, std::placeholders::_1, std::placeholders::_2);
+	std::function<void(Button*, Button*)> mapChange = std::bind(&Menu::selectedMapChange, this, std::placeholders::_1, std::placeholders::_2);
 	this->mapNames->AddListener(mapChange);
 }
 
@@ -72,25 +74,52 @@ void Menu::OnEnable()
 
 void Menu::OnDisable()
 {
-	delete l_console;
-	delete l_newgame;
-	delete l_options;
-	delete l_editor;
+	if (l_console != nullptr)
+		delete l_console;
+	l_console = nullptr;
+	if (l_newgame != nullptr)
+		delete l_newgame;
+	l_newgame = nullptr;
+	if (l_options != nullptr)
+		delete l_options;
+	l_options = nullptr;
+	if (l_editor != nullptr)
+		delete l_editor;
+	l_editor = nullptr;
 
-	delete t_test;
-	delete optionsPanel;
+	if (t_test != nullptr)
+		delete t_test;
+	t_test = nullptr;
+	if (optionsPanel != nullptr)
+		delete optionsPanel;
+	optionsPanel = nullptr;
 
-	delete mapNames;
+	if (mapNames != nullptr)
+		delete mapNames;
+	mapNames = nullptr;
 
-	delete t_mapName;
-	delete b_newGame;
-	delete mapsPanel;
-	delete newPanel;
+	if (t_mapName != nullptr)
+		delete t_mapName;
+	t_mapName = nullptr;
+	if (b_newGame != nullptr)
+		delete b_newGame;
+	b_newGame = nullptr;
+	if (mapsPanel != nullptr)
+		delete mapsPanel;
+	mapsPanel = nullptr;
+	if (newPanel != nullptr)
+		delete newPanel;
+	newPanel = nullptr;
 
-	delete textRenderer;
-
-	delete menuRenderer;
-	delete squareRenderer;
+	if (textRenderer != nullptr)
+		delete textRenderer;
+	textRenderer = nullptr;
+	if (menuRenderer != nullptr)
+		delete menuRenderer;
+	menuRenderer = nullptr;
+	if (squareRenderer != nullptr)
+		delete squareRenderer;
+	squareRenderer = nullptr;
 }
 
 void Menu::SetEnable(const bool value)
@@ -185,7 +214,7 @@ void Menu::Render()
 	//t_test->Draw(menuRenderer, squareRenderer);
 }
 
-void Menu::selectedMapChange(Button *old, Button *n)
+void Menu::selectedMapChange(Button * old, Button * n)
 {
 	t_mapName->setText(n->getText());
 }

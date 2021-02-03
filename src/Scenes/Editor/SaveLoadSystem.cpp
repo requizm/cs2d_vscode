@@ -1,4 +1,5 @@
 #include "SaveLoadSystem.hpp"
+
 #include "Editor.hpp"
 
 SaveLoadSystem::SaveLoadSystem()
@@ -54,13 +55,13 @@ void SaveLoadSystem::Render(SpriteRenderer &menuRenderer, SquareRenderer &square
 
 void SaveLoadSystem::SaveMap()
 {
-    if (!Editor::instance().tiles.empty() && !t_save->getText().empty())
+    if (!Editor::instance().tils->tiles.empty() && !t_save->getText().empty())
     {
         rapidxml::xml_document<> doc;
         rapidxml::xml_node<> *node_map = doc.allocate_node(rapidxml::node_element, "map");
         Logger::WriteLog("xml_node olusturuldu");
         //int i = 0;
-        for (auto &tile : Editor::instance().tiles)
+        for (auto &tile : Editor::instance().tils->tiles)
         {
             rapidxml::xml_node<> *node_tile = doc.allocate_node(rapidxml::node_element, "tile");
             char *cellX = doc.allocate_string(std::to_string(tile->cell.x).c_str());

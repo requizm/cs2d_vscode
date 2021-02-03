@@ -18,6 +18,7 @@ public:
 protected:
     void onMouseDown() override;
     void onMouseUp() override;
+    Button *btn;
 };
 
 class ListItem : public UIObject

@@ -1,5 +1,4 @@
 #include "Env_Item.hpp"
-
 #include "../Editor.hpp"
 
 Env_Item::Env_Item()
@@ -16,6 +15,7 @@ Env_Item::Env_Item(int id, Vector2<int> position)
 Env_Item::~Env_Item()
 {
     button->removeParent();
+    delete button;
 }
 
 void Env_Item::Initialize()
