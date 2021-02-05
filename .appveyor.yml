@@ -7,6 +7,7 @@ build_script:
   - sh: sudo apt-get -y install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
   - sh: pwd
   - sh: ls
-  - sh: cmake -BBuild -S/home/appveyor/projects/cs2d-vscode
+  - sh: mkdir Build
+  - sh: cmake -BBuild 
   - cmd: cmake -BBuild
   - cmake --build Build
