@@ -8,6 +8,6 @@ build_script:
   - sh: pwd
   - sh: ls
   - sh: mkdir Build
-  - sh: cmake -BBuild 
+  - sh: cmake -B Build -S .
   - cmd: cmake -BBuild
   - cmake --build Build
