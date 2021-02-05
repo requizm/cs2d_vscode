@@ -74,3 +74,7 @@ if(MSVC_IDE)
 	# Run macro
 	GroupSources(src)
 endif()
+
+if (UNIX)
+    execute_process(COMMAND rmdir dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
+endif (UNIX)
