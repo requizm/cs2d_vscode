@@ -8,17 +8,13 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_language(CXX)
 
-#set(CMAKE_SOURCE_DIR ../)
-#set(CMAKE_BINARY_DIR ../)
-
 # Add source files
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 	
 # Add header files
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/src/*.hpp)
-	
-#list(REMOVE_ITEM SOURCE_FILES "src/Common.cpp")
-#list(REMOVE_ITEM HEADER_FILES "src/Common.hpp")
+
+
 list(FILTER SOURCE_FILES EXCLUDE REGEX ".*src/Common.cpp$")
 list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.hpp$")
 	
@@ -26,16 +22,17 @@ list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.hpp$")
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
 if (UNIX)
+	execute_process(COMMAND rmdir dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 	message("unix")
-    execute_process(COMMAND rmdir dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
+	include_directories("${CMAKE_SOURCE_DIR}/include")
 endif (UNIX)
 
 if (WIN32)
 	message("win32")
+	include_directories("${CMAKE_SOURCE_DIR}/include")
 endif (WIN32)
 
 message("include")
-include_directories("${CMAKE_SOURCE_DIR}/include")
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/../bin/Release)
 
 execute_process(COMMAND git submodule update --init WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})

@@ -1,6 +1,7 @@
 os:
 - Visual Studio 2017
 - Visual Studio 2019
+- Ubuntu
 
 build_script:
   - cmake -BBuild
