@@ -18,9 +18,9 @@ make
 ___
   
 ### Used Libraries  
-- [glfw](https://github.com/glfw/glfw)
-- [glew](https://github.com/Perlmint/glew-cmake)
-- [freetype 2.10.0](https://github.com/aseprite/freetype2)
+- [glfw dep](https://github.com/glfw/glfw)
+- [glew dep](https://github.com/Perlmint/glew-cmake)
+- [freetype dep](https://github.com/aseprite/freetype2)
 - [stb_image](https://github.com/nothings/stb)
 - [rapidxml 1.13](http://rapidxml.sourceforge.net/)
 - [spdlog 1.8.2](https://github.com/gabime/spdlog)

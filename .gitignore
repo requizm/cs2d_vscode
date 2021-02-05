@@ -49,11 +49,9 @@ bin/64/**
 bin/Release/cs2d_vscode.exe
 bin/Debug/cs2d_vscode.exe
 tracy/*
-deps/glfw/**
-deps/glew/**
-deps/freetype/**
 include/glfw/**
-include/glew/**
+include/GL/**
+include/ft2build.h
 include/freetype/**
 *.pb
 .scannerwork/.sonar_lock

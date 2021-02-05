@@ -7,8 +7,7 @@
             "command": "C:\\mingw32\\bin\\g++.exe",
             "args": [
                 "-I${workspaceFolder}\\include",
-                "-L${workspaceFolder}\\lib\\32",
-                "-L${workspaceFolder}\\lib\\32\\mingw",
+                "-L${workspaceFolder}\\lib",
                 "-g",
                 "${workspaceFolder}\\src\\main.cpp",
                 "${workspaceFolder}\\src\\Common.cpp",
