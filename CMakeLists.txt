@@ -23,7 +23,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
 if (UNIX)
 	message("unix")
-	execute_process(COMMAND rm -rf dirent/ WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
+	execute_process(COMMAND rm -rf dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 	execute_process(COMMAND rmdir dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 	include_directories("${CMAKE_SOURCE_DIR}/include")
 	install(TARGETS ${PROJECT_NAME}
@@ -31,8 +31,6 @@ if (UNIX)
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-)
-
 endif (UNIX)
 
 if (WIN32)
