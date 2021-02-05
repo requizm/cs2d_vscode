@@ -27,9 +27,9 @@ jobs:
       shell: bash
       run: |
         sudo apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
-        cmake -BBuild -G "MinGW Makefiles"
+        cmake -BBuild -G "Unix Makefiles"
         cd Build
-        mingw32-make.exe
+        make
   windows:
     # The CMake configure and build commands are platform agnostic and should work equally
     # well on Windows or Mac.  You can convert this to a matrix build if you need
@@ -45,3 +45,5 @@ jobs:
       shell: bash
       run: |
         cmake -BBuild -G "MinGW Makefiles" 
+        cd Build
+        mingw32-make.exe
