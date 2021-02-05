@@ -5,5 +5,7 @@ os:
 
 build_script:
   - sh: sudo apt-get -y install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+  - sh: pwd
+  - sh: ls
   - cmake -BBuild -S.
   - cmake --build Build
