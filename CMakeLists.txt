@@ -26,11 +26,11 @@ if (UNIX)
 	execute_process(COMMAND rm -rf dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 	execute_process(COMMAND rmdir dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 	include_directories("${CMAKE_SOURCE_DIR}/include")
-	install(TARGETS ${PROJECT_NAME}
-	EXPORT "${PROJECT_NAME}Config"
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+	#install(TARGETS ${PROJECT_NAME}
+	#EXPORT "${PROJECT_NAME}Config"
+    #ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    #LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    #RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif (UNIX)
 
 if (WIN32)
@@ -85,3 +85,7 @@ if(MSVC_IDE)
 	GroupSources(src)
 endif()
 
+if (UNIX)
+	message("unix-2")
+	execute_process(COMMAND make SYSTEM=linux-egl WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/deps/glew/auto)
+endif()
