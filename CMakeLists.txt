@@ -22,9 +22,13 @@ list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.hpp$")
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
 if (UNIX)
-	execute_process(COMMAND rmdir dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 	message("unix")
+	execute_process(COMMAND rm -rf dirent/ WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
+	execute_process(COMMAND rmdir dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 	include_directories("${CMAKE_SOURCE_DIR}/include")
+	INSTALL(TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION ${CMAKE_SOURCE_DIR}/lib)
+
 endif (UNIX)
 
 if (WIN32)
