@@ -60,7 +60,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE freetype)
 
 if(MINGW)
 	SET(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc")
-endif()
+endif(MINGW)
 
 if(MSVC_IDE)
 	message("msvc")
@@ -83,9 +83,9 @@ if(MSVC_IDE)
 
 	# Run macro
 	GroupSources(src)
-endif()
+endif(MSVC_IDE)
 
 if (UNIX)
 	message("unix-2")
 	execute_process(COMMAND make SYSTEM=linux-egl WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/deps/glew/auto)
-endif()
+endif(UNIX)
