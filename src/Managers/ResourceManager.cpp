@@ -108,7 +108,7 @@ Texture2D ResourceManager::loadTextureFromFile(const GLchar *file, GLboolean alp
 
 	if (!image)
 	{
-#ifdef DEBUG
+#ifdef _DEBUG
 		LOG_ERROR("texture yuklenmedi!");
 #endif // DEBUG
 	}

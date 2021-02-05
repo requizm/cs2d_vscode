@@ -30,7 +30,7 @@
 sonar-project.properties
 src/.scannerwork/report-task.txt
 
-
+.vs/**
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -49,6 +49,12 @@ bin/64/**
 bin/Release/cs2d_vscode.exe
 bin/Debug/cs2d_vscode.exe
 tracy/*
+deps/glfw/**
+deps/glew/**
+deps/freetype/**
+include/glfw/**
+include/glew/**
+include/freetype/**
 *.pb
 .scannerwork/.sonar_lock
 .scannerwork/scanner-report/analysis.log

@@ -109,7 +109,7 @@ void SaveLoadSystem::SaveMap()
         if (!fileC)
         {
             std::string str = a + "dosyasi acilamadi";
-#ifdef DEBUG
+#ifdef _DEBUG
             LOG_ERROR(str);
 #endif // DEBUG
 

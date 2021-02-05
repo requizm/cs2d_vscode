@@ -102,7 +102,7 @@ NewMapResult NewMapSystem::B_NewMap(float& dt, Vector2<int>& pos, bool& fSelect,
 	std::string tileSet = t_tile->getText();
 	if (sizeX.empty() || sizeY.empty() || tileSet.empty())
 	{
-#ifdef DEBUG
+#ifdef _DEBUG
 		LOG_ERROR("BOS");
 #endif // DEBUG
 
@@ -110,7 +110,7 @@ NewMapResult NewMapSystem::B_NewMap(float& dt, Vector2<int>& pos, bool& fSelect,
 	}
 	if (ResourceManager::GetTexture(tileSet).Width == 0)
 	{
-#ifdef DEBUG
+#ifdef _DEBUG
 		LOG_ERROR("BOYLE BIR TEXTURE YOK");
 #endif // DEBUG
 
@@ -118,7 +118,7 @@ NewMapResult NewMapSystem::B_NewMap(float& dt, Vector2<int>& pos, bool& fSelect,
 	}
 	if (!Utils::TryStringToInt(sizeX.c_str()) || !Utils::TryStringToInt(sizeY.c_str()))
 	{
-#ifdef DEBUG
+#ifdef _DEBUG
 		LOG_ERROR("BUNLAR SAYI DEGIL");
 #endif // DEBUG
 
@@ -130,7 +130,7 @@ NewMapResult NewMapSystem::B_NewMap(float& dt, Vector2<int>& pos, bool& fSelect,
 
 	if (isizeX <= 0 || isizeY <= 0)
 	{
-#ifdef DEBUG
+#ifdef _DEBUG
 		LOG_ERROR("BUNLAR NEGATIF");
 #endif // DEBUG
 

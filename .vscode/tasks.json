@@ -8,6 +8,7 @@
             "args": [
                 "-I${workspaceFolder}\\include",
                 "-L${workspaceFolder}\\lib\\32",
+                "-L${workspaceFolder}\\lib\\32\\mingw",
                 "-g",
                 "${workspaceFolder}\\src\\main.cpp",
                 "${workspaceFolder}\\src\\Common.cpp",
@@ -23,7 +24,7 @@
                 "-std=c++17",
                 "-static-libstdc++",
                 "-static-libgcc",
-                "-DDEBUG"
+                "-D_DEBUG"
             ],
             "group": {
                 "kind": "build",

@@ -1,6 +1,6 @@
 #include "ListItem.hpp"
 
-ListItem::ListItem(Panel* panel) : UIObject(panel->getPosition(), panel->getScale(), *(panel->rend))
+ListItem::ListItem(Panel *panel) : UIObject(panel->getPosition(), panel->getScale(), *(panel->rend))
 {
 	this->panel = panel;
 }
@@ -13,16 +13,16 @@ ListItem::ListItem() : UIObject()
 
 ListItem::~ListItem()
 {
-	for (auto& item : items)
+	for (auto &item : items)
 	{
 		delete item;
 	}
 	UIObject::removeParent();
 }
 
-void ListItem::AddItem(std::string& text)
+void ListItem::AddItem(std::string &text)
 {
-	Button* bt = new Button(text, Vector2<int>(0.0F, static_cast<int>(i++ * 20)), Vector2<int>(panel->getSize().x, 20.0F), *(panel->rend), Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F, UIObjectType::LISTITEM);
+	Button *bt = new Button(text, Vector2<int>(0.0F, static_cast<int>(i++ * 20)), Vector2<int>(panel->getSize().x, 20.0F), *(panel->rend), Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F, UIObjectType::LISTITEM);
 	bt->setMouseClickColor(Vector3<float>(0.35F));
 	bt->setMouseHoverColor(Vector3<float>(0.25F));
 	bt->setLabelMouseHoverColor(Vector3<float>(1.0F));
@@ -41,16 +41,16 @@ void ListItem::Clear()
 	i = 0;
 }
 
-void ListItem::AddListener(std::function<void(Button*, Button*)> func)
+void ListItem::AddListener(std::function<void(Button *, Button *)> func)
 {
 	listeners.push_back(std::move(func));
 }
 
-void ListItem::Draw(SpriteRenderer& spriteRenderer, SquareRenderer& squareRenderer)
+void ListItem::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
 	if (panel->isEnable())
 	{
-		for (auto& item : items)
+		for (auto &item : items)
 		{
 			item->Draw(spriteRenderer, squareRenderer);
 		}
@@ -80,9 +80,10 @@ void ListItem::ProcessInput()
 				items[i]->selected = true;
 				selectedIndex = i;
 
-				for (auto& f : listeners)
+				for (auto &f : listeners)
 				{
-					if (old != -1) {
+					if (old != -1)
+					{
 
 						f(items[old], items[selectedIndex]);
 					}
@@ -114,7 +115,7 @@ void ListItem::Update()
 
 				if (!check_1 && !check_2)
 				{
-					for (auto& tile : items)
+					for (auto &tile : items)
 					{
 						tile->setPosition(tile->getLocalPosition().x, tile->getLocalPosition().y + InputManager::scroll.y * 20);
 					}
@@ -130,7 +131,7 @@ int ListItem::getSelectedIndex()
 	return selectedIndex;
 }
 
-ListItemElement::ListItemElement(Button* btn) : Button(*btn)
+ListItemElement::ListItemElement(Button *btn) : Button(*btn)
 {
 	this->btn = btn;
 
@@ -175,7 +176,7 @@ void ListItemElement::onMouseDown()
 		upTrigger = false;
 		downTrigger = true;
 		isPressed = true;
-		for (auto& f : listenersDown)
+		for (auto &f : listenersDown)
 		{
 			f();
 		}
@@ -188,7 +189,7 @@ void ListItemElement::onMouseUp()
 	{
 		if (isEnable())
 		{
-			for (auto& f : listenersUp)
+			for (auto &f : listenersUp)
 			{
 				f();
 			}

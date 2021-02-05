@@ -16,7 +16,7 @@ void XMLLoader::Load(std::string &mapName)
     std::ifstream fileC(mapName.c_str());
     if (!fileC)
     {
-#ifdef DEBUG
+#ifdef _DEBUG
         LOG_ERROR("dosya acilamadi: " + mapName);
 #endif // DEBUG
 

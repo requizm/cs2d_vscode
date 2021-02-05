@@ -1,7 +1,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#ifdef DEBUG
+#ifdef _DEBUG
 #include <spdlog/spdlog.h>
 #define LOG_ERROR(...) ::spdlog::error(__VA_ARGS__)
 #define LOG_WARNING(...) ::spdlog::warn(__VA_ARGS__)
