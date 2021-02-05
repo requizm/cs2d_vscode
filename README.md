@@ -6,6 +6,14 @@
   
 ___
   
+### Available compilers  
+- Mingw
+- Mingw-w64
+- MSVC
+- MYSY
+  
+___
+  
 ### How To Build  
 ```
 git clone https://github.com/requizm/cs2d_vscode
