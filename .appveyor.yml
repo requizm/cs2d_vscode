@@ -9,7 +9,9 @@ build_script:
   - sh: ls
   - sh: mkdir Build
   - sh: cmake -B Build -S .
+  - sh: ls
   - sh: cd Build
+  - sh: ls
   - sh: make
   - cmd: cmake -BBuild
   - cmd: cmake --build Build
