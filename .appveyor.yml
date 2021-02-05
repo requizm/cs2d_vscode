@@ -1,8 +1,9 @@
 os:
+- Ubuntu
 - Visual Studio 2017
 - Visual Studio 2019
-- Ubuntu
 
 build_script:
+  - sudo apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
   - cmake -BBuild
   - cmake --build Build
