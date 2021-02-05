@@ -25,10 +25,17 @@ list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.hpp$")
 # Define the executable
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
-# Define the include DIRs
+if (UNIX)
+	message("unix")
+    execute_process(COMMAND rmdir dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
+endif (UNIX)
+
+if (WIN32)
+	message("win32")
+endif (WIN32)
+
+message("include")
 include_directories("${CMAKE_SOURCE_DIR}/include")
-
-
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/../bin/Release)
 
 execute_process(COMMAND git submodule update --init WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -75,6 +82,3 @@ if(MSVC_IDE)
 	GroupSources(src)
 endif()
 
-if (UNIX)
-    execute_process(COMMAND rmdir dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
-endif (UNIX)
