@@ -6,6 +6,7 @@
 #include "Window.hpp"
 
 std::unique_ptr<Game> cs2d = std::make_unique<Game>(Game());
+auto logger = spdlog::basic_logger_mt("write_logger", "log.txt");
 
 int nbFrames = 0;
 
@@ -18,8 +19,6 @@ int main(int argc, char *argv[])
 
 	// Initialize game
 	cs2d->Init();
-
-	Logger::WriteLog("cum");
 
 	// DeltaTime variables
 	float lastFrame = 0.0F;

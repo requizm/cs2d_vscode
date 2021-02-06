@@ -11,7 +11,6 @@ StartGame::StartGame() = default;
 
 void StartGame::Initialize(const std::string & mapName)
 {
-	Logger::WriteLog("StartGame->StartGame()");
 	this->map = new Map(mapName.c_str(), mapName.c_str());
 	this->renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 	this->camera = new Camera(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
@@ -23,7 +22,6 @@ void StartGame::Initialize(const std::string & mapName)
 
 void StartGame::Start()
 {
-	Logger::WriteLog("StartGame->Start()");
 	Sprite ct1_0 = Sprite(ResourceManager::GetTexture("ct1"), 0, 0, 32, 32);
 	Sprite ct1_1 = Sprite(ResourceManager::GetTexture("ct1"), 0, 32, 32, 32);
 	Sprite ct1_2 = Sprite(ResourceManager::GetTexture("ct1"), 0, 64, 32, 32);

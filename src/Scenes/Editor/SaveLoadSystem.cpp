@@ -59,7 +59,6 @@ void SaveLoadSystem::SaveMap()
     {
         rapidxml::xml_document<> doc;
         rapidxml::xml_node<> *node_map = doc.allocate_node(rapidxml::node_element, "map");
-        Logger::WriteLog("xml_node olusturuldu");
         //int i = 0;
         for (auto &tile : Editor::instance().tils->tiles)
         {
@@ -109,11 +108,7 @@ void SaveLoadSystem::SaveMap()
         if (!fileC)
         {
             std::string str = a + "dosyasi acilamadi";
-
-            LOG_ERROR(str);
-
-
-            Logger::WriteLog(str);
+            WRITE_ERROR(str);
             exit(EXIT_FAILURE);
         }
         fileC << doc;

@@ -8,7 +8,6 @@ Menu::~Menu() {
 
 void Menu::Start()
 {
-	Logger::WriteLog("Menu::Start()");
 	this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
 	this->textRenderer = new TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
 	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 16);
@@ -56,7 +55,6 @@ void Menu::Start()
 
 void Menu::Initialize(Sprite menuSprites[4])
 {
-	Logger::WriteLog("Menu::Menu(menuSprites[4], menuRenderer)");
 	for (int i = 0; i < 4; i++)
 	{
 		this->menuSprites[i] = menuSprites[i];

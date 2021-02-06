@@ -39,9 +39,9 @@ ___
 - [glfw dep](https://github.com/glfw/glfw)
 - [glew dep](https://github.com/Perlmint/glew-cmake)
 - [freetype dep](https://github.com/aseprite/freetype2)
+- [spdlog dep](https://github.com/gabime/spdlog)
 - [stb_image](https://github.com/nothings/stb)
 - [rapidxml 1.13](http://rapidxml.sourceforge.net/)
-- [spdlog 1.8.2](https://github.com/gabime/spdlog)
   
 ___
   

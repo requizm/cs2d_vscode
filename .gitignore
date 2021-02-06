@@ -53,6 +53,7 @@ include/glfw/**
 include/GL/**
 include/ft2build.h
 include/freetype/**
+include/spdlog/**
 *.pb
 .scannerwork/.sonar_lock
 .scannerwork/scanner-report/analysis.log

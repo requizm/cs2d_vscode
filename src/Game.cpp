@@ -6,7 +6,6 @@ GameState Game::state;
 
 Game::Game()
 {
-    Logger::WriteLog("Game->Game()");
     Game::state = GameState::MENU;
 }
 
@@ -14,7 +13,6 @@ Game::~Game() = default;
 
 void Game::Init()
 {
-    Logger::WriteLog("Game->Init()");
     initTextures();
     initShaders();
     initRenderers();
@@ -78,7 +76,6 @@ void Game::Render()
 
 void Game::NewGame()
 {
-    Logger::WriteLog("Game->NewGame()");
     Sprite awp = Sprite(ResourceManager::GetTexture("awp"));
     Sprite awp_d = Sprite(ResourceManager::GetTexture("awp_d"));
     Sprite famas = Sprite(ResourceManager::GetTexture("famas"));
@@ -129,7 +126,6 @@ void Game::NewGame()
 
 void Game::initTextures() const
 {
-    Logger::WriteLog("Game->initTextures()");
     //tiles
     ResourceManager::LoadTexture("../../resources/textures/tiles/cs2dnorm.png", GL_TRUE, "cs2dnorm");
 
@@ -167,7 +163,6 @@ void Game::initTextures() const
 
 void Game::initShaders()
 {
-    Logger::WriteLog("Game->initShaders()");
     ResourceManager::LoadShader("../../resources/shaders/textVertex.txt", "../../resources/shaders/textFragment.txt",
                                 nullptr, "text");
     ResourceManager::LoadShader("../../resources/shaders/spriteVertex.txt",
@@ -187,7 +182,6 @@ void Game::initShaders()
 
 void Game::initMenuSprites()
 {
-    Logger::WriteLog("Game->initMenuSprites()");
     Sprite cs2d = Sprite(ResourceManager::GetTexture("cs2d"));
     Sprite unrealsoftware = Sprite(ResourceManager::GetTexture("unrealsoftware"));
     Sprite splash = Sprite(ResourceManager::GetTexture("splash"));
@@ -201,7 +195,6 @@ void Game::initMenuSprites()
 
 void Game::initMaps()
 {
-    Logger::WriteLog("Game->initMaps()");
     //maps = std::vector<Map>();
     //const Map test_map = Map("../../resources/levels/hadiyav.xml", "test_one");
     //maps.push_back(test_map);
@@ -209,7 +202,6 @@ void Game::initMaps()
 
 void Game::initRenderers()
 {
-    Logger::WriteLog("Game->initRenderers()");
     spriteRenderer = SpriteRenderer(ResourceManager::GetShader("sprite"));
     menuRenderer = SpriteRenderer(ResourceManager::GetShader("menu"));
 }

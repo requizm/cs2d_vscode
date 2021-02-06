@@ -44,7 +44,6 @@ void Weapon::SetParent(GameObject *go)
 	{
 		return;
 	}
-	Logger::WriteLog("Weapon->SetParent()");
 	SetPosition(go->GetPositionOfCenter());
 	SetPosition(GetPosition().x - Game_Parameters::SIZE_TILE, GetPosition().y - Game_Parameters::SIZE_TILE / 2);
 	parent = go;
@@ -55,7 +54,6 @@ void Weapon::RemoveParent()
 {
 	if (IsParent())
 	{
-		Logger::WriteLog("Weapon->RemoveParent()");
 		Vector2 t = parent->GetPositionOfCenter();
 		this->parent = nullptr;
 		setCellPosition(Utils::PositionToCell(t));
@@ -67,5 +65,4 @@ void Weapon::RemoveParent()
 		}*/
 		return;
 	}
-	Logger::WriteLog("Weapon->RemoveParent() -->parent zaten yok");
 }

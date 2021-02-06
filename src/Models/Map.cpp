@@ -6,7 +6,6 @@ Map::Map(const GLchar *file, const std::string &name)
 {
 	this->name = name;
 	Load(file);
-	//Logger::WriteLog("GameObject->Destroy()");
 }
 
 Map::~Map()

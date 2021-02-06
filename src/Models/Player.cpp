@@ -134,20 +134,17 @@ void Player::SlotInput()
 }
 void Player::SetMap(Map *map)
 {
-	Logger::WriteLog("Player->SetMap(" + map->GetName() + ")");
 	//this->map = std::move(map);
 	this->map = map;
 }
 
 void Player::setVelocity(const int velocity)
 {
-	Logger::WriteLog("Player->SetVelocity(" + std::to_string(velocity) + ")");
 	this->velocity = velocity;
 }
 
 void Player::takeDamage(const int value)
 {
-	Logger::WriteLog("Player->takeDamage(" + std::to_string(value) + ")");
 	health -= value;
 	if (health <= 0)
 		Destroy();
@@ -155,30 +152,25 @@ void Player::takeDamage(const int value)
 
 void Player::OnDestroy()
 {
-	Logger::WriteLog("Player->OnDestroy()");
 }
 
 void Player::Destroy()
 {
-	Logger::WriteLog("Player->Destroy()");
 	OnDestroy();
 	isDestroyed = true;
 }
 
 int Player::getVelocity() const
 {
-	Logger::WriteLog("Player->takeDamage(" + std::to_string(velocity) + ")");
 	return velocity;
 }
 
 int Player::getHealth() const
 {
-	Logger::WriteLog("Player->getHealth(" + std::to_string(health) + ")");
 	return health;
 }
 
 int Player::getMaxHealth() const
 {
-	Logger::WriteLog("Player->getMaxHealth(" + std::to_string(maxHealth) + ")");
 	return maxHealth;
 }

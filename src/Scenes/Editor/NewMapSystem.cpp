@@ -103,16 +103,19 @@ NewMapResult NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect,
 	if (sizeX.empty() || sizeY.empty() || tileSet.empty())
 	{
 		LOG_ERROR("BOS");
+		WRITE_ERROR("BOS");
 		return (NewMapResult());
 	}
 	if (ResourceManager::GetTexture(tileSet).Width == 0)
 	{
 		LOG_ERROR("BOYLE BIR TEXTURE YOK");
+		WRITE_ERROR("BOYLE BIR TEXTURE YOK");
 		return (NewMapResult());
 	}
 	if (!Utils::TryStringToInt(sizeX.c_str()) || !Utils::TryStringToInt(sizeY.c_str()))
 	{
 		LOG_ERROR("BUNLAR SAYI DEGIL");
+		WRITE_ERROR("BUNLAR SAYI DEGIL");
 		return (NewMapResult());
 	}
 
@@ -122,6 +125,7 @@ NewMapResult NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect,
 	if (isizeX <= 0 || isizeY <= 0)
 	{
 		LOG_ERROR("BUNLAR NEGATIF");
+		WRITE_ERROR("BUNLAR NEGATIF");
 		return (NewMapResult());
 	}
 	return NewMap(tileSet, Vector2<int>(isizeX, isizeY), dt, pos, fSelect, mLimit, texture, tCount, tPanel, bPanel, maxCell);

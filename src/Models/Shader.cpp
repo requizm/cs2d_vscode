@@ -99,6 +99,7 @@ void Shader::checkCompileErrors(GLuint object, const std::string &type) const
 		{
 			glGetShaderInfoLog(object, 1024, NULL, infoLog);
 			LOG_ERROR("ERROR::SHADER: Compile-time error: Type: " + type + "\n" + infoLog);
+			WRITE_ERROR("ERROR::SHADER: Compile-time error: Type: " + type + "\n" + infoLog);
 		}
 	}
 	else
@@ -108,6 +109,7 @@ void Shader::checkCompileErrors(GLuint object, const std::string &type) const
 		{
 			glGetProgramInfoLog(object, 1024, NULL, infoLog);
 			LOG_ERROR("ERROR::Shader: Link-time error: Type: " + type + "\n" + infoLog);
+			WRITE_ERROR("ERROR::Shader: Link-time error: Type: " + type + "\n" + infoLog);
 		}
 	}
 }

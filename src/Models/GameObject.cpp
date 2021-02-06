@@ -12,7 +12,6 @@ GameObject::GameObject(Vector2<int> pos, const Sprite &sprite, Vector2<int> size
 	this->objType = (ObjectType)objType;
 	this->setID(Utils::GenerateID());
 	BuildTransform();
-	//Logger::WriteLog("" + GetObjectTypeString() + " olusturuldu");
 }
 
 GameObject::~GameObject() = default;
@@ -44,7 +43,6 @@ Matrix4<float> GameObject::GetTransform()
 	{
 		return parent->GetTransform() * localTransform;
 	}
-	//Logger::WriteLog("GameObject->GetTransform() " + glm::to_string(localTransform) + "");
 	return globalTransform;
 }
 
@@ -87,7 +85,6 @@ void GameObject::SetTransform(const Matrix4<float> &transform)
 		localTransform.values[15] = temp[3][3];*/
 		return;
 	}
-	//Logger::WriteLog("GameObject->SetTransform() " + glm::to_string(transform) + "");
 	globalTransform = transform;
 }
 
@@ -97,7 +94,6 @@ void GameObject::SetParent(GameObject *go)
 	{
 		//globalTransform = GetTransform();
 	}
-	Logger::WriteLog("" + GetObjectTypeString() + "->SetParent()");
 	parent = go;
 	//parentPositionDelta = localPosition - go->GetPosition();
 	//localTransform = glm::inverse(parent->GetTransform()) * globalTransform;
@@ -107,11 +103,9 @@ void GameObject::RemoveParent()
 {
 	if (IsParent())
 	{
-		Logger::WriteLog("" + GetObjectTypeString() + "->RemoveParent()");
 		this->parent = nullptr;
 		return;
 	}
-	Logger::WriteLog("" + GetObjectTypeString() + "->RemoveParent() -->parent zaten yok");
 }
 
 void GameObject::setID(int id)
@@ -124,7 +118,6 @@ void GameObject::SetTransform(Vector2<int> pos, Vector2<int> size, int rot)
 	this->globalSize = size;
 	this->globalRotation = rot;
 	SetPosition(pos);
-	Logger::WriteLog("" + GetObjectTypeString() + "->SetTransform() ->pos(" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + "), size(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ") rot(" + std::to_string(rot) + ") ");
 }
 
 void GameObject::SetPosition(const Vector2<int> pos)
@@ -132,7 +125,6 @@ void GameObject::SetPosition(const Vector2<int> pos)
 	this->globalPosition = pos;
 	//localPosition = pos;
 	BuildTransform();
-	//Logger::WriteLog("GameObject->SetPosition(" + std::to_string(pos.x) + " " + std::to_string(pos.y) + ")");
 }
 
 void GameObject::SetPosition(const int x, const int y)
@@ -141,21 +133,18 @@ void GameObject::SetPosition(const int x, const int y)
 	/*localPosition.x = x;
 	localPosition.y = y;*/
 	BuildTransform();
-	//Logger::WriteLog("GameObject->SetPosition(" + std::to_string(x) + ", " + std::to_string(y) + " )");
 }
 
 void GameObject::SetSize(Vector2<int> size)
 {
 	this->globalSize = size;
 	BuildTransform();
-	Logger::WriteLog("" + GetObjectTypeString() + "->SetSize(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ")");
 }
 
 void GameObject::SetRotation(int rot)
 {
 	this->globalRotation = rot;
 	BuildTransform();
-	//Logger::WriteLog("GameObject->SetRotation(" + std::to_string(rot) + ")");
 }
 
 void GameObject::setCellPosition(int x, int y)
@@ -169,31 +158,26 @@ void GameObject::setCellPosition(Vector2<int> pos)
 
 GameObject *GameObject::GetParent()
 {
-	Logger::WriteLog("" + GetObjectTypeString() + "->GetParentObject()");
 	return parent;
 }
 
 int GameObject::GetObjectType()
 {
-	Logger::WriteLog("" + GetObjectTypeString() + "->GetObjectType()");
 	return (int)this->objType;
 }
 
 void GameObject::Destroy()
 {
-	Logger::WriteLog("" + GetObjectTypeString() + "->Destroy()");
 	OnDestroy();
 	isDestroyed = true;
 }
 
 void GameObject::OnDestroy()
 {
-	Logger::WriteLog("" + GetObjectTypeString() + "->OnDestroy()");
 }
 
 GLboolean GameObject::IsDestroyed() const
 {
-	//Logger::WriteLog("GameObject->IsDestroyed() " + std::to_string(isDestroyed) + "");
 	return isDestroyed;
 }
 
@@ -213,13 +197,11 @@ bool GameObject::IsParent()
 	{
 		returnn = false;
 	}
-	//Logger::WriteLog("GameObject->IsParent() " + std::to_string(returnn) + "");
 	return returnn;
 }
 
 GLboolean GameObject::IsCollision() const
 {
-	//Logger::WriteLog("GameObject->IsCollision() " + std::to_string(isCollision) + "");
 	return isCollision;
 }
 
