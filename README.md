@@ -1,6 +1,8 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/requizm/cs2d_vscode/badge)](https://www.codefactor.io/repository/github/requizm/cs2d_vscode)
 ![Build](https://github.com/requizm/cs2d_vscode/workflows/build/badge.svg)
 [![Build status](https://ci.appveyor.com/api/projects/status/7qjq7a7vhsh5cbow?svg=true)](https://ci.appveyor.com/project/requizm/cs2d-vscode)
+![GitHub repo size](https://img.shields.io/github/repo-size/requizm/cs2d_vscode)
+![GitHub last commit](https://img.shields.io/github/last-commit/requizm/cs2d_vscode)
 
 
 **WIP**  
@@ -33,7 +35,7 @@ cmake -BBuild
 cd Build
 make
 ```
-
+  
 *Linux*
 ```
 sudo apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
