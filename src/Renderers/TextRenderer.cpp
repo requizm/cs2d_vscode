@@ -53,16 +53,16 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 	FT_Library ft;
 	if (FT_Init_FreeType(&ft)) // All functions return a value different than 0 whenever an error occurred
 	{
-		LOG_ERROR("ERROR::FREETYPE: Could not init FreeType Library");
 		WRITE_ERROR("ERROR::FREETYPE: Could not init FreeType Library");
+		exit(EXIT_FAILURE);
 	}
 
 	// Load font as face
 	FT_Face face;
 	if (FT_New_Face(ft, font.c_str(), 0, &face))
 	{
-		LOG_ERROR("ERROR::FREETYPE: Failed to load font");
 		WRITE_ERROR("ERROR::FREETYPE: Failed to load font");
+		exit(EXIT_FAILURE);
 	}
 	// Set size to load glyphs as
 	FT_Set_Pixel_Sizes(face, 0, fontSize);
@@ -74,7 +74,6 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 		// Load character glyph
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
 		{
-			LOG_ERROR("ERROR::FREETYTPE: Failed to load Glyph");
 			WRITE_ERROR("ERROR::FREETYTPE: Failed to load Glyph");
 			continue;
 		}

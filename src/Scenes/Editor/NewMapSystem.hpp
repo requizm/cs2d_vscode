@@ -30,12 +30,8 @@ public:
     bool isEditMode();
     bool isMouseHover();
 
-    NewMapResult NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
-                         Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, Panel *tPanel,
-                         Panel *bPanel, int maxCell);
-    NewMapResult B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit,
-                           Vector2<int> &texture, int &tCount, Panel *tPanel,
-                           Panel *bPanel, int maxCell);
+    NewMapResult NewMap(std::string tileSet, Vector2<int> mapSize);
+    NewMapResult B_NewMap();
 
     Panel *newPanel;
     Label *l_tile, *l_mapSize, *l_x;

@@ -195,6 +195,7 @@ void SaveLoadSystem::B_LoadMap()
     {
         load_listMaps->AddItem(maps[i]);
     }
+    load_listMaps->Select(0);
     this->loadPanel->setEnable(true);
 }
 

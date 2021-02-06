@@ -66,32 +66,7 @@ void ListItem::ProcessInput()
 			items[i]->ProcessInput();
 			if (items[i]->isMouseDown() && items[i]->isRenderable() && i != selectedIndex)
 			{
-				int old = selectedIndex;
-				if (selectedIndex != -1)
-				{
-					items[selectedIndex]->setButtonColor(Vector3<float>(0.21F));
-					items[selectedIndex]->setMouseHoverColor(Vector3<float>(0.25F));
-					items[selectedIndex]->setLabelColor(Vector3<float>(0.58F));
-					items[selectedIndex]->selected = false;
-				}
-				items[i]->setButtonColor(Vector3<float>(0.35F));
-				items[i]->setMouseHoverColor(Vector3<float>(0.35F));
-				items[i]->setLabelColor(Vector3<float>(1.0F));
-				items[i]->selected = true;
-				selectedIndex = i;
-
-				for (auto &f : listeners)
-				{
-					if (old != -1)
-					{
-
-						f(items[old], items[selectedIndex]);
-					}
-					else
-					{
-						f(nullptr, items[selectedIndex]);
-					}
-				}
+				Select(i);
 				break;
 			}
 		}
@@ -126,9 +101,54 @@ void ListItem::Update()
 	}
 }
 
+void ListItem::Select(int i)
+{
+	if (i < 0 || i > items.size())
+	{
+		WRITE_ERROR("Boyle bir list item indexi yok" + i);
+		exit(EXIT_FAILURE);
+	}
+	int old = selectedIndex;
+	if (selectedIndex != -1)
+	{
+		items[selectedIndex]->setButtonColor(Vector3<float>(0.21F));
+		items[selectedIndex]->setMouseHoverColor(Vector3<float>(0.25F));
+		items[selectedIndex]->setLabelColor(Vector3<float>(0.58F));
+		items[selectedIndex]->selected = false;
+	}
+	items[i]->setButtonColor(Vector3<float>(0.35F));
+	items[i]->setMouseHoverColor(Vector3<float>(0.35F));
+	items[i]->setLabelColor(Vector3<float>(1.0F));
+	items[i]->selected = true;
+	selectedIndex = i;
+
+	for (auto &f : listeners)
+	{
+		if (old != -1)
+		{
+
+			f(items[old], items[selectedIndex]);
+		}
+		else
+		{
+			f(nullptr, items[selectedIndex]);
+		}
+	}
+}
+
 int ListItem::getSelectedIndex()
 {
 	return selectedIndex;
+}
+
+ListItemElement *ListItem::getIndex(int i)
+{
+	if (i < 0 || i > items.size())
+	{
+		WRITE_ERROR("Boyle bir list item indexi yok" + i);
+		exit(EXIT_FAILURE);
+	}
+	return items.at(i);
 }
 
 ListItemElement::ListItemElement(Button *btn) : Button(*btn)

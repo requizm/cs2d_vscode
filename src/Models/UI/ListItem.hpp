@@ -36,8 +36,10 @@ public:
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
     void ProcessInput() override;
     void Update() override;
+    void Select(int i);
 
     int getSelectedIndex();
+    ListItemElement* getIndex(int i);
 
 private:
     Panel *panel = nullptr;

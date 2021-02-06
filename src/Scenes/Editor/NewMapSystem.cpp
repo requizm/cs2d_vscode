@@ -1,4 +1,5 @@
 #include "NewMapSystem.hpp"
+#include "Editor.hpp"
 
 NewMapSystem::NewMapSystem()
 {
@@ -46,29 +47,27 @@ bool NewMapSystem::isMouseHover()
 	return newPanel->isMouseHover(false);
 }
 
-NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, float &dt, Vector2<int> &pos, bool &fSelect,
-								  Vector2<int> &mLimit, Vector2<int> &texture, int &tCount, Panel *tPanel,
-								  Panel *bPanel, int maxCell)
+NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
 {
 	NewMapResult res = NewMapResult();
 
-	dt = 0.0F;
-	pos = Vector2<int>(0 - bPanel->getSize().x, 0);
+	Editor::instance().time = 0.0F;
+	Editor::instance().position = Vector2<int>(0 - Editor::instance().buildPanel->getSize().x, 0);
 
-	fSelect = false;
-	mLimit = mapSize;
+	Editor::instance().firstSelect = false;
+	Editor::instance().mapLimit = mapSize;
 
-	texture.x = ResourceManager::GetTexture(tileSet).Width / 32;
-	texture.y = ResourceManager::GetTexture(tileSet).Height / 32;
-	tCount = texture.x * texture.y;
+	Editor::instance().texture.x = ResourceManager::GetTexture(tileSet).Width / 32;
+	Editor::instance().texture.y = ResourceManager::GetTexture(tileSet).Height / 32;
+	Editor::instance().tileCount = Editor::instance().texture.x * Editor::instance().texture.y;
 
 	InputManager::scroll.y = 0.0F;
 
 	int curIndex = 0;
-	for (int i = 0; i < tCount; i++)
+	for (int i = 0; i < Editor::instance().tileCount; i++)
 	{
-		const int xPos = 32 * (curIndex % maxCell);
-		const int yPos = 32 * (curIndex / maxCell);
+		const int xPos = 32 * (curIndex % Editor::instance().maxCellInColumn);
+		const int yPos = 32 * (curIndex / Editor::instance().maxCellInColumn);
 		const Vector2<int> pos(xPos, yPos);
 		const Vector2<int> size(Vector2<int>(32, 32));
 		const int xoffset = curIndex % (ResourceManager::GetTexture(tileSet).Width / 32);
@@ -77,13 +76,13 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, flo
 		Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
 		Button *button = new Button(tile);
 		button->independent = true;
-		button->setParent(tPanel, true);
+		button->setParent(Editor::instance().tilePanel, true);
 		res.tilesUI.push_back(button);
 	}
 
-	for (int i = 0; i < mLimit.x; i++)
+	for (int i = 0; i < Editor::instance().mapLimit.x; i++)
 	{
-		for (int j = 0; j < mLimit.y; j++)
+		for (int j = 0; j < Editor::instance().mapLimit.y; j++)
 		{
 			ButtonTile *t = new ButtonTile(Vector2<int>(i, j));
 			t->button->getTile()->frame = 0;
@@ -94,27 +93,23 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize, flo
 
 	return res;
 }
-NewMapResult NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect, Vector2<int> &mLimit, Vector2<int> &texture,
-									int &tCount, Panel *tPanel, Panel *bPanel, int maxCell)
+NewMapResult NewMapSystem::B_NewMap()
 {
 	std::string sizeX = t_mapSizeX->getText();
 	std::string sizeY = t_mapSizeY->getText();
 	std::string tileSet = t_tile->getText();
 	if (sizeX.empty() || sizeY.empty() || tileSet.empty())
 	{
-		LOG_ERROR("BOS");
 		WRITE_ERROR("BOS");
 		return (NewMapResult());
 	}
 	if (ResourceManager::GetTexture(tileSet).Width == 0)
 	{
-		LOG_ERROR("BOYLE BIR TEXTURE YOK");
 		WRITE_ERROR("BOYLE BIR TEXTURE YOK");
 		return (NewMapResult());
 	}
 	if (!Utils::TryStringToInt(sizeX.c_str()) || !Utils::TryStringToInt(sizeY.c_str()))
 	{
-		LOG_ERROR("BUNLAR SAYI DEGIL");
 		WRITE_ERROR("BUNLAR SAYI DEGIL");
 		return (NewMapResult());
 	}
@@ -124,9 +119,8 @@ NewMapResult NewMapSystem::B_NewMap(float &dt, Vector2<int> &pos, bool &fSelect,
 
 	if (isizeX <= 0 || isizeY <= 0)
 	{
-		LOG_ERROR("BUNLAR NEGATIF");
 		WRITE_ERROR("BUNLAR NEGATIF");
 		return (NewMapResult());
 	}
-	return NewMap(tileSet, Vector2<int>(isizeX, isizeY), dt, pos, fSelect, mLimit, texture, tCount, tPanel, bPanel, maxCell);
+	return NewMap(tileSet, Vector2<int>(isizeX, isizeY));
 }

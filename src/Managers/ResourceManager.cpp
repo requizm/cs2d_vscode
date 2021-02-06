@@ -109,6 +109,7 @@ Texture2D ResourceManager::loadTextureFromFile(const GLchar *file, GLboolean alp
 	if (!image)
 	{
 		WRITE_ERROR("texture yuklenmedi!");
+		exit(EXIT_FAILURE);
 	}
 	// Now generate texture
 	//SOIL_last_result();

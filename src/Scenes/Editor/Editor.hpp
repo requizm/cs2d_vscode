@@ -41,7 +41,7 @@ public:
 
 	void Initialize();
 
-	static Editor& instance()
+	static Editor &instance()
 	{
 		static Editor INSTANCE;
 		return INSTANCE;
@@ -57,12 +57,12 @@ public:
 	void SetEnable(const bool value);
 
 	std::shared_ptr<TextRenderer> textRenderer;
-	Panel* controlPanel;
-	Panel* buildPanel;
-	Panel* tilePanel, * objectPanel;
+	Panel *controlPanel;
+	Panel *buildPanel;
+	Panel *tilePanel, *objectPanel;
 
-	std::vector<Env_Item*> env_items;
-	Env_Item_Manager* envItemManager;
+	std::vector<Env_Item *> env_items;
+	Env_Item_Manager *envItemManager;
 
 	std::string currentTileSet;
 
@@ -72,44 +72,42 @@ public:
 
 	SelectedMode selectedMode;
 
-	NewMapResult* tils;
+	NewMapResult *tils;
 
-private:
-	void SelectedRbChanged(RadioButtonElement* old, RadioButtonElement* n);
-
-	SpriteRenderer* menuRenderer;
-	SquareRenderer* squareRenderer;
-
-	SpriteRenderer* worldRenderer;
-
-	Vector2<int> position;
-
-	ListItem* objects_ui;
-
-	NewMapSystem* NewMap;
-
-	SaveLoadSystem* SaveLoad;
-
-	
+	float time = 0;
 	Vector2<int> texture;
 	int tileCount;
 	int maxCellInColumn;
 	int maxCellInRow;
-
-	Tile* selectedTile = nullptr;
-	Env_Item* selectedItem = nullptr;
 	bool firstSelect;
+	Vector2<int> position;
+
+private:
+	void SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n);
+
+	SpriteRenderer *menuRenderer;
+	SquareRenderer *squareRenderer;
+
+	SpriteRenderer *worldRenderer;
+
+	ListItem *objects_ui;
+
+	NewMapSystem *NewMap;
+
+	SaveLoadSystem *SaveLoad;
+
+	Tile *selectedTile = nullptr;
+	Env_Item *selectedItem = nullptr;
 
 	bool enable = false;
-	float time = 0;
 
-	Button* b_save, * b_new, * b_load, * b_objects, * b_tiles;
+	Button *b_save, *b_new, *b_load, *b_objects, *b_tiles;
 
-	Panel* tilePropertiesPanel;
-	Button* b_tileProperties;
-	RadioButton* rb_tileProperties;
+	Panel *tilePropertiesPanel;
+	Button *b_tileProperties;
+	RadioButton *rb_tileProperties;
 
-	Button* b_cancel;
+	Button *b_cancel;
 
 	std::string currentName;
 
