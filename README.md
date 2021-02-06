@@ -1,4 +1,6 @@
-[![CodeFactor](https://www.codefactor.io/repository/github/requizm/cs2d_vscode/badge)](https://www.codefactor.io/repository/github/requizm/cs2d_vscode)  
+[![CodeFactor](https://www.codefactor.io/repository/github/requizm/cs2d_vscode/badge)](https://www.codefactor.io/repository/github/requizm/cs2d_vscode)
+![Build](https://github.com/requizm/cs2d_vscode/workflows/build/badge.svg)
+[![Build status](https://ci.appveyor.com/api/projects/status/7qjq7a7vhsh5cbow?svg=true)](https://ci.appveyor.com/project/requizm/cs2d-vscode)
 
 
 **WIP**  
@@ -6,11 +8,19 @@
   
 ___
   
-### Available compilers  
+### Available Compilers  
 - Mingw
 - Mingw-w64
 - MSVC
-- MYSY
+- MSYS
+  
+___
+  
+### Tested Platforms  
+- Visual Studio 2017 (Windows)
+- Visual Studio 2019 (Windows)
+- MinGW (Windows)
+- GCC (Ubuntu)
   
 ___
   
