@@ -9,6 +9,8 @@ script:
 - cmake -E make_directory Build
 - cmake -E chdir Build cmake ..
 - ls
+- cd Build
+- make
 addons:
   apt:
     update: true
