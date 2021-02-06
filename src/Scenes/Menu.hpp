@@ -2,7 +2,12 @@
 #define MENU_H
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#ifdef WIN32
 #include <dirent/dirent.h>
+#endif // WIN32
+#ifdef LINUX
+#include <dirent.h>
+#endif // LINUX
 #include <map>
 #include <string.h>
 #include <memory>

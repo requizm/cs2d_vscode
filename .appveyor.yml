@@ -1,16 +1,8 @@
 os:
-- Ubuntu
+- Visual Studio 2015
 - Visual Studio 2017
 - Visual Studio 2019
 
 build_script:
-  - sh: sudo apt-get -y install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
-  - sh: pwd
-  - sh: ls
-  - sh: cmake -B Build -S . -G "Unix Makefiles"
-  - sh: ls
-  - sh: cd Build
-  - sh: ls
-  - sh: make
   - cmd: cmake -BBuild
   - cmd: cmake --build Build

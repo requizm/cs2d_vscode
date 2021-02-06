@@ -1,7 +1,12 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#ifdef WIN32
 #include <dirent/dirent.h>
+#endif // WIN32
+#ifdef LINUX
+#include <dirent.h>
+#endif // LINUX
 #include <vector>
 #include <iostream>
 #include <fstream>

@@ -3,7 +3,12 @@
 
 #include <rapidxml-1.13/rapidxml.hpp>
 #include <rapidxml-1.13/rapidxml_print.hpp>
+#ifdef WIN32
 #include <dirent/dirent.h>
+#endif // WIN32
+#ifdef LINUX
+#include <dirent.h>
+#endif // LINUX
 #include <memory>
 #include <vector>
 #include <fstream>
