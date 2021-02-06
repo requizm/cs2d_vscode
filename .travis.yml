@@ -6,7 +6,7 @@ before_install:
 
 install:
 script:
-- cmake -B Build -S . -G "Unix Makefiles"
+- cmake -BBuild -G "Unix Makefiles"
 - cd Build
 - make
 addons:
