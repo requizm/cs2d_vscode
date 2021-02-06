@@ -21,6 +21,11 @@ list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.hpp$")
 # Define the executable
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
+
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/../bin/Release)
+execute_process(COMMAND git submodule update --init WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+execute_process(COMMAND make SYSTEM=linux-egl ${CMAKE_SOURCE_DIR}/deps/glew/auto)
+
 if (UNIX)
 	message("unix")
 	execute_process(COMMAND rm -rf include/dirent WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -32,12 +37,6 @@ if (WIN32)
 	message("win32")
 	include_directories("${CMAKE_SOURCE_DIR}/include")
 endif (WIN32)
-
-message("include")
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/../bin/Release)
-
-execute_process(COMMAND git submodule update --init WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-
 
 # glfw
 add_subdirectory(${CMAKE_SOURCE_DIR}/deps/glfw EXCLUDE_FROM_ALL)
