@@ -25,10 +25,19 @@ ___
 ___
   
 ### How To Build  
+*Windows*
 ```
 git clone https://github.com/requizm/cs2d_vscode
 cd cs2d_vscode
 cmake -BBuild
+cd Build
+make
+```
+
+*Linux*
+```
+sudo apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+cmake -BBuild -G "Unix Makefiles"
 cd Build
 make
 ```
