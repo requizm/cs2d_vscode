@@ -7,7 +7,7 @@ before_install:
 install:
 script:
 - cmake -E make_directory Build
-- cmake -B Build -S . -G "Unix Makefiles"
+- cmake -E chdir build cmake ..
 - ls
 - cd Build
 - ls
