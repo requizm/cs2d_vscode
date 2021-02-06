@@ -7,3 +7,6 @@
 [submodule "deps/freetype"]
 	path = deps/freetype
 	url = https://github.com/aseprite/freetype2
+[submodule "deps/spdlog"]
+	path = deps/spdlog
+	url = https://github.com/gabime/spdlog

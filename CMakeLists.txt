@@ -50,6 +50,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
 add_subdirectory(${CMAKE_SOURCE_DIR}/deps/freetype EXCLUDE_FROM_ALL)
 target_link_libraries(${PROJECT_NAME} PRIVATE freetype)
 
+# spdlog
+add_subdirectory(${CMAKE_SOURCE_DIR}/deps/spdlog EXCLUDE_FROM_ALL)
+target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
+
 
 if(MINGW)
 	SET(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc")
