@@ -1,12 +1,12 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#ifdef _DEBUG
 #include <spdlog/spdlog.h>
+#include <spdlog/sinks/basic_file_sink.h>
 #define LOG_ERROR(...) ::spdlog::error(__VA_ARGS__)
 #define LOG_WARNING(...) ::spdlog::warn(__VA_ARGS__)
 #define LOG_INFO(...) ::spdlog::info(__VA_ARGS__)
-#endif // DEBUG
+#define WRITE_ERROR(...) ::Logger
 
 #include <string>
 #include <iostream>
