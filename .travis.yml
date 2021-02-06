@@ -2,7 +2,7 @@ os: linux
 language: cpp
 dist: trusty
 before_install: 
-- apt-get -y install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+- sudo apt-get -y install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
 
 install:
 script:
