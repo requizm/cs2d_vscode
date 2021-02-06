@@ -6,9 +6,9 @@ before_install:
 
 install:
 script:
-- cmake -BBuild -G "Unix Makefiles"
-- cd Build
-- make
+- cmake -E make_directory Build
+- cmake -E chdir Build cmake ..
+- ls
 addons:
   apt:
     update: true
