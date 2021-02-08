@@ -31,4 +31,5 @@ bool CircleCollider::Intersect(RectangleCollider &col) //top left axis
 
 bool CircleCollider::Intersect(CircleCollider &col)
 {
+    return false;
 }
