@@ -14,7 +14,7 @@ RectangleCollider::~RectangleCollider()
 
 Vector2<int> RectangleCollider::GetSize()
 {
-    this->size;
+    return this->size;
 }
 
 void RectangleCollider::SetSize(Vector2<int> siz)
