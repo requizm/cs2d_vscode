@@ -2,13 +2,14 @@
 
 StartGame::StartGame() = default;
 
-void StartGame::Initialize(const std::string & mapName)
+void StartGame::Initialize(const std::string &mapName)
 {
 	this->map = new Map(mapName.c_str(), mapName.c_str());
 	this->renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 	this->camera = new Camera(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
 	this->textRenderer = new TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
 	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 20);
+	this->squareRenderer = SquareRenderer(true);
 
 	this->SetEnable(true);
 }
@@ -29,10 +30,13 @@ void StartGame::OnEnable()
 {
 	this->Start();
 
-	player->SetTransform(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2),
-		Vector2<int>(static_cast<int>(static_cast<float>(Game_Parameters::SIZE_TILE) * 0.9F)), 0.0F);
+	player->SetPosition(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2));
 	player->setVelocity(500.0F);
 	player->SetMap(map);
+
+	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
+	renderer->SetProjection(camera->cameraMatrix);
+	squareRenderer.SetProjection(camera->cameraMatrix);
 }
 
 void StartGame::OnDisable()
@@ -86,19 +90,12 @@ void StartGame::ProcessInput()
 	{
 		//this->weapons.at(1).RemoveParent();
 	}
-	player->ProcessInput();
+	player->ProcessInput(*camera, *renderer, squareRenderer);
 }
 
 void StartGame::Render()
 {
-	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
-	renderer->SetProjection(camera->cameraMatrix);
 	map->Draw(*renderer);
-	/*int temp = weapons.size();
-	for (int i = 0; i < temp; i++)
-	{
-		this->weapons.at(i).DrawModel(this->renderer);
-	}*/
 	player->DrawModel(*renderer);
 
 	Vector2 p = Utils::ScreenToWorld(camera->view, InputManager::mousePos);
@@ -108,11 +105,13 @@ void StartGame::Render()
 	this->textRenderer->RenderText("player cell: " + Utils::PositionToCell(player->GetPositionOfCenter()).ToString(), Vector2(700, 105), 1.0F, 0.5F);
 	this->textRenderer->RenderText("fps: " + std::to_string(InputManager::m_fps), Vector2(700, 135), 1.0F, 0.5F);
 
+	squareRenderer.world_RenderEmptyCircle(player->collider.GetPosition(), player->collider.radius, Vector3<float>(0, 0, 0));
 	//label->Draw(*textRenderer);
 
 	//button->Draw(*squareRenderer, *buttonRenderer, *textRenderer);
 }
 
-StartGame::~StartGame() {
+StartGame::~StartGame()
+{
 	OnDisable();
 }

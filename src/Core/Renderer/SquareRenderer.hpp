@@ -151,6 +151,17 @@ public:
 	 */
 	void ui_RenderFilledCircle(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy = 1.0F, int rotate = 0);
 
+	/**
+	 * @brief 
+	 * 
+	 * @param position 
+	 * @param size 
+	 * @param color 
+	 * @param transperancy 1.0F
+	 * @param rotate 0
+	 */
+	void world_RenderEmptyCircle(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy = 1.0F, int rotate = 0);
+
 	void SetProjection(Matrix4<float> proj);
 };
 

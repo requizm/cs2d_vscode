@@ -300,6 +300,28 @@ void SquareRenderer::ui_RenderFilledCircle(Vector2<int> position, Vector2<int> s
 	this->squareShader_ui.UnUse();
 }
 
+void SquareRenderer::world_RenderEmptyCircle(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
+{
+	this->squareShader_world.Use();
+	Matrix4 model = Matrix4(1.0F);
+	model = Projection::translate(model, Vector3(static_cast<float>(position.x), static_cast<float>(position.y), 0.0f)); // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
+	//model = Projection::translate(model, Vector3(position.x, position.y, 0.0f));
+	model = Projection::translate(model, Vector3(0.5f * static_cast<float>(size.x), 0.5f * static_cast<float>(size.y), 0.0f));	 // Move origin of rotation to center of quad
+	model = Projection::rotate(model, Projection::radians(static_cast<float>(rotate)), Vector3(0.0f, 0.0f, 1.0f));				 // Then rotate
+	model = Projection::translate(model, Vector3(-0.5f * static_cast<float>(size.x), -0.5f * static_cast<float>(size.y), 0.0f)); // Move origin back
+	model = Projection::scale(model, Vector3(static_cast<float>(size.x), static_cast<float>(size.y), 1.0f));					 // Last scale
+	this->squareShader_world.SetMatrix4("model", model);
+	this->squareShader_world.SetVector3f("colorUniform", color);
+	this->squareShader_world.SetFloat("trans", transperancy);
+
+	//glLineWidth(2.0F);
+	glBindVertexArray(emptyCircle.VAO);
+	glDrawArrays(GL_LINE_STRIP, 0, 31);
+	glBindVertexArray(0);
+	//glLineWidth(1.0F);
+	this->squareShader_world.UnUse();
+}
+
 void SquareRenderer::SetProjection(Matrix4<float> proj)
 {
 	this->squareShader_world.Use();

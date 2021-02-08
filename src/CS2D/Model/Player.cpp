@@ -1,6 +1,5 @@
 #include "Player.hpp"
 
-
 #define PI 3.14159265
 
 void Player::Draw(SpriteRenderer &renderer)
@@ -27,20 +26,35 @@ void Player::Update()
 	}
 }
 
-void Player::ProcessInput()
+void Player::ProcessInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s)
 {
-	ControllerInput();
+	ControllerInput(cam, r, s);
 	SlotInput();
 }
 
-void Player::ControllerInput()
+void Player::SetPosition(Vector2<int> pos)
+{
+	this->globalPosition = pos;
+	this->collider.SetPosition(this->GetPositionOfCenter());
+	this->BuildTransform();
+}
+
+void Player::SetPosition(Vector2<int> pos, Camera &cam, SpriteRenderer &r, SquareRenderer &s)
+{
+	this->SetPosition(pos);
+	cam.setPosition(Vector2(this->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, this->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
+	r.SetProjection(cam.cameraMatrix);
+	s.SetProjection(cam.cameraMatrix);
+}
+
+void Player::ControllerInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s)
 {
 	if (InputManager::isKey(KeyboardKeys::KEY_W))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y - this->velocity * Timer::DeltaTime);
 		if (!CheckCollision(newPos, MoveDirection::TOP))
 		{
-			this->SetPosition(newPos);
+			this->SetPosition(newPos, cam, r, s);
 		}
 	}
 	if (InputManager::isKey(KeyboardKeys::KEY_S))
@@ -48,7 +62,7 @@ void Player::ControllerInput()
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y + this->velocity * Timer::DeltaTime);
 		if (!CheckCollision(newPos, MoveDirection::BOTTOM))
 		{
-			this->SetPosition(newPos);
+			this->SetPosition(newPos, cam, r, s);
 		}
 	}
 	if (InputManager::isKey(KeyboardKeys::KEY_A))
@@ -56,7 +70,7 @@ void Player::ControllerInput()
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x - this->velocity * Timer::DeltaTime, this->GetPosition().y);
 		if (!CheckCollision(newPos, MoveDirection::LEFT))
 		{
-			this->SetPosition(newPos);
+			this->SetPosition(newPos, cam, r, s);
 		}
 	}
 	if (InputManager::isKey(KeyboardKeys::KEY_D))
@@ -64,7 +78,7 @@ void Player::ControllerInput()
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x + this->velocity * Timer::DeltaTime, this->GetPosition().y);
 		if (!CheckCollision(newPos, MoveDirection::RIGHT))
 		{
-			this->SetPosition(newPos);
+			this->SetPosition(newPos, cam, r, s);
 		}
 	}
 }
@@ -82,48 +96,89 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 		if (newTile == nullptr)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
-			return true;
+		{
+			if (this->collider.Intersect(newTile->getCollider()))
+			{
+				return true;
+			}
+		}
+
 		newTile = map->GetTileByPosition(posCenter.x + this->GetSize().x / 2, posCenter.y + this->GetSize().y / 2);
 		if (newTile == nullptr)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
-			return true;
+		{
+			if (this->collider.Intersect(newTile->getCollider()))
+			{
+				return true;
+			}
+		}
 		break;
 	case MoveDirection::LEFT:
 		newTile = map->GetTileByPosition(posCenter.x - this->GetSize().x / 2, posCenter.y - this->GetSize().y / 2);
 		if (newTile == nullptr)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
-			return true;
+		{
+			if (this->collider.Intersect(newTile->getCollider()))
+			{
+				return true;
+			}
+		}
 		newTile = map->GetTileByPosition(posCenter.x - this->GetSize().x / 2, posCenter.y + this->GetSize().y / 2);
 		if (newTile == nullptr)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
-			return true;
+		{
+			if (this->collider.Intersect(newTile->getCollider()))
+			{
+				return true;
+			}
+		}
 		break;
 	case MoveDirection::TOP:
 		newTile = map->GetTileByPosition(posCenter.x + this->GetSize().x / 2, posCenter.y - this->GetSize().y / 2);
 		if (newTile == nullptr)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
-			return true;
+		{
+			if (this->collider.Intersect(newTile->getCollider()))
+			{
+				return true;
+			}
+		}
 		newTile = map->GetTileByPosition(posCenter.x - this->GetSize().x / 2, posCenter.y - this->GetSize().y / 2);
 		if (newTile == nullptr)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
-			return true;
+		{
+			if (this->collider.Intersect(newTile->getCollider()))
+			{
+				return true;
+			}
+		}
 		break;
 	case MoveDirection::BOTTOM:
 		newTile = map->GetTileByPosition(posCenter.x + this->GetSize().x / 2, posCenter.y + this->GetSize().y / 2);
 		if (newTile == nullptr)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
-			return true;
+		{
+			if (this->collider.Intersect(newTile->getCollider()))
+			{
+				return true;
+			}
+		}
 		newTile = map->GetTileByPosition(posCenter.x - this->GetSize().x / 2, posCenter.y + this->GetSize().y / 2);
 		if (newTile == nullptr)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
-			return true;
+		{
+			if (this->collider.Intersect(newTile->getCollider()))
+			{
+				return true;
+			}
+		}
 		break;
 	}
 

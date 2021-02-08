@@ -5,6 +5,7 @@
 
 #include "../../Core/Model/Camera.hpp"
 #include "../../Core/Renderer/SpriteRenderer.hpp"
+#include "../../Core/Renderer/SquareRenderer.hpp"
 #include "../../Core/Renderer/TextRenderer.hpp"
 #include "../Model/Player.hpp"
 #include "../../Core/Manager/ResourceManager.hpp"
@@ -45,6 +46,7 @@ private:
 	Camera *camera;
 	SpriteRenderer *renderer;
 	TextRenderer *textRenderer;
+	SquareRenderer squareRenderer;
 	std::vector<Weapon> weapons;
 	bool enable = false;
 };

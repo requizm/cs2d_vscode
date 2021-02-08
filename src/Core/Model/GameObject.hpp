@@ -42,7 +42,7 @@ public:
 	void SetTransform(const Matrix4<float> &transform);
 
 	void SetTransform(Vector2<int> pos, Vector2<int> size, int rot = 0);
-	void SetPosition(Vector2<int> pos);
+	virtual void SetPosition(Vector2<int> pos);
 	void SetPosition(const int x, const int y);
 	void SetSize(Vector2<int> size);
 	void SetRotation(int rot);

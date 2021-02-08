@@ -62,7 +62,9 @@
         "filesystem": "cpp",
         "optional": "cpp",
         "bit": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "set": "cpp",
+        "variant": "cpp"
     },
     "c-cpp-flylint.excludeFromWorkspacePaths": [
         "include\\**"

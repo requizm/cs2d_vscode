@@ -2,6 +2,7 @@
 #define TILE_H
 
 #include "../../Core/Model/GameObject.hpp"
+#include "../../Core/Collider/RectangleCollider.hpp"
 
 enum TileTypes
 {
@@ -20,10 +21,13 @@ public:
 	void setType(TileTypes type);
 	TileTypes getType() const;
 
+	RectangleCollider& getCollider();
+
 	int frame;
 
 private:
 	TileTypes type;
+	RectangleCollider collider;
 };
 
 #endif

@@ -18,7 +18,6 @@
 #include "Core/UI/RadioButton.cpp"
 #include "Core/UI/ListItem.cpp"
 
-
 #include "Core/Model/GameObject.cpp"
 #include "Core/Model/Camera.cpp"
 
@@ -37,6 +36,9 @@
 #include "Core/Manager/Utils.cpp"
 #include "Core/Manager/Timer.cpp"
 
+#include "Core/Collider/Collider.cpp"
+#include "Core/Collider/CircleCollider.cpp"
+#include "Core/Collider/RectangleCollider.cpp"
 
 #include "CS2D/Model/Player.cpp"
 #include "CS2D/Model/Map.cpp"
@@ -52,7 +54,6 @@
 #include "CS2D/Scene/Editor/NewMapSystem.cpp"
 #include "CS2D/Scene/Editor/ButtonTile.cpp"
 #include "CS2D/Scene/Editor/Entities/Env_Item.cpp"
-
 
 #include "CS2D/Game.cpp"
 #include "Core/Window.cpp"
