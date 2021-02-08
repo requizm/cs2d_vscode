@@ -8,7 +8,7 @@
 #include <string>
 #include <cstring>
 
-#include "../../Others/Logger.hpp"
+#include "../Manager/Logger.hpp"
 
 class XMLLoader
 {

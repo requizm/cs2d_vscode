@@ -2,8 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 
-#include "Game.hpp"
-#include "Window.hpp"
+#include "CS2D/Game.hpp"
+#include "Core/Window.hpp"
 
 std::unique_ptr<Game> cs2d = std::make_unique<Game>(Game());
 auto logger = spdlog::basic_logger_mt("write_logger", "log.txt");
