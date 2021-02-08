@@ -28,6 +28,8 @@ Window::Window(const char *windowName, int x, int y)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glfwSwapInterval(1);
 }
 
 void Window::Clear()
