@@ -3,8 +3,8 @@ language: cpp
 dist: trusty
 before_install: 
 - sudo apt-get -y install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
-- pip install --upgrade pip
-- pip install --upgrade cmake
+- sudo pip install --upgrade pip
+- sudo pip install --upgrade cmake
 
 install:
 script:
