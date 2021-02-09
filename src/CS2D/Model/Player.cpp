@@ -88,6 +88,8 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 	Tile *newTile;
 
 	Vector2<int> posCenter = Vector2<int>(pos.x + this->GetSize().x / 2, pos.y + this->GetSize().y / 2);
+	CircleCollider col = this->collider;
+	col.SetPosition(posCenter);
 
 	switch (direction)
 	{
@@ -97,7 +99,7 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
 		{
-			if (this->collider.Intersect(newTile->getCollider()))
+			if (col.Intersect(newTile->getCollider()))
 			{
 				return true;
 			}
@@ -108,7 +110,7 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
 		{
-			if (this->collider.Intersect(newTile->getCollider()))
+			if (col.Intersect(newTile->getCollider()))
 			{
 				return true;
 			}
@@ -120,7 +122,7 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
 		{
-			if (this->collider.Intersect(newTile->getCollider()))
+			if (col.Intersect(newTile->getCollider()))
 			{
 				return true;
 			}
@@ -130,7 +132,7 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
 		{
-			if (this->collider.Intersect(newTile->getCollider()))
+			if (col.Intersect(newTile->getCollider()))
 			{
 				return true;
 			}
@@ -142,7 +144,7 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
 		{
-			if (this->collider.Intersect(newTile->getCollider()))
+			if (col.Intersect(newTile->getCollider()))
 			{
 				return true;
 			}
@@ -152,7 +154,7 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
 		{
-			if (this->collider.Intersect(newTile->getCollider()))
+			if (col.Intersect(newTile->getCollider()))
 			{
 				return true;
 			}
@@ -164,7 +166,7 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
 		{
-			if (this->collider.Intersect(newTile->getCollider()))
+			if (col.Intersect(newTile->getCollider()))
 			{
 				return true;
 			}
@@ -174,7 +176,7 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 			return true;
 		if (newTile->getType() == TileTypes::WALL || newTile->getType() == TileTypes::OBSTACLE)
 		{
-			if (this->collider.Intersect(newTile->getCollider()))
+			if (col.Intersect(newTile->getCollider()))
 			{
 				return true;
 			}

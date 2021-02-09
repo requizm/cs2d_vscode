@@ -36,7 +36,7 @@ public:
 		this->lastMousePos = Vector2(0, 0);
 	}
 
-	Player(const Vector2<int> pos, const std::vector<Sprite> &sprites, const Vector2<int> size = Vector2<int>(Game_Parameters::SIZE_TILE), int maxHealth = 100) : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER), map(nullptr), velocity(0.0F), collider(CircleCollider(this->GetPositionOfCenter(), static_cast<int>(static_cast<int>(Game_Parameters::SIZE_TILE / 2) * 1)))
+	Player(const Vector2<int> pos, const std::vector<Sprite> &sprites, const Vector2<int> size = Vector2<int>(Game_Parameters::SIZE_TILE), int maxHealth = 100) : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER), map(nullptr), velocity(0.0F), collider(CircleCollider(this->GetPositionOfCenter(), static_cast<int>(static_cast<float>(Game_Parameters::SIZE_TILE / 2) * 0.8F)))
 	{
 		this->maxHealth = maxHealth;
 		this->health = maxHealth;

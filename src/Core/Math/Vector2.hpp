@@ -27,7 +27,7 @@ public:
         return Vector2(x, y);
     }
 
-    Vector2 Magnitude()
+    T Magnitude()
     {
         return sqrt(this->x * this->x + this->y * this->y);
     }

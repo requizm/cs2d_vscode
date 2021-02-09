@@ -31,7 +31,7 @@ void StartGame::OnEnable()
 	this->Start();
 
 	player->SetPosition(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2));
-	player->setVelocity(500.0F);
+	player->setVelocity(500);
 	player->SetMap(map);
 
 	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));

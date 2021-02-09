@@ -14,19 +14,23 @@ CircleCollider::~CircleCollider()
 
 bool CircleCollider::Intersect(RectangleCollider &col) //top left axis
 {
-    // clamp(value, min, max) - limits value to the range min..max
-
-    // Find the closest point to the circle within the rectangle
-    int closestX = std::clamp(this->position.x, col.GetPosition().x, col.GetPosition().x + col.GetSize().x);
-    int closestY = std::clamp(this->position.y, col.GetPosition().y, col.GetPosition().y + col.GetSize().y);
-
-    // Calculate the distance between the circle's center and this closest point
-    int distanceX = this->position.x - closestX;
-    int distanceY = this->position.y - closestY;
-
-    // If the distance is less than the circle's radius, an intersection occurs
-    int distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-    return distanceSquared < (this->radius * this->radius);
+    // get center point circle first
+    Vector2<int> center(this->GetPosition());
+    // calculate AABB info (center, half-extents)
+    Vector2<int> aabb_half_extents(col.GetSize().x / 2, col.GetSize().y / 2);
+    Vector2<int> aabb_center(
+        col.GetPosition().x + aabb_half_extents.x,
+        col.GetPosition().y + aabb_half_extents.y);
+    // get difference vector between both centers
+    Vector2<int> difference = center - aabb_center;
+    int cX = std::clamp(difference.x, -aabb_half_extents.x, aabb_half_extents.x);
+    int cY = std::clamp(difference.y, -aabb_half_extents.y, aabb_half_extents.y);
+    Vector2<int> clamped = Vector2<int>(cX, cY);
+    // add clamped value to AABB_center and we get the value of box closest to circle
+    Vector2<int> closest = aabb_center + clamped;
+    // retrieve vector between center circle and closest point AABB and check if length <= radius
+    difference = closest - center;
+    return difference.Magnitude() < this->radius;
 }
 
 bool CircleCollider::Intersect(CircleCollider &col)
