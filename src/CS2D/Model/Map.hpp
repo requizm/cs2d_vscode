@@ -15,6 +15,7 @@
 #include "../Other/Game_Parameters.hpp"
 #include "../../Core/Manager/Logger.hpp"
 #include "../../Core/Loader/XMLLoader.hpp"
+#include "../../Core/Loader/JSONLoader.hpp"
 
 class Map
 {

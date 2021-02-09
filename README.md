@@ -55,6 +55,7 @@ ___
 - [spdlog dep](https://github.com/gabime/spdlog)
 - [stb_image](https://github.com/nothings/stb)
 - [rapidxml 1.13](http://rapidxml.sourceforge.net/)
+- [nlohmann/json 3.9.1](https://github.com/nlohmann/json)
   
 ___
   

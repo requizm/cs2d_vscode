@@ -221,7 +221,7 @@
 		<cellX>2</cellX>
 		<cellY>1</cellY>
 		<tileType>2</tileType>
-		<itemID>0</itemID>
+		<itemID>1</itemID>
 	</tile>
 	<tile>
 		<tileTexture>1</tileTexture>
@@ -235,7 +235,7 @@
 		<cellX>2</cellX>
 		<cellY>3</cellY>
 		<tileType>2</tileType>
-		<itemID>0</itemID>
+		<itemID>2</itemID>
 	</tile>
 	<tile>
 		<tileTexture>1</tileTexture>
@@ -249,7 +249,7 @@
 		<cellX>2</cellX>
 		<cellY>5</cellY>
 		<tileType>2</tileType>
-		<itemID>0</itemID>
+		<itemID>3</itemID>
 	</tile>
 	<tile>
 		<tileTexture>1</tileTexture>

@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "name": "ak47",
+        "sprite": "ak47",
+        "floorSprite": "ak47_d",
+        "type": 0,
+        "maxAmmo": 90,
+        "currentAmmo": 90,
+        "curAmmoInMag": 30,
+        "maxAmmoInMag": 30
+    },
+    {
+        "id": 2,
+        "name": "m4a1",
+        "sprite": "m4a1",
+        "floorSprite": "m4a1_d",
+        "type": 0,
+        "maxAmmo": 90,
+        "currentAmmo": 90,
+        "curAmmoInMag": 30,
+        "maxAmmoInMag": 30
+    },
+    {
+        "id": 3,
+        "name": "deagle",
+        "sprite": "deagle",
+        "floorSprite": "deagle_d",
+        "type": 1,
+        "maxAmmo": 35,
+        "currentAmmo": 35,
+        "curAmmoInMag": 7,
+        "maxAmmoInMag": 7
+    }
+]

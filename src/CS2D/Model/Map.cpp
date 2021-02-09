@@ -24,6 +24,18 @@ Map::~Map()
 
 void Map::Load(const GLchar *file)
 {
+	JSONLoader jsonLoader;
+	std::string str2("../../resources/content/weapons.json");
+	nlohmann::json weaponsJ = jsonLoader.Load(str2);
+
+	for (nlohmann::json::iterator it = weaponsJ.begin(); it != weaponsJ.end(); ++it)
+	{
+		std::string spritePath = "../../resources/textures/weapons/" + it->at("sprite").get<std::string>() + ".png";
+		std::string floorSpritePath = "../../resources/textures/weapons/" + it->at("floorSprite").get<std::string>() + ".png";
+		ResourceManager::LoadTexture(spritePath.c_str(), GL_TRUE, it->at("sprite").get<std::string>());
+		ResourceManager::LoadTexture(floorSpritePath.c_str(), GL_TRUE, it->at("floorSprite").get<std::string>());
+	}
+
 	this->tiles.clear();
 	std::string str(file);
 	XMLLoader loader = XMLLoader(str);
@@ -59,7 +71,30 @@ void Map::Load(const GLchar *file)
 		tiles.push_back(tile);
 		if (itemId != 0)
 		{
-			Weapon *w = new Weapon(pos, ResourceManager::GetTexture("ak47"), ResourceManager::GetTexture("ak47_d"), "ak47", WeaponType::MAIN, 90, 90, 30, 30);
+			Weapon *w;
+			bool found = false;
+			for (nlohmann::json::iterator it = weaponsJ.begin(); it != weaponsJ.end(); ++it)
+			{
+				if (itemId == it->at("id").get<int>())
+				{
+					std::string textureName = it->at("sprite").get<std::string>();
+					std::string floorTextureName = it->at("floorSprite").get<std::string>();
+					std::string name = it->at("name").get<std::string>();
+					WeaponType type = (WeaponType)it->at("type").get<int>();
+					int maxAmmo = it->at("maxAmmo").get<int>();
+					int currentAmmo = it->at("currentAmmo").get<int>();
+					int curAmmoInMag = it->at("curAmmoInMag").get<int>();
+					int maxAmmoInMag = it->at("maxAmmoInMag").get<int>();
+					w = new Weapon(pos, ResourceManager::GetTexture(textureName), ResourceManager::GetTexture(floorTextureName), name, type, maxAmmo, currentAmmo, curAmmoInMag, maxAmmoInMag);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				w = new Weapon(pos, ResourceManager::GetTexture("awp"), ResourceManager::GetTexture("awp_d"), "awp", WeaponType::MAIN, 90, 90, 30, 30);
+			}
+
 			weapons.push_back(w);
 		}
 	}
