@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
 project(cs2d_vscode)
 
 
@@ -51,8 +51,8 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/deps/freetype EXCLUDE_FROM_ALL)
 target_link_libraries(${PROJECT_NAME} PRIVATE freetype)
 
 # spdlog
-add_subdirectory(${CMAKE_SOURCE_DIR}/deps/spdlog EXCLUDE_FROM_ALL)
-target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
+#add_subdirectory(${CMAKE_SOURCE_DIR}/deps/spdlog EXCLUDE_FROM_ALL)
+#target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
 
 
 if(MINGW)
