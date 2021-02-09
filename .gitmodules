@@ -1,7 +1,7 @@
 [submodule "deps/glew"]
 	path = deps/glew
 	url = https://github.com/Perlmint/glew-cmake
-	branch = fix-for-old-cmake
+	branch = master
 [submodule "deps/glfw"]
 	path = deps/glfw
 	url = https://github.com/glfw/glfw
