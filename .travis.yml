@@ -2,11 +2,16 @@ os: linux
 language: cpp
 dist: trusty
 before_install: 
-- sudo apt-get -y install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
-- CMAKE_INSTALLER=install-cmake.sh
-- curl -sSL https://cmake.org/files/LatestRelease/cmake-3.19.2-Linux-x86_64.sh -o ${CMAKE_INSTALLER}
-- chmod +x ${CMAKE_INSTALLER}
-- sudo ./${CMAKE_INSTALLER} --prefix=/usr/local --skip-license
+- sudo apt-get -y install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+  - |
+    if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+      export CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.17.0/cmake-3.17.0-Linux-x86_64.tar.gz";
+      mkdir cmake;
+      travis_retry wget --no-check-certificate -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake;
+      export PATH=${DEPS_DIR}/cmake/bin:${PATH};
+      echo ${PATH};
+    fi
+- cmake --version
 
 install:
 script:
