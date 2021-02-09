@@ -1,0 +1,15 @@
+os: linux
+language: cpp
+dist: trusty
+before_install: 
+- sudo apt-get -y install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+
+install:
+script:
+- cmake -E make_directory Build
+- cmake -E chdir Build cmake ..
+- cd Build
+- make
+addons:
+  apt:
+    update: true
