@@ -20,10 +20,5 @@ nlohmann::json JSONLoader::Load(std::string &str)
     nlohmann::json j;
     t >> j;
 
-    for (nlohmann::json::iterator it = j.begin(); it != j.end(); ++it)
-    {
-        LOG_INFO(it->at("name"));
-    }
-
     return j;
 }

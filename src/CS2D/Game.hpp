@@ -25,7 +25,6 @@ public:
 	void Update();
 	void Render();
 	void ProcessInput();
-	void NewGame();
 
 	static void SetGameState(GameState state);
 	static GameState GetGameState();

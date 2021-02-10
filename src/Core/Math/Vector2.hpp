@@ -32,10 +32,11 @@ public:
         return sqrt(this->x * this->x + this->y * this->y);
     }
 
-    Vector2 Normalize()
+    Vector2<float> Normalize()
     {
         Vector2 a = this->Clone();
-        return a / a.Magnitude();
+        float mag = static_cast<float>(a.Magnitude());
+        return Vector2<float>(static_cast<float>(a.x) / mag, static_cast<float>(a.y) / mag);
     }
 
     T &operator[](int i)

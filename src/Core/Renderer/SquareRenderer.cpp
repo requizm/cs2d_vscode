@@ -132,7 +132,8 @@ void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos, c
 {
 	Vector2<int> size;
 	int rotate = 0;
-	Vector2<int> dif = endPos - startPos;
+	Vector2<int> difInt = endPos - startPos;
+	Vector2<float> dif = Vector2<float>(static_cast<float>(difInt.x), static_cast<float>(difInt.y));
 	if (abs(dif.y) >= abs(dif.x))
 	{
 		size = Vector2<int>(dif.y, lineSize);
@@ -177,7 +178,8 @@ void SquareRenderer::world_RenderLine(Vector2<int> startPos, Vector2<int> endPos
 {
 	Vector2<int> size;
 	int rotate = 0;
-	Vector2<int> dif = endPos - startPos;
+	Vector2<int> difInt = endPos - startPos;
+	Vector2<float> dif = Vector2<float>(static_cast<float>(difInt.x), static_cast<float>(difInt.y));
 	if (abs(dif.y) >= abs(dif.x))
 	{
 		size = Vector2<int>(dif.y, lineSize);

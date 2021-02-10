@@ -94,7 +94,6 @@ void Map::Load(const GLchar *file)
 			{
 				w = new Weapon(pos, ResourceManager::GetTexture("awp"), ResourceManager::GetTexture("awp_d"), "awp", WeaponType::MAIN, 90, 90, 30, 30);
 			}
-
 			weapons.push_back(w);
 		}
 	}

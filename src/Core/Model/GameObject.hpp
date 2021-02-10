@@ -42,12 +42,12 @@ public:
 	void SetTransform(const Matrix4<float> &transform);
 
 	void SetTransform(Vector2<int> pos, Vector2<int> size, int rot = 0);
-	virtual void SetPosition(Vector2<int> pos);
-	void SetPosition(const int x, const int y);
+	virtual void SetPosition(Vector2<int> pos, bool changeCell = true);
+	virtual void SetPosition(const int x, const int y, bool changeCell = true);
 	void SetSize(Vector2<int> size);
 	void SetRotation(int rot);
-	void setCellPosition(int x, int y);
-	void setCellPosition(Vector2<int> pos);
+	void setCellPosition(int x, int y, bool changeCell = true);
+	void setCellPosition(Vector2<int> pos, bool changeCell = true);
 	void setID(int id);
 
 	virtual void Destroy();
@@ -61,6 +61,7 @@ public:
 	int GetRotation();
 	Vector2<int> GetSize();
 	int GetID() const;
+	virtual Vector2<int> GetCellPos();
 
 	void BuildTransform();
 
@@ -71,7 +72,8 @@ public:
 	Sprite sprite;
 
 protected:
-	// Object state
+	Vector2<int> cellPos;
+
 	Vector2<int> localPosition, localSize, Velocity2d;
 	int localRotation;
 

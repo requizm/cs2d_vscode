@@ -32,11 +32,40 @@ void Player::ProcessInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s)
 	SlotInput();
 }
 
-void Player::SetPosition(Vector2<int> pos)
+void Player::SetPosition(Vector2<int> pos, bool changeCell)
 {
 	this->globalPosition = pos;
 	this->collider.SetPosition(this->GetPositionOfCenter());
 	this->BuildTransform();
+	Vector2<int> newCellPos = Utils::PositionToCell(this->GetPositionOfCenter());
+	if (newCellPos != cellPos)
+	{
+		this->cellPos = newCellPos;
+		for (auto &weapon : map->weapons)
+		{
+			if (!weaponLimit[((int)weapon->weaponType)] && !weapon->getSelect() && weapon->GetCellPos() == this->cellPos)
+			{
+				weaponLimit[((int)weapon->weaponType)] = true;
+				weapon->SetRotation(this->globalRotation + 180);
+				weapon->SetParent(this);
+				if (selectedWeapon != nullptr)
+				{
+					selectedWeapon->setSelect(false);
+				}
+				selectedWeapon = weapon;
+				switch (weapon->weaponType)
+				{
+				case WeaponType::MAIN:
+					main_weapon = weapon;
+					break;
+				case WeaponType::PISTOL:
+					second_weapon = weapon;
+					break;
+				}
+				break;
+			}
+		}
+	}
 }
 
 void Player::SetPosition(Vector2<int> pos, Camera &cam, SpriteRenderer &r, SquareRenderer &s)
@@ -45,6 +74,12 @@ void Player::SetPosition(Vector2<int> pos, Camera &cam, SpriteRenderer &r, Squar
 	cam.setPosition(Vector2(this->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, this->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
 	r.SetProjection(cam.cameraMatrix);
 	s.SetProjection(cam.cameraMatrix);
+}
+
+void Player::SetPosition(const int x, const int y, bool changeCell)
+{
+	Vector2<int> newPos = Vector2<int>(x, y);
+	this->SetPosition(newPos, changeCell);
 }
 
 void Player::ControllerInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s)
@@ -188,6 +223,46 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 }
 void Player::SlotInput()
 {
+	if (InputManager::isKeyDown(KeyboardKeys::KEY_G) && selectedWeapon != nullptr)
+	{
+		selectedWeapon->RemoveParent();
+		weaponLimit[((int)selectedWeapon->weaponType)] = false;
+
+		switch (selectedWeapon->weaponType)
+		{
+		case WeaponType::MAIN:
+			main_weapon = nullptr;
+			if (second_weapon != nullptr)
+			{
+				selectedWeapon = second_weapon;
+				selectedWeapon->setSelect(true);
+			}
+			break;
+		case WeaponType::PISTOL:
+			second_weapon = nullptr;
+			if (main_weapon != nullptr)
+			{
+				selectedWeapon = main_weapon;
+				selectedWeapon->setSelect(true);
+			}
+			break;
+		default:
+			selectedWeapon = nullptr;
+			break;
+		}
+	}
+	else if (InputManager::isKeyDown(KeyboardKeys::KEY_1) && main_weapon != nullptr && selectedWeapon != nullptr && selectedWeapon != main_weapon)
+	{
+		selectedWeapon->setSelect(false);
+		selectedWeapon = main_weapon;
+		selectedWeapon->setSelect(true);
+	}
+	else if (InputManager::isKeyDown(KeyboardKeys::KEY_2) && second_weapon != nullptr && selectedWeapon != nullptr && selectedWeapon != second_weapon)
+	{
+		selectedWeapon->setSelect(false);
+		selectedWeapon = second_weapon;
+		selectedWeapon->setSelect(true);
+	}
 }
 void Player::SetMap(Map *map)
 {

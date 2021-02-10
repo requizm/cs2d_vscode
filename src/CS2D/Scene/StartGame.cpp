@@ -29,14 +29,18 @@ void StartGame::Start()
 void StartGame::OnEnable()
 {
 	this->Start();
-
+	player->SetMap(map);
 	player->SetPosition(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2));
 	player->setVelocity(500);
-	player->SetMap(map);
 
 	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
 	renderer->SetProjection(camera->cameraMatrix);
 	squareRenderer.SetProjection(camera->cameraMatrix);
+
+	for (auto &weapon : map->weapons)
+	{
+		weapon->camera = this->camera;
+	}
 }
 
 void StartGame::OnDisable()
@@ -102,7 +106,7 @@ void StartGame::Render()
 	this->textRenderer->RenderText("mouse: " + std::to_string(p.x) + " - " + std::to_string(p.y), Vector2(700, 15), 1.0F, 0.5F);
 	this->textRenderer->RenderText("player matrix: " + std::to_string(player->GetTransform().values[12]) + " - " + std::to_string(player->GetTransform().values[13]), Vector2(700, 45), 1.0F, 0.5F);
 	this->textRenderer->RenderText("player pos: " + player->GetPosition().ToString(), Vector2(700, 75), 1.0F, 0.5F);
-	this->textRenderer->RenderText("player cell: " + Utils::PositionToCell(player->GetPositionOfCenter()).ToString(), Vector2(700, 105), 1.0F, 0.5F);
+	this->textRenderer->RenderText("player cell: " + player->GetCellPos().ToString(), Vector2(700, 105), 1.0F, 0.5F);
 	this->textRenderer->RenderText("fps: " + std::to_string(InputManager::m_fps), Vector2(700, 135), 1.0F, 0.5F);
 
 	squareRenderer.world_RenderEmptyCircle(player->collider.GetPosition(), player->collider.radius, Vector3<float>(0, 0, 0));

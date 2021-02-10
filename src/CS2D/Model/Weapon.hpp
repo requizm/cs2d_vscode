@@ -3,9 +3,11 @@
 
 #include "Mag.hpp"
 #include "../../Core/Model/GameObject.hpp"
+#include "../../Core/Model/Camera.hpp"
 #include "../Other/Game_Parameters.hpp"
 #include "../../Core/Manager/Utils.hpp"
 #include "../../Core/Manager/Logger.hpp"
+#include "../../Core/Manager/InputManager.hpp"
 
 enum WeaponType
 {
@@ -43,7 +45,7 @@ public:
 
 	Weapon(const Vector2<int> pos, const Sprite &sprite, const Sprite &floorSprite, const std::string &weaponName,
 		   WeaponType type, int maxAmmo, int curAmmo, int curAmmoInMag,
-		   const int maxAmmoInMag) : GameObject(Vector2<int>(Utils::PositionToCell(pos).x * Game_Parameters::SIZE_TILE, Utils::PositionToCell(pos).y * Game_Parameters::SIZE_TILE), floorSprite, Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE), (int)ObjectType::WEAPON)
+		   const int maxAmmoInMag) : GameObject(Vector2<int>(Utils::PositionToCell(pos).x * Game_Parameters::SIZE_TILE, Utils::PositionToCell(pos).y * Game_Parameters::SIZE_TILE), floorSprite, Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE), (int)ObjectType::WEAPON), currentIndex(1)
 	{
 		this->weaponType = type;
 
@@ -80,7 +82,6 @@ public:
 	WeaponType weaponType;
 	std::string weaponName;
 	Sprite sprites[2];
-	bool selected;
 
 	void Draw(SpriteRenderer &renderer) override;
 	void DrawModel(SpriteRenderer &renderer) override;
@@ -88,6 +89,15 @@ public:
 
 	void SetParent(GameObject *go) override;
 	void RemoveParent() override;
+
+	void setSelect(bool value);
+	bool getSelect();
+
+	Camera *camera = nullptr;
+
+private:
+	bool selected;
+	int currentIndex; //0=hand   1=floor
 };
 
-#endif // !WEAPON_H
+#endif // WEAPON_H

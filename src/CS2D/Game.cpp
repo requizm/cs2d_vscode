@@ -1,6 +1,5 @@
 #include "Game.hpp"
 
-
 GameState Game::state;
 
 Game::Game()
@@ -19,7 +18,6 @@ void Game::Init()
     initMenuSprites();
     Menu::instance().Initialize(menuSprites);
     Editor::instance().Initialize();
-    NewGame();
 }
 
 void Game::Update()
@@ -73,56 +71,6 @@ void Game::Render()
                             true);
 }
 
-void Game::NewGame()
-{
-    Sprite awp = Sprite(ResourceManager::GetTexture("awp"));
-    Sprite awp_d = Sprite(ResourceManager::GetTexture("awp_d"));
-    Sprite famas = Sprite(ResourceManager::GetTexture("famas"));
-    Sprite famas_d = Sprite(ResourceManager::GetTexture("famas_d"));
-    Sprite ak47 = Sprite(ResourceManager::GetTexture("ak47"));
-    Sprite ak47_d = Sprite(ResourceManager::GetTexture("ak47_d"));
-    /*Sprite deagle = Sprite(ResourceManager::GetTexture("deagle"));
-    Sprite deagle_d = Sprite(ResourceManager::GetTexture("deagle_d"));
-    Sprite usp = Sprite(ResourceManager::GetTexture("usp"));
-    Sprite usp_d = Sprite(ResourceManager::GetTexture("usp_d"));
-    Sprite fiveseven = Sprite(ResourceManager::GetTexture("fiveseven"));
-    Sprite fiveseven_d = Sprite(ResourceManager::GetTexture("fiveseven_d"));
-    Sprite glock = Sprite(ResourceManager::GetTexture("glock"));
-    Sprite glock_d = Sprite(ResourceManager::GetTexture("glock_d"));
-    Sprite knife = Sprite(ResourceManager::GetTexture("knife"));
-    Sprite machete = Sprite(ResourceManager::GetTexture("machete"));*/
-
-    std::shared_ptr<Weapon> main1 = std::make_shared<Weapon>(
-        Vector2<int>(65, 65), awp, awp_d, "awp", WeaponType::MAIN, 30, 20, 10, 10);
-    std::shared_ptr<Weapon> main2 = std::make_shared<Weapon>(
-        Vector2<int>(10, 10), famas, famas_d, "famas", WeaponType::MAIN, 30, 20, 10, 10);
-    std::shared_ptr<Weapon> main3 = std::make_shared<Weapon>(
-        Vector2<int>(12, 20), ak47, ak47_d, "ak47", WeaponType::MAIN, 30, 20, 10, 10);
-    /*Weapon* pistol1 = new Weapon(
-        Vector2<int>(170.0f, 30.0f), deagle, deagle_d, "deagle", WeaponType::PISTOL, 30, 20, 10, 10
-    );
-    Weapon* pistol2 = new Weapon(
-        Vector2<int>(260.0f, 30.0f), usp, usp_d, "usp", WeaponType::PISTOL, 30, 20, 10, 10
-    );
-    Weapon* pistol3 = new Weapon(
-        Vector2<int>(320.0f, 30.0f), fiveseven, fiveseven_d, "fiveseven", WeaponType::PISTOL, 30, 20, 10, 10
-    );
-    Weapon* pistol4 = new Weapon(
-        Vector2<int>(20.0f, 90.0f), glock, glock_d, "glock", WeaponType::PISTOL, 30, 20, 10, 10
-    );
-
-    Weapon* knife1 = new Weapon(
-        Vector2<int>(20.0f, 150.0f), knife, knife, "knife", WeaponType::KNIFE, 30, 20, 10, 10
-    );
-    Weapon* knife2 = new Weapon(
-        Vector2<int>(20.0f, 210.0f), machete, machete, "machete", WeaponType::KNIFE, 30, 20, 10, 10
-    );*/
-
-    weapons.push_back(*main1.get());
-    weapons.push_back(*main2.get());
-    weapons.push_back(*main3.get());
-}
-
 void Game::initTextures() const
 {
     //tiles
@@ -132,14 +80,10 @@ void Game::initTextures() const
     ResourceManager::LoadTexture("../../resources/textures/player/ct1.png", GL_TRUE, "ct1");
     ResourceManager::LoadTexture("../../resources/textures/weapons/awp.png", GL_TRUE, "awp");
     ResourceManager::LoadTexture("../../resources/textures/weapons/awp_d.png", GL_TRUE, "awp_d");
-    ResourceManager::LoadTexture("../../resources/textures/weapons/ak47.png", GL_TRUE, "ak47");
-    ResourceManager::LoadTexture("../../resources/textures/weapons/ak47_d.png", GL_TRUE, "ak47_d");
     ResourceManager::LoadTexture("../../resources/textures/weapons/famas.png", GL_TRUE, "famas");
     ResourceManager::LoadTexture("../../resources/textures/weapons/famas_d.png", GL_TRUE, "famas_d");
     ResourceManager::LoadTexture("../../resources/textures/bulb.png", GL_TRUE, "bulb");
-    /*ResourceManager::LoadTexture("../../resources/textures/weapons/deagle.png", GL_TRUE, "deagle");
-    ResourceManager::LoadTexture("../../resources/textures/weapons/deagle_d.png", GL_TRUE, "deagle_d");
-    ResourceManager::LoadTexture("../../resources/textures/weapons/fiveseven.png", GL_TRUE, "fiveseven");
+    /*ResourceManager::LoadTexture("../../resources/textures/weapons/fiveseven.png", GL_TRUE, "fiveseven");
     ResourceManager::LoadTexture("../../resources/textures/weapons/fiveseven_d.png", GL_TRUE, "fiveseven_d");
     ResourceManager::LoadTexture("../../resources/textures/weapons/elite.png", GL_TRUE, "elite");
     ResourceManager::LoadTexture("../../resources/textures/weapons/elite_d.png", GL_TRUE, "elite_d");
@@ -172,7 +116,6 @@ void Game::initShaders()
     ResourceManager::GetShader("sprite").Use();
     ResourceManager::GetShader("sprite").SetInteger("image", 0);
     ResourceManager::GetShader("sprite").UnUse();
-    //Matrix4 za = Projection::ortho(0.0f, static_cast<GLfloat>(Game_Parameters::SCREEN_WIDTH), static_cast<GLfloat>(Game_Parameters::SCREEN_HEIGHT), 0.0f);
     ResourceManager::GetShader("menu").Use();
     ResourceManager::GetShader("menu").SetMatrix4("projection", Projection::ortho(0.0f, static_cast<float>(Game_Parameters::SCREEN_WIDTH), static_cast<float>(Game_Parameters::SCREEN_HEIGHT), 0.0f), GL_TRUE);
     ResourceManager::GetShader("menu").SetInteger("image", 0);

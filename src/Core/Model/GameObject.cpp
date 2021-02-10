@@ -7,7 +7,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(Vector2<int> pos, const Sprite &sprite, Vector2<int> size, int objType)
-	: globalPosition(pos), globalSize(size), globalRotation(0), sprite(sprite), isCollision(false), isDestroyed(false), localRotation(0), localPosition(pos)
+	: globalPosition(pos), globalSize(size), globalRotation(0), sprite(sprite), isCollision(false), isDestroyed(false), localRotation(0), localPosition(pos), cellPos(Utils::PositionToCell(pos))
 {
 	this->objType = (ObjectType)objType;
 	this->setID(Utils::GenerateID());
@@ -120,19 +120,25 @@ void GameObject::SetTransform(Vector2<int> pos, Vector2<int> size, int rot)
 	SetPosition(pos);
 }
 
-void GameObject::SetPosition(const Vector2<int> pos)
+void GameObject::SetPosition(const Vector2<int> pos, bool changeCell)
 {
 	this->globalPosition = pos;
-	//localPosition = pos;
+	if (changeCell)
+	{
+		Vector2<int> newCellPos = Utils::PositionToCell(this->GetPositionOfCenter());
+		if (newCellPos != cellPos)
+		{
+			cellPos = newCellPos;
+		}
+	}
+
 	BuildTransform();
 }
 
-void GameObject::SetPosition(const int x, const int y)
+void GameObject::SetPosition(const int x, const int y, bool changeCell)
 {
-	this->globalPosition = Vector2<int>(x, y);
-	/*localPosition.x = x;
-	localPosition.y = y;*/
-	BuildTransform();
+	Vector2<int> newPos = Vector2<int>(x, y);
+	this->SetPosition(newPos, changeCell);
 }
 
 void GameObject::SetSize(Vector2<int> size)
@@ -147,13 +153,14 @@ void GameObject::SetRotation(int rot)
 	BuildTransform();
 }
 
-void GameObject::setCellPosition(int x, int y)
+void GameObject::setCellPosition(int x, int y, bool changeCell)
 {
-	SetPosition(x * Game_Parameters::SIZE_TILE, y * Game_Parameters::SIZE_TILE);
+	Vector2<int> newPos = Vector2<int>(x, y);
+	setCellPosition(newPos, changeCell);
 }
-void GameObject::setCellPosition(Vector2<int> pos)
+void GameObject::setCellPosition(Vector2<int> pos, bool changeCell)
 {
-	SetPosition(pos.x * Game_Parameters::SIZE_TILE, pos.y * Game_Parameters::SIZE_TILE);
+	SetPosition(Vector2<int>(pos.x * Game_Parameters::SIZE_TILE, pos.y * Game_Parameters::SIZE_TILE), changeCell);
 }
 
 GameObject *GameObject::GetParent()
@@ -184,6 +191,11 @@ GLboolean GameObject::IsDestroyed() const
 int GameObject::GetID() const
 {
 	return this->id;
+}
+
+Vector2<int> GameObject::GetCellPos()
+{
+	return this->cellPos;
 }
 
 bool GameObject::IsParent()

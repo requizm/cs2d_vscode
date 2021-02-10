@@ -43,6 +43,10 @@ public:
 		this->sprites = sprites;
 
 		this->lastMousePos = Vector2(0, 0);
+
+		weaponLimit[0] = false;
+		weaponLimit[1] = false;
+		weaponLimit[2] = false;
 	}
 
 	~Player();
@@ -52,10 +56,10 @@ public:
 	void DrawModel(SpriteRenderer &renderer) override;
 	void Update();
 	void ProcessInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s);
-	void SetPosition(Vector2<int> pos) override;
+	void SetPosition(Vector2<int> pos, bool changeCell = true) override;
+	void SetPosition(const int x, const int y, bool changeCell = true) override;
 	void SetPosition(Vector2<int> pos, Camera &cam, SpriteRenderer &r, SquareRenderer &s);
 	void SetMap(Map *map);
-	void setSelectFalse();
 	void setVelocity(const int velocity);
 	void takeDamage(const int value);
 
@@ -75,10 +79,16 @@ private:
 
 	Map *map;
 
+	Weapon *selectedWeapon = nullptr;
+	Weapon *main_weapon = nullptr; //m4a1
+	Weapon *second_weapon = nullptr; //deagle
+
 	Vector2<int> lastMousePos;
 
 	int currentIndex = 0;
 	std::vector<Sprite> sprites;
+	
+	bool weaponLimit[3];
 
 	void SlotInput();
 	void ControllerInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s);
