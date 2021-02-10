@@ -62,7 +62,6 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
 					second_weapon = weapon;
 					break;
 				}
-				break;
 			}
 		}
 	}
@@ -237,6 +236,10 @@ void Player::SlotInput()
 				selectedWeapon = second_weapon;
 				selectedWeapon->setSelect(true);
 			}
+			else
+			{
+				selectedWeapon = nullptr;
+			}
 			break;
 		case WeaponType::PISTOL:
 			second_weapon = nullptr;
@@ -245,9 +248,10 @@ void Player::SlotInput()
 				selectedWeapon = main_weapon;
 				selectedWeapon->setSelect(true);
 			}
-			break;
-		default:
-			selectedWeapon = nullptr;
+			else
+			{
+				selectedWeapon = nullptr;
+			}
 			break;
 		}
 	}
