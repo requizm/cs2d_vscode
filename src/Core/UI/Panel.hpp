@@ -1,9 +1,6 @@
 #ifndef PANEL_H
 #define PANEL_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include "UIObject.hpp"
 #include "Button.hpp"
 #include "../Renderer/SquareRenderer.hpp"

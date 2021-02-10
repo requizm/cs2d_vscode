@@ -9,7 +9,7 @@ class Circle
 {
 public:
     Circle();
-    Circle(bool empty);
+    explicit Circle(bool empty);
     ~Circle();
 
     void initEmptyCircle();

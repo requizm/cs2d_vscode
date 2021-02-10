@@ -45,7 +45,7 @@ public:
 
 	Weapon(const Vector2<int> pos, const Sprite &sprite, const Sprite &floorSprite, const std::string &weaponName,
 		   WeaponType type, int maxAmmo, int curAmmo, int curAmmoInMag,
-		   const int maxAmmoInMag) : GameObject(Vector2<int>(Utils::PositionToCell(pos).x * Game_Parameters::SIZE_TILE, Utils::PositionToCell(pos).y * Game_Parameters::SIZE_TILE), floorSprite, Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE), (int)ObjectType::WEAPON), currentIndex(1)
+		   const int maxAmmoInMag) : GameObject(Vector2<int>(Utils::PositionToCell(pos).x * Game_Parameters::SIZE_TILE, Utils::PositionToCell(pos).y * Game_Parameters::SIZE_TILE), floorSprite, Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE), (int)ObjectType::WEAPON), currentIndex(1), selected(false)
 	{
 		this->weaponType = type;
 
@@ -54,12 +54,7 @@ public:
 		if (weaponType == WeaponType::MAIN)
 		{
 			this->SetSize(Vector2<int>(Game_Parameters::SIZE_TILE * 2, Game_Parameters::SIZE_TILE));
-			this->SetPosition(GetPosition().x - Game_Parameters::SIZE_TILE / 2, GetPosition().y);
-		}
-
-		else if (weaponType == WeaponType::PISTOL)
-		{
-			ammoType = AmmoType::SECONDARY;
+			this->SetPosition(GetPosition().x - Game_Parameters::SIZE_TILE / 2, GetPosition().y, false);
 		}
 
 		this->maxAmmo = maxAmmo;
@@ -69,7 +64,6 @@ public:
 		this->weaponName = weaponName;
 		this->sprites[0] = sprite;
 		this->sprites[1] = floorSprite;
-		selected = false;
 	}
 
 	~Weapon();

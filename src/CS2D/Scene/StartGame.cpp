@@ -94,7 +94,7 @@ void StartGame::ProcessInput()
 	{
 		//this->weapons.at(1).RemoveParent();
 	}
-	player->ProcessInput(*camera, *renderer, squareRenderer);
+	player->ProcessInput();
 }
 
 void StartGame::Render()
@@ -109,7 +109,7 @@ void StartGame::Render()
 	this->textRenderer->RenderText("player cell: " + player->GetCellPos().ToString(), Vector2(700, 105), 1.0F, 0.5F);
 	this->textRenderer->RenderText("fps: " + std::to_string(InputManager::m_fps), Vector2(700, 135), 1.0F, 0.5F);
 
-	squareRenderer.world_RenderEmptyCircle(player->collider.GetPosition(), player->collider.radius, Vector3<float>(0, 0, 0));
+	squareRenderer.world_RenderEmptyCircle(player->collider.GetPosition(), Vector2<int>(player->collider.radius), Vector3<float>(0, 0, 0));
 	//label->Draw(*textRenderer);
 
 	//button->Draw(*squareRenderer, *buttonRenderer, *textRenderer);

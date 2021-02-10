@@ -85,14 +85,14 @@ void Map::Load(const GLchar *file)
 					int currentAmmo = it->at("currentAmmo").get<int>();
 					int curAmmoInMag = it->at("curAmmoInMag").get<int>();
 					int maxAmmoInMag = it->at("maxAmmoInMag").get<int>();
-					w = new Weapon(pos, ResourceManager::GetTexture(textureName), ResourceManager::GetTexture(floorTextureName), name, type, maxAmmo, currentAmmo, curAmmoInMag, maxAmmoInMag);
+					w = new Weapon(pos, Sprite(ResourceManager::GetTexture(textureName)), Sprite(ResourceManager::GetTexture(floorTextureName)), name, type, maxAmmo, currentAmmo, curAmmoInMag, maxAmmoInMag);
 					found = true;
 					break;
 				}
 			}
 			if (!found)
 			{
-				w = new Weapon(pos, ResourceManager::GetTexture("awp"), ResourceManager::GetTexture("awp_d"), "awp", WeaponType::MAIN, 90, 90, 30, 30);
+				w = new Weapon(pos, Sprite(ResourceManager::GetTexture("awp")), Sprite(ResourceManager::GetTexture("awp_d")), "awp", WeaponType::MAIN, 90, 90, 30, 30);
 			}
 			weapons.push_back(w);
 		}

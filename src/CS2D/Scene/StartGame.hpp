@@ -40,13 +40,16 @@ public:
 
 	void SetEnable(const bool value);
 
+	Camera *camera;
+
+	SquareRenderer squareRenderer;
+	SpriteRenderer *renderer;
+
 private:
 	Map *map;
 	Player *player;
-	Camera *camera;
-	SpriteRenderer *renderer;
+
 	TextRenderer *textRenderer;
-	SquareRenderer squareRenderer;
 	std::vector<Weapon> weapons;
 	bool enable = false;
 };

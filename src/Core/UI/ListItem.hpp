@@ -8,7 +8,7 @@
 class ListItemElement : public Button
 {
 public:
-    ListItemElement(Button *btn);
+    explicit ListItemElement(Button *btn);
     ~ListItemElement();
 
     void Update() override;

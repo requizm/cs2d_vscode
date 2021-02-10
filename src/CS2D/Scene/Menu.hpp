@@ -1,7 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+
 #ifdef WIN32
 #include <dirent/dirent.h>
 #endif // WIN32

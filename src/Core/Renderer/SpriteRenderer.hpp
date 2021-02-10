@@ -10,7 +10,7 @@ class SpriteRenderer
 public:
 	// Constructor (inits shaders/shapes)
 	//SpriteRenderer(Shader shader, Texture2D texture, GLuint x, GLuint y, GLuint width, GLuint height);
-	SpriteRenderer(Shader shader);
+	explicit SpriteRenderer(Shader shader);
 	SpriteRenderer();
 	// Destructor
 	~SpriteRenderer();

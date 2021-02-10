@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "../Scene/StartGame.hpp"
 
 #define PI 3.14159265
 
@@ -26,17 +27,23 @@ void Player::Update()
 	}
 }
 
-void Player::ProcessInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s)
+void Player::ProcessInput()
 {
-	ControllerInput(cam, r, s);
+	ControllerInput();
 	SlotInput();
 }
 
 void Player::SetPosition(Vector2<int> pos, bool changeCell)
 {
+
 	this->globalPosition = pos;
 	this->collider.SetPosition(this->GetPositionOfCenter());
 	this->BuildTransform();
+
+	StartGame::instance().camera->setPosition(Vector2(this->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, this->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
+	StartGame::instance().renderer->SetProjection(StartGame::instance().camera->cameraMatrix);
+	StartGame::instance().squareRenderer.SetProjection(StartGame::instance().camera->cameraMatrix);
+
 	Vector2<int> newCellPos = Utils::PositionToCell(this->GetPositionOfCenter());
 	if (newCellPos != cellPos)
 	{
@@ -67,28 +74,20 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
 	}
 }
 
-void Player::SetPosition(Vector2<int> pos, Camera &cam, SpriteRenderer &r, SquareRenderer &s)
-{
-	this->SetPosition(pos);
-	cam.setPosition(Vector2(this->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, this->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
-	r.SetProjection(cam.cameraMatrix);
-	s.SetProjection(cam.cameraMatrix);
-}
-
 void Player::SetPosition(const int x, const int y, bool changeCell)
 {
 	Vector2<int> newPos = Vector2<int>(x, y);
 	this->SetPosition(newPos, changeCell);
 }
 
-void Player::ControllerInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s)
+void Player::ControllerInput()
 {
 	if (InputManager::isKey(KeyboardKeys::KEY_W))
 	{
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y - this->velocity * Timer::DeltaTime);
 		if (!CheckCollision(newPos, MoveDirection::TOP))
 		{
-			this->SetPosition(newPos, cam, r, s);
+			this->SetPosition(newPos, true);
 		}
 	}
 	if (InputManager::isKey(KeyboardKeys::KEY_S))
@@ -96,7 +95,7 @@ void Player::ControllerInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s)
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x, this->GetPosition().y + this->velocity * Timer::DeltaTime);
 		if (!CheckCollision(newPos, MoveDirection::BOTTOM))
 		{
-			this->SetPosition(newPos, cam, r, s);
+			this->SetPosition(newPos, true);
 		}
 	}
 	if (InputManager::isKey(KeyboardKeys::KEY_A))
@@ -104,7 +103,7 @@ void Player::ControllerInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s)
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x - this->velocity * Timer::DeltaTime, this->GetPosition().y);
 		if (!CheckCollision(newPos, MoveDirection::LEFT))
 		{
-			this->SetPosition(newPos, cam, r, s);
+			this->SetPosition(newPos, true);
 		}
 	}
 	if (InputManager::isKey(KeyboardKeys::KEY_D))
@@ -112,7 +111,7 @@ void Player::ControllerInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s)
 		Vector2<int> newPos = Vector2<int>(this->GetPosition().x + this->velocity * Timer::DeltaTime, this->GetPosition().y);
 		if (!CheckCollision(newPos, MoveDirection::RIGHT))
 		{
-			this->SetPosition(newPos, cam, r, s);
+			this->SetPosition(newPos, true);
 		}
 	}
 }

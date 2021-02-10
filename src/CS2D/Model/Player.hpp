@@ -1,8 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 
 #include "../../Core/Manager/InputManager.hpp"
@@ -55,10 +53,9 @@ public:
 	void Draw(SpriteRenderer &renderer) override;
 	void DrawModel(SpriteRenderer &renderer) override;
 	void Update();
-	void ProcessInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s);
+	void ProcessInput();
 	void SetPosition(Vector2<int> pos, bool changeCell = true) override;
 	void SetPosition(const int x, const int y, bool changeCell = true) override;
-	void SetPosition(Vector2<int> pos, Camera &cam, SpriteRenderer &r, SquareRenderer &s);
 	void SetMap(Map *map);
 	void setVelocity(const int velocity);
 	void takeDamage(const int value);
@@ -80,18 +77,18 @@ private:
 	Map *map;
 
 	Weapon *selectedWeapon = nullptr;
-	Weapon *main_weapon = nullptr; //m4a1
+	Weapon *main_weapon = nullptr;	 //m4a1
 	Weapon *second_weapon = nullptr; //deagle
 
 	Vector2<int> lastMousePos;
 
 	int currentIndex = 0;
 	std::vector<Sprite> sprites;
-	
+
 	bool weaponLimit[3];
 
 	void SlotInput();
-	void ControllerInput(Camera &cam, SpriteRenderer &r, SquareRenderer &s);
+	void ControllerInput();
 
 	bool CheckCollision(Vector2<int> pos, MoveDirection direction);
 };

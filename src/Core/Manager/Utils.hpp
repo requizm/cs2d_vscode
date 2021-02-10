@@ -1,9 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include "../../CS2D/Other/Game_Parameters.hpp"
 #include "../Math/Vector2.hpp"
 #include "../Math/Vector2.hpp"

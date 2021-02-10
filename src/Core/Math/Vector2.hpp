@@ -14,7 +14,7 @@ public:
     {
     }
 
-    Vector2(T _v) : x(_v), y(_v)
+    explicit Vector2(T _v) : x(_v), y(_v)
     {
     }
 

@@ -1,8 +1,6 @@
 #ifndef LABEL_H
 #define LABEL_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <string>
 
 #include "UIObject.hpp"

@@ -15,7 +15,7 @@ class SquareRenderer
 {
 public:
 	SquareRenderer();
-	SquareRenderer(bool init);
+	explicit SquareRenderer(bool init);
 	~SquareRenderer();
 
 	Shader squareShader_ui;
