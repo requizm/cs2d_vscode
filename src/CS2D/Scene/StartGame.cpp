@@ -36,11 +36,7 @@ void StartGame::OnEnable()
 	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
 	renderer->SetProjection(camera->cameraMatrix);
 	squareRenderer.SetProjection(camera->cameraMatrix);
-
-	for (auto &weapon : map->weapons)
-	{
-		weapon->camera = this->camera;
-	}
+	player->Init();
 }
 
 void StartGame::OnDisable()

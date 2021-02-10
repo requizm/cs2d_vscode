@@ -13,7 +13,8 @@ enum WeaponType
 {
 	MAIN,
 	PISTOL,
-	KNIFE
+	KNIFE,
+	BOMB
 };
 
 class Weapon : public GameObject
@@ -45,7 +46,7 @@ public:
 
 	Weapon(const Vector2<int> pos, const Sprite &sprite, const Sprite &floorSprite, const std::string &weaponName,
 		   WeaponType type, int maxAmmo, int curAmmo, int curAmmoInMag,
-		   const int maxAmmoInMag) : GameObject(Vector2<int>(Utils::PositionToCell(pos).x * Game_Parameters::SIZE_TILE, Utils::PositionToCell(pos).y * Game_Parameters::SIZE_TILE), floorSprite, Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE), (int)ObjectType::WEAPON), currentIndex(1), selected(false)
+		   const int maxAmmoInMag, bool dropable, bool ammoAndWeapon) : GameObject(Vector2<int>(Utils::PositionToCell(pos).x * Game_Parameters::SIZE_TILE, Utils::PositionToCell(pos).y * Game_Parameters::SIZE_TILE), floorSprite, Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE), (int)ObjectType::WEAPON), currentIndex(1), selected(false)
 	{
 		this->weaponType = type;
 
@@ -64,6 +65,9 @@ public:
 		this->weaponName = weaponName;
 		this->sprites[0] = sprite;
 		this->sprites[1] = floorSprite;
+
+		this->dropable = dropable;
+		this->ammoAndWeapon = ammoAndWeapon;;
 	}
 
 	~Weapon();
@@ -87,11 +91,14 @@ public:
 	void setSelect(bool value);
 	bool getSelect();
 
-	Camera *camera = nullptr;
+	bool isDropable();
+	bool isAmmoAndWeapon();
 
 private:
 	bool selected;
 	int currentIndex; //0=hand   1=floor
+	bool dropable;
+	bool ammoAndWeapon;
 };
 
 #endif // WEAPON_H

@@ -1,4 +1,5 @@
 #include "Weapon.hpp"
+#include "../Scene/StartGame.hpp"
 
 Weapon::~Weapon() = default;
 
@@ -38,7 +39,7 @@ void Weapon::SetParent(GameObject *go)
 	}
 	this->SetSize(Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
 	SetPosition(go->GetPosition());
-	Vector2<int> dif = Utils::ScreenToWorld(camera->view, InputManager::mousePos) - this->GetPosition();
+	Vector2<int> dif = Utils::ScreenToWorld(StartGame::instance().camera->view, InputManager::mousePos) - this->GetPosition();
 	Vector2<float> a = dif.Normalize();
 	SetPosition(GetPosition().x + a.x * Game_Parameters::SIZE_TILE / 4, GetPosition().y + a.y * Game_Parameters::SIZE_TILE / 4, false);
 	parent = go;
@@ -93,4 +94,14 @@ void Weapon::setSelect(bool value)
 bool Weapon::getSelect()
 {
 	return this->selected;
+}
+
+bool Weapon::isDropable()
+{
+	return this->dropable;
+}
+
+bool Weapon::isAmmoAndWeapon()
+{
+	return this->ammoAndWeapon;
 }

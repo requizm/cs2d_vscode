@@ -44,11 +44,12 @@ public:
 
 		weaponLimit[0] = false;
 		weaponLimit[1] = false;
-		weaponLimit[2] = false;
+		weaponLimit[2] = false; //init()
 	}
 
 	~Player();
 
+	void Init();
 	void setIndex(int index);
 	void Draw(SpriteRenderer &renderer) override;
 	void DrawModel(SpriteRenderer &renderer) override;
@@ -76,9 +77,13 @@ private:
 
 	Map *map;
 
-	Weapon *selectedWeapon = nullptr;
-	Weapon *main_weapon = nullptr;	 //m4a1
-	Weapon *second_weapon = nullptr; //deagle
+	std::vector<Weapon *> mainWeapons, pistolWeapons, knifeWeapons, bombWeapons;
+	int mainIndex = 0;
+	int pistolIndex = 0;
+	int knifeIndex = 0;
+	int bombIndex = 0;
+
+	Weapon* selectedWeapon;
 
 	Vector2<int> lastMousePos;
 

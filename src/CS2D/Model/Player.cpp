@@ -11,9 +11,23 @@ void Player::Draw(SpriteRenderer &renderer)
 void Player::DrawModel(SpriteRenderer &renderer)
 {
 	renderer.DrawSprite(this->sprites[currentIndex], this->GetTransform());
+	knifeWeapons.at(0)->DrawModel(renderer);
 }
 
-Player::~Player() = default;
+Player::~Player()
+{
+	delete knifeWeapons.at(0);
+}
+
+void Player::Init()
+{
+	weaponLimit[2] = true;
+	Weapon *knf = new Weapon(GetPosition(), Sprite(ResourceManager::GetTexture("knife")), Sprite(ResourceManager::GetTexture("knife")), "knife", WeaponType::KNIFE, 1, 1, 1, 1, false, false);
+	knf->SetRotation(this->globalRotation + 0);
+	knf->SetParent(this);
+	selectedWeapon = knf;
+	knifeWeapons.push_back(knf);
+}
 
 void Player::Update()
 {
@@ -22,7 +36,7 @@ void Player::Update()
 		const int komsu = static_cast<int>(InputManager::mousePos.x) - Game_Parameters::SCREEN_WIDTH / 2;
 		const int karsi = static_cast<int>(InputManager::mousePos.y) - Game_Parameters::SCREEN_HEIGHT / 2;
 		const float atan = atan2(static_cast<float>(karsi), static_cast<float>(komsu)) * 180.0F / static_cast<float>(PI);
-		SetRotation(atan + 90.0F);
+		SetRotation(static_cast<int>(atan + 90.0F));
 		lastMousePos = InputManager::mousePos;
 	}
 }
@@ -50,24 +64,59 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
 		this->cellPos = newCellPos;
 		for (auto &weapon : map->weapons)
 		{
-			if (!weaponLimit[((int)weapon->weaponType)] && !weapon->getSelect() && weapon->GetCellPos() == this->cellPos)
+			if (!weaponLimit[((int)weapon->weaponType)] && !weapon->getSelect() && weapon->GetCellPos() == this->cellPos && !weapon->IsParent() && weapon->isDropable())
 			{
-				weaponLimit[((int)weapon->weaponType)] = true;
-				weapon->SetRotation(this->globalRotation + 180);
-				weapon->SetParent(this);
-				if (selectedWeapon != nullptr)
+				if (!weapon->isAmmoAndWeapon())
 				{
-					selectedWeapon->setSelect(false);
+					weaponLimit[((int)weapon->weaponType)] = true;
+					weapon->SetRotation(this->globalRotation + 180);
+					weapon->SetParent(this);
+					if (selectedWeapon != nullptr)
+					{
+						selectedWeapon->setSelect(false);
+					}
+					selectedWeapon = weapon;
+					switch (weapon->weaponType)
+					{
+					case WeaponType::MAIN:
+						mainWeapons.push_back(weapon);
+						break;
+					case WeaponType::PISTOL:
+						pistolWeapons.push_back(weapon);
+						break;
+					case WeaponType::KNIFE:
+						knifeWeapons.push_back(weapon);
+						break;
+					}
 				}
-				selectedWeapon = weapon;
-				switch (weapon->weaponType)
+				else
 				{
-				case WeaponType::MAIN:
-					main_weapon = weapon;
-					break;
-				case WeaponType::PISTOL:
-					second_weapon = weapon;
-					break;
+					bool found = false;
+					for (auto &bomb : bombWeapons)
+					{
+						if (bomb->weaponName == weapon->weaponName)
+						{
+							if (bomb->curAmmo + 1 <= bomb->maxAmmo)
+							{
+								bomb->curAmmo++;
+								weapon->SetParent(this);
+								weapon->setSelect(false);
+								found = true;
+							}
+							break;
+						}
+					}
+					if (!found)
+					{
+						weapon->SetRotation(this->globalRotation + 180);
+						weapon->SetParent(this);
+						if (selectedWeapon != nullptr)
+						{
+							selectedWeapon->setSelect(false);
+						}
+						selectedWeapon = weapon;
+						bombWeapons.push_back(weapon);
+					}
 				}
 			}
 		}
@@ -221,50 +270,228 @@ bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 }
 void Player::SlotInput()
 {
-	if (InputManager::isKeyDown(KeyboardKeys::KEY_G) && selectedWeapon != nullptr)
+	if (InputManager::isKeyDown(KeyboardKeys::KEY_G) && selectedWeapon != nullptr && selectedWeapon->isDropable())
 	{
-		selectedWeapon->RemoveParent();
-		weaponLimit[((int)selectedWeapon->weaponType)] = false;
-
-		switch (selectedWeapon->weaponType)
+		if (!selectedWeapon->isAmmoAndWeapon())
 		{
-		case WeaponType::MAIN:
-			main_weapon = nullptr;
-			if (second_weapon != nullptr)
+			selectedWeapon->RemoveParent();
+			weaponLimit[((int)selectedWeapon->weaponType)] = false;
+
+			switch (selectedWeapon->weaponType)
 			{
-				selectedWeapon = second_weapon;
+			case WeaponType::MAIN:
+				if (mainWeapons.size() >= 2)
+				{
+					mainWeapons.at(mainIndex) = nullptr;
+					mainWeapons.erase(mainWeapons.begin() + mainIndex);
+					selectedWeapon = mainWeapons.at(mainWeapons.size() - 1);
+					mainIndex = mainWeapons.size() - 1;
+					selectedWeapon->setSelect(true);
+				}
+				else if (!pistolWeapons.empty())
+				{
+					mainWeapons.at(0) = nullptr;
+					mainWeapons.erase(mainWeapons.begin() + 0);
+					selectedWeapon = pistolWeapons.at(0);
+					selectedWeapon->setSelect(true);
+					mainIndex = 0;
+				}
+				else
+				{
+					mainWeapons.at(0) = nullptr;
+					mainWeapons.erase(mainWeapons.begin() + 0);
+					selectedWeapon = knifeWeapons.at(0);
+					selectedWeapon->setSelect(true);
+					mainIndex = 0;
+				}
+				break;
+			case WeaponType::PISTOL:
+				if (!pistolWeapons.size() >= 2)
+				{
+					pistolWeapons.at(pistolIndex) = nullptr;
+					pistolWeapons.erase(pistolWeapons.begin() + pistolIndex);
+					selectedWeapon = pistolWeapons.at(pistolWeapons.size() - 1);
+					pistolIndex = pistolWeapons.size() - 1;
+					selectedWeapon->setSelect(true);
+				}
+				else if (!mainWeapons.empty())
+				{
+					pistolWeapons.at(0) = nullptr;
+					pistolWeapons.erase(pistolWeapons.begin() + 0);
+					selectedWeapon = mainWeapons.at(0);
+					selectedWeapon->setSelect(true);
+					pistolIndex = 0;
+				}
+				else
+				{
+					pistolWeapons.at(0) = nullptr;
+					pistolWeapons.erase(pistolWeapons.begin() + 0);
+					selectedWeapon = knifeWeapons.at(0);
+					selectedWeapon->setSelect(true);
+					pistolIndex = 0;
+				}
+				break;
+			case WeaponType::KNIFE:
+				if (!knifeWeapons.size() >= 2)
+				{
+					knifeWeapons.at(knifeIndex) = nullptr;
+					knifeWeapons.erase(knifeWeapons.begin() + knifeIndex);
+					selectedWeapon = knifeWeapons.at(knifeWeapons.size() - 1);
+					knifeIndex = knifeWeapons.size() - 1;
+					selectedWeapon->setSelect(true);
+				}
+				else
+				{
+					knifeWeapons.at(0) = nullptr;
+					knifeWeapons.erase(knifeWeapons.begin() + 0);
+					selectedWeapon = knifeWeapons.at(0);
+					selectedWeapon->setSelect(true);
+					knifeIndex = 0;
+				}
+				break;
+			}
+		}
+		else
+		{
+			if (selectedWeapon->curAmmo > 1)
+			{
+				for (auto &wp : map->weapons)
+				{
+					if (wp->IsParent() && !wp->getSelect() && wp->weaponName == selectedWeapon->weaponName)
+					{
+						wp->RemoveParent();
+						selectedWeapon->curAmmo = selectedWeapon->curAmmo - 1;
+						return;
+					}
+				}
+			}
+
+			if (bombWeapons.size() >= 2)
+			{
+				bombWeapons.at(mainIndex) = nullptr;
+				bombWeapons.erase(bombWeapons.begin() + mainIndex);
+				selectedWeapon = bombWeapons.at(bombWeapons.size() - 1);
+				mainIndex = bombWeapons.size() - 1;
+				selectedWeapon->setSelect(true);
+			}
+			else if (mainWeapons.size() >= 1)
+			{
+				bombWeapons.at(0) = nullptr;
+				bombWeapons.erase(bombWeapons.begin() + 0);
+				selectedWeapon = mainWeapons.at(0);
+				selectedWeapon->setSelect(true);
+			}
+			else if (pistolWeapons.size() >= 1)
+			{
+				bombWeapons.at(0) = nullptr;
+				bombWeapons.erase(bombWeapons.begin() + 0);
+				selectedWeapon = pistolWeapons.at(0);
 				selectedWeapon->setSelect(true);
 			}
 			else
 			{
-				selectedWeapon = nullptr;
-			}
-			break;
-		case WeaponType::PISTOL:
-			second_weapon = nullptr;
-			if (main_weapon != nullptr)
-			{
-				selectedWeapon = main_weapon;
+				bombWeapons.at(0) = nullptr;
+				bombWeapons.erase(bombWeapons.begin() + 0);
+				selectedWeapon = knifeWeapons.at(0);
 				selectedWeapon->setSelect(true);
 			}
-			else
-			{
-				selectedWeapon = nullptr;
-			}
-			break;
 		}
 	}
-	else if (InputManager::isKeyDown(KeyboardKeys::KEY_1) && main_weapon != nullptr && selectedWeapon != nullptr && selectedWeapon != main_weapon)
+	else if (InputManager::isKeyDown(KeyboardKeys::KEY_1) && !mainWeapons.empty() && selectedWeapon != nullptr && selectedWeapon != mainWeapons.at(mainIndex))
 	{
-		selectedWeapon->setSelect(false);
-		selectedWeapon = main_weapon;
-		selectedWeapon->setSelect(true);
+		if (selectedWeapon->weaponType != WeaponType::MAIN)
+		{
+			selectedWeapon->setSelect(false);
+			mainIndex = 0;
+			selectedWeapon = mainWeapons.at(mainIndex);
+			selectedWeapon->setSelect(true);
+		}
+		else if (mainWeapons.size() >= 2)
+		{
+			selectedWeapon->setSelect(false);
+			if (mainIndex + 1 == mainWeapons.size())
+			{
+				mainIndex = 0;
+			}
+			else
+			{
+				mainIndex = mainIndex + 1;
+			}
+			selectedWeapon = mainWeapons.at(mainIndex);
+			selectedWeapon->setSelect(true);
+		}
 	}
-	else if (InputManager::isKeyDown(KeyboardKeys::KEY_2) && second_weapon != nullptr && selectedWeapon != nullptr && selectedWeapon != second_weapon)
+	else if (InputManager::isKeyDown(KeyboardKeys::KEY_2) && !pistolWeapons.empty() && selectedWeapon != nullptr && selectedWeapon != pistolWeapons.at(pistolIndex))
 	{
-		selectedWeapon->setSelect(false);
-		selectedWeapon = second_weapon;
-		selectedWeapon->setSelect(true);
+		if (selectedWeapon->weaponType != WeaponType::PISTOL)
+		{
+			selectedWeapon->setSelect(false);
+			pistolIndex = 0;
+			selectedWeapon = pistolWeapons.at(pistolIndex);
+			selectedWeapon->setSelect(true);
+		}
+		else if (pistolWeapons.size() >= 2)
+		{
+			selectedWeapon->setSelect(false);
+			if (pistolIndex + 1 == pistolWeapons.size())
+			{
+				pistolIndex = 0;
+			}
+			else
+			{
+				pistolIndex = pistolIndex + 1;
+			}
+			selectedWeapon = pistolWeapons.at(pistolIndex);
+			selectedWeapon->setSelect(true);
+		}
+	}
+	else if (InputManager::isKeyDown(KeyboardKeys::KEY_3) && !knifeWeapons.empty() && selectedWeapon != nullptr && selectedWeapon != knifeWeapons.at(knifeIndex))
+	{
+		if (selectedWeapon->weaponType != WeaponType::KNIFE)
+		{
+			selectedWeapon->setSelect(false);
+			knifeIndex = 0;
+			selectedWeapon = knifeWeapons.at(knifeIndex);
+			selectedWeapon->setSelect(true);
+		}
+		else if (knifeWeapons.size() >= 2)
+		{
+			selectedWeapon->setSelect(false);
+			if (knifeIndex + 1 == knifeWeapons.size())
+			{
+				knifeIndex = 0;
+			}
+			else
+			{
+				knifeIndex = knifeIndex + 1;
+			}
+			selectedWeapon = knifeWeapons.at(knifeIndex);
+			selectedWeapon->setSelect(true);
+		}
+	}
+	else if (InputManager::isKeyDown(KeyboardKeys::KEY_4) && !bombWeapons.empty() && selectedWeapon != nullptr && selectedWeapon != bombWeapons.at(bombIndex))
+	{
+		if (selectedWeapon->weaponType != WeaponType::BOMB)
+		{
+			selectedWeapon->setSelect(false);
+			bombIndex = 0;
+			selectedWeapon = bombWeapons.at(bombIndex);
+			selectedWeapon->setSelect(true);
+		}
+		else if (bombWeapons.size() >= 2)
+		{
+			selectedWeapon->setSelect(false);
+			if (bombIndex + 1 == bombWeapons.size())
+			{
+				bombIndex = 0;
+			}
+			else
+			{
+				bombIndex = bombIndex + 1;
+			}
+			selectedWeapon = bombWeapons.at(bombIndex);
+			selectedWeapon->setSelect(true);
+		}
 	}
 }
 void Player::SetMap(Map *map)

@@ -8,7 +8,9 @@
         "maxAmmo": 90,
         "currentAmmo": 90,
         "curAmmoInMag": 30,
-        "maxAmmoInMag": 30
+        "maxAmmoInMag": 30,
+        "ammoAndWeapon": false,
+        "dropable": true
     },
     {
         "id": 2,
@@ -19,7 +21,9 @@
         "maxAmmo": 90,
         "currentAmmo": 90,
         "curAmmoInMag": 30,
-        "maxAmmoInMag": 30
+        "maxAmmoInMag": 30,
+        "ammoAndWeapon": false,
+        "dropable": true
     },
     {
         "id": 3,
@@ -30,6 +34,47 @@
         "maxAmmo": 35,
         "currentAmmo": 35,
         "curAmmoInMag": 7,
-        "maxAmmoInMag": 7
+        "maxAmmoInMag": 7,
+        "ammoAndWeapon": false,
+        "dropable": true
+    },
+    {
+        "id": 4,
+        "name": "knife",
+        "sprite": "knife",
+        "floorSprite": "knife",
+        "type": 2,
+        "maxAmmo": 1,
+        "currentAmmo": 1,
+        "curAmmoInMag": 1,
+        "maxAmmoInMag": 1,
+        "ammoAndWeapon": false,
+        "dropable": false
+    },
+    {
+        "id": 5,
+        "name": "he",
+        "sprite": "he",
+        "floorSprite": "he",
+        "type": 3,
+        "maxAmmo": 1,
+        "currentAmmo": 1,
+        "curAmmoInMag": 1,
+        "maxAmmoInMag": 1,
+        "ammoAndWeapon": true,
+        "dropable": true
+    },
+    {
+        "id": 6,
+        "name": "flashbang",
+        "sprite": "flashbang",
+        "floorSprite": "flashbang",
+        "type": 3,
+        "maxAmmo": 2,
+        "currentAmmo": 1,
+        "curAmmoInMag": 1,
+        "maxAmmoInMag": 1,
+        "ammoAndWeapon": true,
+        "dropable": true
     }
 ]
