@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "../../CS2D/Other/Game_Parameters.hpp"
+#include "../../CS2D/Other/GameParameters.hpp"
 #include "../Math/Vector2.hpp"
 #include "../Math/Vector2.hpp"
 
@@ -15,8 +15,8 @@ public:
     static Vector2<int> PositionToCell(Vector2<int> pos);
     static Vector2<int> CellToPosition(Vector2<int> cell);
     static int GenerateID();
-    static bool TryStringToInt(const char *s);
-    static int StringToInt(const char *s);
+    static bool TryStringToInt(std::string s);
+    static int StringToInt(std::string s);
 
     static int curIndex;
 };

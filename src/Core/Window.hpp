@@ -16,7 +16,7 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 class Window
 {
 public:
-    Window(const char *windowName, int x, int y);
+    Window(std::string windowName, int x, int y);
     void Clear();
     void Update();
     void Destroy();

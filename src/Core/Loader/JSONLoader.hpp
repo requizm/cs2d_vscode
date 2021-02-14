@@ -13,7 +13,7 @@ public:
     JSONLoader();
     ~JSONLoader();
 
-    nlohmann::json Load(std::string &str);
+    nlohmann::json Load(std::string str);
 };
 
 #endif // JSONLOADER_H

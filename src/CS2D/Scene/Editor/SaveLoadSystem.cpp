@@ -103,7 +103,7 @@ void SaveLoadSystem::SaveMap()
         doc.append_node(node_map);
         doc.append_node(node_info);
         std::ofstream fileC;
-        std::string a("../../resources/levels/" + t_save->getText() + ".xml");
+        std::string a(GameParameters::resDirectory + "levels/" + t_save->getText() + ".xml");
         fileC.open(a.c_str());
         if (!fileC)
         {
@@ -137,7 +137,7 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
     InputManager::scroll.y = 0.0F;
     this->loadPanel->setEnable(false);
 
-    mapName = "../../resources/levels/" + mapName + ".xml";
+    mapName = GameParameters::resDirectory + "levels/" + mapName + ".xml";
     XMLLoader loader = XMLLoader(mapName);
 
     this->t_save->setText(loader.GetDoc().first_node("info")->first_node("name")->value());
@@ -163,8 +163,8 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
         int textureIndex = atoi(tIndex);
         int tileType = atoi(tType);
         int itemId = atoi(tItemId);
-        const Vector2<int> pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
-        const Vector2<int> size(Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
+        const Vector2<int> pos(GameParameters::SIZE_TILE * cellX, GameParameters::SIZE_TILE * cellY);
+        const Vector2<int> size(Vector2<int>(GameParameters::SIZE_TILE, GameParameters::SIZE_TILE));
         const int xoffset = textureIndex % (ResourceManager::GetTexture(Editor::instance().currentTileSet).Width / 32);
         const int yoffset = textureIndex / (ResourceManager::GetTexture(Editor::instance().currentTileSet).Width / 32);
         const Sprite sprite = Sprite(ResourceManager::GetTexture(Editor::instance().currentTileSet), (xoffset)*32, yoffset * 32, 32, 32);
@@ -221,7 +221,8 @@ std::vector<std::string> SaveLoadSystem::getMapNames()
 
     DIR *dir;
     struct dirent *ent;
-    if ((dir = opendir("../../resources/levels")) != NULL)
+    std::string str = GameParameters::resDirectory + "levels";
+    if ((dir = opendir(str.c_str())) != NULL)
     {
         /* print all the files and directories within directory */
         while ((ent = readdir(dir)) != NULL)

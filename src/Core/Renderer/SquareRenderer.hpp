@@ -9,7 +9,7 @@
 #include "Shader.hpp"
 #include "../Manager/ResourceManager.hpp"
 #include "../Manager/InputManager.hpp"
-#include "../../CS2D/Other/Game_Parameters.hpp"
+#include "../../CS2D/Other/GameParameters.hpp"
 
 class SquareRenderer
 {

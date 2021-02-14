@@ -3,7 +3,7 @@
 
 #include "../../../../Core/UI/Panel.hpp"
 #include "../../../../Core/UI/TextBox.hpp"
-#include "../../../Other/Game_Parameters.hpp"
+#include "../../../Other/GameParameters.hpp"
 #include "../../../../Core/Manager/Utils.hpp"
 
 class Env_Item

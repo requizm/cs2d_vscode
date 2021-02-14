@@ -5,22 +5,18 @@
 #include <string>
 #include <math.h> // pow()
 
-enum GameState
-{
-    MENU,
-    INGAME,
-    EDITOR
-};
+#include "../../Core/Loader/JSONLoader.hpp"
 
-class Game_Parameters
+class GameParameters
 {
 public:
     static int SCREEN_WIDTH;
     static int SCREEN_HEIGHT;
     static int SIZE_TILE;
+    static std::string resDirectory;
 
-    Game_Parameters();
-    ~Game_Parameters();
+    GameParameters();
+    ~GameParameters();
 
     static void LoadParameters();
 };

@@ -102,7 +102,7 @@ void Button::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer
 			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition(), this->getSize());
 			break;
 		case ButtonType::ENV_OBJ:
-			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition() + Game_Parameters::SIZE_TILE / 4, this->getSize() / Vector2<int>(2));
+			spriteRenderer.DrawSprite(this->tile.sprite, this->getPosition() + GameParameters::SIZE_TILE / 4, this->getSize() / Vector2<int>(2));
 			break;
 		}
 	}

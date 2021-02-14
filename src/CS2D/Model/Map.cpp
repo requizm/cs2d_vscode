@@ -2,7 +2,7 @@
 
 Map::Map() = default;
 
-Map::Map(const GLchar *file, const std::string &name)
+Map::Map(std::string file, const std::string &name)
 {
 	this->name = name;
 	Load(file);
@@ -22,18 +22,17 @@ Map::~Map()
 	weapons.clear();
 }
 
-void Map::Load(const GLchar *file)
+void Map::Load(std::string file)
 {
 	JSONLoader jsonLoader;
-	std::string str2("../../resources/content/weapons.json");
-	nlohmann::json weaponsJ = jsonLoader.Load(str2);
+	nlohmann::json weaponsJ = jsonLoader.Load(GameParameters::resDirectory + "content/weapons.json");
 
 	for (nlohmann::json::iterator it = weaponsJ.begin(); it != weaponsJ.end(); ++it)
 	{
-		std::string spritePath = "../../resources/textures/weapons/" + it->at("sprite").get<std::string>() + ".png";
-		std::string floorSpritePath = "../../resources/textures/weapons/" + it->at("floorSprite").get<std::string>() + ".png";
-		ResourceManager::LoadTexture(spritePath.c_str(), GL_TRUE, it->at("sprite").get<std::string>());
-		ResourceManager::LoadTexture(floorSpritePath.c_str(), GL_TRUE, it->at("floorSprite").get<std::string>());
+		std::string spritePath = GameParameters::resDirectory + "textures/weapons/" + it->at("sprite").get<std::string>() + ".png";
+		std::string floorSpritePath = GameParameters::resDirectory + "textures/weapons/" + it->at("floorSprite").get<std::string>() + ".png";
+		ResourceManager::LoadTexture(spritePath, GL_TRUE, it->at("sprite").get<std::string>());
+		ResourceManager::LoadTexture(floorSpritePath, GL_TRUE, it->at("floorSprite").get<std::string>());
 	}
 
 	this->tiles.clear();
@@ -62,8 +61,8 @@ void Map::Load(const GLchar *file)
 		int textureIndex = atoi(tIndex);
 		int tileType = atoi(tType);
 		int itemId = atoi(iNo);
-		const Vector2<int> pos(Game_Parameters::SIZE_TILE * cellX, Game_Parameters::SIZE_TILE * cellY);
-		const Vector2<int> size(Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
+		const Vector2<int> pos(GameParameters::SIZE_TILE * cellX, GameParameters::SIZE_TILE * cellY);
+		const Vector2<int> size(Vector2<int>(GameParameters::SIZE_TILE, GameParameters::SIZE_TILE));
 		const int xoffset = textureIndex % (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const int yoffset = textureIndex / (ResourceManager::GetTexture("cs2dnorm").Width / 32);
 		const Sprite sprite = Sprite(ResourceManager::GetTexture("cs2dnorm"), (xoffset)*32, yoffset * 32, 32, 32);

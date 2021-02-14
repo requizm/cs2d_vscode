@@ -6,7 +6,7 @@
 #include "../../CS2D/Model/Tile.hpp"
 #include "../Renderer/SpriteRenderer.hpp"
 #include "../Renderer/SquareRenderer.hpp"
-#include "../../CS2D/Other/Game_Parameters.hpp"
+#include "../../CS2D/Other/GameParameters.hpp"
 #include "../Manager/ObjectManager.hpp"
 
 enum ButtonType

@@ -23,7 +23,7 @@ void Env_Item::Initialize()
     sp = Sprite(ResourceManager::GetTexture("bulb"));
     this->obj_id = Utils::GenerateID();
 
-    Tile t = Tile(position, sp, Vector2<int>(Game_Parameters::SIZE_TILE));
+    Tile t = Tile(position, sp, Vector2<int>(GameParameters::SIZE_TILE));
     button = new Button(t, 1.0F, UIObjectType::ENV_ITEM);
     button->setType(ButtonType::ENV_OBJ);
 
@@ -43,7 +43,7 @@ void Env_Item::Update()
 void Env_Item::Render(SpriteRenderer &worldRenderer, SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer, float time)
 {
     button->Draw(worldRenderer, squareRenderer);
-    /*worldRenderer.DrawSprite(sp, Vector2<float>(position + Game_Parameters::SIZE_TILE / 4), Vector2<float>(Game_Parameters::SIZE_TILE / 2), Vector3<float>(0.5F, 1.0F, 0.0F), false, 0.0F, 0.15F, true, time);*/
+    /*worldRenderer.DrawSprite(sp, Vector2<float>(position + GameParameters::SIZE_TILE / 4), Vector2<float>(GameParameters::SIZE_TILE / 2), Vector3<float>(0.5F, 1.0F, 0.0F), false, 0.0F, 0.15F, true, time);*/
 }
 
 int Env_Item::getItemID()

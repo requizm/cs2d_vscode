@@ -14,7 +14,7 @@
 #include "Map.hpp"
 #include "Weapon.hpp"
 
-#include "../Other/Game_Parameters.hpp"
+#include "../Other/GameParameters.hpp"
 
 enum MoveDirection
 {
@@ -34,7 +34,7 @@ public:
 		this->lastMousePos = Vector2(0, 0);
 	}
 
-	Player(const Vector2<int> pos, const std::vector<Sprite> &sprites, const Vector2<int> size = Vector2<int>(Game_Parameters::SIZE_TILE), int maxHealth = 100) : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER), map(nullptr), velocity(0.0F), collider(CircleCollider(this->GetPositionOfCenter(), static_cast<int>(static_cast<float>(Game_Parameters::SIZE_TILE / 2) * 0.8F)))
+	Player(const Vector2<int> pos, const std::vector<Sprite> &sprites, const Vector2<int> size = Vector2<int>(GameParameters::SIZE_TILE), int maxHealth = 100) : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER), map(nullptr), velocity(0.0F), collider(CircleCollider(this->GetPositionOfCenter(), static_cast<int>(static_cast<float>(GameParameters::SIZE_TILE / 2) * 0.8F)))
 	{
 		this->maxHealth = maxHealth;
 		this->health = maxHealth;

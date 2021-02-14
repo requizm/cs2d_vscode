@@ -4,7 +4,7 @@
 #include "Mag.hpp"
 #include "../../Core/Model/GameObject.hpp"
 #include "../../Core/Model/Camera.hpp"
-#include "../Other/Game_Parameters.hpp"
+#include "../Other/GameParameters.hpp"
 #include "../../Core/Manager/Utils.hpp"
 #include "../../Core/Manager/Logger.hpp"
 #include "../../Core/Manager/InputManager.hpp"
@@ -46,7 +46,7 @@ public:
 
 	Weapon(const Vector2<int> pos, const Sprite &sprite, const Sprite &floorSprite, const std::string &weaponName,
 		   WeaponType type, int maxAmmo, int curAmmo, int curAmmoInMag,
-		   const int maxAmmoInMag, bool dropable, bool ammoAndWeapon) : GameObject(Vector2<int>(Utils::PositionToCell(pos).x * Game_Parameters::SIZE_TILE, Utils::PositionToCell(pos).y * Game_Parameters::SIZE_TILE), floorSprite, Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE), (int)ObjectType::WEAPON), currentIndex(1), selected(false)
+		   const int maxAmmoInMag, bool dropable, bool ammoAndWeapon) : GameObject(Vector2<int>(Utils::PositionToCell(pos).x * GameParameters::SIZE_TILE, Utils::PositionToCell(pos).y * GameParameters::SIZE_TILE), floorSprite, Vector2<int>(GameParameters::SIZE_TILE, GameParameters::SIZE_TILE), (int)ObjectType::WEAPON), currentIndex(1), selected(false)
 	{
 		this->weaponType = type;
 
@@ -54,8 +54,8 @@ public:
 
 		if (weaponType == WeaponType::MAIN)
 		{
-			this->SetSize(Vector2<int>(Game_Parameters::SIZE_TILE * 2, Game_Parameters::SIZE_TILE));
-			this->SetPosition(GetPosition().x - Game_Parameters::SIZE_TILE / 2, GetPosition().y, false);
+			this->SetSize(Vector2<int>(GameParameters::SIZE_TILE * 2, GameParameters::SIZE_TILE));
+			this->SetPosition(GetPosition().x - GameParameters::SIZE_TILE / 2, GetPosition().y, false);
 		}
 
 		this->maxAmmo = maxAmmo;

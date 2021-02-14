@@ -108,14 +108,14 @@ NewMapResult NewMapSystem::B_NewMap()
 		WRITE_ERROR("BOYLE BIR TEXTURE YOK");
 		return (NewMapResult());
 	}
-	if (!Utils::TryStringToInt(sizeX.c_str()) || !Utils::TryStringToInt(sizeY.c_str()))
+	if (!Utils::TryStringToInt(sizeX) || !Utils::TryStringToInt(sizeY))
 	{
 		WRITE_ERROR("BUNLAR SAYI DEGIL");
 		return (NewMapResult());
 	}
 
-	int isizeX = Utils::StringToInt(sizeX.c_str());
-	int isizeY = Utils::StringToInt(sizeY.c_str());
+	int isizeX = Utils::StringToInt(sizeX);
+	int isizeY = Utils::StringToInt(sizeY);
 
 	if (isizeX <= 0 || isizeY <= 0)
 	{

@@ -160,7 +160,7 @@ void GameObject::setCellPosition(int x, int y, bool changeCell)
 }
 void GameObject::setCellPosition(Vector2<int> pos, bool changeCell)
 {
-	SetPosition(Vector2<int>(pos.x * Game_Parameters::SIZE_TILE, pos.y * Game_Parameters::SIZE_TILE), changeCell);
+	SetPosition(Vector2<int>(pos.x * GameParameters::SIZE_TILE, pos.y * GameParameters::SIZE_TILE), changeCell);
 }
 
 GameObject *GameObject::GetParent()

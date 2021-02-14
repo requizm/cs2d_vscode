@@ -8,7 +8,7 @@ JSONLoader::~JSONLoader()
 {
 }
 
-nlohmann::json JSONLoader::Load(std::string &str)
+nlohmann::json JSONLoader::Load(std::string str)
 {
     std::ifstream t(str);
     if (!t)

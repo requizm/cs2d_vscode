@@ -35,16 +35,16 @@ void Editor::Start()
 {
 	this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
 	this->worldRenderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
-	this->textRenderer = std::make_shared<TextRenderer>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
-	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 16);
+	this->textRenderer = std::make_shared<TextRenderer>(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
+	this->textRenderer->Load(GameParameters::resDirectory + "fonts/liberationsans.ttf", 16);
 	this->squareRenderer = new SquareRenderer(true);
-	this->camera = std::make_shared<Camera>(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
+	this->camera = std::make_shared<Camera>(static_cast<int>(GameParameters::SCREEN_WIDTH), static_cast<int>(GameParameters::SCREEN_HEIGHT));
 	this->mouse_yellow = Vector3<float>(0.73F, 0.73F, 0.0F);
 	this->cell_yellow = Vector3<float>(0.15F, 0.15F, 0.0F);
 	this->maxCellInColumn = 5;
-	this->maxCellInRow = (Game_Parameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32 + 1;
+	this->maxCellInRow = (GameParameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32 + 1;
 
-	this->buildPanel = new Panel(Vector2<int>(0, 0), "Build Panel", Vector2<int>(32 * maxCellInColumn + (5 * 2), Game_Parameters::SCREEN_HEIGHT), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
+	this->buildPanel = new Panel(Vector2<int>(0, 0), "Build Panel", Vector2<int>(32 * maxCellInColumn + (5 * 2), GameParameters::SCREEN_HEIGHT), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
 	this->buildPanel->setMovable(false);
 	this->buildPanel->setEnable(true);
 
@@ -461,19 +461,19 @@ void Editor::ProcessInput()
 	{
 		if (InputManager::isKey(KeyboardKeys::KEY_W))
 		{
-			this->position = Vector2(this->position.x, this->position.y - static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime));
+			this->position = Vector2(this->position.x, this->position.y - static_cast<int>(static_cast<float>(GameParameters::SCREEN_HEIGHT) * Timer::DeltaTime));
 		}
 		if (InputManager::isKey(KeyboardKeys::KEY_S))
 		{
-			this->position = Vector2(this->position.x, this->position.y + static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime));
+			this->position = Vector2(this->position.x, this->position.y + static_cast<int>(static_cast<float>(GameParameters::SCREEN_HEIGHT) * Timer::DeltaTime));
 		}
 		if (InputManager::isKey(KeyboardKeys::KEY_A))
 		{
-			this->position = Vector2(this->position.x - static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
+			this->position = Vector2(this->position.x - static_cast<int>(static_cast<float>(GameParameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
 		}
 		if (InputManager::isKey(KeyboardKeys::KEY_D))
 		{
-			this->position = Vector2(this->position.x + static_cast<int>(static_cast<float>(Game_Parameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
+			this->position = Vector2(this->position.x + static_cast<int>(static_cast<float>(GameParameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
 		}
 	}
 
@@ -660,7 +660,7 @@ void Editor::ProcessInput()
 				{
 					if (tile->cell == selectedCell)
 					{
-						Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile->sprite, Vector2<int>(Game_Parameters::SIZE_TILE), selectedTile->getType(), selectedTile->frame);
+						Tile tilee = Tile(Utils::CellToPosition(selectedCell), selectedTile->sprite, Vector2<int>(GameParameters::SIZE_TILE), selectedTile->getType(), selectedTile->frame);
 						if (!(selectedTile->frame == tile->button->getTile()->frame))
 						{
 							Button *bt = new Button(tilee);
@@ -710,13 +710,13 @@ void Editor::Render()
 	{
 		tile_1->button->Draw(*worldRenderer, *squareRenderer);
 
-		squareRenderer->world_RenderEmptySquare(Utils::CellToPosition(tile_1->cell), Vector2<int>(Game_Parameters::SIZE_TILE), cell_yellow);
+		squareRenderer->world_RenderEmptySquare(Utils::CellToPosition(tile_1->cell), Vector2<int>(GameParameters::SIZE_TILE), cell_yellow);
 
 		if (!f && ms == tile_1->cell && !NewMap->isMouseHover() && !buildPanel->isMouseHover(false) && !SaveLoad->isMouseHover() && !envItemManager->isPressedOrHover())
 		{
 			f = true;
 			Vector2<int> pos = Utils::CellToPosition(tile_1->cell);
-			squareRenderer->world_RenderEmptySquareWithLine(pos, Vector2<int>(Game_Parameters::SIZE_TILE), mouse_yellow, 2.0F);
+			squareRenderer->world_RenderEmptySquareWithLine(pos, Vector2<int>(GameParameters::SIZE_TILE), mouse_yellow, 2.0F);
 		}
 	}
 	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)

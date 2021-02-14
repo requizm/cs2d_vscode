@@ -5,6 +5,7 @@
 
 #include "../Manager/ResourceManager.hpp"
 #include "../Manager/Logger.hpp"
+#include "../../CS2D/Other/GameParameters.hpp"
 
 /// Holds all state information relevant to a character as loaded using FreeType
 struct Character

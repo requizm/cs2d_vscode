@@ -18,7 +18,7 @@
 #include "../../../Core/UI/TextBox.hpp"
 #include "../../../Core/UI/ListItem.hpp"
 #include "ButtonTile.hpp"
-#include "../../Other/Game_Parameters.hpp"
+#include "../../Other/GameParameters.hpp"
 #include "../../../Core/Loader/XMLLoader.hpp"
 
 class SaveLoadSystem

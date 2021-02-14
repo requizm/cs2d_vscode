@@ -4,11 +4,11 @@ StartGame::StartGame() = default;
 
 void StartGame::Initialize(const std::string &mapName)
 {
-	this->map = new Map(mapName.c_str(), mapName.c_str());
+	this->map = new Map(mapName, mapName);
 	this->renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
-	this->camera = new Camera(static_cast<int>(Game_Parameters::SCREEN_WIDTH), static_cast<int>(Game_Parameters::SCREEN_HEIGHT));
-	this->textRenderer = new TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
-	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 20);
+	this->camera = new Camera(static_cast<int>(GameParameters::SCREEN_WIDTH), static_cast<int>(GameParameters::SCREEN_HEIGHT));
+	this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
+	this->textRenderer->Load(GameParameters::resDirectory + "fonts/liberationsans.ttf", 20);
 	this->squareRenderer = SquareRenderer(true);
 
 	this->SetEnable(true);
@@ -30,10 +30,10 @@ void StartGame::OnEnable()
 {
 	this->Start();
 	player->SetMap(map);
-	player->SetPosition(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2, Game_Parameters::SCREEN_HEIGHT / 2));
+	player->SetPosition(Vector2<int>(GameParameters::SCREEN_WIDTH / 2, GameParameters::SCREEN_HEIGHT / 2));
 	player->setVelocity(500);
 
-	camera->setPosition(Vector2(player->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
+	camera->setPosition(Vector2(player->GetPositionOfCenter().x - GameParameters::SCREEN_WIDTH / 2, player->GetPositionOfCenter().y - GameParameters::SCREEN_HEIGHT / 2));
 	renderer->SetProjection(camera->cameraMatrix);
 	squareRenderer.SetProjection(camera->cameraMatrix);
 	player->Init();

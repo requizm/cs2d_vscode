@@ -5,7 +5,7 @@
 
 #include "../Renderer/SpriteRenderer.hpp"
 #include "../Manager/Logger.hpp"
-#include "../../CS2D/Other/Game_Parameters.hpp"
+#include "../../CS2D/Other/GameParameters.hpp"
 #include "../Manager/Utils.hpp"
 
 enum class ObjectType

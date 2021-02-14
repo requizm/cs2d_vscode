@@ -6,10 +6,10 @@ SquareRenderer::SquareRenderer()
 
 SquareRenderer::SquareRenderer(bool init)
 {
-	this->squareShader_world = ResourceManager::LoadShader("../../resources/shaders/squareVertex.txt", "../../resources/shaders/squareFragment.txt", nullptr, "squareShader");
-	this->squareShader_ui = ResourceManager::LoadShader("../../resources/shaders/squareVertex.txt", "../../resources/shaders/squareFragment.txt", nullptr, "squareShader");
+	this->squareShader_world = ResourceManager::LoadShader(GameParameters::resDirectory + "shaders/squareVertex.txt", GameParameters::resDirectory + "shaders/squareFragment.txt", "", "squareShader");
+	this->squareShader_ui = ResourceManager::LoadShader(GameParameters::resDirectory + "shaders/squareVertex.txt", GameParameters::resDirectory + "shaders/squareFragment.txt", "", "squareShader");
 	this->squareShader_ui.Use();
-	this->squareShader_ui.SetMatrix4("projection", Projection::ortho(0.0f, static_cast<float>(Game_Parameters::SCREEN_WIDTH), static_cast<float>(Game_Parameters::SCREEN_HEIGHT), 0.0f, -1.0f, 1.0f));
+	this->squareShader_ui.SetMatrix4("projection", Projection::ortho(0.0f, static_cast<float>(GameParameters::SCREEN_WIDTH), static_cast<float>(GameParameters::SCREEN_HEIGHT), 0.0f, -1.0f, 1.0f));
 	this->squareShader_ui.UnUse();
 	outline.initData();
 	square.init();

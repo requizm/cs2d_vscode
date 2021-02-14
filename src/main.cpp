@@ -13,8 +13,8 @@ int nbFrames = 0;
 int main(int argc, char *argv[])
 {
 	//FreeConsole();
-	Game_Parameters::LoadParameters();
-	Window window("CS2D", Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
+	GameParameters::LoadParameters();
+	Window window("CS2D", GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
 	Logger::StartApp();
 
 	// Initialize game

@@ -12,7 +12,7 @@
 #include "Tile.hpp"
 #include "Weapon.hpp"
 #include "../../Core/Manager/ResourceManager.hpp"
-#include "../Other/Game_Parameters.hpp"
+#include "../Other/GameParameters.hpp"
 #include "../../Core/Manager/Logger.hpp"
 #include "../../Core/Loader/XMLLoader.hpp"
 #include "../../Core/Loader/JSONLoader.hpp"
@@ -24,7 +24,7 @@ public:
 	std::vector<Weapon *> weapons;
 
 	Map();
-	Map(const GLchar *file, const std::string &name);
+	Map(std::string file, const std::string &name);
 	~Map();
 
 	std::string GetName() const;
@@ -38,7 +38,7 @@ public:
 	Tile *GetTileByPosition(Vector2<int> position);
 
 private:
-	void Load(const GLchar *file);
+	void Load(std::string file);
 	std::string name;
 
 	Vector2<int> mapLimit;

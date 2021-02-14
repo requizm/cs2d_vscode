@@ -8,9 +8,17 @@
 std::map<std::string, Texture2D> ResourceManager::Textures;
 std::map<std::string, Shader> ResourceManager::Shaders;
 
-Shader ResourceManager::LoadShader(const GLchar *vShaderFile, const GLchar *fShaderFile, const GLchar *gShaderFile, std::string name)
+Shader ResourceManager::LoadShader(std::string vShaderFile, std::string fShaderFile, std::string gShaderFile, std::string name)
 {
-	Shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);
+	if (gShaderFile.empty())
+	{
+		Shaders[name] = loadShaderFromFile(vShaderFile.c_str(), fShaderFile.c_str(), nullptr);
+	}
+	else
+	{
+		Shaders[name] = loadShaderFromFile(vShaderFile.c_str(), fShaderFile.c_str(), gShaderFile.c_str());
+	}
+
 	return Shaders[name];
 }
 
@@ -19,9 +27,9 @@ Shader ResourceManager::GetShader(std::string name)
 	return Shaders[name];
 }
 
-Texture2D ResourceManager::LoadTexture(const GLchar *file, const GLboolean alpha, const std::string name)
+Texture2D ResourceManager::LoadTexture(std::string file, const GLboolean alpha, const std::string name)
 {
-	Textures[name] = loadTextureFromFile(file, alpha);
+	Textures[name] = loadTextureFromFile(file.c_str(), alpha);
 	return Textures[name];
 }
 
@@ -40,7 +48,7 @@ void ResourceManager::Destroy()
 		glDeleteTextures(1, &iter.second.ID);
 }
 
-Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile, const GLchar *gShaderFile)
+Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile)
 {
 	// 1. Retrieve the vertex/fragment source code from filePath
 	std::string vertexCode;
@@ -85,7 +93,7 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
 	return shader;
 }
 
-Texture2D ResourceManager::loadTextureFromFile(const GLchar *file, GLboolean alpha)
+Texture2D ResourceManager::loadTextureFromFile(const char *file, GLboolean alpha)
 {
 	// Create Texture object
 	Texture2D texture;

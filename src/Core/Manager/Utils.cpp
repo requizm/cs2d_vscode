@@ -17,14 +17,14 @@ Vector2<int> Utils::PositionToCell(Vector2<int> pos)
 {
     if (pos.x >= 0 && pos.y >= 0)
     {
-        return Vector2<int>(pos.x / Game_Parameters::SIZE_TILE, pos.y / Game_Parameters::SIZE_TILE);
+        return Vector2<int>(pos.x / GameParameters::SIZE_TILE, pos.y / GameParameters::SIZE_TILE);
     }
     return Vector2<int>(-1, -1); //gereksiz
 }
 
 Vector2<int> Utils::CellToPosition(Vector2<int> cell)
 {
-    return Vector2<int>(cell.x * Game_Parameters::SIZE_TILE, cell.y * Game_Parameters::SIZE_TILE);
+    return Vector2<int>(cell.x * GameParameters::SIZE_TILE, cell.y * GameParameters::SIZE_TILE);
 }
 
 int Utils::GenerateID()
@@ -32,48 +32,51 @@ int Utils::GenerateID()
     return curIndex++;
 }
 
-bool Utils::TryStringToInt(char const *s)
+bool Utils::TryStringToInt(std::string s)
 {
-    if (s == NULL || *s == '\0')
+    const char *sC = s.c_str();
+    if (sC == NULL || *sC == '\0')
         return false;
 
-    bool negate = (s[0] == '-');
-    if (*s == '+' || *s == '-')
-        ++s;
+    bool negate = (sC[0] == '-');
+    if (*sC == '+' || *sC == '-')
+        ++sC;
 
-    if (*s == '\0')
+    if (*sC == '\0')
         return false;
 
     int result = 0;
-    while (*s)
+    while (*sC)
     {
-        if (*s >= '0' && *s <= '9')
+        if (*sC >= '0' && *sC <= '9')
         {
-            result = result * 10 - (*s - '0'); //assume negative number
+            result = result * 10 - (*sC - '0'); //assume negative number
         }
         else
             return false;
-        ++s;
+        ++sC;
     }
     return true;
 }
 
-int Utils::StringToInt(char const *s)
+int Utils::StringToInt(std::string s)
 {
-    bool negate = (s[0] == '-');
-    if (*s == '+' || *s == '-')
-        ++s;
+    const char *sC = s.c_str();
+
+    bool negate = (sC[0] == '-');
+    if (*sC == '+' || *sC == '-')
+        ++sC;
 
     int result = 0;
-    while (*s)
+    while (*sC)
     {
-        if (*s >= '0' && *s <= '9')
+        if (*sC >= '0' && *sC <= '9')
         {
-            result = result * 10 - (*s - '0'); //assume negative number
+            result = result * 10 - (*sC - '0'); //assume negative number
         }
         else
             return false;
-        ++s;
+        ++sC;
     }
     return negate ? result : -result;
 }

@@ -37,11 +37,11 @@ void Weapon::SetParent(GameObject *go)
 	{
 		return;
 	}
-	this->SetSize(Vector2<int>(Game_Parameters::SIZE_TILE, Game_Parameters::SIZE_TILE));
+	this->SetSize(Vector2<int>(GameParameters::SIZE_TILE, GameParameters::SIZE_TILE));
 	SetPosition(go->GetPosition());
 	Vector2<int> dif = Utils::ScreenToWorld(StartGame::instance().camera->view, InputManager::mousePos) - this->GetPosition();
 	Vector2<float> a = dif.Normalize();
-	SetPosition(GetPosition().x + a.x * Game_Parameters::SIZE_TILE / 4, GetPosition().y + a.y * Game_Parameters::SIZE_TILE / 4, false);
+	SetPosition(GetPosition().x + a.x * GameParameters::SIZE_TILE / 4, GetPosition().y + a.y * GameParameters::SIZE_TILE / 4, false);
 	parent = go;
 	setSelect(true);
 	localTransform = Projection::inverse(parent->GetTransform()) * globalTransform;
@@ -57,8 +57,8 @@ void Weapon::RemoveParent()
 
 		if (weaponType == WeaponType::MAIN)
 		{
-			this->SetSize(Vector2<int>(Game_Parameters::SIZE_TILE * 2, Game_Parameters::SIZE_TILE));
-			this->SetPosition(GetPosition().x - Game_Parameters::SIZE_TILE / 2, GetPosition().y, false);
+			this->SetSize(Vector2<int>(GameParameters::SIZE_TILE * 2, GameParameters::SIZE_TILE));
+			this->SetPosition(GetPosition().x - GameParameters::SIZE_TILE / 2, GetPosition().y, false);
 		}
 	}
 }

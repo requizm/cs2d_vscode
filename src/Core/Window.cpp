@@ -1,5 +1,5 @@
 #include "Window.hpp"
-Window::Window(const char *windowName, int x, int y)
+Window::Window(std::string windowName, int x, int y)
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -7,7 +7,7 @@ Window::Window(const char *windowName, int x, int y)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    window = glfwCreateWindow(x, y, windowName, nullptr, nullptr);
+    window = glfwCreateWindow(x, y, windowName.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;

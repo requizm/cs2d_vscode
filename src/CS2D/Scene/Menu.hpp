@@ -23,7 +23,7 @@
 #include "../../Core/Renderer/SpriteRenderer.hpp"
 #include "../../Core/Renderer/TextRenderer.hpp"
 #include "../../Core/Manager/InputManager.hpp"
-#include "../Other/Game_Parameters.hpp"
+#include "../Other/GameParameters.hpp"
 #include "../../Core/Manager/Logger.hpp"
 
 class Menu
@@ -82,7 +82,8 @@ private:
 
 		DIR *dir;
 		struct dirent *ent;
-		if ((dir = opendir("../../resources/levels")) != NULL)
+		std::string str = GameParameters::resDirectory + "levels";
+		if ((dir = opendir(str.c_str())) != NULL)
 		{
 			/* print all the files and directories within directory */
 			while ((ent = readdir(dir)) != NULL)

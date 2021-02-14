@@ -8,10 +8,6 @@
 #include <map>
 
 #include "../Math/Vector2.hpp"
-#include "Utils.hpp"
-#include "ResourceManager.hpp"
-#include "ObjectManager.hpp"
-#include "Logger.hpp"
 #include "Input/InputStructs.hpp"
 
 class InputManager

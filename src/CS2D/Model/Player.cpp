@@ -33,8 +33,8 @@ void Player::Update()
 {
 	if (lastMousePos != InputManager::mousePos)
 	{
-		const int komsu = static_cast<int>(InputManager::mousePos.x) - Game_Parameters::SCREEN_WIDTH / 2;
-		const int karsi = static_cast<int>(InputManager::mousePos.y) - Game_Parameters::SCREEN_HEIGHT / 2;
+		const int komsu = static_cast<int>(InputManager::mousePos.x) - GameParameters::SCREEN_WIDTH / 2;
+		const int karsi = static_cast<int>(InputManager::mousePos.y) - GameParameters::SCREEN_HEIGHT / 2;
 		const float atan = atan2(static_cast<float>(karsi), static_cast<float>(komsu)) * 180.0F / static_cast<float>(PI);
 		SetRotation(static_cast<int>(atan + 90.0F));
 		lastMousePos = InputManager::mousePos;
@@ -54,7 +54,7 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
 	this->collider.SetPosition(this->GetPositionOfCenter());
 	this->BuildTransform();
 
-	StartGame::instance().camera->setPosition(Vector2(this->GetPositionOfCenter().x - Game_Parameters::SCREEN_WIDTH / 2, this->GetPositionOfCenter().y - Game_Parameters::SCREEN_HEIGHT / 2));
+	StartGame::instance().camera->setPosition(Vector2(this->GetPositionOfCenter().x - GameParameters::SCREEN_WIDTH / 2, this->GetPositionOfCenter().y - GameParameters::SCREEN_HEIGHT / 2));
 	StartGame::instance().renderer->SetProjection(StartGame::instance().camera->cameraMatrix);
 	StartGame::instance().squareRenderer.SetProjection(StartGame::instance().camera->cameraMatrix);
 

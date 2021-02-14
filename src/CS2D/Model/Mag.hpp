@@ -2,7 +2,7 @@
 #define MAG_H
 
 #include "../../Core/Model/GameObject.hpp"
-#include "../Other/Game_Parameters.hpp"
+#include "../Other/GameParameters.hpp"
 
 enum AmmoType
 {
@@ -14,7 +14,7 @@ class Mag :GameObject
 public:
 	Mag() = default;
 
-	Mag(Vector2<int> pos, const Sprite& sprite, const int value, AmmoType type, Vector2<int> size = Vector2<int>(Game_Parameters::SCREEN_WIDTH / 26, Game_Parameters::SCREEN_WIDTH / 26))
+	Mag(Vector2<int> pos, const Sprite& sprite, const int value, AmmoType type, Vector2<int> size = Vector2<int>(GameParameters::SCREEN_WIDTH / 26, GameParameters::SCREEN_WIDTH / 26))
 		:GameObject(pos, sprite, size)
 	{
 		ammo = value;

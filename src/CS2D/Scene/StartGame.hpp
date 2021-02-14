@@ -9,7 +9,7 @@
 #include "../../Core/Renderer/TextRenderer.hpp"
 #include "../Model/Player.hpp"
 #include "../../Core/Manager/ResourceManager.hpp"
-#include "../Other/Game_Parameters.hpp"
+#include "../Other/GameParameters.hpp"
 #include "../../Core/Manager/Logger.hpp"
 #include "../../Core/Manager/Utils.hpp"
 #include "../../Core/Manager/InputManager.hpp"

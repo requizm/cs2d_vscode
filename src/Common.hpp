@@ -48,7 +48,7 @@
 #include "CS2D/Model/Weapon.cpp"
 #include "CS2D/Model/Mag.cpp"
 
-#include "CS2D/Other/Game_Parameters.cpp"
+#include "CS2D/Other/GameParameters.cpp"
 #include "CS2D/Scene/StartGame.cpp"
 #include "CS2D/Scene/Menu.cpp"
 #include "CS2D/Scene/Editor/Editor.cpp"

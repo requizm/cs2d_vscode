@@ -9,23 +9,23 @@ Menu::~Menu() {
 void Menu::Start()
 {
 	this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
-	this->textRenderer = new TextRenderer(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT);
-	this->textRenderer->Load("../../resources/fonts/liberationsans.ttf", 16);
+	this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
+	this->textRenderer->Load(GameParameters::resDirectory + "fonts/liberationsans.ttf", 16);
 	this->squareRenderer = new SquareRenderer(true);
 
-	this->l_console = new Label("Console", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 - 50), *textRenderer, 0.8F, Vector3<float>(0.55F));
-	this->l_newgame = new Label("New Game", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 - 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
-	this->l_options = new Label("Options", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2), *textRenderer, 1.0F, Vector3<float>(0.58F));
-	this->l_editor = new Label("Editor", Vector2<int>(10, Game_Parameters::SCREEN_HEIGHT / 2 + 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	this->l_console = new Label("Console", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 - 50), *textRenderer, 0.8F, Vector3<float>(0.55F));
+	this->l_newgame = new Label("New Game", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 - 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	this->l_options = new Label("Options", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2), *textRenderer, 1.0F, Vector3<float>(0.58F));
+	this->l_editor = new Label("Editor", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 + 20), *textRenderer, 1.0F, Vector3<float>(0.58F));
 
-	this->optionsPanel = new Panel(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", Vector2<int>(420, 450), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
+	this->optionsPanel = new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F, GameParameters::SCREEN_HEIGHT / 2 - 225.0F), "Options", Vector2<int>(420, 450), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
 	this->optionsPanel->setMovable(true);
 
 	this->t_test = new TextBox(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20), true, 1.0F, Vector3<float>(0.58F));
 	this->t_test->setParent(optionsPanel);
 	this->t_test->setParentCenterPos();
 
-	this->newPanel = new Panel(Vector2<int>(Game_Parameters::SCREEN_WIDTH / 2 - 210.0F, Game_Parameters::SCREEN_HEIGHT / 2 - 225.0F), "New Game", Vector2<int>(420, 450), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
+	this->newPanel = new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F, GameParameters::SCREEN_HEIGHT / 2 - 225.0F), "New Game", Vector2<int>(420, 450), *textRenderer, true, true, 1.0F, Vector3<float>(0.21F));
 	this->newPanel->setMovable(true);
 
 	this->mapsPanel = new Panel(Vector2<int>(100, 100), "Maps", Vector2<int>(120, 200), *textRenderer, true, false, 1.0F, Vector3<float>(0.21F));
@@ -171,7 +171,7 @@ void Menu::ProcessInput()
 
 	if (b_newGame->isMouseDown())
 	{
-		std::string mName = "../../resources/levels/" + t_mapName->getText() + ".xml";
+		std::string mName = GameParameters::resDirectory + "levels/" + t_mapName->getText() + ".xml";
 		StartGame::instance().Initialize(mName);
 		Game::SetGameState(GameState::INGAME);
 		return;
@@ -196,11 +196,11 @@ void Menu::Render()
 		case 2:
 			break;
 		case 3:
-			menuRenderer->DrawSprite(menuSprites[3], Vector2<int>(0), Vector2<int>(Game_Parameters::SCREEN_WIDTH, Game_Parameters::SCREEN_HEIGHT));
+			menuRenderer->DrawSprite(menuSprites[3], Vector2<int>(0), Vector2<int>(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT));
 			break;
 		}
 	}
-	//menuRenderer.DrawSprite(menuSprites["mouseSprite"], Vector2<int>(InputManager::mousePos.x, InputManager::mousePos.y), Vector2<int>(Game_Parameters::SCREEN_HEIGHT / 35, Game_Parameters::SCREEN_HEIGHT / 35), 0.0F, true);
+	//menuRenderer.DrawSprite(menuSprites["mouseSprite"], Vector2<int>(InputManager::mousePos.x, InputManager::mousePos.y), Vector2<int>(GameParameters::SCREEN_HEIGHT / 35, GameParameters::SCREEN_HEIGHT / 35), 0.0F, true);
 	l_options->Draw();
 	l_editor->Draw();
 	l_console->Draw();

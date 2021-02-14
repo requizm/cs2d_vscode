@@ -18,7 +18,7 @@
 #include "../../../Core/UI/ListItem.hpp"
 #include "../../../Core/Model/Camera.hpp"
 #include "../../Model/Tile.hpp"
-#include "../../Other/Game_Parameters.hpp"
+#include "../../Other/GameParameters.hpp"
 #include "../../../Core/Manager/Timer.hpp"
 #include "../../../Core/Manager/ObjectManager.hpp"
 #include "SaveLoadSystem.hpp"

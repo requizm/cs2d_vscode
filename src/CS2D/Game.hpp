@@ -11,9 +11,16 @@
 #include "Model/Player.hpp"
 #include "Scene/StartGame.hpp"
 #include "../Core/Manager/ResourceManager.hpp"
-#include "Other/Game_Parameters.hpp"
+#include "Other/GameParameters.hpp"
 #include "Scene/Menu.hpp"
 #include "Scene/Editor/Editor.hpp"
+
+enum GameState
+{
+    MENU,
+    INGAME,
+    EDITOR
+};
 
 class Game
 {
