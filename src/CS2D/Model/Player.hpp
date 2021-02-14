@@ -9,8 +9,9 @@
 #include "../../Core/Model/GameObject.hpp"
 #include "../../Core/Collider/CircleCollider.hpp"
 #include "../../Core/Model/Camera.hpp"
+#include "../../Core/Model/Tile.hpp"
 #include "../../Core/Renderer/SquareRenderer.hpp"
-#include "Tile.hpp"
+
 #include "Map.hpp"
 #include "Weapon.hpp"
 

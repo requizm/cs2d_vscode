@@ -39,7 +39,7 @@ void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position, Vector2<int> s
 	this->squareShader_ui.UnUse();
 
 	if (outline)
-		ui_RenderEmptySquareWithLine(position, size, borderColor, borderSize / 2, transperancy, rotate);
+		ui_RenderEmptySquare(position, size, borderColor, transperancy, rotate, borderSize / 2);
 }
 
 void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
@@ -80,54 +80,6 @@ void SquareRenderer::world_RenderFilledSquare(Vector2<int> position, Vector2<int
 	this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::world_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, float lineSize, GLfloat transperancy, int rotate)
-{
-	Vector2<int> startPos, endPos;
-	//sol kenar
-	startPos = position;
-	endPos = Vector2<int>(position.x, position.y + size.y);
-	this->world_RenderLine(startPos, endPos, color, lineSize, transperancy);
-
-	//ust kenar
-	startPos = position;
-	endPos = Vector2<int>(position.x + size.x, position.y);
-	this->world_RenderLine(startPos, endPos, color, lineSize, transperancy);
-
-	//sag kenar
-	startPos = Vector2<int>(position.x + size.x, position.y);
-	endPos = Vector2<int>(position.x + size.x, position.y + size.y);
-	this->world_RenderLine(startPos, endPos, color, lineSize, transperancy);
-
-	//alt kenar
-	startPos = Vector2<int>(position.x, position.y + size.y);
-	endPos = Vector2<int>(position.x + size.x, position.y + size.y);
-	this->world_RenderLine(startPos, endPos, color, lineSize, transperancy);
-}
-
-void SquareRenderer::ui_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, float lineSize, GLfloat transperancy, int rotate)
-{
-	Vector2<int> startPos, endPos;
-	//sol kenar
-	startPos = position;
-	endPos = Vector2<int>(position.x, position.y + size.y);
-	this->ui_RenderLine(startPos, endPos, color, lineSize, transperancy);
-
-	//ust kenar
-	startPos = position;
-	endPos = Vector2<int>(position.x + size.x, position.y);
-	this->ui_RenderLine(startPos, endPos, color, lineSize, transperancy);
-
-	//sag kenar
-	startPos = Vector2<int>(position.x + size.x, position.y);
-	endPos = Vector2<int>(position.x + size.x, position.y + size.y);
-	this->ui_RenderLine(startPos, endPos, color, lineSize, transperancy);
-
-	//alt kenar
-	startPos = Vector2<int>(position.x, position.y + size.y);
-	endPos = Vector2<int>(position.x + size.x, position.y + size.y);
-	this->ui_RenderLine(startPos, endPos, color, lineSize, transperancy);
-}
-
 void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos, const Vector3<float> &color, float lineSize, GLfloat transperancy)
 {
 	Vector2<int> size;
@@ -166,11 +118,14 @@ void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos, c
 	this->squareShader_ui.SetMatrix4("model", model);
 	this->squareShader_ui.SetVector3f("colorUniform", color);
 	this->squareShader_ui.SetFloat("trans", transperancy);
-	glLineWidth(lineSize);
+	if (oldLineSize != lineSize)
+	{
+		glLineWidth(lineSize);
+		oldLineSize = lineSize;
+	}
 	glBindVertexArray(outline.VAO);
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
 	glBindVertexArray(0);
-	glLineWidth(1.0F);
 	this->squareShader_ui.UnUse();
 }
 
@@ -212,15 +167,18 @@ void SquareRenderer::world_RenderLine(Vector2<int> startPos, Vector2<int> endPos
 	this->squareShader_world.SetMatrix4("model", model);
 	this->squareShader_world.SetVector3f("colorUniform", color);
 	this->squareShader_world.SetFloat("trans", transperancy);
-	glLineWidth(lineSize);
+	if (oldLineSize != lineSize)
+	{
+		glLineWidth(lineSize);
+		oldLineSize = lineSize;
+	}
 	glBindVertexArray(outline.VAO);
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
 	glBindVertexArray(0);
-	glLineWidth(1.0F);
 	this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
+void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate, float lineSize)
 {
 	this->squareShader_ui.Use();
 	Matrix4 model = Matrix4(1.0F);
@@ -233,13 +191,18 @@ void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position, Vector2<int> si
 	this->squareShader_ui.SetMatrix4("model", model);
 	this->squareShader_ui.SetVector3f("colorUniform", color);
 	this->squareShader_ui.SetFloat("trans", transperancy);
+	if (oldLineSize != lineSize)
+	{
+		glLineWidth(lineSize);
+		oldLineSize = lineSize;
+	}
 	glBindVertexArray(outline.VAO);
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
 	glBindVertexArray(0);
 	this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::world_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate)
+void SquareRenderer::world_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy, int rotate, float lineSize)
 {
 	this->squareShader_world.Use();
 	Matrix4 model = Matrix4(1.0F);
@@ -252,6 +215,11 @@ void SquareRenderer::world_RenderEmptySquare(Vector2<int> position, Vector2<int>
 	this->squareShader_world.SetMatrix4("model", model);
 	this->squareShader_world.SetVector3f("colorUniform", color);
 	this->squareShader_world.SetFloat("trans", transperancy);
+	if (oldLineSize != lineSize)
+	{
+		glLineWidth(lineSize);
+		oldLineSize = lineSize;
+	}
 	glBindVertexArray(outline.VAO);
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
 	glBindVertexArray(0);
@@ -272,11 +240,9 @@ void SquareRenderer::ui_RenderEmptyCircle(Vector2<int> position, Vector2<int> si
 	this->squareShader_ui.SetVector3f("colorUniform", color);
 	this->squareShader_ui.SetFloat("trans", transperancy);
 
-	//glLineWidth(2.0F);
 	glBindVertexArray(emptyCircle.VAO);
 	glDrawArrays(GL_LINE_STRIP, 0, 31);
 	glBindVertexArray(0);
-	//glLineWidth(1.0F);
 	this->squareShader_ui.UnUse();
 }
 
@@ -294,11 +260,9 @@ void SquareRenderer::ui_RenderFilledCircle(Vector2<int> position, Vector2<int> s
 	this->squareShader_ui.SetVector3f("colorUniform", color);
 	this->squareShader_ui.SetFloat("trans", transperancy);
 
-	//glLineWidth(2.0F);
 	glBindVertexArray(filledCircle.VAO);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 32);
 	glBindVertexArray(0);
-	//glLineWidth(1.0F);
 	this->squareShader_ui.UnUse();
 }
 
@@ -316,11 +280,9 @@ void SquareRenderer::world_RenderEmptyCircle(Vector2<int> position, Vector2<int>
 	this->squareShader_world.SetVector3f("colorUniform", color);
 	this->squareShader_world.SetFloat("trans", transperancy);
 
-	//glLineWidth(2.0F);
 	glBindVertexArray(emptyCircle.VAO);
 	glDrawArrays(GL_LINE_STRIP, 0, 31);
 	glBindVertexArray(0);
-	//glLineWidth(1.0F);
 	this->squareShader_world.UnUse();
 }
 

@@ -35,10 +35,10 @@ void Editor::Start()
 {
 	this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
 	this->worldRenderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
-	this->textRenderer = std::make_shared<TextRenderer>(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
+	this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
 	this->textRenderer->Load(GameParameters::resDirectory + "fonts/liberationsans.ttf", 16);
 	this->squareRenderer = new SquareRenderer(true);
-	this->camera = std::make_shared<Camera>(static_cast<int>(GameParameters::SCREEN_WIDTH), static_cast<int>(GameParameters::SCREEN_HEIGHT));
+	this->camera = new Camera(static_cast<int>(GameParameters::SCREEN_WIDTH), static_cast<int>(GameParameters::SCREEN_HEIGHT));
 	this->mouse_yellow = Vector3<float>(0.73F, 0.73F, 0.0F);
 	this->cell_yellow = Vector3<float>(0.15F, 0.15F, 0.0F);
 	this->maxCellInColumn = 5;
@@ -373,6 +373,13 @@ void Editor::OnDisable()
 	if (worldRenderer != nullptr)
 		delete worldRenderer;
 	worldRenderer = nullptr;
+	if (textRenderer != nullptr)
+		delete textRenderer;
+	textRenderer = nullptr;
+
+	if (camera != nullptr)
+		delete camera;
+	camera = nullptr;
 }
 
 void Editor::SetEnable(const bool value)
@@ -716,7 +723,7 @@ void Editor::Render()
 		{
 			f = true;
 			Vector2<int> pos = Utils::CellToPosition(tile_1->cell);
-			squareRenderer->world_RenderEmptySquareWithLine(pos, Vector2<int>(GameParameters::SIZE_TILE), mouse_yellow, 2.0F);
+			squareRenderer->world_RenderEmptySquare(pos, Vector2<int>(GameParameters::SIZE_TILE), mouse_yellow, 1.0F, 0, 4.0F);
 		}
 	}
 	for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
@@ -754,6 +761,7 @@ void Editor::Render()
 		}
 	}
 	objects_ui->Draw(*menuRenderer, *squareRenderer);
+	this->textRenderer->RenderText("fps: " + std::to_string(InputManager::m_fps), Vector2(700, 135), 1.0F, 0.5F);
 }
 
 void Editor::SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n)

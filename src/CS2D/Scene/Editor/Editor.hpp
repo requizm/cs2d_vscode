@@ -17,7 +17,7 @@
 #include "../../../Core/UI/RadioButton.hpp"
 #include "../../../Core/UI/ListItem.hpp"
 #include "../../../Core/Model/Camera.hpp"
-#include "../../Model/Tile.hpp"
+#include "../../../Core/Model/Tile.hpp"
 #include "../../Other/GameParameters.hpp"
 #include "../../../Core/Manager/Timer.hpp"
 #include "../../../Core/Manager/ObjectManager.hpp"
@@ -56,7 +56,7 @@ public:
 
 	void SetEnable(const bool value);
 
-	std::shared_ptr<TextRenderer> textRenderer;
+	TextRenderer *textRenderer;
 	Panel *controlPanel;
 	Panel *buildPanel;
 	Panel *tilePanel, *objectPanel;
@@ -68,7 +68,7 @@ public:
 
 	Vector2<int> mapLimit;
 
-	std::shared_ptr<Camera> camera;
+	Camera *camera;
 
 	SelectedMode selectedMode;
 

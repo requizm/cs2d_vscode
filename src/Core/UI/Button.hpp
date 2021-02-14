@@ -3,7 +3,7 @@
 
 #include "Label.hpp"
 #include "../Renderer/Sprite.hpp"
-#include "../../CS2D/Model/Tile.hpp"
+#include "../Model/Tile.hpp"
 #include "../Renderer/SpriteRenderer.hpp"
 #include "../Renderer/SquareRenderer.hpp"
 #include "../../CS2D/Other/GameParameters.hpp"

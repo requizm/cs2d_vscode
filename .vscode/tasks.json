@@ -34,17 +34,17 @@
             }
         },
         {
-            "label": "(64)build",
+            "label": "(32)test_build",
             "type": "shell",
-            "command": "C:\\mingw64\\bin\\g++.exe",
+            "command": "C:\\mingw32\\bin\\g++.exe",
             "args": [
                 "-I${workspaceFolder}\\include",
-                "-L${workspaceFolder}\\lib\\64",
+                "-L${workspaceFolder}\\lib",
                 "-g",
-                "${workspaceFolder}\\src\\main.cpp",
-                "${workspaceFolder}\\src\\Common.cpp",
+                "${workspaceFolder}\\test\\main.cpp",
+                "${workspaceFolder}\\test\\Common.cpp",
                 "-o",
-                "${workspaceFolder}\\bin\\64\\main",
+                "${workspaceFolder}\\test\\main",
                 "-lglew32",
                 "-lglfw3",
                 "-lopengl32",
@@ -60,7 +60,7 @@
                 "isDefault": true
             },
             "options": {
-                "cwd": "C:\\mingw64\\bin"
+                "cwd": "C:\\mingw32\\bin"
             }
         }
     ]

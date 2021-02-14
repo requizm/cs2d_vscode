@@ -9,7 +9,7 @@
 #include <math.h> // pow()
 
 #include "../../Core/Renderer/SpriteRenderer.hpp"
-#include "Tile.hpp"
+#include "../../Core/Model/Tile.hpp"
 #include "Weapon.hpp"
 #include "../../Core/Manager/ResourceManager.hpp"
 #include "../Other/GameParameters.hpp"

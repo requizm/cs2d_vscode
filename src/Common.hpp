@@ -19,6 +19,7 @@
 
 #include "Core/Model/GameObject.cpp"
 #include "Core/Model/Camera.cpp"
+#include "Core/Model/Tile.cpp"
 
 #include "Core/Renderer/SpriteRenderer.cpp"
 #include "Core/Renderer/TextRenderer.cpp"
@@ -44,7 +45,6 @@
 
 #include "CS2D/Model/Player.cpp"
 #include "CS2D/Model/Map.cpp"
-#include "CS2D/Model/Tile.cpp"
 #include "CS2D/Model/Weapon.cpp"
 #include "CS2D/Model/Mag.cpp"
 

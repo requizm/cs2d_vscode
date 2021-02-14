@@ -1,28 +1,6 @@
 {
     "configurations": [
         {
-            "name": "Win64",
-            "includePath": [
-                "${workspaceFolder}/include"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
-            "compilerPath": "C:\\mingw64\\bin\\g++",
-            "browse": {
-                "path": [
-                    "${workspaceFolder}"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            },
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64"
-        },
-        {
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/include"

@@ -25,6 +25,8 @@ public:
 	Circle emptyCircle;
 	Circle filledCircle;
 
+	float oldLineSize = 1.0F;
+
 	/**
 	 * @brief 
 	 * 
@@ -64,30 +66,6 @@ public:
 	/**
 	 * @brief 
 	 * 
-	 * @param position 
-	 * @param size 
-	 * @param color 
-	 * @param lineSize 
-	 * @param transperancy 1.0F
-	 * @param rotate 0
-	 */
-	void world_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, float lineSize, GLfloat transperancy = 1.0F, int rotate = 0);
-
-	/**
-	 * @brief 
-	 * 
-	 * @param position 
-	 * @param size 
-	 * @param color 
-	 * @param lineSize 
-	 * @param transperancy 1.0F
-	 * @param rotate 0
-	 */
-	void ui_RenderEmptySquareWithLine(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, float lineSize, GLfloat transperancy = 1.0F, int rotate = 0);
-
-	/**
-	 * @brief 
-	 * 
 	 * @param startPos 
 	 * @param endPos 
 	 * @param color 
@@ -116,7 +94,7 @@ public:
 	 * @param transperancy 1.0F
 	 * @param rotate 0
 	 */
-	void ui_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy = 1.0F, int rotate = 0);
+	void ui_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy = 1.0F, int rotate = 0, float lineSize = 1.0F);
 
 	/**
 	 * @brief 
@@ -127,7 +105,7 @@ public:
 	 * @param transperancy 1.0F
 	 * @param rotate 0
 	 */
-	void world_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy = 1.0F, int rotate = 0);
+	void world_RenderEmptySquare(Vector2<int> position, Vector2<int> size, const Vector3<float> &color, GLfloat transperancy = 1.0F, int rotate = 0, float lineSize = 1.0F);
 
 	/**
 	 * @brief 
