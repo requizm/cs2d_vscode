@@ -3,9 +3,9 @@
 
 #include <GL/glew.h>
 
-#include "../UI/Square.hpp"
-#include "../UI/Circle.hpp"
-#include "../UI/Outline.hpp"
+#include "Square.hpp"
+#include "Circle.hpp"
+#include "Outline.hpp"
 #include "Shader.hpp"
 #include "../Manager/ResourceManager.hpp"
 #include "../Manager/InputManager.hpp"
