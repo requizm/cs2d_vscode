@@ -1,4 +1,5 @@
 #include "Map.hpp"
+#include "../Scene/StartGame.hpp"
 
 Map::Map() = default;
 
@@ -104,11 +105,21 @@ void Map::Draw(SpriteRenderer &renderer)
 	for (auto &tile : tiles)
 	{
 		if (!tile->IsDestroyed())
-			tile->DrawModel(renderer);
+		{
+			Vector2 pos = Utils::WorldToScreen(StartGame::instance().camera->view, tile->GetPosition());
+			if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 && pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
+			{
+				tile->DrawModel(renderer);
+			}
+		}
 	}
 	for (auto &weapon : weapons)
 	{
-		weapon->DrawModel(renderer);
+		Vector2 pos = Utils::WorldToScreen(StartGame::instance().camera->view, weapon->GetPosition());
+		if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 && pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
+		{
+			weapon->DrawModel(renderer);
+		}
 	}
 }
 

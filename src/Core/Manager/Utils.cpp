@@ -13,6 +13,15 @@ Vector2<int> Utils::ScreenToWorld(Vector2<int> view, Vector2<int> point)
     return (view + point);
 }
 
+Vector2<int> Utils::WorldToScreen(Vector2<int> view, Vector2<int> point)
+{
+    Vector2<int> screen = Vector2<int>(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
+    Vector2<int> res = screen - (view + screen - point);
+    res.x = abs(res.x);
+    res.y = abs(res.y);
+    return res;
+}
+
 Vector2<int> Utils::PositionToCell(Vector2<int> pos)
 {
     if (pos.x >= 0 && pos.y >= 0)

@@ -39,6 +39,9 @@ void Editor::Start()
 	this->textRenderer->Load(GameParameters::resDirectory + "fonts/liberationsans.ttf", 16);
 	this->squareRenderer = new SquareRenderer(true);
 	this->camera = new Camera(static_cast<int>(GameParameters::SCREEN_WIDTH), static_cast<int>(GameParameters::SCREEN_HEIGHT));
+	camera->setPosition(position);
+	worldRenderer->SetProjection(camera->cameraMatrix);
+	squareRenderer->SetProjection(camera->cameraMatrix);
 	this->mouse_yellow = Vector3<float>(0.73F, 0.73F, 0.0F);
 	this->cell_yellow = Vector3<float>(0.15F, 0.15F, 0.0F);
 	this->maxCellInColumn = 5;
@@ -469,18 +472,30 @@ void Editor::ProcessInput()
 		if (InputManager::isKey(KeyboardKeys::KEY_W))
 		{
 			this->position = Vector2(this->position.x, this->position.y - static_cast<int>(static_cast<float>(GameParameters::SCREEN_HEIGHT) * Timer::DeltaTime));
+			camera->setPosition(position);
+			worldRenderer->SetProjection(camera->cameraMatrix);
+			squareRenderer->SetProjection(camera->cameraMatrix);
 		}
 		if (InputManager::isKey(KeyboardKeys::KEY_S))
 		{
 			this->position = Vector2(this->position.x, this->position.y + static_cast<int>(static_cast<float>(GameParameters::SCREEN_HEIGHT) * Timer::DeltaTime));
+			camera->setPosition(position);
+			worldRenderer->SetProjection(camera->cameraMatrix);
+			squareRenderer->SetProjection(camera->cameraMatrix);
 		}
 		if (InputManager::isKey(KeyboardKeys::KEY_A))
 		{
 			this->position = Vector2(this->position.x - static_cast<int>(static_cast<float>(GameParameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
+			camera->setPosition(position);
+			worldRenderer->SetProjection(camera->cameraMatrix);
+			squareRenderer->SetProjection(camera->cameraMatrix);
 		}
 		if (InputManager::isKey(KeyboardKeys::KEY_D))
 		{
 			this->position = Vector2(this->position.x + static_cast<int>(static_cast<float>(GameParameters::SCREEN_HEIGHT) * Timer::DeltaTime), this->position.y);
+			camera->setPosition(position);
+			worldRenderer->SetProjection(camera->cameraMatrix);
+			squareRenderer->SetProjection(camera->cameraMatrix);
 		}
 	}
 
@@ -706,18 +721,16 @@ void Editor::ProcessInput()
 
 void Editor::Render()
 {
-	camera->setPosition(position);
-
-	worldRenderer->SetProjection(camera->cameraMatrix);
-	squareRenderer->SetProjection(camera->cameraMatrix);
-
 	Vector2<int> ms = Utils::PositionToCell(Utils::ScreenToWorld(camera->view, InputManager::mousePos));
 	bool f = false;
 	for (auto &tile_1 : tils->tiles)
 	{
-		tile_1->button->Draw(*worldRenderer, *squareRenderer);
-
-		squareRenderer->world_RenderEmptySquare(Utils::CellToPosition(tile_1->cell), Vector2<int>(GameParameters::SIZE_TILE), cell_yellow);
+		Vector2 pos = Utils::WorldToScreen(camera->view, tile_1->cell * Vector2<int>(GameParameters::SIZE_TILE));
+		if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 && pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
+		{
+			tile_1->button->Draw(*worldRenderer, *squareRenderer);
+			squareRenderer->world_RenderEmptySquare(Utils::CellToPosition(tile_1->cell), Vector2<int>(GameParameters::SIZE_TILE), cell_yellow);
+		}
 
 		if (!f && ms == tile_1->cell && !NewMap->isMouseHover() && !buildPanel->isMouseHover(false) && !SaveLoad->isMouseHover() && !envItemManager->isPressedOrHover())
 		{

@@ -12,6 +12,7 @@ public:
     virtual ~Utils();
 
     static Vector2<int> ScreenToWorld(Vector2<int> view, Vector2<int> point);
+    static Vector2<int> WorldToScreen(Vector2<int> view, Vector2<int> point);
     static Vector2<int> PositionToCell(Vector2<int> pos);
     static Vector2<int> CellToPosition(Vector2<int> cell);
     static int GenerateID();
