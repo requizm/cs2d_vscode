@@ -4,6 +4,7 @@
 #include <functional>
 
 #include "Panel.hpp"
+#include "../Manager/MemoryOverride/MemoryOverride.hpp"
 
 class ListItemElement : public Button
 {

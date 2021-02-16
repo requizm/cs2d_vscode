@@ -38,6 +38,7 @@
 #include "Core/Manager/Logger.cpp"
 #include "Core/Manager/Utils.cpp"
 #include "Core/Manager/Timer.cpp"
+#include "Core/Manager/MemoryOverride/MemoryOverride.cpp"
 
 #include "Core/Collider/Collider.cpp"
 #include "Core/Collider/CircleCollider.cpp"

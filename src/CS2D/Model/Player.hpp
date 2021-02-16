@@ -6,6 +6,7 @@
 #include "../../Core/Manager/InputManager.hpp"
 #include "../../Core/Manager/Logger.hpp"
 #include "../../Core/Manager/Timer.hpp"
+#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../../Core/Model/GameObject.hpp"
 #include "../../Core/Collider/CircleCollider.hpp"
 #include "../../Core/Model/Camera.hpp"

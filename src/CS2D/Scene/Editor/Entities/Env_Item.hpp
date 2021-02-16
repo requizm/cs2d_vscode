@@ -5,6 +5,7 @@
 #include "../../../../Core/UI/TextBox.hpp"
 #include "../../../Other/GameParameters.hpp"
 #include "../../../../Core/Manager/Utils.hpp"
+#include "../../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 
 class Env_Item
 {

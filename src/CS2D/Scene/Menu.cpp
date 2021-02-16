@@ -11,6 +11,9 @@ Menu::~Menu() {
 
 void Menu::Start()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+		ZoneScoped;
+	#endif
 	this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
 	this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
 	this->textRenderer->Load(GameParameters::resDirectory + "fonts/liberationsans.ttf", 16);

@@ -8,6 +8,7 @@
 #include "../../../Core/UI/TextBox.hpp"
 #include "../../../Core/Manager/Utils.hpp"
 #include "../../../Core/Manager/ObjectManager.hpp"
+#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 
 struct NewMapResult
 {

@@ -1,4 +1,5 @@
 #include "Editor.hpp"
+
 #if defined(WIN32) && defined(TRACY_ENABLE)
 	#include <tracy/Tracy.hpp>
 #endif
@@ -36,6 +37,9 @@ void Editor::Initialize()
 
 void Editor::Start()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+		ZoneScoped;
+	#endif
 	this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
 	this->worldRenderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 	this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);

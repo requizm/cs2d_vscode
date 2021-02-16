@@ -1,5 +1,8 @@
 #include "Map.hpp"
 #include "../Scene/StartGame.hpp"
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	#include <tracy/Tracy.hpp>
+#endif
 
 Map::Map() = default;
 
@@ -25,6 +28,9 @@ Map::~Map()
 
 void Map::Load(std::string file)
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	JSONLoader jsonLoader;
 	nlohmann::json weaponsJ = jsonLoader.Load(GameParameters::resDirectory + "content/weapons.json");
 
@@ -102,6 +108,9 @@ void Map::Load(std::string file)
 }
 void Map::Draw(SpriteRenderer &renderer)
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	for (auto &tile : tiles)
 	{
 		if (!tile->IsDestroyed())

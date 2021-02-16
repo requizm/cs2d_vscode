@@ -1,4 +1,5 @@
 #include "StartGame.hpp"
+
 #if defined(WIN32) && defined(TRACY_ENABLE)
 	#include <tracy/Tracy.hpp>
 #endif
@@ -19,6 +20,9 @@ void StartGame::Initialize(const std::string &mapName)
 
 void StartGame::Start()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+		ZoneScoped;
+	#endif
 	Sprite ct1_0 = Sprite(ResourceManager::GetTexture("ct1"), 0, 0, 32, 32);
 	Sprite ct1_1 = Sprite(ResourceManager::GetTexture("ct1"), 0, 32, 32, 32);
 	Sprite ct1_2 = Sprite(ResourceManager::GetTexture("ct1"), 0, 64, 32, 32);

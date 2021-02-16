@@ -6,6 +6,7 @@
 #include "../Renderer/SquareRenderer.hpp"
 #include "../Renderer/SpriteRenderer.hpp"
 #include "../Manager/InputManager.hpp"
+#include "../Manager/MemoryOverride/MemoryOverride.hpp"
 
 class Panel : public UIObject
 {

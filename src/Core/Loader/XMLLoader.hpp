@@ -9,6 +9,7 @@
 #include <cstring>
 
 #include "../Manager/Logger.hpp"
+#include "../Manager/MemoryOverride/MemoryOverride.hpp"
 
 class XMLLoader
 {

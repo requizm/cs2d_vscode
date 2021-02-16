@@ -1,5 +1,8 @@
 #include "Env_Item.hpp"
 #include "../Editor.hpp"
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	#include <tracy/Tracy.hpp>
+#endif
 
 Env_Item::Env_Item()
 {
@@ -20,6 +23,9 @@ Env_Item::~Env_Item()
 
 void Env_Item::Initialize()
 {
+    #if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
     sp = Sprite(ResourceManager::GetTexture("bulb"));
     this->obj_id = Utils::GenerateID();
 
@@ -67,6 +73,9 @@ Vector2<int> Env_Item::getPosition()
 
 Env_Item_Manager::Env_Item_Manager()
 {
+    #if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
     p_panel = new Panel(Vector2<int>(Editor::instance().tilePanel->getSize().x + 20, Editor::instance().controlPanel->getSize().y), "Entity Options", Vector2<int>(400, 200), *(Editor::instance().textRenderer), true, true, 1.0F, Vector3<float>(0.21F), 0.8F);
     p_panel->setMovable(false);
     p_panel->setEnable(false);

@@ -14,6 +14,7 @@
 #include "../../Core/Manager/ResourceManager.hpp"
 #include "../Other/GameParameters.hpp"
 #include "../../Core/Manager/Logger.hpp"
+#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../../Core/Loader/XMLLoader.hpp"
 #include "../../Core/Loader/JSONLoader.hpp"
 

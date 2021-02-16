@@ -23,6 +23,7 @@
 #include "../../Core/Renderer/SpriteRenderer.hpp"
 #include "../../Core/Renderer/TextRenderer.hpp"
 #include "../../Core/Manager/InputManager.hpp"
+#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../Other/GameParameters.hpp"
 #include "../../Core/Manager/Logger.hpp"
 

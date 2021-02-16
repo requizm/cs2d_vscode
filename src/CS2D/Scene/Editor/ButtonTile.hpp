@@ -4,6 +4,7 @@
 #include "../../../Core/UI/Button.hpp"
 #include "Entities/Env_Item.hpp"
 #include "../../../Core/Manager/Utils.hpp"
+#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 
 class ButtonTile
 {

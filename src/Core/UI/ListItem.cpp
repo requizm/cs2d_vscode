@@ -15,13 +15,17 @@ ListItem::~ListItem()
 {
 	for (auto &item : items)
 	{
-		delete item;
+		if (item != nullptr)
+			delete item;
 	}
 	UIObject::removeParent();
 }
 
 void ListItem::AddItem(std::string &text)
 {
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	ZoneScoped;
+#endif
 	Button *bt = new Button(text, Vector2<int>(0.0F, static_cast<int>(i++ * 20)), Vector2<int>(panel->getSize().x, 20.0F), *(panel->rend), Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F, UIObjectType::LISTITEM);
 	bt->setMouseClickColor(Vector3<float>(0.35F));
 	bt->setMouseHoverColor(Vector3<float>(0.25F));
@@ -37,6 +41,12 @@ void ListItem::AddItem(std::string &text)
 
 void ListItem::Clear()
 {
+	for (auto &item : items)
+	{
+		if (item != nullptr)
+			delete item;
+	}
+	UIObject::removeParent();
 	items.clear();
 	i = 0;
 }

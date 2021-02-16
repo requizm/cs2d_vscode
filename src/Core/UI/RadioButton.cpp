@@ -1,4 +1,7 @@
 #include "RadioButton.hpp"
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	#include <tracy/Tracy.hpp>
+#endif
 
 RadioButtonElement::RadioButtonElement() : Label()
 {
@@ -222,6 +225,9 @@ void RadioButton::Clear()
 
 void RadioButton::AddElement(const std::string &text, const Vector3<float> &buttonColor, const Vector3<float> &textColor, float scale)
 {
+    #if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
     RadioButtonElement *r = new RadioButtonElement(text, Vector2<int>(position.x, position.y + y_sep * i), *rend, i++, buttonColor, textColor, scale);
     r->setSize(300, 300);
     r->setMouseHoverColor(Vector3<float>(0.9F));

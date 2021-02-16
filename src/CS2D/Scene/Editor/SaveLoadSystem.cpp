@@ -1,6 +1,8 @@
 #include "SaveLoadSystem.hpp"
-
 #include "Editor.hpp"
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	#include <tracy/Tracy.hpp>
+#endif
 
 SaveLoadSystem::SaveLoadSystem()
 {
@@ -132,6 +134,9 @@ void SaveLoadSystem::B_SaveMap()
 
 std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
 {
+    #if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
     std::vector<ButtonTile *> tiles;
 
     InputManager::scroll.y = 0.0F;
