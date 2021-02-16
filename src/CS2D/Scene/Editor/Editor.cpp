@@ -1,4 +1,7 @@
 #include "Editor.hpp"
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	#include <tracy/Tracy.hpp>
+#endif
 
 Editor::Editor()
 {
@@ -398,6 +401,9 @@ void Editor::SetEnable(const bool value)
 
 void Editor::Update()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	this->time += Timer::DeltaTime;
 	this->buildPanel->Update();
 	this->NewMap->Update();
@@ -431,6 +437,9 @@ void Editor::Update()
 
 void Editor::ProcessInput()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	this->buildPanel->ProcessInput();
 	this->NewMap->ProcessInput();
 	this->tilePropertiesPanel->ProcessInput();
@@ -721,6 +730,9 @@ void Editor::ProcessInput()
 
 void Editor::Render()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	Vector2<int> ms = Utils::PositionToCell(Utils::ScreenToWorld(camera->view, InputManager::mousePos));
 	bool f = false;
 	for (auto &tile_1 : tils->tiles)

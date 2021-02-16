@@ -1,6 +1,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <memory>
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	#include <tracy/Tracy.hpp>
+#endif
 
 #include "CS2D/Game.hpp"
 #include "Core/Window.hpp"
@@ -28,6 +31,9 @@ int main(int argc, char *argv[])
 	InputManager::InitKeyboardKeys();
 	while (!glfwWindowShouldClose(window.GetWindow()))
 	{
+		#if defined(WIN32) && defined(TRACY_ENABLE)
+			ZoneScoped;
+		#endif
 		const float currentFrame = static_cast<float>(glfwGetTime());
 		Timer::DeltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
@@ -51,6 +57,9 @@ int main(int argc, char *argv[])
 		cs2d->Render();
 
 		window.Update();
+		#if defined(WIN32) && defined(TRACY_ENABLE)
+			FrameMark;
+		#endif
 	}
 
 	ResourceManager::Destroy();

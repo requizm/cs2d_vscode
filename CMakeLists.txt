@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 enable_language(CXX)
 
 # Add source files
-file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/include/tracy/TracyClient.cpp)
 	
 # Add header files
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/src/*.hpp)
@@ -56,7 +56,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
 
 
 if(MINGW)
-	SET(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc")
+	SET(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc -O3")
+	target_link_libraries(${PROJECT_NAME} PRIVATE ws2_32 imagehlp)
 endif(MINGW)
 
 if(MSVC_IDE)

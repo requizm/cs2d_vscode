@@ -1,4 +1,7 @@
 #include "Menu.hpp"
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	#include <tracy/Tracy.hpp>
+#endif
 
 Menu::Menu() = default;
 
@@ -133,6 +136,9 @@ void Menu::SetEnable(const bool value)
 
 void Menu::Update()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	l_options->Update();
 	l_console->Update();
 	l_editor->Update();
@@ -144,6 +150,9 @@ void Menu::Update()
 
 void Menu::ProcessInput()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	l_options->ProcessInput();
 	l_console->ProcessInput();
 	l_editor->ProcessInput();
@@ -185,6 +194,9 @@ void Menu::ProcessInput()
 
 void Menu::Render()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	for (int i = 0; i < 4; i++)
 	{
 		switch (i)

@@ -1,4 +1,7 @@
 #include "Game.hpp"
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	#include <tracy/Tracy.hpp>
+#endif
 
 GameState Game::state;
 
@@ -22,6 +25,9 @@ void Game::Init()
 
 void Game::Update()
 {
+    #if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
     switch (Game::state)
     {
     case GameState::MENU:
@@ -38,6 +44,9 @@ void Game::Update()
 
 void Game::ProcessInput()
 {
+    #if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
     switch (Game::state)
     {
     case GameState::MENU:
@@ -54,6 +63,9 @@ void Game::ProcessInput()
 
 void Game::Render()
 {
+    #if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
     switch (Game::state)
     {
     case GameState::MENU:

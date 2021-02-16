@@ -1,4 +1,7 @@
 #include "StartGame.hpp"
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	#include <tracy/Tracy.hpp>
+#endif
 
 StartGame::StartGame() = default;
 
@@ -71,12 +74,18 @@ void StartGame::SetEnable(const bool value)
 
 void StartGame::Update()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	player->Update();
 	//player->DoCollision(weapons);
 }
 
 void StartGame::ProcessInput()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+	    ZoneScoped;
+	#endif
 	if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
 	{
 		Game::SetGameState(GameState::MENU);
@@ -95,6 +104,9 @@ void StartGame::ProcessInput()
 
 void StartGame::Render()
 {
+	#if defined(WIN32) && defined(TRACY_ENABLE)
+		ZoneScoped;
+	#endif
 	map->Draw(*renderer);
 	player->DrawModel(*renderer);
 
