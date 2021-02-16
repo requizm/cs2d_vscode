@@ -1,7 +1,7 @@
 #include "Editor.hpp"
 
 #if defined(WIN32) && defined(TRACY_ENABLE)
-	#include <tracy/Tracy.hpp>
+#include <tracy/Tracy.hpp>
 #endif
 
 Editor::Editor()
@@ -37,9 +37,9 @@ void Editor::Initialize()
 
 void Editor::Start()
 {
-	#if defined(WIN32) && defined(TRACY_ENABLE)
-		ZoneScoped;
-	#endif
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	ZoneScoped;
+#endif
 	this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
 	this->worldRenderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 	this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
@@ -279,6 +279,13 @@ void Editor::OnEnable()
 		tils->tilesUI.clear();
 		delete tils;
 	}
+
+	for (auto &env : env_items)
+	{
+		if (env != nullptr)
+			delete env;
+	}
+	env_items.clear();
 	Start();
 	tils = nullptr;
 	tils = new NewMapResult();
@@ -292,11 +299,6 @@ void Editor::OnDisable()
 {
 	selectedTile = nullptr;
 
-	for (auto &env : env_items)
-	{
-		if (env != nullptr)
-			delete env;
-	}
 	if (tils != nullptr)
 	{
 		for (auto tile : tils->tiles)
@@ -317,6 +319,11 @@ void Editor::OnDisable()
 		delete objects_ui;
 	objects_ui = nullptr;
 
+	for (auto &env : env_items)
+	{
+		if (env != nullptr)
+			delete env;
+	}
 	env_items.clear();
 
 	if (envItemManager != nullptr)
@@ -405,9 +412,9 @@ void Editor::SetEnable(const bool value)
 
 void Editor::Update()
 {
-	#if defined(WIN32) && defined(TRACY_ENABLE)
-	    ZoneScoped;
-	#endif
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	ZoneScoped;
+#endif
 	this->time += Timer::DeltaTime;
 	this->buildPanel->Update();
 	this->NewMap->Update();
@@ -441,9 +448,9 @@ void Editor::Update()
 
 void Editor::ProcessInput()
 {
-	#if defined(WIN32) && defined(TRACY_ENABLE)
-	    ZoneScoped;
-	#endif
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	ZoneScoped;
+#endif
 	this->buildPanel->ProcessInput();
 	this->NewMap->ProcessInput();
 	this->tilePropertiesPanel->ProcessInput();
@@ -538,6 +545,13 @@ void Editor::ProcessInput()
 				tils->tilesUI.clear();
 				delete tils;
 			}
+
+			for (auto &env : env_items)
+			{
+				if (env != nullptr)
+					delete env;
+			}
+			env_items.clear();
 			tils = nullptr;
 			NewMap->newPanel->setEnable(false);
 			tils = new NewMapResult();
@@ -734,9 +748,9 @@ void Editor::ProcessInput()
 
 void Editor::Render()
 {
-	#if defined(WIN32) && defined(TRACY_ENABLE)
-	    ZoneScoped;
-	#endif
+#if defined(WIN32) && defined(TRACY_ENABLE)
+	ZoneScoped;
+#endif
 	Vector2<int> ms = Utils::PositionToCell(Utils::ScreenToWorld(camera->view, InputManager::mousePos));
 	bool f = false;
 	for (auto &tile_1 : tils->tiles)
