@@ -41,6 +41,7 @@ src/.scannerwork/report-task.txt
 # Local History for Visual Studio Code
 .history/
 
+test/main.exe
 build/**
 CMakeFiles/**
 bin/32/**

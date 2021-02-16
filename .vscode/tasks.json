@@ -2,47 +2,52 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "(32)build",
+            "label": "(64)build",
             "type": "shell",
-            "command": "C:\\mingw32\\bin\\g++.exe",
+            "command": "C:\\mingw64\\bin\\g++.exe",
             "args": [
                 "-I${workspaceFolder}\\include",
-                "-L${workspaceFolder}\\lib",
+                "-L${workspaceFolder}\\lib\\x64",
                 "-g",
-                "${workspaceFolder}\\src\\main.cpp",
-                "${workspaceFolder}\\src\\Common.cpp",
+                "${workspaceFolder}\\test\\main.cpp",
+                "${workspaceFolder}\\test\\Common.cpp",
+                "${workspaceFolder}\\tracy\\TracyClient.cpp",
                 "-o",
-                "${workspaceFolder}\\bin\\32\\main",
+                "${workspaceFolder}\\bin\\64\\main",
                 "-lglew32",
                 "-lglfw3",
                 "-lopengl32",
                 "-lfreetype",
                 "-lgdi32",
-                "-lspdlog",
+                "-lws2_32",
+                "-limagehlp",
                 "-w",
                 "-std=c++17",
                 "-static-libstdc++",
                 "-static-libgcc",
-                "-D_DEBUG"
+                "-D_DEBUG",
+                "-D_WIN32_WINNT=0x0602",
+                "-DWINVER=0x0602"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "options": {
-                "cwd": "C:\\mingw32\\bin"
+                "cwd": "C:\\mingw64\\bin"
             }
         },
         {
-            "label": "(32)test_build",
+            "label": "(64)test_build",
             "type": "shell",
-            "command": "C:\\mingw32\\bin\\g++.exe",
+            "command": "C:\\mingw64\\bin\\g++.exe",
             "args": [
                 "-I${workspaceFolder}\\include",
-                "-L${workspaceFolder}\\lib",
+                "-L${workspaceFolder}\\lib\\x64",
                 "-g",
                 "${workspaceFolder}\\test\\main.cpp",
                 "${workspaceFolder}\\test\\Common.cpp",
+                "${workspaceFolder}\\tracy\\TracyClient.cpp",
                 "-o",
                 "${workspaceFolder}\\test\\main",
                 "-lglew32",
@@ -50,17 +55,23 @@
                 "-lopengl32",
                 "-lfreetype",
                 "-lgdi32",
+                "-lws2_32",
+                "-limagehlp",
                 "-w",
                 "-std=c++17",
                 "-static-libstdc++",
-                "-static-libgcc"
+                "-static-libgcc",
+                "-D_DEBUG",
+                "-D_WIN32_WINNT=0x0602",
+                "-DWINVER=0x0602",
+                "-DTRACY_ENABLE"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "options": {
-                "cwd": "C:\\mingw32\\bin"
+                "cwd": "C:\\mingw64\\bin"
             }
         }
     ]

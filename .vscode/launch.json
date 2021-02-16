@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": " (32)Build and Debug",
+            "name": " (64)Build and Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\bin\\32\\main.exe",
+            "program": "${workspaceFolder}\\bin\\64\\main.exe",
             "args": [],
-            "targetArchitecture": "x86",
+            "targetArchitecture": "x64",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\bin\\32",
+            "cwd": "${workspaceFolder}\\bin\\64",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\mingw32\\bin\\gdb.exe",
+            "miDebuggerPath": "C:\\mingw64\\bin\\gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -24,17 +24,17 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "(32)build"
+            "preLaunchTask": "(64)build"
         },
         {
-            "name": "(32)Debug",
+            "name": "(64)Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\bin\\32\\main.exe",
+            "program": "${workspaceFolder}\\bin\\64\\main.exe",
             "args": [],
-            "targetArchitecture": "x86",
+            "targetArchitecture": "x64",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\bin\\32",
+            "cwd": "${workspaceFolder}\\bin\\64",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
@@ -45,21 +45,21 @@
                     "ignoreFailures": true
                 }
             ],
-            "miDebuggerPath": "C:\\mingw32\\bin\\gdb.exe"
+            "miDebuggerPath": "C:\\mingw64\\bin\\gdb.exe"
         },
         {
-            "name": " (32)test_build and Debug",
+            "name": " (64)test_build and Debug",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}\\test\\main.exe",
             "args": [],
-            "targetArchitecture": "x86",
+            "targetArchitecture": "x64",
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}\\test",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\mingw32\\bin\\gdb.exe",
+            "miDebuggerPath": "C:\\mingw64\\bin\\gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -67,15 +67,15 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "(32)test_build"
+            "preLaunchTask": "(64)test_build"
         },
         {
-            "name": "(32)test debug",
+            "name": "(64)test debug",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}\\test\\main.exe",
             "args": [],
-            "targetArchitecture": "x86",
+            "targetArchitecture": "x64",
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}\\test",
             "environment": [],
@@ -88,7 +88,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "miDebuggerPath": "C:\\mingw32\\bin\\gdb.exe"
+            "miDebuggerPath": "C:\\mingw64\\bin\\gdb.exe"
         }
     ]
 }
