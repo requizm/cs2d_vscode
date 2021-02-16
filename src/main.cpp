@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <memory>
+//#include "../tracy/Tracy.hpp"
 
 #include "CS2D/Game.hpp"
 #include "Core/Window.hpp"
@@ -12,6 +13,7 @@ int nbFrames = 0;
 
 int main(int argc, char *argv[])
 {
+	#define ZoneScoped
 	//FreeConsole();
 	GameParameters::LoadParameters();
 	Window window("CS2D", GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
@@ -51,6 +53,8 @@ int main(int argc, char *argv[])
 		cs2d->Render();
 
 		window.Update();
+
+		#define FrameMark
 	}
 
 	ResourceManager::Destroy();
