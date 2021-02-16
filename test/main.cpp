@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "../src/Core/Window.hpp"
-#include "../src/Core/Manager/ResourceManager.hpp"
+#include "ResourceManager.hpp"
 #include "../src/CS2D/Other/GameParameters.hpp"
 #include "SquareRenderer.hpp"
 

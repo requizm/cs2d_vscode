@@ -28,14 +28,14 @@ execute_process(COMMAND git submodule update --init WORKING_DIRECTORY ${CMAKE_SO
 if (UNIX)
 	message("unix")
 	add_definitions(-DLINUX)
-	include_directories("${CMAKE_SOURCE_DIR}/include")
 endif (UNIX)
 
 if (WIN32)
 	message("win32")
 	add_definitions(-DWIN32)
-	include_directories("${CMAKE_SOURCE_DIR}/include")
 endif (WIN32)
+
+include_directories("${CMAKE_SOURCE_DIR}/include")
 
 # glfw
 add_subdirectory(${CMAKE_SOURCE_DIR}/deps/glfw EXCLUDE_FROM_ALL)

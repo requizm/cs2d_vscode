@@ -3,7 +3,7 @@
 
 #include <GL/glew.h>
 
-#include "../Math/Vector2.hpp"
+#include "../src/Core/Math/Vector2.hpp"
 
 class Circle
 {
