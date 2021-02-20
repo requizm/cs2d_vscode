@@ -115,22 +115,21 @@ void UIObject::Draw(SpriteRenderer &spriteRenderer,
 {
 }
 
-void UIObject::setPosition(const Vector2<int> position)
+void UIObject::setPosition(const Vector2<int> &position)
 {
-    this->position = position;
-}
-
-void UIObject::setPosition(const int x, const int y)
-{
-    this->position.x = x;
-    this->position.y = y;
+    Vector2<int> newPos = position;
+    if (isParent())
+    {
+        newPos = newPos + getParent()->getPosition();
+    }
+    this->position = newPos;
 }
 
 void UIObject::setParentCenterPos()
 {
     if (isParent())
-        setPosition(parent->getSize().x / 2 - this->getSize().x / 2,
-                    parent->getSize().y / 2 - this->getSize().y / 2);
+        setPosition(Vector2<int>(parent->getSize().x / 2 - this->getSize().x / 2,
+                                 parent->getSize().y / 2 - this->getSize().y / 2));
 }
 
 void UIObject::setSize(const Vector2<int> size) { this->size = size; }
@@ -142,10 +141,6 @@ void UIObject::setSize(const int x, const int y)
 
 Vector2<int> UIObject::getPosition()
 {
-    if (isParent())
-    {
-        return parent->getPosition() + this->position;
-    }
     return this->position;
 }
 
@@ -178,21 +173,29 @@ void UIObject::setParent(UIObject *uiobject, bool dependParent)
 {
     if (isParent())
     {
-        for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
+        if (uiobject->getID() != getParent()->getID())
         {
-            if (parent->childs[i]->getID() == this->getID())
+            for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
             {
-                parent->childs.erase(parent->childs.begin() + i);
-                break;
+                if (parent->childs[i]->getID() == this->getID())
+                {
+                    parent->childs.erase(parent->childs.begin() + i);
+                    break;
+                }
             }
+            uiobject->childs.push_back(this);
+            this->parent = uiobject;
+            this->setPosition(getPosition());
+            this->dependParent = dependParent;
         }
     }
     else
     {
         uiobject->childs.push_back(this);
         this->parent = uiobject;
+        this->setPosition(getPosition());
+        this->dependParent = dependParent;
     }
-    this->dependParent = dependParent;
 }
 
 void UIObject::removeParent()

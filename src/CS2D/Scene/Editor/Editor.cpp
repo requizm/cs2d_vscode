@@ -497,9 +497,9 @@ void Editor::Update()
             {
                 for (auto &tile : tils->tilesUI)
                 {
-                    tile->setPosition(tile->getLocalPosition().x,
-                                      tile->getLocalPosition().y +
-                                          InputManager::scroll.y * 32);
+                    tile->setPosition(Vector2<int>(tile->getLocalPosition().x,
+                                                   tile->getLocalPosition().y +
+                                                       InputManager::scroll.y * 32));
                 }
             }
         }

@@ -64,7 +64,8 @@
         "bit": "cpp",
         "list": "cpp",
         "set": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "charconv": "cpp"
     },
     "clang-tidy.checks": [
         "clang-diagnostic-*",
@@ -76,6 +77,5 @@
         "-modernize-pass-by-value",
         "-modernize-use-trailing-return-type*",
         "-modernize-avoid-c-arrays"
-    ],
-    "C_Cpp.errorSquiggles": "Disabled"
+    ]
 }

@@ -28,7 +28,7 @@ class RadioButtonElement : public Label
                        const Vector3<float> &buttonColor = Vector3<float>(1.0F),
                        const Vector3<float> &textColor = Vector3<float>(0.0F),
                        float scale = 1.0F);
-    ~RadioButtonElement();
+    ~RadioButtonElement() final;
 
     void Draw(SpriteRenderer &spriteRenderer,
               SquareRenderer &squareRenderer) override;
@@ -48,8 +48,7 @@ class RadioButtonElement : public Label
     void OnEnable() override;
     void OnDisable() override;
 
-    void setPosition(const Vector2<int> position) override;
-    void setPosition(const int x, const int y) override;
+    void setPosition(const Vector2<int> &position) override;
 
     bool isMouseHover() override;
     bool isMouseDown() override;
@@ -86,7 +85,7 @@ class RadioButton : public UIObject
    public:
     RadioButton();
     RadioButton(TextRenderer &renderer, Vector2<int> position, int y_sep);
-    ~RadioButton();
+    ~RadioButton() final;
 
     void AddListener(
         std::function<void(RadioButtonElement *, RadioButtonElement *)> func);

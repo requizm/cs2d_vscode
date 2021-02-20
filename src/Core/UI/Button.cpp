@@ -18,7 +18,7 @@ Button::Button(const std::string &text, Vector2<int> position,
                      static_cast<int>(static_cast<float>(nSize.y) * 1.5F)));
     this->btn_type = ButtonType::DEFAULT;
 
-    if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
+    if (type == UIObjectType::TEXTBUTTON || type == UIObjectType::RADIOBUTTON)
     {
         mDown = std::bind(&Button::onMouseDown, this);
         InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -38,7 +38,7 @@ Button::Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size,
     this->difColor = difColor;
     this->btn_type = ButtonType::SPRITE;
 
-    if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
+    if (type == UIObjectType::TEXTBUTTON || type == UIObjectType::RADIOBUTTON)
     {
         mDown = std::bind(&Button::onMouseDown, this);
         InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -58,7 +58,7 @@ Button::Button(Tile &tile, float scale, UIObjectType type)
     this->tile = tile;
     this->btn_type = ButtonType::TILE;
 
-    if (type == UIObjectType::BUTTON || type == UIObjectType::RADIOBUTTON)
+    if (type == UIObjectType::TEXTBUTTON || type == UIObjectType::RADIOBUTTON)
     {
         mDown = std::bind(&Button::onMouseDown, this);
         InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -71,7 +71,7 @@ Button::Button(Tile &tile, float scale, UIObjectType type)
 
 Button::~Button()
 {
-    if (objType == UIObjectType::BUTTON || objType == UIObjectType::RADIOBUTTON)
+    if (objType == UIObjectType::TEXTBUTTON || objType == UIObjectType::RADIOBUTTON)
     {
         InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
         InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
@@ -99,7 +99,7 @@ void Button::Draw(SpriteRenderer &spriteRenderer,
                     spriteRenderer.DrawSprite(this->sprite, this->getPosition(),
                                               this->getSize(), currentColor);
                 }
-                else if (!difColor)
+                else
                 {
                     if (haveOutline)
                     {
@@ -413,7 +413,7 @@ void Button::setMargin(const Vector2<int> value)
     if (haveOutline) this->margin = value;
 }
 
-void Button::setPosition(const Vector2<int> position)
+void Button::setPosition(const Vector2<int> &position)
 {
     if (btn_type == ButtonType::TILE)
     {
@@ -421,19 +421,6 @@ void Button::setPosition(const Vector2<int> position)
     }
     else
         this->position = position;
-}
-
-void Button::setPosition(const int x, const int y)
-{
-    if (btn_type == ButtonType::TILE)
-    {
-        this->tile.SetPosition(x, y);
-    }
-    else
-    {
-        this->position.x = x;
-        this->position.y = y;
-    }
 }
 
 Tile *Button::getTile() { return &this->tile; }

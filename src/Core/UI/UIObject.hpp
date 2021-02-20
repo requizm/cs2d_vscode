@@ -16,7 +16,7 @@ enum class UIObjectType
     UIOBJECT,
     LABEL,
     TEXTBOX,
-    BUTTON,
+    TEXTBUTTON,
     PANEL,
     RADIOBUTTON,
     LISTITEM,
@@ -64,8 +64,7 @@ class UIObject
     bool isRenderable();  // scroll'dan dolayi
     bool isScrollable() const;
 
-    virtual void setPosition(const Vector2<int> position);
-    virtual void setPosition(const int x, const int y);
+    virtual void setPosition(const Vector2<int> &position);
     virtual void setParentCenterPos();
     virtual void setSize(const Vector2<int> size);
     virtual void setSize(const int x, const int y);

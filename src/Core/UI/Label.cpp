@@ -141,11 +141,11 @@ bool Label::isMousePress()
     return isMousePressM(MOUSE_BUTTON_LEFT);
 }
 
-Vector2<int> Label::getPositionForButton(const bool center)
+Vector2<int> Label::getPositionForButton(const bool center) //FIXME: silinecek
 {
     if (isParent())
     {
-        if (objType == UIObjectType::BUTTON)
+        if (objType == UIObjectType::TEXTBUTTON)
         {
             Vector2<int> dif = getSize() - getLabelSize();
             dif.y /= 2;
@@ -159,7 +159,7 @@ Vector2<int> Label::getPositionForButton(const bool center)
         }
         return parent->getPosition() + this->position;
     }
-    if (objType == UIObjectType::BUTTON)
+    if (objType == UIObjectType::TEXTBUTTON)
     {
         Vector2<int> dif = getSize() - getLabelSize();
         dif.y /= 2;

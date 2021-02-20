@@ -168,13 +168,14 @@ void TextBox::InputText()
                     std::string afsaf;
                     afsaf = tempString[0];
                     this->text += afsaf;
-                    if (rend->CalculateSize(text, scale).x >= size.x)
+                    Vector2<int> newSize = rend->CalculateSize(text, scale);
+                    if (newSize.x >= size.x)
                     {
                         text.pop_back();
                     }
                     else
                     {
-                        this->labelSize = rend->CalculateSize(text, scale);
+                        this->labelSize = newSize;
                     }
                 }
                 InputManager::keycode = L'\0';

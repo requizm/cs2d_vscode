@@ -27,10 +27,7 @@
                 "-static-libstdc++",
                 "-static-libgcc",
                 "-D_DEBUG",
-                "-DWIN32",
-                "-D_WIN32_WINNT=0x0602",
-                "-DWINVER=0x0602",
-                "-DTRACY_ENABLE"
+                "-DWIN32"
             ],
             "group": {
                 "kind": "build",

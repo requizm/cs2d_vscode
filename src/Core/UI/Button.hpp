@@ -34,13 +34,13 @@ class Button : public Label
      * @param buttonColor Vector3<float>(1.0F)
      * @param textColor Vector3<float>(0.0F)
      * @param scale 1.0F
-     * @param type UIObjectType::BUTTON
+     * @param type UIObjectType::TEXTBUTTON
      */
     Button(const std::string &text, Vector2<int> position, Vector2<int> size,
            TextRenderer &renderer,
            const Vector3<float> &buttonColor = Vector3<float>(1.0F),
            const Vector3<float> &textColor = Vector3<float>(0.0F),
-           float scale = 1.0F, UIObjectType type = UIObjectType::BUTTON);
+           float scale = 1.0F, UIObjectType type = UIObjectType::TEXTBUTTON);
 
     /**
      * @brief Construct a new Sprite Button
@@ -50,21 +50,21 @@ class Button : public Label
      * @param size
      * @param difColor false
      * @param scale 1.0F
-     * @param type UIObjectType::BUTTON
+     * @param type UIObjectType::TEXTBUTTON
      */
     Button(const Sprite &sprite, Vector2<int> position, Vector2<int> size,
            bool difColor = false, float scale = 1.0F,
-           UIObjectType type = UIObjectType::BUTTON);
+           UIObjectType type = UIObjectType::TEXTBUTTON);
 
     /**
      * @brief Construct a new Tile Button for tile objects
      *
      * @param tile
      * @param scale 1.0F
-     * @param type UIObjectType::BUTTON
+     * @param type UIObjectType::TEXTBUTTON
      */
     Button(Tile &tile, float scale = 1.0F,
-           UIObjectType type = UIObjectType::BUTTON);
+           UIObjectType type = UIObjectType::TEXTBUTTON);
     virtual ~Button();
 
     void Draw(SpriteRenderer &spriteRenderer,
@@ -92,8 +92,7 @@ class Button : public Label
 
     void setMargin(const Vector2<int> value);
 
-    void setPosition(const Vector2<int> position) override;
-    void setPosition(const int x, const int y) override;
+    void setPosition(const Vector2<int> &position) override;
 
     bool isMouseHover() override;
     bool isMouseDown() override;

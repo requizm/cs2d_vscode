@@ -19,7 +19,7 @@ RadioButtonElement::RadioButtonElement(const std::string &text,
     this->index = index;
 }
 
-RadioButtonElement::~RadioButtonElement() {}
+RadioButtonElement::~RadioButtonElement() = default;
 
 void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer,
                               SquareRenderer &squareRenderer)
@@ -112,14 +112,9 @@ void RadioButtonElement::OnDisable()
     // this->selected = false;
 }
 
-void RadioButtonElement::setPosition(const Vector2<int> position)
+void RadioButtonElement::setPosition(const Vector2<int> &position)
 {
     this->position = position;
-}
-void RadioButtonElement::setPosition(const int x, const int y)
-{
-    this->position.x = x;
-    this->position.y = y;
 }
 
 bool RadioButtonElement::isMouseHover()

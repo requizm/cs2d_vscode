@@ -19,7 +19,7 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
         position, Vector2<int>(20, 20), true);
     escapeButton->setParent(this);
     escapeButton->independent = true;
-    escapeButton->setPosition(this->size.x - 20.0F, 3.0F);
+    escapeButton->setPosition(Vector2<int>(this->size.x - 20, 3));
     escapeButton->setButtonColor(color);
     escapeButton->setMouseHoverColor(Vector3<float>(0.64F));
     escapeButton->setMouseClickColor(Vector3<float>(1.0F));
@@ -27,7 +27,7 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
                         UIObjectType::PANEL, LabelType::NOT_CLICKABLE);
     this->title.setMouseEvent(false);
     this->title.setParent(this);
-    this->title.setPosition(static_cast<int>(lineOffset), 4.0F);
+    this->title.setPosition(Vector2<int>(lineOffset, 4));
     this->title.independent = true;
 }
 
