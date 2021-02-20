@@ -3,29 +3,34 @@
 
 #include <functional>
 
-#include "Label.hpp"
 #include "../Manager/MemoryOverride/MemoryOverride.hpp"
+#include "Label.hpp"
 
-class RadioButtonElement : public Label
-{
-public:
+
+class RadioButtonElement : public Label {
+   public:
     RadioButtonElement();
 
     /**
      * @brief Construct a new Radio Button Element object
-     * 
-     * @param text 
-     * @param position 
-     * @param textRenderer 
-     * @param index 
+     *
+     * @param text
+     * @param position
+     * @param textRenderer
+     * @param index
      * @param buttonColor Vector3<float>(1.0F)
      * @param textColor Vector3<float>(0.0F)
      * @param scale 1.0F
      */
-    RadioButtonElement(const std::string &text, Vector2<int> position, TextRenderer &textRenderer, int index, const Vector3<float> &buttonColor = Vector3<float>(1.0F), const Vector3<float> &textColor = Vector3<float>(0.0F), float scale = 1.0F);
+    RadioButtonElement(const std::string &text, Vector2<int> position,
+                       TextRenderer &textRenderer, int index,
+                       const Vector3<float> &buttonColor = Vector3<float>(1.0F),
+                       const Vector3<float> &textColor = Vector3<float>(0.0F),
+                       float scale = 1.0F);
     ~RadioButtonElement();
 
-    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
+    void Draw(SpriteRenderer &spriteRenderer,
+              SquareRenderer &squareRenderer) override;
     void Update() override;
     void ProcessInput() override;
 
@@ -52,8 +57,8 @@ public:
 
     bool selected;
 
-private:
-    Vector3<float> buttonColor; //secili oldugunu belli eden daire'nin rengi
+   private:
+    Vector3<float> buttonColor;  // secili oldugunu belli eden daire'nin rengi
     Vector3<float> mouseHoverColor;
     Vector3<float> outlineColor;
     Vector3<float> mouseHoverOutlineColor;
@@ -67,26 +72,31 @@ private:
     bool isMousePressM(const int key) override;
 };
 
-class RadioButton : public UIObject
-{
-private:
+class RadioButton : public UIObject {
+   private:
     std::vector<RadioButtonElement *> elements;
     int i = 0;
-    int y_sep; //aradaki bosluklar
+    int y_sep;  // aradaki bosluklar
 
-    std::vector<std::function<void(RadioButtonElement *, RadioButtonElement *)>> listeners;
+    std::vector<std::function<void(RadioButtonElement *, RadioButtonElement *)>>
+        listeners;
 
-public:
+   public:
     RadioButton();
     RadioButton(TextRenderer &renderer, Vector2<int> position, int y_sep);
     ~RadioButton();
 
-    void AddListener(std::function<void(RadioButtonElement *, RadioButtonElement *)> func);
+    void AddListener(
+        std::function<void(RadioButtonElement *, RadioButtonElement *)> func);
 
     void Clear();
-    void AddElement(const std::string &text, const Vector3<float> &buttonColor = Vector3<float>(1.0F), const Vector3<float> &textColor = Vector3<float>(0.0F), float scale = 1.0F);
+    void AddElement(const std::string &text,
+                    const Vector3<float> &buttonColor = Vector3<float>(1.0F),
+                    const Vector3<float> &textColor = Vector3<float>(0.0F),
+                    float scale = 1.0F);
 
-    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
+    void Draw(SpriteRenderer &spriteRenderer,
+              SquareRenderer &squareRenderer) override;
     void Update() override;
     void ProcessInput() override;
 

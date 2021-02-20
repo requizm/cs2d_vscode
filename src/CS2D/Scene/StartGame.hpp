@@ -3,56 +3,55 @@
 
 #include <memory>
 
+#include "../../Core/Manager/InputManager.hpp"
+#include "../../Core/Manager/Logger.hpp"
+#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../Core/Manager/ResourceManager.hpp"
+#include "../../Core/Manager/Utils.hpp"
+#include "../../Core/Math/Matrix4.hpp"
+#include "../../Core/Math/Vector2.hpp"
 #include "../../Core/Model/Camera.hpp"
 #include "../../Core/Renderer/SpriteRenderer.hpp"
 #include "../../Core/Renderer/SquareRenderer.hpp"
 #include "../../Core/Renderer/TextRenderer.hpp"
-#include "../Model/Player.hpp"
-#include "../../Core/Manager/ResourceManager.hpp"
-#include "../Other/GameParameters.hpp"
-#include "../../Core/Manager/Logger.hpp"
-#include "../../Core/Manager/Utils.hpp"
-#include "../../Core/Manager/InputManager.hpp"
-#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../Game.hpp"
-#include "../../Core/Math/Vector2.hpp"
-#include "../../Core/Math/Matrix4.hpp"
+#include "../Model/Player.hpp"
+#include "../Other/GameParameters.hpp"
 
-class StartGame
-{
-public:
-	StartGame();
-	~StartGame();
 
-	void Initialize(const std::string &mapName);
+class StartGame {
+   public:
+    StartGame();
+    ~StartGame();
 
-	static StartGame &instance()
-	{
-		static StartGame INSTANCE;
-		return INSTANCE;
-	}
+    void Initialize(const std::string &mapName);
 
-	void Start();
-	void OnEnable();
-	void OnDisable();
-	void Update();
-	void ProcessInput();
-	void Render();
+    static StartGame &instance() {
+        static StartGame INSTANCE;
+        return INSTANCE;
+    }
 
-	void SetEnable(const bool value);
+    void Start();
+    void OnEnable();
+    void OnDisable();
+    void Update();
+    void ProcessInput();
+    void Render();
 
-	Camera *camera;
+    void SetEnable(const bool value);
 
-	SquareRenderer squareRenderer;
-	SpriteRenderer *renderer;
+    Camera *camera;
 
-private:
-	Map *map;
-	Player *player;
+    SquareRenderer squareRenderer;
+    SpriteRenderer *renderer;
 
-	TextRenderer *textRenderer;
-	std::vector<Weapon> weapons;
-	bool enable = false;
+   private:
+    Map *map;
+    Player *player;
+
+    TextRenderer *textRenderer;
+    std::vector<Weapon> weapons;
+    bool enable = false;
 };
 
-#endif //SCENE_H
+#endif  // SCENE_H

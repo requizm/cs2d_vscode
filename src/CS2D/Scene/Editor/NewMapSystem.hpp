@@ -3,22 +3,21 @@
 
 #include <memory>
 
-#include "ButtonTile.hpp"
+#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../../Core/Manager/ObjectManager.hpp"
+#include "../../../Core/Manager/Utils.hpp"
 #include "../../../Core/UI/Panel.hpp"
 #include "../../../Core/UI/TextBox.hpp"
-#include "../../../Core/Manager/Utils.hpp"
-#include "../../../Core/Manager/ObjectManager.hpp"
-#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "ButtonTile.hpp"
 
-struct NewMapResult
-{
+
+struct NewMapResult {
     std::vector<Button *> tilesUI;
     std::vector<ButtonTile *> tiles;
 };
 
-class NewMapSystem
-{
-public:
+class NewMapSystem {
+   public:
     NewMapSystem(/* args */);
     ~NewMapSystem();
 

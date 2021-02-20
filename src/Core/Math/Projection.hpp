@@ -5,17 +5,12 @@
 
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
-class Projection
-{
-public:
-    Projection()
-    {
-    }
+class Projection {
+   public:
+    Projection() {}
 
     template <typename T>
-    static Matrix4<T> ortho(T l, T r, T b, T t,
-                            T n, T f)
-    {
+    static Matrix4<T> ortho(T l, T r, T b, T t, T n, T f) {
         Matrix4<T> M;
 
         // set OpenGL perspective projection matrix
@@ -43,8 +38,7 @@ public:
     }
 
     template <typename T>
-    static Matrix4<T> ortho(T l, T r, T b, T t)
-    {
+    static Matrix4<T> ortho(T l, T r, T b, T t) {
         Matrix4<T> M;
 
         // set OpenGL perspective projection matrix
@@ -72,21 +66,23 @@ public:
     }
 
     template <typename T>
-    static Matrix4<T> translate(Matrix4<T> m, Vector3<T> v)
-    {
+    static Matrix4<T> translate(Matrix4<T> m, Vector3<T> v) {
         Matrix4<T> R = m.Clone();
 
-        R.Get(4, 1) = m.Get(1, 1) * v[0] + m.Get(2, 1) * v[1] + m.Get(3, 1) * v[2] + m.Get(4, 1);
-        R.Get(4, 2) = m.Get(1, 2) * v[0] + m.Get(2, 2) * v[1] + m.Get(3, 2) * v[2] + m.Get(4, 2);
-        R.Get(4, 3) = m.Get(1, 3) * v[0] + m.Get(2, 3) * v[1] + m.Get(3, 3) * v[2] + m.Get(4, 3);
-        R.Get(4, 4) = m.Get(1, 4) * v[0] + m.Get(2, 4) * v[1] + m.Get(3, 4) * v[2] + m.Get(4, 4);
+        R.Get(4, 1) = m.Get(1, 1) * v[0] + m.Get(2, 1) * v[1] +
+                      m.Get(3, 1) * v[2] + m.Get(4, 1);
+        R.Get(4, 2) = m.Get(1, 2) * v[0] + m.Get(2, 2) * v[1] +
+                      m.Get(3, 2) * v[2] + m.Get(4, 2);
+        R.Get(4, 3) = m.Get(1, 3) * v[0] + m.Get(2, 3) * v[1] +
+                      m.Get(3, 3) * v[2] + m.Get(4, 3);
+        R.Get(4, 4) = m.Get(1, 4) * v[0] + m.Get(2, 4) * v[1] +
+                      m.Get(3, 4) * v[2] + m.Get(4, 4);
 
         return R;
     }
 
     template <typename T>
-    static Matrix4<T> rotate(Matrix4<T> m, T angle, Vector3<T> v)
-    {
+    static Matrix4<T> rotate(Matrix4<T> m, T angle, Vector3<T> v) {
         T const a = angle;
         T const c = cos(a);
         T const s = sin(a);
@@ -109,20 +105,44 @@ public:
 
         Matrix4<T> R;
 
-        R.Get(1, 1) = m.Get(1, 1) * Rotate.Get(1, 1) + m.Get(2, 1) * Rotate.Get(1, 2) + m.Get(3, 1) * Rotate.Get(1, 3);
-        R.Get(1, 2) = m.Get(1, 2) * Rotate.Get(1, 1) + m.Get(2, 2) * Rotate.Get(1, 2) + m.Get(3, 2) * Rotate.Get(1, 3);
-        R.Get(1, 3) = m.Get(1, 3) * Rotate.Get(1, 1) + m.Get(2, 3) * Rotate.Get(1, 2) + m.Get(3, 3) * Rotate.Get(1, 3);
-        R.Get(1, 4) = m.Get(1, 4) * Rotate.Get(1, 1) + m.Get(2, 4) * Rotate.Get(1, 2) + m.Get(3, 4) * Rotate.Get(1, 3);
+        R.Get(1, 1) = m.Get(1, 1) * Rotate.Get(1, 1) +
+                      m.Get(2, 1) * Rotate.Get(1, 2) +
+                      m.Get(3, 1) * Rotate.Get(1, 3);
+        R.Get(1, 2) = m.Get(1, 2) * Rotate.Get(1, 1) +
+                      m.Get(2, 2) * Rotate.Get(1, 2) +
+                      m.Get(3, 2) * Rotate.Get(1, 3);
+        R.Get(1, 3) = m.Get(1, 3) * Rotate.Get(1, 1) +
+                      m.Get(2, 3) * Rotate.Get(1, 2) +
+                      m.Get(3, 3) * Rotate.Get(1, 3);
+        R.Get(1, 4) = m.Get(1, 4) * Rotate.Get(1, 1) +
+                      m.Get(2, 4) * Rotate.Get(1, 2) +
+                      m.Get(3, 4) * Rotate.Get(1, 3);
 
-        R.Get(2, 1) = m.Get(1, 1) * Rotate.Get(2, 1) + m.Get(2, 1) * Rotate.Get(2, 2) + m.Get(3, 1) * Rotate.Get(2, 3);
-        R.Get(2, 2) = m.Get(1, 2) * Rotate.Get(2, 1) + m.Get(2, 2) * Rotate.Get(2, 2) + m.Get(3, 2) * Rotate.Get(2, 3);
-        R.Get(2, 3) = m.Get(1, 3) * Rotate.Get(2, 1) + m.Get(2, 3) * Rotate.Get(2, 2) + m.Get(3, 3) * Rotate.Get(2, 3);
-        R.Get(2, 4) = m.Get(1, 4) * Rotate.Get(2, 1) + m.Get(2, 4) * Rotate.Get(2, 2) + m.Get(3, 4) * Rotate.Get(2, 3);
+        R.Get(2, 1) = m.Get(1, 1) * Rotate.Get(2, 1) +
+                      m.Get(2, 1) * Rotate.Get(2, 2) +
+                      m.Get(3, 1) * Rotate.Get(2, 3);
+        R.Get(2, 2) = m.Get(1, 2) * Rotate.Get(2, 1) +
+                      m.Get(2, 2) * Rotate.Get(2, 2) +
+                      m.Get(3, 2) * Rotate.Get(2, 3);
+        R.Get(2, 3) = m.Get(1, 3) * Rotate.Get(2, 1) +
+                      m.Get(2, 3) * Rotate.Get(2, 2) +
+                      m.Get(3, 3) * Rotate.Get(2, 3);
+        R.Get(2, 4) = m.Get(1, 4) * Rotate.Get(2, 1) +
+                      m.Get(2, 4) * Rotate.Get(2, 2) +
+                      m.Get(3, 4) * Rotate.Get(2, 3);
 
-        R.Get(3, 1) = m.Get(1, 1) * Rotate.Get(3, 1) + m.Get(2, 1) * Rotate.Get(3, 2) + m.Get(3, 1) * Rotate.Get(3, 3);
-        R.Get(3, 2) = m.Get(1, 2) * Rotate.Get(3, 1) + m.Get(2, 2) * Rotate.Get(3, 2) + m.Get(3, 2) * Rotate.Get(3, 3);
-        R.Get(3, 3) = m.Get(1, 3) * Rotate.Get(3, 1) + m.Get(2, 3) * Rotate.Get(3, 2) + m.Get(3, 3) * Rotate.Get(3, 3);
-        R.Get(3, 4) = m.Get(1, 4) * Rotate.Get(3, 1) + m.Get(2, 4) * Rotate.Get(3, 2) + m.Get(3, 4) * Rotate.Get(3, 3);
+        R.Get(3, 1) = m.Get(1, 1) * Rotate.Get(3, 1) +
+                      m.Get(2, 1) * Rotate.Get(3, 2) +
+                      m.Get(3, 1) * Rotate.Get(3, 3);
+        R.Get(3, 2) = m.Get(1, 2) * Rotate.Get(3, 1) +
+                      m.Get(2, 2) * Rotate.Get(3, 2) +
+                      m.Get(3, 2) * Rotate.Get(3, 3);
+        R.Get(3, 3) = m.Get(1, 3) * Rotate.Get(3, 1) +
+                      m.Get(2, 3) * Rotate.Get(3, 2) +
+                      m.Get(3, 3) * Rotate.Get(3, 3);
+        R.Get(3, 4) = m.Get(1, 4) * Rotate.Get(3, 1) +
+                      m.Get(2, 4) * Rotate.Get(3, 2) +
+                      m.Get(3, 4) * Rotate.Get(3, 3);
 
         R.Get(4, 1) = m.Get(4, 1);
         R.Get(4, 2) = m.Get(4, 2);
@@ -133,8 +153,7 @@ public:
     }
 
     template <typename T>
-    static Matrix4<T> scale(Matrix4<T> m, Vector3<T> v)
-    {
+    static Matrix4<T> scale(Matrix4<T> m, Vector3<T> v) {
         Matrix4<T> R = m.Clone();
 
         R.Get(1, 1) = m.Get(1, 1) * v[0];
@@ -160,148 +179,92 @@ public:
         return R;
     }
 
-    static float *value_ptr(Matrix4<float> &m)
-    {
-        return &(m.values[0]);
-    }
+    static float *value_ptr(Matrix4<float> &m) { return &(m.values[0]); }
 
-    static float radians(float degrees)
-    {
+    static float radians(float degrees) {
         return degrees * (0.01745329251994329576923690768489F);
     }
 
-    static float degrees(float radians)
-    {
+    static float degrees(float radians) {
         return radians * (57.295779513082320876798154814105F);
     }
 
-    static Matrix4<float> inverse(Matrix4<float> m)
-    {
+    static Matrix4<float> inverse(Matrix4<float> m) {
         Matrix4<float> inv, r;
         float det;
         int i;
 
-        inv[0] = m[5] * m[10] * m[15] -
-                 m[5] * m[11] * m[14] -
-                 m[9] * m[6] * m[15] +
-                 m[9] * m[7] * m[14] +
-                 m[13] * m[6] * m[11] -
-                 m[13] * m[7] * m[10];
+        inv[0] = m[5] * m[10] * m[15] - m[5] * m[11] * m[14] -
+                 m[9] * m[6] * m[15] + m[9] * m[7] * m[14] +
+                 m[13] * m[6] * m[11] - m[13] * m[7] * m[10];
 
-        inv[4] = -m[4] * m[10] * m[15] +
-                 m[4] * m[11] * m[14] +
-                 m[8] * m[6] * m[15] -
-                 m[8] * m[7] * m[14] -
-                 m[12] * m[6] * m[11] +
-                 m[12] * m[7] * m[10];
+        inv[4] = -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] +
+                 m[8] * m[6] * m[15] - m[8] * m[7] * m[14] -
+                 m[12] * m[6] * m[11] + m[12] * m[7] * m[10];
 
-        inv[8] = m[4] * m[9] * m[15] -
-                 m[4] * m[11] * m[13] -
-                 m[8] * m[5] * m[15] +
-                 m[8] * m[7] * m[13] +
-                 m[12] * m[5] * m[11] -
-                 m[12] * m[7] * m[9];
+        inv[8] = m[4] * m[9] * m[15] - m[4] * m[11] * m[13] -
+                 m[8] * m[5] * m[15] + m[8] * m[7] * m[13] +
+                 m[12] * m[5] * m[11] - m[12] * m[7] * m[9];
 
-        inv[12] = -m[4] * m[9] * m[14] +
-                  m[4] * m[10] * m[13] +
-                  m[8] * m[5] * m[14] -
-                  m[8] * m[6] * m[13] -
-                  m[12] * m[5] * m[10] +
-                  m[12] * m[6] * m[9];
+        inv[12] = -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] +
+                  m[8] * m[5] * m[14] - m[8] * m[6] * m[13] -
+                  m[12] * m[5] * m[10] + m[12] * m[6] * m[9];
 
-        inv[1] = -m[1] * m[10] * m[15] +
-                 m[1] * m[11] * m[14] +
-                 m[9] * m[2] * m[15] -
-                 m[9] * m[3] * m[14] -
-                 m[13] * m[2] * m[11] +
-                 m[13] * m[3] * m[10];
+        inv[1] = -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] +
+                 m[9] * m[2] * m[15] - m[9] * m[3] * m[14] -
+                 m[13] * m[2] * m[11] + m[13] * m[3] * m[10];
 
-        inv[5] = m[0] * m[10] * m[15] -
-                 m[0] * m[11] * m[14] -
-                 m[8] * m[2] * m[15] +
-                 m[8] * m[3] * m[14] +
-                 m[12] * m[2] * m[11] -
-                 m[12] * m[3] * m[10];
+        inv[5] = m[0] * m[10] * m[15] - m[0] * m[11] * m[14] -
+                 m[8] * m[2] * m[15] + m[8] * m[3] * m[14] +
+                 m[12] * m[2] * m[11] - m[12] * m[3] * m[10];
 
-        inv[9] = -m[0] * m[9] * m[15] +
-                 m[0] * m[11] * m[13] +
-                 m[8] * m[1] * m[15] -
-                 m[8] * m[3] * m[13] -
-                 m[12] * m[1] * m[11] +
-                 m[12] * m[3] * m[9];
+        inv[9] = -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] +
+                 m[8] * m[1] * m[15] - m[8] * m[3] * m[13] -
+                 m[12] * m[1] * m[11] + m[12] * m[3] * m[9];
 
-        inv[13] = m[0] * m[9] * m[14] -
-                  m[0] * m[10] * m[13] -
-                  m[8] * m[1] * m[14] +
-                  m[8] * m[2] * m[13] +
-                  m[12] * m[1] * m[10] -
-                  m[12] * m[2] * m[9];
+        inv[13] = m[0] * m[9] * m[14] - m[0] * m[10] * m[13] -
+                  m[8] * m[1] * m[14] + m[8] * m[2] * m[13] +
+                  m[12] * m[1] * m[10] - m[12] * m[2] * m[9];
 
-        inv[2] = m[1] * m[6] * m[15] -
-                 m[1] * m[7] * m[14] -
-                 m[5] * m[2] * m[15] +
-                 m[5] * m[3] * m[14] +
-                 m[13] * m[2] * m[7] -
-                 m[13] * m[3] * m[6];
+        inv[2] = m[1] * m[6] * m[15] - m[1] * m[7] * m[14] -
+                 m[5] * m[2] * m[15] + m[5] * m[3] * m[14] +
+                 m[13] * m[2] * m[7] - m[13] * m[3] * m[6];
 
-        inv[6] = -m[0] * m[6] * m[15] +
-                 m[0] * m[7] * m[14] +
-                 m[4] * m[2] * m[15] -
-                 m[4] * m[3] * m[14] -
-                 m[12] * m[2] * m[7] +
-                 m[12] * m[3] * m[6];
+        inv[6] = -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] +
+                 m[4] * m[2] * m[15] - m[4] * m[3] * m[14] -
+                 m[12] * m[2] * m[7] + m[12] * m[3] * m[6];
 
-        inv[10] = m[0] * m[5] * m[15] -
-                  m[0] * m[7] * m[13] -
-                  m[4] * m[1] * m[15] +
-                  m[4] * m[3] * m[13] +
-                  m[12] * m[1] * m[7] -
-                  m[12] * m[3] * m[5];
+        inv[10] = m[0] * m[5] * m[15] - m[0] * m[7] * m[13] -
+                  m[4] * m[1] * m[15] + m[4] * m[3] * m[13] +
+                  m[12] * m[1] * m[7] - m[12] * m[3] * m[5];
 
-        inv[14] = -m[0] * m[5] * m[14] +
-                  m[0] * m[6] * m[13] +
-                  m[4] * m[1] * m[14] -
-                  m[4] * m[2] * m[13] -
-                  m[12] * m[1] * m[6] +
-                  m[12] * m[2] * m[5];
+        inv[14] = -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] +
+                  m[4] * m[1] * m[14] - m[4] * m[2] * m[13] -
+                  m[12] * m[1] * m[6] + m[12] * m[2] * m[5];
 
-        inv[3] = -m[1] * m[6] * m[11] +
-                 m[1] * m[7] * m[10] +
-                 m[5] * m[2] * m[11] -
-                 m[5] * m[3] * m[10] -
-                 m[9] * m[2] * m[7] +
-                 m[9] * m[3] * m[6];
+        inv[3] = -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] +
+                 m[5] * m[2] * m[11] - m[5] * m[3] * m[10] -
+                 m[9] * m[2] * m[7] + m[9] * m[3] * m[6];
 
-        inv[7] = m[0] * m[6] * m[11] -
-                 m[0] * m[7] * m[10] -
-                 m[4] * m[2] * m[11] +
-                 m[4] * m[3] * m[10] +
-                 m[8] * m[2] * m[7] -
-                 m[8] * m[3] * m[6];
+        inv[7] = m[0] * m[6] * m[11] - m[0] * m[7] * m[10] -
+                 m[4] * m[2] * m[11] + m[4] * m[3] * m[10] +
+                 m[8] * m[2] * m[7] - m[8] * m[3] * m[6];
 
-        inv[11] = -m[0] * m[5] * m[11] +
-                  m[0] * m[7] * m[9] +
-                  m[4] * m[1] * m[11] -
-                  m[4] * m[3] * m[9] -
-                  m[8] * m[1] * m[7] +
-                  m[8] * m[3] * m[5];
+        inv[11] = -m[0] * m[5] * m[11] + m[0] * m[7] * m[9] +
+                  m[4] * m[1] * m[11] - m[4] * m[3] * m[9] -
+                  m[8] * m[1] * m[7] + m[8] * m[3] * m[5];
 
-        inv[15] = m[0] * m[5] * m[10] -
-                  m[0] * m[6] * m[9] -
-                  m[4] * m[1] * m[10] +
-                  m[4] * m[2] * m[9] +
-                  m[8] * m[1] * m[6] -
-                  m[8] * m[2] * m[5];
+        inv[15] = m[0] * m[5] * m[10] - m[0] * m[6] * m[9] -
+                  m[4] * m[1] * m[10] + m[4] * m[2] * m[9] +
+                  m[8] * m[1] * m[6] - m[8] * m[2] * m[5];
 
         det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
 
-        if (det == 0)
-            return false;
+        if (det == 0) return false;
 
         det = 1.0F / det;
 
-        for (i = 0; i < 16; i++)
-            r[i] = inv[i] * det;
+        for (i = 0; i < 16; i++) r[i] = inv[i] * det;
 
         return r;
     }

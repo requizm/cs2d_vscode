@@ -6,9 +6,8 @@
 #include "Collider.hpp"
 #include "RectangleCollider.hpp"
 
-class CircleCollider : public Collider
-{
-public:
+class CircleCollider : public Collider {
+   public:
     CircleCollider(Vector2<int> pos, int r);
     CircleCollider();
     ~CircleCollider();
@@ -16,9 +15,9 @@ public:
     bool Intersect(RectangleCollider &col);
     bool Intersect(CircleCollider &col);
 
-    int radius = 1; //FIXME: private olacak
+    int radius = 1;  // FIXME: private olacak
 
-private:
+   private:
 };
 
-#endif // CIRCLECOLLIDER_H
+#endif  // CIRCLECOLLIDER_H

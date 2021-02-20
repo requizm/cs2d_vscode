@@ -5,9 +5,8 @@
 
 #include "../Math/Vector2.hpp"
 
-class Circle
-{
-public:
+class Circle {
+   public:
     Circle();
     explicit Circle(bool empty);
     ~Circle();

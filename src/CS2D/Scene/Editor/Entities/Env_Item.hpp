@@ -1,16 +1,16 @@
 #ifndef ENVITEM_H
 #define ENVITEM_H
 
+#include "../../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../../../Core/Manager/Utils.hpp"
 #include "../../../../Core/UI/Panel.hpp"
 #include "../../../../Core/UI/TextBox.hpp"
 #include "../../../Other/GameParameters.hpp"
-#include "../../../../Core/Manager/Utils.hpp"
-#include "../../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 
-class Env_Item
-{
-private:
-    int item_id = 0; // 0=null  1=ak47   2=m4a1 ..
+
+class Env_Item {
+   private:
+    int item_id = 0;  // 0=null  1=ak47   2=m4a1 ..
 
     Vector2<int> position;
     Vector2<int> size;
@@ -18,7 +18,7 @@ private:
 
     Button *button;
 
-public:
+   public:
     int obj_id = 0;
     Env_Item();
     Env_Item(int id, Vector2<int> position);
@@ -28,35 +28,35 @@ public:
 
     void ProcessInput();
     void Update();
-    void Render(SpriteRenderer &worldRenderer, SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer, float time);
+    void Render(SpriteRenderer &worldRenderer, SpriteRenderer &menuRenderer,
+                SquareRenderer &squareRenderer, float time);
 
     /**
      * @brief Get Item ID
-     * 
-     * @return int 
+     *
+     * @return int
      */
     int getItemID();
 
     /**
      * @brief Set Item ID
-     * 
-     * @param id 
+     *
+     * @param id
      */
     void setItemID(int id);
 
     /**
      * @brief Get Obj ID
-     * 
-     * @return int 
+     *
+     * @return int
      */
     int getObjID();
 
     Vector2<int> getPosition();
 };
 
-class Env_Item_Manager
-{
-public:
+class Env_Item_Manager {
+   public:
     Env_Item_Manager();
     ~Env_Item_Manager();
 

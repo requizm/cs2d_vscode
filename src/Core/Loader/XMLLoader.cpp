@@ -1,21 +1,13 @@
 #include "XMLLoader.hpp"
 
-XMLLoader::XMLLoader(std::string &mapName)
-{
-    Load(mapName);
-}
+XMLLoader::XMLLoader(std::string &mapName) { Load(mapName); }
 
-XMLLoader::~XMLLoader()
-{
-    delete[] codeChar;
-}
+XMLLoader::~XMLLoader() { delete[] codeChar; }
 
-void XMLLoader::Load(std::string &mapName)
-{
+void XMLLoader::Load(std::string &mapName) {
     std::string codeString;
     std::ifstream fileC(mapName.c_str());
-    if (!fileC)
-    {
+    if (!fileC) {
         WRITE_ERROR("dosya acilamadi: " + mapName);
         exit(EXIT_FAILURE);
     }
@@ -29,7 +21,4 @@ void XMLLoader::Load(std::string &mapName)
     doc.parse<0>(codeChar);
 }
 
-rapidxml::xml_document<> &XMLLoader::GetDoc()
-{
-    return doc;
-}
+rapidxml::xml_document<> &XMLLoader::GetDoc() { return doc; }

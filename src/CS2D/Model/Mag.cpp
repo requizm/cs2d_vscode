@@ -1,14 +1,9 @@
 #include "Mag.hpp"
 
-void Mag::takeAmmo(const int value)
-{
-	ammo -= value;
-	if (ammo <= 0)
-		if (!IsDestroyed())
-			Destroy();
+void Mag::takeAmmo(const int value) {
+    ammo -= value;
+    if (ammo <= 0)
+        if (!IsDestroyed()) Destroy();
 }
 
-int Mag::getAmmo() const
-{
-	return ammo;
-}
+int Mag::getAmmo() const { return ammo; }

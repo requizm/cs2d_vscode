@@ -3,12 +3,12 @@
 
 #include <functional>
 
-#include "Panel.hpp"
 #include "../Manager/MemoryOverride/MemoryOverride.hpp"
+#include "Panel.hpp"
 
-class ListItemElement : public Button
-{
-public:
+
+class ListItemElement : public Button {
+   public:
     explicit ListItemElement(Button *btn);
     ~ListItemElement();
 
@@ -16,15 +16,14 @@ public:
 
     bool selected = false;
 
-protected:
+   protected:
     void onMouseDown() override;
     void onMouseUp() override;
     Button *btn;
 };
 
-class ListItem : public UIObject
-{
-public:
+class ListItem : public UIObject {
+   public:
     ListItem(Panel *panel);
     ListItem();
     ~ListItem();
@@ -34,15 +33,16 @@ public:
 
     void AddListener(std::function<void(Button *, Button *)> func);
 
-    void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) override;
+    void Draw(SpriteRenderer &spriteRenderer,
+              SquareRenderer &squareRenderer) override;
     void ProcessInput() override;
     void Update() override;
     void Select(int i);
 
     int getSelectedIndex();
-    ListItemElement* getIndex(int i);
+    ListItemElement *getIndex(int i);
 
-private:
+   private:
     Panel *panel = nullptr;
     std::vector<ListItemElement *> items;
     int selectedIndex = -1;
@@ -52,4 +52,4 @@ private:
     std::vector<std::function<void(Button *, Button *)>> listeners;
 };
 
-#endif // LISTITEM_H
+#endif  // LISTITEM_H

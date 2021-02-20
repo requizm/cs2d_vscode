@@ -1,33 +1,29 @@
 #ifndef TILE_H
 #define TILE_H
 
-#include "../../Core/Model/GameObject.hpp"
 #include "../../Core/Collider/RectangleCollider.hpp"
+#include "../../Core/Model/GameObject.hpp"
 
-enum TileTypes
-{
-	WALL,
-	OBSTACLE,
-	FLOOR
-};
 
-class Tile : public GameObject
-{
-public:
-	Tile();
-	Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size, TileTypes type, int frame = -1);
-	Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size);
+enum TileTypes { WALL, OBSTACLE, FLOOR };
 
-	void setType(TileTypes type);
-	TileTypes getType() const;
+class Tile : public GameObject {
+   public:
+    Tile();
+    Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size,
+         TileTypes type, int frame = -1);
+    Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size);
 
-	RectangleCollider& getCollider();
+    void setType(TileTypes type);
+    TileTypes getType() const;
 
-	int frame;
+    RectangleCollider &getCollider();
 
-private:
-	TileTypes type;
-	RectangleCollider collider;
+    int frame;
+
+   private:
+    TileTypes type;
+    RectangleCollider collider;
 };
 
 #endif

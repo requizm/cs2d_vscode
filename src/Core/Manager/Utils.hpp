@@ -3,11 +3,10 @@
 
 #include "../../CS2D/Other/GameParameters.hpp"
 #include "../Math/Vector2.hpp"
-#include "../Math/Vector2.hpp"
 
-class Utils
-{
-public:
+
+class Utils {
+   public:
     Utils();
     virtual ~Utils();
 

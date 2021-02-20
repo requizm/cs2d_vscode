@@ -2,47 +2,48 @@
 #define MAP_H
 
 #include <GL/glew.h>
-#include <vector>
+#include <math.h>  // pow()
+
+#include <cstring>
 #include <fstream>
 #include <sstream>
-#include <cstring>
-#include <math.h> // pow()
+#include <vector>
 
-#include "../../Core/Renderer/SpriteRenderer.hpp"
-#include "../../Core/Model/Tile.hpp"
-#include "Weapon.hpp"
-#include "../../Core/Manager/ResourceManager.hpp"
-#include "../Other/GameParameters.hpp"
+#include "../../Core/Loader/JSONLoader.hpp"
+#include "../../Core/Loader/XMLLoader.hpp"
 #include "../../Core/Manager/Logger.hpp"
 #include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
-#include "../../Core/Loader/XMLLoader.hpp"
-#include "../../Core/Loader/JSONLoader.hpp"
+#include "../../Core/Manager/ResourceManager.hpp"
+#include "../../Core/Model/Tile.hpp"
+#include "../../Core/Renderer/SpriteRenderer.hpp"
+#include "../Other/GameParameters.hpp"
+#include "Weapon.hpp"
 
-class Map
-{
-public:
-	std::vector<Tile *> tiles;
-	std::vector<Weapon *> weapons;
 
-	Map();
-	Map(std::string file, const std::string &name);
-	~Map();
+class Map {
+   public:
+    std::vector<Tile *> tiles;
+    std::vector<Weapon *> weapons;
 
-	std::string GetName() const;
+    Map();
+    Map(std::string file, const std::string &name);
+    ~Map();
 
-	void Draw(SpriteRenderer &renderer);
+    std::string GetName() const;
 
-	Tile *GetTileByCell(int x, int y);
-	Tile *GetTileByCell(Vector2<int> cellPos);
+    void Draw(SpriteRenderer &renderer);
 
-	Tile *GetTileByPosition(int x, int y);
-	Tile *GetTileByPosition(Vector2<int> position);
+    Tile *GetTileByCell(int x, int y);
+    Tile *GetTileByCell(Vector2<int> cellPos);
 
-private:
-	void Load(std::string file);
-	std::string name;
+    Tile *GetTileByPosition(int x, int y);
+    Tile *GetTileByPosition(Vector2<int> position);
 
-	Vector2<int> mapLimit;
+   private:
+    void Load(std::string file);
+    std::string name;
+
+    Vector2<int> mapLimit;
 };
 
-#endif // MAP_H
+#endif  // MAP_H

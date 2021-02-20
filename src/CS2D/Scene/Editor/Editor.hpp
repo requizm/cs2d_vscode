@@ -3,116 +3,110 @@
 
 #ifdef WIN32
 #include <dirent/dirent.h>
-#endif // WIN32
+#endif  // WIN32
 #ifdef LINUX
 #include <dirent.h>
-#endif // LINUX
-#include <vector>
-#include <iostream>
+#endif  // LINUX
 #include <fstream>
+#include <iostream>
 #include <sstream>
+#include <vector>
 
-#include "../../../Core/UI/Panel.hpp"
-#include "../../../Core/UI/TextBox.hpp"
-#include "../../../Core/UI/RadioButton.hpp"
-#include "../../../Core/UI/ListItem.hpp"
+#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../../Core/Manager/ObjectManager.hpp"
+#include "../../../Core/Manager/Timer.hpp"
 #include "../../../Core/Model/Camera.hpp"
 #include "../../../Core/Model/Tile.hpp"
-#include "../../Other/GameParameters.hpp"
-#include "../../../Core/Manager/Timer.hpp"
-#include "../../../Core/Manager/ObjectManager.hpp"
-#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
-#include "SaveLoadSystem.hpp"
-#include "NewMapSystem.hpp"
-#include "Entities/Env_Item.hpp"
-
+#include "../../../Core/UI/ListItem.hpp"
+#include "../../../Core/UI/Panel.hpp"
+#include "../../../Core/UI/RadioButton.hpp"
+#include "../../../Core/UI/TextBox.hpp"
 #include "../../Game.hpp"
+#include "../../Other/GameParameters.hpp"
+#include "Entities/Env_Item.hpp"
+#include "NewMapSystem.hpp"
+#include "SaveLoadSystem.hpp"
 
-enum SelectedMode
-{
-	TILE_MOD,
-	OBJECT_MOD
-};
 
-class Editor
-{
-public:
-	Editor();
-	~Editor();
+enum SelectedMode { TILE_MOD, OBJECT_MOD };
 
-	void Initialize();
+class Editor {
+   public:
+    Editor();
+    ~Editor();
 
-	static Editor &instance()
-	{
-		static Editor INSTANCE;
-		return INSTANCE;
-	}
+    void Initialize();
 
-	void Start();
-	void OnEnable();
-	void OnDisable();
-	void Update();
-	void ProcessInput();
-	void Render();
+    static Editor &instance() {
+        static Editor INSTANCE;
+        return INSTANCE;
+    }
 
-	void SetEnable(const bool value);
+    void Start();
+    void OnEnable();
+    void OnDisable();
+    void Update();
+    void ProcessInput();
+    void Render();
 
-	TextRenderer *textRenderer;
-	Panel *controlPanel;
-	Panel *buildPanel;
-	Panel *tilePanel, *objectPanel;
+    void SetEnable(const bool value);
 
-	std::vector<Env_Item *> env_items;
-	Env_Item_Manager *envItemManager;
+    TextRenderer *textRenderer;
+    Panel *controlPanel;
+    Panel *buildPanel;
+    Panel *tilePanel, *objectPanel;
 
-	std::string currentTileSet;
+    std::vector<Env_Item *> env_items;
+    Env_Item_Manager *envItemManager;
 
-	Vector2<int> mapLimit;
+    std::string currentTileSet;
 
-	Camera *camera;
+    Vector2<int> mapLimit;
 
-	SelectedMode selectedMode;
+    Camera *camera;
 
-	NewMapResult *tils;
+    SelectedMode selectedMode;
 
-	float time = 0;
-	Vector2<int> texture;
-	int tileCount;
-	int maxCellInColumn;
-	int maxCellInRow;
-	bool firstSelect;
-	Vector2<int> position;
+    NewMapResult *tils;
 
-private:
-	void SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n);
+    float time = 0;
+    Vector2<int> texture;
+    int tileCount;
+    int maxCellInColumn;
+    int maxCellInRow;
+    bool firstSelect;
+    Vector2<int> position;
 
-	SpriteRenderer *menuRenderer;
-	SquareRenderer *squareRenderer;
+   private:
+    void SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n);
 
-	SpriteRenderer *worldRenderer;
+    SpriteRenderer *menuRenderer;
+    SquareRenderer *squareRenderer;
 
-	ListItem *objects_ui;
+    SpriteRenderer *worldRenderer;
 
-	NewMapSystem *NewMap;
+    ListItem *objects_ui;
 
-	SaveLoadSystem *SaveLoad;
+    NewMapSystem *NewMap;
 
-	Tile *selectedTile = nullptr;
-	Env_Item *selectedItem = nullptr;
+    SaveLoadSystem *SaveLoad;
 
-	bool enable = false;
+    Tile *selectedTile = nullptr;
+    Env_Item *selectedItem = nullptr;
 
-	Button *b_save, *b_new, *b_load, *b_objects, *b_tiles;
+    bool enable = false;
 
-	Panel *tilePropertiesPanel;
-	Button *b_tileProperties;
-	RadioButton *rb_tileProperties;
+    Button *b_save, *b_new, *b_load, *b_objects, *b_tiles;
 
-	Button *b_cancel;
+    Panel *tilePropertiesPanel;
+    Button *b_tileProperties;
+    RadioButton *rb_tileProperties;
 
-	std::string currentName;
+    Button *b_cancel;
 
-	Vector3<float> cell_yellow;
-	Vector3<float> mouse_yellow;
+    std::string currentName;
+
+    Vector3<float> cell_yellow;
+    Vector3<float> mouse_yellow;
 };
 #endif

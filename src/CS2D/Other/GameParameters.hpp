@@ -1,15 +1,16 @@
 #ifndef GAME_PARAMETERS_H
 #define GAME_PARAMETERS_H
 
+#include <math.h>  // pow()
+
 #include <fstream>
 #include <string>
-#include <math.h> // pow()
 
 #include "../../Core/Loader/JSONLoader.hpp"
 
-class GameParameters
-{
-public:
+
+class GameParameters {
+   public:
     static int SCREEN_WIDTH;
     static int SCREEN_HEIGHT;
     static int SIZE_TILE;

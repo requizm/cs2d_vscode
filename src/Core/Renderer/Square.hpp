@@ -3,17 +3,16 @@
 
 #include <GL/glew.h>
 
-class Square
-{
-public:
-	Square();
-	void init();
-	~Square();
+class Square {
+   public:
+    Square();
+    void init();
+    ~Square();
 
-	GLuint VAO;
+    GLuint VAO;
 
-private:
-	void initData();
+   private:
+    void initData();
 };
 
-#endif // SQUARE_H
+#endif  // SQUARE_H

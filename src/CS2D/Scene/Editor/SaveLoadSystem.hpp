@@ -5,28 +5,28 @@
 #include <rapidxml-1.13/rapidxml_print.hpp>
 #ifdef WIN32
 #include <dirent/dirent.h>
-#endif // WIN32
+#endif  // WIN32
 #ifdef LINUX
 #include <dirent.h>
-#endif // LINUX
-#include <memory>
-#include <vector>
+#endif  // LINUX
 #include <fstream>
+#include <memory>
 #include <sstream>
+#include <vector>
 
-#include "../../../Core/UI/Panel.hpp"
-#include "../../../Core/UI/TextBox.hpp"
-#include "../../../Core/UI/ListItem.hpp"
-#include "ButtonTile.hpp"
-#include "../../Other/GameParameters.hpp"
 #include "../../../Core/Loader/XMLLoader.hpp"
 #include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../../Core/UI/ListItem.hpp"
+#include "../../../Core/UI/Panel.hpp"
+#include "../../../Core/UI/TextBox.hpp"
+#include "../../Other/GameParameters.hpp"
+#include "ButtonTile.hpp"
 
-class SaveLoadSystem
-{
-private:
+
+class SaveLoadSystem {
+   private:
     /* data */
-public:
+   public:
     SaveLoadSystem();
     ~SaveLoadSystem();
 
@@ -35,7 +35,7 @@ public:
     void Update();
     void Render(SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer);
 
-    //save
+    // save
     void SaveMap();
     void B_SaveMap();
     void SaveListChanged(Button *old, Button *n);
@@ -44,7 +44,7 @@ public:
     TextBox *t_save;
     ListItem *save_listMaps;
 
-    //load
+    // load
     std::vector<ButtonTile *> LoadMap(std::string &mapName);
     void B_LoadMap();
     void LoadListChanged(Button *old, Button *n);
@@ -53,12 +53,12 @@ public:
     TextBox *t_load;
     ListItem *load_listMaps;
 
-    //both
+    // both
     bool isPressedOrHover();
     bool isEditMode();
     bool isMouseHover();
 
-private:
+   private:
     std::vector<std::string> getMapNames();
 };
 

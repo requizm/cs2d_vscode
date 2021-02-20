@@ -1,23 +1,12 @@
 #include "RectangleCollider.hpp"
 
-RectangleCollider::RectangleCollider(Vector2<int> pos, Vector2<int> siz) : Collider(pos, ColliderTypes::RECTANGLE), size(siz)
-{
-}
+RectangleCollider::RectangleCollider(Vector2<int> pos, Vector2<int> siz)
+    : Collider(pos, ColliderTypes::RECTANGLE), size(siz) {}
 
-RectangleCollider::RectangleCollider() : Collider(ColliderTypes::RECTANGLE)
-{
-}
+RectangleCollider::RectangleCollider() : Collider(ColliderTypes::RECTANGLE) {}
 
-RectangleCollider::~RectangleCollider()
-{
-}
+RectangleCollider::~RectangleCollider() {}
 
-Vector2<int> RectangleCollider::GetSize()
-{
-    return this->size;
-}
+Vector2<int> RectangleCollider::GetSize() { return this->size; }
 
-void RectangleCollider::SetSize(Vector2<int> siz)
-{
-    this->size = siz;
-}
+void RectangleCollider::SetSize(Vector2<int> siz) { this->size = siz; }

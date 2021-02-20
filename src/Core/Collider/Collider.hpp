@@ -5,21 +5,16 @@
 
 #include "../Math/Vector2.hpp"
 
-enum ColliderTypes
-{
-    CIRCLE,
-    RECTANGLE
-};
+enum ColliderTypes { CIRCLE, RECTANGLE };
 
-class Collider
-{
-private:
+class Collider {
+   private:
     ColliderTypes type;
 
-protected:
+   protected:
     Vector2<int> position = Vector2<int>(0);
 
-public:
+   public:
     Collider(Vector2<int> pos, ColliderTypes _type);
     Collider(ColliderTypes _type);
     ~Collider();
@@ -30,4 +25,4 @@ public:
     void SetPosition(Vector2<int> pos);
 };
 
-#endif // COLLIDER_H
+#endif  // COLLIDER_H

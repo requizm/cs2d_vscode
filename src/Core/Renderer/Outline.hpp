@@ -3,12 +3,11 @@
 
 #include <GL/glew.h>
 
-class Outline
-{
-public:
-	Outline();
-	~Outline();
-	GLuint VAO;
-	void initData();
+class Outline {
+   public:
+    Outline();
+    ~Outline();
+    GLuint VAO;
+    void initData();
 };
-#endif // OUTLINE_H
+#endif  // OUTLINE_H
