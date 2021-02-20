@@ -9,7 +9,8 @@
 
 
 /// Holds all state information relevant to a character as loaded using FreeType
-struct Character {
+struct Character
+{
     GLuint TextureID;      // ID handle of the glyph texture
     Vector2<int> Size;     // Size of glyph
     Vector2<int> Bearing;  // Offset from baseline to left/top of glyph
@@ -19,7 +20,8 @@ struct Character {
 // A renderer class for rendering text displayed by a font loaded using the
 // FreeType library. A single font is loaded, processed into a list of Character
 // items for later rendering.
-class TextRenderer {
+class TextRenderer
+{
    public:
     // Holds a list of pre-compiled Characters
     std::map<GLchar, Character> Characters;

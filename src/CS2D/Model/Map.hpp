@@ -20,7 +20,8 @@
 #include "Weapon.hpp"
 
 
-class Map {
+class Map
+{
    public:
     std::vector<Tile *> tiles;
     std::vector<Weapon *> weapons;

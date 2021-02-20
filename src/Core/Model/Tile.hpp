@@ -5,9 +5,15 @@
 #include "../../Core/Model/GameObject.hpp"
 
 
-enum TileTypes { WALL, OBSTACLE, FLOOR };
+enum TileTypes
+{
+    WALL,
+    OBSTACLE,
+    FLOOR
+};
 
-class Tile : public GameObject {
+class Tile : public GameObject
+{
    public:
     Tile();
     Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size,

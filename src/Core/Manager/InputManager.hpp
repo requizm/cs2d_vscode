@@ -12,7 +12,8 @@
 #include "Input/InputStructs.hpp"
 
 
-class InputManager {
+class InputManager
+{
    public:
     static Vector2<int> mousePos;
     static Vector2<float> scroll;
@@ -23,8 +24,8 @@ class InputManager {
     static int m_fps;
     InputManager();
 
-    static KeyEvent mouseKeys[8];
-    static KeyEvent oldMouseKeys[8];
+    static KeyEvent mouseKeys[3];
+    static KeyEvent oldMouseKeys[3];
 
     static KeyEvent keyboardKeys[52];
     static KeyEvent oldKeyboardKeys[52];
@@ -36,9 +37,9 @@ class InputManager {
     static bool isKeyDown(const KeyboardKeys key);
     static bool isKeyUp(const KeyboardKeys key);
 
-    static bool isButton(int key);
-    static bool isButtonDown(int key);
-    static bool isButtonUp(int key);
+    static bool isButton(MouseKeys key);
+    static bool isButtonDown(MouseKeys key);
+    static bool isButtonUp(MouseKeys key);
 
     static void addListenerDown(int key, std::function<void()> callback,
                                 int id);

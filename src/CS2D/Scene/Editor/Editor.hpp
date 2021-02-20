@@ -28,16 +28,22 @@
 #include "SaveLoadSystem.hpp"
 
 
-enum SelectedMode { TILE_MOD, OBJECT_MOD };
+enum SelectedMode
+{
+    TILE_MOD,
+    OBJECT_MOD
+};
 
-class Editor {
+class Editor
+{
    public:
     Editor();
     ~Editor();
 
     void Initialize();
 
-    static Editor &instance() {
+    static Editor &instance()
+    {
         static Editor INSTANCE;
         return INSTANCE;
     }

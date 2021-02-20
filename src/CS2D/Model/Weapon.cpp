@@ -5,29 +5,39 @@
 
 Weapon::~Weapon() = default;
 
-void Weapon::Draw(SpriteRenderer &renderer) {
-    if (parent == nullptr) {
+void Weapon::Draw(SpriteRenderer &renderer)
+{
+    if (parent == nullptr)
+    {
         renderer.DrawSprite(this->sprites[1], this->globalPosition,
                             this->globalSize, this->globalRotation);
-    } else if (this->selected) {
+    }
+    else if (this->selected)
+    {
         renderer.DrawSprite(this->sprites[0], this->globalPosition,
                             this->globalSize, this->globalRotation);
-    } else {
+    }
+    else
+    {
         renderer.DrawSprite(this->sprites[1], this->globalPosition,
                             this->globalSize, this->globalRotation);
     }
 }
 
-void Weapon::DrawModel(SpriteRenderer &renderer) {
-    if (!IsParent() || (selected && IsParent())) {
+void Weapon::DrawModel(SpriteRenderer &renderer)
+{
+    if (!IsParent() || (selected && IsParent()))
+    {
         renderer.DrawSprite(this->sprites[currentIndex], this->GetTransform());
     }
 }
 
 void Weapon::Update() {}
 
-void Weapon::SetParent(GameObject *go) {
-    if (IsParent()) {
+void Weapon::SetParent(GameObject *go)
+{
+    if (IsParent())
+    {
         return;
     }
     this->SetSize(
@@ -44,14 +54,17 @@ void Weapon::SetParent(GameObject *go) {
     localTransform =
         Projection::inverse(parent->GetTransform()) * globalTransform;
 }
-void Weapon::RemoveParent() {
-    if (IsParent()) {
+void Weapon::RemoveParent()
+{
+    if (IsParent())
+    {
         Vector2 t = parent->GetPositionOfCenter();
         this->parent = nullptr;
         setCellPosition(Utils::PositionToCell(t));
         setSelect(false);
 
-        if (weaponType == WeaponType::MAIN) {
+        if (weaponType == WeaponType::MAIN)
+        {
             this->SetSize(Vector2<int>(GameParameters::SIZE_TILE * 2,
                                        GameParameters::SIZE_TILE));
             this->SetPosition(GetPosition().x - GameParameters::SIZE_TILE / 2,
@@ -60,19 +73,28 @@ void Weapon::RemoveParent() {
     }
 }
 
-void Weapon::setSelect(bool value) {
-    if (value != this->selected) {
+void Weapon::setSelect(bool value)
+{
+    if (value != this->selected)
+    {
         this->selected = value;
-        if (value) {
+        if (value)
+        {
             // onselect
-            if (IsParent()) {
+            if (IsParent())
+            {
                 currentIndex = 0;
             }
-        } else {
+        }
+        else
+        {
             // ondeselect
-            if (!IsParent()) {
+            if (!IsParent())
+            {
                 currentIndex = 1;
-            } else {
+            }
+            else
+            {
                 currentIndex = 1;
             }
         }

@@ -2,6 +2,6 @@
 
 float Timer::DeltaTime = 0.0F;
 
-Timer::Timer() {}
+Timer::Timer() = default;
 
-Timer::~Timer() {}
+Timer::~Timer() = default;

@@ -8,7 +8,8 @@
 
 // An abstract camera class that processes input and calculates the
 // corresponding Euler Angles, Vectors and Matrices for use in OpenGL
-class Camera {
+class Camera
+{
    public:
     Vector2<int> view;
 
@@ -19,7 +20,8 @@ class Camera {
           needX(0),
           needY(0),
           cameraMatrix(Matrix4(1.0F)){};
-    Camera(int width, int height, Vector2<int> pos = Vector2(0)) {
+    Camera(int width, int height, Vector2<int> pos = Vector2(0))
+    {
         needX = 0;
         needY = 0;
         view = pos;
@@ -32,8 +34,10 @@ class Camera {
     };
     Matrix4<float> cameraMatrix;
 
-    void update() {
-        if (needUpdate) {
+    void update()
+    {
+        if (needUpdate)
+        {
             const Vector3 translation(-needX, -needY, 0.0f);
 
             cameraMatrix = Projection::translate(cameraMatrix, translation);
@@ -41,13 +45,15 @@ class Camera {
         }
     }
 
-    void incPosition(Vector2<float> newPos) const {
+    void incPosition(Vector2<float> newPos) const
+    {
         /*needX = x - newPos.x;
         needY = y - newPos.y;
         needUpdate = true;*/
     }
 
-    void setPosition(Vector2<int> newPos) {
+    void setPosition(Vector2<int> newPos)
+    {
         needX = static_cast<float>(newPos.x - view.x);
         needY = static_cast<float>(newPos.y - view.y);
         needUpdate = true;

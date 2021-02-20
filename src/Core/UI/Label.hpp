@@ -9,9 +9,14 @@
 #include "UIObject.hpp"
 
 
-enum LabelType { CLICKABLE, NOT_CLICKABLE };
+enum LabelType
+{
+    CLICKABLE,
+    NOT_CLICKABLE
+};
 
-class Label : public UIObject {
+class Label : public UIObject
+{
    public:
     Label();
 
@@ -57,10 +62,10 @@ class Label : public UIObject {
           LabelType ltype = LabelType::CLICKABLE);
     virtual ~Label();
 
-    virtual void Draw() override;
+    void Draw() override;
 
-    virtual void Update() override;
-    virtual void ProcessInput() override;
+    void Update() override;
+    void ProcessInput() override;
 
     virtual bool isMouseHover();
     virtual bool isMouseDown();
@@ -79,7 +84,7 @@ class Label : public UIObject {
     void setLabelClickColor(const Vector3<float> &color);
 
    protected:
-    Vector2<int> labelSize;
+    Vector2<int> labelSize = Vector2<int>(1);
 
     std::string text;
     Vector3<float> labelClickColor;
@@ -92,9 +97,9 @@ class Label : public UIObject {
     Vector2<int> getPositionForButton(const bool center);
 
     virtual bool isMouseHoverM();
-    virtual bool isMouseDownM(const int key);
-    virtual bool isMouseUpM(const int key);
-    virtual bool isMousePressM(const int key);
+    virtual bool isMouseDownM(MouseKeys key);
+    virtual bool isMouseUpM(MouseKeys key);
+    virtual bool isMousePressM(MouseKeys key);
 
     virtual void onMouseDown();
     virtual void onMouseUp();

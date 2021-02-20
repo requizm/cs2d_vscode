@@ -2,7 +2,8 @@
 
 SquareRenderer::SquareRenderer() {}
 
-SquareRenderer::SquareRenderer(bool init) {
+SquareRenderer::SquareRenderer(bool init)
+{
     this->squareShader_world = ResourceManager::LoadShader(
         GameParameters::resDirectory + "shaders/squareVertex.txt",
         GameParameters::resDirectory + "shaders/squareFragment.txt", "",
@@ -30,7 +31,8 @@ SquareRenderer::~SquareRenderer() = default;
 void SquareRenderer::ui_RenderFilledSquare(
     Vector2<int> position, Vector2<int> size, const Vector3<float> &color,
     bool outline, const Vector3<float> &borderColor, float borderSize,
-    GLfloat transperancy, int rotate) {
+    GLfloat transperancy, int rotate)
+{
     // Prepare transformations
     this->squareShader_ui.Use();
     Matrix4 model = Matrix4(1.0F);
@@ -72,7 +74,8 @@ void SquareRenderer::ui_RenderFilledSquare(
 void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position,
                                            Vector2<int> size,
                                            const Vector3<float> &color,
-                                           GLfloat transperancy, int rotate) {
+                                           GLfloat transperancy, int rotate)
+{
     this->squareShader_ui.Use();
     Matrix4 model = Matrix4(1.0F);
     model = Projection::translate(
@@ -109,8 +112,8 @@ void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position,
 void SquareRenderer::world_RenderFilledSquare(Vector2<int> position,
                                               Vector2<int> size,
                                               const Vector3<float> &color,
-                                              GLfloat transperancy,
-                                              int rotate) {
+                                              GLfloat transperancy, int rotate)
+{
     this->squareShader_world.Use();
     Matrix4 model = Matrix4(1.0F);
     model = Projection::translate(
@@ -146,13 +149,15 @@ void SquareRenderer::world_RenderFilledSquare(Vector2<int> position,
 
 void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos,
                                    const Vector3<float> &color, float lineSize,
-                                   GLfloat transperancy) {
+                                   GLfloat transperancy)
+{
     Vector2<int> size;
     int rotate = 0;
     Vector2<int> difInt = endPos - startPos;
     Vector2<float> dif = Vector2<float>(static_cast<float>(difInt.x),
                                         static_cast<float>(difInt.y));
-    if (abs(dif.y) >= abs(dif.x)) {
+    if (abs(dif.y) >= abs(dif.x))
+    {
         size = Vector2<int>(dif.y, lineSize);
         dif = dif.Normalize();
         rotate = static_cast<int>(
@@ -161,7 +166,9 @@ void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos,
             rotate += 90;
         else
             rotate -= 90;
-    } else if (abs(dif.x) > abs(dif.y)) {
+    }
+    else if (abs(dif.x) > abs(dif.y))
+    {
         size = Vector2<int>(dif.x, lineSize);
         dif = dif.Normalize();
         rotate = static_cast<int>(Projection::degrees(atan2(dif.x, dif.y)));
@@ -182,8 +189,8 @@ void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos,
                          // happens; reversed order)
     // model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f *
     // size.y,
-    // 0.0f));					   // Move origin of rotation to center
-    // of quad
+    // 0.0f));					   // Move origin of rotation to
+    // center of quad
     model = Projection::rotate(model,
                                Projection::radians(static_cast<float>(rotate)),
                                Vector3(0.0f, 0.0f, 1.0f));  // Then rotate
@@ -195,7 +202,8 @@ void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos,
     this->squareShader_ui.SetMatrix4("model", model);
     this->squareShader_ui.SetVector3f("colorUniform", color);
     this->squareShader_ui.SetFloat("trans", transperancy);
-    if (oldLineSize != lineSize) {
+    if (oldLineSize != lineSize)
+    {
         glLineWidth(lineSize);
         oldLineSize = lineSize;
     }
@@ -208,13 +216,15 @@ void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos,
 void SquareRenderer::world_RenderLine(Vector2<int> startPos,
                                       Vector2<int> endPos,
                                       const Vector3<float> &color,
-                                      float lineSize, GLfloat transperancy) {
+                                      float lineSize, GLfloat transperancy)
+{
     Vector2<int> size;
     int rotate = 0;
     Vector2<int> difInt = endPos - startPos;
     Vector2<float> dif = Vector2<float>(static_cast<float>(difInt.x),
                                         static_cast<float>(difInt.y));
-    if (abs(dif.y) >= abs(dif.x)) {
+    if (abs(dif.y) >= abs(dif.x))
+    {
         size = Vector2<int>(dif.y, lineSize);
         dif = dif.Normalize();
         rotate = static_cast<int>(
@@ -223,7 +233,9 @@ void SquareRenderer::world_RenderLine(Vector2<int> startPos,
             rotate += 90;
         else
             rotate -= 90;
-    } else if (abs(dif.x) > abs(dif.y)) {
+    }
+    else if (abs(dif.x) > abs(dif.y))
+    {
         size = Vector2<int>(dif.x, lineSize);
         dif = dif.Normalize();
         rotate = static_cast<int>(Projection::degrees(atan2(dif.x, dif.y)));
@@ -244,8 +256,8 @@ void SquareRenderer::world_RenderLine(Vector2<int> startPos,
                          // happens; reversed order)
     // model = Projection::translate(model, Vector3(0.5f * size.x, 0.5f *
     // size.y,
-    // 0.0f));					   // Move origin of rotation to center
-    // of quad
+    // 0.0f));					   // Move origin of rotation to
+    // center of quad
     model = Projection::rotate(model,
                                Projection::radians(static_cast<float>(rotate)),
                                Vector3(0.0f, 0.0f, 1.0f));  // Then rotate
@@ -257,7 +269,8 @@ void SquareRenderer::world_RenderLine(Vector2<int> startPos,
     this->squareShader_world.SetMatrix4("model", model);
     this->squareShader_world.SetVector3f("colorUniform", color);
     this->squareShader_world.SetFloat("trans", transperancy);
-    if (oldLineSize != lineSize) {
+    if (oldLineSize != lineSize)
+    {
         glLineWidth(lineSize);
         oldLineSize = lineSize;
     }
@@ -271,7 +284,8 @@ void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position,
                                           Vector2<int> size,
                                           const Vector3<float> &color,
                                           GLfloat transperancy, int rotate,
-                                          float lineSize) {
+                                          float lineSize)
+{
     this->squareShader_ui.Use();
     Matrix4 model = Matrix4(1.0F);
     model = Projection::translate(
@@ -299,7 +313,8 @@ void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position,
     this->squareShader_ui.SetMatrix4("model", model);
     this->squareShader_ui.SetVector3f("colorUniform", color);
     this->squareShader_ui.SetFloat("trans", transperancy);
-    if (oldLineSize != lineSize) {
+    if (oldLineSize != lineSize)
+    {
         glLineWidth(lineSize);
         oldLineSize = lineSize;
     }
@@ -313,7 +328,8 @@ void SquareRenderer::world_RenderEmptySquare(Vector2<int> position,
                                              Vector2<int> size,
                                              const Vector3<float> &color,
                                              GLfloat transperancy, int rotate,
-                                             float lineSize) {
+                                             float lineSize)
+{
     this->squareShader_world.Use();
     Matrix4 model = Matrix4(1.0F);
     model = Projection::translate(
@@ -341,7 +357,8 @@ void SquareRenderer::world_RenderEmptySquare(Vector2<int> position,
     this->squareShader_world.SetMatrix4("model", model);
     this->squareShader_world.SetVector3f("colorUniform", color);
     this->squareShader_world.SetFloat("trans", transperancy);
-    if (oldLineSize != lineSize) {
+    if (oldLineSize != lineSize)
+    {
         glLineWidth(lineSize);
         oldLineSize = lineSize;
     }
@@ -354,7 +371,8 @@ void SquareRenderer::world_RenderEmptySquare(Vector2<int> position,
 void SquareRenderer::ui_RenderEmptyCircle(Vector2<int> position,
                                           Vector2<int> size,
                                           const Vector3<float> &color,
-                                          GLfloat transperancy, int rotate) {
+                                          GLfloat transperancy, int rotate)
+{
     this->squareShader_ui.Use();
     Matrix4 model = Matrix4(1.0F);
     model = Projection::translate(
@@ -392,7 +410,8 @@ void SquareRenderer::ui_RenderEmptyCircle(Vector2<int> position,
 void SquareRenderer::ui_RenderFilledCircle(Vector2<int> position,
                                            Vector2<int> size,
                                            const Vector3<float> &color,
-                                           GLfloat transperancy, int rotate) {
+                                           GLfloat transperancy, int rotate)
+{
     this->squareShader_ui.Use();
     Matrix4 model = Matrix4(1.0F);
     model = Projection::translate(
@@ -430,7 +449,8 @@ void SquareRenderer::ui_RenderFilledCircle(Vector2<int> position,
 void SquareRenderer::world_RenderEmptyCircle(Vector2<int> position,
                                              Vector2<int> size,
                                              const Vector3<float> &color,
-                                             GLfloat transperancy, int rotate) {
+                                             GLfloat transperancy, int rotate)
+{
     this->squareShader_world.Use();
     Matrix4 model = Matrix4(1.0F);
     model = Projection::translate(
@@ -465,7 +485,8 @@ void SquareRenderer::world_RenderEmptyCircle(Vector2<int> position,
     this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::SetProjection(Matrix4<float> proj) {
+void SquareRenderer::SetProjection(Matrix4<float> proj)
+{
     this->squareShader_world.Use();
     this->squareShader_world.SetMatrix4("projection", proj);
     this->squareShader_world.UnUse();

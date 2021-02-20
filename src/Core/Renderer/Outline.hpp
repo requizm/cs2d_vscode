@@ -3,7 +3,8 @@
 
 #include <GL/glew.h>
 
-class Outline {
+class Outline
+{
    public:
     Outline();
     ~Outline();

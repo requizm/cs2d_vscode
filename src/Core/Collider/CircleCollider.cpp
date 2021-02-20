@@ -8,7 +8,7 @@ CircleCollider::CircleCollider(Vector2<int> pos, int r)
 
 CircleCollider::CircleCollider() : Collider(ColliderTypes::CIRCLE) {}
 
-CircleCollider::~CircleCollider() {}
+CircleCollider::~CircleCollider() = default;
 
 bool CircleCollider::Intersect(RectangleCollider &col)  // top left axis
 {

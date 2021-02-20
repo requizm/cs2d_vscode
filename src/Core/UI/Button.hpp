@@ -10,14 +10,16 @@
 #include "Label.hpp"
 
 
-enum ButtonType {
+enum ButtonType
+{
     DEFAULT,  // standart button
     TILE,     // editor'deki build tile'ları gibi
     SPRITE,   // editor'deki save button'ı gibi
     ENV_OBJ   // editor'deki env objesi gibi
 };
 
-class Button : public Label {
+class Button : public Label
+{
    public:
     Button();
 
@@ -112,9 +114,9 @@ class Button : public Label {
     Vector3<float> currentColor;
 
     bool isMouseHoverM() override;
-    bool isMouseDownM(const int key) override;
-    bool isMouseUpM(const int key) override;
-    bool isMousePressM(const int key) override;
+    bool isMouseDownM(MouseKeys key) override;
+    bool isMouseUpM(MouseKeys key) override;
+    bool isMousePressM(MouseKeys key) override;
 
     virtual void onMouseDown() override;
     virtual void onMouseUp() override;

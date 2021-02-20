@@ -3,7 +3,8 @@
 
 #include "Collider.hpp"
 
-class RectangleCollider : public Collider {
+class RectangleCollider : public Collider
+{
    public:
     RectangleCollider(Vector2<int> pos, Vector2<int> siz);
     RectangleCollider();

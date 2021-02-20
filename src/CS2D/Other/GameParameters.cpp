@@ -9,7 +9,8 @@ GameParameters::GameParameters() {}
 
 GameParameters::~GameParameters() = default;
 
-void GameParameters::LoadParameters() {
+void GameParameters::LoadParameters()
+{
     JSONLoader loader;
     nlohmann::json data = loader.Load("config.json");
 

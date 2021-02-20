@@ -15,7 +15,8 @@ auto logger = spdlog::basic_logger_mt("write_logger", "log.txt");
 
 int nbFrames = 0;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     // FreeConsole();
     GameParameters::LoadParameters();
     Window window("CS2D", GameParameters::SCREEN_WIDTH,
@@ -31,17 +32,19 @@ int main(int argc, char *argv[]) {
     InputManager::m_fps = 0;
     int fps = 0;
     InputManager::InitKeyboardKeys();
-    while (!glfwWindowShouldClose(window.GetWindow())) {
+    while (!glfwWindowShouldClose(window.GetWindow()))
+    {
 #if defined(WIN32) && defined(TRACY_ENABLE)
         ZoneScoped;
 #endif
-        const float currentFrame = static_cast<float>(glfwGetTime());
+        const auto currentFrame = static_cast<float>(glfwGetTime());
         Timer::DeltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         time += Timer::DeltaTime;
         nbFrames++;
         fps++;
-        if (time >= 1.0F) {
+        if (time >= 1.0F)
+        {
             InputManager::m_fps = fps;
             time = 0.0F;
             fps = 0;

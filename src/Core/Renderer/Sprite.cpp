@@ -2,12 +2,16 @@
 
 Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width,
                GLuint height)
-    : VAO(0) {
+    : VAO(0)
+{
     this->texture = texture;
-    if (width == 0) {
+    if (width == 0)
+    {
         size = Vector2<int>(texture.Width, texture.Height);
         initData();
-    } else {
+    }
+    else
+    {
         size = Vector2<int>(width, height);
         initData(x, y, width, height);
     }
@@ -17,12 +21,14 @@ Sprite::Sprite() = default;
 
 Sprite::~Sprite() = default;
 
-void Sprite::initData(GLuint x, GLuint y, GLuint width, GLuint height) {
+void Sprite::initData(GLuint x, GLuint y, GLuint width, GLuint height)
+{
     // Configure VAO/VBO
     GLuint VBO;
     GLfloat vertices[24];
 
-    if (width == 0) {
+    if (width == 0)
+    {
         vertices[0] = 0.0f;
         vertices[1] = 1.0f;
         vertices[2] = 0.0f;
@@ -50,7 +56,8 @@ void Sprite::initData(GLuint x, GLuint y, GLuint width, GLuint height) {
         vertices[23] = 0.0f;
     }
 
-    else {
+    else
+    {
         const GLfloat xNorm =
             static_cast<GLfloat>(x) / static_cast<GLfloat>(texture.Width);
         const GLfloat yNorm =

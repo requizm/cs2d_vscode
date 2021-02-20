@@ -5,9 +5,14 @@
 
 #include "../Math/Vector2.hpp"
 
-enum ColliderTypes { CIRCLE, RECTANGLE };
+enum ColliderTypes
+{
+    CIRCLE,
+    RECTANGLE
+};
 
-class Collider {
+class Collider
+{
    private:
     ColliderTypes type;
 

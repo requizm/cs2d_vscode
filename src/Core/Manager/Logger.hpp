@@ -11,7 +11,8 @@
 #define WRITE_WARNING(...) ::spdlog::get("write_logger")->warn(__VA_ARGS__)
 #define WRITE_INFO(...) ::spdlog::get("write_logger")->info(__VA_ARGS__)
 
-class Logger {
+class Logger
+{
    public:
     Logger();
     ~Logger();

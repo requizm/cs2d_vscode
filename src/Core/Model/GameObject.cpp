@@ -9,7 +9,8 @@ GameObject::GameObject()
       localRotation(0),
       localPosition(0, 0),
       localSize(1, 1),
-      objType(ObjectType::GAMEOBJECT) {
+      objType(ObjectType::GAMEOBJECT)
+{
     this->setID(Utils::GenerateID());
 }
 
@@ -23,7 +24,8 @@ GameObject::GameObject(Vector2<int> pos, const Sprite &sprite,
       isDestroyed(false),
       localRotation(0),
       localPosition(pos),
-      cellPos(Utils::PositionToCell(pos)) {
+      cellPos(Utils::PositionToCell(pos))
+{
     this->objType = (ObjectType)objType;
     this->setID(Utils::GenerateID());
     BuildTransform();
@@ -31,16 +33,19 @@ GameObject::GameObject(Vector2<int> pos, const Sprite &sprite,
 
 GameObject::~GameObject() = default;
 
-void GameObject::Draw(SpriteRenderer &renderer) {
+void GameObject::Draw(SpriteRenderer &renderer)
+{
     renderer.DrawSprite(this->sprite, this->globalPosition, this->globalSize,
                         this->globalRotation);
 }
 
-void GameObject::DrawModel(SpriteRenderer &renderer) {
+void GameObject::DrawModel(SpriteRenderer &renderer)
+{
     renderer.DrawSprite(this->sprite, this->GetTransform());
 }
 
-void GameObject::BuildTransform() {
+void GameObject::BuildTransform()
+{
     Matrix4 model = Matrix4(1.0F);
     model = Projection::translate(
         model, Vector3(static_cast<float>(globalPosition.x),
@@ -62,8 +67,10 @@ void GameObject::BuildTransform() {
     SetTransform(model);
 }
 
-Matrix4<float> GameObject::GetTransform() {
-    if (IsParent()) {
+Matrix4<float> GameObject::GetTransform()
+{
+    if (IsParent())
+    {
         return parent->GetTransform() * localTransform;
     }
     return globalTransform;
@@ -71,15 +78,18 @@ Matrix4<float> GameObject::GetTransform() {
 
 Vector2<int> GameObject::GetPosition() { return globalPosition; }
 
-Vector2<int> GameObject::GetPositionOfCenter() {
+Vector2<int> GameObject::GetPositionOfCenter()
+{
     return Vector2<int>(GetPosition().x + GetSize().x / 2,
                         GetPosition().y + GetSize().y / 2);
 }
 
 Vector2<int> GameObject::GetSize() { return globalSize; }
 
-void GameObject::SetTransform(const Matrix4<float> &transform) {
-    if (IsParent()) {
+void GameObject::SetTransform(const Matrix4<float> &transform)
+{
+    if (IsParent())
+    {
         localTransform =
             Projection::inverse(parent->GetTransform()) * globalTransform;
         /*glm::mat4 temp =
@@ -104,8 +114,10 @@ void GameObject::SetTransform(const Matrix4<float> &transform) {
     globalTransform = transform;
 }
 
-void GameObject::SetParent(GameObject *go) {
-    if (IsParent()) {
+void GameObject::SetParent(GameObject *go)
+{
+    if (IsParent())
+    {
         // globalTransform = GetTransform();
     }
     parent = go;
@@ -113,8 +125,10 @@ void GameObject::SetParent(GameObject *go) {
     // localTransform = glm::inverse(parent->GetTransform()) * globalTransform;
 }
 
-void GameObject::RemoveParent() {
-    if (IsParent()) {
+void GameObject::RemoveParent()
+{
+    if (IsParent())
+    {
         this->parent = nullptr;
         return;
     }
@@ -122,18 +136,22 @@ void GameObject::RemoveParent() {
 
 void GameObject::setID(int id) { this->id = id; }
 
-void GameObject::SetTransform(Vector2<int> pos, Vector2<int> size, int rot) {
+void GameObject::SetTransform(Vector2<int> pos, Vector2<int> size, int rot)
+{
     this->globalSize = size;
     this->globalRotation = rot;
     SetPosition(pos);
 }
 
-void GameObject::SetPosition(const Vector2<int> pos, bool changeCell) {
+void GameObject::SetPosition(const Vector2<int> pos, bool changeCell)
+{
     this->globalPosition = pos;
-    if (changeCell) {
+    if (changeCell)
+    {
         Vector2<int> newCellPos =
             Utils::PositionToCell(this->GetPositionOfCenter());
-        if (newCellPos != cellPos) {
+        if (newCellPos != cellPos)
+        {
             cellPos = newCellPos;
         }
     }
@@ -141,26 +159,31 @@ void GameObject::SetPosition(const Vector2<int> pos, bool changeCell) {
     BuildTransform();
 }
 
-void GameObject::SetPosition(const int x, const int y, bool changeCell) {
+void GameObject::SetPosition(const int x, const int y, bool changeCell)
+{
     Vector2<int> newPos = Vector2<int>(x, y);
     this->SetPosition(newPos, changeCell);
 }
 
-void GameObject::SetSize(Vector2<int> size) {
+void GameObject::SetSize(Vector2<int> size)
+{
     this->globalSize = size;
     BuildTransform();
 }
 
-void GameObject::SetRotation(int rot) {
+void GameObject::SetRotation(int rot)
+{
     this->globalRotation = rot;
     BuildTransform();
 }
 
-void GameObject::setCellPosition(int x, int y, bool changeCell) {
+void GameObject::setCellPosition(int x, int y, bool changeCell)
+{
     Vector2<int> newPos = Vector2<int>(x, y);
     setCellPosition(newPos, changeCell);
 }
-void GameObject::setCellPosition(Vector2<int> pos, bool changeCell) {
+void GameObject::setCellPosition(Vector2<int> pos, bool changeCell)
+{
     SetPosition(Vector2<int>(pos.x * GameParameters::SIZE_TILE,
                              pos.y * GameParameters::SIZE_TILE),
                 changeCell);
@@ -170,7 +193,8 @@ GameObject *GameObject::GetParent() { return parent; }
 
 int GameObject::GetObjectType() { return (int)this->objType; }
 
-void GameObject::Destroy() {
+void GameObject::Destroy()
+{
     OnDestroy();
     isDestroyed = true;
 }
@@ -183,11 +207,15 @@ int GameObject::GetID() const { return this->id; }
 
 Vector2<int> GameObject::GetCellPos() { return this->cellPos; }
 
-bool GameObject::IsParent() {
+bool GameObject::IsParent()
+{
     bool returnn;
-    if (parent != nullptr) {
+    if (parent != nullptr)
+    {
         returnn = true;
-    } else {
+    }
+    else
+    {
         returnn = false;
     }
     return returnn;
@@ -195,9 +223,11 @@ bool GameObject::IsParent() {
 
 GLboolean GameObject::IsCollision() const { return isCollision; }
 
-std::string GameObject::GetObjectTypeString() {
+std::string GameObject::GetObjectTypeString()
+{
     std::string str;
-    switch ((int)this->objType) {
+    switch ((int)this->objType)
+    {
         case 0:
             str = "Player";
             break;

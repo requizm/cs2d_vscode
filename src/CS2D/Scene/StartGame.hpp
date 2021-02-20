@@ -19,14 +19,16 @@
 #include "../Other/GameParameters.hpp"
 
 
-class StartGame {
+class StartGame
+{
    public:
     StartGame();
     ~StartGame();
 
     void Initialize(const std::string &mapName);
 
-    static StartGame &instance() {
+    static StartGame &instance()
+    {
         static StartGame INSTANCE;
         return INSTANCE;
     }

@@ -6,7 +6,8 @@
 
 StartGame::StartGame() = default;
 
-void StartGame::Initialize(const std::string &mapName) {
+void StartGame::Initialize(const std::string &mapName)
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -23,7 +24,8 @@ void StartGame::Initialize(const std::string &mapName) {
     this->SetEnable(true);
 }
 
-void StartGame::Start() {
+void StartGame::Start()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -37,7 +39,8 @@ void StartGame::Start() {
     player = new Player(Vector2<int>(70, 70), sprites);
 }
 
-void StartGame::OnEnable() {
+void StartGame::OnEnable()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -55,7 +58,8 @@ void StartGame::OnEnable() {
     player->Init();
 }
 
-void StartGame::OnDisable() {
+void StartGame::OnDisable()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -71,7 +75,8 @@ void StartGame::OnDisable() {
     camera = nullptr;
 }
 
-void StartGame::SetEnable(const bool value) {
+void StartGame::SetEnable(const bool value)
+{
     if (this->enable == value) return;
     this->enable = value;
     if (this->enable)
@@ -80,7 +85,8 @@ void StartGame::SetEnable(const bool value) {
         OnDisable();
 }
 
-void StartGame::Update() {
+void StartGame::Update()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -88,24 +94,29 @@ void StartGame::Update() {
     // player->DoCollision(weapons);
 }
 
-void StartGame::ProcessInput() {
+void StartGame::ProcessInput()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE)) {
+    if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
+    {
         Game::SetGameState(GameState::MENU);
         return;
     }
-    if (InputManager::isKeyDown(KeyboardKeys::KEY_Q)) {
+    if (InputManager::isKeyDown(KeyboardKeys::KEY_Q))
+    {
         // this->weapons.at(1).SetParent(player.get());
     }
-    if (InputManager::isKeyDown(KeyboardKeys::KEY_E)) {
+    if (InputManager::isKeyDown(KeyboardKeys::KEY_E))
+    {
         // this->weapons.at(1).RemoveParent();
     }
     player->ProcessInput();
 }
 
-void StartGame::Render() {
+void StartGame::Render()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif

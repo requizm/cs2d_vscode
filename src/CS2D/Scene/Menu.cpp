@@ -7,7 +7,8 @@ Menu::Menu() = default;
 
 Menu::~Menu() { OnDisable(); }
 
-void Menu::Start() {
+void Menu::Start()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -84,21 +85,25 @@ void Menu::Start() {
     this->mapNames->AddListener(mapChange);
 }
 
-void Menu::Initialize(Sprite menuSprites[4]) {
-    for (int i = 0; i < 4; i++) {
+void Menu::Initialize(Sprite menuSprites[4])
+{
+    for (int i = 0; i < 4; i++)
+    {
         this->menuSprites[i] = menuSprites[i];
     }
 
     this->SetEnable(true);
 }
 
-void Menu::OnEnable() {
+void Menu::OnEnable()
+{
     this->Start();
     this->optionsPanel->setEnable(false);
     this->mapsPanel->setEnable(false);
 }
 
-void Menu::OnDisable() {
+void Menu::OnDisable()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -136,7 +141,8 @@ void Menu::OnDisable() {
     squareRenderer = nullptr;
 }
 
-void Menu::SetEnable(const bool value) {
+void Menu::SetEnable(const bool value)
+{
     if (this->enable == value) return;
     this->enable = value;
     if (this->enable)
@@ -145,7 +151,8 @@ void Menu::SetEnable(const bool value) {
         OnDisable();
 }
 
-void Menu::Update() {
+void Menu::Update()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -158,7 +165,8 @@ void Menu::Update() {
     mapNames->Update();
 }
 
-void Menu::ProcessInput() {
+void Menu::ProcessInput()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -170,24 +178,28 @@ void Menu::ProcessInput() {
     newPanel->ProcessInput();
     mapNames->ProcessInput();
 
-    if (l_editor->isMouseDown()) {
+    if (l_editor->isMouseDown())
+    {
         Game::SetGameState(GameState::EDITOR);
         return;
     }
 
-    if (l_newgame->isMouseDown()) {
+    if (l_newgame->isMouseDown())
+    {
 #if defined(WIN32) && defined(TRACY_ENABLE)
         ZoneScoped;
 #endif
         mapNames->Clear();
         std::vector<std::string> maps = getMapNames();
-        for (std::vector<int>::size_type i = 0; i != maps.size(); i++) {
+        for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
+        {
             mapNames->AddItem(maps[i]);
         }
         newPanel->setEnable(true);
     }
 
-    if (b_newGame->isMouseDown()) {
+    if (b_newGame->isMouseDown())
+    {
 #if defined(WIN32) && defined(TRACY_ENABLE)
         ZoneScoped;
 #endif
@@ -198,17 +210,21 @@ void Menu::ProcessInput() {
         return;
     }
 
-    if (l_options->isMouseDown()) {
+    if (l_options->isMouseDown())
+    {
         optionsPanel->setEnable(true);
     }
 }
 
-void Menu::Render() {
+void Menu::Render()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    for (int i = 0; i < 4; i++) {
-        switch (i) {
+    for (int i = 0; i < 4; i++)
+    {
+        switch (i)
+        {
             case 0:
                 break;
             case 1:
@@ -238,6 +254,7 @@ void Menu::Render() {
     // t_test->Draw(menuRenderer, squareRenderer);
 }
 
-void Menu::selectedMapChange(Button *old, Button *n) {
+void Menu::selectedMapChange(Button *old, Button *n)
+{
     t_mapName->setText(n->getText());
 }

@@ -8,7 +8,8 @@
 
 NewMapSystem::NewMapSystem() {}
 
-NewMapSystem::~NewMapSystem() {
+NewMapSystem::~NewMapSystem()
+{
     delete l_tile;
     delete l_mapSize;
     delete l_x;
@@ -23,20 +24,24 @@ void NewMapSystem::Start() {}
 void NewMapSystem::ProcessInput() { newPanel->ProcessInput(); }
 void NewMapSystem::Update() { newPanel->Update(); }
 void NewMapSystem::Render(SpriteRenderer &menuRenderer,
-                          SquareRenderer &squareRenderer) {
+                          SquareRenderer &squareRenderer)
+{
     newPanel->Draw(menuRenderer, squareRenderer);
 }
 
-bool NewMapSystem::isPressedOrHover() {
+bool NewMapSystem::isPressedOrHover()
+{
     return newPanel->isPressed || newPanel->isMouseHover(false);
 }
-bool NewMapSystem::isEditMode() {
+bool NewMapSystem::isEditMode()
+{
     return t_mapSizeX->editMode || t_mapSizeY->editMode || t_tile->editMode;
 }
 
 bool NewMapSystem::isMouseHover() { return newPanel->isMouseHover(false); }
 
-NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize) {
+NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -59,7 +64,8 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize) {
     InputManager::scroll.y = 0.0F;
 
     int curIndex = 0;
-    for (int i = 0; i < Editor::instance().tileCount; i++) {
+    for (int i = 0; i < Editor::instance().tileCount; i++)
+    {
         const int xPos = 32 * (curIndex % Editor::instance().maxCellInColumn);
         const int yPos = 32 * (curIndex / Editor::instance().maxCellInColumn);
         const Vector2<int> pos(xPos, yPos);
@@ -77,8 +83,10 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize) {
         res.tilesUI.push_back(button);
     }
 
-    for (int i = 0; i < Editor::instance().mapLimit.x; i++) {
-        for (int j = 0; j < Editor::instance().mapLimit.y; j++) {
+    for (int i = 0; i < Editor::instance().mapLimit.x; i++)
+    {
+        for (int j = 0; j < Editor::instance().mapLimit.y; j++)
+        {
             ButtonTile *t = new ButtonTile(Vector2<int>(i, j));
             t->button->getTile()->frame = 0;
             t->button->getTile()->setType(TileTypes::FLOOR);
@@ -88,22 +96,26 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize) {
 
     return res;
 }
-NewMapResult NewMapSystem::B_NewMap() {
+NewMapResult NewMapSystem::B_NewMap()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
     std::string sizeX = t_mapSizeX->getText();
     std::string sizeY = t_mapSizeY->getText();
     std::string tileSet = t_tile->getText();
-    if (sizeX.empty() || sizeY.empty() || tileSet.empty()) {
+    if (sizeX.empty() || sizeY.empty() || tileSet.empty())
+    {
         WRITE_ERROR("BOS");
         return (NewMapResult());
     }
-    if (ResourceManager::GetTexture(tileSet).Width == 0) {
+    if (ResourceManager::GetTexture(tileSet).Width == 0)
+    {
         WRITE_ERROR("BOYLE BIR TEXTURE YOK");
         return (NewMapResult());
     }
-    if (!Utils::TryStringToInt(sizeX) || !Utils::TryStringToInt(sizeY)) {
+    if (!Utils::TryStringToInt(sizeX) || !Utils::TryStringToInt(sizeY))
+    {
         WRITE_ERROR("BUNLAR SAYI DEGIL");
         return (NewMapResult());
     }
@@ -111,7 +123,8 @@ NewMapResult NewMapSystem::B_NewMap() {
     int isizeX = Utils::StringToInt(sizeX);
     int isizeY = Utils::StringToInt(sizeY);
 
-    if (isizeX <= 0 || isizeY <= 0) {
+    if (isizeX <= 0 || isizeY <= 0)
+    {
         WRITE_ERROR("BUNLAR NEGATIF");
         return (NewMapResult());
     }

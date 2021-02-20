@@ -3,7 +3,8 @@
 
 #include <GL/glew.h>
 
-class Square {
+class Square
+{
    public:
     Square();
     void init();

@@ -4,7 +4,8 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-Editor::Editor() {
+Editor::Editor()
+{
     this->tileCount = 0;
     this->maxCellInColumn = 0;
     this->maxCellInRow = 0;
@@ -18,7 +19,8 @@ Editor::Editor() {
 
 Editor::~Editor() { OnDisable(); }
 
-void Editor::Initialize() {
+void Editor::Initialize()
+{
     this->tileCount = 0;
     this->maxCellInColumn = 0;
     this->maxCellInRow = 0;
@@ -30,7 +32,8 @@ void Editor::Initialize() {
     this->selectedMode = SelectedMode::TILE_MOD;
 }
 
-void Editor::Start() {
+void Editor::Start()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -333,24 +336,29 @@ void Editor::Start() {
     this->selectedMode = SelectedMode::TILE_MOD;
 }
 
-void Editor::OnEnable() {
+void Editor::OnEnable()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
     currentTileSet = "cs2dnorm";
-    if (tils != nullptr) {
-        for (auto tile : tils->tiles) {
+    if (tils != nullptr)
+    {
+        for (auto tile : tils->tiles)
+        {
             delete tile;
         }
         tils->tiles.clear();
-        for (auto tile : tils->tilesUI) {
+        for (auto tile : tils->tilesUI)
+        {
             delete tile;
         }
         tils->tilesUI.clear();
         delete tils;
     }
 
-    for (auto &env : env_items) {
+    for (auto &env : env_items)
+    {
         if (env != nullptr) delete env;
     }
     env_items.clear();
@@ -363,18 +371,22 @@ void Editor::OnEnable() {
     selectedTile = tils->tilesUI.at(0)->getTile();
 }
 
-void Editor::OnDisable() {
+void Editor::OnDisable()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
     selectedTile = nullptr;
 
-    if (tils != nullptr) {
-        for (auto tile : tils->tiles) {
+    if (tils != nullptr)
+    {
+        for (auto tile : tils->tiles)
+        {
             delete tile;
         }
         tils->tiles.clear();
-        for (auto tile : tils->tilesUI) {
+        for (auto tile : tils->tilesUI)
+        {
             delete tile;
         }
         tils->tilesUI.clear();
@@ -385,7 +397,8 @@ void Editor::OnDisable() {
     if (objects_ui != nullptr) delete objects_ui;
     objects_ui = nullptr;
 
-    for (auto &env : env_items) {
+    for (auto &env : env_items)
+    {
         if (env != nullptr) delete env;
     }
     env_items.clear();
@@ -441,7 +454,8 @@ void Editor::OnDisable() {
     camera = nullptr;
 }
 
-void Editor::SetEnable(const bool value) {
+void Editor::SetEnable(const bool value)
+{
     if (this->enable == value) return;
     this->enable = value;
     if (this->enable)
@@ -450,7 +464,8 @@ void Editor::SetEnable(const bool value) {
         OnDisable();
 }
 
-void Editor::Update() {
+void Editor::Update()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -461,13 +476,16 @@ void Editor::Update() {
     envItemManager->Update();
     SaveLoad->Update();
     objects_ui->Update();
-    for (std::vector<int>::size_type i = 0; i < env_items.size(); i++) {
+    for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+    {
         env_items[i]->Update();
     }
 
     if (InputManager::scrollYPressed &&
-        selectedMode == SelectedMode::TILE_MOD && tilePanel->isScrollable()) {
-        if (!tils->tilesUI.empty()) {
+        selectedMode == SelectedMode::TILE_MOD && tilePanel->isScrollable())
+    {
+        if (!tils->tilesUI.empty())
+        {
             bool check_1 = tils->tilesUI.at(0)->getLocalPosition().y == 0 &&
                            InputManager::scroll.y > 0;
             bool check_2 =
@@ -475,8 +493,10 @@ void Editor::Update() {
                     maxCellInRow * 32 &&
                 InputManager::scroll.y < 0;
 
-            if (!check_1 && !check_2) {
-                for (auto &tile : tils->tilesUI) {
+            if (!check_1 && !check_2)
+            {
+                for (auto &tile : tils->tilesUI)
+                {
                     tile->setPosition(tile->getLocalPosition().x,
                                       tile->getLocalPosition().y +
                                           InputManager::scroll.y * 32);
@@ -487,7 +507,8 @@ void Editor::Update() {
     }
 }
 
-void Editor::ProcessInput() {
+void Editor::ProcessInput()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -498,35 +519,25 @@ void Editor::ProcessInput() {
     this->SaveLoad->ProcessInput();
     this->objects_ui->ProcessInput();
 
-    for (auto &tile : tils->tilesUI) {
-        if (tile->isRenderable()) {
+    for (auto &tile : tils->tilesUI)
+    {
+        if (tile->isRenderable())
+        {
             // tile->ProcessInput();
-            if (tile->isMouseDown()) {
+            if (tile->isMouseDown())
+            {
                 selectedTile = tile->getTile();
                 firstSelect = true;
             }
         }
     }
 
-    /*for (std::vector<int>::size_type i = 0; i !=
-    newMap.newPanel->childs.size(); i++)
-    {
-            if (newMap.newPanel->childs[i]->GetObjectTypeString() == "TextBox")
-            {
-                    TextBox *t = dynamic_cast<TextBox
-    *>(newMap.newPanel->childs[i]); if (t->editMode)
-                    {
-                            passMovement = true;
-                            break;
-                    }
-                    t = nullptr;
-            }
-    }*/
-
     bool passMovement = SaveLoad->isEditMode() || NewMap->isEditMode();
 
-    if (!passMovement) {
-        if (InputManager::isKey(KeyboardKeys::KEY_W)) {
+    if (!passMovement)
+    {
+        if (InputManager::isKey(KeyboardKeys::KEY_W))
+        {
             this->position = Vector2(
                 this->position.x,
                 this->position.y -
@@ -537,7 +548,8 @@ void Editor::ProcessInput() {
             worldRenderer->SetProjection(camera->cameraMatrix);
             squareRenderer->SetProjection(camera->cameraMatrix);
         }
-        if (InputManager::isKey(KeyboardKeys::KEY_S)) {
+        if (InputManager::isKey(KeyboardKeys::KEY_S))
+        {
             this->position = Vector2(
                 this->position.x,
                 this->position.y +
@@ -548,7 +560,8 @@ void Editor::ProcessInput() {
             worldRenderer->SetProjection(camera->cameraMatrix);
             squareRenderer->SetProjection(camera->cameraMatrix);
         }
-        if (InputManager::isKey(KeyboardKeys::KEY_A)) {
+        if (InputManager::isKey(KeyboardKeys::KEY_A))
+        {
             this->position = Vector2(
                 this->position.x -
                     static_cast<int>(
@@ -559,7 +572,8 @@ void Editor::ProcessInput() {
             worldRenderer->SetProjection(camera->cameraMatrix);
             squareRenderer->SetProjection(camera->cameraMatrix);
         }
-        if (InputManager::isKey(KeyboardKeys::KEY_D)) {
+        if (InputManager::isKey(KeyboardKeys::KEY_D))
+        {
             this->position = Vector2(
                 this->position.x +
                     static_cast<int>(
@@ -572,31 +586,38 @@ void Editor::ProcessInput() {
         }
     }
 
-    if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE)) {
+    if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
+    {
         Game::SetGameState(GameState::MENU);
         return;
     }
 
-    if (NewMap->b_okey->isMouseDown()) {
+    if (NewMap->b_okey->isMouseDown())
+    {
 #if defined(WIN32) && defined(TRACY_ENABLE)
         ZoneScoped;
 #endif
         NewMapResult t = NewMap->B_NewMap();
 
-        if (!t.tiles.empty() && !t.tilesUI.empty()) {
-            if (tils != nullptr) {
-                for (auto tile : tils->tiles) {
+        if (!t.tiles.empty() && !t.tilesUI.empty())
+        {
+            if (tils != nullptr)
+            {
+                for (auto tile : tils->tiles)
+                {
                     delete tile;
                 }
                 tils->tiles.clear();
-                for (auto tile : tils->tilesUI) {
+                for (auto tile : tils->tilesUI)
+                {
                     delete tile;
                 }
                 tils->tilesUI.clear();
                 delete tils;
             }
 
-            for (auto &env : env_items) {
+            for (auto &env : env_items)
+            {
                 if (env != nullptr) delete env;
             }
             env_items.clear();
@@ -605,12 +626,16 @@ void Editor::ProcessInput() {
             tils = new NewMapResult();
             tils->tiles = t.tiles;
             tils->tilesUI = t.tilesUI;
-        } else {
-            for (auto tile : t.tiles) {
+        }
+        else
+        {
+            for (auto tile : t.tiles)
+            {
                 delete tile;
             }
             t.tiles.clear();
-            for (auto tile : t.tilesUI) {
+            for (auto tile : t.tilesUI)
+            {
                 delete tile;
             }
             t.tilesUI.clear();
@@ -621,35 +646,42 @@ void Editor::ProcessInput() {
         }
     }
 
-    if (b_new->isMouseDown()) {
+    if (b_new->isMouseDown())
+    {
         this->NewMap->newPanel->setEnable(true);
     }
 
-    if (b_save->isMouseDown()) {
+    if (b_save->isMouseDown())
+    {
         SaveLoad->B_SaveMap();
     }
 
-    if (SaveLoad->b_map_save->isMouseDown()) {
+    if (SaveLoad->b_map_save->isMouseDown())
+    {
         SaveLoad->SaveMap();
     }
 
-    if (b_load->isMouseDown()) {
+    if (b_load->isMouseDown())
+    {
         SaveLoad->B_LoadMap();
     }
 
-    if (b_objects->isMouseDown()) {
+    if (b_objects->isMouseDown())
+    {
         tilePanel->setEnable(false);
         objectPanel->setEnable(true);
         selectedMode = SelectedMode::OBJECT_MOD;
     }
 
-    if (b_tiles->isMouseDown()) {
+    if (b_tiles->isMouseDown())
+    {
         objectPanel->setEnable(false);
         tilePanel->setEnable(true);
         selectedMode = SelectedMode::TILE_MOD;
     }
 
-    if (SaveLoad->b_map_load->isMouseDown()) {
+    if (SaveLoad->b_map_load->isMouseDown())
+    {
 #if defined(WIN32) && defined(TRACY_ENABLE)
         ZoneScoped;
 #endif
@@ -659,8 +691,10 @@ void Editor::ProcessInput() {
         OnDisable();
         OnEnable();
         currentTileSet = "cs2dnorm";
-        if (tils != nullptr) {
-            for (auto tile : tils->tiles) {
+        if (tils != nullptr)
+        {
+            for (auto tile : tils->tiles)
+            {
                 delete tile;
             }
             tils->tiles.clear();
@@ -670,7 +704,8 @@ void Editor::ProcessInput() {
         selectedTile = tils->tilesUI.at(0)->getTile();
     }
 
-    if (b_tileProperties->isMouseDown()) {
+    if (b_tileProperties->isMouseDown())
+    {
         this->tilePropertiesPanel->setEnable(true);
         this->rb_tileProperties->Select(
             static_cast<int>(selectedTile->getType()));
@@ -682,16 +717,20 @@ void Editor::ProcessInput() {
         tilePropertiesPanel->isMouseHover(false) ||
         SaveLoad->isPressedOrHover() || envItemManager->isPressedOrHover();
 
-    for (std::vector<int>::size_type i = 0; i < env_items.size(); i++) {
-        if (!envItemManager->p_panel->isEnable()) {
+    for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+    {
+        if (!envItemManager->p_panel->isEnable())
+        {
             if (selectedMode == SelectedMode::OBJECT_MOD &&
-                InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+                InputManager::isButtonDown(MOUSE_BUTTON_LEFT))
+            {
                 Vector2<int> sw =
                     Utils::ScreenToWorld(camera->view, InputManager::mousePos);
                 Vector2<int> c =
                     Utils::PositionToCell(env_items[i]->getPosition());
                 Vector2<int> d = Utils::PositionToCell(sw);
-                if (d == c) {
+                if (d == c)
+                {
                     envItemManager->p_panel->setEnable(true);
                     envItemManager->t_id->setText(
                         std::to_string(env_items[i]->getItemID()));
@@ -701,21 +740,31 @@ void Editor::ProcessInput() {
         }
     }
 
-    if (envItemManager->p_panel->isEnable()) {
-        if (envItemManager->b_okay->isMouseDown()) {
+    if (envItemManager->p_panel->isEnable())
+    {
+        if (envItemManager->b_okay->isMouseDown())
+        {
             selectedItem->setItemID(
                 atoi(envItemManager->t_id->getText().c_str()));
             envItemManager->p_panel->setEnable(false);
-        } else if (envItemManager->b_cancel->isMouseDown()) {
+        }
+        else if (envItemManager->b_cancel->isMouseDown())
+        {
             envItemManager->p_panel->setEnable(false);
-        } else if (envItemManager->b_delete->isMouseDown()) {
-            for (std::vector<int>::size_type i = 0; i < env_items.size(); i++) {
-                if (env_items[i]->getObjID() == selectedItem->getObjID()) {
+        }
+        else if (envItemManager->b_delete->isMouseDown())
+        {
+            for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+            {
+                if (env_items[i]->getObjID() == selectedItem->getObjID())
+                {
                     for (std::vector<int>::size_type j = 0;
-                         j < tils->tiles.size(); j++) {
+                         j < tils->tiles.size(); j++)
+                    {
                         if (tils->tiles[j]->item != nullptr &&
                             tils->tiles[j]->item->getObjID() ==
-                                selectedItem->getObjID()) {
+                                selectedItem->getObjID())
+                        {
                             tils->tiles[j]->item = nullptr;
                             break;
                         }
@@ -733,21 +782,27 @@ void Editor::ProcessInput() {
         }
     }
 
-    if (selectedMode == SelectedMode::TILE_MOD) {
-        if (firstSelect && !panelsPressed) {
-            if (InputManager::isButton(GLFW_MOUSE_BUTTON_LEFT)) {
+    if (selectedMode == SelectedMode::TILE_MOD)
+    {
+        if (firstSelect && !panelsPressed)
+        {
+            if (InputManager::isButton(MOUSE_BUTTON_LEFT))
+            {
                 Vector2 wd =
                     Utils::ScreenToWorld(camera->view, InputManager::mousePos);
                 Vector2 selectedCell = Utils::PositionToCell(wd);
-                for (auto &tile : tils->tiles) {
-                    if (tile->cell == selectedCell) {
+                for (auto &tile : tils->tiles)
+                {
+                    if (tile->cell == selectedCell)
+                    {
                         Tile tilee =
                             Tile(Utils::CellToPosition(selectedCell),
                                  selectedTile->sprite,
                                  Vector2<int>(GameParameters::SIZE_TILE),
                                  selectedTile->getType(), selectedTile->frame);
                         if (!(selectedTile->frame ==
-                              tile->button->getTile()->frame)) {
+                              tile->button->getTile()->frame))
+                        {
 #if defined(WIN32) && defined(TRACY_ENABLE)
                             ZoneScoped;
 #endif
@@ -759,16 +814,23 @@ void Editor::ProcessInput() {
                 }
             }
         }
-    } else if (selectedMode == SelectedMode::OBJECT_MOD) {
-        if (!panelsPressed) {
-            if (InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT) &&
-                objects_ui->getSelectedIndex() == 0) {
+    }
+    else if (selectedMode == SelectedMode::OBJECT_MOD)
+    {
+        if (!panelsPressed)
+        {
+            if (InputManager::isButtonDown(MOUSE_BUTTON_LEFT) &&
+                objects_ui->getSelectedIndex() == 0)
+            {
                 Vector2 wd =
                     Utils::ScreenToWorld(camera->view, InputManager::mousePos);
                 Vector2 selectedCell = Utils::PositionToCell(wd);
-                for (auto &tile : tils->tiles) {
-                    if (tile->cell == selectedCell) {
-                        if (tile->item == nullptr) {
+                for (auto &tile : tils->tiles)
+                {
+                    if (tile->cell == selectedCell)
+                    {
+                        if (tile->item == nullptr)
+                        {
 #if defined(WIN32) && defined(TRACY_ENABLE)
                             ZoneScoped;
 #endif
@@ -784,19 +846,22 @@ void Editor::ProcessInput() {
     }
 }
 
-void Editor::Render() {
+void Editor::Render()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
     Vector2<int> ms = Utils::PositionToCell(
         Utils::ScreenToWorld(camera->view, InputManager::mousePos));
     bool f = false;
-    for (auto &tile_1 : tils->tiles) {
+    for (auto &tile_1 : tils->tiles)
+    {
         Vector2 pos = Utils::WorldToScreen(
             camera->view,
             tile_1->cell * Vector2<int>(GameParameters::SIZE_TILE));
         if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
-            pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0) {
+            pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
+        {
             tile_1->button->Draw(*worldRenderer, *squareRenderer);
             squareRenderer->world_RenderEmptySquare(
                 Utils::CellToPosition(tile_1->cell),
@@ -805,7 +870,8 @@ void Editor::Render() {
 
         if (!f && ms == tile_1->cell && !NewMap->isMouseHover() &&
             !buildPanel->isMouseHover(false) && !SaveLoad->isMouseHover() &&
-            !envItemManager->isPressedOrHover()) {
+            !envItemManager->isPressedOrHover())
+        {
             f = true;
             Vector2<int> pos = Utils::CellToPosition(tile_1->cell);
             squareRenderer->world_RenderEmptySquare(
@@ -813,7 +879,8 @@ void Editor::Render() {
                 1.0F, 0, 4.0F);
         }
     }
-    for (std::vector<int>::size_type i = 0; i < env_items.size(); i++) {
+    for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+    {
         env_items[i]->Render(*worldRenderer, *menuRenderer, *squareRenderer,
                              this->time);
     }
@@ -829,16 +896,23 @@ void Editor::Render() {
 
     SaveLoad->Render(*menuRenderer, *squareRenderer);
 
-    if (!tils->tilesUI.empty()) {
-        for (auto &tile : tils->tilesUI) {
+    if (!tils->tilesUI.empty())
+    {
+        for (auto &tile : tils->tilesUI)
+        {
             if (firstSelect &&
-                selectedTile->GetID() == tile->getTile()->GetID()) {
+                selectedTile->GetID() == tile->getTile()->GetID())
+            {
                 tile->Draw(*menuRenderer, *squareRenderer, 0.3F, true,
                            this->time);
-            } else if (tile->isMouseHover()) {
+            }
+            else if (tile->isMouseHover())
+            {
                 tile->Draw(*menuRenderer, *squareRenderer, 0.3F, false,
                            this->time);
-            } else {
+            }
+            else
+            {
                 tile->Draw(*menuRenderer, *squareRenderer);
                 int a = 2;
             }
@@ -850,6 +924,7 @@ void Editor::Render() {
         0.5F);
 }
 
-void Editor::SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n) {
+void Editor::SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n)
+{
     selectedTile->setType((TileTypes)n->getIndex());
 }

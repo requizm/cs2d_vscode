@@ -12,7 +12,8 @@
 #include "Square.hpp"
 
 
-class SquareRenderer {
+class SquareRenderer
+{
    public:
     SquareRenderer();
     explicit SquareRenderer(bool init);

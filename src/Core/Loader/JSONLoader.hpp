@@ -7,7 +7,8 @@
 #include "../Manager/Logger.hpp"
 
 
-class JSONLoader {
+class JSONLoader
+{
    private:
    public:
     JSONLoader();

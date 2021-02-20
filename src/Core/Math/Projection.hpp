@@ -1,16 +1,18 @@
 #ifndef PROJECTION_H
 #define PROJECTION_H
 
-#include <math.h>
+#include <cmath>
 
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
-class Projection {
+class Projection
+{
    public:
-    Projection() {}
+    Projection() = default;
 
     template <typename T>
-    static Matrix4<T> ortho(T l, T r, T b, T t, T n, T f) {
+    static Matrix4<T> ortho(T l, T r, T b, T t, T n, T f)
+    {
         Matrix4<T> M;
 
         // set OpenGL perspective projection matrix
@@ -38,7 +40,8 @@ class Projection {
     }
 
     template <typename T>
-    static Matrix4<T> ortho(T l, T r, T b, T t) {
+    static Matrix4<T> ortho(T l, T r, T b, T t)
+    {
         Matrix4<T> M;
 
         // set OpenGL perspective projection matrix
@@ -66,7 +69,8 @@ class Projection {
     }
 
     template <typename T>
-    static Matrix4<T> translate(Matrix4<T> m, Vector3<T> v) {
+    static Matrix4<T> translate(Matrix4<T> m, Vector3<T> v)
+    {
         Matrix4<T> R = m.Clone();
 
         R.Get(4, 1) = m.Get(1, 1) * v[0] + m.Get(2, 1) * v[1] +
@@ -82,7 +86,8 @@ class Projection {
     }
 
     template <typename T>
-    static Matrix4<T> rotate(Matrix4<T> m, T angle, Vector3<T> v) {
+    static Matrix4<T> rotate(Matrix4<T> m, T angle, Vector3<T> v)
+    {
         T const a = angle;
         T const c = cos(a);
         T const s = sin(a);
@@ -153,7 +158,8 @@ class Projection {
     }
 
     template <typename T>
-    static Matrix4<T> scale(Matrix4<T> m, Vector3<T> v) {
+    static Matrix4<T> scale(Matrix4<T> m, Vector3<T> v)
+    {
         Matrix4<T> R = m.Clone();
 
         R.Get(1, 1) = m.Get(1, 1) * v[0];
@@ -181,15 +187,18 @@ class Projection {
 
     static float *value_ptr(Matrix4<float> &m) { return &(m.values[0]); }
 
-    static float radians(float degrees) {
+    static float radians(float degrees)
+    {
         return degrees * (0.01745329251994329576923690768489F);
     }
 
-    static float degrees(float radians) {
+    static float degrees(float radians)
+    {
         return radians * (57.295779513082320876798154814105F);
     }
 
-    static Matrix4<float> inverse(Matrix4<float> m) {
+    static Matrix4<float> inverse(Matrix4<float> m)
+    {
         Matrix4<float> inv, r;
         float det;
         int i;

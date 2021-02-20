@@ -9,9 +9,16 @@
 #include "../Renderer/SpriteRenderer.hpp"
 
 
-enum class ObjectType { PLAYER, WEAPON, GAMEOBJECT, TILE };
+enum class ObjectType
+{
+    PLAYER,
+    WEAPON,
+    GAMEOBJECT,
+    TILE
+};
 
-class GameObject {
+class GameObject
+{
    public:
     GameObject();
 

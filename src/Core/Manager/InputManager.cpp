@@ -7,8 +7,8 @@ bool InputManager::scrollYPressed;
 wchar_t InputManager::keycode;
 int InputManager::m_fps = 0;
 
-KeyEvent InputManager::mouseKeys[8];
-KeyEvent InputManager::oldMouseKeys[8];
+KeyEvent InputManager::mouseKeys[3];
+KeyEvent InputManager::oldMouseKeys[3];
 
 KeyEvent InputManager::keyboardKeys[52];
 KeyEvent InputManager::oldKeyboardKeys[52];
@@ -20,47 +20,59 @@ std::map<int, std::vector<EventF>> InputManager::m_Callbacks_Up;
 
 InputManager::InputManager() = default;
 
-bool InputManager::isKey(const KeyboardKeys key) {
+bool InputManager::isKey(const KeyboardKeys key)
+{
     return InputManager::keyboardKeys[(int)key].state == KeyStates::PRESS;
 }
 
-bool InputManager::isKeyDown(const KeyboardKeys key) {
+bool InputManager::isKeyDown(const KeyboardKeys key)
+{
     return InputManager::keyboardKeys[(int)key].state == KeyStates::DOWN;
 }
 
-bool InputManager::isKeyUp(const KeyboardKeys key) {
+bool InputManager::isKeyUp(const KeyboardKeys key)
+{
     return InputManager::keyboardKeys[(int)key].state == KeyStates::RELEASE;
 }
 
-bool InputManager::isButton(int key) {
-    return InputManager::mouseKeys[key].state == KeyStates::PRESS;
+bool InputManager::isButton(MouseKeys key)
+{
+    return InputManager::mouseKeys[(int)key].state == KeyStates::PRESS;
 }
 
-bool InputManager::isButtonDown(int key) {
-    return InputManager::mouseKeys[key].state == KeyStates::DOWN;
+bool InputManager::isButtonDown(MouseKeys key)
+{
+    return InputManager::mouseKeys[(int)key].state == KeyStates::DOWN;
 }
 
-bool InputManager::isButtonUp(int key) {
-    return InputManager::mouseKeys[key].state == KeyStates::RELEASE;
+bool InputManager::isButtonUp(MouseKeys key)
+{
+    return InputManager::mouseKeys[(int)key].state == KeyStates::RELEASE;
 }
 
 void InputManager::addListenerDown(int key, std::function<void()> callback,
-                                   int id) {
+                                   int id)
+{
     InputManager::m_Callbacks_Down[key].push_back(EventF(callback, id));
 }
 
 void InputManager::addListenerUp(int key, std::function<void()> callback,
-                                 int id) {
+                                 int id)
+{
     InputManager::m_Callbacks_Up[key].push_back(EventF(callback, id));
 }
 
 void InputManager::removeListenerDown(int key, std::function<void()> callback,
-                                      int id) {
-    for (auto &pair : m_Callbacks_Down) {
-        if (pair.first == key) {
-            for (std::vector<int>::size_type i = 0; i < pair.second.size();
-                 i++) {
-                if (pair.second[i].id == id) {
+                                      int id)
+{
+    for (auto &pair : m_Callbacks_Down)
+    {
+        if (pair.first == key)
+        {
+            for (std::vector<int>::size_type i = 0; i < pair.second.size(); i++)
+            {
+                if (pair.second[i].id == id)
+                {
                     pair.second.erase(pair.second.begin() + i);
                     break;
                 }
@@ -70,12 +82,16 @@ void InputManager::removeListenerDown(int key, std::function<void()> callback,
 }
 
 void InputManager::removeListenerUp(int key, std::function<void()> callback,
-                                    int id) {
-    for (auto &pair : m_Callbacks_Up) {
-        if (pair.first == key) {
-            for (std::vector<int>::size_type i = 0; i < pair.second.size();
-                 i++) {
-                if (pair.second[i].id == id) {
+                                    int id)
+{
+    for (auto &pair : m_Callbacks_Up)
+    {
+        if (pair.first == key)
+        {
+            for (std::vector<int>::size_type i = 0; i < pair.second.size(); i++)
+            {
+                if (pair.second[i].id == id)
+                {
                     pair.second.erase(pair.second.begin() + i);
                     break;
                 }
@@ -84,18 +100,23 @@ void InputManager::removeListenerUp(int key, std::function<void()> callback,
     }
 }
 
-void InputManager::onMouseDown(int key) {
-    for (auto &callback : m_Callbacks_Down[key]) {
+void InputManager::onMouseDown(int key)
+{
+    for (auto &callback : m_Callbacks_Down[key])
+    {
         callback.event();
     }
 }
-void InputManager::onMouseUp(int key) {
-    for (auto &callback : m_Callbacks_Up[key]) {
+void InputManager::onMouseUp(int key)
+{
+    for (auto &callback : m_Callbacks_Up[key])
+    {
         callback.event();
     }
 }
 
-void InputManager::InitKeyboardKeys() {
+void InputManager::InitKeyboardKeys()
+{
     InputManager::keys[0] = 32;
     InputManager::keys[1] = 39; /* ' */
     InputManager::keys[2] = 44; /* ; */
@@ -151,46 +172,65 @@ void InputManager::InitKeyboardKeys() {
     InputManager::keys[51] = 259; /* BACKSPACE */
 }
 
-void InputManager::UpdateMouse(GLFWwindow *window) {
-    for (int i = 0; i < 8; i++) {
+void InputManager::UpdateMouse(GLFWwindow *window)
+{
+    int size = sizeof(InputManager::mouseKeys) / sizeof(KeyEvent);
+    for (int i = 0; i < size; i++)
+    {
         int newStatus = glfwGetMouseButton(window, i);
         if (InputManager::oldMouseKeys[i].state == GLFW_RELEASE &&
-            newStatus == GLFW_PRESS) {
+            newStatus == GLFW_PRESS)
+        {
             InputManager::mouseKeys[i].state = (int)KeyStates::DOWN;
             InputManager::oldMouseKeys[i].state = GLFW_PRESS;
-        } else if (InputManager::oldMouseKeys[i].state == GLFW_PRESS &&
-                   newStatus == GLFW_PRESS) {
+        }
+        else if (InputManager::oldMouseKeys[i].state == GLFW_PRESS &&
+                 newStatus == GLFW_PRESS)
+        {
             InputManager::mouseKeys[i].state = (int)KeyStates::PRESS;
             InputManager::oldMouseKeys[i].state = GLFW_PRESS;
-        } else if (InputManager::oldMouseKeys[i].state == GLFW_PRESS &&
-                   newStatus == GLFW_RELEASE) {
+        }
+        else if (InputManager::oldMouseKeys[i].state == GLFW_PRESS &&
+                 newStatus == GLFW_RELEASE)
+        {
             InputManager::mouseKeys[i].state = (int)KeyStates::RELEASE;
             InputManager::oldMouseKeys[i].state = GLFW_RELEASE;
-        } else if (InputManager::oldMouseKeys[i].state == GLFW_RELEASE &&
-                   newStatus == GLFW_RELEASE) {
+        }
+        else if (InputManager::oldMouseKeys[i].state == GLFW_RELEASE &&
+                 newStatus == GLFW_RELEASE)
+        {
             InputManager::mouseKeys[i].state = (int)KeyStates::NOTHING;
             InputManager::oldMouseKeys[i].state = GLFW_RELEASE;
         }
     }
 }
 
-void InputManager::UpdateKeyboard(GLFWwindow *window) {
-    for (int i = 0; i < 52; i++) {
+void InputManager::UpdateKeyboard(GLFWwindow *window)
+{
+    for (int i = 0; i < InputManager::keys.size(); i++)
+    {
         int newStatus = glfwGetKey(window, InputManager::keys[i]);
         if (InputManager::oldKeyboardKeys[i].state == GLFW_RELEASE &&
-            newStatus == GLFW_PRESS) {
+            newStatus == GLFW_PRESS)
+        {
             InputManager::keyboardKeys[i].state = (int)KeyStates::DOWN;
             InputManager::oldKeyboardKeys[i].state = GLFW_PRESS;
-        } else if (InputManager::oldKeyboardKeys[i].state == GLFW_PRESS &&
-                   newStatus == GLFW_PRESS) {
+        }
+        else if (InputManager::oldKeyboardKeys[i].state == GLFW_PRESS &&
+                 newStatus == GLFW_PRESS)
+        {
             InputManager::keyboardKeys[i].state = (int)KeyStates::PRESS;
             InputManager::oldKeyboardKeys[i].state = GLFW_PRESS;
-        } else if (InputManager::oldKeyboardKeys[i].state == GLFW_PRESS &&
-                   newStatus == GLFW_RELEASE) {
+        }
+        else if (InputManager::oldKeyboardKeys[i].state == GLFW_PRESS &&
+                 newStatus == GLFW_RELEASE)
+        {
             InputManager::keyboardKeys[i].state = (int)KeyStates::RELEASE;
             InputManager::oldKeyboardKeys[i].state = GLFW_RELEASE;
-        } else if (InputManager::oldKeyboardKeys[i].state == GLFW_RELEASE &&
-                   newStatus == GLFW_RELEASE) {
+        }
+        else if (InputManager::oldKeyboardKeys[i].state == GLFW_RELEASE &&
+                 newStatus == GLFW_RELEASE)
+        {
             InputManager::keyboardKeys[i].state = (int)KeyStates::NOTHING;
             InputManager::oldKeyboardKeys[i].state = GLFW_RELEASE;
         }

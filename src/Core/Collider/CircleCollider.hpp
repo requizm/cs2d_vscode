@@ -6,7 +6,8 @@
 #include "Collider.hpp"
 #include "RectangleCollider.hpp"
 
-class CircleCollider : public Collider {
+class CircleCollider : public Collider
+{
    public:
     CircleCollider(Vector2<int> pos, int r);
     CircleCollider();

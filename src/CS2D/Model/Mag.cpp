@@ -1,6 +1,7 @@
 #include "Mag.hpp"
 
-void Mag::takeAmmo(const int value) {
+void Mag::takeAmmo(const int value)
+{
     ammo -= value;
     if (ammo <= 0)
         if (!IsDestroyed()) Destroy();

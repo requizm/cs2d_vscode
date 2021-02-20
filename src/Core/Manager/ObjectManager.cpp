@@ -2,6 +2,6 @@
 
 int ObjectManager::listenerObjCount = 0;
 
-ObjectManager::ObjectManager() {}
+ObjectManager::ObjectManager() = default;
 
-ObjectManager::~ObjectManager() {}
+ObjectManager::~ObjectManager() = default;

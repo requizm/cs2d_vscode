@@ -8,7 +8,8 @@
 #include "Texture.hpp"
 
 
-class Sprite {
+class Sprite
+{
    public:
     explicit Sprite(Texture2D texture, GLuint x = 0, GLuint y = 0,
                     GLuint width = 0, GLuint height = 0);

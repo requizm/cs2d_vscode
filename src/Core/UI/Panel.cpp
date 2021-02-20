@@ -3,7 +3,8 @@
 Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
              TextRenderer &renderer, bool isBackGround, bool opttitles,
              float scale, const Vector3<float> &color, float transp)
-    : UIObject(position, size, scale, renderer, UIObjectType::PANEL) {
+    : UIObject(position, size, scale, renderer, UIObjectType::PANEL)
+{
     this->panelColor = color;
     this->backGround = isBackGround;
     this->dragSize = Vector2<int>(size.x, 23.0F);
@@ -32,26 +33,33 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
 
 Panel::Panel() : UIObject() {}
 
-Panel::~Panel() {
+Panel::~Panel()
+{
     delete escapeButton;
     UIObject::removeParent();
 }
 
-void Panel::Draw(SpriteRenderer &spriteRenderer,
-                 SquareRenderer &squareRenderer) {
-    if (isEnable() && isVisible()) {
-        if (this->backGround) {
-            if (!isOutline()) {
+void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
+{
+    if (isEnable() && isVisible())
+    {
+        if (this->backGround)
+        {
+            if (!isOutline())
+            {
                 squareRenderer.ui_RenderFilledSquare(
                     this->getPosition(), this->getSize(), this->getPanelColor(),
                     this->trans);
-            } else {
+            }
+            else
+            {
                 squareRenderer.ui_RenderFilledSquare(
                     this->getPosition(), this->getSize(), getPanelColor(), true,
                     getOutlineColor(), 2.0F, this->trans, 0.0F);
             }
         }
-        if (opttitles) {
+        if (opttitles)
+        {
             squareRenderer.ui_RenderLine(
                 Vector2<int>(getPosition().x + lineOffset,
                              getPosition().y + 23.0F),
@@ -62,8 +70,10 @@ void Panel::Draw(SpriteRenderer &spriteRenderer,
             title.Draw();
         }
     }
-    for (std::vector<int>::size_type i = 0; i != childs.size(); i++) {
-        if (!childs[i]->independent) {
+    for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+    {
+        if (!childs[i]->independent)
+        {
             if (childs[i]->GetObjectTypeString() == "Label")
                 childs[i]->Draw();
             else
@@ -75,12 +85,17 @@ void Panel::Draw(SpriteRenderer &spriteRenderer,
 int deltaX;
 int deltaY;
 bool click = false;
-void Panel::Update() {
-    if (isEnable()) {
-        if (isMouseEvents() && isMovable()) {
+void Panel::Update()
+{
+    if (isEnable())
+    {
+        if (isMouseEvents() && isMovable())
+        {
             if (!click && (opttitles && !escapeButton->isPressed) ||
-                (!opttitles && !click)) {
-                if (isMouseDown(true)) {
+                (!opttitles && !click))
+            {
+                if (isMouseDown(true))
+                {
                     deltaX =
                         InputManager::mousePos.x - static_cast<int>(position.x);
                     deltaY =
@@ -88,7 +103,8 @@ void Panel::Update() {
                     click = true;
                 }
             }
-            if (isPressed && click) {
+            if (isPressed && click)
+            {
                 Vector2<int> mousePos = InputManager::mousePos;
                 this->setPosition(
                     Vector2<int>(mousePos.x - deltaX, mousePos.y - deltaY));
@@ -96,39 +112,52 @@ void Panel::Update() {
             }
             if (!isPressed) click = false;
         }
-        if (opttitles) {
+        if (opttitles)
+        {
             escapeButton->Update();
         }
     }
-    for (std::vector<int>::size_type i = 0; i != childs.size(); i++) {
-        if (!(childs[i]->independent)) {
+    for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+    {
+        if (!(childs[i]->independent))
+        {
             childs[i]->Update();
         }
     }
 }
 
-void Panel::ProcessInput() {
-    if (isEnable()) {
+void Panel::ProcessInput()
+{
+    if (isEnable())
+    {
         escapeButton->ProcessInput();
-        if (isMouseEvents()) {
-            isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
-            if (escapeButton->isMouseUp() && opttitles) {
+        if (isMouseEvents())
+        {
+            isMouseUpM(MOUSE_BUTTON_LEFT);
+            if (escapeButton->isMouseUp() && opttitles)
+            {
                 this->setEnable(false);
             }
-            if (isMovable()) {
-                isMouseDownForDrag(GLFW_MOUSE_BUTTON_LEFT);
-            } else {
-                isMouseDownForMouse(GLFW_MOUSE_BUTTON_LEFT);
+            if (isMovable())
+            {
+                isMouseDownForDrag(MOUSE_BUTTON_LEFT);
+            }
+            else
+            {
+                isMouseDownForMouse(MOUSE_BUTTON_LEFT);
             }
         }
-        for (std::vector<int>::size_type i = 0; i != childs.size(); i++) {
+        for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+        {
             if (!childs[i]->independent) childs[i]->ProcessInput();
         }
     }
 }
 
-void Panel::OnEnable() {
-    if (opttitles) {
+void Panel::OnEnable()
+{
+    if (opttitles)
+    {
         escapeButton->setEnable(true);
         title.setEnable(true);
         escapeButton->setVisible(true);
@@ -136,8 +165,10 @@ void Panel::OnEnable() {
     }
 }
 
-void Panel::OnDisable() {
-    if (opttitles) {
+void Panel::OnDisable()
+{
+    if (opttitles)
+    {
         escapeButton->setEnable(false);
         title.setEnable(false);
         escapeButton->setVisible(false);
@@ -148,8 +179,10 @@ void Panel::OnDisable() {
     }
 }
 
-bool Panel::isMouseHover(bool drag) {
-    if (!this->isEnable()) {
+bool Panel::isMouseHover(bool drag)
+{
+    if (!this->isEnable())
+    {
         return false;
     }
     if (drag)
@@ -158,8 +191,10 @@ bool Panel::isMouseHover(bool drag) {
         return isMouseHoverForMouse();
 }
 
-bool Panel::isMouseDown(bool drag) {
-    if (!this->isEnable()) {
+bool Panel::isMouseDown(bool drag)
+{
+    if (!this->isEnable())
+    {
         return false;
     }
     if (drag)
@@ -170,17 +205,20 @@ bool Panel::isMouseDown(bool drag) {
 
 bool Panel::isMouseUp() { return isUp; }
 
-bool Panel::isMousePress(bool drag) {
-    if (!this->isEnable()) {
+bool Panel::isMousePress(bool drag)
+{
+    if (!this->isEnable())
+    {
         return false;
     }
     if (drag)
-        return isMousePressForDrag(GLFW_MOUSE_BUTTON_LEFT);
+        return isMousePressForDrag(MOUSE_BUTTON_LEFT);
     else
-        return isMousePressForMouse(GLFW_MOUSE_BUTTON_LEFT);
+        return isMousePressForMouse(MOUSE_BUTTON_LEFT);
 }
 
-bool Panel::isMouseHoverForDrag() {
+bool Panel::isMouseHoverForDrag()
+{
     const int posX = static_cast<int>(this->getPosition().x);
     const int posY = static_cast<int>(this->getPosition().y);
 
@@ -190,13 +228,15 @@ bool Panel::isMouseHoverForDrag() {
     if (InputManager::mousePos.x >= posX &&
         InputManager::mousePos.x <= posX + sizeX &&
         InputManager::mousePos.y >= posY &&
-        InputManager::mousePos.y <= posY + sizeY) {
+        InputManager::mousePos.y <= posY + sizeY)
+    {
         return true;
     }
     return false;
 }
 
-bool Panel::isMouseHoverForMouse() {
+bool Panel::isMouseHoverForMouse()
+{
     const int posX = static_cast<int>(this->getPosition().x);
     const int posY = static_cast<int>(this->getPosition().y);
 
@@ -206,18 +246,22 @@ bool Panel::isMouseHoverForMouse() {
     if (InputManager::mousePos.x >= posX &&
         InputManager::mousePos.x <= posX + sizeX &&
         InputManager::mousePos.y >= posY &&
-        InputManager::mousePos.y <= posY + sizeY) {
+        InputManager::mousePos.y <= posY + sizeY)
+    {
         return true;
     }
     return false;
 }
 
-bool Panel::isMouseDownForDrag(const int key) {
-    if (isPressed && isDownForDrag) {
+bool Panel::isMouseDownForDrag(MouseKeys key)
+{
+    if (isPressed && isDownForDrag)
+    {
         isDownForDrag = false;
         return false;
     }
-    if (InputManager::isButtonDown(key) && isMouseHover(true)) {
+    if (InputManager::isButtonDown(key) && isMouseHover(true))
+    {
         isPressed = true;
         isDownForDrag = true;
         return true;
@@ -225,12 +269,15 @@ bool Panel::isMouseDownForDrag(const int key) {
     return false;
 }
 
-bool Panel::isMouseDownForMouse(const int key) {
-    if (isPressed && isDown) {
+bool Panel::isMouseDownForMouse(MouseKeys key)
+{
+    if (isPressed && isDown)
+    {
         isDown = false;
         return false;
     }
-    if (InputManager::isButtonDown(key) && isMouseHover(false)) {
+    if (InputManager::isButtonDown(key) && isMouseHover(false))
+    {
         isPressed = true;
         isDown = true;
         return true;
@@ -238,8 +285,10 @@ bool Panel::isMouseDownForMouse(const int key) {
     return false;
 }
 
-bool Panel::isMouseUpM(const int key) {
-    if (InputManager::isButtonUp(key) && isPressed) {
+bool Panel::isMouseUpM(MouseKeys key)
+{
+    if (InputManager::isButtonUp(key) && isPressed)
+    {
         isPressed = false;
         isUp = true;
         return true;
@@ -248,15 +297,19 @@ bool Panel::isMouseUpM(const int key) {
     return false;
 }
 
-bool Panel::isMousePressForDrag(const int key) {
-    if (isMouseHover(true) && InputManager::isButton(key)) {
+bool Panel::isMousePressForDrag(MouseKeys key)
+{
+    if (isMouseHover(true) && InputManager::isButton(key))
+    {
         return true;
     }
     return false;
 }
 
-bool Panel::isMousePressForMouse(const int key) {
-    if (isMouseHover(false) && InputManager::isButton(key)) {
+bool Panel::isMousePressForMouse(MouseKeys key)
+{
+    if (isMouseHover(false) && InputManager::isButton(key))
+    {
         return true;
     }
     return false;
@@ -274,7 +327,8 @@ bool Panel::isOutline() const { return this->outline; }
 
 std::string Panel::getTitle() const { return title.getText(); }
 
-void Panel::setPanelColor(const Vector3<float> &color) {
+void Panel::setPanelColor(const Vector3<float> &color)
+{
     this->panelColor = color;
 }
 
@@ -284,7 +338,8 @@ void Panel::setMovable(const bool value) { this->movable = value; }
 
 void Panel::setTitle(const std::string &text) { this->title.setText(text); }
 
-void Panel::setOutlineColor(const Vector3<float> &color) {
+void Panel::setOutlineColor(const Vector3<float> &color)
+{
     this->outlineColor = color;
 }
 

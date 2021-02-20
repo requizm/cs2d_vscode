@@ -8,12 +8,14 @@ Texture2D::Texture2D()
       Wrap_S(GL_CLAMP_TO_EDGE),
       Wrap_T(GL_CLAMP_TO_EDGE),
       Filter_Min(GL_NEAREST),
-      Filter_Max(GL_NEAREST) {
+      Filter_Max(GL_NEAREST)
+{
     glGenTextures(1, &this->ID);
 }
 
 void Texture2D::Generate(const GLuint width, const GLuint height,
-                         unsigned char *data) {
+                         unsigned char *data)
+{
     this->Width = width;
     this->Height = height;
 
@@ -31,8 +33,10 @@ void Texture2D::Generate(const GLuint width, const GLuint height,
 }
 
 void Texture2D::Generate(GLuint width, GLuint height, GLubyte (*data)[1][4],
-                         bool isBlack) {
-    if (isBlack) {
+                         bool isBlack)
+{
+    if (isBlack)
+    {
         Filter_Min = GL_LINEAR;
         Filter_Max = GL_LINEAR;
     }
@@ -54,7 +58,8 @@ void Texture2D::Generate(GLuint width, GLuint height, GLubyte (*data)[1][4],
 }
 
 void Texture2D::Generate(bool isAlpha, const GLuint width, const GLuint height,
-                         unsigned char *data) {
+                         unsigned char *data)
+{
     this->Width = width;
     this->Height = height;
     glGenTextures(1, &this->ID);

@@ -7,7 +7,8 @@
 #include "Entities/Env_Item.hpp"
 
 
-class ButtonTile {
+class ButtonTile
+{
    public:
     Button *button = nullptr;
     Vector2<int> cell;
@@ -16,17 +17,20 @@ class ButtonTile {
 
     ButtonTile() = default;
 
-    ButtonTile(Vector2<int> cell) {
+    ButtonTile(Vector2<int> cell)
+    {
         this->cell = cell;
         this->button = new Button();
     }
 
-    ButtonTile(Button *button, Vector2<int> cell) {
+    ButtonTile(Button *button, Vector2<int> cell)
+    {
         this->cell = cell;
         this->button = button;
     }
 
-    ButtonTile(int item_id, Button *button, Vector2<int> cell) {
+    ButtonTile(int item_id, Button *button, Vector2<int> cell)
+    {
         this->item = new Env_Item(item_id, button->getPosition());
         this->cell = cell;
         this->button = button;
@@ -34,15 +38,19 @@ class ButtonTile {
 
     ~ButtonTile() { delete button; }
 
-    void SetButton(Button *bt) {
-        if (this->button != nullptr) {
+    void SetButton(Button *bt)
+    {
+        if (this->button != nullptr)
+        {
             delete this->button;
         }
         this->button = bt;
     }
 
-    void SetItem(Env_Item *item) {
-        if (this->item != nullptr) {
+    void SetItem(Env_Item *item)
+    {
+        if (this->item != nullptr)
+        {
             delete this->item;
         }
         this->item = item;

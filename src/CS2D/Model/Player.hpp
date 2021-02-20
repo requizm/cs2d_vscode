@@ -17,26 +17,26 @@
 #include "Weapon.hpp"
 
 
-enum MoveDirection { TOP, BOTTOM, RIGHT, LEFT };
+enum MoveDirection
+{
+    TOP,
+    BOTTOM,
+    RIGHT,
+    LEFT
+};
 
-class Player : public GameObject {
+class Player : public GameObject
+{
    public:
-    Player() : health(0), maxHealth(0), map(nullptr), velocity(0) {
-        this->objType = ObjectType::PLAYER;
-
-        this->lastMousePos = Vector2(0, 0);
-    }
-
     Player(const Vector2<int> pos, const std::vector<Sprite> &sprites,
            const Vector2<int> size = Vector2<int>(GameParameters::SIZE_TILE),
            int maxHealth = 100)
         : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER),
-          map(nullptr),
-          velocity(0.0F),
           collider(CircleCollider(
               this->GetPositionOfCenter(),
               static_cast<int>(
-                  static_cast<float>(GameParameters::SIZE_TILE / 2) * 0.8F))) {
+                  static_cast<float>(GameParameters::SIZE_TILE / 2) * 0.8F)))
+    {
         this->maxHealth = maxHealth;
         this->health = maxHealth;
         this->sprites = sprites;
@@ -72,11 +72,11 @@ class Player : public GameObject {
     CircleCollider collider;  // FIXME: private olacak
 
    private:
-    int health;
-    int maxHealth;
-    int velocity;
+    int health = 0;
+    int maxHealth = 0;
+    int velocity = 0;
 
-    Map *map;
+    Map *map = nullptr;
 
     std::vector<Weapon *> mainWeapons, pistolWeapons, knifeWeapons, bombWeapons;
     int mainIndex = 0;

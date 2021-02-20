@@ -6,7 +6,8 @@ TextBox::TextBox() : Label() {}
 TextBox::TextBox(Vector2<int> position, TextRenderer &renderer,
                  Vector2<int> size, bool isBackGround, float scale /*= 1.0F*/,
                  const Vector3<float> &color /*= Vector3<float>(1.0F)*/)
-    : Label(position, renderer, scale, color, UIObjectType::TEXTBOX) {
+    : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
+{
     this->editable = true;
     this->editMode = false;
     this->isBackGround = isBackGround;
@@ -24,20 +25,26 @@ TextBox::~TextBox() { UIObject::removeParent(); }
 void TextBox::Update() { InputText(); }
 
 void TextBox::Draw(SpriteRenderer &spriteRenderer,
-                   SquareRenderer &squareRenderer) {
-    if (isVisible() && isEnable()) {
+                   SquareRenderer &squareRenderer)
+{
+    if (isVisible() && isEnable())
+    {
         if (isBackGround)
             squareRenderer.ui_RenderFilledSquare(
                 this->getPosition(), this->getSize(), Vector3<float>(0.15F),
                 true, currentBorderColor, 1.0F, 1.0F);
-        if (editMode) {
-            if (time <= 0.5F) {
+        if (editMode)
+        {
+            if (time <= 0.5F)
+            {
                 spriteRenderer.DrawSprite(
                     cursor,
                     Vector2<int>(getPosition().x - 2.0F + labelSize.x,
                                  getPosition().y + 2.0F),
                     Vector2<int>(8, 16));
-            } else if (time >= 1.0F) {
+            }
+            else if (time >= 1.0F)
+            {
                 time = 0.0F;
             }
         }
@@ -49,25 +56,28 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer,
 
 void TextBox::OnEnable() {}
 
-void TextBox::OnDisable() {
+void TextBox::OnDisable()
+{
     this->editMode = false;
     this->setText("");
 }
 
-void TextBox::setText(const std::string &text) {
+void TextBox::setText(const std::string &text)
+{
     this->text = text;
     this->labelSize = rend->CalculateSize(text, scale);
 }
 
 bool TextBox::isMouseHover() { return isMouseHoverM(); }
 
-bool TextBox::isMouseDown() { return isMouseDownM(GLFW_MOUSE_BUTTON_LEFT); }
+bool TextBox::isMouseDown() { return isMouseDownM(MOUSE_BUTTON_LEFT); }
 
-bool TextBox::isMouseUp() { return isMouseUpM(GLFW_MOUSE_BUTTON_LEFT); }
+bool TextBox::isMouseUp() { return isMouseUpM(MOUSE_BUTTON_LEFT); }
 
-bool TextBox::isMousePress() { return isMousePressM(GLFW_MOUSE_BUTTON_LEFT); }
+bool TextBox::isMousePress() { return isMousePressM(MOUSE_BUTTON_LEFT); }
 
-bool TextBox::isMouseHoverM() {
+bool TextBox::isMouseHoverM()
+{
     const int posX = static_cast<int>(this->getPosition().x);
     const int posY = static_cast<int>(this->getPosition().y);
 
@@ -77,7 +87,8 @@ bool TextBox::isMouseHoverM() {
     if (InputManager::mousePos.x >= posX &&
         InputManager::mousePos.x <= posX + sizeX &&
         InputManager::mousePos.y >= posY &&
-        InputManager::mousePos.y <= posY + sizeY) {
+        InputManager::mousePos.y <= posY + sizeY)
+    {
         if (editable && !editMode)
             currentBorderColor = hoverBorderColor;  // 0.78F
         return true;
@@ -86,75 +97,96 @@ bool TextBox::isMouseHoverM() {
     return false;
 }
 
-bool TextBox::isMouseDownM(const int key) {
-    if (InputManager::isButtonDown(key) && isMouseHover()) {
+bool TextBox::isMouseDownM(MouseKeys key)
+{
+    if (InputManager::isButtonDown(key) && isMouseHover())
+    {
         isDown = true;
         return true;
     }
     return false;
 }
 
-bool TextBox::isMouseUpM(const int key) {
-    if (InputManager::isButtonUp(key) && isDown) {
+bool TextBox::isMouseUpM(MouseKeys key)
+{
+    if (InputManager::isButtonUp(key) && isDown)
+    {
         isDown = false;
         return true;
     }
     return false;
 }
 
-bool TextBox::isMousePressM(const int key) {
-    if (isMouseHover() && InputManager::isButton(key)) {
+bool TextBox::isMousePressM(MouseKeys key)
+{
+    if (isMouseHover() && InputManager::isButton(key))
+    {
         return true;
     }
     return false;
 }
 
-void TextBox::InputText() {
-    if (editable && isEnable()) {
-        if (isMouseDown()) {
+void TextBox::InputText()
+{
+    if (editable && isEnable())
+    {
+        if (isMouseDown())
+        {
             editMode = true;
             time = 0.0F;
             labelCurrentColor = labelClickColor;
             currentBorderColor = clickBorderColor;  // 1.0F
         }
 
-        if (editMode) {
+        if (editMode)
+        {
             time += Timer::DeltaTime;
-            if (InputManager::isButtonDown(GLFW_MOUSE_BUTTON_LEFT) &&
-                !isMouseHover()) {
+            if (InputManager::isButtonDown(MOUSE_BUTTON_LEFT) &&
+                !isMouseHover())
+            {
                 this->labelCurrentColor = labelColor;
                 this->currentBorderColor = borderColor;  // 0.6F
                 editMode = false;
             }
 
-            if (InputManager::isKeyDown(KeyboardKeys::KEY_BACKSPACE)) {
-                if (!text.empty()) {
+            if (InputManager::isKeyDown(KeyboardKeys::KEY_BACKSPACE))
+            {
+                if (!text.empty())
+                {
                     text.pop_back();
                     this->labelSize = rend->CalculateSize(text, scale);
                 }
             }
 
-            if (InputManager::keycode != L'\0') {
-                if (InputManager::keycode <= 255) {
+            if (InputManager::keycode != L'\0')
+            {
+                if (InputManager::keycode <= 255)
+                {
                     const wchar_t keycode = InputManager::keycode;
                     const wchar_t *c = &keycode;
                     std::wstring tempString = &c[0];
                     std::string afsaf;
                     afsaf = tempString[0];
                     this->text += afsaf;
-                    if (rend->CalculateSize(text, scale).x >= size.x) {
+                    if (rend->CalculateSize(text, scale).x >= size.x)
+                    {
                         text.pop_back();
-                    } else {
+                    }
+                    else
+                    {
                         this->labelSize = rend->CalculateSize(text, scale);
                     }
                 }
                 InputManager::keycode = L'\0';
             }
-        } else if (isMouseHover()) {
+        }
+        else if (isMouseHover())
+        {
             currentBorderColor = hoverBorderColor;  // 0.78F
         }
 
-        else {
+        else
+        {
             currentBorderColor = borderColor;  // 0.6F
         }
     }

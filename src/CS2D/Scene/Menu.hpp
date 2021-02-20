@@ -29,12 +29,14 @@
 #include "../Other/GameParameters.hpp"
 
 
-class Menu {
+class Menu
+{
    public:
     Menu();
     ~Menu();
 
-    static Menu &instance() {
+    static Menu &instance()
+    {
         static Menu INSTANCE;
         return INSTANCE;
     }
@@ -77,24 +79,30 @@ class Menu {
 
     void selectedMapChange(Button *old, Button *n);
 
-    std::vector<std::string> getMapNames() {
+    std::vector<std::string> getMapNames()
+    {
         std::vector<std::string> maps;
 
         DIR *dir;
         struct dirent *ent;
         std::string str = GameParameters::resDirectory + "levels";
-        if ((dir = opendir(str.c_str())) != NULL) {
+        if ((dir = opendir(str.c_str())) != NULL)
+        {
             /* print all the files and directories within directory */
-            while ((ent = readdir(dir)) != NULL) {
+            while ((ent = readdir(dir)) != NULL)
+            {
                 if (ent->d_name[0] == '.') continue;
                 std::string mapName(ent->d_name);
-                if (mapName.substr(mapName.size() - 4) == ".xml") {
+                if (mapName.substr(mapName.size() - 4) == ".xml")
+                {
                     std::string a = mapName.substr(0, mapName.size() - 4);
                     maps.push_back(a);
                 }
             }
             closedir(dir);
-        } else {
+        }
+        else
+        {
             perror("could not open directory");
         }
         return maps;

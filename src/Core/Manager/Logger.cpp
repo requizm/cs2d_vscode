@@ -1,8 +1,8 @@
 #include "Logger.hpp"
 
-Logger::Logger() {}
+Logger::Logger() = default;
 
-Logger::~Logger() {}
+Logger::~Logger() = default;
 
 void Logger::StopApp() {}
 

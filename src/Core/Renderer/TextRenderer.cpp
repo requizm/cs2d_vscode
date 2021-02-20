@@ -3,7 +3,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-TextRenderer::TextRenderer(GLuint width, GLuint height) {
+TextRenderer::TextRenderer(GLuint width, GLuint height)
+{
     // Load and configure shader
     this->TextShader = ResourceManager::GetShader("text");
     this->TextShader.Use();
@@ -26,7 +27,8 @@ TextRenderer::TextRenderer(GLuint width, GLuint height) {
     this->TextShader.UnUse();
 }
 
-TextRenderer::TextRenderer(GLuint width, GLuint height, Matrix4<float> camera) {
+TextRenderer::TextRenderer(GLuint width, GLuint height, Matrix4<float> camera)
+{
     // Load and configure shader
     this->TextShader = ResourceManager::LoadShader(
         GameParameters::resDirectory + "shaders/textVertex.txt",
@@ -50,7 +52,8 @@ TextRenderer::TextRenderer(GLuint width, GLuint height, Matrix4<float> camera) {
 
 TextRenderer::TextRenderer() = default;
 
-void TextRenderer::Load(std::string font, GLuint fontSize) {
+void TextRenderer::Load(std::string font, GLuint fontSize)
+{
     // First clear the previously loaded Characters
     this->Characters.clear();
     // Then initialize and load the FreeType library
@@ -64,7 +67,8 @@ void TextRenderer::Load(std::string font, GLuint fontSize) {
 
     // Load font as face
     FT_Face face;
-    if (FT_New_Face(ft, font.c_str(), 0, &face)) {
+    if (FT_New_Face(ft, font.c_str(), 0, &face))
+    {
         WRITE_ERROR("ERROR::FREETYPE: Failed to load font");
         exit(EXIT_FAILURE);
     }
@@ -77,7 +81,8 @@ void TextRenderer::Load(std::string font, GLuint fontSize) {
     for (GLubyte c = 0; c < 254; c++)  // lol see what I did there
     {
         // Load character glyph
-        if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
+        if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+        {
             WRITE_ERROR("ERROR::FREETYTPE: Failed to load Glyph");
             continue;
         }
@@ -109,7 +114,8 @@ void TextRenderer::Load(std::string font, GLuint fontSize) {
 }
 
 void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale,
-                              const Vector3<float> &color) {
+                              const Vector3<float> &color)
+{
     // Activate corresponding render state
     this->TextShader.Use();
     this->TextShader.SetVector3f("textColor", color);
@@ -118,7 +124,8 @@ void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale,
 
     // Iterate through all characters
     std::string::const_iterator c;
-    for (c = text.begin(); c != text.end(); c++) {
+    for (c = text.begin(); c != text.end(); c++)
+    {
         Character ch = Characters[*c];
 
         GLfloat xpos = x + ch.Bearing.x * scale;
@@ -129,10 +136,10 @@ void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale,
         GLfloat h = ch.Size.y * scale;
         // Update VBO for each character
         GLfloat vertices[6][4] = {
-            {xpos, ypos + h, 0.0, 1.0}, {xpos + w, ypos, 1.0, 0.0},
-            {xpos, ypos, 0.0, 0.0},
+            {xpos, ypos + h, 0.0, 1.0}, {xpos + w, ypos, 1.0, 0.0}, {xpos, ypos, 0.0, 0.0},
 
-            {xpos, ypos + h, 0.0, 1.0}, {xpos + w, ypos + h, 1.0, 1.0},
+            {xpos, ypos + h, 0.0, 1.0},
+            {xpos + w, ypos + h, 1.0, 1.0},
             {xpos + w, ypos, 1.0, 0.0}};
         // Render glyph texture over quad
         glBindTexture(GL_TEXTURE_2D, ch.TextureID);
@@ -155,7 +162,8 @@ void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale,
 }
 
 void TextRenderer::RenderText(std::string text, Vector2<int> position,
-                              GLfloat scale, const Vector3<float> &color) {
+                              GLfloat scale, const Vector3<float> &color)
+{
     // Activate corresponding render state
     this->TextShader.Use();
     this->TextShader.SetVector3f("textColor", color);
@@ -164,7 +172,8 @@ void TextRenderer::RenderText(std::string text, Vector2<int> position,
 
     // Iterate through all characters
     std::string::const_iterator c;
-    for (c = text.begin(); c != text.end(); c++) {
+    for (c = text.begin(); c != text.end(); c++)
+    {
         Character ch = Characters[*c];
 
         GLfloat xpos = position.x + ch.Bearing.x * scale;
@@ -175,10 +184,10 @@ void TextRenderer::RenderText(std::string text, Vector2<int> position,
         GLfloat h = ch.Size.y * scale;
         // Update VBO for each character
         GLfloat vertices[6][4] = {
-            {xpos, ypos + h, 0.0, 1.0}, {xpos + w, ypos, 1.0, 0.0},
-            {xpos, ypos, 0.0, 0.0},
+            {xpos, ypos + h, 0.0, 1.0}, {xpos + w, ypos, 1.0, 0.0}, {xpos, ypos, 0.0, 0.0},
 
-            {xpos, ypos + h, 0.0, 1.0}, {xpos + w, ypos + h, 1.0, 1.0},
+            {xpos, ypos + h, 0.0, 1.0},
+            {xpos + w, ypos + h, 1.0, 1.0},
             {xpos + w, ypos, 1.0, 0.0}};
         // Render glyph texture over quad
         glBindTexture(GL_TEXTURE_2D, ch.TextureID);
@@ -256,14 +265,15 @@ value in pixels (1/64th times 2^6 = 64)
         //label->size.y = 12;
 }*/
 
-Vector2<int> TextRenderer::CalculateSize(const std::string &text,
-                                         GLfloat scale) {
+Vector2<int> TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
+{
     // GLfloat startX = 0;
     float xPo = 0;
     // Activate corresponding render state
     // Iterate through all characters
     std::string::const_iterator c;
-    for (c = text.begin(); c != text.end(); c++) {
+    for (c = text.begin(); c != text.end(); c++)
+    {
         Character ch = this->Characters[*c];
 
         GLfloat w = ch.Size.x * scale;

@@ -10,7 +10,8 @@ SpriteRenderer::~SpriteRenderer() = default;
 void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
                                 Vector2<int> size, int rotate, bool drawCenter,
                                 GLfloat shineFactor, bool isSelected,
-                                GLfloat time) {
+                                GLfloat time)
+{
     // Prepare transformations
     this->shader.Use();
     Matrix4 model = Matrix4(1.0F);
@@ -47,7 +48,8 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
     this->shader.SetFloat("shineFactor", shineFactor);
 
     this->shader.SetInteger("selectedTile", isSelected);
-    if (isSelected) {
+    if (isSelected)
+    {
         this->shader.SetFloat("time", time);
     }
 
@@ -64,7 +66,8 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
                                 Vector2<int> size, const Vector3<float> &color,
                                 bool drawCenter, int rotate,
                                 GLfloat shineFactor, bool isSelected,
-                                float time) {
+                                float time)
+{
     // rotate = rotate * static_cast<GLfloat>(PI) / static_cast<GLfloat>(180);
     // Prepare transformations
     this->shader.Use();
@@ -102,7 +105,8 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
     this->shader.SetVector3f("uniformColor", color);
     this->shader.SetFloat("shineFactor", shineFactor);
     this->shader.SetInteger("selectedTile", isSelected);
-    if (isSelected) {
+    if (isSelected)
+    {
         this->shader.SetFloat("time", time);
     }
     // this->shader.SetInteger("selectedTile", isSelected); // gerek yok, buraya
@@ -117,7 +121,8 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
     this->shader.UnUse();
 }
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, Matrix4<float> model) {
+void SpriteRenderer::DrawSprite(const Sprite &sprite, Matrix4<float> model)
+{
     this->shader.Use();
     this->shader.SetMatrix4("model", model);
     this->shader.SetInteger("overrideColor", false);
@@ -132,7 +137,8 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Matrix4<float> model) {
     this->shader.UnUse();
 }
 
-void SpriteRenderer::SetProjection(Matrix4<float> projection) {
+void SpriteRenderer::SetProjection(Matrix4<float> projection)
+{
     this->shader.Use();
     this->shader.SetMatrix4("projection", projection);
     this->shader.UnUse();

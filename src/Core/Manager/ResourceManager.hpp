@@ -20,14 +20,17 @@
 // handles. All functions and resources are static and no
 // public constructor is defined.
 
-typedef union PixelInfo {
+typedef union PixelInfo
+{
     std::uint32_t Colour;
-    struct {
+    struct
+    {
         std::uint8_t B, G, R, A;
     };
 } * PPixelInfo;
 
-class ResourceManager {
+class ResourceManager
+{
    public:
     // Resource storage
     static std::map<std::string, Shader> Shaders;

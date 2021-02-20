@@ -4,17 +4,20 @@
 
 #include <functional>
 
-struct EventF {
+struct EventF
+{
    public:
     std::function<void()> event;
     int id;
-    EventF(std::function<void()> func, int id) {
+    EventF(std::function<void()> func, int id)
+    {
         this->id = id;
         event = func;
     }
 };
 
-enum KeyboardKeys {
+enum KeyboardKeys
+{
     KEY_SPACE,
     KEY_APOSTROPHE, /* ' */
     KEY_COMMA,      /* , */
@@ -70,9 +73,23 @@ enum KeyboardKeys {
     KEY_BACKSPACE
 };
 
-enum KeyStates { NOTHING, DOWN, PRESS, RELEASE };
+enum MouseKeys
+{
+    MOUSE_BUTTON_LEFT,
+    MOUSE_BUTTON_RIGHT,
+    MOUSE_BUTTON_MIDDLE
+};
 
-struct KeyEvent {
+enum KeyStates
+{
+    NOTHING,
+    DOWN,
+    PRESS,
+    RELEASE
+};
+
+struct KeyEvent
+{
    public:
     KeyEvent() {}
     int state = 0;

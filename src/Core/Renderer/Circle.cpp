@@ -4,17 +4,22 @@
 
 Circle::Circle() {}
 
-Circle::Circle(bool fill) {
-    if (!fill) {
+Circle::Circle(bool fill)
+{
+    if (!fill)
+    {
         initEmptyCircle();
-    } else {
+    }
+    else
+    {
         initFilledCircle();
     }
 }
 
 Circle::~Circle() = default;
 
-void Circle::initEmptyCircle() {
+void Circle::initEmptyCircle()
+{
     GLuint VBO;
     Vector2<float> vertices[31];
     int i;
@@ -22,7 +27,8 @@ void Circle::initEmptyCircle() {
     // GLfloat radius = 0.8f; //radius
     GLfloat twicePi = 2.0f * PI;
 
-    for (i = 0; i <= triangleAmount; i++) {
+    for (i = 0; i <= triangleAmount; i++)
+    {
         vertices[i] = Vector2<float>((cos(i * twicePi / triangleAmount)),
                                      (sin(i * twicePi / triangleAmount)));
     }
@@ -41,7 +47,8 @@ void Circle::initEmptyCircle() {
     glBindVertexArray(0);
 }
 
-void Circle::initFilledCircle() {
+void Circle::initFilledCircle()
+{
     GLuint VBO;
     Vector2<float> vertices[32];
     int i;
@@ -49,7 +56,8 @@ void Circle::initFilledCircle() {
     // GLfloat radius = 0.8f; //radius
     GLfloat twicePi = 2.0f * PI;
     vertices[0] = Vector2<float>(0, 0);
-    for (i = 1; i <= triangleAmount + 1; i++) {
+    for (i = 1; i <= triangleAmount + 1; i++)
+    {
         vertices[i] = Vector2<float>((cos(i * twicePi / triangleAmount)),
                                      (sin(i * twicePi / triangleAmount)));
     }

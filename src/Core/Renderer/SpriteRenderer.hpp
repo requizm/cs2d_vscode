@@ -6,7 +6,8 @@
 #include "Texture.hpp"
 
 
-class SpriteRenderer {
+class SpriteRenderer
+{
    public:
     // Constructor (inits shaders/shapes)
     // SpriteRenderer(Shader shader, Texture2D texture, GLuint x, GLuint y,

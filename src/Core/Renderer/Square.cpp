@@ -8,7 +8,8 @@ void Square::init() { initData(); }
 
 Square::~Square() = default;
 
-void Square::initData() {
+void Square::initData()
+{
     // Configure VAO/VBO
     GLuint VBO;
     GLfloat vertices[12];

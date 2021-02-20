@@ -11,12 +11,14 @@
 #include "ButtonTile.hpp"
 
 
-struct NewMapResult {
+struct NewMapResult
+{
     std::vector<Button *> tilesUI;
     std::vector<ButtonTile *> tiles;
 };
 
-class NewMapSystem {
+class NewMapSystem
+{
    public:
     NewMapSystem(/* args */);
     ~NewMapSystem();

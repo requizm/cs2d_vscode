@@ -8,23 +8,28 @@
 
 Map::Map() = default;
 
-Map::Map(std::string file, const std::string &name) {
+Map::Map(std::string file, const std::string &name)
+{
     this->name = name;
     Load(file);
 }
 
-Map::~Map() {
-    for (auto &tile : tiles) {
+Map::~Map()
+{
+    for (auto &tile : tiles)
+    {
         delete tile;
     }
     tiles.clear();
-    for (auto &weapon : weapons) {
+    for (auto &weapon : weapons)
+    {
         delete weapon;
     }
     weapons.clear();
 }
 
-void Map::Load(std::string file) {
+void Map::Load(std::string file)
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -33,7 +38,8 @@ void Map::Load(std::string file) {
         jsonLoader.Load(GameParameters::resDirectory + "content/weapons.json");
 
     for (nlohmann::json::iterator it = weaponsJ.begin(); it != weaponsJ.end();
-         ++it) {
+         ++it)
+    {
         std::string spritePath = GameParameters::resDirectory +
                                  "textures/weapons/" +
                                  it->at("sprite").get<std::string>() + ".png";
@@ -64,7 +70,8 @@ void Map::Load(std::string file) {
     // std::endl;
     int i = 0;
     for (rapidxml::xml_node<> *child = node->first_node(); child;
-         child = child->next_sibling()) {
+         child = child->next_sibling())
+    {
         // std::cout << child->first_node("cellY")->value() << std::endl;
         // tile.SetSize(Vector2<float>(Game::Width / 26.5, Game::Width / 26.5));
         char *x = child->first_node("cellX")->value();
@@ -89,12 +96,15 @@ void Map::Load(std::string file) {
                                      (xoffset)*32, yoffset * 32, 32, 32);
         Tile *tile = new Tile(pos, sprite, size, TileTypes(tileType));
         tiles.push_back(tile);
-        if (itemId != 0) {
+        if (itemId != 0)
+        {
             Weapon *w;
             bool found = false;
             for (nlohmann::json::iterator it = weaponsJ.begin();
-                 it != weaponsJ.end(); ++it) {
-                if (itemId == it->at("id").get<int>()) {
+                 it != weaponsJ.end(); ++it)
+            {
+                if (itemId == it->at("id").get<int>())
+                {
                     std::string textureName =
                         it->at("sprite").get<std::string>();
                     std::string floorTextureName =
@@ -116,7 +126,8 @@ void Map::Load(std::string file) {
                     break;
                 }
             }
-            if (!found) {
+            if (!found)
+            {
                 w = new Weapon(pos, Sprite(ResourceManager::GetTexture("awp")),
                                Sprite(ResourceManager::GetTexture("awp_d")),
                                "awp", WeaponType::MAIN, 90, 90, 30, 30, true,
@@ -126,53 +137,65 @@ void Map::Load(std::string file) {
         }
     }
 }
-void Map::Draw(SpriteRenderer &renderer) {
+void Map::Draw(SpriteRenderer &renderer)
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    for (auto &tile : tiles) {
-        if (!tile->IsDestroyed()) {
+    for (auto &tile : tiles)
+    {
+        if (!tile->IsDestroyed())
+        {
             Vector2 pos = Utils::WorldToScreen(
                 StartGame::instance().camera->view, tile->GetPosition());
             if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
-                pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0) {
+                pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
+            {
                 tile->DrawModel(renderer);
             }
         }
     }
-    for (auto &weapon : weapons) {
+    for (auto &weapon : weapons)
+    {
         Vector2 pos = Utils::WorldToScreen(StartGame::instance().camera->view,
                                            weapon->GetPosition());
         if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
-            pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0) {
+            pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
+        {
             weapon->DrawModel(renderer);
         }
     }
 }
 
-Tile *Map::GetTileByCell(int x, int y) {
-    if (x < 0 || y < 0 || x >= mapLimit.x || y >= mapLimit.y) {
+Tile *Map::GetTileByCell(int x, int y)
+{
+    if (x < 0 || y < 0 || x >= mapLimit.x || y >= mapLimit.y)
+    {
         return nullptr;
     }
     int tileIndex = (x * this->mapLimit.x) + y;
     return tiles.at(tileIndex);
 }
 
-Tile *Map::GetTileByCell(Vector2<int> cellPos) {
+Tile *Map::GetTileByCell(Vector2<int> cellPos)
+{
     if (cellPos.x < 0 || cellPos.y < 0 || cellPos.x >= mapLimit.x ||
-        cellPos.y >= mapLimit.y) {
+        cellPos.y >= mapLimit.y)
+    {
         return nullptr;
     }
     int tileIndex = (cellPos.x * this->mapLimit.x) + cellPos.y;
     return tiles.at(tileIndex);
 }
 
-Tile *Map::GetTileByPosition(int x, int y) {
+Tile *Map::GetTileByPosition(int x, int y)
+{
     Vector2<int> cell = Utils::PositionToCell(Vector2<int>(x, y));
     return GetTileByCell(cell);
 }
 
-Tile *Map::GetTileByPosition(Vector2<int> position) {
+Tile *Map::GetTileByPosition(Vector2<int> position)
+{
     Vector2<int> cell = Utils::PositionToCell(position);
 
     return GetTileByCell(cell);

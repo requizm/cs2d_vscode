@@ -10,9 +10,16 @@
 #include "Mag.hpp"
 
 
-enum WeaponType { MAIN, PISTOL, KNIFE, BOMB };
+enum WeaponType
+{
+    MAIN,
+    PISTOL,
+    KNIFE,
+    BOMB
+};
 
-class Weapon : public GameObject {
+class Weapon : public GameObject
+{
    public:
     Weapon()
         : curAmmoInMag(0),
@@ -21,7 +28,8 @@ class Weapon : public GameObject {
           maxAmmo(0),
           ammoType(),
           weaponType(),
-          selected(false) {
+          selected(false)
+    {
         this->objType = (ObjectType)ObjectType::WEAPON;
     }
 
@@ -62,12 +70,14 @@ class Weapon : public GameObject {
                            GameParameters::SIZE_TILE),
               (int)ObjectType::WEAPON),
           currentIndex(1),
-          selected(false) {
+          selected(false)
+    {
         this->weaponType = type;
 
         ammoType = (AmmoType)((int)weaponType);
 
-        if (weaponType == WeaponType::MAIN) {
+        if (weaponType == WeaponType::MAIN)
+        {
             this->SetSize(Vector2<int>(GameParameters::SIZE_TILE * 2,
                                        GameParameters::SIZE_TILE));
             this->SetPosition(GetPosition().x - GameParameters::SIZE_TILE / 2,

@@ -9,7 +9,8 @@ Game::Game() { Game::state = GameState::MENU; }
 
 Game::~Game() = default;
 
-void Game::Init() {
+void Game::Init()
+{
     initTextures();
     initShaders();
     initRenderers();
@@ -19,11 +20,13 @@ void Game::Init() {
     Editor::instance().Initialize();
 }
 
-void Game::Update() {
+void Game::Update()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    switch (Game::state) {
+    switch (Game::state)
+    {
         case GameState::MENU:
             Menu::instance().Update();
             break;
@@ -36,11 +39,13 @@ void Game::Update() {
     }
 }
 
-void Game::ProcessInput() {
+void Game::ProcessInput()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    switch (Game::state) {
+    switch (Game::state)
+    {
         case GameState::MENU:
             Menu::instance().ProcessInput();
             break;
@@ -53,11 +58,13 @@ void Game::ProcessInput() {
     }
 }
 
-void Game::Render() {
+void Game::Render()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    switch (Game::state) {
+    switch (Game::state)
+    {
         case GameState::MENU:
             Menu::instance().Render();
             break;
@@ -74,7 +81,8 @@ void Game::Render() {
                             0, true);
 }
 
-void Game::initTextures() const {
+void Game::initTextures() const
+{
     // tiles
     ResourceManager::LoadTexture(
         GameParameters::resDirectory + "textures/tiles/cs2dnorm.png", GL_TRUE,
@@ -140,7 +148,8 @@ void Game::initTextures() const {
         "gui_icons");
 }
 
-void Game::initShaders() {
+void Game::initShaders()
+{
     ResourceManager::LoadShader(
         GameParameters::resDirectory + "shaders/textVertex.txt",
         GameParameters::resDirectory + "shaders/textFragment.txt", "", "text");
@@ -167,7 +176,8 @@ void Game::initShaders() {
     ResourceManager::GetShader("menu").UnUse();
 }
 
-void Game::initMenuSprites() {
+void Game::initMenuSprites()
+{
     Sprite cs2d = Sprite(ResourceManager::GetTexture("cs2d"));
     Sprite unrealsoftware =
         Sprite(ResourceManager::GetTexture("unrealsoftware"));
@@ -180,19 +190,23 @@ void Game::initMenuSprites() {
     menuSprites[3] = splash;
 }
 
-void Game::initMaps() {
+void Game::initMaps()
+{
     // maps = std::vector<Map>();
     // const Map test_map = Map(GameParameters::resDirectory +
     // "levels/hadiyav.xml", "test_one"); maps.push_back(test_map);
 }
 
-void Game::initRenderers() {
+void Game::initRenderers()
+{
     spriteRenderer = SpriteRenderer(ResourceManager::GetShader("sprite"));
     menuRenderer = SpriteRenderer(ResourceManager::GetShader("menu"));
 }
 
-void Game::SetGameState(GameState state) {
-    switch (Game::state) {
+void Game::SetGameState(GameState state)
+{
+    switch (Game::state)
+    {
         case GameState::MENU:
             Menu::instance().SetEnable(false);
             break;
@@ -204,7 +218,8 @@ void Game::SetGameState(GameState state) {
             break;
     }
 
-    switch (state) {
+    switch (state)
+    {
         case GameState::MENU:
             Menu::instance().SetEnable(true);
             break;

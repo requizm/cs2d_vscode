@@ -1,13 +1,12 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-#include <math.h>
-
+#include <cmath>
 #include <string>
 
-
 template <typename T>
-class Vector2 {
+class Vector2
+{
    public:
     T x, y;
 
@@ -21,15 +20,18 @@ class Vector2 {
 
     T Magnitude() { return sqrt(this->x * this->x + this->y * this->y); }
 
-    Vector2<float> Normalize() {
+    Vector2<float> Normalize()
+    {
         Vector2 a = this->Clone();
         float mag = static_cast<float>(a.Magnitude());
         return Vector2<float>(static_cast<float>(a.x) / mag,
                               static_cast<float>(a.y) / mag);
     }
 
-    T &operator[](int i) {
-        switch (i) {
+    T &operator[](int i)
+    {
+        switch (i)
+        {
             case 0:
                 return x;
                 break;
@@ -41,19 +43,23 @@ class Vector2 {
         }
     }
 
-    Vector2 operator+(Vector2 const &obj) {
+    Vector2 operator+(Vector2 const &obj)
+    {
         return Vector2(x + obj.x, y + obj.y);
     }
 
-    Vector2 operator-(Vector2 const &obj) {
+    Vector2 operator-(Vector2 const &obj)
+    {
         return Vector2(x - obj.x, y - obj.y);
     }
 
-    Vector2 operator*(Vector2 const &obj) {
+    Vector2 operator*(Vector2 const &obj)
+    {
         return Vector2(x * obj.x, y * obj.y);
     }
 
-    Vector2 operator/(Vector2 const &obj) {
+    Vector2 operator/(Vector2 const &obj)
+    {
         return Vector2(x / obj.x, y / obj.y);
     }
 
@@ -69,7 +75,8 @@ class Vector2 {
 
     Vector2 operator/(T obj) { return Vector2(x / obj, y / obj); }
 
-    std::string ToString() {
+    std::string ToString()
+    {
         return std::string(std::to_string(x) + " - " + std::to_string(y));
     }
 };

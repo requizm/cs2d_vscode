@@ -17,9 +17,15 @@
 #include "Scene/StartGame.hpp"
 
 
-enum GameState { MENU, INGAME, EDITOR };
+enum GameState
+{
+    MENU,
+    INGAME,
+    EDITOR
+};
 
-class Game {
+class Game
+{
    public:
     Game();
     ~Game();

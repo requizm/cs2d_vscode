@@ -4,7 +4,8 @@ Outline::Outline() : VAO(0) {}
 
 Outline::~Outline() = default;
 
-void Outline::initData() {
+void Outline::initData()
+{
     // Configure VAO/VBO
     GLuint VBO;
 

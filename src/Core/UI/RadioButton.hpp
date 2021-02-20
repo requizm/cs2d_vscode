@@ -7,7 +7,8 @@
 #include "Label.hpp"
 
 
-class RadioButtonElement : public Label {
+class RadioButtonElement : public Label
+{
    public:
     RadioButtonElement();
 
@@ -67,12 +68,13 @@ class RadioButtonElement : public Label {
     int index;
 
     bool isMouseHoverM() override;
-    bool isMouseDownM(const int key) override;
-    bool isMouseUpM(const int key) override;
-    bool isMousePressM(const int key) override;
+    bool isMouseDownM(MouseKeys key) override;
+    bool isMouseUpM(MouseKeys key) override;
+    bool isMousePressM(MouseKeys key) override;
 };
 
-class RadioButton : public UIObject {
+class RadioButton : public UIObject
+{
    private:
     std::vector<RadioButtonElement *> elements;
     int i = 0;

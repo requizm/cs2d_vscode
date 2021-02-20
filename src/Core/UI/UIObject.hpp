@@ -11,7 +11,8 @@
 #include "../Renderer/TextRenderer.hpp"
 
 
-enum class UIObjectType {
+enum class UIObjectType
+{
     UIOBJECT,
     LABEL,
     TEXTBOX,
@@ -23,7 +24,8 @@ enum class UIObjectType {
 };
 // class TextRenderer;
 
-class UIObject {
+class UIObject
+{
    public:
     UIObject();
     UIObject(Vector2<int> position, Vector2<int> size, float scale,
@@ -103,18 +105,16 @@ class UIObject {
     /**
      * visible, enable ve mouseEvent degiskenleri parent'a bagli olsun
      */
-    bool dependParent;
+    bool dependParent = false;
 
-    bool visible;
-    bool enable;
-    bool mouseEvents;
+    bool visible = true;
+    bool enable = true;
+    bool mouseEvents = true;
 
-    bool scrollable;
+    bool scrollable = false;
 
     bool isDown = false;
     bool isUp = false;
-
-   private:
 };
 
 #endif  // UIOBJECT_H

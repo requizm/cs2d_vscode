@@ -9,7 +9,8 @@
 #include "UIObject.hpp"
 
 
-class Panel : public UIObject {
+class Panel : public UIObject
+{
    public:
     /**
      * @brief Construct a new Panel
@@ -78,13 +79,13 @@ class Panel : public UIObject {
     float trans;
 
     bool isMouseHoverForDrag();
-    bool isMouseDownForDrag(const int key);
-    bool isMouseUpM(const int key);
-    bool isMousePressForDrag(const int key);
+    bool isMouseDownForDrag(MouseKeys key);
+    bool isMouseUpM(MouseKeys key);
+    bool isMousePressForDrag(MouseKeys key);
 
     bool isMouseHoverForMouse();
-    bool isMouseDownForMouse(const int key);
-    bool isMousePressForMouse(const int key);
+    bool isMouseDownForMouse(MouseKeys key);
+    bool isMousePressForMouse(MouseKeys key);
 };
 
 #endif

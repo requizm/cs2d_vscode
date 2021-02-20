@@ -17,7 +17,8 @@ void mouse_button_callback(GLFWwindow *window, int button, int action,
 void character_callback(GLFWwindow *window, unsigned int codepoint);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 
-class Window {
+class Window
+{
    public:
     Window(std::string windowName, int x, int y);
     void Clear();

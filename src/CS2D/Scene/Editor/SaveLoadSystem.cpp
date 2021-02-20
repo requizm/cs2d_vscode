@@ -8,7 +8,8 @@
 
 SaveLoadSystem::SaveLoadSystem() {}
 
-SaveLoadSystem::~SaveLoadSystem() {
+SaveLoadSystem::~SaveLoadSystem()
+{
     delete load_mapsPanel;
     delete save_mapsPanel;
 
@@ -26,7 +27,8 @@ SaveLoadSystem::~SaveLoadSystem() {
 }
 
 void SaveLoadSystem::Start() {}
-void SaveLoadSystem::ProcessInput() {
+void SaveLoadSystem::ProcessInput()
+{
     savePanel->ProcessInput();
     loadPanel->ProcessInput();
 
@@ -34,7 +36,8 @@ void SaveLoadSystem::ProcessInput() {
     load_listMaps->ProcessInput();
 }
 
-void SaveLoadSystem::Update() {
+void SaveLoadSystem::Update()
+{
     savePanel->Update();
     loadPanel->Update();
 
@@ -42,7 +45,8 @@ void SaveLoadSystem::Update() {
     load_listMaps->Update();
 }
 void SaveLoadSystem::Render(SpriteRenderer &menuRenderer,
-                            SquareRenderer &squareRenderer) {
+                            SquareRenderer &squareRenderer)
+{
     savePanel->Draw(menuRenderer, squareRenderer);
     loadPanel->Draw(menuRenderer, squareRenderer);
 
@@ -50,13 +54,16 @@ void SaveLoadSystem::Render(SpriteRenderer &menuRenderer,
     load_listMaps->Draw(menuRenderer, squareRenderer);
 }
 
-void SaveLoadSystem::SaveMap() {
-    if (!Editor::instance().tils->tiles.empty() && !t_save->getText().empty()) {
+void SaveLoadSystem::SaveMap()
+{
+    if (!Editor::instance().tils->tiles.empty() && !t_save->getText().empty())
+    {
         rapidxml::xml_document<> doc;
         rapidxml::xml_node<> *node_map =
             doc.allocate_node(rapidxml::node_element, "map");
         // int i = 0;
-        for (auto &tile : Editor::instance().tils->tiles) {
+        for (auto &tile : Editor::instance().tils->tiles)
+        {
             rapidxml::xml_node<> *node_tile =
                 doc.allocate_node(rapidxml::node_element, "tile");
             char *cellX =
@@ -120,7 +127,8 @@ void SaveLoadSystem::SaveMap() {
         std::string a(GameParameters::resDirectory + "levels/" +
                       t_save->getText() + ".xml");
         fileC.open(a.c_str());
-        if (!fileC) {
+        if (!fileC)
+        {
             std::string str = a + "dosyasi acilamadi";
             WRITE_ERROR(str);
             exit(EXIT_FAILURE);
@@ -131,18 +139,21 @@ void SaveLoadSystem::SaveMap() {
         savePanel->setEnable(false);
     }
 }
-void SaveLoadSystem::B_SaveMap() {
+void SaveLoadSystem::B_SaveMap()
+{
     save_listMaps->Clear();
 
     std::vector<std::string> maps = getMapNames();
 
-    for (std::vector<int>::size_type i = 0; i != maps.size(); i++) {
+    for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
+    {
         save_listMaps->AddItem(maps[i]);
     }
     this->savePanel->setEnable(true);
 }
 
-std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName) {
+std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -170,7 +181,8 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName) {
     // std::endl;
     int i = 0;
     for (rapidxml::xml_node<> *child = node->first_node(); child;
-         child = child->next_sibling()) {
+         child = child->next_sibling())
+    {
         // std::cout << child->first_node("cellY")->value() << std::endl;
         // tile.SetSize(Vector2<int>(Game::Width / 26.5, Game::Width / 26.5));
         char *x = child->first_node("cellX")->value();
@@ -203,9 +215,12 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName) {
         Tile tile = Tile(pos, sprite, size, TileTypes(tileType), textureIndex);
         Button *b = new Button(tile);
         ButtonTile *t = nullptr;
-        if (itemId == 0) {
+        if (itemId == 0)
+        {
             t = new ButtonTile(b, Vector2<int>(cellX, cellY));
-        } else {
+        }
+        else
+        {
             t = new ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
         }
 
@@ -214,58 +229,71 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName) {
 
     return tiles;
 }
-void SaveLoadSystem::B_LoadMap() {
+void SaveLoadSystem::B_LoadMap()
+{
     load_listMaps->Clear();
 
     std::vector<std::string> maps = getMapNames();
 
-    for (std::vector<int>::size_type i = 0; i != maps.size(); i++) {
+    for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
+    {
         load_listMaps->AddItem(maps[i]);
     }
     load_listMaps->Select(0);
     this->loadPanel->setEnable(true);
 }
 
-bool SaveLoadSystem::isPressedOrHover() {
+bool SaveLoadSystem::isPressedOrHover()
+{
     return loadPanel->isPressed || savePanel->isPressed ||
            loadPanel->isMouseHover(false) || savePanel->isMouseHover(false);
 }
 
-bool SaveLoadSystem::isEditMode() {
+bool SaveLoadSystem::isEditMode()
+{
     return t_load->editMode || t_save->editMode;
 }
 
-bool SaveLoadSystem::isMouseHover() {
+bool SaveLoadSystem::isMouseHover()
+{
     return loadPanel->isMouseHover(false) || savePanel->isMouseHover(false);
 }
 
-std::vector<std::string> SaveLoadSystem::getMapNames() {
+std::vector<std::string> SaveLoadSystem::getMapNames()
+{
     std::vector<std::string> maps;
 
     DIR *dir;
     struct dirent *ent;
     std::string str = GameParameters::resDirectory + "levels";
-    if ((dir = opendir(str.c_str())) != NULL) {
+    if ((dir = opendir(str.c_str())) != NULL)
+    {
         /* print all the files and directories within directory */
-        while ((ent = readdir(dir)) != NULL) {
+        while ((ent = readdir(dir)) != NULL)
+        {
             if (ent->d_name[0] == '.') continue;
             std::string mapName(ent->d_name);
-            if (mapName.substr(mapName.size() - 4) == ".xml") {
+            if (mapName.substr(mapName.size() - 4) == ".xml")
+            {
                 std::string a = mapName.substr(0, mapName.size() - 4);
                 maps.push_back(a);
             }
         }
         closedir(dir);
-    } else {
+    }
+    else
+    {
         perror("could not open directory");
     }
     return maps;
 }
 
-void SaveLoadSystem::SaveListChanged(Button *old, Button *n) {
+void SaveLoadSystem::SaveListChanged(Button *old, Button *n)
+{
     t_save->setText(n->getText());
 }
 
-void SaveLoadSystem::LoadListChanged(Button *old, Button *n) {
+void SaveLoadSystem::LoadListChanged(Button *old, Button *n)
+{
     t_load->setText(n->getText());
 }

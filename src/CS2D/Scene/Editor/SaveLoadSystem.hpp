@@ -23,7 +23,8 @@
 #include "ButtonTile.hpp"
 
 
-class SaveLoadSystem {
+class SaveLoadSystem
+{
    private:
     /* data */
    public:

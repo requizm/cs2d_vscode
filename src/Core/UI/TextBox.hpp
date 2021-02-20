@@ -7,8 +7,8 @@
 #include "../Renderer/SquareRenderer.hpp"
 #include "Label.hpp"
 
-
-class TextBox : public Label {
+class TextBox : public Label
+{
    public:
     TextBox();
 
@@ -26,7 +26,7 @@ class TextBox : public Label {
             bool isBackGround = false, float scale = 1.0F,
             const Vector3<float> &color = Vector3<float>(1.0F));
 
-    virtual ~TextBox();
+    ~TextBox() final;
 
     void Update() override;
     void Draw(SpriteRenderer &spriteRenderer,
@@ -43,9 +43,9 @@ class TextBox : public Label {
     bool isMousePress() override;
 
     bool isMouseHoverM() override;
-    bool isMouseDownM(const int key) override;
-    bool isMouseUpM(const int key) override;
-    bool isMousePressM(const int key) override;
+    bool isMouseDownM(MouseKeys key) override;
+    bool isMouseUpM(MouseKeys key) override;
+    bool isMousePressM(MouseKeys key) override;
 
     bool editable;
     bool editMode;

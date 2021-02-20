@@ -7,7 +7,8 @@
 #include "Panel.hpp"
 
 
-class ListItemElement : public Button {
+class ListItemElement : public Button
+{
    public:
     explicit ListItemElement(Button *btn);
     ~ListItemElement();
@@ -22,7 +23,8 @@ class ListItemElement : public Button {
     Button *btn;
 };
 
-class ListItem : public UIObject {
+class ListItem : public UIObject
+{
    public:
     ListItem(Panel *panel);
     ListItem();

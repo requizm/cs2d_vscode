@@ -12,7 +12,8 @@
 #include "../Manager/MemoryOverride/MemoryOverride.hpp"
 
 
-class XMLLoader {
+class XMLLoader
+{
    public:
     XMLLoader(std::string &mapName);
     ~XMLLoader();

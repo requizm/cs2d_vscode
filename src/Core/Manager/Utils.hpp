@@ -5,7 +5,8 @@
 #include "../Math/Vector2.hpp"
 
 
-class Utils {
+class Utils
+{
    public:
     Utils();
     virtual ~Utils();

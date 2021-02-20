@@ -4,9 +4,11 @@ JSONLoader::JSONLoader() {}
 
 JSONLoader::~JSONLoader() {}
 
-nlohmann::json JSONLoader::Load(std::string str) {
+nlohmann::json JSONLoader::Load(std::string str)
+{
     std::ifstream t(str);
-    if (!t) {
+    if (!t)
+    {
         WRITE_ERROR("dosya acilamadi: " + str);
         exit(EXIT_FAILURE);
     }

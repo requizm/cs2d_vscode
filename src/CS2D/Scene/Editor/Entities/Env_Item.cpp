@@ -8,19 +8,22 @@
 
 Env_Item::Env_Item() {}
 
-Env_Item::Env_Item(int id, Vector2<int> position) {
+Env_Item::Env_Item(int id, Vector2<int> position)
+{
     this->item_id = id;
     this->position = position;
     this->Initialize();
 }
 
-Env_Item::~Env_Item() {
+Env_Item::~Env_Item()
+{
     button->removeParent();
     if (button != nullptr) delete button;
     button = nullptr;
 }
 
-void Env_Item::Initialize() {
+void Env_Item::Initialize()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -31,18 +34,21 @@ void Env_Item::Initialize() {
     button = new Button(t, 1.0F, UIObjectType::ENV_ITEM);
     button->setType(ButtonType::ENV_OBJ);
 
-    if (item_id != 0) {
+    if (item_id != 0)
+    {
         Editor::instance().env_items.push_back(this);
     }
 }
 
 void Env_Item::ProcessInput() {}
-void Env_Item::Update() {
+void Env_Item::Update()
+{
     // button.Update();
 }
 void Env_Item::Render(SpriteRenderer &worldRenderer,
                       SpriteRenderer &menuRenderer,
-                      SquareRenderer &squareRenderer, float time) {
+                      SquareRenderer &squareRenderer, float time)
+{
     button->Draw(worldRenderer, squareRenderer);
     /*worldRenderer.DrawSprite(sp, Vector2<float>(position +
      * GameParameters::SIZE_TILE / 4), Vector2<float>(GameParameters::SIZE_TILE
@@ -57,7 +63,8 @@ int Env_Item::getObjID() { return this->obj_id; }
 
 Vector2<int> Env_Item::getPosition() { return position; }
 
-Env_Item_Manager::Env_Item_Manager() {
+Env_Item_Manager::Env_Item_Manager()
+{
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
@@ -110,7 +117,8 @@ Env_Item_Manager::Env_Item_Manager() {
     t_id->setParent(p_panel);
 }
 
-Env_Item_Manager::~Env_Item_Manager() {
+Env_Item_Manager::~Env_Item_Manager()
+{
     delete t_id;
     delete b_cancel;
     delete b_okay;
@@ -121,12 +129,14 @@ Env_Item_Manager::~Env_Item_Manager() {
 void Env_Item_Manager::Update() { p_panel->Update(); }
 
 void Env_Item_Manager::Draw(SpriteRenderer &spriteRenderer,
-                            SquareRenderer &squareRenderer) {
+                            SquareRenderer &squareRenderer)
+{
     p_panel->Draw(spriteRenderer, squareRenderer);
 }
 
 void Env_Item_Manager::ProcessInput() { p_panel->ProcessInput(); }
 
-bool Env_Item_Manager::isPressedOrHover() {
+bool Env_Item_Manager::isPressedOrHover()
+{
     return p_panel->isPressed || p_panel->isMouseHover(false);
 }

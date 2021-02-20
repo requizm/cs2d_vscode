@@ -4,10 +4,12 @@ XMLLoader::XMLLoader(std::string &mapName) { Load(mapName); }
 
 XMLLoader::~XMLLoader() { delete[] codeChar; }
 
-void XMLLoader::Load(std::string &mapName) {
+void XMLLoader::Load(std::string &mapName)
+{
     std::string codeString;
     std::ifstream fileC(mapName.c_str());
-    if (!fileC) {
+    if (!fileC)
+    {
         WRITE_ERROR("dosya acilamadi: " + mapName);
         exit(EXIT_FAILURE);
     }
