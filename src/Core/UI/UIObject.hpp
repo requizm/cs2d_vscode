@@ -17,6 +17,7 @@ enum class UIObjectType
     LABEL,
     TEXTBOX,
     TEXTBUTTON,
+    SPRITEBUTTON,
     PANEL,
     RADIOBUTTON,
     LISTITEM,

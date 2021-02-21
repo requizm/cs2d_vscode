@@ -10,7 +10,7 @@ class TextButton : public UIObject
                const Vector3<float> &buttonColor = Vector3<float>(1.0F),
                const Vector3<float> &textColor = Vector3<float>(0.0F),
                float scale = 1.0F);
-    ~TextButton() final = default;
+    ~TextButton() final;
 
     void Update() final;
     void ProcessInput() final;
@@ -20,18 +20,25 @@ class TextButton : public UIObject
 
     void setButtonMouseHoverColor(const Vector3<float> &value);
 
-    void setTextColor(const Vector3<float> &value);
+    void setButtonClickColor(const Vector3<float> &value);
 
-    void setOutlineColor(const Vector3<float> &value);
+    void setTextColor(const Vector3<float> &value);
 
     void setTextMouseHoverColor(const Vector3<float> &value);
 
+    void setTextClickColor(const Vector3<float> &value);
+
+    void setOutlineColor(const Vector3<float> &value);
+
     void setTextColor(const Vector3<float> &value);
 
-    void setHaveOutline(bool value);
 
     std::string getText() const;
     void setText(const std::string &value);
+
+    void setHaveOutline(bool value);
+
+    void setDrawCenter(bool value);
 
     Vector2<int> getTextSize() const;
 
@@ -42,11 +49,13 @@ class TextButton : public UIObject
     Vector3<float> buttonCurrentColor = Vector3<float>(1.0F);
     Vector3<float> buttonColor = Vector3<float>(1.0F);
     Vector3<float> buttonMouseHoverColor = Vector3<float>(1.0F);
+    Vector3<float> buttonClickColor = Vector3<float>(1.0F);
     Vector3<float> outlineColor = Vector3<float>(1.0F);
 
     Vector3<float> textCurrentColor = Vector3<float>(1.0F);
-    Vector3<float> textMouseHoverColor = Vector3<float>(1.0F);
     Vector3<float> textColor = Vector3<float>(1.0F);
+    Vector3<float> textMouseHoverColor = Vector3<float>(1.0F);
+    Vector3<float> textClickColor = Vector3<float>(1.0F);
 
     std::string text;
     bool haveOutline = true;
@@ -58,6 +67,8 @@ class TextButton : public UIObject
     std::vector<std::function<void()>> listenersDown, listenersUp;
     std::function<void()> mDown;
     std::function<void()> mUp;
+
+    bool isMouseHover();
 
     void onMouseDown();
     void onMouseUp();
