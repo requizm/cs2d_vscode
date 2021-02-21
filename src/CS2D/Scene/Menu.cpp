@@ -68,18 +68,19 @@ void Menu::Start()
                     Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F));
     this->t_mapName->setParent(newPanel, true);
 
-    this->b_newGame = new Button(
+    this->b_newGame = new TextButton(
         "Start", Vector2<int>(240, 320), Vector2<int>(60, 20), *textRenderer,
         Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    this->b_newGame->setMouseClickColor(Vector3<float>(0.30F));
-    this->b_newGame->setMouseHoverColor(Vector3<float>(0.30F));
-    this->b_newGame->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    this->b_newGame->setLabelClickColor(Vector3<float>(1.0F));
-    this->b_newGame->setOutline(true);
+    this->b_newGame->setButtonClickColor(Vector3<float>(0.30F));
+    this->b_newGame->setButtonHoverColor(Vector3<float>(0.30F));
+    this->b_newGame->setTextHoverColor(Vector3<float>(0.58F));
+    this->b_newGame->setTextClickColor(Vector3<float>(1.0F));
+    this->b_newGame->setHaveOutline(true);
     this->b_newGame->setOutlineColor(Vector3<float>(1.0F));
     this->b_newGame->setParent(newPanel, true);
+    this->b_newGame->addListenerDown(std::bind(&Menu::newGameBtnClick, this));
 
-    std::function<void(Button *, Button *)> mapChange =
+    std::function<void(TextButton *, TextButton *)> mapChange =
         std::bind(&Menu::selectedMapChange, this, std::placeholders::_1,
                   std::placeholders::_2);
     this->mapNames->AddListener(mapChange);
@@ -198,18 +199,6 @@ void Menu::ProcessInput()
         newPanel->setEnable(true);
     }
 
-    if (b_newGame->isMouseDown())
-    {
-#if defined(WIN32) && defined(TRACY_ENABLE)
-        ZoneScoped;
-#endif
-        std::string mName = GameParameters::resDirectory + "levels/" +
-                            t_mapName->getText() + ".xml";
-        StartGame::instance().Initialize(mName);
-        Game::SetGameState(GameState::INGAME);
-        return;
-    }
-
     if (l_options->isMouseDown())
     {
         optionsPanel->setEnable(true);
@@ -250,11 +239,23 @@ void Menu::Render()
     // button->Draw(*squareRenderer);
     optionsPanel->Draw(*menuRenderer, *squareRenderer);
     newPanel->Draw(*menuRenderer, *squareRenderer);
-    mapNames->Draw(*menuRenderer, *squareRenderer);
+    mapNames->Draw(*squareRenderer);
     // t_test->Draw(menuRenderer, squareRenderer);
 }
 
-void Menu::selectedMapChange(Button *old, Button *n)
+void Menu::selectedMapChange(TextButton *old, TextButton *n)
 {
     t_mapName->setText(n->getText());
+}
+
+void Menu::newGameBtnClick()
+{
+#if defined(WIN32) && defined(TRACY_ENABLE)
+    ZoneScoped;
+#endif
+    std::string mName = GameParameters::resDirectory + "levels/" +
+                        t_mapName->getText() + ".xml";
+    StartGame::instance().Initialize(mName);
+    Game::SetGameState(GameState::INGAME);
+    return;
 }

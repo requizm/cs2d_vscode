@@ -4,6 +4,7 @@ SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, c
                            bool difColor, float scale) : UIObject(position, scale, UIObjectType::SPRITEBUTTON)
 {
     this->sprite = sprite;
+    this->size = size;
 
     mDown = std::bind(&SpriteButton::onMouseDown, this);
     InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -27,7 +28,7 @@ void SpriteButton::Update()
         {
             if (isMouseHover())
             {
-                buttonCurrentColor = buttonMouseHoverColor;
+                buttonCurrentColor = buttonHoverColor;
             }
             else
             {
@@ -54,13 +55,12 @@ void SpriteButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRe
             squareRenderer.ui_RenderEmptySquare(
                 position,
                 getSize(),
-                this->outlineColor);
+                outlineColor);
         }
         spriteRenderer.DrawSprite(
-            this->sprite,
-            Vector2<int>(position.x + margin.x / 2,
-                         position.y + margin.y / 2),
-            this->size);
+            sprite,
+            spritePos,
+            size);
     }
 }
 
@@ -69,9 +69,20 @@ Vector2<int> SpriteButton::getSize()
     return size + margin;
 }
 
+void SpriteButton::setPosition(const Vector2<int> &position)
+{
+    Vector2<int> newPos = position;
+    if (isParent())
+    {
+        newPos = newPos + getParent()->getPosition();
+    }
+    this->position = newPos;
+    spritePos = Vector2<int>(newPos.x + margin.x / 2, newPos.y + margin.y / 2);
+}
+
 void SpriteButton::setButtonCurrentColor(const Vector3<float> &value) { buttonCurrentColor = value; }
 
-void SpriteButton::setButtonMouseHoverColor(const Vector3<float> &value) { buttonMouseHoverColor = value; }
+void SpriteButton::setButtonHoverColor(const Vector3<float> &value) { buttonHoverColor = value; }
 
 void SpriteButton::setButtonClickColor(const Vector3<float> &value) { buttonClickColor = value; }
 
@@ -79,9 +90,25 @@ void SpriteButton::setOutlineColor(const Vector3<float> &value) { outlineColor =
 
 void SpriteButton::setButtonColor(const Vector3<float> &value) { buttonColor = value; }
 
-void SpriteButton::setMargin(const Vector2<int> &value) { margin = value; }
+void SpriteButton::setMargin(const Vector2<int> &value)
+{
+    margin = value;
+    spritePos = Vector2<int>(position.x + margin.x / 2, position.y + margin.y / 2);
+}
 
 void SpriteButton::setSprite(const Sprite &value) { sprite = value; }
+
+void SpriteButton::setHaveOutline(bool value) { haveOutline = value; }
+
+void SpriteButton::addListenerDown(std::function<void()> func)
+{
+    listenersDown.push_back(func);
+}
+
+void SpriteButton::addListenerUp(std::function<void()> func)
+{
+    listenersUp.push_back(func);
+}
 
 bool SpriteButton::isMouseHover()
 {

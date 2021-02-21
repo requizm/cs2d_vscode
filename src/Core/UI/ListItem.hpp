@@ -5,22 +5,27 @@
 
 #include "../Manager/MemoryOverride/MemoryOverride.hpp"
 #include "Panel.hpp"
+#include "TextButton.hpp"
+
+class ListItem;
 
 
-class ListItemElement : public Button
+class ListItemElement : public UIObject
 {
    public:
-    explicit ListItemElement(Button *btn);
+    explicit ListItemElement(TextButton *btn, int i, ListItem *listItem);
     ~ListItemElement();
 
-    void Update() override;
-
     bool selected = false;
+    TextButton *bt = nullptr;
 
-   protected:
-    void onMouseDown() override;
-    void onMouseUp() override;
-    Button *btn;
+   private:
+    ListItem *listItem = nullptr;
+
+
+    int index = -1;
+
+    void MouseDown();
 };
 
 class ListItem : public UIObject
@@ -30,14 +35,12 @@ class ListItem : public UIObject
     ListItem();
     ~ListItem();
 
-    void AddItem(std::string &text);
+    void AddItem(const std::string &text);
     void Clear();
 
-    void AddListener(std::function<void(Button *, Button *)> func);
+    void AddListener(std::function<void(TextButton *, TextButton *)> func);
 
-    void Draw(SpriteRenderer &spriteRenderer,
-              SquareRenderer &squareRenderer) override;
-    void ProcessInput() override;
+    void Draw(SquareRenderer &squareRenderer);
     void Update() override;
     void Select(int i);
 
@@ -51,7 +54,7 @@ class ListItem : public UIObject
 
     int i = 0;
 
-    std::vector<std::function<void(Button *, Button *)>> listeners;
+    std::vector<std::function<void(TextButton *, TextButton *)>> listeners;
 };
 
 #endif  // LISTITEM_H

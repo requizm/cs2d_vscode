@@ -21,6 +21,7 @@ enum class UIObjectType
     PANEL,
     RADIOBUTTON,
     LISTITEM,
+    LISTITEMELEMENT,
     ENV_ITEM
 };
 // class TextRenderer;
@@ -28,7 +29,8 @@ enum class UIObjectType
 class UIObject
 {
    public:
-    UIObject();
+    UIObject() = default;
+    UIObject(UIObjectType type);
     UIObject(Vector2<int> position, Vector2<int> size, float scale,
              TextRenderer &renderer);
     UIObject(Vector2<int> position, Vector2<int> size, float scale,
@@ -47,6 +49,7 @@ class UIObject
     virtual void OnDisable();
     virtual void ProcessInput();
     virtual void Draw();
+    virtual void Draw(SquareRenderer &squareRenderer);
     virtual void Draw(SpriteRenderer &spriteRenderer,
                       SquareRenderer &squareRenderer);
 
@@ -94,10 +97,10 @@ class UIObject
     TextRenderer *rend = nullptr;
 
    protected:
-    Vector2<int> position;
-    float scale;
-    Vector2<int> size;
-    UIObjectType objType;
+    Vector2<int> position = Vector2<int>(0);
+    float scale = 1.0F;
+    Vector2<int> size = Vector2<int>(0);
+    UIObjectType objType = UIObjectType::UIOBJECT;
     UIObject *parent = nullptr;
 
     int id = 0;

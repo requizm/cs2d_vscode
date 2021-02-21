@@ -44,6 +44,8 @@
 #include "Core/Renderer/TextRenderer.cpp"
 #include "Core/Renderer/Texture.cpp"
 #include "Core/UI/Button.cpp"
+#include "Core/UI/TextButton.cpp"
+#include "Core/UI/SpriteButton.cpp"
 #include "Core/UI/Label.cpp"
 #include "Core/UI/ListItem.cpp"
 #include "Core/UI/Panel.cpp"

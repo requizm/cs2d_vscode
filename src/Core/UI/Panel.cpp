@@ -14,15 +14,17 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
     this->movable = false;
     this->scrollable = false;
     this->outline = false;
-    escapeButton = new Button(
+    escapeButton = new SpriteButton(
         Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16),
         position, Vector2<int>(20, 20), true);
     escapeButton->setParent(this);
     escapeButton->independent = true;
     escapeButton->setPosition(Vector2<int>(this->size.x - 20, 3));
     escapeButton->setButtonColor(color);
-    escapeButton->setMouseHoverColor(Vector3<float>(0.64F));
-    escapeButton->setMouseClickColor(Vector3<float>(1.0F));
+    escapeButton->setButtonHoverColor(Vector3<float>(0.64F));
+    escapeButton->setButtonClickColor(Vector3<float>(1.0F));
+    escapeButton->setHaveOutline(false);
+    escapeButton->addListenerUp(std::bind(&Panel::escapeButtonClicked, this));
     this->title = Label(title, position, renderer, scale, Vector3<float>(1.0F),
                         UIObjectType::PANEL, LabelType::NOT_CLICKABLE);
     this->title.setMouseEvent(false);
@@ -35,6 +37,7 @@ Panel::Panel() : UIObject() {}
 
 Panel::~Panel()
 {
+    InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, escapeDown, id);
     delete escapeButton;
     UIObject::removeParent();
 }
@@ -76,6 +79,8 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
         {
             if (childs[i]->GetObjectTypeString() == "Label")
                 childs[i]->Draw();
+            else if(childs[i]->GetObjectTypeString() == "TextButton")
+                childs[i]->Draw(squareRenderer);
             else
                 childs[i]->Draw(spriteRenderer, squareRenderer);
         }
@@ -108,7 +113,6 @@ void Panel::Update()
                 Vector2<int> mousePos = InputManager::mousePos;
                 this->setPosition(
                     Vector2<int>(mousePos.x - deltaX, mousePos.y - deltaY));
-                // std::cout << "hey" << std::endl;
             }
             if (!isPressed) click = false;
         }
@@ -134,10 +138,10 @@ void Panel::ProcessInput()
         if (isMouseEvents())
         {
             isMouseUpM(MOUSE_BUTTON_LEFT);
-            if (escapeButton->isMouseUp() && opttitles)
+            /*if (escapeButton->isMouseUp() && opttitles)
             {
                 this->setEnable(false);
-            }
+            }*/
             if (isMovable())
             {
                 isMouseDownForDrag(MOUSE_BUTTON_LEFT);
@@ -344,3 +348,11 @@ void Panel::setOutlineColor(const Vector3<float> &color)
 }
 
 void Panel::setOutline(const bool value) { this->outline = value; }
+
+void Panel::escapeButtonClicked()
+{
+    if (opttitles && isEnable() && isMouseEvents())
+    {
+        setEnable(false);
+    }
+}

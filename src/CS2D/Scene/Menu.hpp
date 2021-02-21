@@ -71,13 +71,14 @@ class Menu
     Panel *newPanel = nullptr;
     Panel *mapsPanel = nullptr;
     TextBox *t_mapName = nullptr;
-    Button *b_newGame = nullptr;
+    TextButton *b_newGame = nullptr;
     ListItem *mapNames = nullptr;
 
    private:
     bool enable = false;
 
-    void selectedMapChange(Button *old, Button *n);
+    void selectedMapChange(TextButton *old, TextButton *n);
+    void newGameBtnClick();
 
     std::vector<std::string> getMapNames()
     {

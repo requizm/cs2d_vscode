@@ -1,13 +1,8 @@
 #include "UIObject.hpp"
 
-UIObject::UIObject()
+UIObject::UIObject(UIObjectType type)
 {
-    this->objType = UIObjectType::UIOBJECT;
-
-    this->position = Vector2<int>(0);
-    this->scale = 1.0F;
-    this->size = Vector2<int>(0);
-    this->rend = nullptr;
+    this->objType = type;
 }
 
 UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
@@ -110,6 +105,10 @@ void UIObject::ProcessInput() {}
 
 void UIObject::Draw() {}
 
+void UIObject::Draw(SquareRenderer &squareRenderer)
+{
+}
+
 void UIObject::Draw(SpriteRenderer &spriteRenderer,
                     SquareRenderer &squareRenderer)
 {
@@ -118,6 +117,17 @@ void UIObject::Draw(SpriteRenderer &spriteRenderer,
 void UIObject::setPosition(const Vector2<int> &position)
 {
     Vector2<int> newPos = position;
+    if (objType == UIObjectType::PANEL)
+    {
+        Vector2<int> oldPos = this->position;
+
+        for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+        {
+            Vector2<int> delta = newPos - oldPos;
+            childs[i]->setPosition(childs[i]->getLocalPosition() + delta);
+        }
+    }
+
     if (isParent())
     {
         newPos = newPos + getParent()->getPosition();
@@ -148,7 +158,7 @@ Vector2<int> UIObject::getLocalPosition()
 {
     if (isParent())
     {
-        return this->getPosition() - parent->getPosition();
+        return this->position - parent->getPosition();
     }
     return this->position;
 }
@@ -302,25 +312,37 @@ void UIObject::setID(const int value) { this->id = value; }
 std::string UIObject::GetObjectTypeString()
 {
     std::string str;
-    switch ((int)this->objType)
+    switch (this->objType)
     {
-        case 0:
+        case UIObjectType::UIOBJECT:
             str = "UIObject";
             break;
-        case 1:
+        case UIObjectType::LABEL:
             str = "Label";
             break;
-        case 2:
+        case UIObjectType::TEXTBOX:
             str = "TextBox";
             break;
-        case 3:
-            str = "Button";
+        case UIObjectType::TEXTBUTTON:
+            str = "TextButton";
             break;
-        case 4:
+        case UIObjectType::SPRITEBUTTON:
+            str = "SpriteButton";
+            break;
+        case UIObjectType::PANEL:
             str = "Panel";
             break;
-        case 5:
+        case UIObjectType::RADIOBUTTON:
             str = "RadioButton";
+            break;
+        case UIObjectType::LISTITEM:
+            str = "ListItem";
+            break;
+        case UIObjectType::LISTITEMELEMENT:
+            str = "ListItemElement";
+            break;
+        case UIObjectType::ENV_ITEM:
+            str = "Env_Item";
             break;
         default:
             str = "Bilinmeyen";

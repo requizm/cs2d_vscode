@@ -248,7 +248,7 @@ void Editor::Start()
     this->SaveLoad->b_map_load->setOutline(true);
     this->SaveLoad->b_map_load->setOutlineColor(Vector3<float>(1.0F));
     this->SaveLoad->b_map_load->setParent(SaveLoad->loadPanel);
-    std::function<void(Button *, Button *)> loadListChanged =
+    std::function<void(TextButton *, TextButton *)> loadListChanged =
         std::bind(&SaveLoadSystem::LoadListChanged, this->SaveLoad,
                   std::placeholders::_1, std::placeholders::_2);
     this->SaveLoad->load_listMaps->AddListener(loadListChanged);
@@ -289,7 +289,7 @@ void Editor::Start()
     this->SaveLoad->b_map_save->setOutline(true);
     this->SaveLoad->b_map_save->setOutlineColor(Vector3<float>(1.0F));
     this->SaveLoad->b_map_save->setParent(SaveLoad->savePanel);
-    std::function<void(Button *, Button *)> saveListChanged =
+    std::function<void(TextButton *, TextButton *)> saveListChanged =
         std::bind(&SaveLoadSystem::SaveListChanged, this->SaveLoad,
                   std::placeholders::_1, std::placeholders::_2);
     this->SaveLoad->save_listMaps->AddListener(saveListChanged);
@@ -918,7 +918,7 @@ void Editor::Render()
             }
         }
     }
-    objects_ui->Draw(*menuRenderer, *squareRenderer);
+    objects_ui->Draw(*squareRenderer);
     this->textRenderer->RenderText(
         "fps: " + std::to_string(InputManager::m_fps), Vector2(700, 135), 1.0F,
         0.5F);

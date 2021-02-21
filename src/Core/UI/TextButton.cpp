@@ -1,11 +1,15 @@
 #include "TextButton.hpp"
 
-TextButton::TextButton(const std::string &text, Vector2<int> position,
+TextButton::TextButton(const std::string &text, const Vector2<int> &position, const Vector2<int> &size,
                        TextRenderer &renderer,
                        const Vector3<float> &buttonColor,
                        const Vector3<float> &textColor,
-                       float scale) : UIObject(position, 1.0F, renderer, UIObjectType::TEXTBUTTON)
+                       float scale, UIObjectType type) : UIObject(position, size, 1.0F, renderer, type)
 {
+    this->buttonColor = buttonColor;
+    this->textColor = textColor;
+    this->text = text;
+
     mDown = std::bind(&TextButton::onMouseDown, this);
     InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
@@ -29,8 +33,8 @@ void TextButton::Update()
         {
             if (isMouseHover())
             {
-                buttonCurrentColor = buttonMouseHoverColor;
-                textCurrentColor = textMouseHoverColor;
+                buttonCurrentColor = buttonHoverColor;
+                textCurrentColor = textHoverColor;
             }
             else
             {
@@ -57,13 +61,36 @@ void TextButton::Draw(SquareRenderer &squareRenderer)
     }
 }
 
+void TextButton::setPosition(const Vector2<int> &position)
+{
+    Vector2<int> newPos = position;
+
+    if (isParent())
+    {
+        newPos = newPos + getParent()->getPosition();
+    }
+    this->position = newPos;
+
+    if (drawCenter)
+    {
+        Vector2<int> dif = size - textSize;
+        dif.y /= 2;
+        dif.x /= 2;
+        textPos = newPos + dif;
+    }
+    else
+    {
+        textPos = newPos;
+    }
+}
+
 void TextButton::setButtonColor(const Vector3<float> &value) { buttonColor = value; }
 
-void TextButton::setButtonMouseHoverColor(const Vector3<float> &value) { buttonMouseHoverColor = value; }
+void TextButton::setButtonHoverColor(const Vector3<float> &value) { buttonHoverColor = value; }
 
 void TextButton::setOutlineColor(const Vector3<float> &value) { outlineColor = value; }
 
-void TextButton::setTextMouseHoverColor(const Vector3<float> &value) { textMouseHoverColor = value; }
+void TextButton::setTextHoverColor(const Vector3<float> &value) { textHoverColor = value; }
 
 void TextButton::setTextClickColor(const Vector3<float> &value) { textClickColor = value; }
 
@@ -99,6 +126,16 @@ void TextButton::setText(const std::string &value)
 Vector2<int> TextButton::getTextSize() const { return textSize; }
 
 Vector2<int> TextButton::getTextPos() const { return textPos; }
+
+void TextButton::addListenerDown(std::function<void()> func)
+{
+    listenersDown.push_back(func);
+}
+
+void TextButton::addListenerUp(std::function<void()> func)
+{
+    listenersUp.push_back(func);
+}
 
 bool TextButton::isMouseHover()
 {

@@ -6,31 +6,31 @@
 class TextButton : public UIObject
 {
    public:
-    TextButton(const std::string &text, Vector2<int> position, TextRenderer &renderer,
+    TextButton(const std::string &text, const Vector2<int> &position, const Vector2<int> &size, TextRenderer &renderer,
                const Vector3<float> &buttonColor = Vector3<float>(1.0F),
                const Vector3<float> &textColor = Vector3<float>(0.0F),
-               float scale = 1.0F);
-    ~TextButton() final;
+               float scale = 1.0F, UIObjectType type = UIObjectType::TEXTBUTTON);
+    ~TextButton();
 
     void Update() final;
     void ProcessInput() final;
-    void Draw(SquareRenderer &squareRenderer);
+    void Draw(SquareRenderer &squareRenderer) final;
+
+    void setPosition(const Vector2<int> &position) final;
 
     void setButtonColor(const Vector3<float> &value);
 
-    void setButtonMouseHoverColor(const Vector3<float> &value);
+    void setButtonHoverColor(const Vector3<float> &value);
 
     void setButtonClickColor(const Vector3<float> &value);
 
     void setTextColor(const Vector3<float> &value);
 
-    void setTextMouseHoverColor(const Vector3<float> &value);
+    void setTextHoverColor(const Vector3<float> &value);
 
     void setTextClickColor(const Vector3<float> &value);
 
     void setOutlineColor(const Vector3<float> &value);
-
-    void setTextColor(const Vector3<float> &value);
 
 
     std::string getText() const;
@@ -44,17 +44,20 @@ class TextButton : public UIObject
 
     Vector2<int> getTextPos() const;
 
+    void addListenerDown(std::function<void()> func);
+    void addListenerUp(std::function<void()> func);
 
-   private:
+
+   protected:
     Vector3<float> buttonCurrentColor = Vector3<float>(1.0F);
     Vector3<float> buttonColor = Vector3<float>(1.0F);
-    Vector3<float> buttonMouseHoverColor = Vector3<float>(1.0F);
+    Vector3<float> buttonHoverColor = Vector3<float>(1.0F);
     Vector3<float> buttonClickColor = Vector3<float>(1.0F);
     Vector3<float> outlineColor = Vector3<float>(1.0F);
 
     Vector3<float> textCurrentColor = Vector3<float>(1.0F);
     Vector3<float> textColor = Vector3<float>(1.0F);
-    Vector3<float> textMouseHoverColor = Vector3<float>(1.0F);
+    Vector3<float> textHoverColor = Vector3<float>(1.0F);
     Vector3<float> textClickColor = Vector3<float>(1.0F);
 
     std::string text;
@@ -68,10 +71,10 @@ class TextButton : public UIObject
     std::function<void()> mDown;
     std::function<void()> mUp;
 
-    bool isMouseHover();
+    virtual bool isMouseHover();
 
-    void onMouseDown();
-    void onMouseUp();
+    virtual void onMouseDown();
+    virtual void onMouseUp();
 };
 
 

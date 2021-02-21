@@ -5,8 +5,9 @@
 #include "../Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../Renderer/SpriteRenderer.hpp"
 #include "../Renderer/SquareRenderer.hpp"
-#include "Button.hpp"
-#include "UIObject.hpp"
+#include "Label.hpp"
+#include "SpriteButton.hpp"
+
 
 
 class Panel : public UIObject
@@ -63,7 +64,7 @@ class Panel : public UIObject
     Vector3<float> panelColor;
     Vector2<int> dragSize;
     Vector2<int> dragPos;
-    Button *escapeButton;
+    SpriteButton *escapeButton;
     Label title;
     bool opttitles;
     bool backGround;
@@ -86,6 +87,9 @@ class Panel : public UIObject
     bool isMouseHoverForMouse();
     bool isMouseDownForMouse(MouseKeys key);
     bool isMousePressForMouse(MouseKeys key);
+
+    std::function<void()> escapeDown;
+    void escapeButtonClicked();
 };
 
 #endif

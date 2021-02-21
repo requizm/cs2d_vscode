@@ -6,6 +6,7 @@
 #include "../../../../Core/UI/Panel.hpp"
 #include "../../../../Core/UI/TextBox.hpp"
 #include "../../../Other/GameParameters.hpp"
+#include "../../../../Core/UI/Button.hpp""
 
 
 class Env_Item

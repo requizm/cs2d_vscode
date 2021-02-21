@@ -39,7 +39,7 @@ class SaveLoadSystem
     // save
     void SaveMap();
     void B_SaveMap();
-    void SaveListChanged(Button *old, Button *n);
+    void SaveListChanged(TextButton *old, TextButton *n);
     Panel *savePanel, *save_mapsPanel;
     Button *b_map_save;
     TextBox *t_save;
@@ -48,7 +48,7 @@ class SaveLoadSystem
     // load
     std::vector<ButtonTile *> LoadMap(std::string &mapName);
     void B_LoadMap();
-    void LoadListChanged(Button *old, Button *n);
+    void LoadListChanged(TextButton *old, TextButton *n);
     Panel *loadPanel, *load_mapsPanel;
     Button *b_map_load;
     TextBox *t_load;

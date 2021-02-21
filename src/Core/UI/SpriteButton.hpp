@@ -18,11 +18,13 @@ class SpriteButton : public UIObject
 
     Vector2<int> getSize() final;
 
+    void setPosition(const Vector2<int> &position) final;
+
     void setButtonCurrentColor(const Vector3<float> &value);
 
     void setButtonColor(const Vector3<float> &value);
 
-    void setButtonMouseHoverColor(const Vector3<float> &value);
+    void setButtonHoverColor(const Vector3<float> &value);
 
     void setButtonClickColor(const Vector3<float> &value);
 
@@ -32,20 +34,23 @@ class SpriteButton : public UIObject
 
     void setSprite(const Sprite &value);
 
-    void setHaveOutline(bool value) { haveOutline = value; }
+    void setHaveOutline(bool value);
 
-    
+    void addListenerDown(std::function<void()> func);
+    void addListenerUp(std::function<void()> func);
 
 
    private:
     Vector3<float> buttonCurrentColor = Vector3<float>(1.0F);
     Vector3<float> buttonColor = Vector3<float>(1.0F);
-    Vector3<float> buttonMouseHoverColor = Vector3<float>(1.0F);
+    Vector3<float> buttonHoverColor = Vector3<float>(1.0F);
     Vector3<float> buttonClickColor = Vector3<float>(1.0F);
     Vector3<float> outlineColor = Vector3<float>(1.0F);
 
     Sprite sprite;
     Vector2<int> margin = Vector2<int>(0);
+
+    Vector2<int> spritePos = Vector2<int>(1);
 
     bool haveOutline = true;
 

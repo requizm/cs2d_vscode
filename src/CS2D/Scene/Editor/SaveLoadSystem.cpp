@@ -50,8 +50,8 @@ void SaveLoadSystem::Render(SpriteRenderer &menuRenderer,
     savePanel->Draw(menuRenderer, squareRenderer);
     loadPanel->Draw(menuRenderer, squareRenderer);
 
-    save_listMaps->Draw(menuRenderer, squareRenderer);
-    load_listMaps->Draw(menuRenderer, squareRenderer);
+    save_listMaps->Draw(squareRenderer);
+    load_listMaps->Draw(squareRenderer);
 }
 
 void SaveLoadSystem::SaveMap()
@@ -288,12 +288,12 @@ std::vector<std::string> SaveLoadSystem::getMapNames()
     return maps;
 }
 
-void SaveLoadSystem::SaveListChanged(Button *old, Button *n)
+void SaveLoadSystem::SaveListChanged(TextButton *old, TextButton *n)
 {
     t_save->setText(n->getText());
 }
 
-void SaveLoadSystem::LoadListChanged(Button *old, Button *n)
+void SaveLoadSystem::LoadListChanged(TextButton *old, TextButton *n)
 {
     t_load->setText(n->getText());
 }
