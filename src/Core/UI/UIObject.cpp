@@ -121,10 +121,10 @@ void UIObject::setPosition(const Vector2<int> &position)
     {
         Vector2<int> oldPos = this->position;
 
-        for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+        for (auto &child: childs)
         {
             Vector2<int> delta = newPos - oldPos;
-            childs[i]->setPosition(childs[i]->getLocalPosition() + delta);
+            child->setPosition(child->getLocalPosition() + delta);
         }
     }
 
