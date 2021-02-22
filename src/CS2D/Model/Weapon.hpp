@@ -22,40 +22,10 @@ class Weapon : public GameObject
 {
    public:
     Weapon()
-        : curAmmoInMag(0),
-          maxAmmoInMag(0),
-          curAmmo(0),
-          maxAmmo(0),
-          ammoType(),
-          weaponType(),
-          selected(false)
+        : GameObject()
     {
-        this->objType = (ObjectType)ObjectType::WEAPON;
+        objType = ObjectType::WEAPON;
     }
-
-    /*Weapon(Player &player, const Sprite& sprite, const Sprite& floorSprite,
-    std::string weaponName, const WeaponType type, const int maxAmmo, const int
-    curAmmo, const int curAmmoInMag, const int maxAmmoInMag) :
-    GameObject(player.GetGlobalPosition(), sprite,
-    Vector2<int>(InputManager::Width / 26.5, InputManager::Width / 26.5),
-    (int)ObjectType::WEAPON)
-    {
-            this->SetPosition(Vector2<int>(player.GetGlobalPosition().x,
-    player.GetGlobalPosition().y + 50)); this->SetMoveParent(&player);
-            this->weaponType = type;
-            if (weaponType == WeaponType::MAIN)
-                    ammoType = AmmoType::PRIMARY;
-            else if (weaponType == WeaponType::GUN)
-                    ammoType = AmmoType::SECONDARY;
-            this->maxAmmo = maxAmmo;
-            this->curAmmo = curAmmo;
-            this->curAmmoInMag = curAmmoInMag;
-            this->maxAmmoInMag = maxAmmoInMag;
-            this->weaponName = weaponName;
-            this->sprites[0] = sprite;
-            this->sprites[1] = floorSprite;
-            player.addWeapon(*this);
-    }*/
 
     Weapon(const Vector2<int> pos, const Sprite &sprite,
            const Sprite &floorSprite, const std::string &weaponName,
@@ -68,7 +38,7 @@ class Weapon : public GameObject
               floorSprite,
               Vector2<int>(GameParameters::SIZE_TILE,
                            GameParameters::SIZE_TILE),
-              (int)ObjectType::WEAPON),
+              ObjectType::WEAPON),
           currentIndex(1),
           selected(false)
     {
@@ -80,8 +50,9 @@ class Weapon : public GameObject
         {
             this->SetSize(Vector2<int>(GameParameters::SIZE_TILE * 2,
                                        GameParameters::SIZE_TILE));
-            this->SetPosition(GetPosition().x - GameParameters::SIZE_TILE / 2,
-                              GetPosition().y, false);
+            const Vector2<int> newPos = Vector2<int>(GetPosition().x - GameParameters::SIZE_TILE / 2,
+                                                     GetPosition().y);
+            this->SetPosition(newPos, false);
         }
 
         this->maxAmmo = maxAmmo;
@@ -108,11 +79,10 @@ class Weapon : public GameObject
     std::string weaponName;
     Sprite sprites[2];
 
-    void Draw(SpriteRenderer &renderer) override;
     void DrawModel(SpriteRenderer &renderer) override;
     void Update();
 
-    void SetParent(GameObject *go) override;
+    void SetParent(Object *value) override;
     void RemoveParent() override;
 
     void setSelect(bool value);
@@ -122,10 +92,10 @@ class Weapon : public GameObject
     bool isAmmoAndWeapon();
 
    private:
-    bool selected;
-    int currentIndex;  // 0=hand   1=floor
-    bool dropable;
-    bool ammoAndWeapon;
+    bool selected = false;
+    int currentIndex = 1;  // 0=hand   1=floor
+    bool dropable = true;
+    bool ammoAndWeapon = false;
 };
 
 #endif  // WEAPON_H

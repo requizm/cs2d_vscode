@@ -43,7 +43,7 @@ class UIObject
              UIObjectType type);
     UIObject(Vector2<int> position, float scale, UIObjectType type);
     virtual ~UIObject();
-
+    
     virtual void Update();
     virtual void OnEnable();
     virtual void OnDisable();
@@ -118,6 +118,17 @@ class UIObject
 
     bool isDown = false;
     bool isUp = false;
+
+    Vector2<int> localPosition, localSize;
+    int localRotation;
+
+    Vector2<int> globalPosition, globalSize;
+    int globalRotation;
+
+    Matrix4<float> localTransform = Matrix4(1.0f);
+    Matrix4<float> globalTransform = Matrix4(1.0f);
+
+    void BuildTransform();
 };
 
 #endif  // UIOBJECT_H

@@ -8,12 +8,6 @@
 
 #define PI 3.14159265
 
-void Player::Draw(SpriteRenderer &renderer)
-{
-    renderer.DrawSprite(this->sprites[currentIndex], this->globalPosition,
-                        this->globalSize, this->globalRotation);
-}
-
 void Player::DrawModel(SpriteRenderer &renderer)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
@@ -31,7 +25,7 @@ Player::~Player()
     delete knifeWeapons.at(0);
 }
 
-void Player::Init()
+void Player::init()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
@@ -41,7 +35,7 @@ void Player::Init()
         new Weapon(GetPosition(), Sprite(ResourceManager::GetTexture("knife")),
                    Sprite(ResourceManager::GetTexture("knife")), "knife",
                    WeaponType::KNIFE, 1, 1, 1, 1, false, false);
-    knf->SetRotation(this->globalRotation + 0);
+    knf->SetRotation(rotation + 0);
     knf->SetParent(this);
     selectedWeapon = knf;
     knifeWeapons.push_back(knf);
@@ -77,7 +71,7 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    this->globalPosition = pos;
+    this->position = pos;
     this->collider.SetPosition(this->GetPositionOfCenter());
     this->BuildTransform();
 
@@ -103,7 +97,7 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
                 if (!weapon->isAmmoAndWeapon())
                 {
                     weaponLimit[((int)weapon->weaponType)] = true;
-                    weapon->SetRotation(this->globalRotation + 180);
+                    weapon->SetRotation(this->rotation + 180);
                     weapon->SetParent(this);
                     if (selectedWeapon != nullptr)
                     {
@@ -142,7 +136,7 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
                     }
                     if (!found)
                     {
-                        weapon->SetRotation(this->globalRotation + 180);
+                        weapon->SetRotation(this->rotation + 180);
                         weapon->SetParent(this);
                         if (selectedWeapon != nullptr)
                         {
@@ -155,15 +149,6 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
             }
         }
     }
-}
-
-void Player::SetPosition(const int x, const int y, bool changeCell)
-{
-#if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
-#endif
-    Vector2<int> newPos = Vector2<int>(x, y);
-    this->SetPosition(newPos, changeCell);
 }
 
 void Player::ControllerInput()
@@ -575,10 +560,9 @@ void Player::SlotInput()
         }
     }
 }
-void Player::SetMap(Map *map)
+void Player::setMap(Map *map)
 {
-    // this->map = std::move(map);
-    this->map = map;
+    map = map;
 }
 
 void Player::setVelocity(const int velocity) { this->velocity = velocity; }
@@ -586,15 +570,7 @@ void Player::setVelocity(const int velocity) { this->velocity = velocity; }
 void Player::takeDamage(const int value)
 {
     health -= value;
-    if (health <= 0) Destroy();
-}
-
-void Player::OnDestroy() {}
-
-void Player::Destroy()
-{
-    OnDestroy();
-    isDestroyed = true;
+    //if (health <= 0) Destroy(); 
 }
 
 int Player::getVelocity() const { return velocity; }

@@ -5,71 +5,52 @@
 
 Weapon::~Weapon() = default;
 
-void Weapon::Draw(SpriteRenderer &renderer)
-{
-    if (parent == nullptr)
-    {
-        renderer.DrawSprite(this->sprites[1], this->globalPosition,
-                            this->globalSize, this->globalRotation);
-    }
-    else if (this->selected)
-    {
-        renderer.DrawSprite(this->sprites[0], this->globalPosition,
-                            this->globalSize, this->globalRotation);
-    }
-    else
-    {
-        renderer.DrawSprite(this->sprites[1], this->globalPosition,
-                            this->globalSize, this->globalRotation);
-    }
-}
-
 void Weapon::DrawModel(SpriteRenderer &renderer)
 {
     if (!IsParent() || (selected && IsParent()))
     {
-        renderer.DrawSprite(this->sprites[currentIndex], this->GetTransform());
+        renderer.DrawSprite(this->sprites[currentIndex], transform);
     }
 }
 
 void Weapon::Update() {}
 
-void Weapon::SetParent(GameObject *go)
+void Weapon::SetParent(Object *value)
 {
     if (IsParent())
     {
         return;
     }
-    this->SetSize(
-        Vector2<int>(GameParameters::SIZE_TILE, GameParameters::SIZE_TILE));
-    SetPosition(go->GetPosition());
+    const Vector2<int> newSize = Vector2<int>(GameParameters::SIZE_TILE, GameParameters::SIZE_TILE);
+    this->SetSize(newSize);
+    SetPosition(value->GetPosition());
     Vector2<int> dif = Utils::ScreenToWorld(StartGame::instance().camera->view,
                                             InputManager::mousePos) -
                        this->GetPosition();
     Vector2<float> a = dif.Normalize();
-    SetPosition(GetPosition().x + a.x * GameParameters::SIZE_TILE / 4,
-                GetPosition().y + a.y * GameParameters::SIZE_TILE / 4, false);
-    parent = go;
+    const Vector2<float> newPosF = Vector2<float>(GetPosition().x + a.x * GameParameters::SIZE_TILE / 4,
+                                                  GetPosition().y + a.y * GameParameters::SIZE_TILE / 4);
+    const Vector2<int> newPosI = Vector2<int>(static_cast<int>(newPosF.x), static_cast<int>(newPosF.y));
+    SetPosition(newPosI, false);
+    parent = value;
     setSelect(true);
     localTransform =
-        Projection::inverse(parent->GetTransform()) * globalTransform;
+        Projection::inverse(parent->GetTransform()) * transform;
 }
 void Weapon::RemoveParent()
 {
-    if (IsParent())
-    {
-        Vector2 t = parent->GetPositionOfCenter();
-        this->parent = nullptr;
-        setCellPosition(Utils::PositionToCell(t));
-        setSelect(false);
+    Vector2 t = parent->GetPositionOfCenter();
+    Object::RemoveParent();
+    setCellPosition(Utils::PositionToCell(t));
+    setSelect(false);
 
-        if (weaponType == WeaponType::MAIN)
-        {
-            this->SetSize(Vector2<int>(GameParameters::SIZE_TILE * 2,
-                                       GameParameters::SIZE_TILE));
-            this->SetPosition(GetPosition().x - GameParameters::SIZE_TILE / 2,
-                              GetPosition().y, false);
-        }
+    if (weaponType == WeaponType::MAIN)
+    {
+        this->SetSize(Vector2<int>(GameParameters::SIZE_TILE * 2,
+                                   GameParameters::SIZE_TILE));
+        const Vector2<int> newPos = Vector2<int>(GetPosition().x - GameParameters::SIZE_TILE / 2,
+                                                 GetPosition().y);
+        this->SetPosition(newPos, false);
     }
 }
 

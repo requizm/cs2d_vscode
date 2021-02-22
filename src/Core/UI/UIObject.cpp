@@ -121,7 +121,7 @@ void UIObject::setPosition(const Vector2<int> &position)
     {
         Vector2<int> oldPos = this->position;
 
-        for (auto &child: childs)
+        for (auto &child : childs)
         {
             Vector2<int> delta = newPos - oldPos;
             child->setPosition(child->getLocalPosition() + delta);
@@ -352,3 +352,26 @@ std::string UIObject::GetObjectTypeString()
 }
 
 void UIObject::setScrollable(const bool value) { this->scrollable = value; }
+
+void UIObject::BuildTransform()
+{
+    Matrix4 model = Matrix4(1.0F);
+    model = Projection::translate(
+        model, Vector3(static_cast<float>(globalPosition.x),
+                       static_cast<float>(globalPosition.y), 0.0F));
+    model = Projection::translate(
+        model, Vector3(0.5F * static_cast<float>(globalSize.x),
+                       0.5F * static_cast<float>(globalSize.y),
+                       0.0F));  // Move origin of rotation to center of quad
+    model = Projection::rotate(
+        model, Projection::radians(static_cast<float>(globalRotation)),
+        Vector3(0.0F, 0.0F, 1.0F));  // Then rotate
+    model = Projection::translate(
+        model, Vector3(-0.5F * static_cast<float>(globalSize.x),
+                       -0.5F * static_cast<float>(globalSize.y),
+                       0.0F));  // Move origin back
+    model = Projection::scale(model,
+                              Vector3(static_cast<float>(globalSize.x),
+                                      static_cast<float>(globalSize.y), 1.0F));
+    //SetTransform(model);
+}
