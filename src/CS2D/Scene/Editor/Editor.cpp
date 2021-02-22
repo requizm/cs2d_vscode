@@ -901,7 +901,7 @@ void Editor::Render()
         for (auto &tile : tils->tilesUI)
         {
             if (firstSelect &&
-                selectedTile->GetID() == tile->getTile()->GetID())
+                selectedTile->GetId() == tile->getTile()->GetId())
             {
                 tile->Draw(*menuRenderer, *squareRenderer, 0.3F, true,
                            this->time);

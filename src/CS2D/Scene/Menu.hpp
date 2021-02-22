@@ -76,6 +76,8 @@ class Menu
 
    private:
     bool enable = false;
+    bool gonnaDieForGame = false;
+    bool gonnaDieForEditor = false;
 
     void selectedMapChange(TextButton *old, TextButton *n);
     void newGameBtnClick();

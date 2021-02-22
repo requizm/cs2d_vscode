@@ -46,8 +46,8 @@ bool Object::IsParent() const
 
 Vector2<int> Object::GetPositionOfCenter()
 {
-    return Vector2<int>(position.x + position.x / 2,
-                        size.y + size.y / 2);
+    return Vector2<int>(position.x + size.x / 2,
+                        position.y + size.y / 2);
 }
 
 void Object::UpdateChilds()
@@ -124,6 +124,7 @@ void Object::RemoveParent()
             break;
         }
     }
+    localTransform = transform;
     parent = nullptr;
 }
 

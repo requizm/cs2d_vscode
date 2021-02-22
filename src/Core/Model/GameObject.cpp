@@ -10,6 +10,7 @@ GameObject::GameObject(const Vector2<int>& pos, const Sprite& spr,
 {
     objType = type;
     sprite = spr;
+    cellPos = Utils::PositionToCell(pos);
 }
 
 GameObject::~GameObject() = default;
@@ -28,7 +29,7 @@ void GameObject::SetTransform(const Vector2<int>& pos, const Vector2<int>& size,
 
 void GameObject::SetPosition(const Vector2<int>& pos, bool changeCell)
 {
-    this->position = pos;
+    Object::SetPosition(pos);
     if (changeCell)
     {
         Vector2<int> newCellPos =
@@ -38,8 +39,6 @@ void GameObject::SetPosition(const Vector2<int>& pos, bool changeCell)
             cellPos = newCellPos;
         }
     }
-
-    BuildTransform();
 }
 
 void GameObject::setCellPosition(const Vector2<int>& pos, bool changeCell)

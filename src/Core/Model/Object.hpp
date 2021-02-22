@@ -8,8 +8,6 @@
 #include "../Math/Projection.hpp"
 #include "../Math/Vector2.hpp"
 
-
-
 class Object
 {
    public:

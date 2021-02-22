@@ -38,9 +38,7 @@ class Weapon : public GameObject
               floorSprite,
               Vector2<int>(GameParameters::SIZE_TILE,
                            GameParameters::SIZE_TILE),
-              ObjectType::WEAPON),
-          currentIndex(1),
-          selected(false)
+              ObjectType::WEAPON)
     {
         this->weaponType = type;
 
@@ -65,7 +63,6 @@ class Weapon : public GameObject
 
         this->dropable = dropable;
         this->ammoAndWeapon = ammoAndWeapon;
-        ;
     }
 
     ~Weapon();

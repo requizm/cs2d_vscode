@@ -37,9 +37,6 @@ class GameObject : public Object
 
     virtual void DrawModel(SpriteRenderer &renderer);
 
-    virtual void SetParent(GameObject *go);
-    virtual void RemoveParent();
-
 
     void SetTransform(const Vector2<int> &pos, const Vector2<int> &size, int rot = 0);
     virtual void SetPosition(const Vector2<int> &pos, bool changeCell = true);
@@ -47,7 +44,7 @@ class GameObject : public Object
 
 
     ObjectType GetObjectType();
-    
+
     virtual Vector2<int> GetCellPos();
 
     GLboolean IsCollision() const;

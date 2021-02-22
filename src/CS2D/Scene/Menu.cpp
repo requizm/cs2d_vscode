@@ -157,6 +157,14 @@ void Menu::Update()
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
+    if (gonnaDieForGame)
+    {
+        std::string mName = GameParameters::resDirectory + "levels/" +
+                            t_mapName->getText() + ".xml";
+        StartGame::instance().Initialize(mName);
+        Game::SetGameState(GameState::INGAME);
+        return;
+    }
     l_options->Update();
     l_console->Update();
     l_editor->Update();
@@ -253,9 +261,8 @@ void Menu::newGameBtnClick()
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    std::string mName = GameParameters::resDirectory + "levels/" +
-                        t_mapName->getText() + ".xml";
-    StartGame::instance().Initialize(mName);
-    Game::SetGameState(GameState::INGAME);
-    return;
+    if (this->enable)
+    {
+        gonnaDieForGame = true;
+    }
 }

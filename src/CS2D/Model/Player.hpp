@@ -55,7 +55,7 @@ class Player : public GameObject
     void DrawModel(SpriteRenderer &renderer) override;
     void Update();
     void ProcessInput();
-    void SetPosition(Vector2<int> pos, bool changeCell = true);
+    void SetPosition(const Vector2<int> &pos, bool changeCell = true);
     void setMap(Map *map);
     void setVelocity(const int velocity);
     void takeDamage(const int value);

@@ -13,7 +13,7 @@ void Player::DrawModel(SpriteRenderer &renderer)
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    renderer.DrawSprite(this->sprites[currentIndex], this->GetTransform());
+    renderer.DrawSprite(this->sprites[currentIndex], transform);
     knifeWeapons.at(0)->DrawModel(renderer);
 }
 
@@ -31,7 +31,7 @@ void Player::init()
     ZoneScoped;
 #endif
     weaponLimit[2] = true;
-    auto *knf =
+    Weapon *knf =
         new Weapon(GetPosition(), Sprite(ResourceManager::GetTexture("knife")),
                    Sprite(ResourceManager::GetTexture("knife")), "knife",
                    WeaponType::KNIFE, 1, 1, 1, 1, false, false);
@@ -66,14 +66,13 @@ void Player::ProcessInput()
     SlotInput();
 }
 
-void Player::SetPosition(Vector2<int> pos, bool changeCell)
+void Player::SetPosition(const Vector2<int> &pos, bool changeCell)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    this->position = pos;
+    Object::SetPosition(pos);
     this->collider.SetPosition(this->GetPositionOfCenter());
-    this->BuildTransform();
 
     StartGame::instance().camera->setPosition(Vector2(
         this->GetPositionOfCenter().x - GameParameters::SCREEN_WIDTH / 2,
@@ -164,6 +163,10 @@ void Player::ControllerInput()
         if (!CheckCollision(newPos, MoveDirection::TOP))
         {
             this->SetPosition(newPos, true);
+        }
+        else
+        {
+            int a = 2;
         }
     }
     if (InputManager::isKey(KeyboardKeys::KEY_S))
@@ -562,7 +565,7 @@ void Player::SlotInput()
 }
 void Player::setMap(Map *map)
 {
-    map = map;
+    this->map = map;
 }
 
 void Player::setVelocity(const int velocity) { this->velocity = velocity; }
@@ -570,7 +573,7 @@ void Player::setVelocity(const int velocity) { this->velocity = velocity; }
 void Player::takeDamage(const int value)
 {
     health -= value;
-    //if (health <= 0) Destroy(); 
+    //if (health <= 0) Destroy();
 }
 
 int Player::getVelocity() const { return velocity; }

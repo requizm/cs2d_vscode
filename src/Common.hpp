@@ -32,6 +32,7 @@
 #include "Core/Math/Vector2.cpp"
 #include "Core/Math/Vector3.cpp"
 #include "Core/Model/Camera.cpp"
+#include "Core/Model/Object.cpp""
 #include "Core/Model/GameObject.cpp"
 #include "Core/Model/Tile.cpp"
 #include "Core/Renderer/Circle.cpp"

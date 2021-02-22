@@ -45,7 +45,7 @@ void StartGame::OnEnable()
     ZoneScoped;
 #endif
     this->Start();
-    player->SetMap(map);
+    player->setMap(map);
     player->SetPosition(Vector2<int>(GameParameters::SCREEN_WIDTH / 2,
                                      GameParameters::SCREEN_HEIGHT / 2));
     player->setVelocity(500);
@@ -55,7 +55,7 @@ void StartGame::OnEnable()
         player->GetPositionOfCenter().y - GameParameters::SCREEN_HEIGHT / 2));
     renderer->SetProjection(camera->cameraMatrix);
     squareRenderer.SetProjection(camera->cameraMatrix);
-    player->Init();
+    player->init();
 }
 
 void StartGame::OnDisable()

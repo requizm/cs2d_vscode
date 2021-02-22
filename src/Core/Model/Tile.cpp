@@ -4,7 +4,7 @@ Tile::Tile() : type(TileTypes::FLOOR), frame(-1), GameObject() {}
 
 Tile::Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size,
            TileTypes type, int frame)
-    : GameObject(pos, sprite, size, (int)ObjectType::TILE),
+    : GameObject(pos, sprite, size, ObjectType::TILE),
       type(type),
       frame(frame),
       collider(RectangleCollider(pos, size))
@@ -12,7 +12,7 @@ Tile::Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size,
 }
 
 Tile::Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size)
-    : GameObject(pos, sprite, size, (int)ObjectType::TILE),
+    : GameObject(pos, sprite, size, ObjectType::TILE),
       type(TileTypes::FLOOR),
       frame(-1)
 {

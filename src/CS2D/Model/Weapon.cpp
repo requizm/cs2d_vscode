@@ -17,10 +17,6 @@ void Weapon::Update() {}
 
 void Weapon::SetParent(Object *value)
 {
-    if (IsParent())
-    {
-        return;
-    }
     const Vector2<int> newSize = Vector2<int>(GameParameters::SIZE_TILE, GameParameters::SIZE_TILE);
     this->SetSize(newSize);
     SetPosition(value->GetPosition());
@@ -32,10 +28,8 @@ void Weapon::SetParent(Object *value)
                                                   GetPosition().y + a.y * GameParameters::SIZE_TILE / 4);
     const Vector2<int> newPosI = Vector2<int>(static_cast<int>(newPosF.x), static_cast<int>(newPosF.y));
     SetPosition(newPosI, false);
-    parent = value;
+    Object::SetParent(value);
     setSelect(true);
-    localTransform =
-        Projection::inverse(parent->GetTransform()) * transform;
 }
 void Weapon::RemoveParent()
 {
