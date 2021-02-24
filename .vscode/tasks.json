@@ -4,7 +4,7 @@
         {
             "label": "(64)build",
             "type": "shell",
-            "command": "C:\\mingw64\\bin\\g++.exe",
+            "command": "C:\\mingw32\\bin\\g++.exe",
             "args": [
                 "-I${workspaceFolder}\\include",
                 "-L${workspaceFolder}\\lib\\x64",
