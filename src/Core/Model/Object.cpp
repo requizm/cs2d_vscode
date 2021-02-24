@@ -35,8 +35,14 @@ void Object::BuildTransform()
     model = Projection::scale(model,
                               Vector3<float>(static_cast<float>(size.x),
                                              static_cast<float>(size.y), 1.0F));
+
     SetTransform(model);
-    UpdateChilds();
+
+
+    if (!childs.empty())
+    {
+        UpdateChilds();
+    }
 }
 
 bool Object::IsParent() const
@@ -101,7 +107,17 @@ void Object::SetLocalTransform(const Matrix4<float> &value) { localTransform = v
 
 Matrix4<float> Object::GetTransform() const { return transform; }
 
-void Object::SetTransform(const Matrix4<float> &value) { transform = value; }
+void Object::SetTransform(const Matrix4<float> &value)
+{
+    transform = value;
+    if (IsParent())
+    {
+        position = Projection::GetPosFromMatrix(transform);
+        rotation = Projection::GetRotFromMatrix(transform);
+        size = Projection::GetSizeFromMatrix(transform);
+        ChangeLocal();
+    }
+}
 
 Object *Object::GetParent() const { return parent; }
 
@@ -129,3 +145,21 @@ void Object::RemoveParent()
 }
 
 int Object::GetId() const { return id; }
+
+void Object::ChangeLocal()
+{
+    if (IsParent())
+    {
+        localTransform =
+            Projection::inverse(parent->GetTransform()) * transform;
+
+        Matrix4 localTrans = GetLocalTransform();
+        Vector2<float> localPos = Projection::GetPosFromMatrixForLocal(localTrans);
+        Vector2<float> localSize = Projection::GetSizeFromMatrixForLocal(localTrans);
+        float localRot = Projection::GetRotFromMatrixForLocal(localTrans);
+        localPos = Vector2<float>(static_cast<float>(GameParameters::SIZE_TILE)) * localPos;
+        localSize = Vector2<float>(static_cast<float>(GameParameters::SIZE_TILE)) * localSize;
+        this->localPosition = Vector2<int>(static_cast<int>(round(localPos.x)), static_cast<int>(round(localPos.y)));
+        this->localSize = Vector2<int>(static_cast<int>(round(localSize.x)), static_cast<int>(round(localSize.y)));
+    }
+}

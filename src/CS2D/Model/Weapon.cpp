@@ -18,14 +18,12 @@ void Weapon::Update() {}
 void Weapon::SetParent(Object *value)
 {
     const Vector2<int> newSize = Vector2<int>(GameParameters::SIZE_TILE, GameParameters::SIZE_TILE);
-    this->SetSize(newSize);
-    SetPosition(value->GetPosition());
+    SetTransform(value->GetPosition(), newSize, value->GetRotation());
     Vector2<int> dif = Utils::ScreenToWorld(StartGame::instance().camera->view,
                                             InputManager::mousePos) -
                        this->GetPosition();
     Vector2<float> a = dif.Normalize();
-    const Vector2<float> newPosF = Vector2<float>(GetPosition().x + a.x * GameParameters::SIZE_TILE / 4,
-                                                  GetPosition().y + a.y * GameParameters::SIZE_TILE / 4);
+    const Vector2<float> newPosF = Vector2<float>(static_cast<float>(GetPosition().x) + a.x * static_cast<float>(GameParameters::SIZE_TILE) / 2.0F, static_cast<float>(GetPosition().y) + a.y * static_cast<float>(GameParameters::SIZE_TILE) / 2.0F);
     const Vector2<int> newPosI = Vector2<int>(static_cast<int>(newPosF.x), static_cast<int>(newPosF.y));
     SetPosition(newPosI, false);
     Object::SetParent(value);

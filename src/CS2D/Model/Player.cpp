@@ -96,7 +96,6 @@ void Player::SetPosition(const Vector2<int> &pos, bool changeCell)
                 if (!weapon->isAmmoAndWeapon())
                 {
                     weaponLimit[((int)weapon->weaponType)] = true;
-                    weapon->SetRotation(this->rotation + 180);
                     weapon->SetParent(this);
                     if (selectedWeapon != nullptr)
                     {

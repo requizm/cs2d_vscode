@@ -90,7 +90,7 @@ void Shader::SetMatrix4(const GLchar *name, Matrix4<float> matrix,
                         GLboolean useShader) const
 {
     glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, GL_FALSE,
-                       Projection::value_ptr(matrix));
+                       matrix.dataPtr());
 }
 
 void Shader::UnUse() const { glUseProgram(0); }

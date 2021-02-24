@@ -4,7 +4,9 @@
 #include <cmath>
 
 #include "Matrix4.hpp"
+#include "Vector2.hpp"
 #include "Vector3.hpp"
+
 class Projection
 {
    public:
@@ -185,8 +187,6 @@ class Projection
         return R;
     }
 
-    static float *value_ptr(Matrix4<float> &m) { return &(m.values[0]); }
-
     static float radians(float degrees)
     {
         return degrees * (0.01745329251994329576923690768489F);
@@ -276,6 +276,56 @@ class Projection
         for (i = 0; i < 16; i++) r[i] = inv[i] * det;
 
         return r;
+    }
+
+    static Vector2<int> GetPosFromMatrix(Matrix4<float> &matrix)
+    {
+        return Vector2<int>(static_cast<int>(round(matrix[12])), static_cast<int>(round(matrix[13])));
+    }
+
+    static int GetRotFromMatrix(Matrix4<float> &matrix)
+    {
+        Vector2<float> d = Vector2<float>(matrix[0], matrix[4]);
+        d = d.Normalize();
+        float a = acos(d.x);
+        return static_cast<int>(Projection::degrees(a));
+    }
+
+    static Vector2<int> GetSizeFromMatrix(Matrix4<float> &matrix)
+    {
+        Matrix4<float> temp = matrix.Clone();
+        Vector2<int> res;
+        int t0 = static_cast<int>(round(temp[0]));
+        int t1 = static_cast<int>(round(temp[1]));
+        int t4 = static_cast<int>(round(temp[4]));
+        int t5 = static_cast<int>(round(temp[5]));
+        res.x = sqrt(t0 * t0 + t4 * t4);
+        res.y = sqrt(t1 * t1 + t5 * t5);
+        return res;
+    }
+
+    static Vector2<float> GetPosFromMatrixForLocal(Matrix4<float> &matrix)
+    {
+        return Vector2<float>(matrix[12], matrix[13]);
+    }
+
+    static float GetRotFromMatrixForLocal(Matrix4<float> &matrix)
+    {
+        Vector2<float> d = Vector2<float>(matrix[0], matrix[4]);
+        float a = acos(d.x);
+        return Projection::degrees(a);
+    }
+
+
+    static Vector2<float> GetSizeFromMatrixForLocal(Matrix4<float> &matrix)
+    {
+        Matrix4<float> temp = matrix.Clone();
+        Vector2<float> res;
+        float t0 = temp[0];
+        float t1 = temp[1];
+        float t4 = temp[4];
+        float t5 = temp[5];
+        return Vector2<float>(sqrt(t0 * t0 + t4 * t4), sqrt(t1 * t1 + t5 * t5));
     }
 };
 

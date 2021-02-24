@@ -71,6 +71,9 @@ class Object
     std::vector<Object *> childs;
 
     int id;
+
+    private:
+        void ChangeLocal();
 };
 
 

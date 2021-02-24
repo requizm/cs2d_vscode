@@ -106,11 +106,9 @@ void StartGame::ProcessInput()
     }
     if (InputManager::isKeyDown(KeyboardKeys::KEY_Q))
     {
-        // this->weapons.at(1).SetParent(player.get());
-    }
-    if (InputManager::isKeyDown(KeyboardKeys::KEY_E))
-    {
-        // this->weapons.at(1).RemoveParent();
+        Vector2<int> oldPos = map->weapons.at(1)->GetPosition();
+        const Vector2<int> newPos = Vector2<int>(oldPos.x + 5, oldPos.y);
+        map->weapons.at(1)->SetPosition(newPos, false);
     }
     player->ProcessInput();
 }
@@ -128,18 +126,23 @@ void StartGame::Render()
         "mouse: " + std::to_string(p.x) + " - " + std::to_string(p.y),
         Vector2(700, 15), 1.0F, 0.5F);
     this->textRenderer->RenderText(
-        "player matrix: " + std::to_string(player->GetTransform().values[12]) +
-            " - " + std::to_string(player->GetTransform().values[13]),
-        Vector2(700, 45), 1.0F, 0.5F);
+        "player matrix: " + std::to_string(player->GetTransform().data[12]) +
+            " - " + std::to_string(player->GetTransform().data[13]),
+        Vector2(700, 45), 1.0F, Vector3<float>(0.5F));
     this->textRenderer->RenderText(
         "player pos: " + player->GetPosition().ToString(), Vector2(700, 75),
-        1.0F, 0.5F);
+        1.0F, Vector3<float>(0.5F));
     this->textRenderer->RenderText(
         "player cell: " + player->GetCellPos().ToString(), Vector2(700, 105),
-        1.0F, 0.5F);
+        1.0F, Vector3<float>(0.5F));
     this->textRenderer->RenderText(
         "fps: " + std::to_string(InputManager::m_fps), Vector2(700, 135), 1.0F,
-        0.5F);
+        Vector3<float>(0.5F));
+    this->textRenderer->RenderText("m4a1 rot: " + std::to_string(map->weapons.at(1)->GetRotation()), Vector2(700, 155), 1.0F, Vector3<float>(0.5F));
+
+
+    this->textRenderer->RenderText("local pos: " + map->weapons.at(1)->GetLocalPosition().ToString(), Vector2(700, 175), 1.0F, Vector3<float>(0.5F));
+    this->textRenderer->RenderText("local size: " + map->weapons.at(1)->GetLocalSize().ToString(), Vector2(700, 195), 1.0F, Vector3<float>(0.5F));
 
     squareRenderer.world_RenderEmptyCircle(
         player->collider.GetPosition(), Vector2<int>(player->collider.radius),

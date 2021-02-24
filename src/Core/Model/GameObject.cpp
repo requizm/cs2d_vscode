@@ -24,7 +24,7 @@ void GameObject::SetTransform(const Vector2<int>& pos, const Vector2<int>& size,
 {
     this->size = size;
     this->rotation = rot;
-    SetPosition(pos);
+    SetPosition(pos, true);
 }
 
 void GameObject::SetPosition(const Vector2<int>& pos, bool changeCell)
