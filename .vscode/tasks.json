@@ -7,12 +7,12 @@
             "command": "C:\\mingw32\\bin\\g++.exe",
             "args": [
                 "-I${workspaceFolder}\\include",
-                "-L${workspaceFolder}\\lib\\x64",
+                "-L${workspaceFolder}\\lib\\x32",
                 "-g",
                 "${workspaceFolder}\\src\\main.cpp",
                 "${workspaceFolder}\\src\\Common.cpp",
                 "-o",
-                "${workspaceFolder}\\bin\\64\\main",
+                "${workspaceFolder}\\bin\\32\\main",
                 "-lglew32",
                 "-lglfw3",
                 "-lopengl32",
@@ -20,7 +20,6 @@
                 "-lgdi32",
                 "-w",
                 "-std=c++17",
-                "-O1",
                 "-static-libstdc++",
                 "-static-libgcc",
                 "-D_DEBUG"
@@ -30,7 +29,7 @@
                 "isDefault": true
             },
             "options": {
-                "cwd": "C:\\mingw64\\bin"
+                "cwd": "C:\\mingw32\\bin"
             }
         },
         {

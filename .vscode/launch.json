@@ -30,11 +30,11 @@
             "name": "(64)Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\bin\\64\\main.exe",
+            "program": "${workspaceFolder}\\bin\\32\\main.exe",
             "args": [],
-            "targetArchitecture": "x64",
+            "targetArchitecture": "x86",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\bin\\64",
+            "cwd": "${workspaceFolder}\\bin\\32",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
@@ -45,7 +45,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "miDebuggerPath": "C:\\mingw64\\bin\\gdb.exe"
+            "miDebuggerPath": "C:\\mingw32\\bin\\gdb.exe"
         },
         {
             "name": " (64)test_build and Debug",
