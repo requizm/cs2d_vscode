@@ -26,6 +26,10 @@ class TextBox : public Label
             bool isBackGround = false, float scale = 1.0F,
             const Vector3<float> &color = Vector3<float>(1.0F));
 
+    TextBox(Vector2<int> position, TextRenderer &renderer, Vector2<int> size, Object *par,
+            bool isBackGround = false, float scale = 1.0F,
+            const Vector3<float> &color = Vector3<float>(1.0F));
+
     ~TextBox() final;
 
     void Update() override;

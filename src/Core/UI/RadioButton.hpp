@@ -28,6 +28,11 @@ class RadioButtonElement : public Label
                        const Vector3<float> &buttonColor = Vector3<float>(1.0F),
                        const Vector3<float> &textColor = Vector3<float>(0.0F),
                        float scale = 1.0F);
+    RadioButtonElement(const std::string &text, Vector2<int> position,
+                       TextRenderer &textRenderer, int index, Object *par,
+                       const Vector3<float> &buttonColor = Vector3<float>(1.0F),
+                       const Vector3<float> &textColor = Vector3<float>(0.0F),
+                       float scale = 1.0F);
     ~RadioButtonElement() final;
 
     void Draw(SpriteRenderer &spriteRenderer,
@@ -35,9 +40,9 @@ class RadioButtonElement : public Label
     void Update() override;
     void ProcessInput() override;
 
-    Vector2<int> getPosition() override;
-    Vector2<int> getLocalPosition() override;
-    Vector2<int> getSize() override;
+    Vector2<int> GetPosition() override;
+    Vector2<int> GetLocalPosition() override;
+    Vector2<int> GetSize() override;
     int getIndex();
 
     void setMouseHoverColor(const Vector3<float> &color);
@@ -48,7 +53,7 @@ class RadioButtonElement : public Label
     void OnEnable() override;
     void OnDisable() override;
 
-    void setPosition(const Vector2<int> &position) override;
+    void SetPosition(const Vector2<int> &position) override;
 
     bool isMouseHover() override;
     bool isMouseDown() override;

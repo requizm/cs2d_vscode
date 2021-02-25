@@ -31,7 +31,7 @@ class ButtonTile
 
     ButtonTile(int item_id, Button *button, Vector2<int> cell)
     {
-        this->item = new Env_Item(item_id, button->getPosition());
+        this->item = new Env_Item(item_id, button->GetPosition());
         this->cell = cell;
         this->button = button;
     }

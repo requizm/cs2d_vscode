@@ -1,15 +1,13 @@
 #include "ListItem.hpp"
 
 ListItem::ListItem(Panel *panel)
-    : UIObject(panel->getPosition(), panel->getScale(), *(panel->rend))
+    : UIObject(panel->GetPosition(), panel->GetSize(), panel->GetScale(), *(panel->rend))
 {
     this->panel = panel;
 }
 
 ListItem::ListItem() : UIObject()
 {
-    this->position = Vector2<int>(0);
-    this->scale = 0.0F;
 }
 
 ListItem::~ListItem()
@@ -18,7 +16,7 @@ ListItem::~ListItem()
     {
         if (item != nullptr) delete item;
     }
-    UIObject::removeParent();
+    RemoveParent();
 }
 
 void ListItem::AddItem(const std::string &text)
@@ -26,11 +24,11 @@ void ListItem::AddItem(const std::string &text)
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
 #endif
-    const Vector2<int> pos = Vector2<int>(0.0F, static_cast<int>(i * 20));
-    const Vector2<int> size = Vector2<int>(panel->getSize().x, 20);
+    const Vector2<int> pos = Vector2<int>(panel->GetPosition().x, panel->GetPosition().y + static_cast<int>(i * 20));
+    const Vector2<int> size = Vector2<int>(panel->GetSize().x, 20);
     TextButton *bt =
         new TextButton(text, pos,
-                       size, *(panel->rend),
+                       size, *(panel->rend), panel,
                        Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F,
                        UIObjectType::LISTITEM);
     bt->setButtonClickColor(Vector3<float>(0.35F));
@@ -38,9 +36,8 @@ void ListItem::AddItem(const std::string &text)
     bt->setTextHoverColor(Vector3<float>(1.0F));
     bt->setTextClickColor(Vector3<float>(1.0F));
     bt->setHaveOutline(false);
-    bt->setParent(panel, true);
     bt->independent = true;
-    bt->setDrawCenter(false);
+    bt->setTextAlign(TextAlign::T_LEFT);
 
     items.push_back(new ListItemElement(bt, i++, this));
 }
@@ -51,7 +48,7 @@ void ListItem::Clear()
     {
         if (item != nullptr) delete item;
     }
-    removeParent();
+    RemoveParent();
     items.clear();
     i = 0;
 }
@@ -63,7 +60,7 @@ void ListItem::AddListener(std::function<void(TextButton *, TextButton *)> func)
 
 void ListItem::Draw(SquareRenderer &squareRenderer)
 {
-    if (panel->isEnable())
+    if (panel->IsEnable())
     {
         for (auto &item : items)
         {
@@ -74,29 +71,29 @@ void ListItem::Draw(SquareRenderer &squareRenderer)
 
 void ListItem::Update()
 {
-    if (panel->isMouseEvents() && panel->isEnable())
+    if (panel->IsMouseEvents() && panel->IsEnable())
     {
         for (std::vector<int>::size_type i = 0; i != items.size(); i++)
         {
             items[i]->bt->Update();
         }
-        if (InputManager::scrollYPressed && panel->isScrollable())
+        if (InputManager::scrollYPressed && panel->IsScrollable())
         {
             if (!items.empty())
             {
-                bool check_1 = items.at(0)->bt->getLocalPosition().y == 0 &&
+                bool check_1 = items.at(0)->bt->GetLocalPosition().y == 0 &&
                                InputManager::scroll.y > 0;
                 bool check_2 =
-                    items.at(items.size() - 1)->bt->getLocalPosition().y + 20.0F <=
-                        panel->getSize().y &&
+                    items.at(items.size() - 1)->bt->GetLocalPosition().y + 20.0F <=
+                        panel->GetSize().y &&
                     InputManager::scroll.y < 0;
 
                 if (!check_1 && !check_2)
                 {
                     for (auto &tile : items)
                     {
-                        tile->bt->setPosition(Vector2<int>(tile->bt->getLocalPosition().x,
-                                                           tile->bt->getLocalPosition().y +
+                        tile->bt->SetPosition(Vector2<int>(tile->bt->GetLocalPosition().x,
+                                                           tile->bt->GetLocalPosition().y +
                                                                InputManager::scroll.y * 20));
                     }
                 }
@@ -160,17 +157,25 @@ ListItemElement::ListItemElement(TextButton *btn, int i, ListItem *listItem) : U
     index = i;
 }
 
+ListItemElement::ListItemElement(TextButton *btn, int i, ListItem *listItem, Object *par) : UIObject(UIObjectType::LISTITEMELEMENT, par)
+{
+    bt = btn;
+    btn->addListenerDown(std::bind(&ListItemElement::MouseDown, this));
+    this->listItem = listItem;
+    index = i;
+}
+
 ListItemElement::~ListItemElement()
 {
     delete bt;
-    removeParent();
+    RemoveParent();
 }
 
 void ListItemElement::MouseDown()
 {
-    if (isEnable() && isMouseEvents())
+    if (IsEnable() && IsMouseEvents())
     {
-        if (!selected && isRenderable())
+        if (!selected && IsRenderable())
         {
             listItem->Select(index);
         }

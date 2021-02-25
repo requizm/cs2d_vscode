@@ -5,7 +5,7 @@ Label::Label() : UIObject() {}
 Label::Label(const std::string &text, Vector2<int> position,
              TextRenderer &renderer, float scale, const Vector3<float> &color,
              UIObjectType type, LabelType ltype)
-    : UIObject(position, scale, renderer, type)
+    : UIObject(position, renderer.CalculateSize(text, scale), scale, renderer, type)
 {
     this->labelColor = color;
     this->text = text;
@@ -27,9 +27,45 @@ Label::Label(const std::string &text, Vector2<int> position,
     }
 }
 
-Label::Label(Vector2<int> position, TextRenderer &renderer, float scale,
+Label::Label(const std::string &text, Vector2<int> position,
+             TextRenderer &renderer, Object *par, float scale,
+             const Vector3<float> &color,
+             UIObjectType type,
+             LabelType ltype) : UIObject(position, renderer.CalculateSize(text, scale), scale, renderer, type, par)
+{
+    this->labelColor = color;
+    this->text = text;
+    this->labelMouseHoverColor = Vector3<float>(0.78F);
+    this->labelClickColor = Vector3<float>(1.0F);
+    this->labelCurrentColor = color;
+    this->labelSize = this->rend->CalculateSize(text, scale);
+    this->labelType = ltype;
+
+    if ((objType == UIObjectType::LABEL && labelType == LabelType::CLICKABLE) ||
+        objType == UIObjectType::RADIOBUTTON)
+    {
+        mDown = std::bind(&Label::onMouseDown, this);
+        InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+
+        mUp = std::bind(&Label::onMouseUp, this);
+        InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+        ObjectManager::listenerObjCount++;
+    }
+}
+
+Label::Label(Vector2<int> position, const Vector2<int> &size, TextRenderer &renderer, float scale,
              const Vector3<float> &color, UIObjectType type)
-    : UIObject(position, scale, renderer, type)
+    : UIObject(position, size, scale, renderer, type)
+{
+    this->labelColor = color;
+    this->labelMouseHoverColor = Vector3<float>(0.78F);
+    this->labelClickColor = Vector3<float>(1.0F);
+    this->labelCurrentColor = color;
+}
+
+Label::Label(Vector2<int> position, const Vector2<int> &size, TextRenderer &renderer, Object *par,float scale,
+             const Vector3<float> &color, UIObjectType type)
+    : UIObject(position, size, scale, renderer, type, par)
 {
     this->labelColor = color;
     this->labelMouseHoverColor = Vector3<float>(0.78F);
@@ -63,25 +99,25 @@ Label::~Label()
         InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
         ObjectManager::listenerObjCount--;
     }
-    UIObject::removeParent();
+    RemoveParent();
 }
 
 void Label::Draw()
 {
-    if (isVisible() && isEnable() && !text.empty())
-        this->rend->RenderText(text, getPosition(), scale, labelCurrentColor);
+    if (IsEnable() && !text.empty())
+        this->rend->RenderText(text, position, scale, labelCurrentColor);
 }
 
 void Label::DrawForButton(const bool center)
 {
-    if (isVisible() && isEnable() && !text.empty())
+    if (IsEnable() && !text.empty())
         this->rend->RenderText(text, getPositionForButton(center), scale,
                                labelCurrentColor);
 }
 
 void Label::Update()
 {
-    if (isEnable() && isMouseEvents())
+    if (IsEnable() && mouseEvents)
     {
         if (!isPressed && !text.empty())
         {
@@ -99,7 +135,7 @@ void Label::Update()
 
 void Label::ProcessInput()
 {
-    if (isMouseEvents())
+    if (mouseEvents)
     {
         isMouseDownM(MOUSE_BUTTON_LEFT);
         isMouseUpM(MOUSE_BUTTON_LEFT);
@@ -141,27 +177,27 @@ bool Label::isMousePress()
     return isMousePressM(MOUSE_BUTTON_LEFT);
 }
 
-Vector2<int> Label::getPositionForButton(const bool center) //FIXME: silinecek
+Vector2<int> Label::getPositionForButton(const bool center)  //FIXME: silinecek
 {
-    if (isParent())
+    if (IsParent())
     {
         if (objType == UIObjectType::TEXTBUTTON)
         {
-            Vector2<int> dif = getSize() - getLabelSize();
+            Vector2<int> dif = GetSize() - getLabelSize();
             dif.y /= 2;
             if (center)
             {
                 dif.x /= 2;
-                return parent->getPosition() + this->position + dif;
+                return parent->GetPosition() + this->position + dif;
             }
-            return parent->getPosition() + this->position +
+            return parent->GetPosition() + this->position +
                    Vector2<int>(0, dif.y);
         }
-        return parent->getPosition() + this->position;
+        return parent->GetPosition() + this->position;
     }
     if (objType == UIObjectType::TEXTBUTTON)
     {
-        Vector2<int> dif = getSize() - getLabelSize();
+        Vector2<int> dif = GetSize() - getLabelSize();
         dif.y /= 2;
         if (center)
         {
@@ -201,8 +237,8 @@ void Label::setLabelClickColor(const Vector3<float> &color)
 
 bool Label::isMouseHoverM()
 {
-    const int posX = static_cast<int>(this->getPosition().x);
-    const int posY = static_cast<int>(this->getPosition().y);
+    const int posX = static_cast<int>(this->GetPosition().x);  //FIXME: gereksiz castler
+    const int posY = static_cast<int>(this->GetPosition().y);
 
     const int labelSizeX = static_cast<int>(this->labelSize.x);
     const int labelSizeY = static_cast<int>(this->labelSize.y);
@@ -258,7 +294,7 @@ void Label::SetMouseState(bool &variable, bool value) { variable = value; }
 
 void Label::onMouseDown()
 {
-    if (isEnable() && isMouseHover())
+    if (IsEnable() && isMouseHover())
     {
         downTrigger = true;
         labelCurrentColor = labelClickColor;
@@ -274,7 +310,7 @@ void Label::onMouseUp()
 {
     if (isPressed)
     {
-        if (isEnable() && isMouseHover())
+        if (IsEnable() && isMouseHover())
         {
             labelCurrentColor = labelColor;
             for (auto &f : listenersUp)

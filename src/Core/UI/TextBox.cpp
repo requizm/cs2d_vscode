@@ -6,13 +6,12 @@ TextBox::TextBox() : Label() {}
 TextBox::TextBox(Vector2<int> position, TextRenderer &renderer,
                  Vector2<int> size, bool isBackGround, float scale /*= 1.0F*/,
                  const Vector3<float> &color /*= Vector3<float>(1.0F)*/)
-    : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
+    : Label(position, size, renderer, scale, color, UIObjectType::TEXTBOX)
 {
     this->editable = true;
     this->editMode = false;
     this->isBackGround = isBackGround;
     cursor = Sprite(ResourceManager::GetTexture("textcursor"));
-    this->size = size;
     labelClickColor = Vector3<float>(1.0F);
     clickBorderColor = Vector3<float>(1.0F);
     borderColor = Vector3<float>(0.6F);
@@ -20,18 +19,34 @@ TextBox::TextBox(Vector2<int> position, TextRenderer &renderer,
     currentBorderColor = borderColor;
 }
 
-TextBox::~TextBox() { UIObject::removeParent(); }
+TextBox::TextBox(Vector2<int> position, TextRenderer &renderer,
+                 Vector2<int> size, Object *par, bool isBackGround, float scale /*= 1.0F*/,
+                 const Vector3<float> &color /*= Vector3<float>(1.0F)*/)
+    : Label(position, size, renderer, par, scale, color, UIObjectType::TEXTBOX)
+{
+    this->editable = true;
+    this->editMode = false;
+    this->isBackGround = isBackGround;
+    cursor = Sprite(ResourceManager::GetTexture("textcursor"));
+    labelClickColor = Vector3<float>(1.0F);
+    clickBorderColor = Vector3<float>(1.0F);
+    borderColor = Vector3<float>(0.6F);
+    hoverBorderColor = Vector3<float>(0.78F);
+    currentBorderColor = borderColor;
+}
+
+TextBox::~TextBox() { RemoveParent(); }
 
 void TextBox::Update() { InputText(); }
 
 void TextBox::Draw(SpriteRenderer &spriteRenderer,
                    SquareRenderer &squareRenderer)
 {
-    if (isVisible() && isEnable())
+    if (IsEnable())
     {
         if (isBackGround)
             squareRenderer.ui_RenderFilledSquare(
-                this->getPosition(), this->getSize(), Vector3<float>(0.15F),
+                this->GetPosition(), this->GetSize(), Vector3<float>(0.15F),
                 true, currentBorderColor, 1.0F, 1.0F);
         if (editMode)
         {
@@ -39,8 +54,8 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer,
             {
                 spriteRenderer.DrawSprite(
                     cursor,
-                    Vector2<int>(getPosition().x - 2.0F + labelSize.x,
-                                 getPosition().y + 2.0F),
+                    Vector2<int>(GetPosition().x - 2.0F + labelSize.x,
+                                 GetPosition().y + 2.0F),
                     Vector2<int>(8, 16));
             }
             else if (time >= 1.0F)
@@ -48,8 +63,8 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer,
                 time = 0.0F;
             }
         }
-        this->rend->RenderText(getText(), getPosition().x,
-                               getPosition().y + 2.0F, scale,
+        this->rend->RenderText(getText(), GetPosition().x,
+                               GetPosition().y + 2.0F, scale,
                                labelCurrentColor);
     }
 }
@@ -78,8 +93,8 @@ bool TextBox::isMousePress() { return isMousePressM(MOUSE_BUTTON_LEFT); }
 
 bool TextBox::isMouseHoverM()
 {
-    const int posX = static_cast<int>(this->getPosition().x);
-    const int posY = static_cast<int>(this->getPosition().y);
+    const int posX = static_cast<int>(this->GetPosition().x);
+    const int posY = static_cast<int>(this->GetPosition().y);
 
     const int sizeX = static_cast<int>(this->size.x);
     const int sizeY = static_cast<int>(this->size.y);
@@ -128,7 +143,7 @@ bool TextBox::isMousePressM(MouseKeys key)
 
 void TextBox::InputText()
 {
-    if (editable && isEnable())
+    if (editable && IsEnable())
     {
         if (isMouseDown())
         {

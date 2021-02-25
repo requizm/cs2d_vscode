@@ -15,6 +15,17 @@ Object::Object(const Vector2<int> &pos, const Vector2<int> &siz, int rot)
     BuildTransform();
 }
 
+Object::Object(const Vector2<int> &pos, const Vector2<int> &siz, int rot, Object *par)
+{
+    position = pos;
+    size = siz;
+    rotation = rot;
+    id = Utils::GenerateID();
+    SetParent(par);
+    localPosition = position - par->GetPosition();
+    BuildTransform();
+}
+
 void Object::BuildTransform()
 {
     Matrix4<float> model = Matrix4<float>(1.0F);
@@ -65,7 +76,7 @@ void Object::UpdateChilds()
     }
 }
 
-Vector2<int> Object::GetLocalPosition() const { return localPosition; }
+Vector2<int> Object::GetLocalPosition() { return localPosition; }
 
 void Object::SetLocalPosition(const Vector2<int> &value) { localPosition = value; }
 
@@ -77,7 +88,7 @@ int Object::GetLocalRotation() const { return localRotation; }
 
 void Object::SetLocalRotation(int value) { localRotation = value; }
 
-Vector2<int> Object::GetPosition() const { return position; }
+Vector2<int> Object::GetPosition() { return position; }
 
 void Object::SetPosition(const Vector2<int> &value)
 {
@@ -85,7 +96,7 @@ void Object::SetPosition(const Vector2<int> &value)
     BuildTransform();
 }
 
-Vector2<int> Object::GetSize() const { return size; }
+Vector2<int> Object::GetSize() { return size; }
 
 void Object::SetSize(const Vector2<int> &value)
 {
@@ -131,16 +142,21 @@ void Object::SetParent(Object *value)
 
 void Object::RemoveParent()
 {
-    int i = 0;
-    for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
+    if (IsParent())
     {
-        if (parent->childs[i]->GetId() == GetId())
+        for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
         {
-            parent->childs.erase(parent->childs.begin() + i);
-            break;
+            if (parent->childs[i]->GetId() == GetId())
+            {
+                parent->childs.erase(parent->childs.begin() + i);
+                break;
+            }
         }
     }
     localTransform = transform;
+    localPosition = position;
+    localRotation = rotation;
+    localSize = size;
     parent = nullptr;
 }
 
@@ -148,18 +164,17 @@ int Object::GetId() const { return id; }
 
 void Object::ChangeLocal()
 {
-    if (IsParent())
-    {
-        localTransform =
-            Projection::inverse(parent->GetTransform()) * transform;
+    localTransform =
+        Projection::inverse(parent->GetTransform()) * transform;
 
-        Matrix4 localTrans = GetLocalTransform();
+    localPosition = position - parent->GetPosition();
+
+    /*Matrix4 localTrans = GetLocalTransform(); // TODO: local pozisyon, rot ve size degistirme imkani olacak
         Vector2<float> localPos = Projection::GetPosFromMatrixForLocal(localTrans);
         Vector2<float> localSize = Projection::GetSizeFromMatrixForLocal(localTrans);
         float localRot = Projection::GetRotFromMatrixForLocal(localTrans);
         localPos = Vector2<float>(static_cast<float>(GameParameters::SIZE_TILE)) * localPos;
         localSize = Vector2<float>(static_cast<float>(GameParameters::SIZE_TILE)) * localSize;
         this->localPosition = Vector2<int>(static_cast<int>(round(localPos.x)), static_cast<int>(round(localPos.y)));
-        this->localSize = Vector2<int>(static_cast<int>(round(localSize.x)), static_cast<int>(round(localSize.y)));
-    }
+        this->localSize = Vector2<int>(static_cast<int>(round(localSize.x)), static_cast<int>(round(localSize.y)));*/
 }

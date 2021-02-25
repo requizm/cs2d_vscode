@@ -1,90 +1,78 @@
 #include "UIObject.hpp"
 
-UIObject::UIObject(UIObjectType type)
+#include "TextButton.hpp"
+
+UIObject::UIObject() : Object()
+{
+    this->objType = UIObjectType::UIOBJECT;
+}
+
+UIObject::UIObject(UIObjectType type) : Object()
+{
+    this->objType = type;
+}
+
+UIObject::UIObject(UIObjectType type, Object *par) : Object(Vector2<int>(0, 0), Vector2<int>(0, 0), 0, par)
 {
     this->objType = type;
 }
 
 UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
-                   TextRenderer &renderer)
+                   TextRenderer &renderer) : Object(position, size, 0)
 {
     this->objType = UIObjectType::UIOBJECT;
-    this->position = position;
     this->scale = scale;
-    this->size = size;
     this->rend = &renderer;
-
-    this->setID(Utils::GenerateID());
-    this->childs.clear();
 }
 
 UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
-                   TextRenderer &renderer, UIObjectType type)
-{
-    this->objType = type;
-    this->position = position;
-    this->scale = scale;
-    this->size = size;
-    this->rend = &renderer;
-
-    this->setID(Utils::GenerateID());
-    this->childs.clear();
-}
-
-UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale)
+                   TextRenderer &renderer, Object *par) : Object(position, size, 0, par)
 {
     this->objType = UIObjectType::UIOBJECT;
-    this->position = position;
     this->scale = scale;
-    this->size = size;
-
-    this->setID(Utils::GenerateID());
-    this->childs.clear();
+    this->rend = &renderer;
 }
 
 UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
-                   UIObjectType type)
+                   TextRenderer &renderer, UIObjectType type) : Object(position, size, 0)
 {
     this->objType = type;
-    this->position = position;
     this->scale = scale;
-    this->size = size;
-
-    this->setID(Utils::GenerateID());
-    this->childs.clear();
+    this->rend = &renderer;
 }
 
-UIObject::UIObject(Vector2<int> position, float scale, TextRenderer &renderer)
+UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
+                   TextRenderer &renderer, UIObjectType type, Object *par) : Object(position, size, 0, par)
+{
+    this->objType = type;
+    this->scale = scale;
+    this->rend = &renderer;
+}
+
+UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale) : Object(position, size, 0)
 {
     this->objType = UIObjectType::UIOBJECT;
-    this->position = position;
     this->scale = scale;
-    this->rend = &renderer;
-
-    this->setID(Utils::GenerateID());
-    this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<int> position, float scale, TextRenderer &renderer,
-                   UIObjectType type)
+UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale, Object *par) : Object(position, size, 0, par)
 {
-    this->objType = type;
-    this->position = position;
+    this->objType = UIObjectType::UIOBJECT;
     this->scale = scale;
-    this->rend = &renderer;
-
-    this->setID(Utils::GenerateID());
-    this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<int> position, float scale, UIObjectType type)
+UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
+                   UIObjectType type) : Object(position, size, 0)
 {
     this->objType = type;
-    this->position = position;
     this->scale = scale;
+}
 
-    this->setID(Utils::GenerateID());
-    this->childs.clear();
+UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
+                   UIObjectType type, Object *par) : Object(position, size, 0, par)
+{
+    this->objType = type;
+    this->scale = scale;
 }
 
 UIObject::~UIObject() = default;
@@ -96,9 +84,9 @@ void UIObject::OnEnable() {}
 
 void UIObject::OnDisable()
 {
-    this->isPressed = false;
-    this->isUp = false;
-    this->isDown = false;
+    isPressed = false;
+    isUp = false;
+    isDown = false;
 }
 
 void UIObject::ProcessInput() {}
@@ -114,125 +102,59 @@ void UIObject::Draw(SpriteRenderer &spriteRenderer,
 {
 }
 
-void UIObject::setPosition(const Vector2<int> &position)
+void UIObject::SetPosition(const Vector2<int> &value)
 {
-    Vector2<int> newPos = position;
-    if (objType == UIObjectType::PANEL)
-    {
-        Vector2<int> oldPos = this->position;
-
-        for (auto &child : childs)
-        {
-            Vector2<int> delta = newPos - oldPos;
-            child->setPosition(child->getLocalPosition() + delta);
-        }
-    }
-
-    if (isParent())
-    {
-        newPos = newPos + getParent()->getPosition();
-    }
-    this->position = newPos;
+    Object::SetPosition(value);
+    if (IsParent())
+        localPosition = parent->GetPosition() - value;
 }
 
-void UIObject::setParentCenterPos()
+void UIObject::SetLocalPosition(const Vector2<int> &value)
 {
-    if (isParent())
-        setPosition(Vector2<int>(parent->getSize().x / 2 - this->getSize().x / 2,
-                                 parent->getSize().y / 2 - this->getSize().y / 2));
-}
-
-void UIObject::setSize(const Vector2<int> size) { this->size = size; }
-
-void UIObject::setSize(const int x, const int y)
-{
-    this->size = Vector2<int>(x, y);
-}
-
-Vector2<int> UIObject::getPosition()
-{
-    return this->position;
-}
-
-Vector2<int> UIObject::getLocalPosition()
-{
-    if (isParent())
-    {
-        return this->position - parent->getPosition();
-    }
-    return this->position;
-}
-
-Vector2<int> UIObject::getSize() { return this->size; }
-
-Vector2<int> UIObject::getCenterPosition() const
-{
-    return Vector2<int>(this->position.x + this->size.x / 2,
-                        this->position.y + this->size.y / 2);
-}
-
-UIObject *UIObject::getParent() const
-{
-    if (isParent()) return parent;
-    return nullptr;
-}
-
-void UIObject::setScale(const float scale) { this->scale = scale; }
-
-void UIObject::setParent(UIObject *uiobject, bool dependParent)
-{
-    if (isParent())
-    {
-        if (uiobject->getID() != getParent()->getID())
-        {
-            for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
-            {
-                if (parent->childs[i]->getID() == this->getID())
-                {
-                    parent->childs.erase(parent->childs.begin() + i);
-                    break;
-                }
-            }
-            uiobject->childs.push_back(this);
-            this->parent = uiobject;
-            this->setPosition(getPosition());
-            this->dependParent = dependParent;
-        }
-    }
+    if (IsParent())
+        SetPosition(parent->GetPosition() + value);
     else
-    {
-        uiobject->childs.push_back(this);
-        this->parent = uiobject;
-        this->setPosition(getPosition());
-        this->dependParent = dependParent;
-    }
+        LOG_WARNING("parenti olmayan objeye local pos atamaya calsiiyon");
 }
 
-void UIObject::removeParent()
+void UIObject::SetParent(Object *value)
 {
-    if (isParent())
+    if (IsParent())
     {
-        for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
-        {
-            if (parent->childs[i]->getID() == this->getID())
-            {
-                parent->childs.erase(parent->childs.begin() + i);
-                break;
-            }
-        }
-        this->parent = nullptr;
+        WRITE_WARNING("parent'i olan objeye parent atamaya calisiyon");
+        return;
+    }
+    Object::SetParent(value);
+    localPosition = parent->GetPosition() - GetPosition();
+}
+
+void UIObject::SetTransform(const Matrix4<float> &value)
+{
+    Object::SetTransform(value);
+    if (IsParent() && objType == UIObjectType::TEXTBUTTON)
+    {
+        TextButton *b = reinterpret_cast<TextButton *>(this);
+        b->setTextAlign(b->getTextAlign());
     }
 }
 
-void UIObject::setVisible(const bool value) { this->visible = value; }
+void UIObject::SetParentCenterPos()
+{
+    if (IsParent())
+        SetPosition(Vector2<int>(parent->GetSize().x / 2 - size.x / 2,
+                                 parent->GetSize().y / 2 - size.y / 2));
+}
 
-void UIObject::setEnable(const bool value)
+void UIObject::SetScale(const float scale) { this->scale = scale; }
+
+
+void UIObject::SetEnable(const bool value)
 {
     if (!childs.empty())
     {
         for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
         {
-            childs[i]->setEnable(value);
+            reinterpret_cast<UIObject *>(childs[i])->SetEnable(value);
         }
     }
 
@@ -244,70 +166,45 @@ void UIObject::setEnable(const bool value)
         OnDisable();
 }
 
-void UIObject::setMouseEvent(const bool value) { this->mouseEvents = value; }
+void UIObject::SetMouseEvent(const bool value) { this->mouseEvents = value; }
 
-void UIObject::setDependParent(const bool value) { this->dependParent = value; }
+float UIObject::GetScale() const { return this->scale; }
 
-float UIObject::getScale() const { return this->scale; }
-
-bool UIObject::isParent() const { return this->parent != nullptr; }
-
-bool UIObject::isVisible() const
+bool UIObject::IsEnable() const
 {
-    if (this->isParent() && dependParent)
+    if (this->IsParent())
     {
-        return parent->isVisible() && this->visible;
-    }
-    return this->visible;
-}
-
-bool UIObject::isEnable() const
-{
-    if (this->isParent() && dependParent)
-    {
-        return parent->isEnable() && this->enable;
+        UIObject *par = reinterpret_cast<UIObject *>(parent);
+        return par->IsEnable() && this->enable;
     }
     return this->enable;
 }
 
-bool UIObject::isMouseEvents() const
+bool UIObject::IsMouseEvents() const
 {
-    if (this->isParent() && dependParent)
-    {
-        return parent->isMouseEvents() && this->mouseEvents;
-    }
-    return this->mouseEvents;
+    return mouseEvents;
 }
 
-bool UIObject::isDependParent() const { return this->dependParent; }
-
-int UIObject::getID() const { return this->id; }
-
-bool UIObject::isRenderable()
+bool UIObject::IsRenderable()
 {
-    if (this->isParent())
+    if (IsParent())
     {
-        UIObject *p = this->getParent();
-        if (p->isScrollable())
+        UIObject *p = reinterpret_cast<UIObject *>(parent);
+        if (p->IsScrollable())
         {
-            if ((getLocalPosition().y + getSize().y <= p->getSize().y) &&
-                getLocalPosition().y >= 0)
+            if ((GetLocalPosition().y + GetSize().y <= p->GetSize().y) &&
+                GetLocalPosition().y >= 0)
             {
-                p = nullptr;
                 return true;
             }
-            p = nullptr;
             return false;
         }
-        p = nullptr;
         return true;
     }
     return true;
 }
 
-bool UIObject::isScrollable() const { return this->scrollable; }
-
-void UIObject::setID(const int value) { this->id = value; }
+bool UIObject::IsScrollable() const { return scrollable; }
 
 std::string UIObject::GetObjectTypeString()
 {
@@ -351,27 +248,4 @@ std::string UIObject::GetObjectTypeString()
     return str;
 }
 
-void UIObject::setScrollable(const bool value) { this->scrollable = value; }
-
-void UIObject::BuildTransform()
-{
-    Matrix4 model = Matrix4(1.0F);
-    model = Projection::translate(
-        model, Vector3(static_cast<float>(globalPosition.x),
-                       static_cast<float>(globalPosition.y), 0.0F));
-    model = Projection::translate(
-        model, Vector3(0.5F * static_cast<float>(globalSize.x),
-                       0.5F * static_cast<float>(globalSize.y),
-                       0.0F));  // Move origin of rotation to center of quad
-    model = Projection::rotate(
-        model, Projection::radians(static_cast<float>(globalRotation)),
-        Vector3(0.0F, 0.0F, 1.0F));  // Then rotate
-    model = Projection::translate(
-        model, Vector3(-0.5F * static_cast<float>(globalSize.x),
-                       -0.5F * static_cast<float>(globalSize.y),
-                       0.0F));  // Move origin back
-    model = Projection::scale(model,
-                              Vector3(static_cast<float>(globalSize.x),
-                                      static_cast<float>(globalSize.y), 1.0F));
-    //SetTransform(model);
-}
+void UIObject::SetScrollable(const bool value) { scrollable = value; }

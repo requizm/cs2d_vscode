@@ -17,7 +17,7 @@ Env_Item::Env_Item(int id, Vector2<int> position)
 
 Env_Item::~Env_Item()
 {
-    button->removeParent();
+    button->RemoveParent();
     if (button != nullptr) delete button;
     button = nullptr;
 }
@@ -69,13 +69,13 @@ Env_Item_Manager::Env_Item_Manager()
     ZoneScoped;
 #endif
     p_panel =
-        new Panel(Vector2<int>(Editor::instance().tilePanel->getSize().x + 20,
-                               Editor::instance().controlPanel->getSize().y),
+        new Panel(Vector2<int>(Editor::instance().tilePanel->GetSize().x + 20,
+                               Editor::instance().controlPanel->GetSize().y),
                   "Entity Options", Vector2<int>(400, 200),
                   *(Editor::instance().textRenderer), true, true, 1.0F,
                   Vector3<float>(0.21F), 0.8F);
     p_panel->setMovable(false);
-    p_panel->setEnable(false);
+    p_panel->SetEnable(false);
 
     b_okay = new Button("Okay", Vector2<int>(330, 170), Vector2<int>(60, 20),
                         *(Editor::instance().textRenderer),
@@ -86,7 +86,7 @@ Env_Item_Manager::Env_Item_Manager()
     b_okay->setLabelClickColor(Vector3<float>(1.0F));
     b_okay->setOutline(true);
     b_okay->setOutlineColor(Vector3<float>(1.0F));
-    b_okay->setParent(p_panel);
+    b_okay->SetParent(p_panel);
 
     b_cancel =
         new Button("Cancel", Vector2<int>(230, 170), Vector2<int>(60, 20),
@@ -98,7 +98,7 @@ Env_Item_Manager::Env_Item_Manager()
     b_cancel->setLabelClickColor(Vector3<float>(1.0F));
     b_cancel->setOutline(true);
     b_cancel->setOutlineColor(Vector3<float>(1.0F));
-    b_cancel->setParent(p_panel);
+    b_cancel->SetParent(p_panel);
 
     b_delete = new Button("Delete", Vector2<int>(0, 170), Vector2<int>(60, 20),
                           *(Editor::instance().textRenderer),
@@ -109,12 +109,12 @@ Env_Item_Manager::Env_Item_Manager()
     b_delete->setLabelClickColor(Vector3<float>(1.0F));
     b_delete->setOutline(true);
     b_delete->setOutlineColor(Vector3<float>(1.0F));
-    b_delete->setParent(p_panel);
+    b_delete->SetParent(p_panel);
 
     t_id =
         new TextBox(Vector2<int>(300, 40), *(Editor::instance().textRenderer),
                     Vector2<int>(60, 20), true, 1.0F, Vector3<float>(0.58F));
-    t_id->setParent(p_panel);
+    t_id->SetParent(p_panel);
 }
 
 Env_Item_Manager::~Env_Item_Manager()

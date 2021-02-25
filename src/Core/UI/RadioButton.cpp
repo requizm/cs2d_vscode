@@ -19,6 +19,19 @@ RadioButtonElement::RadioButtonElement(const std::string &text,
     this->index = index;
 }
 
+RadioButtonElement::RadioButtonElement(const std::string &text,
+                                       Vector2<int> position,
+                                       TextRenderer &textRenderer, int index, Object *par,
+                                       const Vector3<float> &buttonColor,
+                                       const Vector3<float> &textColor,
+                                       float scale)
+    : Label(text, position, textRenderer, par, scale, textColor, UIObjectType::RADIOBUTTON),
+      selected(false)
+{
+    this->setButtonColor(buttonColor);
+    this->index = index;
+}
+
 RadioButtonElement::~RadioButtonElement() = default;
 
 void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer,
@@ -27,19 +40,19 @@ void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer,
     if (!text.empty())
         this->rend->RenderText(
             text,
-            Vector2<int>(getPosition().x + labelSize.y / 2 + 2.0F,
-                         getPosition().y),
+            Vector2<int>(GetPosition().x + labelSize.y / 2 + 2.0F,
+                         GetPosition().y),
             scale, labelCurrentColor);
     squareRenderer.ui_RenderFilledCircle(
-        Vector2<int>(getPosition().x, getPosition().y + labelSize.y / 2),
+        Vector2<int>(GetPosition().x, GetPosition().y + labelSize.y / 2),
         Vector2<int>(labelSize.y / 2), Vector3<float>(0.21F));
     squareRenderer.ui_RenderEmptyCircle(
-        Vector2<int>(getPosition().x, getPosition().y + labelSize.y / 2),
+        Vector2<int>(GetPosition().x, GetPosition().y + labelSize.y / 2),
         Vector2<int>(labelSize.y / 2), currentOutlineColor);
     if (selected)
     {
         squareRenderer.ui_RenderFilledCircle(
-            Vector2<int>(getPosition().x, getPosition().y + labelSize.y / 2),
+            Vector2<int>(GetPosition().x, GetPosition().y + labelSize.y / 2),
             Vector2<int>(labelSize.y / 2 - labelSize.y / 4), currentColor);
     }
 }
@@ -66,21 +79,21 @@ void RadioButtonElement::ProcessInput()
     isMouseUpM(MOUSE_BUTTON_LEFT);
 }
 
-Vector2<int> RadioButtonElement::getPosition()
+Vector2<int> RadioButtonElement::GetPosition()
 {
-    if (isParent()) return this->position + parent->getPosition();
+    if (IsParent()) return this->position + parent->GetPosition();
     return this->position;
 }
-Vector2<int> RadioButtonElement::getLocalPosition()
+Vector2<int> RadioButtonElement::GetLocalPosition()
 {
-    if (isParent()) return this->position - parent->getPosition();
+    if (IsParent()) return this->position - parent->GetPosition();
     return Vector2<int>(0);
 }
-Vector2<int> RadioButtonElement::getSize()
+Vector2<int> RadioButtonElement::GetSize()
 {
     Vector2<int> ps;
-    ps.x = (getPosition().x + labelSize.y / 2 + 2 + labelSize.x) -
-           (getPosition().x - labelSize.y / 2);
+    ps.x = (GetPosition().x + labelSize.y / 2 + 2 + labelSize.x) -
+           (GetPosition().x - labelSize.y / 2);
     ps.y = labelSize.y;
     return ps;
 }
@@ -112,31 +125,31 @@ void RadioButtonElement::OnDisable()
     // this->selected = false;
 }
 
-void RadioButtonElement::setPosition(const Vector2<int> &position)
+void RadioButtonElement::SetPosition(const Vector2<int> &position)
 {
     this->position = position;
 }
 
 bool RadioButtonElement::isMouseHover()
 {
-    if (isEnable() && isMouseEvents()) return isMouseHoverM();
+    if (IsEnable() && mouseEvents) return isMouseHoverM();
     return false;
 }
 bool RadioButtonElement::isMouseDown() { return this->isDown; }
 bool RadioButtonElement::isMouseUp() { return this->isUp; }
 bool RadioButtonElement::isMousePress()
 {
-    if (isEnable()) return isMousePressM(MOUSE_BUTTON_LEFT);
+    if (IsEnable()) return isMousePressM(MOUSE_BUTTON_LEFT);
     return false;
 }
 
 bool RadioButtonElement::isMouseHoverM()
 {
-    const int posX = static_cast<int>(this->getPosition().x - labelSize.y / 2);
-    const int posY = static_cast<int>(this->getPosition().y);
+    const int posX = static_cast<int>(this->GetPosition().x - labelSize.y / 2);
+    const int posY = static_cast<int>(this->GetPosition().y);
 
-    int sizeX = static_cast<int>(this->getSize().x);
-    int sizeY = static_cast<int>(this->getSize().y);
+    int sizeX = static_cast<int>(this->GetSize().x);
+    int sizeY = static_cast<int>(this->GetSize().y);
 
     if (InputManager::mousePos.x >= posX &&
         InputManager::mousePos.x <= posX + sizeX &&
@@ -186,7 +199,7 @@ RadioButton::RadioButton() = default;
 
 RadioButton::RadioButton(TextRenderer &renderer, Vector2<int> position,
                          int y_sep)
-    : UIObject(position, 1.0F, renderer)
+    : UIObject(position, Vector2<int>(1.1), 1.0F, renderer)
 {
     this->y_sep = y_sep;
 }
@@ -197,13 +210,13 @@ RadioButton::~RadioButton()
     {
         delete element;
     }
-    UIObject::removeParent();
+    RemoveParent();
 }
 
 void RadioButton::Draw(SpriteRenderer &spriteRenderer,
                        SquareRenderer &squareRenderer)
 {
-    if (isVisible() && isEnable())
+    if (IsEnable())
     {
         for (auto &element : elements)
         {
@@ -234,17 +247,17 @@ void RadioButton::AddElement(const std::string &text,
     RadioButtonElement *r = new RadioButtonElement(
         text, Vector2<int>(position.x, position.y + y_sep * i), *rend, i++,
         buttonColor, textColor, scale);
-    r->setSize(300, 300);
+    r->SetSize(Vector2<int>(300, 300));
     r->setMouseHoverColor(Vector3<float>(0.9F));
     r->setOutlineColor(Vector3<float>(0.58F));
     r->setMouseHoverOutlineColor(Vector3<float>(0.9F));
-    r->setParent(this, true);
+    r->SetParent(this);
     this->elements.push_back(r);
 }
 
 void RadioButton::Update()
 {
-    if (isEnable() && isMouseEvents())
+    if (IsEnable() && mouseEvents)
     {
         for (std::vector<int>::size_type i = 0; i != elements.size(); i++)
         {
@@ -255,7 +268,7 @@ void RadioButton::Update()
 
 void RadioButton::ProcessInput()
 {
-    if (isMouseEvents() && isEnable())
+    if (mouseEvents && IsEnable())
     {
         for (std::vector<int>::size_type i = 0; i != elements.size(); i++)
         {

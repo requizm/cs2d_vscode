@@ -1,6 +1,8 @@
 #ifndef PANEL_H
 #define PANEL_H
 
+#include <iostream>
+
 #include "../Manager/InputManager.hpp"
 #include "../Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../Renderer/SpriteRenderer.hpp"
@@ -28,6 +30,12 @@ class Panel : public UIObject
      */
     Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
           TextRenderer &renderer, bool isBackGround = false,
+          bool opttitles = true, float scale = 1.0F,
+          const Vector3<float> &color = Vector3<float>(1.0F),
+          float transp = 0.9F);
+
+    Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
+          TextRenderer &renderer, Object *par, bool isBackGround = false,
           bool opttitles = true, float scale = 1.0F,
           const Vector3<float> &color = Vector3<float>(1.0F),
           float transp = 0.9F);

@@ -13,7 +13,7 @@ Button::Button(const std::string &text, Vector2<int> position,
 {
     this->buttonColor = buttonColor;
     Vector2<int> nSize = renderer.CalculateSize(text, 1.0F);
-    this->setSize(
+    this->SetSize(
         Vector2<int>(static_cast<int>(static_cast<float>(nSize.x) * 1.5F),
                      static_cast<int>(static_cast<float>(nSize.y) * 1.5F)));
     this->btn_type = ButtonType::DEFAULT;
@@ -77,72 +77,72 @@ Button::~Button()
         InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
         ObjectManager::listenerObjCount--;
     }
-    UIObject::removeParent();
+    RemoveParent();
 }
 
 void Button::Draw(SpriteRenderer &spriteRenderer,
                   SquareRenderer &squareRenderer)
 {
-    if (isVisible() && isEnable() && isRenderable())
+    if (IsEnable() && IsRenderable())
     {
         switch (btn_type)
         {
             case ButtonType::DEFAULT:
                 squareRenderer.ui_RenderFilledSquare(
-                    this->getPosition(), this->getSize(), currentColor,
+                    this->GetPosition(), this->GetSize(), currentColor,
                     haveOutline, outlineColor, 1.0F, 1.0F, 0.0F);
                 Label::DrawForButton(center);
                 break;
             case ButtonType::SPRITE:
                 if (difColor)
                 {
-                    spriteRenderer.DrawSprite(this->sprite, this->getPosition(),
-                                              this->getSize(), currentColor);
+                    spriteRenderer.DrawSprite(this->sprite, this->GetPosition(),
+                                              this->GetSize(), currentColor);
                 }
                 else
                 {
                     if (haveOutline)
                     {
                         squareRenderer.ui_RenderFilledSquare(
-                            this->getPosition(),
-                            Vector2<int>(this->getSize().x + margin.x,
-                                         this->getSize().y + margin.y),
+                            this->GetPosition(),
+                            Vector2<int>(this->GetSize().x + margin.x,
+                                         this->GetSize().y + margin.y),
                             this->currentColor);
                         squareRenderer.ui_RenderEmptySquare(
-                            this->getPosition(),
-                            Vector2<int>(this->getSize().x + margin.x,
-                                         this->getSize().y + margin.y),
+                            this->GetPosition(),
+                            Vector2<int>(this->GetSize().x + margin.x,
+                                         this->GetSize().y + margin.y),
                             this->outlineColor);
                         spriteRenderer.DrawSprite(
                             this->sprite,
-                            Vector2<int>(this->getPosition().x + margin.x / 2,
-                                         this->getPosition().y + margin.y / 2),
-                            this->getSize());
+                            Vector2<int>(this->GetPosition().x + margin.x / 2,
+                                         this->GetPosition().y + margin.y / 2),
+                            this->GetSize());
                     }
                     else
                     {
                         squareRenderer.ui_RenderFilledSquare(
-                            this->getPosition(),
-                            Vector2<int>(this->getSize().x + margin.x,
-                                         this->getSize().y + margin.y),
+                            this->GetPosition(),
+                            Vector2<int>(this->GetSize().x + margin.x,
+                                         this->GetSize().y + margin.y),
                             this->currentColor);
                         spriteRenderer.DrawSprite(
                             this->sprite,
-                            Vector2<int>(this->getPosition().x + margin.x / 2,
-                                         this->getPosition().y + margin.y / 2),
-                            this->getSize());
+                            Vector2<int>(this->GetPosition().x + margin.x / 2,
+                                         this->GetPosition().y + margin.y / 2),
+                            this->GetSize());
                     }
                 }
                 break;
             case ButtonType::TILE:
                 spriteRenderer.DrawSprite(this->tile.sprite,
-                                          this->getPosition(), this->getSize());
+                                          this->GetPosition(), this->GetSize());
                 break;
             case ButtonType::ENV_OBJ:
                 spriteRenderer.DrawSprite(
                     this->tile.sprite,
-                    this->getPosition() + GameParameters::SIZE_TILE / 4,
-                    this->getSize() / Vector2<int>(2));
+                    this->GetPosition() + GameParameters::SIZE_TILE / 4,
+                    this->GetSize() / Vector2<int>(2));
                 break;
         }
     }
@@ -152,13 +152,13 @@ void Button::Draw(SpriteRenderer &spriteRenderer,
                   SquareRenderer &squareRenderer, float shine, bool selected,
                   float time)
 {
-    if (isVisible() && isEnable() && isRenderable())
+    if (IsEnable() && IsRenderable())
     {
         switch (btn_type)
         {
             case ButtonType::TILE:
                 spriteRenderer.DrawSprite(this->tile.sprite,
-                                          this->getPosition(), this->getSize(),
+                                          this->GetPosition(), this->GetSize(),
                                           0.0F, false, shine, selected, time);
         }
     }
@@ -166,7 +166,7 @@ void Button::Draw(SpriteRenderer &spriteRenderer,
 
 void Button::Draw()
 {
-    if (isVisible() && isEnable())
+    if (IsEnable())
     {
         Label::Draw();
     }
@@ -174,7 +174,7 @@ void Button::Draw()
 
 void Button::Update()
 {
-    if (isEnable() && isMouseEvents())
+    if (IsEnable() && mouseEvents)
     {
         if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE ||
             ButtonType::TILE)
@@ -195,48 +195,48 @@ void Button::Update()
 
 void Button::ProcessInput()
 {
-    if (isMouseEvents())
+    if (mouseEvents)
     {
         // isMouseDownM(GLFW_MOUSE_BUTTON_LEFT);
         // isMouseUpM(GLFW_MOUSE_BUTTON_LEFT);
     }
 }
 
-Vector2<int> Button::getPosition()
+Vector2<int> Button::GetPosition()
 {
     if (btn_type == ButtonType::TILE || btn_type == ButtonType::ENV_OBJ)
     {
-        if (isParent())
+        if (IsParent())
         {
-            return parent->getPosition() + this->tile.GetPosition();
+            return parent->GetPosition() + this->tile.GetPosition();
         }
         return this->tile.GetPosition();
     }
-    if (isParent())
+    if (IsParent())
     {
-        return parent->getPosition() + this->position;
+        return parent->GetPosition() + this->position;
     }
     return this->position;
 }
 
-Vector2<int> Button::getLocalPosition()
+Vector2<int> Button::GetLocalPosition()
 {
     if (btn_type == ButtonType::TILE)
     {
-        if (isParent())
+        if (IsParent())
         {
-            return this->getPosition() - parent->getPosition();
+            return this->GetPosition() - parent->GetPosition();
         }
         return this->tile.GetPosition();
     }
-    if (isParent())
+    if (IsParent())
     {
-        return this->getPosition() - parent->getPosition();
+        return this->GetPosition() - parent->GetPosition();
     }
     return this->position;
 }
 
-Vector2<int> Button::getSize()
+Vector2<int> Button::GetSize()
 {
     if (btn_type == ButtonType::TILE || btn_type == ButtonType::ENV_OBJ)
     {
@@ -247,7 +247,7 @@ Vector2<int> Button::getSize()
 
 bool Button::isMouseHover()
 {
-    if (isEnable() && isMouseEvents()) return isMouseHoverM();
+    if (IsEnable() && mouseEvents) return isMouseHoverM();
     return false;
 }
 
@@ -274,17 +274,17 @@ bool Button::isMouseUp()
 
 bool Button::isMousePress()
 {
-    if (isEnable()) return isMousePressM(MOUSE_BUTTON_LEFT);
+    if (IsEnable()) return isMousePressM(MOUSE_BUTTON_LEFT);
     return false;
 }
 
 bool Button::isMouseHoverM()
 {
-    const int posX = static_cast<int>(this->getPosition().x);
-    const int posY = static_cast<int>(this->getPosition().y);
+    const int posX = static_cast<int>(this->GetPosition().x);
+    const int posY = static_cast<int>(this->GetPosition().y);
 
-    int sizeX = static_cast<int>(this->getSize().x);
-    int sizeY = static_cast<int>(this->getSize().y);
+    int sizeX = static_cast<int>(this->GetSize().x);
+    int sizeY = static_cast<int>(this->GetSize().y);
 
     if (haveOutline)
     {
@@ -341,7 +341,7 @@ bool Button::isMousePressM(MouseKeys key)
 
 void Button::onMouseDown()
 {
-    if (isEnable() && isMouseHover())
+    if (IsEnable() && isMouseHover())
     {
         if (btn_type == ButtonType::DEFAULT || btn_type == ButtonType::SPRITE ||
             btn_type == ButtonType::TILE)
@@ -363,7 +363,7 @@ void Button::onMouseUp()
 {
     if (isPressed)
     {
-        if (isEnable() && isMouseHover())
+        if (IsEnable() && isMouseHover())
         {
             if (btn_type == ButtonType::DEFAULT ||
                 btn_type == ButtonType::SPRITE || btn_type == ButtonType::TILE)
@@ -413,7 +413,7 @@ void Button::setMargin(const Vector2<int> value)
     if (haveOutline) this->margin = value;
 }
 
-void Button::setPosition(const Vector2<int> &position)
+void Button::SetPosition(const Vector2<int> &position)
 {
     if (btn_type == ButtonType::TILE)
     {

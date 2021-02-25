@@ -40,10 +40,9 @@ void Menu::Start()
     this->optionsPanel->setMovable(true);
 
     this->t_test =
-        new TextBox(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20),
+        new TextBox(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20), optionsPanel,
                     true, 1.0F, Vector3<float>(0.58F));
-    this->t_test->setParent(optionsPanel);
-    this->t_test->setParentCenterPos();
+    this->t_test->SetParentCenterPos();
 
     this->newPanel =
         new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F,
@@ -53,23 +52,20 @@ void Menu::Start()
     this->newPanel->setMovable(true);
 
     this->mapsPanel =
-        new Panel(Vector2<int>(100, 100), "Maps", Vector2<int>(120, 200),
-                  *textRenderer, true, false, 1.0F, Vector3<float>(0.21F));
+        new Panel(Vector2<int>(newPanel->GetPosition().x + 100, newPanel->GetPosition().y + 100), "Maps", Vector2<int>(120, 200),
+                  *textRenderer, newPanel, true, false, 1.0F, Vector3<float>(0.21F));
     this->mapsPanel->setMovable(false);
-    this->mapsPanel->setScrollable(true);
+    this->mapsPanel->SetScrollable(true);
     this->mapsPanel->setOutline(true);
-    this->mapsPanel->setVisible(true);
     this->mapsPanel->setOutlineColor(Vector3<float>(0.47F));
-    this->mapsPanel->setParent(newPanel, true);
     this->mapNames = new ListItem(mapsPanel);
 
     this->t_mapName =
-        new TextBox(Vector2<int>(100, 320), *textRenderer,
-                    Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F));
-    this->t_mapName->setParent(newPanel, true);
+        new TextBox(Vector2<int>(newPanel->GetPosition().x + 100, newPanel->GetPosition().y + 320), *textRenderer,
+                    Vector2<int>(120, 20), newPanel, true, 1.0F, Vector3<float>(0.58F));
 
     this->b_newGame = new TextButton(
-        "Start", Vector2<int>(240, 320), Vector2<int>(60, 20), *textRenderer,
+        "Start", Vector2<int>(newPanel->GetPosition().x + 240, newPanel->GetPosition().y + 320), Vector2<int>(60, 20), *textRenderer, newPanel,
         Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
     this->b_newGame->setButtonClickColor(Vector3<float>(0.30F));
     this->b_newGame->setButtonHoverColor(Vector3<float>(0.30F));
@@ -77,7 +73,6 @@ void Menu::Start()
     this->b_newGame->setTextClickColor(Vector3<float>(1.0F));
     this->b_newGame->setHaveOutline(true);
     this->b_newGame->setOutlineColor(Vector3<float>(1.0F));
-    this->b_newGame->setParent(newPanel, true);
     this->b_newGame->addListenerDown(std::bind(&Menu::newGameBtnClick, this));
 
     std::function<void(TextButton *, TextButton *)> mapChange =
@@ -99,8 +94,8 @@ void Menu::Initialize(Sprite menuSprites[4])
 void Menu::OnEnable()
 {
     this->Start();
-    this->optionsPanel->setEnable(false);
-    this->mapsPanel->setEnable(false);
+    this->optionsPanel->SetEnable(false);
+    this->mapsPanel->SetEnable(false);
 }
 
 void Menu::OnDisable()
@@ -204,12 +199,12 @@ void Menu::ProcessInput()
         {
             mapNames->AddItem(maps[i]);
         }
-        newPanel->setEnable(true);
+        newPanel->SetEnable(true);
     }
 
     if (l_options->isMouseDown())
     {
-        optionsPanel->setEnable(true);
+        optionsPanel->SetEnable(true);
     }
 }
 

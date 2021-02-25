@@ -36,16 +36,27 @@ class Label : public UIObject
           UIObjectType type = UIObjectType::LABEL,
           LabelType ltype = LabelType::CLICKABLE);
 
+    Label(const std::string &text, Vector2<int> position,
+          TextRenderer &renderer, Object *par, float scale = 1.0F,
+          const Vector3<float> &color = Vector3<float>(1.0F),
+          UIObjectType type = UIObjectType::LABEL,
+          LabelType ltype = LabelType::CLICKABLE);
+
     /**
      * @brief Construct a new Label for TextBox
      *
      * @param position
+     * @param size
      * @param renderer
      * @param scale 1.0F
      * @param color Vector3<float>(1.0F)
      * @param type UIObjectType::LABEL
      */
-    Label(Vector2<int> position, TextRenderer &renderer, float scale = 1.0F,
+    Label(Vector2<int> position, const Vector2<int> &size, TextRenderer &renderer, float scale = 1.0F,
+          const Vector3<float> &color = Vector3<float>(1.0F),
+          UIObjectType type = UIObjectType::LABEL);
+
+    Label(Vector2<int> position, const Vector2<int> &size, TextRenderer &renderer, Object *par, float scale = 1.0F,
           const Vector3<float> &color = Vector3<float>(1.0F),
           UIObjectType type = UIObjectType::LABEL);
 

@@ -49,7 +49,7 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
 
     Editor::instance().time = 0.0F;
     Editor::instance().position =
-        Vector2<int>(0 - Editor::instance().buildPanel->getSize().x, 0);
+        Vector2<int>(0 - Editor::instance().buildPanel->GetSize().x, 0);
 
     Editor::instance().firstSelect = false;
     Editor::instance().mapLimit = mapSize;
@@ -79,7 +79,7 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
         Button *button = new Button(tile);
         button->independent = true;
-        button->setParent(Editor::instance().tilePanel, true);
+        button->SetParent(Editor::instance().tilePanel);
         res.tilesUI.push_back(button);
     }
 

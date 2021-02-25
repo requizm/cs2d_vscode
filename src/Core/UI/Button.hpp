@@ -79,9 +79,9 @@ class Button : public Label
     virtual void Update() override;
     void ProcessInput() override;
 
-    Vector2<int> getPosition() override;
-    Vector2<int> getLocalPosition() override;
-    Vector2<int> getSize() override;
+    Vector2<int> GetPosition() final;
+    Vector2<int> GetLocalPosition() final;
+    Vector2<int> GetSize() final;
     Tile *getTile();
 
     void setMouseHoverColor(const Vector3<float> &color);
@@ -92,7 +92,7 @@ class Button : public Label
 
     void setMargin(const Vector2<int> value);
 
-    void setPosition(const Vector2<int> &position) override;
+    void SetPosition(const Vector2<int> &position) final;
 
     bool isMouseHover() override;
     bool isMouseDown() override;

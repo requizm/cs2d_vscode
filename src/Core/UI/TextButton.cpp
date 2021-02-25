@@ -9,6 +9,27 @@ TextButton::TextButton(const std::string &text, const Vector2<int> &position, co
     this->buttonColor = buttonColor;
     this->textColor = textColor;
     this->text = text;
+    textSize = rend->CalculateSize(text, scale);
+    setTextAlign(textAlign);
+
+    mDown = std::bind(&TextButton::onMouseDown, this);
+    InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+
+    mUp = std::bind(&TextButton::onMouseUp, this);
+    InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+}
+
+TextButton::TextButton(const std::string &text, const Vector2<int> &position, const Vector2<int> &size,
+                       TextRenderer &renderer, Object *par,
+                       const Vector3<float> &buttonColor,
+                       const Vector3<float> &textColor,
+                       float scale, UIObjectType type) : UIObject(position, size, 1.0F, renderer, type, par)
+{
+    this->buttonColor = buttonColor;
+    this->textColor = textColor;
+    this->text = text;
+    textSize = rend->CalculateSize(text, scale);
+    setTextAlign(textAlign);
 
     mDown = std::bind(&TextButton::onMouseDown, this);
     InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -21,13 +42,13 @@ TextButton::~TextButton()
 {
     InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
     InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
-    removeParent();
+    RemoveParent();
 }
 
 
 void TextButton::Update()
 {
-    if (isEnable() && isMouseEvents())
+    if (IsEnable() && mouseEvents)
     {
         if (!isPressed)
         {
@@ -51,7 +72,7 @@ void TextButton::ProcessInput()
 
 void TextButton::Draw(SquareRenderer &squareRenderer)
 {
-    if (isEnable() && isVisible())
+    if (IsEnable())
     {
         squareRenderer.ui_RenderFilledSquare(
             position, size, buttonCurrentColor,
@@ -61,27 +82,10 @@ void TextButton::Draw(SquareRenderer &squareRenderer)
     }
 }
 
-void TextButton::setPosition(const Vector2<int> &position)
+void TextButton::SetPosition(const Vector2<int> &position)
 {
-    Vector2<int> newPos = position;
-
-    if (isParent())
-    {
-        newPos = newPos + getParent()->getPosition();
-    }
-    this->position = newPos;
-
-    if (drawCenter)
-    {
-        Vector2<int> dif = size - textSize;
-        dif.y /= 2;
-        dif.x /= 2;
-        textPos = newPos + dif;
-    }
-    else
-    {
-        textPos = newPos;
-    }
+    UIObject::SetPosition(position);
+    setTextAlign(textAlign);
 }
 
 void TextButton::setButtonColor(const Vector3<float> &value) { buttonColor = value; }
@@ -100,19 +104,31 @@ void TextButton::setTextColor(const Vector3<float> &value) { textColor = value; 
 
 void TextButton::setHaveOutline(bool value) { haveOutline = value; }
 
-void TextButton::setDrawCenter(bool value)
+TextAlign TextButton::getTextAlign()
 {
-    drawCenter = value;
-    if (value)
+    return textAlign;
+}
+
+void TextButton::setTextAlign(TextAlign value)
+{
+    textAlign = value;
+
+    Vector2<int> dif;
+    switch (textAlign)
     {
-        Vector2<int> dif = size - textSize;
-        dif.y /= 2;
-        dif.x /= 2;
-        textPos = position + dif;
-    }
-    else
-    {
-        textPos = position;
+        case TextAlign::T_LEFT:
+            textPos = position;
+            break;
+        case TextAlign::T_CENTER:
+            dif = size - textSize;
+            dif.y /= 2;
+            dif.x /= 2;
+            textPos = position + dif;
+            break;
+        case TextAlign::T_RIGHT:
+            dif = size - textSize;
+            textPos = position + dif;
+            break;
     }
 }
 
@@ -121,6 +137,7 @@ std::string TextButton::getText() const { return text; }
 void TextButton::setText(const std::string &value)
 {
     text = value;
+    textSize = rend->CalculateSize(text, scale);
 }
 
 Vector2<int> TextButton::getTextSize() const { return textSize; }
@@ -139,8 +156,8 @@ void TextButton::addListenerUp(std::function<void()> func)
 
 bool TextButton::isMouseHover()
 {
-    Vector2<int> pos = this->getPosition();
-    Vector2<int> size = this->getSize();
+    Vector2<int> pos = this->GetPosition();
+    Vector2<int> size = this->GetSize();
 
     if (InputManager::mousePos.x >= pos.x &&
         InputManager::mousePos.x <= pos.x + size.x &&
@@ -154,7 +171,7 @@ bool TextButton::isMouseHover()
 
 void TextButton::onMouseDown()
 {
-    if (isEnable() && isMouseHover())
+    if (IsEnable() && isMouseHover())
     {
         textCurrentColor = textClickColor;
         buttonCurrentColor = buttonClickColor;
@@ -170,7 +187,7 @@ void TextButton::onMouseDown()
 
 void TextButton::onMouseUp()
 {
-    if (isPressed && isEnable() && isMouseHover())
+    if (isPressed && IsEnable() && isMouseHover())
     {
         textCurrentColor = textColor;
         buttonCurrentColor = buttonColor;

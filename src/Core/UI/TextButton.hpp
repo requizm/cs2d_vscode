@@ -3,6 +3,13 @@
 
 #include "UIObject.hpp"
 
+enum TextAlign
+{
+    T_LEFT,
+    T_CENTER,
+    T_RIGHT
+};
+
 class TextButton : public UIObject
 {
    public:
@@ -10,13 +17,14 @@ class TextButton : public UIObject
                const Vector3<float> &buttonColor = Vector3<float>(1.0F),
                const Vector3<float> &textColor = Vector3<float>(0.0F),
                float scale = 1.0F, UIObjectType type = UIObjectType::TEXTBUTTON);
+    TextButton(const std::string &text, const Vector2<int> &position, const Vector2<int> &size, TextRenderer &renderer, Object *par, const Vector3<float> &buttonColor = Vector3<float>(1.0F), const Vector3<float> &textColor = Vector3<float>(0.0F), float scale = 1.0F, UIObjectType type = UIObjectType::TEXTBUTTON);
     ~TextButton();
 
     void Update() final;
     void ProcessInput() final;
     void Draw(SquareRenderer &squareRenderer) final;
 
-    void setPosition(const Vector2<int> &position) final;
+    void SetPosition(const Vector2<int> &position) final;
 
     void setButtonColor(const Vector3<float> &value);
 
@@ -38,7 +46,8 @@ class TextButton : public UIObject
 
     void setHaveOutline(bool value);
 
-    void setDrawCenter(bool value);
+    TextAlign getTextAlign();
+    void setTextAlign(TextAlign value);
 
     Vector2<int> getTextSize() const;
 
@@ -62,7 +71,7 @@ class TextButton : public UIObject
 
     std::string text;
     bool haveOutline = true;
-    bool drawCenter = true;
+    TextAlign textAlign = TextAlign::T_CENTER;
 
     Vector2<int> textSize = Vector2<int>(1);
     Vector2<int> textPos = Vector2<int>(1);

@@ -13,6 +13,7 @@ class Object
    public:
     Object();
     Object(const Vector2<int> &pos, const Vector2<int> &siz, int rot);
+    Object(const Vector2<int> &pos, const Vector2<int> &siz, int rot, Object *par);
     Object(Object &&) = default;
     Object(const Object &) = default;
     Object &operator=(Object &&) = default;
@@ -24,8 +25,8 @@ class Object
     Vector2<int> GetPositionOfCenter();
     void UpdateChilds();
 
-    Vector2<int> GetLocalPosition() const;
-    void SetLocalPosition(const Vector2<int> &value);
+    virtual Vector2<int> GetLocalPosition();
+    virtual void SetLocalPosition(const Vector2<int> &value);
 
     Vector2<int> GetLocalSize() const;
     void SetLocalSize(const Vector2<int> &value);
@@ -33,10 +34,10 @@ class Object
     int GetLocalRotation() const;
     void SetLocalRotation(int value);
 
-    Vector2<int> GetPosition() const;
-    void SetPosition(const Vector2<int> &value);
+    virtual Vector2<int> GetPosition();
+    virtual void SetPosition(const Vector2<int> &value);
 
-    Vector2<int> GetSize() const;
+    virtual Vector2<int> GetSize();
     void SetSize(const Vector2<int> &value);
 
     int GetRotation() const;
@@ -46,7 +47,7 @@ class Object
     void SetLocalTransform(const Matrix4<float> &value);
 
     Matrix4<float> GetTransform() const;
-    void SetTransform(const Matrix4<float> &value);
+    virtual void SetTransform(const Matrix4<float> &value);
 
     Object *GetParent() const;
     virtual void SetParent(Object *value);

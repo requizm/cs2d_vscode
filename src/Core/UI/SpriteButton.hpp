@@ -10,15 +10,17 @@ class SpriteButton : public UIObject
    public:
     SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size,
                  bool difColor = false, float scale = 1.0F);
+    SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size, Object *par,
+                 bool difColor = false, float scale = 1.0F);
     ~SpriteButton();
 
     void Update() final;
     void ProcessInput() final;
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) final;
 
-    Vector2<int> getSize() final;
+    Vector2<int> GetSize() final;
 
-    void setPosition(const Vector2<int> &position) final;
+    void SetPosition(const Vector2<int> &position) final;
 
     void setButtonCurrentColor(const Vector3<float> &value);
 

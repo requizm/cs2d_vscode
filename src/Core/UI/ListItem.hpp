@@ -14,6 +14,7 @@ class ListItemElement : public UIObject
 {
    public:
     explicit ListItemElement(TextButton *btn, int i, ListItem *listItem);
+    explicit ListItemElement(TextButton *btn, int i, ListItem *listItem, Object *par);
     ~ListItemElement();
 
     bool selected = false;

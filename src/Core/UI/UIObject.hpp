@@ -2,10 +2,12 @@
 #define UIOBJECT_H
 
 #include <algorithm>
+#include <iostream>
 #include <memory>
 
 #include "../Manager/Logger.hpp"
 #include "../Manager/Utils.hpp"
+#include "../Model/Object.hpp"
 #include "../Renderer/SpriteRenderer.hpp"
 #include "../Renderer/SquareRenderer.hpp"
 #include "../Renderer/TextRenderer.hpp"
@@ -26,24 +28,28 @@ enum class UIObjectType
 };
 // class TextRenderer;
 
-class UIObject
+class UIObject : public Object
 {
    public:
-    UIObject() = default;
+    UIObject();
     UIObject(UIObjectType type);
+    UIObject(UIObjectType type, Object *par);
     UIObject(Vector2<int> position, Vector2<int> size, float scale,
              TextRenderer &renderer);
     UIObject(Vector2<int> position, Vector2<int> size, float scale,
+             TextRenderer &renderer, Object *par);
+    UIObject(Vector2<int> position, Vector2<int> size, float scale,
              TextRenderer &renderer, UIObjectType type);
+    UIObject(Vector2<int> position, Vector2<int> size, float scale,
+             TextRenderer &renderer, UIObjectType type, Object *par);
     UIObject(Vector2<int> position, Vector2<int> size, float scale);
+    UIObject(Vector2<int> position, Vector2<int> size, float scale, Object *par);
     UIObject(Vector2<int> position, Vector2<int> size, float scale,
              UIObjectType type);
-    UIObject(Vector2<int> position, float scale, TextRenderer &renderer);
-    UIObject(Vector2<int> position, float scale, TextRenderer &renderer,
-             UIObjectType type);
-    UIObject(Vector2<int> position, float scale, UIObjectType type);
+    UIObject(Vector2<int> position, Vector2<int> size, float scale,
+             UIObjectType type, Object *par);
     virtual ~UIObject();
-    
+
     virtual void Update();
     virtual void OnEnable();
     virtual void OnDisable();
@@ -53,34 +59,22 @@ class UIObject
     virtual void Draw(SpriteRenderer &spriteRenderer,
                       SquareRenderer &squareRenderer);
 
-    virtual Vector2<int> getPosition();
-    virtual Vector2<int> getSize();
-    virtual Vector2<int> getCenterPosition() const;
-    virtual Vector2<int> getLocalPosition();
-    UIObject *getParent() const;
-    float getScale() const;
-    bool isParent() const;
-    bool isVisible() const;
-    bool isEnable() const;
-    bool isMouseEvents() const;
-    bool isDependParent() const;
-    int getID() const;
-    bool isRenderable();  // scroll'dan dolayi
-    bool isScrollable() const;
+    void SetPosition(const Vector2<int> &value) override;
+    void SetLocalPosition(const Vector2<int> &value) override;
+    void SetParent(Object *value) final;
+    void SetTransform(const Matrix4<float> &value) final;
 
-    virtual void setPosition(const Vector2<int> &position);
-    virtual void setParentCenterPos();
-    virtual void setSize(const Vector2<int> size);
-    virtual void setSize(const int x, const int y);
-    void setScale(const float scale);
-    void setParent(UIObject *uiobject, bool dependParent = true);
-    void removeParent();
-    void setVisible(const bool value);
-    void setEnable(const bool value);
-    void setMouseEvent(const bool value);
-    void setDependParent(const bool value);
-    void setID(const int value);
-    void setScrollable(const bool value);
+    float GetScale() const;
+    bool IsEnable() const;
+    bool IsMouseEvents() const;
+    bool IsRenderable();  // scroll'dan dolayi
+    bool IsScrollable() const;
+
+    virtual void SetParentCenterPos();
+    void SetScale(const float value);
+    void SetEnable(const bool value);
+    void SetMouseEvent(const bool value);
+    void SetScrollable(const bool value);
 
     std::string GetObjectTypeString();
 
@@ -92,18 +86,11 @@ class UIObject
      */
     bool independent = false;
 
-    std::vector<UIObject *> childs;
-
     TextRenderer *rend = nullptr;
 
    protected:
-    Vector2<int> position = Vector2<int>(0);
     float scale = 1.0F;
-    Vector2<int> size = Vector2<int>(0);
     UIObjectType objType = UIObjectType::UIOBJECT;
-    UIObject *parent = nullptr;
-
-    int id = 0;
 
     /**
      * visible, enable ve mouseEvent degiskenleri parent'a bagli olsun
@@ -118,17 +105,6 @@ class UIObject
 
     bool isDown = false;
     bool isUp = false;
-
-    Vector2<int> localPosition, localSize;
-    int localRotation;
-
-    Vector2<int> globalPosition, globalSize;
-    int globalRotation;
-
-    Matrix4<float> localTransform = Matrix4(1.0f);
-    Matrix4<float> globalTransform = Matrix4(1.0f);
-
-    void BuildTransform();
 };
 
 #endif  // UIOBJECT_H

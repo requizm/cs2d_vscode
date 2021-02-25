@@ -136,7 +136,7 @@ void SaveLoadSystem::SaveMap()
         fileC << doc;
         fileC.close();
 
-        savePanel->setEnable(false);
+        savePanel->SetEnable(false);
     }
 }
 void SaveLoadSystem::B_SaveMap()
@@ -149,7 +149,7 @@ void SaveLoadSystem::B_SaveMap()
     {
         save_listMaps->AddItem(maps[i]);
     }
-    this->savePanel->setEnable(true);
+    this->savePanel->SetEnable(true);
 }
 
 std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
@@ -160,7 +160,7 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
     std::vector<ButtonTile *> tiles;
 
     InputManager::scroll.y = 0.0F;
-    this->loadPanel->setEnable(false);
+    this->loadPanel->SetEnable(false);
 
     mapName = GameParameters::resDirectory + "levels/" + mapName + ".xml";
     XMLLoader loader = XMLLoader(mapName);
@@ -240,7 +240,7 @@ void SaveLoadSystem::B_LoadMap()
         load_listMaps->AddItem(maps[i]);
     }
     load_listMaps->Select(0);
-    this->loadPanel->setEnable(true);
+    this->loadPanel->SetEnable(true);
 }
 
 bool SaveLoadSystem::isPressedOrHover()

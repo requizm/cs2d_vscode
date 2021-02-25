@@ -1,10 +1,21 @@
 #include "SpriteButton.hpp"
 
 SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size,
-                           bool difColor, float scale) : UIObject(position, scale, UIObjectType::SPRITEBUTTON)
+                           bool difColor, float scale) : UIObject(position, size, scale, UIObjectType::SPRITEBUTTON)
 {
     this->sprite = sprite;
-    this->size = size;
+
+    mDown = std::bind(&SpriteButton::onMouseDown, this);
+    InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+
+    mUp = std::bind(&SpriteButton::onMouseUp, this);
+    InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+}
+
+SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size, Object *par,
+                           bool difColor, float scale) : UIObject(position, size, scale, UIObjectType::SPRITEBUTTON, par)
+{
+    this->sprite = sprite;
 
     mDown = std::bind(&SpriteButton::onMouseDown, this);
     InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
@@ -17,12 +28,12 @@ SpriteButton::~SpriteButton()
 {
     InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
     InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
-    removeParent();
+    RemoveParent();
 }
 
 void SpriteButton::Update()
 {
-    if (isEnable() && isMouseEvents())
+    if (IsEnable() && mouseEvents)
     {
         if (!isPressed)
         {
@@ -44,17 +55,17 @@ void SpriteButton::ProcessInput()
 
 void SpriteButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
-    if (isEnable() && isVisible())
+    if (IsEnable())
     {
         squareRenderer.ui_RenderFilledSquare(
             position,
-            getSize(),
+            GetSize(),
             buttonCurrentColor);
         if (haveOutline)
         {
             squareRenderer.ui_RenderEmptySquare(
                 position,
-                getSize(),
+                GetSize(),
                 outlineColor);
         }
         spriteRenderer.DrawSprite(
@@ -64,20 +75,15 @@ void SpriteButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRe
     }
 }
 
-Vector2<int> SpriteButton::getSize()
+Vector2<int> SpriteButton::GetSize()
 {
     return size + margin;
 }
 
-void SpriteButton::setPosition(const Vector2<int> &position)
+void SpriteButton::SetPosition(const Vector2<int> &position)
 {
-    Vector2<int> newPos = position;
-    if (isParent())
-    {
-        newPos = newPos + getParent()->getPosition();
-    }
-    this->position = newPos;
-    spritePos = Vector2<int>(newPos.x + margin.x / 2, newPos.y + margin.y / 2);
+    Object::SetPosition(position);
+    spritePos = Vector2<int>(position.x + margin.x / 2, position.y + margin.y / 2);
 }
 
 void SpriteButton::setButtonCurrentColor(const Vector3<float> &value) { buttonCurrentColor = value; }
@@ -127,7 +133,7 @@ bool SpriteButton::isMouseHover()
 
 void SpriteButton::onMouseDown()
 {
-    if (isEnable() && isMouseHover())
+    if (IsEnable() && isMouseHover())
     {
         buttonCurrentColor = buttonClickColor;
 
@@ -142,7 +148,7 @@ void SpriteButton::onMouseDown()
 
 void SpriteButton::onMouseUp()
 {
-    if (isPressed && isEnable() && isMouseHover())
+    if (isPressed && IsEnable() && isMouseHover())
     {
         buttonCurrentColor = buttonColor;
 
