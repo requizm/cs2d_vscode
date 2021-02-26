@@ -73,7 +73,7 @@ class Panel : public UIObject
     Vector2<int> dragSize;
     Vector2<int> dragPos;
     SpriteButton *escapeButton;
-    Label title;
+    Label *title = nullptr;
     bool opttitles;
     bool backGround;
     bool movable;

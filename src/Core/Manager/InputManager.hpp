@@ -10,6 +10,8 @@
 
 #include "../Math/Vector2.hpp"
 #include "Input/InputStructs.hpp"
+#include "../Manager/ObjectManager.hpp"
+#include "../Manager/Logger.hpp"
 
 
 class InputManager

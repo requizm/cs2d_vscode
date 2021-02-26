@@ -136,7 +136,7 @@ void UIObject::SetTransform(const Matrix4<float> &value)
 void UIObject::SetParentCenterPos()
 {
     if (IsParent())
-        SetPosition(Vector2<int>(parent->GetSize().x / 2 - size.x / 2,
+        SetLocalPosition(Vector2<int>(parent->GetSize().x / 2 - size.x / 2,
                                  parent->GetSize().y / 2 - size.y / 2));
 }
 

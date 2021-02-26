@@ -17,6 +17,8 @@ TextButton::TextButton(const std::string &text, const Vector2<int> &position, co
 
     mUp = std::bind(&TextButton::onMouseUp, this);
     InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+
+    ObjectManager::listenerObjCount++;
 }
 
 TextButton::TextButton(const std::string &text, const Vector2<int> &position, const Vector2<int> &size,
@@ -36,6 +38,8 @@ TextButton::TextButton(const std::string &text, const Vector2<int> &position, co
 
     mUp = std::bind(&TextButton::onMouseUp, this);
     InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+
+    ObjectManager::listenerObjCount++;
 }
 
 TextButton::~TextButton()
@@ -43,6 +47,7 @@ TextButton::~TextButton()
     InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
     InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
     RemoveParent();
+    ObjectManager::listenerObjCount--;
 }
 
 
@@ -147,12 +152,12 @@ Vector2<int> TextButton::getTextPos() const { return textPos; }
 
 void TextButton::addListenerDown(std::function<void()> func)
 {
-    listenersDown.push_back(func);
+    listenersDown.push_back(std::move(func));
 }
 
 void TextButton::addListenerUp(std::function<void()> func)
 {
-    listenersUp.push_back(func);
+    listenersUp.push_back(std::move(func));
 }
 
 bool TextButton::isMouseHover()

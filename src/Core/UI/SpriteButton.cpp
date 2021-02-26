@@ -1,7 +1,7 @@
 #include "SpriteButton.hpp"
 
 SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size,
-                           bool difColor, float scale) : UIObject(position, size, scale, UIObjectType::SPRITEBUTTON)
+                           bool difColor, float scale, UIObjectType type) : UIObject(position, size, scale, type)
 {
     this->sprite = sprite;
 
@@ -10,10 +10,15 @@ SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, c
 
     mUp = std::bind(&SpriteButton::onMouseUp, this);
     InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+
+    if (type == UIObjectType::SPRITEBUTTON)
+    {
+        ObjectManager::listenerObjCount++;
+    }
 }
 
 SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size, Object *par,
-                           bool difColor, float scale) : UIObject(position, size, scale, UIObjectType::SPRITEBUTTON, par)
+                           bool difColor, float scale, UIObjectType type) : UIObject(position, size, scale, type, par)
 {
     this->sprite = sprite;
 
@@ -22,6 +27,11 @@ SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, c
 
     mUp = std::bind(&SpriteButton::onMouseUp, this);
     InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+
+    if (type == UIObjectType::SPRITEBUTTON)
+    {
+        ObjectManager::listenerObjCount++;
+    }
 }
 
 SpriteButton::~SpriteButton()
@@ -29,6 +39,10 @@ SpriteButton::~SpriteButton()
     InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
     InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
     RemoveParent();
+    if (objType == UIObjectType::SPRITEBUTTON)
+    {
+        ObjectManager::listenerObjCount--;
+    }
 }
 
 void SpriteButton::Update()
@@ -113,12 +127,12 @@ void SpriteButton::setHaveOutline(bool value) { haveOutline = value; }
 
 void SpriteButton::addListenerDown(std::function<void()> func)
 {
-    listenersDown.push_back(func);
+    listenersDown.push_back(std::move(func));
 }
 
 void SpriteButton::addListenerUp(std::function<void()> func)
 {
-    listenersUp.push_back(func);
+    listenersUp.push_back(std::move(func));
 }
 
 bool SpriteButton::isMouseHover()

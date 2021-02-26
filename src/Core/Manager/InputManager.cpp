@@ -54,6 +54,8 @@ void InputManager::addListenerDown(int key, std::function<void()> callback,
                                    int id)
 {
     InputManager::m_Callbacks_Down[key].push_back(EventF(callback, id));
+    int a = ObjectManager::listenerObjCount;
+    LOG_INFO(a);
 }
 
 void InputManager::addListenerUp(int key, std::function<void()> callback,
@@ -79,6 +81,8 @@ void InputManager::removeListenerDown(int key, std::function<void()> callback,
             }
         }
     }
+    InputManager::m_Callbacks_Down[key].push_back(EventF(callback, id));
+    int a = ObjectManager::listenerObjCount;
 }
 
 void InputManager::removeListenerUp(int key, std::function<void()> callback,
@@ -102,9 +106,14 @@ void InputManager::removeListenerUp(int key, std::function<void()> callback,
 
 void InputManager::onMouseDown(int key)
 {
-    for (auto &callback : m_Callbacks_Down[key])
+    int siz = m_Callbacks_Down.size();
+    for (int i = 0; i < siz; i++)
     {
-        callback.event();
+        auto callback = m_Callbacks_Down[key];
+        for (auto &call : callback)
+        {
+            call.event();
+        }
     }
 }
 void InputManager::onMouseUp(int key)

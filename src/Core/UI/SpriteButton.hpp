@@ -3,13 +3,14 @@
 
 #include "../Renderer/Sprite.hpp"
 #include "UIObject.hpp"
+#include "../Manager/ObjectManager.hpp"
 class SpriteButton : public UIObject
 {
    public:
     SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size,
-                 bool difColor = false, float scale = 1.0F);
+                 bool difColor = false, float scale = 1.0F, UIObjectType type = UIObjectType::SPRITEBUTTON);
     SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size, Object *par,
-                 bool difColor = false, float scale = 1.0F);
+                 bool difColor = false, float scale = 1.0F, UIObjectType type = UIObjectType::SPRITEBUTTON);
     ~SpriteButton();
 
     void Update() final;

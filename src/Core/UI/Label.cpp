@@ -7,11 +7,11 @@ Label::Label(const std::string &text, Vector2<int> position,
              UIObjectType type, LabelType ltype)
     : UIObject(position, renderer.CalculateSize(text, scale), scale, renderer, type)
 {
-    this->labelColor = color;
+    this->textColor = color;
     this->text = text;
-    this->labelMouseHoverColor = Vector3<float>(0.78F);
-    this->labelClickColor = Vector3<float>(1.0F);
-    this->labelCurrentColor = color;
+    this->textHoverColor = Vector3<float>(0.78F);
+    this->textClickColor = Vector3<float>(1.0F);
+    this->textCurrentColor = color;
     this->labelSize = this->rend->CalculateSize(text, scale);
     this->labelType = ltype;
 
@@ -23,6 +23,8 @@ Label::Label(const std::string &text, Vector2<int> position,
 
         mUp = std::bind(&Label::onMouseUp, this);
         InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+
+        ObjectManager::listenerObjCount++;
     }
 }
 
@@ -32,11 +34,11 @@ Label::Label(const std::string &text, Vector2<int> position,
              UIObjectType type,
              LabelType ltype) : UIObject(position, renderer.CalculateSize(text, scale), scale, renderer, type, par)
 {
-    this->labelColor = color;
+    this->textColor = color;
     this->text = text;
-    this->labelMouseHoverColor = Vector3<float>(0.78F);
-    this->labelClickColor = Vector3<float>(1.0F);
-    this->labelCurrentColor = color;
+    this->textHoverColor = Vector3<float>(0.78F);
+    this->textClickColor = Vector3<float>(1.0F);
+    this->textCurrentColor = color;
     this->labelSize = this->rend->CalculateSize(text, scale);
     this->labelType = ltype;
 
@@ -48,6 +50,8 @@ Label::Label(const std::string &text, Vector2<int> position,
 
         mUp = std::bind(&Label::onMouseUp, this);
         InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+
+        ObjectManager::listenerObjCount++;
     }
 }
 
@@ -55,20 +59,20 @@ Label::Label(Vector2<int> position, const Vector2<int> &size, TextRenderer &rend
              const Vector3<float> &color, UIObjectType type)
     : UIObject(position, size, scale, renderer, type)
 {
-    this->labelColor = color;
-    this->labelMouseHoverColor = Vector3<float>(0.78F);
-    this->labelClickColor = Vector3<float>(1.0F);
-    this->labelCurrentColor = color;
+    this->textColor = color;
+    this->textHoverColor = Vector3<float>(0.78F);
+    this->textClickColor = Vector3<float>(1.0F);
+    this->textCurrentColor = color;
 }
 
 Label::Label(Vector2<int> position, const Vector2<int> &size, TextRenderer &renderer, Object *par, float scale,
              const Vector3<float> &color, UIObjectType type)
     : UIObject(position, size, scale, renderer, type, par)
 {
-    this->labelColor = color;
-    this->labelMouseHoverColor = Vector3<float>(0.78F);
-    this->labelClickColor = Vector3<float>(1.0F);
-    this->labelCurrentColor = color;
+    this->textColor = color;
+    this->textHoverColor = Vector3<float>(0.78F);
+    this->textClickColor = Vector3<float>(1.0F);
+    this->textCurrentColor = color;
 }
 
 Label::~Label()
@@ -78,6 +82,7 @@ Label::~Label()
     {
         InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
         InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+        ObjectManager::listenerObjCount--;
     }
     RemoveParent();
 }
@@ -85,7 +90,7 @@ Label::~Label()
 void Label::Draw()
 {
     if (IsEnable() && !text.empty())
-        this->rend->RenderText(text, position, scale, labelCurrentColor);
+        this->rend->RenderText(text, position, scale, textCurrentColor);
 }
 
 void Label::Update()
@@ -96,11 +101,11 @@ void Label::Update()
         {
             if (isMouseHover())
             {
-                labelCurrentColor = labelMouseHoverColor;
+                textCurrentColor = textHoverColor;
             }
             else
             {
-                labelCurrentColor = labelColor;
+                textCurrentColor = textColor;
             }
         }
     }
@@ -109,10 +114,6 @@ void Label::Update()
 void Label::ProcessInput()
 {
 }
-
-std::string Label::getText() const { return this->text; }
-
-Vector2<int> Label::getLabelSize() const { return this->labelSize; }
 
 void Label::setText(const std::string &text)
 {
@@ -132,31 +133,21 @@ bool Label::isMouseHover()
     return false;
 }
 
-Vector3<float> Label::getLabelColor() const { return this->labelColor; }
+std::string Label::getText() const { return text; }
 
-Vector3<float> Label::getLabelMouseHoverColor() const
+void Label::setTextColor(const Vector3<float> &color)
 {
-    return this->labelMouseHoverColor;
+    this->textColor = color;
 }
 
-Vector3<float> Label::getLabelClickColor() const
+void Label::setTextHoverColor(const Vector3<float> &color)
 {
-    return this->labelClickColor;
+    this->textHoverColor = color;
 }
 
-void Label::setLabelColor(const Vector3<float> &color)
+void Label::setTextClickColor(const Vector3<float> &color)
 {
-    this->labelColor = color;
-}
-
-void Label::setLabelMouseHoverColor(const Vector3<float> &color)
-{
-    this->labelMouseHoverColor = color;
-}
-
-void Label::setLabelClickColor(const Vector3<float> &color)
-{
-    this->labelClickColor = color;
+    this->textClickColor = color;
 }
 
 void Label::SetMouseState(bool &variable, bool value) { variable = value; }
@@ -165,7 +156,7 @@ void Label::onMouseDown()
 {
     if (IsEnable() && isMouseHover())
     {
-        labelCurrentColor = labelClickColor;
+        textCurrentColor = textClickColor;
         isPressed = true;
         for (auto &f : listenersDown)
         {
@@ -180,7 +171,7 @@ void Label::onMouseUp()
     {
         if (IsEnable() && isMouseHover())
         {
-            labelCurrentColor = labelColor;
+            textCurrentColor = textColor;
             for (auto &f : listenersUp)
             {
                 f();

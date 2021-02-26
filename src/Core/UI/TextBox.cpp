@@ -12,7 +12,7 @@ TextBox::TextBox(Vector2<int> position, TextRenderer &renderer,
     this->editMode = false;
     this->isBackGround = isBackGround;
     cursor = Sprite(ResourceManager::GetTexture("textcursor"));
-    labelClickColor = Vector3<float>(1.0F);
+    textClickColor = Vector3<float>(1.0F);
     clickBorderColor = Vector3<float>(1.0F);
     borderColor = Vector3<float>(0.6F);
     hoverBorderColor = Vector3<float>(0.78F);
@@ -28,7 +28,7 @@ TextBox::TextBox(Vector2<int> position, TextRenderer &renderer,
     this->editMode = false;
     this->isBackGround = isBackGround;
     cursor = Sprite(ResourceManager::GetTexture("textcursor"));
-    labelClickColor = Vector3<float>(1.0F);
+    textClickColor = Vector3<float>(1.0F);
     clickBorderColor = Vector3<float>(1.0F);
     borderColor = Vector3<float>(0.6F);
     hoverBorderColor = Vector3<float>(0.78F);
@@ -63,9 +63,9 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer,
                 time = 0.0F;
             }
         }
-        this->rend->RenderText(getText(), GetPosition().x,
+        this->rend->RenderText(text, GetPosition().x,
                                GetPosition().y + 2.0F, scale,
-                               labelCurrentColor);
+                               textCurrentColor);
     }
 }
 
@@ -149,7 +149,7 @@ void TextBox::InputText()
         {
             editMode = true;
             time = 0.0F;
-            labelCurrentColor = labelClickColor;
+            textCurrentColor = textClickColor;
             currentBorderColor = clickBorderColor;  // 1.0F
         }
 
@@ -159,7 +159,7 @@ void TextBox::InputText()
             if (InputManager::isButtonDown(MOUSE_BUTTON_LEFT) &&
                 !isMouseHover())
             {
-                this->labelCurrentColor = labelColor;
+                this->textCurrentColor = textColor;
                 this->currentBorderColor = borderColor;  // 0.6F
                 editMode = false;
             }

@@ -42,7 +42,7 @@ void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer,
             text,
             Vector2<int>(GetPosition().x + labelSize.y / 2 + 2.0F,
                          GetPosition().y),
-            scale, labelCurrentColor);
+            scale, textCurrentColor);
     squareRenderer.ui_RenderFilledCircle(
         Vector2<int>(GetPosition().x, GetPosition().y + labelSize.y / 2),
         Vector2<int>(labelSize.y / 2), Vector3<float>(0.21F));
@@ -61,13 +61,13 @@ void RadioButtonElement::Update()
 {
     if (isMouseHover())
     {
-        labelCurrentColor = mouseHoverColor;
+        textCurrentColor = mouseHoverColor;
         currentColor = mouseHoverColor;  // gereksiz
         currentOutlineColor = mouseHoverOutlineColor;
     }
     else
     {
-        labelCurrentColor = labelColor;
+        textCurrentColor = textColor;
         currentColor = mouseHoverColor;  // gereksiz
         currentOutlineColor = outlineColor;
     }

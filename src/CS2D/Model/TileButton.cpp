@@ -66,7 +66,7 @@ Tile &TileButtonWorld::getTile()
 
 void TileButtonWorld::addListener(std::function<void(TileButtonWorld *)> func)
 {
-    listenersDown.push_back(func);
+    listenersDown.push_back(std::move(func));
 }
 
 bool TileButtonWorld::isMouseHover()
@@ -164,7 +164,7 @@ Tile &TileButtonScreen::getTile()
 
 void TileButtonScreen::addListener(std::function<void(TileButtonScreen *)> func)
 {
-    listenersDown.push_back(func);
+    listenersDown.push_back(std::move(func));
 }
 
 bool TileButtonScreen::isMouseHover()

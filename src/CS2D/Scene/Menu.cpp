@@ -90,7 +90,6 @@ void Menu::Initialize(Sprite menuSprites[4])
     {
         this->menuSprites[i] = menuSprites[i];
     }
-
     this->SetEnable(true);
 }
 
@@ -214,19 +213,13 @@ void Menu::Render()
                 break;
         }
     }
-    // menuRenderer.DrawSprite(menuSprites["mouseSprite"],
-    // Vector2<int>(InputManager::mousePos.x, InputManager::mousePos.y),
-    // Vector2<int>(GameParameters::SCREEN_HEIGHT / 35,
-    // GameParameters::SCREEN_HEIGHT / 35), 0.0F, true);
     l_options->Draw();
     l_editor->Draw();
     l_console->Draw();
     l_newgame->Draw();
-    // button->Draw(*squareRenderer);
     optionsPanel->Draw(*menuRenderer, *squareRenderer);
     newPanel->Draw(*menuRenderer, *squareRenderer);
     mapNames->Draw(*squareRenderer);
-    // t_test->Draw(menuRenderer, squareRenderer);
 }
 
 void Menu::selectedMapChange(TextButton *old, TextButton *n)

@@ -59,7 +59,7 @@ class Label : public UIObject
     Label(Vector2<int> position, const Vector2<int> &size, TextRenderer &renderer, Object *par, float scale = 1.0F,
           const Vector3<float> &color = Vector3<float>(1.0F),
           UIObjectType type = UIObjectType::LABEL);
-    virtual ~Label();
+    ~Label() override;
 
     void Draw() override;
 
@@ -69,15 +69,10 @@ class Label : public UIObject
     virtual bool isMouseHover();
 
     std::string getText() const;
-    Vector2<int> getLabelSize() const;
-    Vector3<float> getLabelColor() const;
-    Vector3<float> getLabelMouseHoverColor() const;
-    Vector3<float> getLabelClickColor() const;
-
     virtual void setText(const std::string &text);
-    void setLabelColor(const Vector3<float> &color);
-    void setLabelMouseHoverColor(const Vector3<float> &color);
-    void setLabelClickColor(const Vector3<float> &color);
+    void setTextColor(const Vector3<float> &color);
+    void setTextHoverColor(const Vector3<float> &color);
+    void setTextClickColor(const Vector3<float> &color);
 
     void addListenerDown(std::function<void()> func);
     void addListenerUp(std::function<void()> func);
@@ -86,14 +81,10 @@ class Label : public UIObject
     Vector2<int> labelSize = Vector2<int>(1);
 
     std::string text;
-    Vector3<float> labelClickColor;
-    Vector3<float> labelColor;
-    Vector3<float> labelMouseHoverColor;
-    Vector3<float> labelCurrentColor;
-
-    void DrawForButton(const bool center);
-
-    Vector2<int> getPositionForButton(const bool center);
+    Vector3<float> textClickColor;
+    Vector3<float> textColor;
+    Vector3<float> textHoverColor;
+    Vector3<float> textCurrentColor;
 
     void onMouseDown();
     void onMouseUp();

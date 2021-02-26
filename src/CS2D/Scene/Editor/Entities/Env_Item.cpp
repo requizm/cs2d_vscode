@@ -142,17 +142,17 @@ void Env_Item_Manager::ProcessInput() { p_panel->ProcessInput(); }
 
 void Env_Item_Manager::AddOkayListener(std::function<void()> func)
 {
-    listenersOkay.push_back(func);
+    listenersOkay.push_back(std::move(func));
 }
 
 void Env_Item_Manager::AddCancelListener(std::function<void()> func)
 {
-    listenersCancel.push_back(func);
+    listenersCancel.push_back(std::move(func));
 }
 
 void Env_Item_Manager::AddDelListener(std::function<void()> func)
 {
-    ListenersDelete.push_back(func);
+    ListenersDelete.push_back(std::move(func));
 }
 
 bool Env_Item_Manager::isPressedOrHover()

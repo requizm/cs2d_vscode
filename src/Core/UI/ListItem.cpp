@@ -48,7 +48,7 @@ void ListItem::Clear()
     {
         if (item != nullptr) delete item;
     }
-    RemoveParent();
+    
     items.clear();
     i = 0;
 }

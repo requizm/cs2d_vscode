@@ -2,6 +2,7 @@
 #define TEXTBUTTON_H
 
 #include "UIObject.hpp"
+#include "../Manager/ObjectManager.hpp"
 
 enum TextAlign
 {
