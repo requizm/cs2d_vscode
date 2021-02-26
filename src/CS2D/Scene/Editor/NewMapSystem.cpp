@@ -6,7 +6,62 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-NewMapSystem::NewMapSystem() {}
+NewMapSystem::NewMapSystem()
+{
+    newPanel = new Panel(
+        Vector2<int>(Editor::instance().tilePanel->GetSize().x + 20, Editor::instance().controlPanel->GetSize().y),
+        "New Map", Vector2<int>(400, 135), *(Editor::instance().textRenderer), true, true, 1.0F,
+        Vector3<float>(0.21F), 0.8F);
+    newPanel->setMovable(false);
+    newPanel->SetEnable(false);
+
+    Vector2<int> pos;
+    pos = Vector2<int>(180, 40) + newPanel->GetPosition();
+    t_mapSizeX =
+        new TextBox(pos, *(Editor::instance().textRenderer), Vector2<int>(60, 20), newPanel,
+                    true, 1.0F, Vector3<float>(0.58F));
+
+    pos = Vector2<int>(250, 40) + newPanel->GetPosition();
+    t_mapSizeY =
+        new TextBox(pos, *(Editor::instance().textRenderer), Vector2<int>(60, 20),
+                    true, 1.0F, Vector3<float>(0.58F));
+    t_mapSizeY->SetParent(newPanel);
+
+    pos = Vector2<int>(180, 65) + newPanel->GetPosition();
+    t_tile =
+        new TextBox(pos, *(Editor::instance().textRenderer), Vector2<int>(120, 20),
+                    true, 1.0F, Vector3<float>(0.58F));
+    t_tile->SetParent(newPanel);
+
+    pos = Vector2<int>(40, 40) + newPanel->GetPosition();
+    l_mapSize = new Label(
+        "Map Size", pos, *(Editor::instance().textRenderer), newPanel, 1.0F,
+        Vector3<float>(0.58F), UIObjectType::LABEL, LabelType::NOT_CLICKABLE);
+    l_mapSize->SetMouseEvent(false);
+
+    pos = Vector2<int>(240, 40) + newPanel->GetPosition();
+    l_x = new Label("x", pos, *(Editor::instance().textRenderer), newPanel, 1.0F,
+                    Vector3<float>(0.58F), UIObjectType::LABEL,
+                    LabelType::NOT_CLICKABLE);
+    l_x->SetMouseEvent(false);
+
+    pos = Vector2<int>(40, 65) + newPanel->GetPosition();
+    l_tile = new Label("Tileset", pos, *(Editor::instance().textRenderer), newPanel,
+                       1.0F, Vector3<float>(0.58F), UIObjectType::LABEL,
+                       LabelType::NOT_CLICKABLE);
+    l_tile->SetMouseEvent(false);
+
+
+    b_okey = new TextButton(
+        "Okay", Vector2<int>(50, 105), Vector2<int>(60, 20), *(Editor::instance().textRenderer), newPanel,
+        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    b_okey->setButtonClickColor(Vector3<float>(0.30F));
+    b_okey->setButtonHoverColor(Vector3<float>(0.30F));
+    b_okey->setTextHoverColor(Vector3<float>(0.58F));
+    b_okey->setTextClickColor(Vector3<float>(1.0F));
+    b_okey->setHaveOutline(true);
+    b_okey->setOutlineColor(Vector3<float>(1.0F));
+}
 
 NewMapSystem::~NewMapSystem()
 {
@@ -77,9 +132,8 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
         const Sprite sprite = Sprite(ResourceManager::GetTexture(tileSet),
                                      (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-        Button *button = new Button(tile);
+        TileButtonScreen *button = new TileButtonScreen(tile, Editor::instance().tilePanel);
         button->independent = true;
-        button->SetParent(Editor::instance().tilePanel);
         res.tilesUI.push_back(button);
     }
 
@@ -87,9 +141,10 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
     {
         for (int j = 0; j < Editor::instance().mapLimit.y; j++)
         {
-            ButtonTile *t = new ButtonTile(Vector2<int>(i, j));
-            t->button->getTile()->frame = 0;
-            t->button->getTile()->setType(TileTypes::FLOOR);
+            ButtonTile *t = new ButtonTile();
+            t->tileButton->SetPosition(Utils::CellToPosition(Vector2<int>(i, j)));
+            t->tileButton->getTile().frame = 0;
+            t->tileButton->getTile().setType(TileTypes::FLOOR);
             res.tiles.push_back(t);
         }
     }

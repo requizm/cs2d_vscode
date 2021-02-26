@@ -6,7 +6,99 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-SaveLoadSystem::SaveLoadSystem() {}
+SaveLoadSystem::SaveLoadSystem()
+{
+    loadPanel = new Panel(
+        Vector2<int>(Editor::instance().tilePanel->GetSize().x + 20, Editor::instance().controlPanel->GetSize().y),
+        "Load Panel", Vector2<int>(400, 200), *(Editor::instance().textRenderer), true, true, 1.0F,
+        Vector3<float>(0.21F), 0.8F);
+    loadPanel->setMovable(false);
+    loadPanel->SetEnable(false);
+
+    Vector2<int> pos;
+    pos = Vector2<int>(20, 60) + loadPanel->GetPosition();
+    load_mapsPanel = new Panel(
+        pos, "Map Panel", Vector2<int>(300, 100),
+        *(Editor::instance().textRenderer), loadPanel, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
+    load_mapsPanel->setMovable(false);
+    load_mapsPanel->SetEnable(false);
+    load_mapsPanel->SetScrollable(true);
+    load_mapsPanel->setOutline(true);
+    load_mapsPanel->setOutlineColor(Vector3<float>(0.47F));
+    load_mapsPanel->SetParentCenterPos();
+
+
+    load_listMaps =
+        new ListItem(load_mapsPanel);
+
+    pos = Vector2<int>(20, 170) + loadPanel->GetPosition();
+    t_load =
+        new TextBox(pos, *(Editor::instance().textRenderer), Vector2<int>(120, 20), loadPanel,
+                    true, 1.0F, Vector3<float>(0.58F));
+    t_load->editable = false;
+
+    pos = Vector2<int>(180, 170) + loadPanel->GetPosition();
+    b_map_load = new TextButton(
+        "Load", pos, Vector2<int>(60, 20), *(Editor::instance().textRenderer), loadPanel,
+        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    b_map_load->setButtonClickColor(Vector3<float>(0.30F));
+    b_map_load->setButtonHoverColor(Vector3<float>(0.30F));
+    b_map_load->setTextHoverColor(Vector3<float>(0.58F));
+    b_map_load->setTextClickColor(Vector3<float>(1.0F));
+    b_map_load->setHaveOutline(true);
+    b_map_load->setOutlineColor(Vector3<float>(1.0F));
+
+
+    std::function<void(TextButton *, TextButton *)> loadListChanged =
+        std::bind(&SaveLoadSystem::LoadListChanged, this,
+                  std::placeholders::_1, std::placeholders::_2);
+    load_listMaps->AddListener(loadListChanged);
+
+    // harita save paneli
+    savePanel = new Panel(
+        Vector2<int>(Editor::instance().tilePanel->GetSize().x + 20, Editor::instance().controlPanel->GetSize().y),
+        "Save Panel", Vector2<int>(400, 200), *(Editor::instance().textRenderer), true, true, 1.0F,
+        Vector3<float>(0.21F), 0.8F);
+    savePanel->setMovable(false);
+    savePanel->SetEnable(false);
+
+    pos = Vector2<int>(20, 60) + savePanel->GetPosition();
+    save_mapsPanel = new Panel(
+        pos, "Map Panel", Vector2<int>(300, 100),
+        *(Editor::instance().textRenderer), savePanel, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
+    save_mapsPanel->setMovable(false);
+    save_mapsPanel->SetEnable(false);
+    save_mapsPanel->SetScrollable(true);
+    save_mapsPanel->setOutline(true);
+    save_mapsPanel->setOutlineColor(Vector3<float>(0.47F));
+    save_mapsPanel->SetParentCenterPos();
+
+
+    save_listMaps =
+        new ListItem(save_mapsPanel);
+
+    pos = Vector2<int>(20, 170) + savePanel->GetPosition();
+    t_save =
+        new TextBox(pos, *(Editor::instance().textRenderer), Vector2<int>(120, 20), savePanel,
+                    true, 1.0F, Vector3<float>(0.58F));
+
+    pos = Vector2<int>(180, 170) + savePanel->GetPosition();
+    b_map_save = new TextButton(
+        "Save", pos, Vector2<int>(60, 20), *(Editor::instance().textRenderer), savePanel,
+        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    b_map_save->setButtonClickColor(Vector3<float>(0.30F));
+    b_map_save->setButtonHoverColor(Vector3<float>(0.30F));
+    b_map_save->setTextHoverColor(Vector3<float>(0.58F));
+    b_map_save->setTextClickColor(Vector3<float>(1.0F));
+    b_map_save->setHaveOutline(true);
+    b_map_save->setOutlineColor(Vector3<float>(1.0F));
+
+
+    std::function<void(TextButton *, TextButton *)> saveListChanged =
+        std::bind(&SaveLoadSystem::SaveListChanged, this,
+                  std::placeholders::_1, std::placeholders::_2);
+    save_listMaps->AddListener(saveListChanged);
+}
 
 SaveLoadSystem::~SaveLoadSystem()
 {
@@ -67,16 +159,17 @@ void SaveLoadSystem::SaveMap()
             rapidxml::xml_node<> *node_tile =
                 doc.allocate_node(rapidxml::node_element, "tile");
             char *cellX =
-                doc.allocate_string(std::to_string(tile->cell.x).c_str());
+                doc.allocate_string(std::to_string(tile->tileButton->getTile().GetCellPos().x).c_str());
             char *cellY =
-                doc.allocate_string(std::to_string(tile->cell.y).c_str());
+                doc.allocate_string(std::to_string(tile->tileButton->getTile().GetCellPos().y).c_str());
             char *frame = doc.allocate_string(
-                std::to_string(tile->button->getTile()->frame).c_str());
+                std::to_string(tile->tileButton->getTile().frame).c_str());
             char *type = doc.allocate_string(
-                std::to_string((int)tile->button->getTile()->getType())
+                std::to_string((int)tile->tileButton->getTile().getType())
                     .c_str());
             int item_id = tile->item != nullptr ? tile->item->getItemID() : 0;
             char *itemId = doc.allocate_string(std::to_string(item_id).c_str());
+
 
             rapidxml::xml_node<> *node_tile_texture;
 
@@ -213,15 +306,15 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
             ResourceManager::GetTexture(Editor::instance().currentTileSet),
             (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes(tileType), textureIndex);
-        Button *b = new Button(tile);
+        TileButtonWorld *b = new TileButtonWorld(tile, Editor::instance().camera->view);
         ButtonTile *t = nullptr;
         if (itemId == 0)
         {
-            t = new ButtonTile(b, Vector2<int>(cellX, cellY));
+            t = new ButtonTile(b);
         }
         else
         {
-            t = new ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
+            t = new ButtonTile(itemId, b);
         }
 
         tiles.push_back(t);

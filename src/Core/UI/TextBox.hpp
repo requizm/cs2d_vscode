@@ -42,14 +42,14 @@ class TextBox : public Label
     void setText(const std::string &text) override;
 
     bool isMouseHover() override;
-    bool isMouseDown() override;
-    bool isMouseUp() override;
-    bool isMousePress() override;
+    bool isMouseDown();
+    bool isMouseUp();
+    bool isMousePress();
 
-    bool isMouseHoverM() override;
-    bool isMouseDownM(MouseKeys key) override;
-    bool isMouseUpM(MouseKeys key) override;
-    bool isMousePressM(MouseKeys key) override;
+    bool isMouseHoverM();
+    bool isMouseDownM(MouseKeys key);
+    bool isMouseUpM(MouseKeys key);
+    bool isMousePressM(MouseKeys key);
 
     bool editable;
     bool editMode;

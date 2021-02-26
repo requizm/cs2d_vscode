@@ -38,7 +38,7 @@ class Object
     virtual void SetPosition(const Vector2<int> &value);
 
     virtual Vector2<int> GetSize();
-    void SetSize(const Vector2<int> &value);
+    virtual void SetSize(const Vector2<int> &value);
 
     int GetRotation() const;
     void SetRotation(int value);

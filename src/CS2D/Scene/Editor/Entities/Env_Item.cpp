@@ -31,8 +31,8 @@ void Env_Item::Initialize()
     this->obj_id = Utils::GenerateID();
 
     Tile t = Tile(position, sp, Vector2<int>(GameParameters::SIZE_TILE));
-    button = new Button(t, 1.0F, UIObjectType::ENV_ITEM);
-    button->setType(ButtonType::ENV_OBJ);
+    button = new TileButtonWorld(t, Editor::instance().camera->view, 1.0F);
+    //button-> setType(ButtonType::ENV_OBJ);
 
     if (item_id != 0)
     {
@@ -77,44 +77,48 @@ Env_Item_Manager::Env_Item_Manager()
     p_panel->setMovable(false);
     p_panel->SetEnable(false);
 
-    b_okay = new Button("Okay", Vector2<int>(330, 170), Vector2<int>(60, 20),
-                        *(Editor::instance().textRenderer),
-                        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    b_okay->setMouseClickColor(Vector3<float>(0.30F));
-    b_okay->setMouseHoverColor(Vector3<float>(0.30F));
-    b_okay->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    b_okay->setLabelClickColor(Vector3<float>(1.0F));
-    b_okay->setOutline(true);
+    Vector2<int> pos;
+    pos = Vector2<int>(330, 170) + p_panel->GetPosition();
+    b_okay = new TextButton("Okay", pos, Vector2<int>(60, 20),
+                            *(Editor::instance().textRenderer), p_panel,
+                            Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    b_okay->setButtonClickColor(Vector3<float>(0.30F));
+    b_okay->setButtonHoverColor(Vector3<float>(0.30F));
+    b_okay->setTextHoverColor(Vector3<float>(0.58F));
+    b_okay->setButtonClickColor(Vector3<float>(1.0F));
+    b_okay->setHaveOutline(true);
     b_okay->setOutlineColor(Vector3<float>(1.0F));
-    b_okay->SetParent(p_panel);
+    b_okay->addListenerDown(std::bind(&Env_Item_Manager::okay_click, this));
 
+    pos = Vector2<int>(230, 170) + p_panel->GetPosition();
     b_cancel =
-        new Button("Cancel", Vector2<int>(230, 170), Vector2<int>(60, 20),
-                   *(Editor::instance().textRenderer), Vector3<float>(0.15F),
-                   Vector3<float>(0.58F), 1.0F);
-    b_cancel->setMouseClickColor(Vector3<float>(0.30F));
-    b_cancel->setMouseHoverColor(Vector3<float>(0.30F));
-    b_cancel->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    b_cancel->setLabelClickColor(Vector3<float>(1.0F));
-    b_cancel->setOutline(true);
+        new TextButton("Cancel", pos, Vector2<int>(60, 20),
+                       *(Editor::instance().textRenderer), p_panel, Vector3<float>(0.15F),
+                       Vector3<float>(0.58F), 1.0F);
+    b_cancel->setButtonClickColor(Vector3<float>(0.30F));
+    b_cancel->setButtonHoverColor(Vector3<float>(0.30F));
+    b_cancel->setTextHoverColor(Vector3<float>(0.58F));
+    b_cancel->setButtonClickColor(Vector3<float>(1.0F));
+    b_cancel->setHaveOutline(true);
     b_cancel->setOutlineColor(Vector3<float>(1.0F));
-    b_cancel->SetParent(p_panel);
+    b_cancel->addListenerDown(std::bind(&Env_Item_Manager::cancel_click, this));
 
-    b_delete = new Button("Delete", Vector2<int>(0, 170), Vector2<int>(60, 20),
-                          *(Editor::instance().textRenderer),
-                          Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    b_delete->setMouseClickColor(Vector3<float>(0.30F));
-    b_delete->setMouseHoverColor(Vector3<float>(0.30F));
-    b_delete->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    b_delete->setLabelClickColor(Vector3<float>(1.0F));
-    b_delete->setOutline(true);
+    pos = Vector2<int>(0, 170) + p_panel->GetPosition();
+    b_delete = new TextButton("Delete", pos, Vector2<int>(60, 20),
+                              *(Editor::instance().textRenderer), p_panel,
+                              Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    b_delete->setButtonClickColor(Vector3<float>(0.30F));
+    b_delete->setButtonHoverColor(Vector3<float>(0.30F));
+    b_delete->setTextHoverColor(Vector3<float>(0.58F));
+    b_delete->setButtonClickColor(Vector3<float>(1.0F));
+    b_delete->setHaveOutline(true);
     b_delete->setOutlineColor(Vector3<float>(1.0F));
-    b_delete->SetParent(p_panel);
+    b_delete->addListenerDown(std::bind(&Env_Item_Manager::del_click, this));
 
+    pos = Vector2<int>(300, 40) + p_panel->GetPosition();
     t_id =
-        new TextBox(Vector2<int>(300, 40), *(Editor::instance().textRenderer),
-                    Vector2<int>(60, 20), true, 1.0F, Vector3<float>(0.58F));
-    t_id->SetParent(p_panel);
+        new TextBox(pos, *(Editor::instance().textRenderer),
+                    Vector2<int>(60, 20), p_panel, true, 1.0F, Vector3<float>(0.58F));
 }
 
 Env_Item_Manager::~Env_Item_Manager()
@@ -136,7 +140,46 @@ void Env_Item_Manager::Draw(SpriteRenderer &spriteRenderer,
 
 void Env_Item_Manager::ProcessInput() { p_panel->ProcessInput(); }
 
+void Env_Item_Manager::AddOkayListener(std::function<void()> func)
+{
+    listenersOkay.push_back(func);
+}
+
+void Env_Item_Manager::AddCancelListener(std::function<void()> func)
+{
+    listenersCancel.push_back(func);
+}
+
+void Env_Item_Manager::AddDelListener(std::function<void()> func)
+{
+    ListenersDelete.push_back(func);
+}
+
 bool Env_Item_Manager::isPressedOrHover()
 {
     return p_panel->isPressed || p_panel->isMouseHover(false);
+}
+
+void Env_Item_Manager::okay_click()
+{
+    for (auto &f : listenersOkay)
+    {
+        f();
+    }
+}
+
+void Env_Item_Manager::cancel_click()
+{
+    for (auto &f : listenersCancel)
+    {
+        f();
+    }
+}
+
+void Env_Item_Manager::del_click()
+{
+    for (auto &f : ListenersDelete)
+    {
+        f();
+    }
 }

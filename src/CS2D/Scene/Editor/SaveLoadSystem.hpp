@@ -41,7 +41,7 @@ class SaveLoadSystem
     void B_SaveMap();
     void SaveListChanged(TextButton *old, TextButton *n);
     Panel *savePanel, *save_mapsPanel;
-    Button *b_map_save;
+    TextButton *b_map_save;
     TextBox *t_save;
     ListItem *save_listMaps;
 
@@ -50,7 +50,7 @@ class SaveLoadSystem
     void B_LoadMap();
     void LoadListChanged(TextButton *old, TextButton *n);
     Panel *loadPanel, *load_mapsPanel;
-    Button *b_map_load;
+    TextButton *b_map_load;
     TextBox *t_load;
     ListItem *load_listMaps;
 

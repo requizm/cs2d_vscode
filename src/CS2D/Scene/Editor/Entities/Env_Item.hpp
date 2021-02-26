@@ -6,7 +6,7 @@
 #include "../../../../Core/UI/Panel.hpp"
 #include "../../../../Core/UI/TextBox.hpp"
 #include "../../../Other/GameParameters.hpp"
-#include "../../../../Core/UI/Button.hpp""
+#include "../../../Model/TileButton.hpp"
 
 
 class Env_Item
@@ -18,7 +18,7 @@ class Env_Item
     Vector2<int> size;
     Sprite sp;
 
-    Button *button;
+    TileButtonWorld *button;
 
    public:
     int obj_id = 0;
@@ -67,11 +67,22 @@ class Env_Item_Manager
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
     void ProcessInput();
 
+    std::vector<std::function<void()>> listenersOkay, listenersCancel, ListenersDelete;
+
+    void AddOkayListener(std::function<void()> func);
+    void AddCancelListener(std::function<void()> func);
+    void AddDelListener(std::function<void()> func);
+
     Panel *p_panel;
-    Button *b_okay, *b_cancel, *b_delete;
+    TextButton *b_okay, *b_cancel, *b_delete;
     TextBox *t_id;
 
     bool isPressedOrHover();
+
+    private:
+    void okay_click();
+    void cancel_click();
+    void del_click();
 };
 
 #endif

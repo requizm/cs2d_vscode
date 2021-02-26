@@ -46,7 +46,7 @@ class TextButton : public UIObject
     void setText(const std::string &value);
 
     void setHaveOutline(bool value);
-    
+
     void setTextAlign(TextAlign value);
 
     Vector2<int> getTextSize() const;
@@ -80,10 +80,10 @@ class TextButton : public UIObject
     std::function<void()> mDown;
     std::function<void()> mUp;
 
-    virtual bool isMouseHover();
+    bool isMouseHover();
 
-    virtual void onMouseDown();
-    virtual void onMouseUp();
+    void onMouseDown();
+    void onMouseUp();
 };
 
 

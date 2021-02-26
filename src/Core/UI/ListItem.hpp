@@ -15,7 +15,7 @@ class ListItemElement : public UIObject
    public:
     explicit ListItemElement(TextButton *btn, int i, ListItem *listItem);
     explicit ListItemElement(TextButton *btn, int i, ListItem *listItem, Object *par);
-    ~ListItemElement();
+    ~ListItemElement() final;
 
     bool selected = false;
     TextButton *bt = nullptr;
@@ -34,14 +34,14 @@ class ListItem : public UIObject
    public:
     ListItem(Panel *panel);
     ListItem();
-    ~ListItem();
+    ~ListItem() final;
 
     void AddItem(const std::string &text);
     void Clear();
 
     void AddListener(std::function<void(TextButton *, TextButton *)> func);
 
-    void Draw(SquareRenderer &squareRenderer);
+    void Draw(SquareRenderer &squareRenderer) final;
     void Update() override;
     void Select(int i);
 

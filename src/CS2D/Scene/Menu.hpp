@@ -80,7 +80,10 @@ class Menu
     bool gonnaDieForEditor = false;
 
     void selectedMapChange(TextButton *old, TextButton *n);
-    void newGameBtnClick();
+    void newGame_click();
+    void newGameLabel_click();
+    void options_click();
+    void editor_click();
 
     std::vector<std::string> getMapNames()
     {

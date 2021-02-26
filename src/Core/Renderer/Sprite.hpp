@@ -16,7 +16,7 @@ class Sprite
     Sprite();
     ~Sprite();
 
-    GLuint VAO;
+    GLuint VAO = -1;
     Texture2D texture;
     Vector2<int> size;
 
@@ -25,4 +25,4 @@ class Sprite
                   GLuint height = 0);
 };
 
-#endif  // !SPRITE_H
+#endif  // SPRITE_H

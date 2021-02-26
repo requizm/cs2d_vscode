@@ -13,7 +13,7 @@
 
 struct NewMapResult
 {
-    std::vector<Button *> tilesUI;
+    std::vector<TileButtonScreen *> tilesUI;
     std::vector<ButtonTile *> tiles;
 };
 
@@ -38,7 +38,7 @@ class NewMapSystem
     Panel *newPanel;
     Label *l_tile, *l_mapSize, *l_x;
     TextBox *t_tile, *t_mapSizeX, *t_mapSizeY;
-    Button *b_okey;
+    TextButton *b_okey;
 };
 
 #endif

@@ -3,48 +3,40 @@
 
 #include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../../../Core/Manager/Utils.hpp"
-#include "../../../Core/UI/Button.hpp"
+#include "../../Model/TileButton.hpp"
 #include "Entities/Env_Item.hpp"
 
 
 class ButtonTile
 {
    public:
-    Button *button = nullptr;
-    Vector2<int> cell;
+    TileButtonWorld *tileButton = nullptr;
     Env_Item *item = nullptr;
-    bool init = false;
 
-    ButtonTile() = default;
-
-    ButtonTile(Vector2<int> cell)
-    {
-        this->cell = cell;
-        this->button = new Button();
+    ButtonTile(){
+        tileButton = new TileButtonWorld();
     }
 
-    ButtonTile(Button *button, Vector2<int> cell)
+    ButtonTile(TileButtonWorld *button)
     {
-        this->cell = cell;
-        this->button = button;
+        this->tileButton = button;
     }
 
-    ButtonTile(int item_id, Button *button, Vector2<int> cell)
+    ButtonTile(int item_id, TileButtonWorld *button)
     {
         this->item = new Env_Item(item_id, button->GetPosition());
-        this->cell = cell;
-        this->button = button;
+        this->tileButton = button;
     }
 
-    ~ButtonTile() { delete button; }
+    ~ButtonTile() { delete tileButton; }
 
-    void SetButton(Button *bt)
+    void SetButton(TileButtonWorld *bt)
     {
-        if (this->button != nullptr)
+        if (this->tileButton != nullptr)
         {
-            delete this->button;
+            delete this->tileButton;
         }
-        this->button = bt;
+        this->tileButton = bt;
     }
 
     void SetItem(Env_Item *item)

@@ -20,6 +20,7 @@ enum class UIObjectType
     TEXTBOX,
     TEXTBUTTON,
     SPRITEBUTTON,
+    TILEBUTTON,
     PANEL,
     RADIOBUTTON,
     LISTITEM,
@@ -60,6 +61,7 @@ class UIObject : public Object
                       SquareRenderer &squareRenderer);
 
     void SetPosition(const Vector2<int> &value) override;
+    void SetSize(const Vector2<int> &value) override;
     void SetLocalPosition(const Vector2<int> &value) override;
     void SetParent(Object *value) final;
     void SetTransform(const Matrix4<float> &value) override;

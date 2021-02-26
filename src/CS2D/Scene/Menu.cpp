@@ -25,12 +25,15 @@ void Menu::Start()
     this->l_newgame = new Label(
         "New Game", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 - 20),
         *textRenderer, 1.0F, Vector3<float>(0.58F));
+    l_newgame->addListenerDown(std::bind(&Menu::newGameLabel_click, this));
     this->l_options = new Label(
         "Options", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2),
         *textRenderer, 1.0F, Vector3<float>(0.58F));
+    l_options->addListenerDown(std::bind(&Menu::options_click, this));
     this->l_editor = new Label(
         "Editor", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 + 20),
         *textRenderer, 1.0F, Vector3<float>(0.58F));
+    l_editor->addListenerDown(std::bind(&Menu::editor_click, this));
 
     this->optionsPanel =
         new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F,
@@ -40,7 +43,7 @@ void Menu::Start()
     this->optionsPanel->setMovable(true);
 
     this->t_test =
-        new TextBox(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20), optionsPanel,
+        new TextBox(Vector2<int>(optionsPanel->GetPosition().x + 20, optionsPanel->GetPosition().y + 20), *textRenderer, Vector2<int>(100, 20), optionsPanel,
                     true, 1.0F, Vector3<float>(0.58F));
     this->t_test->SetParentCenterPos();
 
@@ -73,7 +76,7 @@ void Menu::Start()
     this->b_newGame->setTextClickColor(Vector3<float>(1.0F));
     this->b_newGame->setHaveOutline(true);
     this->b_newGame->setOutlineColor(Vector3<float>(1.0F));
-    this->b_newGame->addListenerDown(std::bind(&Menu::newGameBtnClick, this));
+    this->b_newGame->addListenerDown(std::bind(&Menu::newGame_click, this));
 
     std::function<void(TextButton *, TextButton *)> mapChange =
         std::bind(&Menu::selectedMapChange, this, std::placeholders::_1,
@@ -160,6 +163,11 @@ void Menu::Update()
         Game::SetGameState(GameState::INGAME);
         return;
     }
+    if (gonnaDieForEditor)
+    {
+        Game::SetGameState(GameState::EDITOR);
+        return;
+    }
     l_options->Update();
     l_console->Update();
     l_editor->Update();
@@ -181,31 +189,6 @@ void Menu::ProcessInput()
     optionsPanel->ProcessInput();
     newPanel->ProcessInput();
     mapNames->ProcessInput();
-
-    if (l_editor->isMouseDown())
-    {
-        Game::SetGameState(GameState::EDITOR);
-        return;
-    }
-
-    if (l_newgame->isMouseDown())
-    {
-#if defined(WIN32) && defined(TRACY_ENABLE)
-        ZoneScoped;
-#endif
-        mapNames->Clear();
-        std::vector<std::string> maps = getMapNames();
-        for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
-        {
-            mapNames->AddItem(maps[i]);
-        }
-        newPanel->SetEnable(true);
-    }
-
-    if (l_options->isMouseDown())
-    {
-        optionsPanel->SetEnable(true);
-    }
 }
 
 void Menu::Render()
@@ -248,10 +231,13 @@ void Menu::Render()
 
 void Menu::selectedMapChange(TextButton *old, TextButton *n)
 {
-    t_mapName->setText(n->getText());
+    if (this->enable)
+    {
+        t_mapName->setText(n->getText());
+    }
 }
 
-void Menu::newGameBtnClick()
+void Menu::newGame_click()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScoped;
@@ -259,5 +245,35 @@ void Menu::newGameBtnClick()
     if (this->enable)
     {
         gonnaDieForGame = true;
+    }
+}
+
+void Menu::newGameLabel_click()
+{
+    if (this->enable)
+    {
+        mapNames->Clear();
+        std::vector<std::string> maps = getMapNames();
+        for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
+        {
+            mapNames->AddItem(maps[i]);
+        }
+        newPanel->SetEnable(true);
+    }
+}
+
+void Menu::options_click()
+{
+    if (this->enable)
+    {
+        optionsPanel->SetEnable(true);
+    }
+}
+
+void Menu::editor_click()
+{
+    if (this->enable)
+    {
+        gonnaDieForEditor = true;
     }
 }

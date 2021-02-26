@@ -103,8 +103,10 @@ void UIObject::Draw(SpriteRenderer &spriteRenderer,
 void UIObject::SetPosition(const Vector2<int> &value)
 {
     Object::SetPosition(value);
-    if (IsParent())
-        localPosition = parent->GetPosition() - value;
+}
+
+void UIObject::SetSize(const Vector2<int> &value) {
+    Object::SetSize(value);
 }
 
 void UIObject::SetLocalPosition(const Vector2<int> &value)

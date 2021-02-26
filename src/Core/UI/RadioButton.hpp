@@ -56,9 +56,9 @@ class RadioButtonElement : public Label
     void SetPosition(const Vector2<int> &position) override;
 
     bool isMouseHover() override;
-    bool isMouseDown() override;
-    bool isMouseUp() override;
-    bool isMousePress() override;
+    bool isMouseDown();
+    bool isMouseUp();
+    bool isMousePress();
 
     bool selected;
 
@@ -71,10 +71,10 @@ class RadioButtonElement : public Label
     Vector3<float> currentOutlineColor;
     int index;
 
-    bool isMouseHoverM() override;
-    bool isMouseDownM(MouseKeys key) override;
-    bool isMouseUpM(MouseKeys key) override;
-    bool isMousePressM(MouseKeys key) override;
+    bool isMouseHoverM();
+    bool isMouseDownM(MouseKeys key);
+    bool isMouseUpM(MouseKeys key);
+    bool isMousePressM(MouseKeys key);
 };
 
 class RadioButton : public UIObject
@@ -90,9 +90,10 @@ class RadioButton : public UIObject
    public:
     RadioButton();
     RadioButton(TextRenderer &renderer, Vector2<int> position, int y_sep);
+    RadioButton(TextRenderer &renderer, Vector2<int> position, int y_sep, Object *par);
     ~RadioButton() final;
 
-    void AddListener(
+    void AddChangeListener(
         std::function<void(RadioButtonElement *, RadioButtonElement *)> func);
 
     void Clear();

@@ -59,18 +59,6 @@ class Label : public UIObject
     Label(Vector2<int> position, const Vector2<int> &size, TextRenderer &renderer, Object *par, float scale = 1.0F,
           const Vector3<float> &color = Vector3<float>(1.0F),
           UIObjectType type = UIObjectType::LABEL);
-
-    /**
-     * @brief Construct a new Label for TileButton and SpriteButton
-     *
-     * @param position
-     * @param size
-     * @param scale 1.0F
-     * @param type UIObjectType::LABEL
-     */
-    Label(Vector2<int> position, Vector2<int> size, float scale = 1.0F,
-          UIObjectType type = UIObjectType::LABEL,
-          LabelType ltype = LabelType::CLICKABLE);
     virtual ~Label();
 
     void Draw() override;
@@ -79,9 +67,6 @@ class Label : public UIObject
     void ProcessInput() override;
 
     virtual bool isMouseHover();
-    virtual bool isMouseDown();
-    virtual bool isMouseUp();
-    virtual bool isMousePress();
 
     std::string getText() const;
     Vector2<int> getLabelSize() const;
@@ -93,6 +78,9 @@ class Label : public UIObject
     void setLabelColor(const Vector3<float> &color);
     void setLabelMouseHoverColor(const Vector3<float> &color);
     void setLabelClickColor(const Vector3<float> &color);
+
+    void addListenerDown(std::function<void()> func);
+    void addListenerUp(std::function<void()> func);
 
    protected:
     Vector2<int> labelSize = Vector2<int>(1);
@@ -107,20 +95,11 @@ class Label : public UIObject
 
     Vector2<int> getPositionForButton(const bool center);
 
-    virtual bool isMouseHoverM();
-    virtual bool isMouseDownM(MouseKeys key);
-    virtual bool isMouseUpM(MouseKeys key);
-    virtual bool isMousePressM(MouseKeys key);
+    void onMouseDown();
+    void onMouseUp();
 
-    virtual void onMouseDown();
-    virtual void onMouseUp();
-    void addListenerDown(std::function<void()> func);
-    void addListenerUp(std::function<void()> func);
 
     std::vector<std::function<void()>> listenersDown, listenersUp;
-
-    bool downTrigger = false;
-    bool upTrigger = false;
 
     std::function<void()> mDown;
     std::function<void()> mUp;

@@ -204,6 +204,13 @@ RadioButton::RadioButton(TextRenderer &renderer, Vector2<int> position,
     this->y_sep = y_sep;
 }
 
+RadioButton::RadioButton(TextRenderer &renderer, Vector2<int> position,
+                         int y_sep, Object *par)
+    : UIObject(position, Vector2<int>(1.1), 1.0F, renderer, par)
+{
+    this->y_sep = y_sep;
+}
+
 RadioButton::~RadioButton()
 {
     for (auto &element : elements)
@@ -225,7 +232,7 @@ void RadioButton::Draw(SpriteRenderer &spriteRenderer,
     }
 }
 
-void RadioButton::AddListener(
+void RadioButton::AddChangeListener(
     std::function<void(RadioButtonElement *, RadioButtonElement *)> func)
 {
     listeners.push_back(std::move(func));

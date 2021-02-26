@@ -3,8 +3,6 @@
 
 #include "../Renderer/Sprite.hpp"
 #include "UIObject.hpp"
-
-
 class SpriteButton : public UIObject
 {
    public:

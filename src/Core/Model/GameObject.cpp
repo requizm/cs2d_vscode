@@ -17,7 +17,8 @@ GameObject::~GameObject() = default;
 
 void GameObject::DrawModel(SpriteRenderer& renderer)
 {
-    renderer.DrawSprite(this->sprite, this->GetTransform());
+    if (sprite.VAO != -1)
+        renderer.DrawSprite(this->sprite, this->GetTransform());
 }
 
 void GameObject::SetTransform(const Vector2<int>& pos, const Vector2<int>& size, int rot)
