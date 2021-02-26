@@ -83,7 +83,12 @@ Vector2<int> SpriteButton::GetSize()
 void SpriteButton::SetPosition(const Vector2<int> &position)
 {
     Object::SetPosition(position);
-    spritePos = Vector2<int>(position.x + margin.x / 2, position.y + margin.y / 2);
+}
+
+void SpriteButton::SetTransform(const Matrix4<float> &value)
+{
+    UIObject::SetTransform(value);
+    setMargin(margin);
 }
 
 void SpriteButton::setButtonCurrentColor(const Vector3<float> &value) { buttonCurrentColor = value; }
@@ -118,13 +123,10 @@ void SpriteButton::addListenerUp(std::function<void()> func)
 
 bool SpriteButton::isMouseHover()
 {
-    Vector2<int> pos = position;
-    Vector2<int> size = size;
-
-    if (InputManager::mousePos.x >= pos.x &&
-        InputManager::mousePos.x <= pos.x + size.x &&
-        InputManager::mousePos.y >= pos.y &&
-        InputManager::mousePos.y <= pos.y + size.y)
+    if (InputManager::mousePos.x >= position.x &&
+        InputManager::mousePos.x <= position.x + size.x &&
+        InputManager::mousePos.y >= position.y &&
+        InputManager::mousePos.y <= position.y + size.y)
     {
         return true;
     }

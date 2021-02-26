@@ -16,8 +16,7 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
     this->outline = false;
     escapeButton = new SpriteButton(
         Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16),
-        position, Vector2<int>(20, 20), true);
-    escapeButton->SetParent(this);
+        position, Vector2<int>(20, 20), this, true);
     escapeButton->independent = true;
     escapeButton->SetLocalPosition(Vector2<int>(size.x - 20, 3));
     escapeButton->setButtonColor(color);
@@ -25,10 +24,9 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
     escapeButton->setButtonClickColor(Vector3<float>(1.0F));
     escapeButton->setHaveOutline(false);
     escapeButton->addListenerUp(std::bind(&Panel::escapeButtonClicked, this));
-    this->title = Label(title, position, renderer, scale, Vector3<float>(1.0F),
+    this->title = Label(title, position, renderer, this, scale, Vector3<float>(1.0F),
                         UIObjectType::PANEL, LabelType::NOT_CLICKABLE);
     this->title.SetMouseEvent(false);
-    this->title.SetParent(this);
     this->title.SetLocalPosition(Vector2<int>(lineOffset, 4));
     this->title.independent = true;
 }
@@ -49,8 +47,7 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
     this->outline = false;
     escapeButton = new SpriteButton(
         Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16),
-        position, Vector2<int>(20, 20), true);
-    escapeButton->SetParent(this);
+        position, Vector2<int>(20, 20), this, true);
     escapeButton->independent = true;
     escapeButton->SetLocalPosition(Vector2<int>(size.x - 20, 3));
     escapeButton->setButtonColor(color);
@@ -174,10 +171,6 @@ void Panel::ProcessInput()
         if (mouseEvents)
         {
             isMouseUpM(MOUSE_BUTTON_LEFT);
-            /*if (escapeButton->isMouseUp() && opttitles)
-            {
-                this->setEnable(false);
-            }*/
             if (isMovable())
             {
                 isMouseDownForDrag(MOUSE_BUTTON_LEFT);

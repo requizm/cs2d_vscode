@@ -1,7 +1,5 @@
 #include "UIObject.hpp"
 
-#include "TextButton.hpp"
-
 UIObject::UIObject() : Object()
 {
     this->objType = UIObjectType::UIOBJECT;
@@ -131,11 +129,6 @@ void UIObject::SetParent(Object *value)
 void UIObject::SetTransform(const Matrix4<float> &value)
 {
     Object::SetTransform(value);
-    if (IsParent() && objType == UIObjectType::TEXTBUTTON)
-    {
-        TextButton *b = reinterpret_cast<TextButton *>(this);
-        b->setTextAlign(b->getTextAlign());
-    }
 }
 
 void UIObject::SetParentCenterPos()

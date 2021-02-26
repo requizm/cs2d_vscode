@@ -73,6 +73,7 @@ void Object::UpdateChilds()
     {
         Matrix4 chi = child->GetLocalTransform();
         child->SetTransform(transform * chi);
+        child->UpdateChilds();
     }
 }
 

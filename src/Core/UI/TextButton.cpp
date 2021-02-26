@@ -88,6 +88,12 @@ void TextButton::SetPosition(const Vector2<int> &position)
     setTextAlign(textAlign);
 }
 
+void TextButton::SetTransform(const Matrix4<float> &value)
+{
+    UIObject::SetTransform(value);
+    setTextAlign(textAlign);
+}
+
 void TextButton::setButtonColor(const Vector3<float> &value) { buttonColor = value; }
 
 void TextButton::setButtonHoverColor(const Vector3<float> &value) { buttonHoverColor = value; }
@@ -103,11 +109,6 @@ void TextButton::setButtonClickColor(const Vector3<float> &value) { buttonClickC
 void TextButton::setTextColor(const Vector3<float> &value) { textColor = value; }
 
 void TextButton::setHaveOutline(bool value) { haveOutline = value; }
-
-TextAlign TextButton::getTextAlign()
-{
-    return textAlign;
-}
 
 void TextButton::setTextAlign(TextAlign value)
 {
@@ -156,13 +157,10 @@ void TextButton::addListenerUp(std::function<void()> func)
 
 bool TextButton::isMouseHover()
 {
-    Vector2<int> pos = this->GetPosition();
-    Vector2<int> size = this->GetSize();
-
-    if (InputManager::mousePos.x >= pos.x &&
-        InputManager::mousePos.x <= pos.x + size.x &&
-        InputManager::mousePos.y >= pos.y &&
-        InputManager::mousePos.y <= pos.y + size.y)
+    if (InputManager::mousePos.x >= position.x &&
+        InputManager::mousePos.x <= position.x + size.x &&
+        InputManager::mousePos.y >= position.y &&
+        InputManager::mousePos.y <= position.y + size.y)
     {
         return true;
     }

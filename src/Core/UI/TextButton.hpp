@@ -23,6 +23,7 @@ class TextButton : public UIObject
     void Update() final;
     void ProcessInput() final;
     void Draw(SquareRenderer &squareRenderer) final;
+    void SetTransform(const Matrix4<float> &value) final;
 
     void SetPosition(const Vector2<int> &position) final;
 
@@ -45,8 +46,7 @@ class TextButton : public UIObject
     void setText(const std::string &value);
 
     void setHaveOutline(bool value);
-
-    TextAlign getTextAlign();
+    
     void setTextAlign(TextAlign value);
 
     Vector2<int> getTextSize() const;

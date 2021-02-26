@@ -62,7 +62,7 @@ class UIObject : public Object
     void SetPosition(const Vector2<int> &value) override;
     void SetLocalPosition(const Vector2<int> &value) override;
     void SetParent(Object *value) final;
-    void SetTransform(const Matrix4<float> &value) final;
+    void SetTransform(const Matrix4<float> &value) override;
 
     float GetScale() const;
     bool IsEnable() const;
