@@ -215,15 +215,6 @@ void Editor::Start()
     this->rb_tileProperties->AddChangeListener(t);
 
     this->selectedMode = SelectedMode::TILE_MOD;
-
-    for (auto &item : tils->tiles)
-    {
-        item->tileButton->addListener(std::bind(&Editor::select_tile_world, this, std::placeholders::_1));
-    }
-    for (auto &item : tils->tilesUI)
-    {
-        item->addListener(std::bind(&Editor::select_tile_ui, this, std::placeholders::_1));
-    }
 }
 
 void Editor::OnEnable()
@@ -259,6 +250,15 @@ void Editor::OnEnable()
     tils->tiles = r.tiles;
     tils->tilesUI = r.tilesUI;
     selectedTile = &tils->tilesUI.at(0)->getTile();
+
+    for (auto &item : tils->tiles)
+    {
+        item->tileButton->addListener(std::bind(&Editor::select_tile_world, this, std::placeholders::_1));
+    }
+    for (auto &item : tils->tilesUI)
+    {
+        item->addListener(std::bind(&Editor::select_tile_ui, this, std::placeholders::_1));
+    }
 }
 
 void Editor::OnDisable()
@@ -545,7 +545,7 @@ void Editor::Render()
         {
             tile_1->tileButton->Draw(*worldRenderer, *squareRenderer);
             squareRenderer->world_RenderEmptySquare(
-                tile_1->tileButton->getTile().GetCellPos(),
+                tile_1->tileButton->getTile().GetCellPos() * GameParameters::SIZE_TILE,
                 Vector2<int>(GameParameters::SIZE_TILE), cell_yellow);
         }
 

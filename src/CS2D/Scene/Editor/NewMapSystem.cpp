@@ -123,7 +123,7 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
     {
         const int xPos = 32 * (curIndex % Editor::instance().maxCellInColumn);
         const int yPos = 32 * (curIndex / Editor::instance().maxCellInColumn);
-        const Vector2<int> pos(xPos, yPos);
+        const Vector2<int> pos(xPos + Editor::instance().tilePanel->GetPosition().x, yPos + Editor::instance().tilePanel->GetPosition().y);
         const Vector2<int> size(Vector2<int>(32, 32));
         const int xoffset =
             curIndex % (ResourceManager::GetTexture(tileSet).Width / 32);
