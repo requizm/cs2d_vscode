@@ -1,32 +1,25 @@
 #include "TileButton.hpp"
 
-TileButtonWorld::TileButtonWorld()
+#include "../Scene/Editor/Editor.hpp"
+
+
+TileButtonWorld::TileButtonWorld() : UIObject(UIObjectType::TILEBUTTON)
 {
-    mDown = std::bind(&TileButtonWorld::onMouseDown, this);
-    InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+    this->SetSize(Vector2<int>(GameParameters::SIZE_TILE));
 }
 
-TileButtonWorld::TileButtonWorld(Tile &tile, Vector2<int> &cameraView, float scale) : UIObject(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::TILEBUTTON)
+TileButtonWorld::TileButtonWorld(Tile &tile, float scale) : UIObject(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::TILEBUTTON)
 {
     this->tile = tile;
-    this->cameraView = &cameraView;
-
-    mDown = std::bind(&TileButtonWorld::onMouseDown, this);
-    InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 }
 
-TileButtonWorld::TileButtonWorld(Tile &tile, Vector2<int> &cameraView, Object *par, float scale) : UIObject(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::TILEBUTTON, par)
+TileButtonWorld::TileButtonWorld(Tile &tile, Object *par, float scale) : UIObject(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::TILEBUTTON, par)
 {
     this->tile = tile;
-    this->cameraView = &cameraView;
-
-    mDown = std::bind(&TileButtonWorld::onMouseDown, this);
-    InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 }
 
 TileButtonWorld::~TileButtonWorld()
 {
-    InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
     RemoveParent();
 }
 
@@ -64,33 +57,42 @@ Tile &TileButtonWorld::getTile()
     return tile;
 }
 
-void TileButtonWorld::addListener(std::function<void(TileButtonWorld *)> func)
+bool TileButtonWorld::IsMouseDown()
 {
-    listenersDown.push_back(std::move(func));
-}
-
-bool TileButtonWorld::isMouseHover()
-{
-    Vector2<int> MouseWorldPos = Utils::ScreenToWorld(*cameraView, InputManager::mousePos);
-    if (MouseWorldPos.x >= position.x &&
-        MouseWorldPos.x <= position.x + size.x &&
-        MouseWorldPos.y >= position.y &&
-        MouseWorldPos.y <= position.y + size.y)
+    if (IsEnable() && mouseEvents)
     {
-        return true;
+        if (InputManager::isButtonDown(MouseKeys::MOUSE_BUTTON_LEFT) && IsMouseHover())
+        {
+            return true;
+        }
     }
     return false;
 }
 
-void TileButtonWorld::onMouseDown()
+bool TileButtonWorld::IsMousePress()
 {
-    if (IsEnable() && isMouseHover())
+    if (IsEnable() && mouseEvents)
     {
-        for (auto &f : listenersDown)
+        if (InputManager::isButton(MouseKeys::MOUSE_BUTTON_LEFT))
         {
-            f(this);
+            if (IsMouseHover())
+                return true;
         }
     }
+    return false;
+}
+
+bool TileButtonWorld::IsMouseHover()
+{
+    Vector2<int> MouseWorldPos = Utils::ScreenToWorld(Editor::instance().camera->view, InputManager::mousePos);
+    if (MouseWorldPos.x >= GetPosition().x &&
+        MouseWorldPos.x <= GetPosition().x + GetSize().x &&
+        MouseWorldPos.y >= GetPosition().y &&
+        MouseWorldPos.y <= GetPosition().y + GetSize().y)
+    {
+        return true;
+    }
+    return false;
 }
 
 /* ------------------------ */
@@ -98,22 +100,15 @@ void TileButtonWorld::onMouseDown()
 TileButtonScreen::TileButtonScreen(Tile &tile, float scale) : UIObject(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::TILEBUTTON)
 {
     this->tile = tile;
-
-    mDown = std::bind(&TileButtonScreen::onMouseDown, this);
-    InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 }
 
 TileButtonScreen::TileButtonScreen(Tile &tile, Object *par, float scale) : UIObject(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::TILEBUTTON, par)
 {
     this->tile = tile;
-
-    mDown = std::bind(&TileButtonScreen::onMouseDown, this);
-    InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 }
 
 TileButtonScreen::~TileButtonScreen()
 {
-    InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
     RemoveParent();
 }
 
@@ -162,12 +157,19 @@ Tile &TileButtonScreen::getTile()
     return tile;
 }
 
-void TileButtonScreen::addListener(std::function<void(TileButtonScreen *)> func)
+bool TileButtonScreen::IsMouseDown()
 {
-    listenersDown.push_back(std::move(func));
+    if (IsEnable() && mouseEvents)
+    {
+        if (InputManager::isButtonDown(MouseKeys::MOUSE_BUTTON_LEFT) && IsMouseHover())
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
-bool TileButtonScreen::isMouseHover()
+bool TileButtonScreen::IsMouseHover()
 {
     if (InputManager::mousePos.x >= position.x &&
         InputManager::mousePos.x <= position.x + size.x &&
@@ -179,13 +181,14 @@ bool TileButtonScreen::isMouseHover()
     return false;
 }
 
-void TileButtonScreen::onMouseDown()
+bool TileButtonScreen::IsMousePress()
 {
-    if (IsEnable() && isMouseHover())
+    if (IsEnable() && mouseEvents)
     {
-        for (auto &f : listenersDown)
+        if (InputManager::isButton(MouseKeys::MOUSE_BUTTON_LEFT) && IsMouseHover())
         {
-            f(this);
+            return true;
         }
     }
+    return false;
 }

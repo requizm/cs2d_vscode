@@ -138,9 +138,9 @@ void SpriteButton::addListenerUp(std::function<void()> func)
 bool SpriteButton::isMouseHover()
 {
     if (InputManager::mousePos.x >= position.x &&
-        InputManager::mousePos.x <= position.x + size.x &&
+        InputManager::mousePos.x <= position.x + GetSize().x &&
         InputManager::mousePos.y >= position.y &&
-        InputManager::mousePos.y <= position.y + size.y)
+        InputManager::mousePos.y <= position.y + GetSize().y)
     {
         return true;
     }

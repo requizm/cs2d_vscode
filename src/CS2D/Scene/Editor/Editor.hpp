@@ -90,8 +90,6 @@ class Editor
     void b_loadMap_click();
     void b_objects_click();
     void b_tiles_click();
-    void select_tile_world(TileButtonWorld *n);
-    void select_tile_ui(TileButtonScreen *n);
     void newMap_okay();
     void save_okay();
     void load_okay();

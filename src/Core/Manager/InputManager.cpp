@@ -81,8 +81,6 @@ void InputManager::removeListenerDown(int key, std::function<void()> callback,
             }
         }
     }
-    InputManager::m_Callbacks_Down[key].push_back(EventF(callback, id));
-    int a = ObjectManager::listenerObjCount;
 }
 
 void InputManager::removeListenerUp(int key, std::function<void()> callback,

@@ -250,15 +250,6 @@ void Editor::OnEnable()
     tils->tiles = r.tiles;
     tils->tilesUI = r.tilesUI;
     selectedTile = &tils->tilesUI.at(0)->getTile();
-
-    for (auto &item : tils->tiles)
-    {
-        item->tileButton->addListener(std::bind(&Editor::select_tile_world, this, std::placeholders::_1));
-    }
-    for (auto &item : tils->tilesUI)
-    {
-        item->addListener(std::bind(&Editor::select_tile_ui, this, std::placeholders::_1));
-    }
 }
 
 void Editor::OnDisable()
@@ -499,28 +490,41 @@ void Editor::ProcessInput()
     }
 
 
-    if (selectedMode == SelectedMode::OBJECT_MOD)
+    for (auto &tile : tils->tilesUI)
     {
-        if (!panelsPressed)
+        if (tile->IsMouseDown() && selectedTile->frame != tile->getTile().frame)
         {
-            if (InputManager::isButtonDown(MOUSE_BUTTON_LEFT) &&
-                objects_ui->getSelectedIndex() == 0)
+            selectedTile = &tile->getTile();
+        }
+    }
+
+    if (!panelsPressed)
+    {
+        if (selectedMode == SelectedMode::TILE_MOD)
+        {
+            for (auto &tile : tils->tiles)
             {
-                Vector2 wd =
-                    Utils::ScreenToWorld(camera->view, InputManager::mousePos);
-                Vector2 selectedCell = Utils::PositionToCell(wd);
-                for (auto &tile : tils->tiles)
+                if (tile->tileButton->IsMousePress())
                 {
-                    if (tile->tileButton->getTile().GetCellPos() == selectedCell)
+                    if (selectedTile->frame != tile->tileButton->getTile().frame)
                     {
-                        if (tile->item == nullptr)
-                        {
-                            Env_Item *a = new Env_Item(
-                                1, Utils::CellToPosition(selectedCell));
-                            tile->SetItem(a);
-                            break;
-                        }
+                        tile->tileButton->getTile().frame = selectedTile->frame;
+                        tile->tileButton->getTile().sprite = selectedTile->sprite;
+                        tile->tileButton->getTile().setType(selectedTile->getType());
                     }
+                }
+            }
+        }
+        else if (selectedMode == SelectedMode::OBJECT_MOD && objects_ui->getSelectedIndex() == 0)
+        {
+            for (auto &tile : tils->tiles)
+            {
+                if (tile->tileButton->IsMouseDown() && tile->item == nullptr)
+                {
+                    Env_Item *a = new Env_Item(
+                        1, tile->tileButton->GetPosition());
+                    tile->SetItem(a);
+                    break;
                 }
             }
         }
@@ -587,7 +591,7 @@ void Editor::Render()
                 tile->Draw(*menuRenderer, *squareRenderer, 0.3F, true,
                            this->time);
             }
-            else if (tile->isMouseHover())
+            else if (tile->IsMouseHover())
             {
                 tile->Draw(*menuRenderer, *squareRenderer, 0.3F, false,
                            this->time);
@@ -637,34 +641,6 @@ void Editor::b_tiles_click()
     objectPanel->SetEnable(false);
     tilePanel->SetEnable(true);
     selectedMode = SelectedMode::TILE_MOD;
-}
-
-void Editor::select_tile_world(TileButtonWorld *n)
-{
-    if (!panelsPressed)
-    {
-        if (selectedMode == SelectedMode::TILE_MOD && firstSelect)
-        {
-            if (selectedTile->frame != n->getTile().frame)
-            {
-                n->getTile().frame = selectedTile->frame;
-                n->getTile().sprite = selectedTile->sprite;
-                n->getTile().setType(selectedTile->getType());
-            }
-        }
-        else if (selectedMode == SelectedMode::OBJECT_MOD && objects_ui->getSelectedIndex() == 0)
-        {
-        }
-    }
-}
-
-void Editor::select_tile_ui(TileButtonScreen *n)
-{
-    if (n->IsRenderable())
-    {
-        selectedTile = &n->getTile();
-        firstSelect = true;
-    }
 }
 
 void Editor::newMap_okay()

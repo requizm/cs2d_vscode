@@ -13,7 +13,8 @@ class ButtonTile
     TileButtonWorld *tileButton = nullptr;
     Env_Item *item = nullptr;
 
-    ButtonTile(){
+    ButtonTile()
+    {
         tileButton = new TileButtonWorld();
     }
 

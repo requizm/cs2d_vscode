@@ -31,7 +31,7 @@ void Env_Item::Initialize()
     this->obj_id = Utils::GenerateID();
 
     Tile t = Tile(position, sp, Vector2<int>(GameParameters::SIZE_TILE));
-    button = new TileButtonWorld(t, Editor::instance().camera->view, 1.0F);
+    button = new TileButtonWorld(t, 1.0F);
     //button-> setType(ButtonType::ENV_OBJ);
 
     if (item_id != 0)

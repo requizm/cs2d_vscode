@@ -306,7 +306,7 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
             ResourceManager::GetTexture(Editor::instance().currentTileSet),
             (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes(tileType), textureIndex);
-        TileButtonWorld *b = new TileButtonWorld(tile, Editor::instance().camera->view);
+        TileButtonWorld *b = new TileButtonWorld(tile);
         ButtonTile *t = nullptr;
         if (itemId == 0)
         {

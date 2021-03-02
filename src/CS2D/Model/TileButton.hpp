@@ -9,8 +9,8 @@ class TileButtonWorld : public UIObject
 {
    public:
     TileButtonWorld();
-    TileButtonWorld(Tile &tile, Vector2<int> &cameraView, float scale = 1.0F);
-    TileButtonWorld(Tile &tile, Vector2<int> &cameraView, Object *par, float scale = 1.0F);
+    TileButtonWorld(Tile &tile, float scale = 1.0F);
+    TileButtonWorld(Tile &tile, Object *par, float scale = 1.0F);
     ~TileButtonWorld();
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) final;
@@ -26,18 +26,12 @@ class TileButtonWorld : public UIObject
 
     Tile &getTile();
 
-    void addListener(std::function<void(TileButtonWorld *)> func);
+    bool IsMouseDown();
+    bool IsMousePress();
+    bool IsMouseHover();
 
    private:
     Tile tile;
-    Vector2<int> *cameraView;
-
-    std::vector<std::function<void(TileButtonWorld *)>> listenersDown;
-    std::function<void()> mDown;
-
-    bool isMouseHover();
-
-    void onMouseDown();
 };
 
 class TileButtonScreen : public UIObject
@@ -45,7 +39,7 @@ class TileButtonScreen : public UIObject
    public:
     TileButtonScreen(Tile &tile, float scale = 1.0F);
     TileButtonScreen(Tile &tile, Object *par, float scale = 1.0F);
-    ~TileButtonScreen();
+    ~TileButtonScreen() final;
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) final;
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, bool selected,
@@ -62,17 +56,12 @@ class TileButtonScreen : public UIObject
 
     Tile &getTile();
 
-    void addListener(std::function<void(TileButtonScreen *)> func);
-
-    bool isMouseHover();
+    bool IsMouseDown();
+    bool IsMousePress();
+    bool IsMouseHover();
 
    private:
     Tile tile;
-
-    std::vector<std::function<void(TileButtonScreen *)>> listenersDown;
-    std::function<void()> mDown;
-
-    void onMouseDown();
 };
 
 
