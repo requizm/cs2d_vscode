@@ -69,7 +69,7 @@ class UIObject : public Object
     float GetScale() const;
     bool IsEnable() const;
     bool IsMouseEvents() const;
-    bool IsRenderable();  // scroll'dan dolayi
+    virtual bool IsRenderable();  // scroll'dan dolayi
     bool IsScrollable() const;
 
     virtual void SetParentCenterPos();

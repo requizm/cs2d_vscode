@@ -5,6 +5,7 @@
 #include "../../../../Core/Manager/Utils.hpp"
 #include "../../../../Core/UI/Panel.hpp"
 #include "../../../../Core/UI/TextBox.hpp"
+#include "../../../../Core/UI/TextButton.hpp"
 #include "../../../Other/GameParameters.hpp"
 #include "../../../Model/TileButton.hpp"
 

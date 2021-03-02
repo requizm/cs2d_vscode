@@ -20,7 +20,6 @@ TileButtonWorld::TileButtonWorld(Tile &tile, Object *par, float scale) : UIObjec
 
 TileButtonWorld::~TileButtonWorld()
 {
-    RemoveParent();
 }
 
 void TileButtonWorld::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
@@ -45,11 +44,20 @@ void TileButtonWorld::SetSize(const Vector2<int> &value)
     tile.SetSize(value);
 }
 
-Vector2<int> TileButtonWorld::GetLocalPosition() { return tile.GetLocalPosition(); }
-
 void TileButtonWorld::SetLocalPosition(const Vector2<int> &value)
 {
     tile.SetLocalPosition(value);
+}
+
+bool TileButtonWorld::IsRenderable()
+{
+    Vector2 pos = Utils::WorldToScreen(Editor::instance().camera->view, tile.GetCellPos() * Vector2<int>(GameParameters::SIZE_TILE));
+    if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
+        pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
+    {
+        return true;
+    }
+    return false;
 }
 
 Tile &TileButtonWorld::getTile()
@@ -105,11 +113,11 @@ TileButtonScreen::TileButtonScreen(Tile &tile, float scale) : UIObject(tile.GetP
 TileButtonScreen::TileButtonScreen(Tile &tile, Object *par, float scale) : UIObject(tile.GetPosition(), tile.GetSize(), scale, UIObjectType::TILEBUTTON, par)
 {
     this->tile = tile;
+    this->tile.SetLocalPosition(GetPosition() - par->GetPosition());
 }
 
 TileButtonScreen::~TileButtonScreen()
 {
-    RemoveParent();
 }
 
 void TileButtonScreen::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
@@ -136,6 +144,7 @@ Vector2<int> TileButtonScreen::GetPosition() { return tile.GetPosition(); }
 void TileButtonScreen::SetPosition(const Vector2<int> &value)
 {
     tile.SetPosition(value);
+    tile.SetLocalPosition(GetPosition() - parent->GetPosition());
 }
 
 Vector2<int> TileButtonScreen::GetSize() { return tile.GetSize(); }
@@ -149,7 +158,21 @@ Vector2<int> TileButtonScreen::GetLocalPosition() { return tile.GetLocalPosition
 
 void TileButtonScreen::SetLocalPosition(const Vector2<int> &value)
 {
-    tile.SetLocalPosition(value);
+    Vector2<int> newLocalPos = value;
+    tile.SetLocalPosition(newLocalPos);
+    tile.SetPosition(newLocalPos + parent->GetPosition());
+}
+
+bool TileButtonScreen::IsRenderable()
+{
+    UIObject *p = reinterpret_cast<UIObject *>(parent);
+    Vector2<int> pe = GetLocalPosition();
+    if ((pe.y + GetSize().y <= p->GetSize().y) &&
+        pe.y >= 0)
+    {
+        return true;
+    }
+    return false;
 }
 
 Tile &TileButtonScreen::getTile()
@@ -171,10 +194,10 @@ bool TileButtonScreen::IsMouseDown()
 
 bool TileButtonScreen::IsMouseHover()
 {
-    if (InputManager::mousePos.x >= position.x &&
-        InputManager::mousePos.x <= position.x + size.x &&
-        InputManager::mousePos.y >= position.y &&
-        InputManager::mousePos.y <= position.y + size.y)
+    if (InputManager::mousePos.x >= GetPosition().x &&
+        InputManager::mousePos.x <= GetPosition().x + GetSize().x &&
+        InputManager::mousePos.y >= GetPosition().y &&
+        InputManager::mousePos.y <= GetPosition().y + GetSize().y)
     {
         return true;
     }

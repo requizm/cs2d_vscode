@@ -189,7 +189,7 @@ void Editor::Start()
 
     this->b_tileProperties = new TextButton(
         "Tile Properties", Vector2<int>(buildPanel->GetPosition().x + 10, buildPanel->GetPosition().y + buildPanel->GetSize().y - 35),
-        Vector2<int>(30, 15), *textRenderer, buildPanel);
+        Vector2<int>(buildPanel->GetSize().x - buildPanel->GetSize().x / 6, 15), *textRenderer, buildPanel);
     this->b_tileProperties->setHaveOutline(true);
     this->b_tileProperties->setOutlineColor(Vector3<float>(0.54));
     this->b_tileProperties->setTextColor(Vector3<float>(0.54F));
@@ -378,7 +378,7 @@ void Editor::Update()
             {
                 for (auto &tile : tils->tilesUI)
                 {
-                    tile->SetPosition(Vector2<int>(tile->GetLocalPosition().x,
+                    tile->SetLocalPosition(Vector2<int>(tile->GetLocalPosition().x,
                                                    tile->GetLocalPosition().y +
                                                        InputManager::scroll.y * 32));
                 }
@@ -492,7 +492,7 @@ void Editor::ProcessInput()
 
     for (auto &tile : tils->tilesUI)
     {
-        if (tile->IsMouseDown() && selectedTile->frame != tile->getTile().frame)
+        if (tile->IsRenderable() && tile->IsMouseDown() && selectedTile->frame != tile->getTile().frame)
         {
             selectedTile = &tile->getTile();
         }
@@ -541,11 +541,7 @@ void Editor::Render()
     bool f = false;
     for (auto &tile_1 : tils->tiles)
     {
-        Vector2 pos = Utils::WorldToScreen(
-            camera->view,
-            tile_1->tileButton->getTile().GetCellPos() * Vector2<int>(GameParameters::SIZE_TILE));
-        if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
-            pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
+        if (tile_1->tileButton->IsRenderable())
         {
             tile_1->tileButton->Draw(*worldRenderer, *squareRenderer);
             squareRenderer->world_RenderEmptySquare(
@@ -585,21 +581,22 @@ void Editor::Render()
     {
         for (auto &tile : tils->tilesUI)
         {
-            if (firstSelect &&
-                selectedTile->GetId() == tile->getTile().GetId())
+            if (tile->IsRenderable())
             {
-                tile->Draw(*menuRenderer, *squareRenderer, 0.3F, true,
-                           this->time);
-            }
-            else if (tile->IsMouseHover())
-            {
-                tile->Draw(*menuRenderer, *squareRenderer, 0.3F, false,
-                           this->time);
-            }
-            else
-            {
-                tile->Draw(*menuRenderer, *squareRenderer);
-                int a = 2;
+                if (selectedTile->GetId() == tile->getTile().GetId())
+                {
+                    tile->Draw(*menuRenderer, *squareRenderer, 0.3F, true,
+                               this->time);
+                }
+                else if (tile->IsMouseHover())
+                {
+                    tile->Draw(*menuRenderer, *squareRenderer, 0.3F, false,
+                               this->time);
+                }
+                else
+                {
+                    tile->Draw(*menuRenderer, *squareRenderer);
+                }
             }
         }
     }

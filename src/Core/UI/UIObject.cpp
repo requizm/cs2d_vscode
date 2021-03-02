@@ -187,16 +187,15 @@ bool UIObject::IsRenderable()
         UIObject *p = reinterpret_cast<UIObject *>(parent);
         if (p->IsScrollable())
         {
+            Vector2<int> pe = GetLocalPosition();
             if ((GetLocalPosition().y + GetSize().y <= p->GetSize().y) &&
                 GetLocalPosition().y >= 0)
             {
                 return true;
             }
-            return false;
         }
-        return true;
     }
-    return true;
+    return false;
 }
 
 bool UIObject::IsScrollable() const { return scrollable; }

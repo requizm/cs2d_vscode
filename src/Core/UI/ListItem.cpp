@@ -48,7 +48,7 @@ void ListItem::Clear()
     {
         if (item != nullptr) delete item;
     }
-    
+
     items.clear();
     i = 0;
 }
@@ -64,7 +64,8 @@ void ListItem::Draw(SquareRenderer &squareRenderer)
     {
         for (auto &item : items)
         {
-            item->bt->Draw(squareRenderer);
+            if (item->bt->IsRenderable())
+                item->bt->Draw(squareRenderer);
         }
     }
 }
@@ -75,7 +76,8 @@ void ListItem::Update()
     {
         for (std::vector<int>::size_type i = 0; i != items.size(); i++)
         {
-            items[i]->bt->Update();
+            if (items[i]->bt->IsRenderable())
+                items[i]->bt->Update();
         }
         if (InputManager::scrollYPressed && panel->IsScrollable())
         {
@@ -92,8 +94,9 @@ void ListItem::Update()
                 {
                     for (auto &tile : items)
                     {
-                        tile->bt->SetPosition(Vector2<int>(tile->bt->GetLocalPosition().x,
-                                                           tile->bt->GetLocalPosition().y +
+                        Vector2<int> parentPos = tile->bt->GetParent()->GetPosition();
+                        tile->bt->SetPosition(Vector2<int>(parentPos.x + tile->bt->GetLocalPosition().x,
+                                                           parentPos.y + tile->bt->GetLocalPosition().y +
                                                                InputManager::scroll.y * 20));
                     }
                 }
@@ -175,7 +178,7 @@ void ListItemElement::MouseDown()
 {
     if (IsEnable() && IsMouseEvents())
     {
-        if (!selected && IsRenderable())
+        if (!selected && bt->IsRenderable())
         {
             listItem->Select(index);
         }
