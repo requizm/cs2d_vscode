@@ -72,14 +72,12 @@ void SpriteButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRe
     if (IsEnable())
     {
         squareRenderer.ui_RenderFilledSquare(
-            position,
-            GetSize(),
+            transform,
             buttonCurrentColor);
         if (haveOutline)
         {
             squareRenderer.ui_RenderEmptySquare(
-                position,
-                GetSize(),
+                transform,
                 outlineColor);
         }
         spriteRenderer.DrawSprite(

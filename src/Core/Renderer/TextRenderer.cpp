@@ -18,10 +18,10 @@ TextRenderer::TextRenderer(GLuint width, GLuint height)
     glGenBuffers(1, &this->VBO);
     glBindVertexArray(this->VAO);
     glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL,
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL,
                  GL_DYNAMIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     this->TextShader.UnUse();
@@ -41,10 +41,10 @@ TextRenderer::TextRenderer(GLuint width, GLuint height, Matrix4<float> camera)
     glGenBuffers(1, &this->VBO);
     glBindVertexArray(this->VAO);
     glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL,
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL,
                  GL_DYNAMIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     this->TextShader.UnUse();
@@ -113,7 +113,7 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
     FT_Done_FreeType(ft);
 }
 
-void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale,
+void TextRenderer::RenderText(std::string text, int x, int y, float scale,
                               const Vector3<float> &color)
 {
     // Activate corresponding render state
@@ -128,14 +128,14 @@ void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale,
     {
         Character ch = Characters[*c];
 
-        GLfloat xpos = x + ch.Bearing.x * scale;
-        GLfloat ypos =
+        float xpos = x + ch.Bearing.x * scale;
+        float ypos =
             y + (this->Characters['H'].Bearing.y - ch.Bearing.y) * scale;
 
-        GLfloat w = ch.Size.x * scale;
-        GLfloat h = ch.Size.y * scale;
+        float w = ch.Size.x * scale;
+        float h = ch.Size.y * scale;
         // Update VBO for each character
-        GLfloat vertices[6][4] = {
+        float vertices[6][4] = {
             {xpos, ypos + h, 0.0, 1.0}, {xpos + w, ypos, 1.0, 0.0}, {xpos, ypos, 0.0, 0.0},
 
             {xpos, ypos + h, 0.0, 1.0},
@@ -162,7 +162,7 @@ void TextRenderer::RenderText(std::string text, int x, int y, GLfloat scale,
 }
 
 void TextRenderer::RenderText(std::string text, Vector2<int> position,
-                              GLfloat scale, const Vector3<float> &color)
+                              float scale, const Vector3<float> &color)
 {
     // Activate corresponding render state
     this->TextShader.Use();
@@ -176,14 +176,14 @@ void TextRenderer::RenderText(std::string text, Vector2<int> position,
     {
         Character ch = Characters[*c];
 
-        GLfloat xpos = position.x + ch.Bearing.x * scale;
-        GLfloat ypos = position.y +
+        float xpos = position.x + ch.Bearing.x * scale;
+        float ypos = position.y +
                        (this->Characters['H'].Bearing.y - ch.Bearing.y) * scale;
 
-        GLfloat w = ch.Size.x * scale;
-        GLfloat h = ch.Size.y * scale;
+        float w = ch.Size.x * scale;
+        float h = ch.Size.y * scale;
         // Update VBO for each character
-        GLfloat vertices[6][4] = {
+        float vertices[6][4] = {
             {xpos, ypos + h, 0.0, 1.0}, {xpos + w, ypos, 1.0, 0.0}, {xpos, ypos, 0.0, 0.0},
 
             {xpos, ypos + h, 0.0, 1.0},
@@ -213,29 +213,29 @@ void TextRenderer::RenderText(std::string text, Vector2<int> position,
 /*
 void TextRenderer::RenderLabel(Label *label)
 {
-        GLfloat startX = label->position.x;
-        GLfloat startY = label->position.y;
+        float startX = label->position.x;
+        float startY = label->position.y;
         float x = label->position.x;
         // Activate corresponding render state
         this->TextShader.Use();
         this->TextShader.SetVector3f("textColor", label->labelCurrentColor);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(this->VAO);
-        GLfloat ypos;
+        float ypos;
         // Iterate through all characters
         std::string::const_iterator c;
         for (c = label->text.begin(); c != label->text.end(); c++)
         {
                 Character ch = Characters[*c];
 
-                GLfloat xpos = x + ch.Bearing.x * label->scale;
+                float xpos = x + ch.Bearing.x * label->scale;
                 ypos = label->position.y + (this->Characters['H'].Bearing.y -
 ch.Bearing.y) * label->scale;
 
-                GLfloat w = ch.Size.x * label->scale;
-                GLfloat h = ch.Size.y * label->scale;
+                float w = ch.Size.x * label->scale;
+                float h = ch.Size.y * label->scale;
                 // Update VBO for each character
-                GLfloat vertices[6][4] = {
+                float vertices[6][4] = {
                         { xpos,     ypos + h,   0.0, 1.0 },
                         { xpos + w, ypos,       1.0, 0.0 },
                         { xpos,     ypos,       0.0, 0.0 },
@@ -265,9 +265,9 @@ value in pixels (1/64th times 2^6 = 64)
         //label->size.y = 12;
 }*/
 
-Vector2<int> TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
+Vector2<int> TextRenderer::CalculateSize(const std::string &text, float scale)
 {
-    // GLfloat startX = 0;
+    // float startX = 0;
     float xPo = 0;
     // Activate corresponding render state
     // Iterate through all characters
@@ -276,8 +276,8 @@ Vector2<int> TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
     {
         Character ch = this->Characters[*c];
 
-        GLfloat w = ch.Size.x * scale;
-        GLfloat h = ch.Size.y * scale;
+        float w = ch.Size.x * scale;
+        float h = ch.Size.y * scale;
         // Now advance cursors for next glyph
         xPo += (ch.Advance >> 6) * scale;  // Bitshift by 6 to get value in
                                            // pixels (1/64th times 2^6 = 64)
@@ -287,29 +287,29 @@ Vector2<int> TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
 /*
 void TextRenderer::RenderButton(Button *button)
 {
-        GLfloat startX = button->position.x;
-        GLfloat startY = button->position.y;
+        float startX = button->position.x;
+        float startY = button->position.y;
         float x = button->position.x;
         // Activate corresponding render state
         this->TextShader.Use();
         this->TextShader.SetVector3f("textColor", button->labelColor);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(this->VAO);
-        GLfloat ypos;
+        float ypos;
         // Iterate through all characters
         std::string::const_iterator c;
         for (c = button->text.begin(); c != button->text.end(); c++)
         {
                 Character ch = Characters[*c];
 
-                GLfloat xpos = x + ch.Bearing.x * button->scale;
+                float xpos = x + ch.Bearing.x * button->scale;
                 ypos = button->position.y + (this->Characters['H'].Bearing.y -
 ch.Bearing.y) * button->scale;
 
-                GLfloat w = ch.Size.x * button->scale;
-                GLfloat h = ch.Size.y * button->scale;
+                float w = ch.Size.x * button->scale;
+                float h = ch.Size.y * button->scale;
                 // Update VBO for each character
-                GLfloat vertices[6][4] = {
+                float vertices[6][4] = {
                         { xpos,     ypos + h,   0.0, 1.0 },
                         { xpos + w, ypos,       1.0, 0.0 },
                         { xpos,     ypos,       0.0, 0.0 },

@@ -134,8 +134,7 @@ void TileButtonScreen::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squa
     if (IsEnable())
     {
         spriteRenderer.DrawSprite(this->tile.sprite,
-                                  this->GetPosition(), this->GetSize(),
-                                  0.0F, false, shine, selected, time);
+                                  transform, shine, selected, time);
     }
 }
 

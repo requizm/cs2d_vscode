@@ -9,7 +9,7 @@ void Outline::initData()
     // Configure VAO/VBO
     GLuint VBO;
 
-    GLfloat vertices[8];
+    float vertices[8];
 
     vertices[0] = 0.0f;
     vertices[1] = 1.0f;
@@ -31,7 +31,7 @@ void Outline::initData()
 
     glBindVertexArray(this->VAO);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat),
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
                           static_cast<GLvoid *>(0));
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

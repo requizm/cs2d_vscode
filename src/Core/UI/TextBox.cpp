@@ -46,7 +46,7 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer,
     {
         if (isBackGround)
             squareRenderer.ui_RenderFilledSquare(
-                this->GetPosition(), this->GetSize(), Vector3<float>(0.15F),
+                transform, Vector3<float>(0.15F),
                 true, currentBorderColor, 1.0F, 1.0F);
         if (editMode)
         {

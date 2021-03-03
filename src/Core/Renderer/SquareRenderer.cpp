@@ -1,7 +1,5 @@
 #include "SquareRenderer.hpp"
 
-SquareRenderer::SquareRenderer() {}
-
 SquareRenderer::SquareRenderer(bool init)
 {
     this->squareShader_world = ResourceManager::LoadShader(
@@ -26,12 +24,11 @@ SquareRenderer::SquareRenderer(bool init)
     filledCircle = Circle(true);
 }
 
-SquareRenderer::~SquareRenderer() = default;
 
 void SquareRenderer::ui_RenderFilledSquare(
-    Vector2<int> position, Vector2<int> size, const Vector3<float> &color,
+    const Vector2<int> &position, const Vector2<int> &size, const Vector3<float> &color,
     bool outline, const Vector3<float> &borderColor, float borderSize,
-    GLfloat transperancy, int rotate)
+    float transperancy, int rotate)
 {
     // Prepare transformations
     this->squareShader_ui.Use();
@@ -71,10 +68,29 @@ void SquareRenderer::ui_RenderFilledSquare(
                              borderSize / 2);
 }
 
-void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position,
-                                           Vector2<int> size,
+void SquareRenderer::ui_RenderFilledSquare(const Matrix4<float> &model,
+                                           const Vector3<float> &color, bool outline,
+                                           const Vector3<float> &borderColor,
+                                           float borderSize, float transperancy)
+{
+    // Prepare transformations
+    this->squareShader_ui.Use();
+    this->squareShader_ui.SetMatrix4("model", model);
+    this->squareShader_ui.SetVector3f("colorUniform", color);
+    this->squareShader_ui.SetFloat("trans", transperancy);
+    glBindVertexArray(square.VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+    this->squareShader_ui.UnUse();
+
+    if (outline)
+        ui_RenderEmptySquare(model, borderColor, transperancy, borderSize / 2);
+}
+
+void SquareRenderer::ui_RenderFilledSquare(const Vector2<int> &position,
+                                           const Vector2<int> &size,
                                            const Vector3<float> &color,
-                                           GLfloat transperancy, int rotate)
+                                           float transperancy, int rotate)
 {
     this->squareShader_ui.Use();
     Matrix4 model = Matrix4(1.0F);
@@ -109,10 +125,23 @@ void SquareRenderer::ui_RenderFilledSquare(Vector2<int> position,
     this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::world_RenderFilledSquare(Vector2<int> position,
-                                              Vector2<int> size,
+void SquareRenderer::ui_RenderFilledSquare(const Matrix4<float> &model,
+                                           const Vector3<float> &color,
+                                           float transperancy) {
+    this->squareShader_ui.Use();
+    this->squareShader_ui.SetMatrix4("model", model);
+    this->squareShader_ui.SetVector3f("colorUniform", color);
+    this->squareShader_ui.SetFloat("trans", transperancy);
+    glBindVertexArray(square.VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+    this->squareShader_ui.UnUse();
+}
+
+void SquareRenderer::world_RenderFilledSquare(const Vector2<int> &position,
+                                              const Vector2<int> &size,
                                               const Vector3<float> &color,
-                                              GLfloat transperancy, int rotate)
+                                              float transperancy, int rotate)
 {
     this->squareShader_world.Use();
     Matrix4 model = Matrix4(1.0F);
@@ -147,9 +176,22 @@ void SquareRenderer::world_RenderFilledSquare(Vector2<int> position,
     this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos,
+void SquareRenderer::world_RenderFilledSquare(const Matrix4<float> &model,
+                                              const Vector3<float> &color,
+                                              float transperancy) {
+    this->squareShader_world.Use();
+    this->squareShader_world.SetMatrix4("model", model);
+    this->squareShader_world.SetVector3f("colorUniform", color);
+    this->squareShader_world.SetFloat("trans", transperancy);
+    glBindVertexArray(square.VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+    this->squareShader_world.UnUse();
+}
+
+void SquareRenderer::ui_RenderLine(Vector2<int> &startPos, Vector2<int> &endPos,
                                    const Vector3<float> &color, float lineSize,
-                                   GLfloat transperancy)
+                                   float transperancy)
 {
     Vector2<int> size;
     int rotate = 0;
@@ -213,10 +255,10 @@ void SquareRenderer::ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos,
     this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::world_RenderLine(Vector2<int> startPos,
-                                      Vector2<int> endPos,
+void SquareRenderer::world_RenderLine(Vector2<int> &startPos,
+                                      Vector2<int> &endPos,
                                       const Vector3<float> &color,
-                                      float lineSize, GLfloat transperancy)
+                                      float lineSize, float transperancy)
 {
     Vector2<int> size;
     int rotate = 0;
@@ -280,10 +322,10 @@ void SquareRenderer::world_RenderLine(Vector2<int> startPos,
     this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position,
-                                          Vector2<int> size,
+void SquareRenderer::ui_RenderEmptySquare(const Vector2<int> &position,
+                                          const Vector2<int> &size,
                                           const Vector3<float> &color,
-                                          GLfloat transperancy, int rotate,
+                                          float transperancy, int rotate,
                                           float lineSize)
 {
     this->squareShader_ui.Use();
@@ -324,10 +366,30 @@ void SquareRenderer::ui_RenderEmptySquare(Vector2<int> position,
     this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::world_RenderEmptySquare(Vector2<int> position,
-                                             Vector2<int> size,
+void SquareRenderer::ui_RenderEmptySquare(const Matrix4<float> &model,
+                                          const Vector3<float> &color,
+                                          float transperancy,
+                                          float lineSize)
+{
+    this->squareShader_ui.Use();
+    this->squareShader_ui.SetMatrix4("model", model);
+    this->squareShader_ui.SetVector3f("colorUniform", color);
+    this->squareShader_ui.SetFloat("trans", transperancy);
+    if (oldLineSize != lineSize)
+    {
+        glLineWidth(lineSize);
+        oldLineSize = lineSize;
+    }
+    glBindVertexArray(outline.VAO);
+    glDrawArrays(GL_LINE_LOOP, 0, 4);
+    glBindVertexArray(0);
+    this->squareShader_ui.UnUse();
+}
+
+void SquareRenderer::world_RenderEmptySquare(const Vector2<int> &position,
+                                             const Vector2<int> &size,
                                              const Vector3<float> &color,
-                                             GLfloat transperancy, int rotate,
+                                             float transperancy, int rotate,
                                              float lineSize)
 {
     this->squareShader_world.Use();
@@ -368,10 +430,29 @@ void SquareRenderer::world_RenderEmptySquare(Vector2<int> position,
     this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::ui_RenderEmptyCircle(Vector2<int> position,
-                                          Vector2<int> size,
+void SquareRenderer::world_RenderEmptySquare(const Matrix4<float> &model,
+                                             const Vector3<float> &color,
+                                             float transperancy,
+                                             float lineSize) {
+    this->squareShader_world.Use();
+    this->squareShader_world.SetMatrix4("model", model);
+    this->squareShader_world.SetVector3f("colorUniform", color);
+    this->squareShader_world.SetFloat("trans", transperancy);
+    if (oldLineSize != lineSize)
+    {
+        glLineWidth(lineSize);
+        oldLineSize = lineSize;
+    }
+    glBindVertexArray(outline.VAO);
+    glDrawArrays(GL_LINE_LOOP, 0, 4);
+    glBindVertexArray(0);
+    this->squareShader_world.UnUse();
+}
+
+void SquareRenderer::ui_RenderEmptyCircle(const Vector2<int> &position,
+                                          const Vector2<int> &size,
                                           const Vector3<float> &color,
-                                          GLfloat transperancy, int rotate)
+                                          float transperancy, int rotate)
 {
     this->squareShader_ui.Use();
     Matrix4 model = Matrix4(1.0F);
@@ -407,10 +488,24 @@ void SquareRenderer::ui_RenderEmptyCircle(Vector2<int> position,
     this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::ui_RenderFilledCircle(Vector2<int> position,
-                                           Vector2<int> size,
+void SquareRenderer::ui_RenderEmptyCircle(const Matrix4<float> &model,
+                                          const Vector3<float> &color,
+                                          float transperancy) {
+    this->squareShader_ui.Use();
+    this->squareShader_ui.SetMatrix4("model", model);
+    this->squareShader_ui.SetVector3f("colorUniform", color);
+    this->squareShader_ui.SetFloat("trans", transperancy);
+
+    glBindVertexArray(emptyCircle.VAO);
+    glDrawArrays(GL_LINE_STRIP, 0, 31);
+    glBindVertexArray(0);
+    this->squareShader_ui.UnUse();
+}
+
+void SquareRenderer::ui_RenderFilledCircle(const Vector2<int> &position,
+                                           const Vector2<int> &size,
                                            const Vector3<float> &color,
-                                           GLfloat transperancy, int rotate)
+                                           float transperancy, int rotate)
 {
     this->squareShader_ui.Use();
     Matrix4 model = Matrix4(1.0F);
@@ -446,10 +541,24 @@ void SquareRenderer::ui_RenderFilledCircle(Vector2<int> position,
     this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::world_RenderEmptyCircle(Vector2<int> position,
-                                             Vector2<int> size,
+void SquareRenderer::ui_RenderFilledCircle(const Matrix4<float> &model,
+                                           const Vector3<float> &color,
+                                           float transperancy) {
+    this->squareShader_ui.Use();
+    this->squareShader_ui.SetMatrix4("model", model);
+    this->squareShader_ui.SetVector3f("colorUniform", color);
+    this->squareShader_ui.SetFloat("trans", transperancy);
+
+    glBindVertexArray(filledCircle.VAO);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 32);
+    glBindVertexArray(0);
+    this->squareShader_ui.UnUse();
+}
+
+void SquareRenderer::world_RenderEmptyCircle(const Vector2<int> &position,
+                                             const Vector2<int> &size,
                                              const Vector3<float> &color,
-                                             GLfloat transperancy, int rotate)
+                                             float transperancy, int rotate)
 {
     this->squareShader_world.Use();
     Matrix4 model = Matrix4(1.0F);
@@ -485,7 +594,21 @@ void SquareRenderer::world_RenderEmptyCircle(Vector2<int> position,
     this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::SetProjection(Matrix4<float> proj)
+void SquareRenderer::world_RenderEmptyCircle(const Matrix4<float> &model,
+                                             const Vector3<float> &color,
+                                             float transperancy) {
+    this->squareShader_world.Use();
+    this->squareShader_world.SetMatrix4("model", model);
+    this->squareShader_world.SetVector3f("colorUniform", color);
+    this->squareShader_world.SetFloat("trans", transperancy);
+
+    glBindVertexArray(emptyCircle.VAO);
+    glDrawArrays(GL_LINE_STRIP, 0, 31);
+    glBindVertexArray(0);
+    this->squareShader_world.UnUse();
+}
+
+void SquareRenderer::SetProjection(const Matrix4<float> &proj)
 {
     this->squareShader_world.Use();
     this->squareShader_world.SetMatrix4("projection", proj);

@@ -108,9 +108,10 @@ void InputManager::onMouseDown(int key)
     for (int i = 0; i < siz; i++)
     {
         auto callback = m_Callbacks_Down[key];
-        for (auto &call : callback)
+        int si = callback.size();
+        for (int j = 0; j < si; j++)
         {
-            call.event();
+            callback[j].event();
         }
     }
 }
@@ -120,9 +121,10 @@ void InputManager::onMouseUp(int key)
     for (int i = 0; i < siz; i++)
     {
         auto callback = m_Callbacks_Up[key];
-        for (auto &call : callback)
+        int si = callback.size();
+        for (int j = 0; j < si; j++)
         {
-            call.event();
+            callback[j].event();
         }
     }
 }

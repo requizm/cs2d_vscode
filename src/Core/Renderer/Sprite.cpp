@@ -25,7 +25,7 @@ void Sprite::initData(GLuint x, GLuint y, GLuint width, GLuint height)
 {
     // Configure VAO/VBO
     GLuint VBO;
-    GLfloat vertices[24];
+    float vertices[24];
 
     if (width == 0)
     {
@@ -58,15 +58,15 @@ void Sprite::initData(GLuint x, GLuint y, GLuint width, GLuint height)
 
     else
     {
-        const GLfloat xNorm =
-            static_cast<GLfloat>(x) / static_cast<GLfloat>(texture.Width);
-        const GLfloat yNorm =
-            static_cast<GLfloat>(y) / static_cast<GLfloat>(texture.Height);
+        const float xNorm =
+            static_cast<float>(x) / static_cast<float>(texture.Width);
+        const float yNorm =
+            static_cast<float>(y) / static_cast<float>(texture.Height);
 
-        const GLfloat wNorm =
-            static_cast<GLfloat>(width) / static_cast<GLfloat>(texture.Width);
-        const GLfloat hNorm =
-            static_cast<GLfloat>(height) / static_cast<GLfloat>(texture.Height);
+        const float wNorm =
+            static_cast<float>(width) / static_cast<float>(texture.Width);
+        const float hNorm =
+            static_cast<float>(height) / static_cast<float>(texture.Height);
 
         vertices[0] = 0.0f;
         vertices[1] = 1.0f;
@@ -104,7 +104,7 @@ void Sprite::initData(GLuint x, GLuint y, GLuint width, GLuint height)
 
     glBindVertexArray(this->VAO);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat),
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
                           (GLvoid *)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

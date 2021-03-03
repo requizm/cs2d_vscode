@@ -80,8 +80,8 @@ void TextButton::Draw(SquareRenderer &squareRenderer)
     if (IsEnable())
     {
         squareRenderer.ui_RenderFilledSquare(
-            position, size, buttonCurrentColor,
-            haveOutline, outlineColor, 1.0F, 1.0F, 0.0F);
+            transform, buttonCurrentColor,
+            haveOutline, outlineColor, 1.0F, 1.0F);
         this->rend->RenderText(text, textPos, scale,
                                textCurrentColor);
     }

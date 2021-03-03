@@ -3,14 +3,10 @@
 #define PI 3.14159265
 SpriteRenderer::SpriteRenderer(const Shader shader) { this->shader = shader; }
 
-SpriteRenderer::SpriteRenderer() = default;
-
-SpriteRenderer::~SpriteRenderer() = default;
-
 void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
                                 Vector2<int> size, int rotate, bool drawCenter,
-                                GLfloat shineFactor, bool isSelected,
-                                GLfloat time)
+                                float shineFactor, bool isSelected,
+                                float time)
 {
     // Prepare transformations
     this->shader.Use();
@@ -62,13 +58,36 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
     this->shader.UnUse();
 }
 
+void SpriteRenderer::DrawSprite(const Sprite &sprite, const Matrix4<float> &model,
+                                float shineFactor, bool isSelected, float time)
+{
+    this->shader.Use();
+    this->shader.SetMatrix4("model", model);
+    this->shader.SetInteger("overrideColor", 0);
+    this->shader.SetFloat("shineFactor", shineFactor);
+
+    this->shader.SetInteger("selectedTile", isSelected);
+    if (isSelected)
+    {
+        this->shader.SetFloat("time", time);
+    }
+
+    glActiveTexture(GL_TEXTURE0);
+    sprite.texture.Bind();
+
+    glBindVertexArray(sprite.VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+    this->shader.UnUse();
+}
+
 void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
                                 Vector2<int> size, const Vector3<float> &color,
                                 bool drawCenter, int rotate,
-                                GLfloat shineFactor, bool isSelected,
+                                float shineFactor, bool isSelected,
                                 float time)
 {
-    // rotate = rotate * static_cast<GLfloat>(PI) / static_cast<GLfloat>(180);
+    // rotate = rotate * static_cast<float>(PI) / static_cast<float>(180);
     // Prepare transformations
     this->shader.Use();
     Matrix4 model = Matrix4(1.0F);

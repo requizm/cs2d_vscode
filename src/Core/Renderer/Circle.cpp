@@ -24,8 +24,8 @@ void Circle::initEmptyCircle()
     Vector2<float> vertices[31];
     int i;
     int triangleAmount = 30;  //# of triangles used to draw circle
-    // GLfloat radius = 0.8f; //radius
-    GLfloat twicePi = 2.0f * PI;
+    // float radius = 0.8f; //radius
+    float twicePi = 2.0f * PI;
 
     for (i = 0; i <= triangleAmount; i++)
     {
@@ -41,7 +41,7 @@ void Circle::initEmptyCircle()
 
     glBindVertexArray(this->VAO);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat),
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
                           (GLvoid *)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -53,8 +53,8 @@ void Circle::initFilledCircle()
     Vector2<float> vertices[32];
     int i;
     int triangleAmount = 30;  //# of triangles used to draw circle
-    // GLfloat radius = 0.8f; //radius
-    GLfloat twicePi = 2.0f * PI;
+    // float radius = 0.8f; //radius
+    float twicePi = 2.0f * PI;
     vertices[0] = Vector2<float>(0, 0);
     for (i = 1; i <= triangleAmount + 1; i++)
     {
@@ -70,7 +70,7 @@ void Circle::initFilledCircle()
 
     glBindVertexArray(this->VAO);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat),
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
                           (GLvoid *)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

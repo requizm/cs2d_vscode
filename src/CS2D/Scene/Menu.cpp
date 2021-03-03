@@ -160,11 +160,13 @@ void Menu::Update()
                             t_mapName->getText() + ".xml";
         StartGame::instance().Initialize(mName);
         Game::SetGameState(GameState::INGAME);
+        gonnaDieForGame = false;
         return;
     }
     if (gonnaDieForEditor)
     {
         Game::SetGameState(GameState::EDITOR);
+        gonnaDieForEditor = false;
         return;
     }
     l_options->Update();

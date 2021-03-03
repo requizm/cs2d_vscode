@@ -33,19 +33,19 @@ void Object::BuildTransform()
         model, Vector3<float>(static_cast<float>(position.x),
                               static_cast<float>(position.y), 0.0F));
     model = Projection::translate(
-        model, Vector3<float>(0.5F * static_cast<float>(size.x),
-                              0.5F * static_cast<float>(size.y),
+        model, Vector3<float>(0.5F * static_cast<float>(GetSize().x),
+                              0.5F * static_cast<float>(GetSize().y),
                               0.0F));  // Move origin of rotation to center of quad
     model = Projection::rotate(
         model, Projection::radians(static_cast<float>(rotation)),
         Vector3<float>(0.0F, 0.0F, 1.0F));  // Then rotate
     model = Projection::translate(
-        model, Vector3<float>(-0.5F * static_cast<float>(size.x),
-                              -0.5F * static_cast<float>(size.y),
+        model, Vector3<float>(-0.5F * static_cast<float>(GetSize().x),
+                              -0.5F * static_cast<float>(GetSize().y),
                               0.0F));  // Move origin back
     model = Projection::scale(model,
-                              Vector3<float>(static_cast<float>(size.x),
-                                             static_cast<float>(size.y), 1.0F));
+                              Vector3<float>(static_cast<float>(GetSize().x),
+                                             static_cast<float>(GetSize().y), 1.0F));
 
     SetTransform(model);
 

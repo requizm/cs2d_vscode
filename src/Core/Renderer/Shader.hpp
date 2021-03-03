@@ -27,20 +27,20 @@ class Shader
                  const GLchar* geometrySource =
                      nullptr);  // Note: geometry source code is optional
     // Utility functions
-    void SetFloat(const GLchar* name, GLfloat value,
+    void SetFloat(const GLchar* name, float value,
                   GLboolean useShader = false) const;
     void SetInteger(const GLchar* name, GLint value,
                     GLboolean useShader = false) const;
-    void SetVector2f(const GLchar* name, GLfloat x, GLfloat y,
+    void SetVector2f(const GLchar* name, float x, float y,
                      GLboolean useShader = false) const;
     void SetVector2f(const GLchar* name, const Vector2<float>& value,
                      GLboolean useShader = false) const;
-    void SetVector3f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z,
+    void SetVector3f(const GLchar* name, float x, float y, float z,
                      GLboolean useShader = false) const;
     void SetVector3f(const GLchar* name, const Vector3<float>& value,
                      GLboolean useShader = false) const;
-    void SetVector4f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z,
-                     GLfloat w, GLboolean useShader = false) const;
+    void SetVector4f(const GLchar* name, float x, float y, float z,
+                     float w, GLboolean useShader = false) const;
     // void    SetVector4f(const GLchar* name, const glm::vec4& value, GLboolean
     // useShader = false) const;
     void SetMatrix4(const GLchar* name, Matrix4<float> matrix,

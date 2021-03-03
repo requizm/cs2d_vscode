@@ -81,24 +81,24 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
             if (!isOutline())
             {
                 squareRenderer.ui_RenderFilledSquare(
-                    this->GetPosition(), this->GetSize(), this->getPanelColor(),
+                    transform, this->getPanelColor(),
                     this->trans);
             }
             else
             {
                 squareRenderer.ui_RenderFilledSquare(
-                    this->GetPosition(), this->GetSize(), getPanelColor(), true,
-                    getOutlineColor(), 2.0F, this->trans, 0.0F);
+                    transform, getPanelColor(), true,
+                    getOutlineColor(), 2.0F, this->trans);
             }
         }
         if (opttitles)
         {
-            squareRenderer.ui_RenderLine(
-                Vector2<int>(GetPosition().x + lineOffset,
-                             GetPosition().y + 23.0F),
-                Vector2<int>(GetPosition().x + size.x - lineOffset,
-                             GetPosition().y + 23.0F),
-                Vector3<float>(0.39F), 1.0F, this->trans);
+            Vector2<int> pos_1 = Vector2<int>(GetPosition().x + lineOffset,
+                                              GetPosition().y + 23);
+            Vector2<int> pos_2 = Vector2<int>(GetPosition().x + size.x - lineOffset,
+                                              GetPosition().y + 23);
+            squareRenderer.ui_RenderLine(pos_1, pos_2,
+                                         Vector3<float>(0.39F), 1.0F, this->trans);
             escapeButton->Draw(spriteRenderer, squareRenderer);
             title->Draw();
         }
