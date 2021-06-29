@@ -10,6 +10,8 @@ TextButton::TextButton(const std::string &text, const Vector2<int> &position, co
     this->textColor = textColor;
     this->text = text;
     this->listenerEnabled = listenerEnabled;
+    this->textPos = this->position;
+    this->textSize = renderer.CalculateSize(text, 1.0F);
 
     if (listenerEnabled)
     {

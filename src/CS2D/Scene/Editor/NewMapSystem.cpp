@@ -43,7 +43,7 @@ bool NewMapSystem::isMouseHover() { return newPanel->isMouseHover(false); }
 NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     NewMapResult res = NewMapResult();
 
@@ -64,11 +64,12 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
     InputManager::scroll.y = 0.0F;
 
     int curIndex = 0;
+    Vector2<int> tilePanelPos = Editor::instance().tilePanel->getPosition();
     for (int i = 0; i < Editor::instance().tileCount; i++)
     {
         const int xPos = 32 * (curIndex % Editor::instance().maxCellInColumn);
         const int yPos = 32 * (curIndex / Editor::instance().maxCellInColumn);
-        const Vector2<int> pos(xPos, yPos);
+        const Vector2<int> pos(xPos + tilePanelPos.x, yPos + tilePanelPos.y);
         const Vector2<int> size(Vector2<int>(32, 32));
         const int xoffset =
             curIndex % (ResourceManager::GetTexture(tileSet).Width / 32);
@@ -99,7 +100,7 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
 NewMapResult NewMapSystem::B_NewMap()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     std::string sizeX = t_mapSizeX->getText();
     std::string sizeY = t_mapSizeY->getText();

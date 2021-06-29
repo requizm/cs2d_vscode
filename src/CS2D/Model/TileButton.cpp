@@ -111,7 +111,7 @@ TileButtonScreen::~TileButtonScreen()
 
 void TileButtonScreen::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
 {
-    if (isEnable())
+    if (isEnable() && isRenderable())
     {
         tile.DrawModel(spriteRenderer);
     }
@@ -119,7 +119,7 @@ void TileButtonScreen::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squa
 
 void TileButtonScreen::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, bool selected, float time)
 {
-    if (isEnable())
+    if (isEnable()  && isRenderable())
     {
         spriteRenderer.DrawSprite(this->tile.sprite,
                                           this->getPosition(), this->getSize(),

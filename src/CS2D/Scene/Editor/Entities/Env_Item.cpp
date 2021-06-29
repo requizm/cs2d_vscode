@@ -25,7 +25,7 @@ Env_Item::~Env_Item()
 void Env_Item::Initialize()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     sp = Sprite(ResourceManager::GetTexture("bulb"));
     this->obj_id = Utils::GenerateID();
@@ -66,7 +66,7 @@ Vector2<int> Env_Item::getPosition() { return position; }
 Env_Item_Manager::Env_Item_Manager()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     p_panel =
         new Panel(Vector2<int>(Editor::instance().tilePanel->getSize().x + 20,

@@ -24,14 +24,14 @@ ListItem::~ListItem()
 void ListItem::AddItem(const std::string &text)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     const Vector2<int> pos = Vector2<int>(0.0F, static_cast<int>(i * 20));
     const Vector2<int> size = Vector2<int>(panel->getSize().x, 20);
     TextButton *bt =
         new TextButton(text, pos,
                        size, *(panel->rend),
-                       Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F, false,
+                       Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F, true,
                        UIObjectType::LISTITEM);
     bt->setButtonClickColor(Vector3<float>(0.35F));
     bt->setButtonHoverColor(Vector3<float>(0.25F));
@@ -96,8 +96,8 @@ void ListItem::Update()
                     for (auto &tile : items)
                     {
                         tile->bt->setPosition(Vector2<int>(tile->bt->getLocalPosition().x,
-                                                       tile->bt->getLocalPosition().y +
-                                                           InputManager::scroll.y * 20));
+                                                           tile->bt->getLocalPosition().y +
+                                                               InputManager::scroll.y * 20));
                     }
                 }
             }

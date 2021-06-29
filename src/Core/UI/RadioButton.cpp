@@ -229,10 +229,10 @@ void RadioButton::AddElement(const std::string &text,
                              const Vector3<float> &textColor, float scale)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     RadioButtonElement *r = new RadioButtonElement(
-        text, Vector2<int>(position.x, position.y + y_sep * i), *rend, i++,
+        text, Vector2<int>(0, y_sep * i), *rend, i++,
         buttonColor, textColor, scale);
     r->setSize(300, 300);
     r->setMouseHoverColor(Vector3<float>(0.9F));

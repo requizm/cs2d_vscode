@@ -28,7 +28,10 @@
                 "-static-libstdc++",
                 "-static-libgcc",
                 "-D_DEBUG",
-                "-DWIN32"
+                "-DWIN32",
+                "-D_WIN32_WINNT=0x0602",
+                "-DWINVER=0x0602",
+                "-DTRACY_ENABLE"
             ],
             "group": {
                 "kind": "build",
@@ -42,7 +45,7 @@
         {
             "label": "(64)test_build",
             "type": "shell",
-            "command": "C:\\mingw64\\bin\\g++.exe",
+            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
             "args": [
                 "-I${workspaceFolder}\\include",
                 "-L${workspaceFolder}\\lib\\x64",

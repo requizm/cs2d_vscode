@@ -13,7 +13,7 @@ CircleCollider::~CircleCollider() = default;
 bool CircleCollider::Intersect(RectangleCollider &col)  // top left axis
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     // get center point circle first
     Vector2<int> center(this->GetPosition());

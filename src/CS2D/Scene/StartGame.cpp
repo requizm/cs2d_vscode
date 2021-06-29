@@ -9,7 +9,7 @@ StartGame::StartGame() = default;
 void StartGame::Initialize(const std::string &mapName)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     this->map = new Map(mapName, mapName);
     this->renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
@@ -27,7 +27,7 @@ void StartGame::Initialize(const std::string &mapName)
 void StartGame::Start()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     Sprite ct1_0 = Sprite(ResourceManager::GetTexture("ct1"), 0, 0, 32, 32);
     Sprite ct1_1 = Sprite(ResourceManager::GetTexture("ct1"), 0, 32, 32, 32);
@@ -42,7 +42,7 @@ void StartGame::Start()
 void StartGame::OnEnable()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     this->Start();
     player->SetMap(map);
@@ -61,7 +61,7 @@ void StartGame::OnEnable()
 void StartGame::OnDisable()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     if (renderer != nullptr) delete renderer;
     renderer = nullptr;
@@ -88,7 +88,7 @@ void StartGame::SetEnable(const bool value)
 void StartGame::Update()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     player->Update();
     // player->DoCollision(weapons);
@@ -97,7 +97,7 @@ void StartGame::Update()
 void StartGame::ProcessInput()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
     {
@@ -118,7 +118,7 @@ void StartGame::ProcessInput()
 void StartGame::Render()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     map->Draw(*renderer);
     player->DrawModel(*renderer);

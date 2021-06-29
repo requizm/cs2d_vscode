@@ -35,7 +35,7 @@ void Editor::Initialize()
 void Editor::Start()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
     this->worldRenderer =
@@ -307,7 +307,7 @@ void Editor::Start()
 
     this->b_tileProperties = new TextButton(
         "Tile Properties", Vector2<int>(10, buildPanel->getSize().y - 35),
-        Vector2<int>(30, 15), *textRenderer);
+        Vector2<int>(buildPanel->getSize().x - 20, 15), *textRenderer);
     this->b_tileProperties->setHaveOutline(true);
     this->b_tileProperties->setOutlineColor(Vector3<float>(0.54));
     this->b_tileProperties->setTextColor(Vector3<float>(0.54F));
@@ -339,7 +339,7 @@ void Editor::Start()
 void Editor::OnEnable()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     currentTileSet = "cs2dnorm";
     if (tils != nullptr)
@@ -374,7 +374,7 @@ void Editor::OnEnable()
 void Editor::OnDisable()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     selectedTile = nullptr;
 
@@ -467,7 +467,7 @@ void Editor::SetEnable(const bool value)
 void Editor::Update()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     this->time += Timer::DeltaTime;
     this->buildPanel->Update();
@@ -497,7 +497,7 @@ void Editor::Update()
             {
                 for (auto &tile : tils->tilesUI)
                 {
-                    tile->setPosition(Vector2<int>(tile->getLocalPosition().x,
+                    tile->setLocalPosition(Vector2<int>(tile->getLocalPosition().x,
                                                    tile->getLocalPosition().y +
                                                        InputManager::scroll.y * 32));
                 }
@@ -510,7 +510,7 @@ void Editor::Update()
 void Editor::ProcessInput()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     this->buildPanel->ProcessInput();
     this->NewMap->ProcessInput();
@@ -594,9 +594,6 @@ void Editor::ProcessInput()
 
     if (NewMap->b_okey->IsMouseDown())
     {
-#if defined(WIN32) && defined(TRACY_ENABLE)
-        ZoneScoped;
-#endif
         NewMapResult t = NewMap->B_NewMap();
 
         if (!t.tiles.empty() && !t.tilesUI.empty())
@@ -682,9 +679,6 @@ void Editor::ProcessInput()
 
     if (SaveLoad->b_map_load->IsMouseDown())
     {
-#if defined(WIN32) && defined(TRACY_ENABLE)
-        ZoneScoped;
-#endif
         this->time = 0.0F;
         this->position = Vector2<int>(0 - buildPanel->getSize().x, 0);
         std::string newMapName = SaveLoad->t_load->getText();
@@ -769,9 +763,6 @@ void Editor::ProcessInput()
                             break;
                         }
                     }
-#if defined(WIN32) && defined(TRACY_ENABLE)
-                    ZoneScoped;
-#endif
                     delete env_items[i];
                     env_items.erase(env_items.begin() + i);
                     selectedItem = nullptr;
@@ -803,9 +794,6 @@ void Editor::ProcessInput()
                         if (!(selectedTile->frame ==
                               tile->button->getTile().frame))
                         {
-#if defined(WIN32) && defined(TRACY_ENABLE)
-                            ZoneScoped;
-#endif
                             TileButtonWorld *bt = new TileButtonWorld(tilee);
                             tile->SetButton(bt);
                             break;
@@ -831,9 +819,6 @@ void Editor::ProcessInput()
                     {
                         if (tile->item == nullptr)
                         {
-#if defined(WIN32) && defined(TRACY_ENABLE)
-                            ZoneScoped;
-#endif
                             Env_Item *a = new Env_Item(
                                 1, Utils::CellToPosition(selectedCell));
                             tile->SetItem(a);
@@ -849,7 +834,7 @@ void Editor::ProcessInput()
 void Editor::Render()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     Vector2<int> ms = Utils::PositionToCell(
         Utils::ScreenToWorld(camera->view, InputManager::mousePos));
@@ -870,7 +855,7 @@ void Editor::Render()
 
         if (!f && ms == tile_1->cell && !NewMap->isMouseHover() &&
             !buildPanel->isMouseHover(false) && !SaveLoad->isMouseHover() &&
-            !envItemManager->isPressedOrHover())
+            !envItemManager->isPressedOrHover() && !tilePropertiesPanel->isMouseHover(false))
         {
             f = true;
             Vector2<int> pos = Utils::CellToPosition(tile_1->cell);

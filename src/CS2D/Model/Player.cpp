@@ -17,7 +17,7 @@ void Player::Draw(SpriteRenderer &renderer)
 void Player::DrawModel(SpriteRenderer &renderer)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     renderer.DrawSprite(this->sprites[currentIndex], this->GetTransform());
     knifeWeapons.at(0)->DrawModel(renderer);
@@ -26,7 +26,7 @@ void Player::DrawModel(SpriteRenderer &renderer)
 Player::~Player()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     delete knifeWeapons.at(0);
 }
@@ -34,7 +34,7 @@ Player::~Player()
 void Player::Init()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     weaponLimit[2] = true;
     auto *knf =
@@ -66,7 +66,7 @@ void Player::Update()
 void Player::ProcessInput()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     ControllerInput();
     SlotInput();
@@ -75,7 +75,7 @@ void Player::ProcessInput()
 void Player::SetPosition(Vector2<int> pos, bool changeCell)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     this->globalPosition = pos;
     this->collider.SetPosition(this->GetPositionOfCenter());
@@ -160,7 +160,7 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
 void Player::SetPosition(const int x, const int y, bool changeCell)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     Vector2<int> newPos = Vector2<int>(x, y);
     this->SetPosition(newPos, changeCell);
@@ -169,7 +169,7 @@ void Player::SetPosition(const int x, const int y, bool changeCell)
 void Player::ControllerInput()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     if (InputManager::isKey(KeyboardKeys::KEY_W))
     {
@@ -216,7 +216,7 @@ void Player::ControllerInput()
 bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     Tile *newTile;
 

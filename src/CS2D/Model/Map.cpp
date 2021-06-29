@@ -31,7 +31,7 @@ Map::~Map()
 void Map::Load(std::string file)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     JSONLoader jsonLoader;
     nlohmann::json weaponsJ =
@@ -140,7 +140,7 @@ void Map::Load(std::string file)
 void Map::Draw(SpriteRenderer &renderer)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     for (auto &tile : tiles)
     {

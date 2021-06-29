@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     while (!glfwWindowShouldClose(window.GetWindow()))
     {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-        ZoneScoped;
+        ZoneScopedS(10);
 #endif
         const auto currentFrame = static_cast<float>(glfwGetTime());
         Timer::DeltaTime = currentFrame - lastFrame;

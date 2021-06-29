@@ -155,7 +155,7 @@ void SaveLoadSystem::B_SaveMap()
 std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     std::vector<ButtonTile *> tiles;
 

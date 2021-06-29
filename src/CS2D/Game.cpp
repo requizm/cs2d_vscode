@@ -23,7 +23,7 @@ void Game::Init()
 void Game::Update()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     switch (Game::state)
     {
@@ -42,7 +42,7 @@ void Game::Update()
 void Game::ProcessInput()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     switch (Game::state)
     {
@@ -61,7 +61,7 @@ void Game::ProcessInput()
 void Game::Render()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     switch (Game::state)
     {

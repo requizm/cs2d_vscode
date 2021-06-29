@@ -10,7 +10,7 @@ Menu::~Menu() { OnDisable(); }
 void Menu::Start()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
     this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH,
@@ -106,7 +106,7 @@ void Menu::OnEnable()
 void Menu::OnDisable()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     if (l_console != nullptr) delete l_console;
     l_console = nullptr;
@@ -155,7 +155,7 @@ void Menu::SetEnable(const bool value)
 void Menu::Update()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     l_options->Update();
     l_console->Update();
@@ -169,7 +169,7 @@ void Menu::Update()
 void Menu::ProcessInput()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     l_options->ProcessInput();
     l_console->ProcessInput();
@@ -188,7 +188,7 @@ void Menu::ProcessInput()
     if (l_newgame->isMouseDown())
     {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-        ZoneScoped;
+        ZoneScopedS(10);
 #endif
         mapNames->Clear();
         std::vector<std::string> maps = getMapNames();
@@ -208,7 +208,7 @@ void Menu::ProcessInput()
 void Menu::Render()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     for (int i = 0; i < 4; i++)
     {
@@ -251,7 +251,7 @@ void Menu::selectedMapChange(TextButton *old, TextButton *n)
 void Menu::newGameBtnClick()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScoped;
+    ZoneScopedS(10);
 #endif
     std::string mName = GameParameters::resDirectory + "levels/" +
                         t_mapName->getText() + ".xml";
