@@ -14,7 +14,7 @@
 #include "../../Core/Manager/Logger.hpp"
 #include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../../Core/Manager/ResourceManager.hpp"
-#include "../../Core/Model/Tile.hpp"
+#include "Tile.hpp"
 #include "../../Core/Renderer/SpriteRenderer.hpp"
 #include "../Other/GameParameters.hpp"
 #include "Weapon.hpp"

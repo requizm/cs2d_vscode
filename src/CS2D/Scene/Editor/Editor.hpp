@@ -16,7 +16,7 @@
 #include "../../../Core/Manager/ObjectManager.hpp"
 #include "../../../Core/Manager/Timer.hpp"
 #include "../../../Core/Model/Camera.hpp"
-#include "../../../Core/Model/Tile.hpp"
+#include "../../Model/Tile.hpp"
 #include "../../../Core/UI/ListItem.hpp"
 #include "../../../Core/UI/Panel.hpp"
 #include "../../../Core/UI/RadioButton.hpp"
@@ -102,13 +102,13 @@ class Editor
 
     bool enable = false;
 
-    Button *b_save, *b_new, *b_load, *b_objects, *b_tiles;
+    SpriteButton *b_save, *b_new, *b_load, *b_objects, *b_tiles;
 
     Panel *tilePropertiesPanel;
-    Button *b_tileProperties;
+    TextButton *b_tileProperties;
     RadioButton *rb_tileProperties;
 
-    Button *b_cancel;
+    TextButton *b_cancel;
 
     std::string currentName;
 

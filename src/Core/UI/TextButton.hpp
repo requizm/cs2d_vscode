@@ -9,12 +9,15 @@ class TextButton : public UIObject
     TextButton(const std::string &text, const Vector2<int> &position, const Vector2<int> &size, TextRenderer &renderer,
                const Vector3<float> &buttonColor = Vector3<float>(1.0F),
                const Vector3<float> &textColor = Vector3<float>(0.0F),
-               float scale = 1.0F, UIObjectType type = UIObjectType::TEXTBUTTON);
+               float scale = 1.0F, bool listenerEnabled = false, UIObjectType type = UIObjectType::TEXTBUTTON);
     ~TextButton();
 
     void Update() final;
     void ProcessInput() final;
     void Draw(SquareRenderer &squareRenderer) final;
+
+    bool IsMouseDown();
+    bool IsMousePress();
 
     void setPosition(const Vector2<int> &position) final;
 
@@ -47,7 +50,6 @@ class TextButton : public UIObject
     void addListenerDown(std::function<void()> func);
     void addListenerUp(std::function<void()> func);
 
-
    protected:
     Vector3<float> buttonCurrentColor = Vector3<float>(1.0F);
     Vector3<float> buttonColor = Vector3<float>(1.0F);
@@ -67,6 +69,7 @@ class TextButton : public UIObject
     Vector2<int> textSize = Vector2<int>(1);
     Vector2<int> textPos = Vector2<int>(1);
 
+    bool listenerEnabled;
     std::vector<std::function<void()>> listenersDown, listenersUp;
     std::function<void()> mDown;
     std::function<void()> mUp;

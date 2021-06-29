@@ -71,9 +71,9 @@ void SaveLoadSystem::SaveMap()
             char *cellY =
                 doc.allocate_string(std::to_string(tile->cell.y).c_str());
             char *frame = doc.allocate_string(
-                std::to_string(tile->button->getTile()->frame).c_str());
+                std::to_string(tile->button->getTile().frame).c_str());
             char *type = doc.allocate_string(
-                std::to_string((int)tile->button->getTile()->getType())
+                std::to_string((int)tile->button->getTile().getType())
                     .c_str());
             int item_id = tile->item != nullptr ? tile->item->getItemID() : 0;
             char *itemId = doc.allocate_string(std::to_string(item_id).c_str());
@@ -213,7 +213,7 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
             ResourceManager::GetTexture(Editor::instance().currentTileSet),
             (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes(tileType), textureIndex);
-        Button *b = new Button(tile);
+        TileButtonWorld *b = new TileButtonWorld(tile);
         ButtonTile *t = nullptr;
         if (itemId == 0)
         {

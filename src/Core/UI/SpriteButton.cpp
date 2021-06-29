@@ -1,22 +1,28 @@
 #include "SpriteButton.hpp"
 
-SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size,
-                           bool difColor, float scale) : UIObject(position, scale, UIObjectType::SPRITEBUTTON)
+SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size, bool listenerEnabled, bool difColor, float scale) : UIObject(position, scale, UIObjectType::SPRITEBUTTON)
 {
     this->sprite = sprite;
     this->size = size;
+    this->listenerEnabled = listenerEnabled;
 
-    mDown = std::bind(&SpriteButton::onMouseDown, this);
-    InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+    if (listenerEnabled)
+    {
+        mDown = std::bind(&SpriteButton::onMouseDown, this);
+        InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
-    mUp = std::bind(&SpriteButton::onMouseUp, this);
-    InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+        mUp = std::bind(&SpriteButton::onMouseUp, this);
+        InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+    }
 }
 
 SpriteButton::~SpriteButton()
 {
-    InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
-    InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+    if (listenerEnabled)
+    {
+        InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+        InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+    }
     removeParent();
 }
 
@@ -62,6 +68,31 @@ void SpriteButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRe
             spritePos,
             size);
     }
+}
+
+bool SpriteButton::IsMouseDown()
+{
+    if (isEnable() && mouseEvents)
+    {
+        if (InputManager::isButtonDown(MouseKeys::MOUSE_BUTTON_LEFT) && isMouseHover())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool SpriteButton::IsMousePress()
+{
+    if (isEnable() && mouseEvents)
+    {
+        if (InputManager::isButton(MouseKeys::MOUSE_BUTTON_LEFT))
+        {
+            if (isMouseHover())
+                return true;
+        }
+    }
+    return false;
 }
 
 Vector2<int> SpriteButton::getSize()
@@ -113,7 +144,7 @@ void SpriteButton::addListenerUp(std::function<void()> func)
 bool SpriteButton::isMouseHover()
 {
     Vector2<int> pos = position;
-    Vector2<int> size = size;
+    Vector2<int> size = getSize();
 
     if (InputManager::mousePos.x >= pos.x &&
         InputManager::mousePos.x <= pos.x + size.x &&

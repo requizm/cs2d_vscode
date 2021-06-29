@@ -8,13 +8,15 @@
 class SpriteButton : public UIObject
 {
    public:
-    SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size,
-                 bool difColor = false, float scale = 1.0F);
+    SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size, bool listenerEnabled = false, bool difColor = false, float scale = 1.0F);
     ~SpriteButton();
 
     void Update() final;
     void ProcessInput() final;
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) final;
+
+    bool IsMouseDown();
+    bool IsMousePress();
 
     Vector2<int> getSize() final;
 
@@ -54,6 +56,7 @@ class SpriteButton : public UIObject
 
     bool haveOutline = true;
 
+    bool listenerEnabled;
     std::vector<std::function<void()>> listenersDown, listenersUp;
     std::function<void()> mDown;
     std::function<void()> mUp;

@@ -30,8 +30,7 @@ class GameObject
      * @param size
      * @param objType 2(ObjectType::GAMEOBJECT)
      */
-    GameObject(Vector2<int> pos, const Sprite &sprite, Vector2<int> size,
-               int objType = 2);
+    GameObject(Vector2<int> pos, const Sprite &sprite, Vector2<int> size, int objType = 2);
     virtual ~GameObject();
 
     // Draw sprite
@@ -46,6 +45,7 @@ class GameObject
     void SetTransform(Vector2<int> pos, Vector2<int> size, int rot = 0);
     virtual void SetPosition(Vector2<int> pos, bool changeCell = true);
     virtual void SetPosition(const int x, const int y, bool changeCell = true);
+    void SetLocalPosition(const Vector2<int> &value);
     void SetSize(Vector2<int> size);
     void SetRotation(int rot);
     void setCellPosition(int x, int y, bool changeCell = true);
@@ -60,6 +60,7 @@ class GameObject
     Matrix4<float> GetTransform();
     Vector2<int> GetPosition();
     Vector2<int> GetPositionOfCenter();
+    Vector2<int> GetLocalPosition();
     int GetRotation();
     Vector2<int> GetSize();
     int GetID() const;

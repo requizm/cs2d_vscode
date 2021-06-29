@@ -18,6 +18,7 @@ enum class UIObjectType
     TEXTBOX,
     TEXTBUTTON,
     SPRITEBUTTON,
+    TILEBUTTON,
     PANEL,
     RADIOBUTTON,
     LISTITEM,
@@ -65,11 +66,12 @@ class UIObject
     bool isMouseEvents() const;
     bool isDependParent() const;
     int getID() const;
-    bool isRenderable();  // scroll'dan dolayi
+    virtual bool isRenderable();  // scroll'dan dolayi
     bool isScrollable() const;
 
     virtual void setPosition(const Vector2<int> &position);
     virtual void setParentCenterPos();
+    virtual void setLocalPosition(const Vector2<int> value);
     virtual void setSize(const Vector2<int> size);
     virtual void setSize(const int x, const int y);
     void setScale(const float scale);

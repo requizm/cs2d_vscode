@@ -8,12 +8,15 @@
 #include "../../../Core/Manager/Utils.hpp"
 #include "../../../Core/UI/Panel.hpp"
 #include "../../../Core/UI/TextBox.hpp"
+
+
 #include "ButtonTile.hpp"
+#include "../../Model/TileButton.hpp"
 
 
 struct NewMapResult
 {
-    std::vector<Button *> tilesUI;
+    std::vector<TileButtonScreen *> tilesUI;
     std::vector<ButtonTile *> tiles;
 };
 
@@ -38,7 +41,7 @@ class NewMapSystem
     Panel *newPanel;
     Label *l_tile, *l_mapSize, *l_x;
     TextBox *t_tile, *t_mapSizeX, *t_mapSizeY;
-    Button *b_okey;
+    TextButton *b_okey;
 };
 
 #endif

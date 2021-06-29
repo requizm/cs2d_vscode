@@ -5,8 +5,10 @@
 #include "../../../../Core/Manager/Utils.hpp"
 #include "../../../../Core/UI/Panel.hpp"
 #include "../../../../Core/UI/TextBox.hpp"
+#include "../../../../Core/UI/SpriteButton.hpp"
+#include "../../../../Core/UI/TextButton.hpp"
 #include "../../../Other/GameParameters.hpp"
-#include "../../../../Core/UI/Button.hpp""
+#include "../../../Model/TileButton.hpp"
 
 
 class Env_Item
@@ -18,7 +20,7 @@ class Env_Item
     Vector2<int> size;
     Sprite sp;
 
-    Button *button;
+    TileButtonWorld *button;
 
    public:
     int obj_id = 0;
@@ -68,7 +70,7 @@ class Env_Item_Manager
     void ProcessInput();
 
     Panel *p_panel;
-    Button *b_okay, *b_cancel, *b_delete;
+    TextButton *b_okay, *b_cancel, *b_delete;
     TextBox *t_id;
 
     bool isPressedOrHover();

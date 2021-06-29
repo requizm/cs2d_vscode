@@ -84,6 +84,10 @@ Vector2<int> GameObject::GetPositionOfCenter()
                         GetPosition().y + GetSize().y / 2);
 }
 
+Vector2<int> GameObject::GetLocalPosition() {
+    return localPosition;
+}
+
 Vector2<int> GameObject::GetSize() { return globalSize; }
 
 void GameObject::SetTransform(const Matrix4<float> &transform)
@@ -163,6 +167,10 @@ void GameObject::SetPosition(const int x, const int y, bool changeCell)
 {
     Vector2<int> newPos = Vector2<int>(x, y);
     this->SetPosition(newPos, changeCell);
+}
+
+void GameObject::SetLocalPosition(const Vector2<int> &value) {
+    localPosition = value;
 }
 
 void GameObject::SetSize(Vector2<int> size)

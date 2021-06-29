@@ -4,23 +4,30 @@ TextButton::TextButton(const std::string &text, const Vector2<int> &position, co
                        TextRenderer &renderer,
                        const Vector3<float> &buttonColor,
                        const Vector3<float> &textColor,
-                       float scale, UIObjectType type) : UIObject(position, size, 1.0F, renderer, type)
+                       float scale, bool listenerEnabled, UIObjectType type) : UIObject(position, size, 1.0F, renderer, type)
 {
     this->buttonColor = buttonColor;
     this->textColor = textColor;
     this->text = text;
+    this->listenerEnabled = listenerEnabled;
 
-    mDown = std::bind(&TextButton::onMouseDown, this);
-    InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+    if (listenerEnabled)
+    {
+        mDown = std::bind(&TextButton::onMouseDown, this);
+        InputManager::addListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
 
-    mUp = std::bind(&TextButton::onMouseUp, this);
-    InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+        mUp = std::bind(&TextButton::onMouseUp, this);
+        InputManager::addListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+    }
 }
 
 TextButton::~TextButton()
 {
-    InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
-    InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+    if (listenerEnabled)
+    {
+        InputManager::removeListenerDown(GLFW_MOUSE_BUTTON_LEFT, mDown, id);
+        InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, mUp, id);
+    }
     removeParent();
 }
 
@@ -59,6 +66,31 @@ void TextButton::Draw(SquareRenderer &squareRenderer)
         this->rend->RenderText(text, textPos, scale,
                                textCurrentColor);
     }
+}
+
+bool TextButton::IsMouseDown()
+{
+    if (isEnable() && mouseEvents)
+    {
+        if (InputManager::isButtonDown(MouseKeys::MOUSE_BUTTON_LEFT) && isMouseHover())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool TextButton::IsMousePress()
+{
+    if (isEnable() && mouseEvents)
+    {
+        if (InputManager::isButton(MouseKeys::MOUSE_BUTTON_LEFT))
+        {
+            if (isMouseHover())
+                return true;
+        }
+    }
+    return false;
 }
 
 void TextButton::setPosition(const Vector2<int> &position)

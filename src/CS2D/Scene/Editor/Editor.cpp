@@ -105,61 +105,61 @@ void Editor::Start()
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16,
                     16);  // new_sprite
     pos = Vector2<int>(0);
-    b_new = new Button(sprite, pos, Vector2<int>(16));
-    b_new->setOutline(true);
+    b_new = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_new->setHaveOutline(true);
     b_new->setOutlineColor(Vector3<float>(0.45));
     b_new->setMargin(Vector2<int>(8, 8));
     b_new->setButtonColor(Vector3<float>(0.15F));
-    b_new->setMouseClickColor(Vector3<float>(0.30F));
-    b_new->setMouseHoverColor(Vector3<float>(0.30F));
+    b_new->setButtonClickColor(Vector3<float>(0.30F));
+    b_new->setButtonHoverColor(Vector3<float>(0.30F));
     b_new->setParent(controlPanel);
 
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16,
                     16);  // load_sprite
     pos = Vector2<int>(30, 0);
-    b_load = new Button(sprite, pos, Vector2<int>(16));
-    b_load->setOutline(true);
+    b_load = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_load->setHaveOutline(true);
     b_load->setOutlineColor(Vector3<float>(0.45));
     b_load->setMargin(Vector2<int>(8, 8));
     b_load->setButtonColor(Vector3<float>(0.15F));
-    b_load->setMouseClickColor(Vector3<float>(0.30F));
-    b_load->setMouseHoverColor(Vector3<float>(0.30F));
+    b_load->setButtonClickColor(Vector3<float>(0.30F));
+    b_load->setButtonHoverColor(Vector3<float>(0.30F));
     b_load->setParent(controlPanel);
 
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16,
                     16);  // save_sprite
     pos = Vector2<int>(60, 0);
-    b_save = new Button(sprite, pos, Vector2<int>(16));
-    b_save->setOutline(true);
+    b_save = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_save->setHaveOutline(true);
     b_save->setOutlineColor(Vector3<float>(0.45));
     b_save->setMargin(Vector2<int>(8, 8));
     b_save->setButtonColor(Vector3<float>(0.15F));
-    b_save->setMouseClickColor(Vector3<float>(0.30F));
-    b_save->setMouseHoverColor(Vector3<float>(0.30F));
+    b_save->setButtonClickColor(Vector3<float>(0.30F));
+    b_save->setButtonHoverColor(Vector3<float>(0.30F));
     b_save->setParent(controlPanel);
 
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 16, 16,
                     16);  // save_sprite
     pos = Vector2<int>(0, 25);
-    b_tiles = new Button(sprite, pos, Vector2<int>(16));
-    b_tiles->setOutline(true);
+    b_tiles = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_tiles->setHaveOutline(true);
     b_tiles->setOutlineColor(Vector3<float>(0.45));
     b_tiles->setMargin(Vector2<int>(8, 8));
     b_tiles->setButtonColor(Vector3<float>(0.15F));
-    b_tiles->setMouseClickColor(Vector3<float>(0.30F));
-    b_tiles->setMouseHoverColor(Vector3<float>(0.30F));
+    b_tiles->setButtonClickColor(Vector3<float>(0.30F));
+    b_tiles->setButtonHoverColor(Vector3<float>(0.30F));
     b_tiles->setParent(controlPanel);
 
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 16, 16,
                     16);  // save_sprite
     pos = Vector2<int>(30, 25);
-    b_objects = new Button(sprite, pos, Vector2<int>(16));
-    b_objects->setOutline(true);
+    b_objects = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_objects->setHaveOutline(true);
     b_objects->setOutlineColor(Vector3<float>(0.45));
     b_objects->setMargin(Vector2<int>(8, 8));
     b_objects->setButtonColor(Vector3<float>(0.15F));
-    b_objects->setMouseClickColor(Vector3<float>(0.30F));
-    b_objects->setMouseHoverColor(Vector3<float>(0.30F));
+    b_objects->setButtonClickColor(Vector3<float>(0.30F));
+    b_objects->setButtonHoverColor(Vector3<float>(0.30F));
     b_objects->setParent(controlPanel);
 
     // yeni harita paneli
@@ -199,14 +199,14 @@ void Editor::Start()
                                LabelType::NOT_CLICKABLE);
     NewMap->l_tile->setParent(NewMap->newPanel);
     NewMap->l_tile->setMouseEvent(false);
-    NewMap->b_okey = new Button(
+    NewMap->b_okey = new TextButton(
         "Okay", Vector2<int>(50, 105), Vector2<int>(60, 20), *textRenderer,
         Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    NewMap->b_okey->setMouseClickColor(Vector3<float>(0.30F));
-    NewMap->b_okey->setMouseHoverColor(Vector3<float>(0.30F));
-    NewMap->b_okey->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    NewMap->b_okey->setLabelClickColor(Vector3<float>(1.0F));
-    NewMap->b_okey->setOutline(true);
+    NewMap->b_okey->setButtonClickColor(Vector3<float>(0.30F));
+    NewMap->b_okey->setButtonHoverColor(Vector3<float>(0.30F));
+    NewMap->b_okey->setTextHoverColor(Vector3<float>(0.58F));
+    NewMap->b_okey->setTextClickColor(Vector3<float>(1.0F));
+    NewMap->b_okey->setHaveOutline(true);
     NewMap->b_okey->setOutlineColor(Vector3<float>(1.0F));
     NewMap->b_okey->setParent(NewMap->newPanel);
 
@@ -238,14 +238,14 @@ void Editor::Start()
                     true, 1.0F, Vector3<float>(0.58F));
     this->SaveLoad->t_load->setParent(SaveLoad->loadPanel);
     this->SaveLoad->t_load->editable = false;
-    this->SaveLoad->b_map_load = new Button(
+    this->SaveLoad->b_map_load = new TextButton(
         "Load", Vector2<int>(180, 170), Vector2<int>(60, 20), *textRenderer,
         Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    this->SaveLoad->b_map_load->setMouseClickColor(Vector3<float>(0.30F));
-    this->SaveLoad->b_map_load->setMouseHoverColor(Vector3<float>(0.30F));
-    this->SaveLoad->b_map_load->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    this->SaveLoad->b_map_load->setLabelClickColor(Vector3<float>(1.0F));
-    this->SaveLoad->b_map_load->setOutline(true);
+    this->SaveLoad->b_map_load->setButtonClickColor(Vector3<float>(0.30F));
+    this->SaveLoad->b_map_load->setButtonHoverColor(Vector3<float>(0.30F));
+    this->SaveLoad->b_map_load->setTextHoverColor(Vector3<float>(0.58F));
+    this->SaveLoad->b_map_load->setTextClickColor(Vector3<float>(1.0F));
+    this->SaveLoad->b_map_load->setHaveOutline(true);
     this->SaveLoad->b_map_load->setOutlineColor(Vector3<float>(1.0F));
     this->SaveLoad->b_map_load->setParent(SaveLoad->loadPanel);
     std::function<void(TextButton *, TextButton *)> loadListChanged =
@@ -279,14 +279,14 @@ void Editor::Start()
         new TextBox(Vector2<int>(20, 170), *textRenderer, Vector2<int>(120, 20),
                     true, 1.0F, Vector3<float>(0.58F));
     this->SaveLoad->t_save->setParent(SaveLoad->savePanel);
-    this->SaveLoad->b_map_save = new Button(
+    this->SaveLoad->b_map_save = new TextButton(
         "Save", Vector2<int>(180, 170), Vector2<int>(60, 20), *textRenderer,
         Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    this->SaveLoad->b_map_save->setMouseClickColor(Vector3<float>(0.30F));
-    this->SaveLoad->b_map_save->setMouseHoverColor(Vector3<float>(0.30F));
-    this->SaveLoad->b_map_save->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    this->SaveLoad->b_map_save->setLabelClickColor(Vector3<float>(1.0F));
-    this->SaveLoad->b_map_save->setOutline(true);
+    this->SaveLoad->b_map_save->setButtonClickColor(Vector3<float>(0.30F));
+    this->SaveLoad->b_map_save->setButtonHoverColor(Vector3<float>(0.30F));
+    this->SaveLoad->b_map_save->setTextHoverColor(Vector3<float>(0.58F));
+    this->SaveLoad->b_map_save->setTextClickColor(Vector3<float>(1.0F));
+    this->SaveLoad->b_map_save->setHaveOutline(true);
     this->SaveLoad->b_map_save->setOutlineColor(Vector3<float>(1.0F));
     this->SaveLoad->b_map_save->setParent(SaveLoad->savePanel);
     std::function<void(TextButton *, TextButton *)> saveListChanged =
@@ -305,17 +305,17 @@ void Editor::Start()
     this->tilePropertiesPanel->setMovable(false);
     this->tilePropertiesPanel->setEnable(false);
 
-    this->b_tileProperties = new Button(
+    this->b_tileProperties = new TextButton(
         "Tile Properties", Vector2<int>(10, buildPanel->getSize().y - 35),
         Vector2<int>(30, 15), *textRenderer);
-    this->b_tileProperties->setOutline(true);
+    this->b_tileProperties->setHaveOutline(true);
     this->b_tileProperties->setOutlineColor(Vector3<float>(0.54));
-    this->b_tileProperties->setLabelColor(Vector3<float>(0.54F));
-    this->b_tileProperties->setLabelMouseHoverColor(Vector3<float>(0.60F));
-    this->b_tileProperties->setLabelClickColor(Vector3<float>(0.60F));
+    this->b_tileProperties->setTextColor(Vector3<float>(0.54F));
+    this->b_tileProperties->setTextHoverColor(Vector3<float>(0.60F));
+    this->b_tileProperties->setTextClickColor(Vector3<float>(0.60F));
     this->b_tileProperties->setButtonColor(Vector3<float>(0.15F));
-    this->b_tileProperties->setMouseClickColor(Vector3<float>(0.30F));
-    this->b_tileProperties->setMouseHoverColor(Vector3<float>(0.30F));
+    this->b_tileProperties->setButtonClickColor(Vector3<float>(0.30F));
+    this->b_tileProperties->setButtonHoverColor(Vector3<float>(0.30F));
     this->b_tileProperties->setParent(buildPanel);
 
     this->rb_tileProperties =
@@ -368,7 +368,7 @@ void Editor::OnEnable()
     NewMapResult r = NewMap->NewMap("cs2dnorm", Vector2<int>(50));
     tils->tiles = r.tiles;
     tils->tilesUI = r.tilesUI;
-    selectedTile = tils->tilesUI.at(0)->getTile();
+    selectedTile = &tils->tilesUI.at(0)->getTile();
 }
 
 void Editor::OnDisable()
@@ -524,9 +524,9 @@ void Editor::ProcessInput()
         if (tile->isRenderable())
         {
             // tile->ProcessInput();
-            if (tile->isMouseDown())
+            if (tile->IsMouseDown())
             {
-                selectedTile = tile->getTile();
+                selectedTile = &tile->getTile();
                 firstSelect = true;
             }
         }
@@ -592,7 +592,7 @@ void Editor::ProcessInput()
         return;
     }
 
-    if (NewMap->b_okey->isMouseDown())
+    if (NewMap->b_okey->IsMouseDown())
     {
 #if defined(WIN32) && defined(TRACY_ENABLE)
         ZoneScoped;
@@ -646,41 +646,41 @@ void Editor::ProcessInput()
         }
     }
 
-    if (b_new->isMouseDown())
+    if (b_new->IsMouseDown())
     {
         this->NewMap->newPanel->setEnable(true);
     }
 
-    if (b_save->isMouseDown())
+    if (b_save->IsMouseDown())
     {
         SaveLoad->B_SaveMap();
     }
 
-    if (SaveLoad->b_map_save->isMouseDown())
+    if (SaveLoad->b_map_save->IsMouseDown())
     {
         SaveLoad->SaveMap();
     }
 
-    if (b_load->isMouseDown())
+    if (b_load->IsMouseDown())
     {
         SaveLoad->B_LoadMap();
     }
 
-    if (b_objects->isMouseDown())
+    if (b_objects->IsMouseDown())
     {
         tilePanel->setEnable(false);
         objectPanel->setEnable(true);
         selectedMode = SelectedMode::OBJECT_MOD;
     }
 
-    if (b_tiles->isMouseDown())
+    if (b_tiles->IsMouseDown())
     {
         objectPanel->setEnable(false);
         tilePanel->setEnable(true);
         selectedMode = SelectedMode::TILE_MOD;
     }
 
-    if (SaveLoad->b_map_load->isMouseDown())
+    if (SaveLoad->b_map_load->IsMouseDown())
     {
 #if defined(WIN32) && defined(TRACY_ENABLE)
         ZoneScoped;
@@ -701,10 +701,10 @@ void Editor::ProcessInput()
         }
 
         tils->tiles = SaveLoad->LoadMap(newMapName);
-        selectedTile = tils->tilesUI.at(0)->getTile();
+        selectedTile = &tils->tilesUI.at(0)->getTile();
     }
 
-    if (b_tileProperties->isMouseDown())
+    if (b_tileProperties->IsMouseDown())
     {
         this->tilePropertiesPanel->setEnable(true);
         this->rb_tileProperties->Select(
@@ -742,17 +742,17 @@ void Editor::ProcessInput()
 
     if (envItemManager->p_panel->isEnable())
     {
-        if (envItemManager->b_okay->isMouseDown())
+        if (envItemManager->b_okay->IsMouseDown())
         {
             selectedItem->setItemID(
                 atoi(envItemManager->t_id->getText().c_str()));
             envItemManager->p_panel->setEnable(false);
         }
-        else if (envItemManager->b_cancel->isMouseDown())
+        else if (envItemManager->b_cancel->IsMouseDown())
         {
             envItemManager->p_panel->setEnable(false);
         }
-        else if (envItemManager->b_delete->isMouseDown())
+        else if (envItemManager->b_delete->IsMouseDown())
         {
             for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
             {
@@ -801,12 +801,12 @@ void Editor::ProcessInput()
                                  Vector2<int>(GameParameters::SIZE_TILE),
                                  selectedTile->getType(), selectedTile->frame);
                         if (!(selectedTile->frame ==
-                              tile->button->getTile()->frame))
+                              tile->button->getTile().frame))
                         {
 #if defined(WIN32) && defined(TRACY_ENABLE)
                             ZoneScoped;
 #endif
-                            Button *bt = new Button(tilee);
+                            TileButtonWorld *bt = new TileButtonWorld(tilee);
                             tile->SetButton(bt);
                             break;
                         }
@@ -901,12 +901,12 @@ void Editor::Render()
         for (auto &tile : tils->tilesUI)
         {
             if (firstSelect &&
-                selectedTile->GetID() == tile->getTile()->GetID())
+                selectedTile->GetID() == tile->getTile().GetID())
             {
                 tile->Draw(*menuRenderer, *squareRenderer, 0.3F, true,
                            this->time);
             }
-            else if (tile->isMouseHover())
+            else if (tile->IsMouseHover())
             {
                 tile->Draw(*menuRenderer, *squareRenderer, 0.3F, false,
                            this->time);

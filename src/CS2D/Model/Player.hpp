@@ -10,7 +10,7 @@
 #include "../../Core/Manager/Timer.hpp"
 #include "../../Core/Model/Camera.hpp"
 #include "../../Core/Model/GameObject.hpp"
-#include "../../Core/Model/Tile.hpp"
+#include "Tile.hpp"
 #include "../../Core/Renderer/SquareRenderer.hpp"
 #include "../Other/GameParameters.hpp"
 #include "Map.hpp"

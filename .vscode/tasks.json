@@ -6,6 +6,7 @@
             "type": "shell",
             "command": "C:\\mingw64\\bin\\g++.exe",
             "args": [
+                "--%",
                 "-I${workspaceFolder}\\include",
                 "-L${workspaceFolder}\\lib\\x64",
                 "-g",
@@ -23,7 +24,7 @@
                 "-limagehlp",
                 "-w",
                 "-std=c++17",
-                "-O3",
+                "-Wa,-mbig-obj",
                 "-static-libstdc++",
                 "-static-libgcc",
                 "-D_DEBUG",
@@ -35,7 +36,8 @@
             },
             "options": {
                 "cwd": "C:\\mingw64\\bin"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "(64)test_build",

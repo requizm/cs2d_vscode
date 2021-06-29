@@ -31,8 +31,8 @@ void Env_Item::Initialize()
     this->obj_id = Utils::GenerateID();
 
     Tile t = Tile(position, sp, Vector2<int>(GameParameters::SIZE_TILE));
-    button = new Button(t, 1.0F, UIObjectType::ENV_ITEM);
-    button->setType(ButtonType::ENV_OBJ);
+    button = new TileButtonWorld(t, 1.0F);
+    //button->setType(ButtonType::ENV_OBJ);
 
     if (item_id != 0)
     {
@@ -77,37 +77,37 @@ Env_Item_Manager::Env_Item_Manager()
     p_panel->setMovable(false);
     p_panel->setEnable(false);
 
-    b_okay = new Button("Okay", Vector2<int>(330, 170), Vector2<int>(60, 20),
+    b_okay = new TextButton("Okay", Vector2<int>(330, 170), Vector2<int>(60, 20),
                         *(Editor::instance().textRenderer),
                         Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    b_okay->setMouseClickColor(Vector3<float>(0.30F));
-    b_okay->setMouseHoverColor(Vector3<float>(0.30F));
-    b_okay->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    b_okay->setLabelClickColor(Vector3<float>(1.0F));
-    b_okay->setOutline(true);
+    b_okay->setButtonClickColor(Vector3<float>(0.30F));
+    b_okay->setButtonHoverColor(Vector3<float>(0.30F));
+    b_okay->setTextHoverColor(Vector3<float>(0.58F));
+    b_okay->setTextClickColor(Vector3<float>(1.0F));
+    b_okay->setHaveOutline(true);
     b_okay->setOutlineColor(Vector3<float>(1.0F));
     b_okay->setParent(p_panel);
 
     b_cancel =
-        new Button("Cancel", Vector2<int>(230, 170), Vector2<int>(60, 20),
+        new TextButton("Cancel", Vector2<int>(230, 170), Vector2<int>(60, 20),
                    *(Editor::instance().textRenderer), Vector3<float>(0.15F),
                    Vector3<float>(0.58F), 1.0F);
-    b_cancel->setMouseClickColor(Vector3<float>(0.30F));
-    b_cancel->setMouseHoverColor(Vector3<float>(0.30F));
-    b_cancel->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    b_cancel->setLabelClickColor(Vector3<float>(1.0F));
-    b_cancel->setOutline(true);
+    b_cancel->setButtonClickColor(Vector3<float>(0.30F));
+    b_cancel->setButtonHoverColor(Vector3<float>(0.30F));
+    b_cancel->setTextHoverColor(Vector3<float>(0.58F));
+    b_cancel->setTextClickColor(Vector3<float>(1.0F));
+    b_cancel->setHaveOutline(true);
     b_cancel->setOutlineColor(Vector3<float>(1.0F));
     b_cancel->setParent(p_panel);
 
-    b_delete = new Button("Delete", Vector2<int>(0, 170), Vector2<int>(60, 20),
+    b_delete = new TextButton("Delete", Vector2<int>(0, 170), Vector2<int>(60, 20),
                           *(Editor::instance().textRenderer),
                           Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    b_delete->setMouseClickColor(Vector3<float>(0.30F));
-    b_delete->setMouseHoverColor(Vector3<float>(0.30F));
-    b_delete->setLabelMouseHoverColor(Vector3<float>(0.58F));
-    b_delete->setLabelClickColor(Vector3<float>(1.0F));
-    b_delete->setOutline(true);
+    b_delete->setButtonClickColor(Vector3<float>(0.30F));
+    b_delete->setButtonHoverColor(Vector3<float>(0.30F));
+    b_delete->setTextHoverColor(Vector3<float>(0.58F));
+    b_delete->setTextClickColor(Vector3<float>(1.0F));
+    b_delete->setHaveOutline(true);
     b_delete->setOutlineColor(Vector3<float>(1.0F));
     b_delete->setParent(p_panel);
 

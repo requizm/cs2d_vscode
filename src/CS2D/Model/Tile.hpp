@@ -17,8 +17,7 @@ class Tile : public GameObject
    public:
     Tile();
     Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size,
-         TileTypes type, int frame = -1);
-    Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size);
+         TileTypes type = TileTypes::WALL, int frame = -1);
 
     void setType(TileTypes type);
     TileTypes getType() const;
@@ -30,6 +29,8 @@ class Tile : public GameObject
    private:
     TileTypes type;
     RectangleCollider collider;
+
+    SpriteRenderer spriteRenderer;
 };
 
 #endif

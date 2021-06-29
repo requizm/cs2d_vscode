@@ -31,7 +31,7 @@ void ListItem::AddItem(const std::string &text)
     TextButton *bt =
         new TextButton(text, pos,
                        size, *(panel->rend),
-                       Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F,
+                       Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F, false,
                        UIObjectType::LISTITEM);
     bt->setButtonClickColor(Vector3<float>(0.35F));
     bt->setButtonHoverColor(Vector3<float>(0.25F));

@@ -77,7 +77,7 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
         const Sprite sprite = Sprite(ResourceManager::GetTexture(tileSet),
                                      (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-        Button *button = new Button(tile);
+        TileButtonScreen *button = new TileButtonScreen(tile);
         button->independent = true;
         button->setParent(Editor::instance().tilePanel, true);
         res.tilesUI.push_back(button);
@@ -88,8 +88,8 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
         for (int j = 0; j < Editor::instance().mapLimit.y; j++)
         {
             ButtonTile *t = new ButtonTile(Vector2<int>(i, j));
-            t->button->getTile()->frame = 0;
-            t->button->getTile()->setType(TileTypes::FLOOR);
+            t->button->getTile().frame = 0;
+            t->button->getTile().setType(TileTypes::FLOOR);
             res.tiles.push_back(t);
         }
     }

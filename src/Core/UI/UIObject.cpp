@@ -142,6 +142,10 @@ void UIObject::setParentCenterPos()
                                  parent->getSize().y / 2 - this->getSize().y / 2));
 }
 
+void UIObject::setLocalPosition(const Vector2<int> value) {
+    
+}
+
 void UIObject::setSize(const Vector2<int> size) { this->size = size; }
 
 void UIObject::setSize(const int x, const int y)
