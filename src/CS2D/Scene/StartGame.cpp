@@ -4,7 +4,9 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-StartGame::StartGame() = default;
+StartGame::StartGame() : Scene("StartGame")
+{
+}
 
 void StartGame::Initialize(const std::string &mapName)
 {
@@ -20,15 +22,15 @@ void StartGame::Initialize(const std::string &mapName)
     this->textRenderer->Load(
         GameParameters::resDirectory + "fonts/liberationsans.ttf", 20);
     this->squareRenderer = SquareRenderer(true);
-
-    this->SetEnable(true);
 }
 
-void StartGame::Start()
+void StartGame::Load()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
+    Initialize(SceneManager::instance().params.at(0));
+
     Sprite ct1_0 = Sprite(ResourceManager::GetTexture("ct1"), 0, 0, 32, 32);
     Sprite ct1_1 = Sprite(ResourceManager::GetTexture("ct1"), 0, 32, 32, 32);
     Sprite ct1_2 = Sprite(ResourceManager::GetTexture("ct1"), 0, 64, 32, 32);
@@ -36,15 +38,9 @@ void StartGame::Start()
     sprites.push_back(ct1_2);
     sprites.push_back(ct1_0);
     sprites.push_back(ct1_1);
-    player = new Player(Vector2<int>(70, 70), sprites);
-}
 
-void StartGame::OnEnable()
-{
-#if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScopedS(10);
-#endif
-    this->Start();
+    player = new Player(Vector2<int>(70, 70), sprites);
+
     player->SetMap(map);
     player->SetPosition(Vector2<int>(GameParameters::SCREEN_WIDTH / 2,
                                      GameParameters::SCREEN_HEIGHT / 2));
@@ -58,7 +54,7 @@ void StartGame::OnEnable()
     player->Init();
 }
 
-void StartGame::OnDisable()
+void StartGame::Unload()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
@@ -73,16 +69,6 @@ void StartGame::OnDisable()
     player = nullptr;
     if (camera != nullptr) delete camera;
     camera = nullptr;
-}
-
-void StartGame::SetEnable(const bool value)
-{
-    if (this->enable == value) return;
-    this->enable = value;
-    if (this->enable)
-        OnEnable();
-    else
-        OnDisable();
 }
 
 void StartGame::Update()
@@ -101,8 +87,7 @@ void StartGame::ProcessInput()
 #endif
     if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
     {
-        Game::SetGameState(GameState::MENU);
-        return;
+        SceneManager::instance().RequestLoadScene("Menu");
     }
     if (InputManager::isKeyDown(KeyboardKeys::KEY_Q))
     {
@@ -148,5 +133,3 @@ void StartGame::Render()
 
     // button->Draw(*squareRenderer, *buttonRenderer, *textRenderer);
 }
-
-StartGame::~StartGame() { OnDisable(); }

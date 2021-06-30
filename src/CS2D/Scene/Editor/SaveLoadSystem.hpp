@@ -19,7 +19,9 @@
 #include "../../../Core/UI/ListItem.hpp"
 #include "../../../Core/UI/Panel.hpp"
 #include "../../../Core/UI/TextBox.hpp"
+
 #include "../../Other/GameParameters.hpp"
+#include "../../Other/SceneManager.hpp"
 #include "ButtonTile.hpp"
 
 

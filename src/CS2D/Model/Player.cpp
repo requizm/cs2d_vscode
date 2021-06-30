@@ -81,13 +81,13 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
     this->collider.SetPosition(this->GetPositionOfCenter());
     this->BuildTransform();
 
-    StartGame::instance().camera->setPosition(Vector2(
+    SceneManager::instance().GetActiveScene<StartGame>()->camera->setPosition(Vector2(
         this->GetPositionOfCenter().x - GameParameters::SCREEN_WIDTH / 2,
         this->GetPositionOfCenter().y - GameParameters::SCREEN_HEIGHT / 2));
-    StartGame::instance().renderer->SetProjection(
-        StartGame::instance().camera->cameraMatrix);
-    StartGame::instance().squareRenderer.SetProjection(
-        StartGame::instance().camera->cameraMatrix);
+    SceneManager::instance().GetActiveScene<StartGame>()->renderer->SetProjection(
+        SceneManager::instance().GetActiveScene<StartGame>()->camera->cameraMatrix);
+    SceneManager::instance().GetActiveScene<StartGame>()->squareRenderer.SetProjection(
+        SceneManager::instance().GetActiveScene<StartGame>()->camera->cameraMatrix);
 
     Vector2<int> newCellPos =
         Utils::PositionToCell(this->GetPositionOfCenter());

@@ -46,7 +46,7 @@ void TileButtonWorld::setLocalPosition(const Vector2<int> value)
 
 bool TileButtonWorld::isRenderable()
 {
-    Vector2 pos = Utils::WorldToScreen(Editor::instance().camera->view, tile.GetCellPos() * Vector2<int>(GameParameters::SIZE_TILE));
+    Vector2 pos = Utils::WorldToScreen(SceneManager::instance().GetActiveScene<Editor>()->camera->view, tile.GetCellPos() * Vector2<int>(GameParameters::SIZE_TILE));
     if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
         pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
     {
@@ -87,7 +87,7 @@ bool TileButtonWorld::IsMousePress()
 
 bool TileButtonWorld::IsMouseHover()
 {
-    Vector2<int> MouseWorldPos = Utils::ScreenToWorld(Editor::instance().camera->view, InputManager::mousePos);
+    Vector2<int> MouseWorldPos = Utils::ScreenToWorld(SceneManager::instance().GetActiveScene<Editor>()->camera->view, InputManager::mousePos);
     if (MouseWorldPos.x >= getPosition().x &&
         MouseWorldPos.x <= getPosition().x + getSize().x &&
         MouseWorldPos.y >= getPosition().y &&

@@ -47,28 +47,28 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
 #endif
     NewMapResult res = NewMapResult();
 
-    Editor::instance().time = 0.0F;
-    Editor::instance().position =
-        Vector2<int>(0 - Editor::instance().buildPanel->getSize().x, 0);
+    SceneManager::instance().GetActiveScene<Editor>()->time = 0.0F;
+    SceneManager::instance().GetActiveScene<Editor>()->position =
+        Vector2<int>(0 - SceneManager::instance().GetActiveScene<Editor>()->buildPanel->getSize().x, 0);
 
-    Editor::instance().firstSelect = false;
-    Editor::instance().mapLimit = mapSize;
+    SceneManager::instance().GetActiveScene<Editor>()->firstSelect = false;
+    SceneManager::instance().GetActiveScene<Editor>()->mapLimit = mapSize;
 
-    Editor::instance().texture.x =
+    SceneManager::instance().GetActiveScene<Editor>()->texture.x =
         ResourceManager::GetTexture(tileSet).Width / 32;
-    Editor::instance().texture.y =
+    SceneManager::instance().GetActiveScene<Editor>()->texture.y =
         ResourceManager::GetTexture(tileSet).Height / 32;
-    Editor::instance().tileCount =
-        Editor::instance().texture.x * Editor::instance().texture.y;
+    SceneManager::instance().GetActiveScene<Editor>()->tileCount =
+        SceneManager::instance().GetActiveScene<Editor>()->texture.x * SceneManager::instance().GetActiveScene<Editor>()->texture.y;
 
     InputManager::scroll.y = 0.0F;
 
     int curIndex = 0;
-    Vector2<int> tilePanelPos = Editor::instance().tilePanel->getPosition();
-    for (int i = 0; i < Editor::instance().tileCount; i++)
+    Vector2<int> tilePanelPos = SceneManager::instance().GetActiveScene<Editor>()->tilePanel->getPosition();
+    for (int i = 0; i < SceneManager::instance().GetActiveScene<Editor>()->tileCount; i++)
     {
-        const int xPos = 32 * (curIndex % Editor::instance().maxCellInColumn);
-        const int yPos = 32 * (curIndex / Editor::instance().maxCellInColumn);
+        const int xPos = 32 * (curIndex % SceneManager::instance().GetActiveScene<Editor>()->maxCellInColumn);
+        const int yPos = 32 * (curIndex / SceneManager::instance().GetActiveScene<Editor>()->maxCellInColumn);
         const Vector2<int> pos(xPos + tilePanelPos.x, yPos + tilePanelPos.y);
         const Vector2<int> size(Vector2<int>(32, 32));
         const int xoffset =
@@ -80,13 +80,13 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
         TileButtonScreen *button = new TileButtonScreen(tile);
         button->independent = true;
-        button->setParent(Editor::instance().tilePanel, true);
+        button->setParent(SceneManager::instance().GetActiveScene<Editor>()->tilePanel, true);
         res.tilesUI.push_back(button);
     }
 
-    for (int i = 0; i < Editor::instance().mapLimit.x; i++)
+    for (int i = 0; i < SceneManager::instance().GetActiveScene<Editor>()->mapLimit.x; i++)
     {
-        for (int j = 0; j < Editor::instance().mapLimit.y; j++)
+        for (int j = 0; j < SceneManager::instance().GetActiveScene<Editor>()->mapLimit.y; j++)
         {
             ButtonTile *t = new ButtonTile(Vector2<int>(i, j));
             t->button->getTile().frame = 0;

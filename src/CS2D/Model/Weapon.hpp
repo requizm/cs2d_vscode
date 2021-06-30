@@ -6,7 +6,10 @@
 #include "../../Core/Manager/Utils.hpp"
 #include "../../Core/Model/Camera.hpp"
 #include "../../Core/Model/GameObject.hpp"
+
 #include "../Other/GameParameters.hpp"
+#include "../Other/SceneManager.hpp"
+#include "Tile.hpp"
 #include "Mag.hpp"
 
 

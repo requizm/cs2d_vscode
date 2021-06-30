@@ -65,7 +65,7 @@ void InputManager::addListenerUp(int key, std::function<void()> callback,
 void InputManager::removeListenerDown(int key, std::function<void()> callback,
                                       int id)
 {
-    for (auto &pair : m_Callbacks_Down)
+    for (auto &pair : InputManager::m_Callbacks_Down)
     {
         if (pair.first == key)
         {
@@ -84,7 +84,7 @@ void InputManager::removeListenerDown(int key, std::function<void()> callback,
 void InputManager::removeListenerUp(int key, std::function<void()> callback,
                                     int id)
 {
-    for (auto &pair : m_Callbacks_Up)
+    for (auto &pair : InputManager::m_Callbacks_Up)
     {
         if (pair.first == key)
         {
@@ -98,6 +98,12 @@ void InputManager::removeListenerUp(int key, std::function<void()> callback,
             }
         }
     }
+}
+
+void InputManager::removeAllListeners()
+{
+    InputManager::m_Callbacks_Down.clear();
+    InputManager::m_Callbacks_Up.clear();
 }
 
 void InputManager::onMouseDown(int key)

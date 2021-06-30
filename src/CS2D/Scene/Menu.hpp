@@ -25,32 +25,25 @@
 #include "../../Core/UI/ListItem.hpp"
 #include "../../Core/UI/Panel.hpp"
 #include "../../Core/UI/TextBox.hpp"
-#include "../Game.hpp"
+
 #include "../Other/GameParameters.hpp"
+#include "../Other/SceneManager.hpp"
+#include "../Model/Scene.hpp"
 
 
-class Menu
+class Menu : public Scene
 {
    public:
     Menu();
-    ~Menu();
-
-    static Menu &instance()
-    {
-        static Menu INSTANCE;
-        return INSTANCE;
-    }
+    ~Menu() = default;
 
     void Initialize(Sprite menuSprites[4]);
 
-    void OnEnable();
-    void OnDisable();
-    void Start();
-    void Update();
-    void ProcessInput();
-    void Render();
-
-    void SetEnable(const bool value);
+    void Unload() final;
+    void Load() final;
+    void Update() final;
+    void ProcessInput() final;
+    void Render() final;
 
     Sprite menuSprites[4];
     TextRenderer *textRenderer;
@@ -75,8 +68,6 @@ class Menu
     ListItem *mapNames = nullptr;
 
    private:
-    bool enable = false;
-
     void selectedMapChange(TextButton *old, TextButton *n);
     void newGameBtnClick();
 

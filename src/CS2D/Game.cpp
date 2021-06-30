@@ -3,11 +3,9 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-GameState Game::state;
-
-Game::Game() { Game::state = GameState::MENU; }
-
-Game::~Game() = default;
+#include "Scene/Editor/Editor.hpp"
+#include "Scene/Menu.hpp"
+#include "Scene/StartGame.hpp"
 
 void Game::Init()
 {
@@ -16,8 +14,16 @@ void Game::Init()
     initRenderers();
     initMaps();
     initMenuSprites();
-    Menu::instance().Initialize(menuSprites);
-    Editor::instance().Initialize();
+
+    Menu *menu = new Menu();
+    menu->Initialize(menuSprites);
+
+    Editor *editor = new Editor();
+    editor->Initialize();
+
+    StartGame *startGame = new StartGame();
+
+    SceneManager::instance().LoadScene("Menu");
 }
 
 void Game::Update()
@@ -25,18 +31,10 @@ void Game::Update()
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    switch (Game::state)
-    {
-        case GameState::MENU:
-            Menu::instance().Update();
-            break;
-        case GameState::EDITOR:
-            Editor::instance().Update();
-            break;
-        case GameState::INGAME:
-            StartGame::instance().Update();
-            break;
-    }
+    Scene *scene = nullptr;
+    scene = SceneManager::instance().GetActiveScene<Scene>();
+    if(scene != nullptr)
+        SceneManager::instance().GetActiveScene<Scene>()->Update();
 }
 
 void Game::ProcessInput()
@@ -44,18 +42,10 @@ void Game::ProcessInput()
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    switch (Game::state)
-    {
-        case GameState::MENU:
-            Menu::instance().ProcessInput();
-            break;
-        case GameState::EDITOR:
-            Editor::instance().ProcessInput();
-            break;
-        case GameState::INGAME:
-            StartGame::instance().ProcessInput();
-            break;
-    }
+    Scene *scene = nullptr;
+    scene = SceneManager::instance().GetActiveScene<Scene>();
+    if(scene != nullptr)
+        SceneManager::instance().GetActiveScene<Scene>()->ProcessInput();
 }
 
 void Game::Render()
@@ -63,22 +53,16 @@ void Game::Render()
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    switch (Game::state)
-    {
-        case GameState::MENU:
-            Menu::instance().Render();
-            break;
-        case GameState::EDITOR:
-            Editor::instance().Render();
-            break;
-        case GameState::INGAME:
-            StartGame::instance().Render();
-            break;
-    }
+    Scene *scene = nullptr;
+    scene = SceneManager::instance().GetActiveScene<Scene>();
+    if(scene != nullptr)
+        SceneManager::instance().GetActiveScene<Scene>()->Render();
     menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos,
                             Vector2<int>(GameParameters::SCREEN_HEIGHT / 35,
                                          GameParameters::SCREEN_HEIGHT / 35),
                             0, true);
+
+    SceneManager::instance().LoadNextScene();
 }
 
 void Game::initTextures() const
@@ -202,35 +186,3 @@ void Game::initRenderers()
     spriteRenderer = SpriteRenderer(ResourceManager::GetShader("sprite"));
     menuRenderer = SpriteRenderer(ResourceManager::GetShader("menu"));
 }
-
-void Game::SetGameState(GameState state)
-{
-    switch (Game::state)
-    {
-        case GameState::MENU:
-            Menu::instance().SetEnable(false);
-            break;
-        case GameState::EDITOR:
-            Editor::instance().SetEnable(false);
-            break;
-        case GameState::INGAME:
-            StartGame::instance().SetEnable(false);
-            break;
-    }
-
-    switch (state)
-    {
-        case GameState::MENU:
-            Menu::instance().SetEnable(true);
-            break;
-        case GameState::EDITOR:
-            Editor::instance().SetEnable(true);
-            break;
-        case GameState::INGAME:
-            StartGame::instance().SetEnable(true);
-            break;
-    }
-    Game::state = state;
-}
-
-GameState Game::GetGameState() { return Game::state; }

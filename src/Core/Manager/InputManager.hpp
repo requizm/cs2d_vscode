@@ -49,6 +49,7 @@ class InputManager
                                    int id);
     static void removeListenerUp(int key, std::function<void()> callback,
                                  int id);
+    static void removeAllListeners();
 
     static void onMouseDown(int key);
     static void onMouseUp(int key);

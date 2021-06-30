@@ -10,11 +10,13 @@
 #include "../../Core/Manager/Timer.hpp"
 #include "../../Core/Model/Camera.hpp"
 #include "../../Core/Model/GameObject.hpp"
-#include "Tile.hpp"
 #include "../../Core/Renderer/SquareRenderer.hpp"
+
 #include "../Other/GameParameters.hpp"
+#include "../Other/SceneManager.hpp"
 #include "Map.hpp"
 #include "Weapon.hpp"
+#include "Tile.hpp"
 
 
 enum MoveDirection

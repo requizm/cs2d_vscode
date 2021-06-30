@@ -1,5 +1,5 @@
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef STARTGAME_H
+#define STARTGAME_H
 
 #include <memory>
 
@@ -14,33 +14,26 @@
 #include "../../Core/Renderer/SpriteRenderer.hpp"
 #include "../../Core/Renderer/SquareRenderer.hpp"
 #include "../../Core/Renderer/TextRenderer.hpp"
-#include "../Game.hpp"
+
 #include "../Model/Player.hpp"
+#include "../Other/SceneManager.hpp"
+#include "../Model/Scene.hpp"
 #include "../Other/GameParameters.hpp"
 
 
-class StartGame
+class StartGame : public Scene
 {
    public:
     StartGame();
-    ~StartGame();
+    ~StartGame() = default;
 
     void Initialize(const std::string &mapName);
 
-    static StartGame &instance()
-    {
-        static StartGame INSTANCE;
-        return INSTANCE;
-    }
-
-    void Start();
-    void OnEnable();
-    void OnDisable();
-    void Update();
-    void ProcessInput();
-    void Render();
-
-    void SetEnable(const bool value);
+    void Load() final;
+    void Unload() final;
+    void Update() final;
+    void ProcessInput() final;
+    void Render() final;
 
     Camera *camera;
 
@@ -53,7 +46,6 @@ class StartGame
 
     TextRenderer *textRenderer;
     std::vector<Weapon> weapons;
-    bool enable = false;
 };
 
-#endif  // SCENE_H
+#endif  // STARTGAME_H

@@ -7,7 +7,9 @@
 #include "../../../../Core/UI/TextBox.hpp"
 #include "../../../../Core/UI/SpriteButton.hpp"
 #include "../../../../Core/UI/TextButton.hpp"
+
 #include "../../../Other/GameParameters.hpp"
+#include "../../../Other/SceneManager.hpp"
 #include "../../../Model/TileButton.hpp"
 
 

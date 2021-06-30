@@ -12,6 +12,7 @@
 
 #include "ButtonTile.hpp"
 #include "../../Model/TileButton.hpp"
+#include "../../Other/SceneManager.hpp"
 
 
 struct NewMapResult

@@ -43,7 +43,7 @@ void Weapon::SetParent(GameObject *go)
     this->SetSize(
         Vector2<int>(GameParameters::SIZE_TILE, GameParameters::SIZE_TILE));
     SetPosition(go->GetPosition());
-    Vector2<int> dif = Utils::ScreenToWorld(StartGame::instance().camera->view,
+    Vector2<int> dif = Utils::ScreenToWorld(SceneManager::instance().GetActiveScene<StartGame>()->camera->view,
                                             InputManager::mousePos) -
                        this->GetPosition();
     Vector2<float> a = dif.Normalize();

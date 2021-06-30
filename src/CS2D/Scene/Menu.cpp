@@ -3,11 +3,12 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-Menu::Menu() = default;
+Menu::Menu() : Scene("Menu")
+{
 
-Menu::~Menu() { OnDisable(); }
+}
 
-void Menu::Start()
+void Menu::Load()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
@@ -70,7 +71,7 @@ void Menu::Start()
 
     this->b_newGame = new TextButton(
         "Start", Vector2<int>(240, 320), Vector2<int>(60, 20), *textRenderer,
-        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F, true);
     this->b_newGame->setButtonClickColor(Vector3<float>(0.30F));
     this->b_newGame->setButtonHoverColor(Vector3<float>(0.30F));
     this->b_newGame->setTextHoverColor(Vector3<float>(0.58F));
@@ -84,6 +85,9 @@ void Menu::Start()
         std::bind(&Menu::selectedMapChange, this, std::placeholders::_1,
                   std::placeholders::_2);
     this->mapNames->AddListener(mapChange);
+
+    this->optionsPanel->setEnable(false);
+    this->mapsPanel->setEnable(false);
 }
 
 void Menu::Initialize(Sprite menuSprites[4])
@@ -92,18 +96,9 @@ void Menu::Initialize(Sprite menuSprites[4])
     {
         this->menuSprites[i] = menuSprites[i];
     }
-
-    this->SetEnable(true);
 }
 
-void Menu::OnEnable()
-{
-    this->Start();
-    this->optionsPanel->setEnable(false);
-    this->mapsPanel->setEnable(false);
-}
-
-void Menu::OnDisable()
+void Menu::Unload()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
@@ -142,16 +137,6 @@ void Menu::OnDisable()
     squareRenderer = nullptr;
 }
 
-void Menu::SetEnable(const bool value)
-{
-    if (this->enable == value) return;
-    this->enable = value;
-    if (this->enable)
-        OnEnable();
-    else
-        OnDisable();
-}
-
 void Menu::Update()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
@@ -181,8 +166,7 @@ void Menu::ProcessInput()
 
     if (l_editor->isMouseDown())
     {
-        Game::SetGameState(GameState::EDITOR);
-        return;
+        SceneManager::instance().RequestLoadScene("Editor");
     }
 
     if (l_newgame->isMouseDown())
@@ -255,7 +239,13 @@ void Menu::newGameBtnClick()
 #endif
     std::string mName = GameParameters::resDirectory + "levels/" +
                         t_mapName->getText() + ".xml";
-    StartGame::instance().Initialize(mName);
-    Game::SetGameState(GameState::INGAME);
-    return;
+    if(SceneManager::instance().params.empty())
+    {
+        SceneManager::instance().params.push_back(mName);
+    }
+    else
+    {
+        SceneManager::instance().params.at(0) = mName;
+    }
+    SceneManager::instance().RequestLoadScene("StartGame");
 }

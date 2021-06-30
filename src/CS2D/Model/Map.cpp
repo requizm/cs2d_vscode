@@ -147,7 +147,7 @@ void Map::Draw(SpriteRenderer &renderer)
         if (!tile->IsDestroyed())
         {
             Vector2 pos = Utils::WorldToScreen(
-                StartGame::instance().camera->view, tile->GetPosition());
+                SceneManager::instance().GetActiveScene<StartGame>()->camera->view, tile->GetPosition());
             if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
                 pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
             {
@@ -157,7 +157,7 @@ void Map::Draw(SpriteRenderer &renderer)
     }
     for (auto &weapon : weapons)
     {
-        Vector2 pos = Utils::WorldToScreen(StartGame::instance().camera->view,
+        Vector2 pos = Utils::WorldToScreen(SceneManager::instance().GetActiveScene<StartGame>()->camera->view,
                                            weapon->GetPosition());
         if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
             pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)

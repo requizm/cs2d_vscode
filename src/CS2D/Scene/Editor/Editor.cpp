@@ -4,7 +4,7 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-Editor::Editor()
+Editor::Editor() : Scene("Editor")
 {
     this->tileCount = 0;
     this->maxCellInColumn = 0;
@@ -16,8 +16,6 @@ Editor::Editor()
     this->texture = Vector2<int>(0);
     this->selectedMode = SelectedMode::TILE_MOD;
 }
-
-Editor::~Editor() { OnDisable(); }
 
 void Editor::Initialize()
 {
@@ -32,11 +30,38 @@ void Editor::Initialize()
     this->selectedMode = SelectedMode::TILE_MOD;
 }
 
-void Editor::Start()
+void Editor::Load()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
+    currentTileSet = "cs2dnorm";
+    if (tils != nullptr)
+    {
+        for (auto tile : tils->tiles)
+        {
+            delete tile;
+        }
+        tils->tiles.clear();
+        for (auto tile : tils->tilesUI)
+        {
+            delete tile;
+        }
+        tils->tilesUI.clear();
+        if (tils != nullptr)
+        {
+            delete tils;
+            tils = nullptr;
+        }
+    }
+
+    for (auto &env : env_items)
+    {
+        if (env != nullptr) delete env;
+    }
+    env_items.clear();
+
+
     this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
     this->worldRenderer =
         new SpriteRenderer(ResourceManager::GetShader("sprite"));
@@ -334,35 +359,8 @@ void Editor::Start()
     this->rb_tileProperties->AddListener(t);
 
     this->selectedMode = SelectedMode::TILE_MOD;
-}
 
-void Editor::OnEnable()
-{
-#if defined(WIN32) && defined(TRACY_ENABLE)
-    ZoneScopedS(10);
-#endif
-    currentTileSet = "cs2dnorm";
-    if (tils != nullptr)
-    {
-        for (auto tile : tils->tiles)
-        {
-            delete tile;
-        }
-        tils->tiles.clear();
-        for (auto tile : tils->tilesUI)
-        {
-            delete tile;
-        }
-        tils->tilesUI.clear();
-        delete tils;
-    }
 
-    for (auto &env : env_items)
-    {
-        if (env != nullptr) delete env;
-    }
-    env_items.clear();
-    Start();
     tils = nullptr;
     tils = new NewMapResult();
     NewMapResult r = NewMap->NewMap("cs2dnorm", Vector2<int>(50));
@@ -371,7 +369,7 @@ void Editor::OnEnable()
     selectedTile = &tils->tilesUI.at(0)->getTile();
 }
 
-void Editor::OnDisable()
+void Editor::Unload()
 {
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
@@ -410,8 +408,6 @@ void Editor::OnDisable()
     NewMap = nullptr;
     if (SaveLoad != nullptr) delete SaveLoad;
     SaveLoad = nullptr;
-    if (b_cancel != nullptr) delete b_cancel;
-    b_cancel = nullptr;
     if (rb_tileProperties != nullptr) delete rb_tileProperties;
     rb_tileProperties = nullptr;
     if (b_tileProperties != nullptr) delete b_tileProperties;
@@ -452,16 +448,6 @@ void Editor::OnDisable()
 
     if (camera != nullptr) delete camera;
     camera = nullptr;
-}
-
-void Editor::SetEnable(const bool value)
-{
-    if (this->enable == value) return;
-    this->enable = value;
-    if (this->enable)
-        OnEnable();
-    else
-        OnDisable();
 }
 
 void Editor::Update()
@@ -588,7 +574,7 @@ void Editor::ProcessInput()
 
     if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
     {
-        Game::SetGameState(GameState::MENU);
+        SceneManager::instance().RequestLoadScene("Menu");
         return;
     }
 
@@ -682,8 +668,8 @@ void Editor::ProcessInput()
         this->time = 0.0F;
         this->position = Vector2<int>(0 - buildPanel->getSize().x, 0);
         std::string newMapName = SaveLoad->t_load->getText();
-        OnDisable();
-        OnEnable();
+        Unload();
+        Load();
         currentTileSet = "cs2dnorm";
         if (tils != nullptr)
         {

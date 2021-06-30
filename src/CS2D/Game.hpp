@@ -12,33 +12,17 @@
 #include "Model/Map.hpp"
 #include "Model/Player.hpp"
 #include "Other/GameParameters.hpp"
-#include "Scene/Editor/Editor.hpp"
-#include "Scene/Menu.hpp"
-#include "Scene/StartGame.hpp"
-
-
-enum GameState
-{
-    MENU,
-    INGAME,
-    EDITOR
-};
 
 class Game
 {
    public:
-    Game();
-    ~Game();
+    Game() = default;
+    ~Game() = default;
 
     void Init();
     void Update();
     void Render();
     void ProcessInput();
-
-    static void SetGameState(GameState state);
-    static GameState GetGameState();
-
-    static GameState state;
 
    private:
     SpriteRenderer spriteRenderer, menuRenderer;
