@@ -24,6 +24,6 @@ addons:
     # Pattern to match selecting branches that will run analysis. We recommend leaving this set to 'coverity_scan'.
     # Take care in resource usage, and consider the build frequency allowances per
     #   https://scan.coverity.com/faq#frequency
-    branch_pattern: master
+    branch_pattern: coverity_scan
     
 script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then cmake . -BBuild -G "Unix Makefiles" ; make -C $TRAVIS_BUILD_DIR/Build ; fi
