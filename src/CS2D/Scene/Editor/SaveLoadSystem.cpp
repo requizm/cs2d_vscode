@@ -26,7 +26,90 @@ SaveLoadSystem::~SaveLoadSystem()
     delete savePanel;
 }
 
-void SaveLoadSystem::Start() {}
+void SaveLoadSystem::Load() {
+    Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
+    this->loadPanel = new Panel(
+        Vector2<int>(editor->tilePanel->getSize().x + 20, editor->controlPanel->getSize().y),
+        "Load Panel", Vector2<int>(400, 200), *editor->textRenderer, true, true, 1.0F,
+        Vector3<float>(0.21F), 0.8F);
+    this->loadPanel->setMovable(false);
+    this->loadPanel->setEnable(false);
+    this->load_mapsPanel = new Panel(
+        Vector2<int>(20, 60), "Map Panel", Vector2<int>(300, 100),
+        *editor->textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
+    this->load_mapsPanel->setMovable(false);
+    this->load_mapsPanel->setEnable(false);
+    this->load_mapsPanel->setScrollable(true);
+    this->load_mapsPanel->setOutline(true);
+    this->load_mapsPanel->setVisible(true);
+    this->load_mapsPanel->setOutlineColor(Vector3<float>(0.47F));
+    this->load_mapsPanel->setParent(this->loadPanel, true);
+    this->load_mapsPanel->setParentCenterPos();
+    this->load_listMaps =
+        new ListItem(this->load_mapsPanel);
+    // this->load_listMaps->setParent(this->load_mapsPanel,
+    // true);
+    this->t_load =
+        new TextBox(Vector2<int>(20, 170), *editor->textRenderer, Vector2<int>(120, 20),
+                    true, 1.0F, Vector3<float>(0.58F));
+    this->t_load->setParent(this->loadPanel);
+    this->t_load->editable = false;
+    this->b_map_load = new TextButton(
+        "Load", Vector2<int>(180, 170), Vector2<int>(60, 20), *editor->textRenderer,
+        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    this->b_map_load->setButtonClickColor(Vector3<float>(0.30F));
+    this->b_map_load->setButtonHoverColor(Vector3<float>(0.30F));
+    this->b_map_load->setTextHoverColor(Vector3<float>(0.58F));
+    this->b_map_load->setTextClickColor(Vector3<float>(1.0F));
+    this->b_map_load->setHaveOutline(true);
+    this->b_map_load->setOutlineColor(Vector3<float>(1.0F));
+    this->b_map_load->setParent(this->loadPanel);
+    std::function<void(TextButton *, TextButton *)> loadListChanged =
+        std::bind(&SaveLoadSystem::LoadListChanged, this,
+                  std::placeholders::_1, std::placeholders::_2);
+    this->load_listMaps->AddListener(loadListChanged);
+
+    // harita save paneli
+    this->savePanel = new Panel(
+        Vector2<int>(editor->tilePanel->getSize().x + 20, editor->controlPanel->getSize().y),
+        "Save Panel", Vector2<int>(400, 200), *editor->textRenderer, true, true, 1.0F,
+        Vector3<float>(0.21F), 0.8F);
+    this->savePanel->setMovable(false);
+    this->savePanel->setEnable(false);
+    this->save_mapsPanel = new Panel(
+        Vector2<int>(20, 60), "Map Panel", Vector2<int>(300, 100),
+        *editor->textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
+    this->save_mapsPanel->setMovable(false);
+    this->save_mapsPanel->setEnable(false);
+    this->save_mapsPanel->setScrollable(true);
+    this->save_mapsPanel->setOutline(true);
+    this->save_mapsPanel->setVisible(true);
+    this->save_mapsPanel->setOutlineColor(Vector3<float>(0.47F));
+    this->save_mapsPanel->setParent(this->savePanel, true);
+    this->save_mapsPanel->setParentCenterPos();
+    this->save_listMaps =
+        new ListItem(this->save_mapsPanel);
+    // this->save_listMaps->setParent(this->save_mapsPanel,
+    // true);
+    this->t_save =
+        new TextBox(Vector2<int>(20, 170), *editor->textRenderer, Vector2<int>(120, 20),
+                    true, 1.0F, Vector3<float>(0.58F));
+    this->t_save->setParent(this->savePanel);
+    this->b_map_save = new TextButton(
+        "Save", Vector2<int>(180, 170), Vector2<int>(60, 20), *editor->textRenderer,
+        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    this->b_map_save->setButtonClickColor(Vector3<float>(0.30F));
+    this->b_map_save->setButtonHoverColor(Vector3<float>(0.30F));
+    this->b_map_save->setTextHoverColor(Vector3<float>(0.58F));
+    this->b_map_save->setTextClickColor(Vector3<float>(1.0F));
+    this->b_map_save->setHaveOutline(true);
+    this->b_map_save->setOutlineColor(Vector3<float>(1.0F));
+    this->b_map_save->setParent(this->savePanel);
+    std::function<void(TextButton *, TextButton *)> saveListChanged =
+        std::bind(&SaveLoadSystem::SaveListChanged, this,
+                  std::placeholders::_1, std::placeholders::_2);
+    this->save_listMaps->AddListener(saveListChanged);
+}
 void SaveLoadSystem::ProcessInput()
 {
     savePanel->ProcessInput();

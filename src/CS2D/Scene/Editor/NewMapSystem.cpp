@@ -20,7 +20,55 @@ NewMapSystem::~NewMapSystem()
     delete newPanel;
 }
 
-void NewMapSystem::Start() {}
+void NewMapSystem::Load()
+{
+    Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
+    this->newPanel = new Panel(
+        Vector2<int>(editor->tilePanel->getSize().x + 20, editor->controlPanel->getSize().y),
+        "New Map", Vector2<int>(400, 135), *editor->textRenderer, true, true, 1.0F,
+        Vector3<float>(0.21F), 0.8F);
+    this->newPanel->setMovable(false);
+    this->newPanel->setEnable(false);
+
+    this->t_mapSizeX =
+        new TextBox(Vector2<int>(180, 40), *editor->textRenderer, Vector2<int>(60, 20),
+                    true, 1.0F, Vector3<float>(0.58F));
+    this->t_mapSizeX->setParent(this->newPanel);
+    this->t_mapSizeY =
+        new TextBox(Vector2<int>(250, 40), *editor->textRenderer, Vector2<int>(60, 20),
+                    true, 1.0F, Vector3<float>(0.58F));
+    this->t_mapSizeY->setParent(this->newPanel);
+    this->t_tile =
+        new TextBox(Vector2<int>(180, 65), *editor->textRenderer, Vector2<int>(120, 20),
+                    true, 1.0F, Vector3<float>(0.58F));
+    this->t_tile->setParent(this->newPanel);
+
+    this->l_mapSize = new Label(
+        "Map Size", Vector2<int>(40, 40), *editor->textRenderer, 1.0F,
+        Vector3<float>(0.58F), UIObjectType::LABEL, LabelType::NOT_CLICKABLE);
+    this->l_mapSize->setParent(this->newPanel);
+    this->l_mapSize->setMouseEvent(false);
+    this->l_x = new Label("x", Vector2<int>(240, 40), *editor->textRenderer, 1.0F,
+                            Vector3<float>(0.58F), UIObjectType::LABEL,
+                            LabelType::NOT_CLICKABLE);
+    this->l_x->setParent(this->newPanel);
+    this->l_x->setMouseEvent(false);
+    this->l_tile = new Label("Tileset", Vector2<int>(40, 65), *editor->textRenderer,
+                               1.0F, Vector3<float>(0.58F), UIObjectType::LABEL,
+                               LabelType::NOT_CLICKABLE);
+    this->l_tile->setParent(this->newPanel);
+    this->l_tile->setMouseEvent(false);
+    this->b_okey = new TextButton(
+        "Okay", Vector2<int>(50, 105), Vector2<int>(60, 20), *editor->textRenderer,
+        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    this->b_okey->setButtonClickColor(Vector3<float>(0.30F));
+    this->b_okey->setButtonHoverColor(Vector3<float>(0.30F));
+    this->b_okey->setTextHoverColor(Vector3<float>(0.58F));
+    this->b_okey->setTextClickColor(Vector3<float>(1.0F));
+    this->b_okey->setHaveOutline(true);
+    this->b_okey->setOutlineColor(Vector3<float>(1.0F));
+    this->b_okey->setParent(this->newPanel);
+}
 void NewMapSystem::ProcessInput() { newPanel->ProcessInput(); }
 void NewMapSystem::Update() { newPanel->Update(); }
 void NewMapSystem::Render(SpriteRenderer &menuRenderer,

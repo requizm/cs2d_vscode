@@ -189,135 +189,11 @@ void Editor::Load()
 
     // yeni harita paneli
     this->NewMap = new NewMapSystem();
-    this->NewMap->newPanel = new Panel(
-        Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y),
-        "New Map", Vector2<int>(400, 135), *textRenderer, true, true, 1.0F,
-        Vector3<float>(0.21F), 0.8F);
-    this->NewMap->newPanel->setMovable(false);
-    this->NewMap->newPanel->setEnable(false);
-
-    NewMap->t_mapSizeX =
-        new TextBox(Vector2<int>(180, 40), *textRenderer, Vector2<int>(60, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
-    NewMap->t_mapSizeX->setParent(NewMap->newPanel);
-    NewMap->t_mapSizeY =
-        new TextBox(Vector2<int>(250, 40), *textRenderer, Vector2<int>(60, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
-    NewMap->t_mapSizeY->setParent(NewMap->newPanel);
-    NewMap->t_tile =
-        new TextBox(Vector2<int>(180, 65), *textRenderer, Vector2<int>(120, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
-    NewMap->t_tile->setParent(NewMap->newPanel);
-
-    NewMap->l_mapSize = new Label(
-        "Map Size", Vector2<int>(40, 40), *textRenderer, 1.0F,
-        Vector3<float>(0.58F), UIObjectType::LABEL, LabelType::NOT_CLICKABLE);
-    NewMap->l_mapSize->setParent(NewMap->newPanel);
-    NewMap->l_mapSize->setMouseEvent(false);
-    NewMap->l_x = new Label("x", Vector2<int>(240, 40), *textRenderer, 1.0F,
-                            Vector3<float>(0.58F), UIObjectType::LABEL,
-                            LabelType::NOT_CLICKABLE);
-    NewMap->l_x->setParent(NewMap->newPanel);
-    NewMap->l_x->setMouseEvent(false);
-    NewMap->l_tile = new Label("Tileset", Vector2<int>(40, 65), *textRenderer,
-                               1.0F, Vector3<float>(0.58F), UIObjectType::LABEL,
-                               LabelType::NOT_CLICKABLE);
-    NewMap->l_tile->setParent(NewMap->newPanel);
-    NewMap->l_tile->setMouseEvent(false);
-    NewMap->b_okey = new TextButton(
-        "Okay", Vector2<int>(50, 105), Vector2<int>(60, 20), *textRenderer,
-        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    NewMap->b_okey->setButtonClickColor(Vector3<float>(0.30F));
-    NewMap->b_okey->setButtonHoverColor(Vector3<float>(0.30F));
-    NewMap->b_okey->setTextHoverColor(Vector3<float>(0.58F));
-    NewMap->b_okey->setTextClickColor(Vector3<float>(1.0F));
-    NewMap->b_okey->setHaveOutline(true);
-    NewMap->b_okey->setOutlineColor(Vector3<float>(1.0F));
-    NewMap->b_okey->setParent(NewMap->newPanel);
+    this->NewMap->Load();
 
     // harita yukle paneli
     this->SaveLoad = new SaveLoadSystem();
-    this->SaveLoad->loadPanel = new Panel(
-        Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y),
-        "Load Panel", Vector2<int>(400, 200), *textRenderer, true, true, 1.0F,
-        Vector3<float>(0.21F), 0.8F);
-    this->SaveLoad->loadPanel->setMovable(false);
-    this->SaveLoad->loadPanel->setEnable(false);
-    this->SaveLoad->load_mapsPanel = new Panel(
-        Vector2<int>(20, 60), "Map Panel", Vector2<int>(300, 100),
-        *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
-    this->SaveLoad->load_mapsPanel->setMovable(false);
-    this->SaveLoad->load_mapsPanel->setEnable(false);
-    this->SaveLoad->load_mapsPanel->setScrollable(true);
-    this->SaveLoad->load_mapsPanel->setOutline(true);
-    this->SaveLoad->load_mapsPanel->setVisible(true);
-    this->SaveLoad->load_mapsPanel->setOutlineColor(Vector3<float>(0.47F));
-    this->SaveLoad->load_mapsPanel->setParent(SaveLoad->loadPanel, true);
-    this->SaveLoad->load_mapsPanel->setParentCenterPos();
-    this->SaveLoad->load_listMaps =
-        new ListItem(this->SaveLoad->load_mapsPanel);
-    // this->SaveLoad->load_listMaps->setParent(this->SaveLoad->load_mapsPanel,
-    // true);
-    this->SaveLoad->t_load =
-        new TextBox(Vector2<int>(20, 170), *textRenderer, Vector2<int>(120, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
-    this->SaveLoad->t_load->setParent(SaveLoad->loadPanel);
-    this->SaveLoad->t_load->editable = false;
-    this->SaveLoad->b_map_load = new TextButton(
-        "Load", Vector2<int>(180, 170), Vector2<int>(60, 20), *textRenderer,
-        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    this->SaveLoad->b_map_load->setButtonClickColor(Vector3<float>(0.30F));
-    this->SaveLoad->b_map_load->setButtonHoverColor(Vector3<float>(0.30F));
-    this->SaveLoad->b_map_load->setTextHoverColor(Vector3<float>(0.58F));
-    this->SaveLoad->b_map_load->setTextClickColor(Vector3<float>(1.0F));
-    this->SaveLoad->b_map_load->setHaveOutline(true);
-    this->SaveLoad->b_map_load->setOutlineColor(Vector3<float>(1.0F));
-    this->SaveLoad->b_map_load->setParent(SaveLoad->loadPanel);
-    std::function<void(TextButton *, TextButton *)> loadListChanged =
-        std::bind(&SaveLoadSystem::LoadListChanged, this->SaveLoad,
-                  std::placeholders::_1, std::placeholders::_2);
-    this->SaveLoad->load_listMaps->AddListener(loadListChanged);
-
-    // harita save paneli
-    this->SaveLoad->savePanel = new Panel(
-        Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y),
-        "Save Panel", Vector2<int>(400, 200), *textRenderer, true, true, 1.0F,
-        Vector3<float>(0.21F), 0.8F);
-    this->SaveLoad->savePanel->setMovable(false);
-    this->SaveLoad->savePanel->setEnable(false);
-    this->SaveLoad->save_mapsPanel = new Panel(
-        Vector2<int>(20, 60), "Map Panel", Vector2<int>(300, 100),
-        *textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
-    this->SaveLoad->save_mapsPanel->setMovable(false);
-    this->SaveLoad->save_mapsPanel->setEnable(false);
-    this->SaveLoad->save_mapsPanel->setScrollable(true);
-    this->SaveLoad->save_mapsPanel->setOutline(true);
-    this->SaveLoad->save_mapsPanel->setVisible(true);
-    this->SaveLoad->save_mapsPanel->setOutlineColor(Vector3<float>(0.47F));
-    this->SaveLoad->save_mapsPanel->setParent(SaveLoad->savePanel, true);
-    this->SaveLoad->save_mapsPanel->setParentCenterPos();
-    this->SaveLoad->save_listMaps =
-        new ListItem(this->SaveLoad->save_mapsPanel);
-    // this->SaveLoad->save_listMaps->setParent(this->SaveLoad->save_mapsPanel,
-    // true);
-    this->SaveLoad->t_save =
-        new TextBox(Vector2<int>(20, 170), *textRenderer, Vector2<int>(120, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
-    this->SaveLoad->t_save->setParent(SaveLoad->savePanel);
-    this->SaveLoad->b_map_save = new TextButton(
-        "Save", Vector2<int>(180, 170), Vector2<int>(60, 20), *textRenderer,
-        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
-    this->SaveLoad->b_map_save->setButtonClickColor(Vector3<float>(0.30F));
-    this->SaveLoad->b_map_save->setButtonHoverColor(Vector3<float>(0.30F));
-    this->SaveLoad->b_map_save->setTextHoverColor(Vector3<float>(0.58F));
-    this->SaveLoad->b_map_save->setTextClickColor(Vector3<float>(1.0F));
-    this->SaveLoad->b_map_save->setHaveOutline(true);
-    this->SaveLoad->b_map_save->setOutlineColor(Vector3<float>(1.0F));
-    this->SaveLoad->b_map_save->setParent(SaveLoad->savePanel);
-    std::function<void(TextButton *, TextButton *)> saveListChanged =
-        std::bind(&SaveLoadSystem::SaveListChanged, this->SaveLoad,
-                  std::placeholders::_1, std::placeholders::_2);
-    this->SaveLoad->save_listMaps->AddListener(saveListChanged);
+    this->SaveLoad->Load();
 
     // env_item
     envItemManager = new Env_Item_Manager();
@@ -581,7 +457,6 @@ void Editor::ProcessInput()
     if (NewMap->b_okey->IsMouseDown())
     {
         NewMapResult t = NewMap->B_NewMap();
-
         if (!t.tiles.empty() && !t.tilesUI.empty())
         {
             if (tils != nullptr)

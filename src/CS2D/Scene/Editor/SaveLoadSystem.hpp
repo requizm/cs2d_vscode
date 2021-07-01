@@ -33,7 +33,7 @@ class SaveLoadSystem
     SaveLoadSystem();
     ~SaveLoadSystem();
 
-    void Start();
+    void Load();
     void ProcessInput();
     void Update();
     void Render(SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer);

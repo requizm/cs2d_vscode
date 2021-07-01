@@ -27,7 +27,7 @@ class NewMapSystem
     NewMapSystem(/* args */);
     ~NewMapSystem();
 
-    void Start();
+    void Load();
     void ProcessInput();
     void Update();
     void Render(SpriteRenderer &menuRenderer, SquareRenderer &squareRenderer);

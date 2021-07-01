@@ -3,6 +3,7 @@
 #include <tracy/Tracy.hpp>
 #endif
 
+#include "Model/Scene.hpp"
 #include "Scene/Editor/Editor.hpp"
 #include "Scene/Menu.hpp"
 #include "Scene/StartGame.hpp"
