@@ -1,6 +1,8 @@
 #ifndef SPRITEBUTTON_H
 #define SPRITEBUTTON_H
 
+#include <functional>
+
 #include "UIObject.hpp"
 
 class SpriteButton : public UIObject

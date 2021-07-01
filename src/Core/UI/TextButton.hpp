@@ -1,6 +1,8 @@
 #ifndef TEXTBUTTON_H
 #define TEXTBUTTON_H
 
+#include <functional>
+
 #include "UIObject.hpp"
 
 class TextButton : public UIObject
