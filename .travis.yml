@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; ls ; then cmake . -BBuild ; make -C $TRAVIS_BUILD_DIR/Build ; fi
+script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; ls ; then cmake . -BBuild -G "Unix Makefiles" ; make -C $TRAVIS_BUILD_DIR/Build ; fi
 
 env:
   global:
