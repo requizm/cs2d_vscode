@@ -29,7 +29,7 @@ class ListItemElement : public UIObject
 class ListItem : public UIObject
 {
    public:
-    ListItem(Panel *panel);
+    explicit ListItem(Panel *panel);
     ListItem();
     ~ListItem() final;
 

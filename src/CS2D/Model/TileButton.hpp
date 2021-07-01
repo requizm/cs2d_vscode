@@ -9,7 +9,7 @@ class TileButtonWorld : public UIObject
 {
    public:
     TileButtonWorld();
-    TileButtonWorld(Tile &tile, float scale = 1.0F);
+    explicit TileButtonWorld(Tile &tile, float scale = 1.0F);
     ~TileButtonWorld() final;
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) final;
@@ -37,7 +37,7 @@ class TileButtonWorld : public UIObject
 class TileButtonScreen : public UIObject
 {
    public:
-    TileButtonScreen(Tile &tile, float scale = 1.0F);
+    explicit TileButtonScreen(Tile &tile, float scale = 1.0F);
     ~TileButtonScreen() final;
 
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer) final;

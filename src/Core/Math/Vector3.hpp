@@ -9,9 +9,9 @@ class Vector3
    public:
     T x, y, z;
 
-    Vector3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
+    explicit Vector3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
 
-    Vector3(T _v) : x(_v), y(_v), z(_v) {}
+    explicit Vector3(T _v) : x(_v), y(_v), z(_v) {}
 
     Vector3() : x(0), y(0), z(0) {}
 

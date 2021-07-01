@@ -7,7 +7,7 @@
 class Scene
 {
    public:
-    Scene(const std::string &name);
+    explicit Scene(const std::string &name);
     Scene(Scene &&) = default;
     Scene(const Scene &) = default;
     Scene &operator=(Scene &&) = default;

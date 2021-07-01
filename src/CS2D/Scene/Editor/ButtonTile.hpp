@@ -16,7 +16,7 @@ class ButtonTile
 
     ButtonTile() = default;
 
-    ButtonTile(Vector2<int> cell)
+    explicit ButtonTile(Vector2<int> cell)
     {
         this->cell = cell;
         this->button = new TileButtonWorld();
@@ -55,5 +55,6 @@ class ButtonTile
         this->item = item;
     }
 };
+
 
 #endif

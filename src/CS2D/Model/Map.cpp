@@ -19,10 +19,10 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-Map::Map(std::string file, const std::string &name)
+Map::Map(const std::string &path, const std::string &name)
 {
     this->name = name;
-    Load(file);
+    Load(path);
 }
 
 Map::~Map()

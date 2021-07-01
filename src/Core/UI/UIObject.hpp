@@ -26,7 +26,7 @@ class UIObject
 {
    public:
     UIObject() = default;
-    UIObject(UIObjectType type);
+    explicit UIObject(UIObjectType type);
     UIObject(Vector2<int> position, Vector2<int> size, float scale,
              TextRenderer &renderer);
     UIObject(Vector2<int> position, Vector2<int> size, float scale,

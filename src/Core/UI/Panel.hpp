@@ -27,7 +27,7 @@ class Panel : public UIObject
           const Vector3<float> &color = Vector3<float>(1.0F),
           float transp = 0.9F);
     Panel();
-    virtual ~Panel();
+    ~Panel();
 
     void Draw(SpriteRenderer &spriteRenderer,
               SquareRenderer &squareRenderer) override;

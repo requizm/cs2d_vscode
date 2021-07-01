@@ -20,8 +20,8 @@ class Collider
     Vector2<int> position = Vector2<int>(0);
 
    public:
-    Collider(Vector2<int> pos, ColliderTypes _type);
-    Collider(ColliderTypes _type);
+    explicit Collider(Vector2<int> pos, ColliderTypes _type);
+    explicit Collider(ColliderTypes _type);
     ~Collider();
 
     ColliderTypes GetType();

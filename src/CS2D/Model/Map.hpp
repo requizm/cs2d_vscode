@@ -19,7 +19,7 @@ class Map
     std::vector<Weapon *> weapons;
 
     Map() = default;
-    Map(std::string file, const std::string &name);
+    Map(const std::string &path, const std::string &name);
     ~Map();
 
     std::string GetName() const;

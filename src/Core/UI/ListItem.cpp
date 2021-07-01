@@ -115,7 +115,7 @@ void ListItem::Select(int i)
 {
     if (i < 0 || i > items.size())
     {
-        WRITE_ERROR("Boyle bir list item indexi yok" + i);
+        WRITE_ERROR("Boyle bir list item indexi yok" + std::to_string(i));
         exit(EXIT_FAILURE);
     }
     int old = selectedIndex;
@@ -151,7 +151,7 @@ ListItemElement *ListItem::getIndex(int i)
 {
     if (i < 0 || i > items.size())
     {
-        WRITE_ERROR("Boyle bir list item indexi yok" + i);
+        WRITE_ERROR("Boyle bir list item indexi yok" + std::to_string(i));
         exit(EXIT_FAILURE);
     }
     return items.at(i);

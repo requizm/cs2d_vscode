@@ -5,11 +5,10 @@
 #include <rapidxml-1.13/rapidxml_print.hpp>
 #include <string>
 
-
 class XMLLoader
 {
    public:
-    XMLLoader(std::string &mapName);
+    explicit XMLLoader(std::string &mapName);
     ~XMLLoader();
     rapidxml::xml_document<> &GetDoc();
 

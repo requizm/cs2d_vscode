@@ -56,8 +56,6 @@ TextRenderer::TextRenderer(GLuint width, GLuint height, Matrix4<float> camera)
     this->TextShader.UnUse();
 }
 
-TextRenderer::TextRenderer() = default;
-
 void TextRenderer::Load(std::string font, GLuint fontSize)
 {
     // First clear the previously loaded Characters

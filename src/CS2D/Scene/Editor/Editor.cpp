@@ -776,7 +776,7 @@ void Editor::Render()
     objects_ui->Draw(*squareRenderer);
     this->textRenderer->RenderText(
         "fps: " + std::to_string(InputManager::m_fps), Vector2(700, 135), 1.0F,
-        0.5F);
+        Vector3<float>(0.5F));
 }
 
 void Editor::SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n)

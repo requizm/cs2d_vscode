@@ -5,7 +5,7 @@ template <typename T>
 class Matrix4
 {
    public:
-    Matrix4(T v)
+    explicit Matrix4(T v)
     {
         for (int i = 0; i < 16; i++)
         {

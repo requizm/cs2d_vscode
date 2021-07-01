@@ -4,8 +4,6 @@
 
 Camera::Camera(int width, int height, Vector2<int> pos)
 {
-    needX = 0;
-    needY = 0;
     view = pos;
     this->width = width;
     this->height = height;
@@ -23,6 +21,6 @@ void Camera::setPosition(Vector2<int> newPos)
     view.y += static_cast<int>(needY);
 
 
-    const Vector3 translation(-needX, -needY, 0.0f);
+    const Vector3<float> translation(-needX, -needY, 0.0F);
     cameraMatrix = Projection::translate(cameraMatrix, translation);
 }
