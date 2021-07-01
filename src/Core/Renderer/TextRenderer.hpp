@@ -4,8 +4,7 @@
 #include <GL/glew.h>
 #include <map>
 
-#include "../Math/Vector3.hpp"
-#include "../Math/Vector2.hpp"
+#include "Shader.hpp"
 
 /// Holds all state information relevant to a character as loaded using FreeType
 struct Character
@@ -26,11 +25,12 @@ class TextRenderer
     std::map<GLchar, Character> Characters;
     // Shader used for text rendering
     Shader TextShader;
-    GLuint VAO, VBO;
+    GLuint VAO = 0;
+    GLuint VBO = 0;
     // Constructor
     TextRenderer(GLuint width, GLuint height);
     TextRenderer(GLuint width, GLuint height, Matrix4<float> camera);
-    TextRenderer();
+    TextRenderer() = default;
     // Pre-compiles a list of characters from the given font
     void Load(std::string font, GLuint fontSize);
     // Renders a string of text using the precompiled list of characters
