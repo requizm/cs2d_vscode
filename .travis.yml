@@ -29,7 +29,7 @@ addons:
       name: requizm/cs2d_vscode
       version: 1.0
       description: My Project
-    build_command_prepend: "(rm -rf ./Build ; mkdir ./Build ; cmake . -BBuild -G "Unix Makefiles")"
+    build_command_prepend: "(ls ; rm -rf ./Build ; mkdir ./Build ; cmake . -BBuild -G "Unix Makefiles")"
     build_command:   "make -C ./Build"
 
     # Pattern to match selecting branches that will run analysis. We recommend leaving this set to 'coverity_scan'.
