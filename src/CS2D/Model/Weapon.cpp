@@ -1,5 +1,7 @@
 #include "Weapon.hpp"
 
+#include "Scene.hpp"
+#include "../Other/SceneManager.hpp"
 #include "../Scene/StartGame.hpp"
 
 

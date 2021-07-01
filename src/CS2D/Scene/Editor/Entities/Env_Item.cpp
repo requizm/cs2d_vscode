@@ -1,6 +1,8 @@
 #include "Env_Item.hpp"
 
 #include "../Editor.hpp"
+#include "../../../Model/Scene.hpp"
+#include "../../../Other/SceneManager.hpp"
 
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>

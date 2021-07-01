@@ -1,6 +1,9 @@
 #include "TileButton.hpp"
 
+#include "Scene.hpp"
+#include "../Other/SceneManager.hpp"
 #include "../Scene/Editor/Editor.hpp"
+
 
 
 TileButtonWorld::TileButtonWorld() : UIObject(UIObjectType::TILEBUTTON)

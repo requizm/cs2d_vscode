@@ -1,5 +1,7 @@
 #include "Map.hpp"
 
+#include "Scene.hpp"
+#include "../Other/SceneManager.hpp"
 #include "../Scene/StartGame.hpp"
 
 #if defined(WIN32) && defined(TRACY_ENABLE)
