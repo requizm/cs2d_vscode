@@ -10,7 +10,7 @@ env:
 
 before_install:
   - mkdir $TRAVIS_BUILD_DIR/Build
-  - apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+  - sudo apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
 
 addons:
   coverity_scan:
