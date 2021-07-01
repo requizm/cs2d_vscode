@@ -5,7 +5,7 @@
 #include "../../Core/Renderer/SquareRenderer.hpp"
 #include "../../Core/Renderer/TextRenderer.hpp"
 #include "../Model/Player.hpp"
-
+#include "../Model/Scene.hpp"
 
 class StartGame : public Scene
 {

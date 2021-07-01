@@ -9,7 +9,6 @@
 #include "Map.hpp"
 #include "Weapon.hpp"
 
-
 enum MoveDirection
 {
     TOP,
