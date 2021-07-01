@@ -5,6 +5,7 @@
 #include <map>
 
 #include "../Math/Vector3.hpp"
+#include "../Math/Vector2.hpp"
 
 /// Holds all state information relevant to a character as loaded using FreeType
 struct Character
