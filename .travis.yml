@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then make ; fi
+script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then make -C $TRAVIS_BUILD_DIR/Build ; fi
 
 env:
   global:
