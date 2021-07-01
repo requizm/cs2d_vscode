@@ -1,4 +1,5 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/requizm/cs2d_vscode/badge)](https://www.codefactor.io/repository/github/requizm/cs2d_vscode)
+[![Codacy](https://app.codacy.com/project/badge/Grade/c6e13fcd32764c3a9a1094a736d8d991)](https://www.codacy.com/gh/requizm/cs2d_vscode/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=requizm/cs2d_vscode&amp;utm_campaign=Badge_Grade)
 ![Build](https://github.com/requizm/cs2d_vscode/workflows/build/badge.svg)
 [![Build status](https://ci.appveyor.com/api/projects/status/7qjq7a7vhsh5cbow?svg=true)](https://ci.appveyor.com/project/requizm/cs2d-vscode)
 ![GitHub repo size](https://img.shields.io/github/repo-size/requizm/cs2d_vscode)
