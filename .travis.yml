@@ -2,8 +2,6 @@ language: cpp
 dist: focal
 sudo: required
 
-script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; ls ; then cmake . -BBuild -G "Unix Makefiles" ; make -C $TRAVIS_BUILD_DIR/Build ; fi
-
 env:
   global:
     # COVERITY_SCAN_TOKEN
@@ -16,9 +14,6 @@ before_install:
 
 addons:
   coverity_scan:
-
-    # GitHub project metadata
-    # ** specific to your project **
     project:
       name: requizm/cs2d_vscode
       version: 1.0
@@ -29,4 +24,6 @@ addons:
     # Pattern to match selecting branches that will run analysis. We recommend leaving this set to 'coverity_scan'.
     # Take care in resource usage, and consider the build frequency allowances per
     #   https://scan.coverity.com/faq#frequency
-    branch_pattern: coverity_scan
+    branch_pattern: master
+    
+script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then cmake . -BBuild -G "Unix Makefiles" ; make -C $TRAVIS_BUILD_DIR/Build ; fi
