@@ -13,11 +13,14 @@ void Game::Init()
 
     Menu *menu = new Menu();
     menu->Initialize(menuSprites);
+    SceneManager::instance().AddScene(menu);
 
     Editor *editor = new Editor();
     editor->Initialize();
+    SceneManager::instance().AddScene(editor);
 
     StartGame *startGame = new StartGame();
+    SceneManager::instance().AddScene(startGame);
 
     SceneManager::instance().LoadScene("Menu");
 }
@@ -27,10 +30,7 @@ void Game::Update()
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    Scene *scene = nullptr;
-    scene = SceneManager::instance().GetActiveScene<Scene>();
-    if(scene != nullptr)
-        SceneManager::instance().GetActiveScene<Scene>()->Update();
+    SceneManager::instance().GetActiveScene<Scene>()->Update();
 }
 
 void Game::ProcessInput()
@@ -38,10 +38,7 @@ void Game::ProcessInput()
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    Scene *scene = nullptr;
-    scene = SceneManager::instance().GetActiveScene<Scene>();
-    if(scene != nullptr)
-        SceneManager::instance().GetActiveScene<Scene>()->ProcessInput();
+    SceneManager::instance().GetActiveScene<Scene>()->ProcessInput();
 }
 
 void Game::Render()
@@ -49,10 +46,7 @@ void Game::Render()
 #if defined(WIN32) && defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    Scene *scene = nullptr;
-    scene = SceneManager::instance().GetActiveScene<Scene>();
-    if(scene != nullptr)
-        SceneManager::instance().GetActiveScene<Scene>()->Render();
+    SceneManager::instance().GetActiveScene<Scene>()->Render();
     menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos,
                             Vector2<int>(GameParameters::SCREEN_HEIGHT / 35,
                                          GameParameters::SCREEN_HEIGHT / 35),

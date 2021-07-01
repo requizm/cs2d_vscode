@@ -2,8 +2,8 @@
 #define SCENEMANAGER_H
 
 #include "../../Core/Manager/InputManager.hpp"
-
 #include "../Model/Scene.hpp"
+
 
 class SceneManager
 {

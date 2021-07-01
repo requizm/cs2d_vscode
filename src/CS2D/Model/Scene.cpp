@@ -1,21 +1,8 @@
 #include "Scene.hpp"
 
-#include "../Other/SceneManager.hpp"
-
-
 Scene::Scene(const std::string& name)
 {
-    std::vector<Scene*> scenes = SceneManager::instance().GetScenes();
-    for (auto& scene : scenes)
-    {
-        if (scene->GetName() == name)
-        {
-            //WRONG NAME
-            return;
-        }
-    }
     this->name = name;
-    SceneManager::instance().AddScene(this);
 }
 
 Scene::~Scene()
