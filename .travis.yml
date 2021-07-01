@@ -1,8 +1,15 @@
+language: cpp
+sudo: required
+
 env:
   global:
     # COVERITY_SCAN_TOKEN
     # ** specific to your project **
   secure: "csEA3tv4+NTJAksoT7t3SmJ3UC1a4IY0NJm3NDjh0pOK48aD1FU2wU9wqqgRNr3yq+63rgPEPKa8ifJE2ejIoiDpGHmvy8Ejg7Dq+sj8tBavr3q9D6y64ZN5RRSUv85oU3uA52mPLxpQkFZz9ppV84frH26B1teE14qogOQdXmE4W7Hy71Ii1zH2ydqQHuyymPpN63TgGV+p5PsOcygrhdwutusntv3IsomWKGq4V5MOTH5bnGBWsl4VwWfDv+awgAhWS+u8A1aqgR32WUvsi0P6PP0fQFJL3JmoUOG2aGWpDpLyxzwOtA8M37PcuULo58MWwt5MnbWDSIoRhUDm8+ELU7vmnY/r0z9MOUdkwIb1TJN9Fyj1PiNKbPJ4muPiVEFmIYJMSzomYjB3HxZZcvW6H+LQYI4SF8PG1oSgIFP4yn/xyW39ukIKr2FhwzggBgDW7s/PySj4Rh6yD5V7pxkoPSK0I0pcSY/9QBlQkbs/U2gGJnZFORtNuHsJuJtEo1hW1u6s1qmKPof7wcvimCO/05jmf4+29iEihoDSj9hg5s5y1su7r3SWlSzpaN990MMumtgBUpf6oglzCCri1vWP43NGul/WMGZaofuLOD1aH9MvrOgyKLmh6V5zgVPvTEOMXXLYyYCLtxLWJLkqPRfOu2daPBGmmOM+pv00mKc="
+
+before_install:
+  - mkdir $TRAVIS_BUILD_DIR/build
+
 addons:
   coverity_scan:
 
@@ -12,15 +19,8 @@ addons:
       name: requizm/cs2d_vscode
       version: 1.0
       description: My Project
-
-
-    # Commands to prepare for build_command
-    # ** likely specific to your build **
-    build_command_prepend: cmake .
-
-    # The command that will be added as an argument to "cov-build" to compile your project for analysis,
-    # ** likely specific to your build **
-    build_command: make
+    build_command_prepend: "(rm -rf $TRAVIS_BUILD_DIR/Build ; mkdir $TRAVIS_BUILD_DIR/Build ; cd $TRAVIS_BUILD_DIR/Build ; cmake $TRAVIS_BUILD_DIR)"
+    build_command:   "make -C $TRAVIS_BUILD_DIR/Build"
 
     # Pattern to match selecting branches that will run analysis. We recommend leaving this set to 'coverity_scan'.
     # Take care in resource usage, and consider the build frequency allowances per
