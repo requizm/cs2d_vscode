@@ -1,5 +1,10 @@
 #include "SceneManager.hpp"
 
+#include "../Model/Scene.hpp"
+#include "../Scene/Menu.hpp"
+#include "../Scene/StartGame.hpp"
+#include "../Scene/Editor/Editor.hpp"
+
 SceneManager::~SceneManager()
 {
     for (auto& scene : scenes)
