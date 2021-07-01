@@ -2,6 +2,7 @@
 #define TEXT_RENDERER_H
 
 #include <GL/glew.h>
+#include <map>
 
 #include "../Math/Vector3.hpp"
 

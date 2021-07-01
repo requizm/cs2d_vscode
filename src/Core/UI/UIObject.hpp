@@ -1,6 +1,8 @@
 #ifndef UIOBJECT_H
 #define UIOBJECT_H
 
+#include <vector>
+
 #include "../Renderer/SpriteRenderer.hpp"
 #include "../Renderer/SquareRenderer.hpp"
 #include "../Renderer/TextRenderer.hpp"
