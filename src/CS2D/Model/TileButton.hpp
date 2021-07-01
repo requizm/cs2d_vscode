@@ -2,9 +2,7 @@
 #define TILEBUTTON_H
 
 #include "../../Core/UI/UIObject.hpp"
-
 #include "Tile.hpp"
-#include "../Other/SceneManager.hpp"
 
 
 class TileButtonWorld : public UIObject

@@ -2,11 +2,7 @@
 
 #define PI 3.14159265
 
-Square::Square() : VAO(0) {}
-
 void Square::init() { initData(); }
-
-Square::~Square() = default;
 
 void Square::initData()
 {

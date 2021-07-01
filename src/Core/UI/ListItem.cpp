@@ -1,5 +1,10 @@
 #include "ListItem.hpp"
 
+#include "../Manager/InputManager.hpp"
+#include "../Manager/Logger.hpp"
+#include "../Manager/MemoryOverride/MemoryOverride.hpp"
+
+
 ListItem::ListItem(Panel *panel)
     : UIObject(panel->getPosition(), panel->getScale(), *(panel->rend))
 {

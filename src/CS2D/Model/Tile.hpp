@@ -4,7 +4,6 @@
 #include "../../Core/Collider/RectangleCollider.hpp"
 #include "../../Core/Model/GameObject.hpp"
 
-
 enum TileTypes
 {
     WALL,

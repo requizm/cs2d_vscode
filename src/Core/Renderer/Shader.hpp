@@ -5,9 +5,9 @@
 
 #include <string>
 
-#include "../Manager/Logger.hpp"
-#include "../Math/Projection.hpp"
+#include "../Math/Matrix4.hpp"
 #include "../Math/Vector2.hpp"
+#include "../Math/Vector3.hpp"
 
 
 // General purpsoe shader object. Compiles from file, generates
@@ -17,9 +17,9 @@ class Shader
 {
    public:
     // State
-    GLuint ID;
+    GLuint ID = 0;
     // Constructor
-    Shader();
+    Shader() = default;
     // Sets the current shader as active
     Shader& Use();
     // Compiles the shader from given source code

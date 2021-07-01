@@ -1,5 +1,7 @@
 #include "SpriteButton.hpp"
 
+#include "../Manager/InputManager.hpp"
+
 SpriteButton::SpriteButton(const Sprite &sprite, const Vector2<int> &position, const Vector2<int> &size, bool listenerEnabled, bool difColor, float scale) : UIObject(position, scale, UIObjectType::SPRITEBUTTON)
 {
     this->sprite = sprite;

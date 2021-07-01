@@ -1,14 +1,9 @@
 #ifndef PANEL_H
 #define PANEL_H
 
-#include "../Manager/InputManager.hpp"
-#include "../Manager/MemoryOverride/MemoryOverride.hpp"
-#include "../Renderer/SpriteRenderer.hpp"
-#include "../Renderer/SquareRenderer.hpp"
+#include "../Manager/Input/InputStructs.hpp"
 #include "Label.hpp"
 #include "SpriteButton.hpp"
-
-
 
 class Panel : public UIObject
 {

@@ -3,20 +3,18 @@
 
 #include <GL/glew.h>
 
-#include "../Manager/Logger.hpp"
 #include "../Math/Vector2.hpp"
 #include "Texture.hpp"
-
 
 class Sprite
 {
    public:
     explicit Sprite(Texture2D texture, GLuint x = 0, GLuint y = 0,
                     GLuint width = 0, GLuint height = 0);
-    Sprite();
-    ~Sprite();
+    Sprite() = default;
+    ~Sprite() = default;
 
-    GLuint VAO;
+    GLuint VAO = 0;
     Texture2D texture;
     Vector2<int> size;
 

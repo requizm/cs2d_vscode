@@ -4,22 +4,12 @@
 #include <GL/glew.h>
 #include <math.h>  // pow()
 
-#include <cstring>
-#include <fstream>
-#include <sstream>
+#include <string>
 #include <vector>
 
-#include "../../Core/Loader/JSONLoader.hpp"
-#include "../../Core/Loader/XMLLoader.hpp"
-#include "../../Core/Manager/Logger.hpp"
-#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
-#include "../../Core/Manager/ResourceManager.hpp"
 #include "../../Core/Renderer/SpriteRenderer.hpp"
-
-#include "../Other/GameParameters.hpp"
-#include "../Other/SceneManager.hpp"
-#include "Weapon.hpp"
 #include "Tile.hpp"
+#include "Weapon.hpp"
 
 
 class Map
@@ -28,7 +18,7 @@ class Map
     std::vector<Tile *> tiles;
     std::vector<Weapon *> weapons;
 
-    Map();
+    Map() = default;
     Map(std::string file, const std::string &name);
     ~Map();
 

@@ -1,5 +1,7 @@
 #include "GameParameters.hpp"
 
+#include "../../Core/Loader/JSONLoader.hpp"
+
 int GameParameters::SCREEN_WIDTH;
 int GameParameters::SCREEN_HEIGHT;
 int GameParameters::SIZE_TILE;

@@ -1,9 +1,5 @@
 #include "Outline.hpp"
 
-Outline::Outline() : VAO(0) {}
-
-Outline::~Outline() = default;
-
 void Outline::initData()
 {
     // Configure VAO/VBO

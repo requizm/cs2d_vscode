@@ -1,9 +1,6 @@
 #include "SceneManager.hpp"
 
-#include "../Model/Scene.hpp"
-#include "../Scene/Menu.hpp"
-#include "../Scene/StartGame.hpp"
-#include "../Scene/Editor/Editor.hpp"
+#include "../../Core/Manager/InputManager.hpp"
 
 SceneManager::~SceneManager()
 {
@@ -56,7 +53,7 @@ void SceneManager::AddScene(Scene* scene)
     scenes.push_back(scene);
 }
 
-void SceneManager::LoadScene(const std::string &name)
+void SceneManager::LoadScene(const std::string& name)
 {
     Scene* sc = nullptr;
     for (auto& scene : scenes)

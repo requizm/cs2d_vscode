@@ -1,5 +1,13 @@
 #include "XMLLoader.hpp"
 
+#include <cstring>
+#include <fstream>
+#include <sstream>
+
+#include "../Manager/Logger.hpp"
+#include "../Manager/MemoryOverride/MemoryOverride.hpp"
+
+
 XMLLoader::XMLLoader(std::string &mapName) { Load(mapName); }
 
 XMLLoader::~XMLLoader() { delete[] codeChar; }

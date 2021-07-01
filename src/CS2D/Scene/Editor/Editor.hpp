@@ -1,31 +1,10 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#ifdef WIN32
-#include <dirent/dirent.h>
-#endif  // WIN32
-#ifdef LINUX
-#include <dirent.h>
-#endif  // LINUX
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <vector>
-
-#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
-#include "../../../Core/Manager/ObjectManager.hpp"
-#include "../../../Core/Manager/Timer.hpp"
 #include "../../../Core/Model/Camera.hpp"
-#include "../../../Core/UI/ListItem.hpp"
-#include "../../../Core/UI/Panel.hpp"
 #include "../../../Core/UI/RadioButton.hpp"
-#include "../../../Core/UI/TextBox.hpp"
-
-
-#include "../../Model/Tile.hpp"
 #include "../../Model/Scene.hpp"
-#include "../../Other/GameParameters.hpp"
-#include "../../Other/SceneManager.hpp"
+#include "../../Model/Tile.hpp"
 #include "Entities/Env_Item.hpp"
 #include "NewMapSystem.hpp"
 #include "SaveLoadSystem.hpp"

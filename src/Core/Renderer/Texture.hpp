@@ -3,9 +3,6 @@
 
 #include <GL/glew.h>
 
-#include <vector>
-
-
 // Texture2D is able to store and configure a texture in OpenGL.
 // It also hosts utility functions for easy management.
 class Texture2D

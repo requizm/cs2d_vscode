@@ -1,8 +1,8 @@
 #include "JSONLoader.hpp"
 
-JSONLoader::JSONLoader() {}
+#include <fstream>
 
-JSONLoader::~JSONLoader() {}
+#include "../Manager/Logger.hpp"
 
 nlohmann::json JSONLoader::Load(std::string str)
 {

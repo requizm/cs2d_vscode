@@ -6,11 +6,12 @@
 class Square
 {
    public:
-    Square();
-    void init();
-    ~Square();
+    Square() = default;
+    ~Square() = default;
 
-    GLuint VAO;
+    void init();
+
+    GLuint VAO = 0;
 
    private:
     void initData();

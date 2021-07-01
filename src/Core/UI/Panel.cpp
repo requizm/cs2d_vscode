@@ -1,5 +1,10 @@
 #include "Panel.hpp"
 
+#include "../Manager/InputManager.hpp"
+#include "../Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../Manager/ResourceManager.hpp"
+
+
 Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
              TextRenderer &renderer, bool isBackGround, bool opttitles,
              float scale, const Vector3<float> &color, float transp)
@@ -79,7 +84,7 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
         {
             if (childs[i]->GetObjectTypeString() == "Label")
                 childs[i]->Draw();
-            else if(childs[i]->GetObjectTypeString() == "TextButton")
+            else if (childs[i]->GetObjectTypeString() == "TextButton")
                 childs[i]->Draw(squareRenderer);
             else
                 childs[i]->Draw(spriteRenderer, squareRenderer);

@@ -1,9 +1,7 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 
-#include "../../Core/Manager/InputManager.hpp"
 #include "../Model/Scene.hpp"
-
 
 class SceneManager
 {
@@ -25,7 +23,7 @@ class SceneManager
     template <class T>
     T *GetActiveScene()
     {
-        return reinterpret_cast<T*>(activeScene);
+        return reinterpret_cast<T *>(activeScene);
     }
 
     /**

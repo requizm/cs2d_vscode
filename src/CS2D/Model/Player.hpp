@@ -4,19 +4,10 @@
 #include <iostream>
 
 #include "../../Core/Collider/CircleCollider.hpp"
-#include "../../Core/Manager/InputManager.hpp"
-#include "../../Core/Manager/Logger.hpp"
-#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
-#include "../../Core/Manager/Timer.hpp"
-#include "../../Core/Model/Camera.hpp"
 #include "../../Core/Model/GameObject.hpp"
-#include "../../Core/Renderer/SquareRenderer.hpp"
-
 #include "../Other/GameParameters.hpp"
-#include "../Other/SceneManager.hpp"
 #include "Map.hpp"
 #include "Weapon.hpp"
-#include "Tile.hpp"
 
 
 enum MoveDirection

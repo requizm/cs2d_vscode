@@ -1,8 +1,14 @@
 #include "Player.hpp"
 
-#include "Scene.hpp"
+#include "../../Core/Manager/InputManager.hpp"
+#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../Core/Manager/ResourceManager.hpp"
+#include "../../Core/Manager/Timer.hpp"
+#include "../../Core/Manager/Utils.hpp"
 #include "../Other/SceneManager.hpp"
 #include "../Scene/StartGame.hpp"
+#include "Tile.hpp"
+
 
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>

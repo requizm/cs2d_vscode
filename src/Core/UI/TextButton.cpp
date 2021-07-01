@@ -1,5 +1,7 @@
 #include "TextButton.hpp"
 
+#include "../Manager/InputManager.hpp"
+
 TextButton::TextButton(const std::string &text, const Vector2<int> &position, const Vector2<int> &size,
                        TextRenderer &renderer,
                        const Vector3<float> &buttonColor,

@@ -1,6 +1,10 @@
 #include "SquareRenderer.hpp"
 
-SquareRenderer::SquareRenderer() {}
+#include "../../CS2D/Other/GameParameters.hpp"
+#include "../Manager/InputManager.hpp"
+#include "../Manager/ResourceManager.hpp"
+#include "../Math/Projection.hpp"
+
 
 SquareRenderer::SquareRenderer(bool init)
 {
@@ -25,8 +29,6 @@ SquareRenderer::SquareRenderer(bool init)
     emptyCircle = Circle(false);
     filledCircle = Circle(true);
 }
-
-SquareRenderer::~SquareRenderer() = default;
 
 void SquareRenderer::ui_RenderFilledSquare(
     Vector2<int> position, Vector2<int> size, const Vector3<float> &color,

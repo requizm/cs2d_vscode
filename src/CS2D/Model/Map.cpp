@@ -1,14 +1,23 @@
 #include "Map.hpp"
 
-#include "Scene.hpp"
+#include <cstring>
+#include <fstream>
+#include <sstream>
+
+#include "../../Core/Loader/JSONLoader.hpp"
+#include "../../Core/Loader/XMLLoader.hpp"
+#include "../../Core/Manager/Logger.hpp"
+#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../Core/Manager/ResourceManager.hpp"
+#include "../../Core/Manager/Utils.hpp"
+#include "../Other/GameParameters.hpp"
 #include "../Other/SceneManager.hpp"
 #include "../Scene/StartGame.hpp"
+
 
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
-
-Map::Map() = default;
 
 Map::Map(std::string file, const std::string &name)
 {

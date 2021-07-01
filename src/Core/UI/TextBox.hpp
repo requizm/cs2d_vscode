@@ -1,16 +1,12 @@
 #ifndef TEXTBOX_H
 #define TEXTBOX_H
 
-#include "../Manager/Timer.hpp"
-#include "../Renderer/Sprite.hpp"
-#include "../Renderer/SpriteRenderer.hpp"
-#include "../Renderer/SquareRenderer.hpp"
 #include "Label.hpp"
 
 class TextBox : public Label
 {
    public:
-    TextBox();
+    TextBox() = default;
 
     /**
      * @brief Construct a new TextBox

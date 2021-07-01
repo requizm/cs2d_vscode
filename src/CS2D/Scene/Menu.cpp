@@ -1,11 +1,20 @@
 #include "Menu.hpp"
+
+#include "../../Core/Manager/InputManager.hpp"
+#include "../../Core/Manager/Logger.hpp"
+#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../Core/Manager/ResourceManager.hpp"
+#include "../../Core/Manager/Utils.hpp"
+#include "../Other/GameParameters.hpp"
+#include "../Other/SceneManager.hpp"
+
+
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
 Menu::Menu() : Scene("Menu")
 {
-
 }
 
 void Menu::Load()
@@ -175,7 +184,7 @@ void Menu::ProcessInput()
         ZoneScopedS(10);
 #endif
         mapNames->Clear();
-        std::vector<std::string> maps = getMapNames();
+        std::vector<std::string> maps = Utils::GetFileNames(GameParameters::resDirectory + "levels");
         for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
         {
             mapNames->AddItem(maps[i]);
@@ -239,7 +248,7 @@ void Menu::newGameBtnClick()
 #endif
     std::string mName = GameParameters::resDirectory + "levels/" +
                         t_mapName->getText() + ".xml";
-    if(SceneManager::instance().params.empty())
+    if (SceneManager::instance().params.empty())
     {
         SceneManager::instance().params.push_back(mName);
     }

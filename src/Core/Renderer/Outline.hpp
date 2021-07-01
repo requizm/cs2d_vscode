@@ -6,9 +6,9 @@
 class Outline
 {
    public:
-    Outline();
-    ~Outline();
-    GLuint VAO;
+    Outline() = default;
+    ~Outline() = default;
+    GLuint VAO = 0;
     void initData();
 };
 #endif  // OUTLINE_H

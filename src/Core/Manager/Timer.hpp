@@ -1,11 +1,10 @@
 #ifndef TIMER_H
 #define TIMER_H
-
 class Timer
 {
    public:
-    Timer();
-    ~Timer();
+    Timer() = default;
+    ~Timer() = default;
 
     static float DeltaTime;
 };

@@ -1,36 +1,14 @@
 #ifndef SAVELOADSYSTEM_H
 #define SAVELOADSYSTEM_H
 
-#include <rapidxml-1.13/rapidxml.hpp>
-#include <rapidxml-1.13/rapidxml_print.hpp>
-#ifdef WIN32
-#include <dirent/dirent.h>
-#endif  // WIN32
-#ifdef LINUX
-#include <dirent.h>
-#endif  // LINUX
-#include <fstream>
-#include <memory>
-#include <sstream>
-#include <vector>
-
-#include "../../../Core/Loader/XMLLoader.hpp"
-#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../../../Core/UI/ListItem.hpp"
-#include "../../../Core/UI/Panel.hpp"
-#include "../../../Core/UI/TextBox.hpp"
-
-#include "../../Other/GameParameters.hpp"
-#include "../../Other/SceneManager.hpp"
 #include "ButtonTile.hpp"
 
 
 class SaveLoadSystem
 {
-   private:
-    /* data */
    public:
-    SaveLoadSystem();
+    SaveLoadSystem() = default;
     ~SaveLoadSystem();
 
     void Load();
@@ -60,9 +38,6 @@ class SaveLoadSystem
     bool isPressedOrHover();
     bool isEditMode();
     bool isMouseHover();
-
-   private:
-    std::vector<std::string> getMapNames();
 };
 
 #endif

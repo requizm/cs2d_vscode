@@ -1,4 +1,7 @@
 #include "Window.hpp"
+
+#include "Manager/InputManager.hpp"
+
 Window::Window(std::string windowName, int x, int y)
 {
     glfwInit();

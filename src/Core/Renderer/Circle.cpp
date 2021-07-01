@@ -2,8 +2,6 @@
 
 #define PI 3.14159265
 
-Circle::Circle() {}
-
 Circle::Circle(bool fill)
 {
     if (!fill)

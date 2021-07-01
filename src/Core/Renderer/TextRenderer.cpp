@@ -1,6 +1,12 @@
 #include "TextRenderer.hpp"
 
 #include <ft2build.h>
+
+#include "../../CS2D/Other/GameParameters.hpp"
+#include "../Manager/Logger.hpp"
+#include "../Manager/ResourceManager.hpp"
+#include "../Math/Projection.hpp"
+
 #include FT_FREETYPE_H
 
 TextRenderer::TextRenderer(GLuint width, GLuint height)

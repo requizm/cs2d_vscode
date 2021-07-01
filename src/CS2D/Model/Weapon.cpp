@@ -1,11 +1,60 @@
 #include "Weapon.hpp"
 
-#include "Scene.hpp"
+#include "../../Core/Manager/InputManager.hpp"
+#include "../../Core/Manager/Logger.hpp"
+#include "../../Core/Manager/Utils.hpp"
+#include "../../Core/Math/Projection.hpp"
+#include "../../Core/Model/Camera.hpp"
+#include "../Other/GameParameters.hpp"
 #include "../Other/SceneManager.hpp"
 #include "../Scene/StartGame.hpp"
+#include "Tile.hpp"
 
 
-Weapon::~Weapon() = default;
+Weapon::Weapon()
+{
+    this->objType = ObjectType::WEAPON;
+}
+
+Weapon::Weapon(const Vector2<int> pos, const Sprite &sprite,
+               const Sprite &floorSprite, const std::string &weaponName,
+               WeaponType type, int maxAmmo, int curAmmo, int curAmmoInMag,
+               const int maxAmmoInMag, bool dropable, bool ammoAndWeapon)
+    : GameObject(
+          Vector2<int>(
+              Utils::PositionToCell(pos).x * GameParameters::SIZE_TILE,
+              Utils::PositionToCell(pos).y * GameParameters::SIZE_TILE),
+          floorSprite,
+          Vector2<int>(GameParameters::SIZE_TILE,
+                       GameParameters::SIZE_TILE),
+          (int)ObjectType::WEAPON),
+      currentIndex(1),
+      selected(false)
+{
+    this->weaponType = type;
+
+    ammoType = (AmmoType)((int)weaponType);
+
+    if (weaponType == WeaponType::MAIN)
+    {
+        this->SetSize(Vector2<int>(GameParameters::SIZE_TILE * 2,
+                                   GameParameters::SIZE_TILE));
+        this->SetPosition(GetPosition().x - GameParameters::SIZE_TILE / 2,
+                          GetPosition().y, false);
+    }
+
+    this->maxAmmo = maxAmmo;
+    this->curAmmo = curAmmo;
+    this->curAmmoInMag = curAmmoInMag;
+    this->maxAmmoInMag = maxAmmoInMag;
+    this->weaponName = weaponName;
+    this->sprites[0] = sprite;
+    this->sprites[1] = floorSprite;
+
+    this->dropable = dropable;
+    this->ammoAndWeapon = ammoAndWeapon;
+    ;
+}
 
 void Weapon::Draw(SpriteRenderer &renderer)
 {

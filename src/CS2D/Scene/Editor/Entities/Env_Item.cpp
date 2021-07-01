@@ -1,14 +1,16 @@
 #include "Env_Item.hpp"
 
-#include "../Editor.hpp"
-#include "../../../Model/Scene.hpp"
+#include "../../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../../../Core/Manager/ResourceManager.hpp"
+#include "../../../../Core/Manager/Utils.hpp"
+#include "../../../Other/GameParameters.hpp"
 #include "../../../Other/SceneManager.hpp"
+#include "../Editor.hpp"
+
 
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
-
-Env_Item::Env_Item() {}
 
 Env_Item::Env_Item(int id, Vector2<int> position)
 {
@@ -80,8 +82,8 @@ Env_Item_Manager::Env_Item_Manager()
     p_panel->setEnable(false);
 
     b_okay = new TextButton("Okay", Vector2<int>(330, 170), Vector2<int>(60, 20),
-                        *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
-                        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+                            *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
+                            Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
     b_okay->setButtonClickColor(Vector3<float>(0.30F));
     b_okay->setButtonHoverColor(Vector3<float>(0.30F));
     b_okay->setTextHoverColor(Vector3<float>(0.58F));
@@ -92,8 +94,8 @@ Env_Item_Manager::Env_Item_Manager()
 
     b_cancel =
         new TextButton("Cancel", Vector2<int>(230, 170), Vector2<int>(60, 20),
-                   *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer), Vector3<float>(0.15F),
-                   Vector3<float>(0.58F), 1.0F);
+                       *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer), Vector3<float>(0.15F),
+                       Vector3<float>(0.58F), 1.0F);
     b_cancel->setButtonClickColor(Vector3<float>(0.30F));
     b_cancel->setButtonHoverColor(Vector3<float>(0.30F));
     b_cancel->setTextHoverColor(Vector3<float>(0.58F));
@@ -103,8 +105,8 @@ Env_Item_Manager::Env_Item_Manager()
     b_cancel->setParent(p_panel);
 
     b_delete = new TextButton("Delete", Vector2<int>(0, 170), Vector2<int>(60, 20),
-                          *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
-                          Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+                              *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
+                              Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
     b_delete->setButtonClickColor(Vector3<float>(0.30F));
     b_delete->setButtonHoverColor(Vector3<float>(0.30F));
     b_delete->setTextHoverColor(Vector3<float>(0.58F));

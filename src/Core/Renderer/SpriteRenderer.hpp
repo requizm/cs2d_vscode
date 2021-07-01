@@ -3,8 +3,6 @@
 
 #include "Shader.hpp"
 #include "Sprite.hpp"
-#include "Texture.hpp"
-
 
 class SpriteRenderer
 {
@@ -13,9 +11,9 @@ class SpriteRenderer
     // SpriteRenderer(Shader shader, Texture2D texture, GLuint x, GLuint y,
     // GLuint width, GLuint height);
     explicit SpriteRenderer(Shader shader);
-    SpriteRenderer();
+    SpriteRenderer() = default;
     // Destructor
-    ~SpriteRenderer();
+    ~SpriteRenderer() = default;
     // Renders a defined quad textured with given sprite
     // void DrawSprite(Texture2D texture, Vector2<float> position,
     // Vector2<float> size = Vector2<float>(10, 10), GLfloat rotate = 0.0f);

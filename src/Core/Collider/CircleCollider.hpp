@@ -11,7 +11,7 @@ class CircleCollider : public Collider
    public:
     CircleCollider(Vector2<int> pos, int r);
     CircleCollider();
-    ~CircleCollider();
+    ~CircleCollider() = default;
 
     bool Intersect(RectangleCollider &col);
     bool Intersect(CircleCollider &col);

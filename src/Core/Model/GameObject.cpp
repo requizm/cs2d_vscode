@@ -1,5 +1,10 @@
 #include "GameObject.hpp"
 
+#include "../../CS2D/Other/GameParameters.hpp"
+#include "../Manager/Logger.hpp"
+#include "../Manager/Utils.hpp"
+#include "../Math/Projection.hpp"
+
 GameObject::GameObject()
     : globalPosition(0, 0),
       globalSize(1, 1),
@@ -84,7 +89,8 @@ Vector2<int> GameObject::GetPositionOfCenter()
                         GetPosition().y + GetSize().y / 2);
 }
 
-Vector2<int> GameObject::GetLocalPosition() {
+Vector2<int> GameObject::GetLocalPosition()
+{
     return localPosition;
 }
 
@@ -169,7 +175,8 @@ void GameObject::SetPosition(const int x, const int y, bool changeCell)
     this->SetPosition(newPos, changeCell);
 }
 
-void GameObject::SetLocalPosition(const Vector2<int> &value) {
+void GameObject::SetLocalPosition(const Vector2<int> &value)
+{
     localPosition = value;
 }
 

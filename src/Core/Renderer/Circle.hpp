@@ -8,7 +8,7 @@
 class Circle
 {
    public:
-    Circle();
+    Circle() = default;
     explicit Circle(bool empty);
     ~Circle();
 

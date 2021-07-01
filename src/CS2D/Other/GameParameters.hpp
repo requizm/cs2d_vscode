@@ -2,11 +2,8 @@
 #define GAME_PARAMETERS_H
 
 #include <cmath>  // pow()
-
 #include <fstream>
 #include <string>
-
-#include "../../Core/Loader/JSONLoader.hpp"
 
 
 class GameParameters

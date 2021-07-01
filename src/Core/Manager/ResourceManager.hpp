@@ -2,23 +2,12 @@
 #define RESOURCE_MANAGER_H
 #include <GL/glew.h>
 
-#include <fstream>
-#include <iostream>
 #include <map>
-#include <sstream>
 #include <string>
 #include <vector>
 
 #include "../Renderer/Shader.hpp"
 #include "../Renderer/Texture.hpp"
-#include "Logger.hpp"
-
-
-// A static singleton ResourceManager class that hosts several
-// functions to load Textures and Shaders. Each loaded texture
-// and/or shader is also stored for future reference by string
-// handles. All functions and resources are static and no
-// public constructor is defined.
 
 typedef union PixelInfo
 {
@@ -29,6 +18,11 @@ typedef union PixelInfo
     };
 } * PPixelInfo;
 
+// A static singleton ResourceManager class that hosts several
+// functions to load Textures and Shaders. Each loaded texture
+// and/or shader is also stored for future reference by string
+// handles. All functions and resources are static and no
+// public constructor is defined.
 class ResourceManager
 {
    public:

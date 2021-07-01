@@ -3,11 +3,7 @@
 
 #include <GL/glew.h>
 
-#include "../../CS2D/Other/GameParameters.hpp"
-#include "../Manager/Logger.hpp"
-#include "../Manager/Utils.hpp"
 #include "../Renderer/SpriteRenderer.hpp"
-
 
 enum class ObjectType
 {

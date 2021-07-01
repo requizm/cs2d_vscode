@@ -1,6 +1,7 @@
 #include "Shader.hpp"
 
-Shader::Shader() : ID(0) {}
+#include "../Manager/Logger.hpp"
+#include "../Math/Projection.hpp"
 
 Shader &Shader::Use()
 {

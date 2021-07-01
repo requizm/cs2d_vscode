@@ -1,12 +1,17 @@
 #include "NewMapSystem.hpp"
 
+#include "../../../Core/Manager/InputManager.hpp"
+#include "../../../Core/Manager/Logger.hpp"
+#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../../Core/Manager/ResourceManager.hpp"
+#include "../../../Core/Manager/Utils.hpp"
+#include "../../Other/SceneManager.hpp"
 #include "Editor.hpp"
+
 
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
-
-NewMapSystem::NewMapSystem() {}
 
 NewMapSystem::~NewMapSystem()
 {
@@ -49,13 +54,13 @@ void NewMapSystem::Load()
     this->l_mapSize->setParent(this->newPanel);
     this->l_mapSize->setMouseEvent(false);
     this->l_x = new Label("x", Vector2<int>(240, 40), *editor->textRenderer, 1.0F,
-                            Vector3<float>(0.58F), UIObjectType::LABEL,
-                            LabelType::NOT_CLICKABLE);
+                          Vector3<float>(0.58F), UIObjectType::LABEL,
+                          LabelType::NOT_CLICKABLE);
     this->l_x->setParent(this->newPanel);
     this->l_x->setMouseEvent(false);
     this->l_tile = new Label("Tileset", Vector2<int>(40, 65), *editor->textRenderer,
-                               1.0F, Vector3<float>(0.58F), UIObjectType::LABEL,
-                               LabelType::NOT_CLICKABLE);
+                             1.0F, Vector3<float>(0.58F), UIObjectType::LABEL,
+                             LabelType::NOT_CLICKABLE);
     this->l_tile->setParent(this->newPanel);
     this->l_tile->setMouseEvent(false);
     this->b_okey = new TextButton(

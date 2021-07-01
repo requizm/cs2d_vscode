@@ -1,7 +1,9 @@
 #include "TextBox.hpp"
 
+#include "../Manager/InputManager.hpp"
+#include "../Manager/ResourceManager.hpp"
+#include "../Manager/Timer.hpp"
 
-TextBox::TextBox() : Label() {}
 
 TextBox::TextBox(Vector2<int> position, TextRenderer &renderer,
                  Vector2<int> size, bool isBackGround, float scale /*= 1.0F*/,

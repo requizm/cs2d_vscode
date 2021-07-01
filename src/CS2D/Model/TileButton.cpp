@@ -1,9 +1,10 @@
 #include "TileButton.hpp"
 
-#include "Scene.hpp"
+#include "../../Core/Manager/InputManager.hpp"
+#include "../../Core/Manager/Utils.hpp"
+#include "../Other/GameParameters.hpp"
 #include "../Other/SceneManager.hpp"
 #include "../Scene/Editor/Editor.hpp"
-
 
 
 TileButtonWorld::TileButtonWorld() : UIObject(UIObjectType::TILEBUTTON)
@@ -122,11 +123,11 @@ void TileButtonScreen::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squa
 
 void TileButtonScreen::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer, float shine, bool selected, float time)
 {
-    if (isEnable()  && isRenderable())
+    if (isEnable() && isRenderable())
     {
         spriteRenderer.DrawSprite(this->tile.sprite,
-                                          this->getPosition(), this->getSize(),
-                                          0.0F, false, shine, selected, time);
+                                  this->getPosition(), this->getSize(),
+                                  0.0F, false, shine, selected, time);
     }
 }
 

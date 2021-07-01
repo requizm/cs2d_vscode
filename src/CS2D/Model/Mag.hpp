@@ -4,6 +4,7 @@
 #include "../../Core/Model/GameObject.hpp"
 #include "../Other/GameParameters.hpp"
 
+
 enum AmmoType
 {
     PRIMARY,
@@ -18,12 +19,7 @@ class Mag : GameObject
 
     Mag(Vector2<int> pos, const Sprite& sprite, const int value, AmmoType type,
         Vector2<int> size = Vector2<int>(GameParameters::SCREEN_WIDTH / 26,
-                                         GameParameters::SCREEN_WIDTH / 26))
-        : GameObject(pos, sprite, size)
-    {
-        ammo = value;
-        this->type = type;
-    }
+                                         GameParameters::SCREEN_WIDTH / 26));
 
     void takeAmmo(int value);
     int getAmmo() const;

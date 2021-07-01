@@ -1,4 +1,5 @@
 #include "CircleCollider.hpp"
+
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
@@ -7,8 +8,6 @@ CircleCollider::CircleCollider(Vector2<int> pos, int r)
     : Collider(pos, ColliderTypes::CIRCLE), radius(r) {}
 
 CircleCollider::CircleCollider() : Collider(ColliderTypes::CIRCLE) {}
-
-CircleCollider::~CircleCollider() = default;
 
 bool CircleCollider::Intersect(RectangleCollider &col)  // top left axis
 {

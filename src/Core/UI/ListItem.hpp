@@ -3,12 +3,10 @@
 
 #include <functional>
 
-#include "../Manager/MemoryOverride/MemoryOverride.hpp"
 #include "Panel.hpp"
 #include "TextButton.hpp"
 
 class ListItem;
-
 
 class ListItemElement : public UIObject
 {

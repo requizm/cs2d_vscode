@@ -14,8 +14,8 @@
 class Logger
 {
    public:
-    Logger();
-    ~Logger();
+    Logger() = default;
+    ~Logger() = default;
     static void StopApp();
     static void StartApp();
 };

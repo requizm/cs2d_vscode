@@ -1,15 +1,9 @@
 #ifndef UIOBJECT_H
 #define UIOBJECT_H
 
-#include <algorithm>
-#include <memory>
-
-#include "../Manager/Logger.hpp"
-#include "../Manager/Utils.hpp"
 #include "../Renderer/SpriteRenderer.hpp"
 #include "../Renderer/SquareRenderer.hpp"
 #include "../Renderer/TextRenderer.hpp"
-
 
 enum class UIObjectType
 {
@@ -25,7 +19,6 @@ enum class UIObjectType
     LISTITEMELEMENT,
     ENV_ITEM
 };
-// class TextRenderer;
 
 class UIObject
 {

@@ -1,18 +1,8 @@
 #ifndef NEWMAPSYSTEM_H
 #define NEWMAPSYSTEM_H
 
-#include <memory>
-
-#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
-#include "../../../Core/Manager/ObjectManager.hpp"
-#include "../../../Core/Manager/Utils.hpp"
 #include "../../../Core/UI/Panel.hpp"
-#include "../../../Core/UI/TextBox.hpp"
-
-
 #include "ButtonTile.hpp"
-#include "../../Model/TileButton.hpp"
-#include "../../Other/SceneManager.hpp"
 
 
 struct NewMapResult
@@ -24,7 +14,7 @@ struct NewMapResult
 class NewMapSystem
 {
    public:
-    NewMapSystem(/* args */);
+    NewMapSystem() = default;
     ~NewMapSystem();
 
     void Load();

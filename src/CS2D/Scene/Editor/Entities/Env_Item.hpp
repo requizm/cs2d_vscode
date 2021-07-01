@@ -1,15 +1,9 @@
 #ifndef ENVITEM_H
 #define ENVITEM_H
 
-#include "../../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
-#include "../../../../Core/Manager/Utils.hpp"
 #include "../../../../Core/UI/Panel.hpp"
 #include "../../../../Core/UI/TextBox.hpp"
-#include "../../../../Core/UI/SpriteButton.hpp"
 #include "../../../../Core/UI/TextButton.hpp"
-
-#include "../../../Other/GameParameters.hpp"
-#include "../../../Other/SceneManager.hpp"
 #include "../../../Model/TileButton.hpp"
 
 
@@ -26,7 +20,7 @@ class Env_Item
 
    public:
     int obj_id = 0;
-    Env_Item();
+    Env_Item() = default;
     Env_Item(int id, Vector2<int> position);
     ~Env_Item();
 

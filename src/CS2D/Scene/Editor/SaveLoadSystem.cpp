@@ -1,12 +1,22 @@
 #include "SaveLoadSystem.hpp"
 
+#include <rapidxml-1.13/rapidxml.hpp>
+#include <rapidxml-1.13/rapidxml_print.hpp>
+
+#include "../../../Core/Loader/XMLLoader.hpp"
+#include "../../../Core/Manager/InputManager.hpp"
+#include "../../../Core/Manager/Logger.hpp"
+#include "../../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../../../Core/Manager/ResourceManager.hpp"
+#include "../../../Core/Manager/Utils.hpp"
+#include "../../Other/GameParameters.hpp"
+#include "../../Other/SceneManager.hpp"
 #include "Editor.hpp"
+
 
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
-
-SaveLoadSystem::SaveLoadSystem() {}
 
 SaveLoadSystem::~SaveLoadSystem()
 {
@@ -26,7 +36,8 @@ SaveLoadSystem::~SaveLoadSystem()
     delete savePanel;
 }
 
-void SaveLoadSystem::Load() {
+void SaveLoadSystem::Load()
+{
     Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
     this->loadPanel = new Panel(
         Vector2<int>(editor->tilePanel->getSize().x + 20, editor->controlPanel->getSize().y),
@@ -226,7 +237,7 @@ void SaveLoadSystem::B_SaveMap()
 {
     save_listMaps->Clear();
 
-    std::vector<std::string> maps = getMapNames();
+    std::vector<std::string> maps = Utils::GetFileNames(GameParameters::resDirectory + "levels");
 
     for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
     {
@@ -316,7 +327,7 @@ void SaveLoadSystem::B_LoadMap()
 {
     load_listMaps->Clear();
 
-    std::vector<std::string> maps = getMapNames();
+    std::vector<std::string> maps = Utils::GetFileNames(GameParameters::resDirectory + "levels");
 
     for (std::vector<int>::size_type i = 0; i != maps.size(); i++)
     {
@@ -340,35 +351,6 @@ bool SaveLoadSystem::isEditMode()
 bool SaveLoadSystem::isMouseHover()
 {
     return loadPanel->isMouseHover(false) || savePanel->isMouseHover(false);
-}
-
-std::vector<std::string> SaveLoadSystem::getMapNames()
-{
-    std::vector<std::string> maps;
-
-    DIR *dir;
-    struct dirent *ent;
-    std::string str = GameParameters::resDirectory + "levels";
-    if ((dir = opendir(str.c_str())) != NULL)
-    {
-        /* print all the files and directories within directory */
-        while ((ent = readdir(dir)) != NULL)
-        {
-            if (ent->d_name[0] == '.') continue;
-            std::string mapName(ent->d_name);
-            if (mapName.substr(mapName.size() - 4) == ".xml")
-            {
-                std::string a = mapName.substr(0, mapName.size() - 4);
-                maps.push_back(a);
-            }
-        }
-        closedir(dir);
-    }
-    else
-    {
-        perror("could not open directory");
-    }
-    return maps;
 }
 
 void SaveLoadSystem::SaveListChanged(TextButton *old, TextButton *n)

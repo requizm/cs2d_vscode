@@ -1,10 +1,19 @@
 #include "Utils.hpp"
 
+#ifdef WIN32
+#include <dirent/dirent.h>
+#endif  // WIN32
+#ifdef LINUX
+#include <dirent.h>
+#endif  // LINUX
+#include <fstream>
+#include <memory>
+#include <sstream>
+#include <vector>
+
+#include "../../CS2D/Other/GameParameters.hpp"
+
 int Utils::curIndex = 1;
-
-Utils::Utils() {}
-
-Utils::~Utils() = default;
 
 Vector2<int> Utils::ScreenToWorld(Vector2<int> view, Vector2<int> point)
 {
@@ -82,4 +91,32 @@ int Utils::StringToInt(std::string s)
         ++sC;
     }
     return negate ? result : -result;
+}
+std::vector<std::string> Utils::GetFileNames(const std::string &path)
+{
+    std::vector<std::string> maps;
+
+    DIR *dir;
+    struct dirent *ent;
+    std::string str = path;
+    if ((dir = opendir(str.c_str())) != NULL)
+    {
+        /* print all the files and directories within directory */
+        while ((ent = readdir(dir)) != NULL)
+        {
+            if (ent->d_name[0] == '.') continue;
+            std::string mapName(ent->d_name);
+            if (mapName.substr(mapName.size() - 4) == ".xml")
+            {
+                std::string a = mapName.substr(0, mapName.size() - 4);
+                maps.push_back(a);
+            }
+        }
+        closedir(dir);
+    }
+    else
+    {
+        perror("could not open directory");
+    }
+    return maps;
 }

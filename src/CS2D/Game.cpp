@@ -3,6 +3,15 @@
 #include <tracy/Tracy.hpp>
 #endif
 
+#include "../Core/Manager/InputManager.hpp"
+#include "../Core/Manager/ResourceManager.hpp"
+#include "../Core/Math/Projection.hpp"
+#include "Other/SceneManager.hpp"
+#include "Scene/Editor/Editor.hpp"
+#include "Scene/Menu.hpp"
+#include "Scene/StartGame.hpp"
+
+
 void Game::Init()
 {
     initTextures();

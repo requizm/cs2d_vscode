@@ -1,14 +1,17 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <memory>
+#include "CS2D/Game.hpp"
+#include "Core/Manager/InputManager.hpp"
+#include "Core/Manager/Logger.hpp"
+#include "Core/Manager/ResourceManager.hpp"
+#include "Core/Manager/Timer.hpp"
+#include "Core/Window.hpp"
+
 
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
-
-#include "CS2D/Game.hpp"
-#include "Core/Window.hpp"
 
 std::unique_ptr<Game> cs2d = std::make_unique<Game>(Game());
 auto logger = spdlog::basic_logger_mt("write_logger", "log.txt");

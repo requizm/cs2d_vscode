@@ -3,10 +3,7 @@
 
 #include <GL/glew.h>
 
-#include "../../CS2D/Other/GameParameters.hpp"
-#include "../Manager/Logger.hpp"
-#include "../Manager/ResourceManager.hpp"
-
+#include "../Math/Vector3.hpp"
 
 /// Holds all state information relevant to a character as loaded using FreeType
 struct Character

@@ -1,6 +1,8 @@
 #include "Label.hpp"
 
-Label::Label() : UIObject() {}
+#include "../Manager/InputManager.hpp"
+#include "../Manager/Logger.hpp"
+#include "../Manager/ObjectManager.hpp"
 
 Label::Label(const std::string &text, Vector2<int> position,
              TextRenderer &renderer, float scale, const Vector3<float> &color,
@@ -141,7 +143,7 @@ bool Label::isMousePress()
     return isMousePressM(MOUSE_BUTTON_LEFT);
 }
 
-Vector2<int> Label::getPositionForButton(const bool center) //FIXME: silinecek
+Vector2<int> Label::getPositionForButton(const bool center)  //FIXME: silinecek
 {
     if (isParent())
     {

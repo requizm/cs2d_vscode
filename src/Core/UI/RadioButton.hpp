@@ -3,9 +3,8 @@
 
 #include <functional>
 
-#include "../Manager/MemoryOverride/MemoryOverride.hpp"
+#include "../Manager/Input/InputStructs.hpp"
 #include "Label.hpp"
-
 
 class RadioButtonElement : public Label
 {

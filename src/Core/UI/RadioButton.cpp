@@ -1,4 +1,9 @@
 #include "RadioButton.hpp"
+
+#include "../Manager/InputManager.hpp"
+#include "../Manager/MemoryOverride/MemoryOverride.hpp"
+
+
 #if defined(WIN32) && defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif

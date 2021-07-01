@@ -1,11 +1,10 @@
 #include "SpriteRenderer.hpp"
 
+#include "../Math/Projection.hpp"
+
 #define PI 3.14159265
+
 SpriteRenderer::SpriteRenderer(const Shader shader) { this->shader = shader; }
-
-SpriteRenderer::SpriteRenderer() = default;
-
-SpriteRenderer::~SpriteRenderer() = default;
 
 void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
                                 Vector2<int> size, int rotate, bool drawCenter,

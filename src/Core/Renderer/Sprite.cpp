@@ -2,7 +2,6 @@
 
 Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width,
                GLuint height)
-    : VAO(0)
 {
     this->texture = texture;
     if (width == 0)
@@ -16,10 +15,6 @@ Sprite::Sprite(Texture2D texture, GLuint x, GLuint y, GLuint width,
         initData(x, y, width, height);
     }
 }
-
-Sprite::Sprite() = default;
-
-Sprite::~Sprite() = default;
 
 void Sprite::initData(GLuint x, GLuint y, GLuint width, GLuint height)
 {

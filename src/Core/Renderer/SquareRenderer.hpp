@@ -3,21 +3,17 @@
 
 #include <GL/glew.h>
 
-#include "../../CS2D/Other/GameParameters.hpp"
-#include "../Manager/InputManager.hpp"
-#include "../Manager/ResourceManager.hpp"
 #include "Circle.hpp"
 #include "Outline.hpp"
 #include "Shader.hpp"
 #include "Square.hpp"
 
-
 class SquareRenderer
 {
    public:
-    SquareRenderer();
+    SquareRenderer() = default;
     explicit SquareRenderer(bool init);
-    ~SquareRenderer();
+    ~SquareRenderer() = default;
 
     Shader squareShader_ui;
     Shader squareShader_world;

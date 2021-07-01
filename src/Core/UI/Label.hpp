@@ -3,11 +3,7 @@
 
 #include <string>
 
-#include "../Manager/InputManager.hpp"
-#include "../Manager/Logger.hpp"
-#include "../Manager/ObjectManager.hpp"
 #include "UIObject.hpp"
-
 
 enum LabelType
 {
@@ -18,7 +14,7 @@ enum LabelType
 class Label : public UIObject
 {
    public:
-    Label();
+    Label() = default;
 
     /**
      * @brief Construct a new Label
