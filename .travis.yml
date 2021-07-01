@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then make -C $TRAVIS_BUILD_DIR/Build ; fi
+script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then cmake -BBuild ; make -C $TRAVIS_BUILD_DIR/Build ; fi
 
 env:
   global:
@@ -9,7 +9,8 @@ env:
   secure: "csEA3tv4+NTJAksoT7t3SmJ3UC1a4IY0NJm3NDjh0pOK48aD1FU2wU9wqqgRNr3yq+63rgPEPKa8ifJE2ejIoiDpGHmvy8Ejg7Dq+sj8tBavr3q9D6y64ZN5RRSUv85oU3uA52mPLxpQkFZz9ppV84frH26B1teE14qogOQdXmE4W7Hy71Ii1zH2ydqQHuyymPpN63TgGV+p5PsOcygrhdwutusntv3IsomWKGq4V5MOTH5bnGBWsl4VwWfDv+awgAhWS+u8A1aqgR32WUvsi0P6PP0fQFJL3JmoUOG2aGWpDpLyxzwOtA8M37PcuULo58MWwt5MnbWDSIoRhUDm8+ELU7vmnY/r0z9MOUdkwIb1TJN9Fyj1PiNKbPJ4muPiVEFmIYJMSzomYjB3HxZZcvW6H+LQYI4SF8PG1oSgIFP4yn/xyW39ukIKr2FhwzggBgDW7s/PySj4Rh6yD5V7pxkoPSK0I0pcSY/9QBlQkbs/U2gGJnZFORtNuHsJuJtEo1hW1u6s1qmKPof7wcvimCO/05jmf4+29iEihoDSj9hg5s5y1su7r3SWlSzpaN990MMumtgBUpf6oglzCCri1vWP43NGul/WMGZaofuLOD1aH9MvrOgyKLmh6V5zgVPvTEOMXXLYyYCLtxLWJLkqPRfOu2daPBGmmOM+pv00mKc="
 
 before_install:
-  - mkdir $TRAVIS_BUILD_DIR/build
+  - mkdir $TRAVIS_BUILD_DIR/Build
+  - apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
 
 addons:
   coverity_scan:
