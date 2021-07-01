@@ -22,8 +22,11 @@ class SceneManager
     SceneManager &operator=(const SceneManager &) = default;
     ~SceneManager();
 
-    template <typename T>
-    T *GetActiveScene();
+    template <class T>
+    T *GetActiveScene()
+    {
+        return reinterpret_cast<T*>(activeScene);
+    }
 
     /**
      * @brief Deletes old scene resources and load new scene immediately

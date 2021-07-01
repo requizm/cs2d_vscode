@@ -13,12 +13,6 @@ SceneManager::~SceneManager()
     }
 }
 
-template <typename T>
-T* SceneManager::GetActiveScene()
-{
-    return reinterpret_cast<T*>(activeScene);
-}
-
 void SceneManager::LoadNextScene()
 {
     if (nextScene != nullptr)
