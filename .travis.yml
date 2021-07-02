@@ -27,6 +27,7 @@ addons:
       name: requizm/cs2d_vscode
       version: 1.0
       description: My Project
+    notification_email: mehmet41650@gmail.com
     # Commands to prepare for build_command
     # ** likely specific to your build **
     build_command_prepend: "(ls ; rm -rf ./Build ; mkdir ./Build ; cmake . -BBuild -G 'Unix Makefiles')"
