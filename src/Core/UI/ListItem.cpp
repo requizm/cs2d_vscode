@@ -100,7 +100,7 @@ void ListItem::Update()
                 {
                     for (auto &tile : items)
                     {
-                        tile->bt->setPosition(Vector2<int>(tile->bt->getLocalPosition().x,
+                        tile->bt->setLocalPosition(Vector2<int>(tile->bt->getLocalPosition().x,
                                                            tile->bt->getLocalPosition().y +
                                                                InputManager::scroll.y * 20));
                     }

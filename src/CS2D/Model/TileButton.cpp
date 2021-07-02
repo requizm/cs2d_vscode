@@ -111,6 +111,7 @@ TileButtonScreen::TileButtonScreen(Tile &tile, float scale) : UIObject(tile.GetP
 
 TileButtonScreen::~TileButtonScreen()
 {
+    removeParent();
 }
 
 void TileButtonScreen::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
@@ -153,6 +154,14 @@ void TileButtonScreen::setLocalPosition(const Vector2<int> value)
     Vector2<int> newLocalPos = value;
     tile.SetLocalPosition(newLocalPos);
     tile.SetPosition(newLocalPos + parent->getPosition());
+}
+
+void TileButtonScreen::setParent(UIObject *uiobject, bool dependParent)
+{
+    uiobject->childs.push_back(this);
+    this->parent = uiobject;
+    this->dependParent = dependParent;
+    setLocalPosition(getPosition());
 }
 
 bool TileButtonScreen::isRenderable()

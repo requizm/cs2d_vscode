@@ -27,9 +27,8 @@ Weapon::Weapon(const Vector2<int> pos, const Sprite &sprite,
           floorSprite,
           Vector2<int>(GameParameters::SIZE_TILE,
                        GameParameters::SIZE_TILE),
-          (int)ObjectType::WEAPON),
-      currentIndex(1),
-      selected(false)
+          ObjectType::WEAPON),
+      currentIndex(1)
 {
     this->weaponType = type;
 

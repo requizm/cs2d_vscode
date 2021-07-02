@@ -9,6 +9,7 @@ enum class ObjectType
 {
     PLAYER,
     WEAPON,
+    MAG,
     GAMEOBJECT,
     TILE
 };
@@ -26,7 +27,7 @@ class GameObject
      * @param size
      * @param objType 2(ObjectType::GAMEOBJECT)
      */
-    GameObject(Vector2<int> pos, const Sprite &sprite, Vector2<int> size, int objType = 2);
+    GameObject(Vector2<int> pos, const Sprite &sprite, Vector2<int> size, ObjectType objType);
     virtual ~GameObject();
 
     // Draw sprite

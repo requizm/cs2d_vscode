@@ -20,7 +20,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(Vector2<int> pos, const Sprite &sprite,
-                       Vector2<int> size, int objType)
+                       Vector2<int> size, ObjectType objType)
     : globalPosition(pos),
       globalSize(size),
       globalRotation(0),
@@ -31,7 +31,7 @@ GameObject::GameObject(Vector2<int> pos, const Sprite &sprite,
       localPosition(pos),
       cellPos(Utils::PositionToCell(pos))
 {
-    this->objType = (ObjectType)objType;
+    this->objType = objType;
     this->setID(Utils::GenerateID());
     BuildTransform();
 }

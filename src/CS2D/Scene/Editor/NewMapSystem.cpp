@@ -117,12 +117,11 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
     InputManager::scroll.y = 0.0F;
 
     int curIndex = 0;
-    Vector2<int> tilePanelPos = SceneManager::instance().GetActiveScene<Editor>()->tilePanel->getPosition();
     for (int i = 0; i < SceneManager::instance().GetActiveScene<Editor>()->tileCount; i++)
     {
         const int xPos = 32 * (curIndex % SceneManager::instance().GetActiveScene<Editor>()->maxCellInColumn);
         const int yPos = 32 * (curIndex / SceneManager::instance().GetActiveScene<Editor>()->maxCellInColumn);
-        const Vector2<int> pos(xPos + tilePanelPos.x, yPos + tilePanelPos.y);
+        const Vector2<int> pos(xPos, yPos);
         const Vector2<int> size(Vector2<int>(32, 32));
         const int xoffset =
             curIndex % (ResourceManager::GetTexture(tileSet).Width / 32);

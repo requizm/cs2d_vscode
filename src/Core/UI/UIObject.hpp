@@ -70,7 +70,7 @@ class UIObject
     virtual void setSize(const Vector2<int> size);
     virtual void setSize(const int x, const int y);
     void setScale(const float scale);
-    void setParent(UIObject *uiobject, bool dependParent = true);
+    virtual void setParent(UIObject *uiobject, bool dependParent = true);
     void removeParent();
     void setVisible(const bool value);
     void setEnable(const bool value);

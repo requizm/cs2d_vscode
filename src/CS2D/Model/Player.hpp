@@ -23,7 +23,7 @@ class Player : public GameObject
     Player(const Vector2<int> pos, const std::vector<Sprite> &sprites,
            const Vector2<int> size = Vector2<int>(GameParameters::SIZE_TILE),
            int maxHealth = 100)
-        : GameObject(pos, sprites[0], size, (int)ObjectType::PLAYER),
+        : GameObject(pos, sprites[0], size, ObjectType::PLAYER),
           collider(CircleCollider(
               this->GetPositionOfCenter(),
               static_cast<int>(

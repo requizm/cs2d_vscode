@@ -21,6 +21,7 @@ class SpriteButton : public UIObject
     Vector2<int> getSize() final;
 
     void setPosition(const Vector2<int> &position) final;
+    void setLocalPosition(const Vector2<int> value) final;
 
     void setButtonCurrentColor(const Vector3<float> &value);
 

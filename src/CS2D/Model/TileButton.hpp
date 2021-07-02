@@ -53,6 +53,8 @@ class TileButtonScreen : public UIObject
     Vector2<int> getLocalPosition() final;
     void setLocalPosition(const Vector2<int> value) final;
 
+    void setParent(UIObject *uiobject, bool dependParent = true) final;
+
     bool isRenderable() final;
 
     Tile &getTile();
