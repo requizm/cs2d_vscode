@@ -24,17 +24,4 @@ addons:
       - libxi-dev
       - valgrind
       - libgl1-mesa-dev
-  coverity_scan:
-    project:
-      name: requizm/cs2d_vscode
-      version: 1.0
-      description: My Project
-    build_command_prepend: "(ls ; rm -rf ./Build ; mkdir ./Build ; cmake . -BBuild -G "Unix Makefiles")"
-    build_command:   "make -C ./Build"
-
-    # Pattern to match selecting branches that will run analysis. We recommend leaving this set to 'coverity_scan'.
-    # Take care in resource usage, and consider the build frequency allowances per
-    #   https://scan.coverity.com/faq#frequency
-    branch_pattern: coverity_scan
-    
 script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then cmake . -BBuild -G "Unix Makefiles" ; make -C ./Build ; fi
