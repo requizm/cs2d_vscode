@@ -21,20 +21,18 @@ Panel::Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
     this->outline = false;
     escapeButton = new SpriteButton(
         Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16),
-        position, Vector2<int>(20, 20), true);
+        Vector2<int>(this->size.x - 20, 3), Vector2<int>(20, 20), true);
     escapeButton->setParent(this);
     escapeButton->independent = true;
-    escapeButton->setPosition(Vector2<int>(this->size.x - 20, 3));
     escapeButton->setButtonColor(color);
     escapeButton->setButtonHoverColor(Vector3<float>(0.64F));
     escapeButton->setButtonClickColor(Vector3<float>(1.0F));
     escapeButton->setHaveOutline(false);
     escapeButton->addListenerUp(std::bind(&Panel::escapeButtonClicked, this));
-    this->title = Label(title, position, renderer, scale, Vector3<float>(1.0F),
+    this->title = Label(title, Vector2<int>(lineOffset, 4), renderer, scale, Vector3<float>(1.0F),
                         UIObjectType::PANEL, LabelType::NOT_CLICKABLE);
     this->title.setMouseEvent(false);
     this->title.setParent(this);
-    this->title.setPosition(Vector2<int>(lineOffset, 4));
     this->title.independent = true;
 }
 

@@ -38,7 +38,7 @@ TextButton::~TextButton()
 
 void TextButton::Update()
 {
-    if (isEnable() && isMouseEvents())
+    if (isEnable() && isMouseEvents() && isRenderable())
     {
         if (!isPressed)
         {
@@ -62,7 +62,7 @@ void TextButton::ProcessInput()
 
 void TextButton::Draw(SquareRenderer &squareRenderer)
 {
-    if (isEnable() && isVisible())
+    if (isEnable() && isVisible() && isRenderable())
     {
         squareRenderer.ui_RenderFilledSquare(
             position, size, buttonCurrentColor,
@@ -101,11 +101,7 @@ void TextButton::setPosition(const Vector2<int> &position)
 {
     Vector2<int> newPos = position;
 
-    if (isParent())
-    {
-        newPos = newPos + getParent()->getPosition();
-    }
-    this->position = newPos;
+    UIObject::setPosition(newPos);
 
     if (drawCenter)
     {
@@ -117,6 +113,23 @@ void TextButton::setPosition(const Vector2<int> &position)
     else
     {
         textPos = newPos;
+    }
+}
+
+void TextButton::setLocalPosition(const Vector2<int> value)
+{
+    UIObject::setLocalPosition(value);
+
+    if (drawCenter)
+    {
+        Vector2<int> dif = size - textSize;
+        dif.y /= 2;
+        dif.x /= 2;
+        textPos = position + dif;
+    }
+    else
+    {
+        textPos = position;
     }
 }
 
@@ -190,7 +203,7 @@ bool TextButton::isMouseHover()
 
 void TextButton::onMouseDown()
 {
-    if (isEnable() && isMouseHover())
+    if (isEnable() && isMouseHover() && isRenderable())
     {
         textCurrentColor = textClickColor;
         buttonCurrentColor = buttonClickColor;
@@ -206,7 +219,7 @@ void TextButton::onMouseDown()
 
 void TextButton::onMouseUp()
 {
-    if (isPressed && isEnable() && isMouseHover())
+    if (isPressed && isEnable() && isMouseHover() && isRenderable())
     {
         textCurrentColor = textColor;
         buttonCurrentColor = buttonColor;

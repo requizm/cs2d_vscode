@@ -9,7 +9,7 @@
 class RadioButtonElement : public Label
 {
    public:
-    RadioButtonElement();
+    RadioButtonElement() = default;
 
     /**
      * @brief Construct a new Radio Button Element object
@@ -30,13 +30,11 @@ class RadioButtonElement : public Label
     ~RadioButtonElement() final;
 
     void Draw(SpriteRenderer &spriteRenderer,
-              SquareRenderer &squareRenderer) override;
-    void Update() override;
-    void ProcessInput() override;
+              SquareRenderer &squareRenderer) final;
+    void Update() final;
+    void ProcessInput() final;
 
-    Vector2<int> getPosition() override;
-    Vector2<int> getLocalPosition() override;
-    Vector2<int> getSize() override;
+    Vector2<int> getSize() final;
     int getIndex();
 
     void setMouseHoverColor(const Vector3<float> &color);
@@ -44,15 +42,10 @@ class RadioButtonElement : public Label
     void setMouseHoverOutlineColor(const Vector3<float> &color);
     void setOutlineColor(const Vector3<float> &color);
 
-    void OnEnable() override;
-    void OnDisable() override;
-
-    void setPosition(const Vector2<int> &position) override;
-
-    bool isMouseHover() override;
-    bool isMouseDown() override;
-    bool isMouseUp() override;
-    bool isMousePress() override;
+    bool isMouseHover() final;
+    bool isMouseDown() final;
+    bool isMouseUp() final;
+    bool isMousePress() final;
 
     bool selected;
 
@@ -65,10 +58,10 @@ class RadioButtonElement : public Label
     Vector3<float> currentOutlineColor;
     int index;
 
-    bool isMouseHoverM() override;
-    bool isMouseDownM(MouseKeys key) override;
-    bool isMouseUpM(MouseKeys key) override;
-    bool isMousePressM(MouseKeys key) override;
+    bool isMouseHoverM() final;
+    bool isMouseDownM(MouseKeys key) final;
+    bool isMouseUpM(MouseKeys key) final;
+    bool isMousePressM(MouseKeys key) final;
 };
 
 class RadioButton : public UIObject
@@ -82,7 +75,7 @@ class RadioButton : public UIObject
         listeners;
 
    public:
-    RadioButton();
+    RadioButton() = default;
     RadioButton(TextRenderer &renderer, Vector2<int> position, int y_sep);
     ~RadioButton() final;
 
@@ -96,9 +89,9 @@ class RadioButton : public UIObject
                     float scale = 1.0F);
 
     void Draw(SpriteRenderer &spriteRenderer,
-              SquareRenderer &squareRenderer) override;
-    void Update() override;
-    void ProcessInput() override;
+              SquareRenderer &squareRenderer) final;
+    void Update() final;
+    void ProcessInput() final;
 
     void Select(int index);
     RadioButtonElement *GetSelectedElement();

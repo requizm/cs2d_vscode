@@ -55,13 +55,13 @@ void SpriteButton::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRe
     if (isEnable() && isVisible())
     {
         squareRenderer.ui_RenderFilledSquare(
-            position,
+            getPosition(),
             getSize(),
             buttonCurrentColor);
         if (haveOutline)
         {
             squareRenderer.ui_RenderEmptySquare(
-                position,
+                getPosition(),
                 getSize(),
                 outlineColor);
         }
@@ -105,12 +105,14 @@ Vector2<int> SpriteButton::getSize()
 void SpriteButton::setPosition(const Vector2<int> &position)
 {
     Vector2<int> newPos = position;
-    if (isParent())
-    {
-        newPos = newPos + getParent()->getPosition();
-    }
-    this->position = newPos;
+    UIObject::setPosition(newPos);
     spritePos = Vector2<int>(newPos.x + margin.x / 2, newPos.y + margin.y / 2);
+}
+
+void SpriteButton::setLocalPosition(const Vector2<int> value)
+{
+    UIObject::setLocalPosition(value);
+    spritePos = Vector2<int>(position.x + margin.x / 2, position.y + margin.y / 2);
 }
 
 void SpriteButton::setButtonCurrentColor(const Vector3<float> &value) { buttonCurrentColor = value; }
@@ -145,7 +147,7 @@ void SpriteButton::addListenerUp(std::function<void()> func)
 
 bool SpriteButton::isMouseHover()
 {
-    Vector2<int> pos = position;
+    Vector2<int> pos = getPosition();
     Vector2<int> size = getSize();
 
     if (InputManager::mousePos.x >= pos.x &&

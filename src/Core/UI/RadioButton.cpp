@@ -8,8 +8,6 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-RadioButtonElement::RadioButtonElement() : Label() {}
-
 RadioButtonElement::RadioButtonElement(const std::string &text,
                                        Vector2<int> position,
                                        TextRenderer &textRenderer, int index,
@@ -71,16 +69,6 @@ void RadioButtonElement::ProcessInput()
     isMouseUpM(MOUSE_BUTTON_LEFT);
 }
 
-Vector2<int> RadioButtonElement::getPosition()
-{
-    if (isParent()) return this->position + parent->getPosition();
-    return this->position;
-}
-Vector2<int> RadioButtonElement::getLocalPosition()
-{
-    if (isParent()) return this->position - parent->getPosition();
-    return Vector2<int>(0);
-}
 Vector2<int> RadioButtonElement::getSize()
 {
     Vector2<int> ps;
@@ -109,17 +97,6 @@ void RadioButtonElement::setMouseHoverOutlineColor(const Vector3<float> &color)
 void RadioButtonElement::setOutlineColor(const Vector3<float> &color)
 {
     this->outlineColor = color;
-}
-
-void RadioButtonElement::OnEnable() {}
-void RadioButtonElement::OnDisable()
-{
-    // this->selected = false;
-}
-
-void RadioButtonElement::setPosition(const Vector2<int> &position)
-{
-    this->position = position;
 }
 
 bool RadioButtonElement::isMouseHover()
@@ -186,8 +163,6 @@ bool RadioButtonElement::isMousePressM(MouseKeys key)
     }
     return false;
 }
-
-RadioButton::RadioButton() = default;
 
 RadioButton::RadioButton(TextRenderer &renderer, Vector2<int> position,
                          int y_sep)

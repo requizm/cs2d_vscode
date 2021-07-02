@@ -2,7 +2,7 @@
 
 Mag::Mag(Vector2<int> pos, const Sprite& sprite, const int value, AmmoType type,
          Vector2<int> size)
-    : GameObject(pos, sprite, size)
+    : GameObject(pos, sprite, size, ObjectType::MAG)
 {
     ammo = value;
     this->type = type;
