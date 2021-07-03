@@ -4,7 +4,7 @@
 #include "../Manager/MemoryOverride/MemoryOverride.hpp"
 
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -208,7 +208,7 @@ void RadioButton::AddElement(const std::string &text,
                              const Vector3<float> &buttonColor,
                              const Vector3<float> &textColor, float scale)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     RadioButtonElement *r = new RadioButtonElement(

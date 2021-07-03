@@ -9,7 +9,7 @@
 #include "Core/Window.hpp"
 
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     InputManager::InitKeyboardKeys();
     while (!glfwWindowShouldClose(window.GetWindow()))
     {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
         ZoneScopedS(10);
 #endif
         const auto currentFrame = static_cast<float>(glfwGetTime());
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
         cs2d->Render();
 
         window.Update();
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
         FrameMark;
 #endif
     }

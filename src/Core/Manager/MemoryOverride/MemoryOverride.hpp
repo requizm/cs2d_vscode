@@ -2,7 +2,7 @@
 #define MEMORYOVERRIDE_H
 
 #include <iostream>
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 
 

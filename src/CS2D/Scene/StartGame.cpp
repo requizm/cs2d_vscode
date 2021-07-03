@@ -8,7 +8,7 @@
 #include "../Other/SceneManager.hpp"
 
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -18,7 +18,7 @@ StartGame::StartGame() : Scene("StartGame")
 
 void StartGame::Initialize(const std::string &mapName)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     this->map = new Map(mapName, mapName);
@@ -34,7 +34,7 @@ void StartGame::Initialize(const std::string &mapName)
 
 void StartGame::Load()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     Initialize(SceneManager::instance().params.at(0));
@@ -64,7 +64,7 @@ void StartGame::Load()
 
 void StartGame::Unload()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     if (renderer != nullptr) delete renderer;
@@ -81,7 +81,7 @@ void StartGame::Unload()
 
 void StartGame::Update()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     player->Update();
@@ -90,7 +90,7 @@ void StartGame::Update()
 
 void StartGame::ProcessInput()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
@@ -110,7 +110,7 @@ void StartGame::ProcessInput()
 
 void StartGame::Render()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     map->Draw(*renderer);

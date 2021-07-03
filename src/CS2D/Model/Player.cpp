@@ -10,7 +10,7 @@
 #include "Tile.hpp"
 
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -24,7 +24,7 @@ void Player::Draw(SpriteRenderer &renderer)
 
 void Player::DrawModel(SpriteRenderer &renderer)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     renderer.DrawSprite(this->sprites[currentIndex], this->GetTransform());
@@ -33,7 +33,7 @@ void Player::DrawModel(SpriteRenderer &renderer)
 
 Player::~Player()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     delete knifeWeapons.at(0);
@@ -41,7 +41,7 @@ Player::~Player()
 
 void Player::Init()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     weaponLimit[2] = true;
@@ -73,7 +73,7 @@ void Player::Update()
 
 void Player::ProcessInput()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     ControllerInput();
@@ -82,7 +82,7 @@ void Player::ProcessInput()
 
 void Player::SetPosition(Vector2<int> pos, bool changeCell)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     this->globalPosition = pos;
@@ -167,7 +167,7 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
 
 void Player::SetPosition(const int x, const int y, bool changeCell)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     Vector2<int> newPos = Vector2<int>(x, y);
@@ -176,7 +176,7 @@ void Player::SetPosition(const int x, const int y, bool changeCell)
 
 void Player::ControllerInput()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     if (InputManager::isKey(KeyboardKeys::KEY_W))
@@ -223,7 +223,7 @@ void Player::ControllerInput()
 
 bool Player::CheckCollision(Vector2<int> pos, MoveDirection direction)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     Tile *newTile;

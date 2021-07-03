@@ -1,6 +1,6 @@
 #include "CircleCollider.hpp"
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -11,7 +11,7 @@ CircleCollider::CircleCollider() : Collider(ColliderTypes::CIRCLE) {}
 
 bool CircleCollider::Intersect(RectangleCollider &col)  // top left axis
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     // get center point circle first

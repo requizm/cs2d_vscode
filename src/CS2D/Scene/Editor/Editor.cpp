@@ -9,7 +9,7 @@
 #include "../../Other/SceneManager.hpp"
 
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -41,7 +41,7 @@ void Editor::Initialize()
 
 void Editor::Load()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     currentTileSet = "cs2dnorm";
@@ -256,7 +256,7 @@ void Editor::Load()
 
 void Editor::Unload()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     selectedTile = nullptr;
@@ -337,7 +337,7 @@ void Editor::Unload()
 
 void Editor::Update()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     this->time += Timer::DeltaTime;
@@ -380,7 +380,7 @@ void Editor::Update()
 
 void Editor::ProcessInput()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     this->buildPanel->ProcessInput();
@@ -703,7 +703,7 @@ void Editor::ProcessInput()
 
 void Editor::Render()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     Vector2<int> ms = Utils::PositionToCell(

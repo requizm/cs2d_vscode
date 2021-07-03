@@ -15,7 +15,7 @@
 #include "../Scene/StartGame.hpp"
 
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -41,7 +41,7 @@ Map::~Map()
 
 void Map::Load(std::string file)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     JSONLoader jsonLoader;
@@ -150,7 +150,7 @@ void Map::Load(std::string file)
 }
 void Map::Draw(SpriteRenderer &renderer)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     for (auto &tile : tiles)

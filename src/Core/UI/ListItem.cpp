@@ -28,7 +28,7 @@ ListItem::~ListItem()
 
 void ListItem::AddItem(const std::string &text)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     const Vector2<int> pos = Vector2<int>(0.0F, static_cast<int>(i * 20));

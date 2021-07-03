@@ -1,5 +1,5 @@
 #include "Game.hpp"
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -36,7 +36,7 @@ void Game::Init()
 
 void Game::Update()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     SceneManager::instance().GetActiveScene<Scene>()->Update();
@@ -44,7 +44,7 @@ void Game::Update()
 
 void Game::ProcessInput()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     SceneManager::instance().GetActiveScene<Scene>()->ProcessInput();
@@ -52,7 +52,7 @@ void Game::ProcessInput()
 
 void Game::Render()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     SceneManager::instance().GetActiveScene<Scene>()->Render();

@@ -9,7 +9,7 @@
 #include "Editor.hpp"
 
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -95,7 +95,7 @@ bool NewMapSystem::isMouseHover() { return newPanel->isMouseHover(false); }
 
 NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     NewMapResult res = NewMapResult();
@@ -151,7 +151,7 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
 }
 NewMapResult NewMapSystem::B_NewMap()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     std::string sizeX = t_mapSizeX->getText();

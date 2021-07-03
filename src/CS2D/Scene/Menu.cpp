@@ -9,7 +9,7 @@
 #include "../Other/SceneManager.hpp"
 
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -19,7 +19,7 @@ Menu::Menu() : Scene("Menu")
 
 void Menu::Load()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
@@ -109,7 +109,7 @@ void Menu::Initialize(Sprite menuSprites[4])
 
 void Menu::Unload()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     if (l_console != nullptr) delete l_console;
@@ -148,7 +148,7 @@ void Menu::Unload()
 
 void Menu::Update()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     l_options->Update();
@@ -162,7 +162,7 @@ void Menu::Update()
 
 void Menu::ProcessInput()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     l_options->ProcessInput();
@@ -180,7 +180,7 @@ void Menu::ProcessInput()
 
     if (l_newgame->isMouseDown())
     {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
         ZoneScopedS(10);
 #endif
         mapNames->Clear();
@@ -200,7 +200,7 @@ void Menu::ProcessInput()
 
 void Menu::Render()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     for (int i = 0; i < 4; i++)
@@ -243,7 +243,7 @@ void Menu::selectedMapChange(TextButton *old, TextButton *n)
 
 void Menu::newGameBtnClick()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     std::string mName = GameParameters::resDirectory + "levels/" +

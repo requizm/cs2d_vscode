@@ -8,7 +8,7 @@
 #include "../Editor.hpp"
 
 
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
@@ -28,7 +28,7 @@ Env_Item::~Env_Item()
 
 void Env_Item::Initialize()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     sp = Sprite(ResourceManager::GetTexture("bulb"));
@@ -69,7 +69,7 @@ Vector2<int> Env_Item::getPosition() { return position; }
 
 Env_Item_Manager::Env_Item_Manager()
 {
-#if defined(WIN32) && defined(TRACY_ENABLE)
+#if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     p_panel =
