@@ -56,6 +56,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE freetype)
 add_subdirectory(${CMAKE_SOURCE_DIR}/deps/spdlog EXCLUDE_FROM_ALL)
 target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
 
+# tracy
+add_subdirectory(${CMAKE_SOURCE_DIR}/include/tracy EXCLUDE_FROM_ALL)
+
 
 if(MINGW)
 	SET(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc -O3")
