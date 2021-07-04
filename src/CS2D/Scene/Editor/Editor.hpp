@@ -53,7 +53,6 @@ class Editor : public Scene
     int tileCount;
     int maxCellInColumn;
     int maxCellInRow;
-    bool firstSelect;
     Vector2<int> position;
 
    private:

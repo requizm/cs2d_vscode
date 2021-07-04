@@ -23,8 +23,7 @@ list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.hpp$")
 # Define the executable
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/../bin/Debug)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/../bin/Release)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/../bin/Release)
 execute_process(COMMAND git submodule update --init WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 if (UNIX)
@@ -55,9 +54,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE freetype)
 # spdlog
 add_subdirectory(${CMAKE_SOURCE_DIR}/deps/spdlog EXCLUDE_FROM_ALL)
 target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
-
-# tracy
-add_subdirectory(${CMAKE_SOURCE_DIR}/include/tracy EXCLUDE_FROM_ALL)
 
 
 if(MINGW)

@@ -40,7 +40,7 @@
             "options": {
                 "cwd": "C:\\mingw64\\bin"
             },
-            "problemMatcher": []
+            "problemMatcher": ["$gcc"]
         },
         {
             "label": "(64)test_build",

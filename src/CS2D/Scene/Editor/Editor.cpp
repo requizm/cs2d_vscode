@@ -19,7 +19,6 @@ Editor::Editor() : Scene("Editor")
     this->maxCellInColumn = 0;
     this->maxCellInRow = 0;
     this->position = Vector2(0);
-    this->firstSelect = false;
     this->time = 0.0F;
     this->mapLimit = Vector2<int>(0);
     this->texture = Vector2<int>(0);
@@ -32,7 +31,6 @@ void Editor::Initialize()
     this->maxCellInColumn = 0;
     this->maxCellInRow = 0;
     this->position = Vector2(0);
-    this->firstSelect = false;
     this->time = 0.0F;
     this->mapLimit = Vector2<int>(0);
     this->texture = Vector2<int>(0);
@@ -398,7 +396,6 @@ void Editor::ProcessInput()
             if (tile->IsMouseDown())
             {
                 selectedTile = &tile->getTile();
-                firstSelect = true;
             }
         }
     }
@@ -512,15 +509,49 @@ void Editor::ProcessInput()
             // oops
         }
     }
-
-    if (b_new->IsMouseDown())
+    if (!(NewMap->newPanel->isEnable() || SaveLoad->loadPanel->isEnable() || SaveLoad->savePanel->isEnable() || tilePropertiesPanel->isEnable() || envItemManager->p_panel->isEnable()))
     {
-        this->NewMap->newPanel->setEnable(true);
-    }
+        if (b_new->IsMouseDown())
+        {
+            this->NewMap->newPanel->setEnable(true);
+        }
 
-    if (b_save->IsMouseDown())
-    {
-        SaveLoad->B_SaveMap();
+        if (b_save->IsMouseDown())
+        {
+            SaveLoad->B_SaveMap();
+        }
+
+        if (b_load->IsMouseDown())
+        {
+            SaveLoad->B_LoadMap();
+        }
+
+        if (b_tileProperties->IsMouseDown())
+        {
+            this->tilePropertiesPanel->setEnable(true);
+            this->rb_tileProperties->Select(
+                static_cast<int>(selectedTile->getType()));
+        }
+
+        for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
+        {
+            if (selectedMode == SelectedMode::OBJECT_MOD &&
+                InputManager::isButtonDown(MOUSE_BUTTON_LEFT))
+            {
+                Vector2<int> sw =
+                    Utils::ScreenToWorld(camera->view, InputManager::mousePos);
+                Vector2<int> c =
+                    Utils::PositionToCell(env_items[i]->getPosition());
+                Vector2<int> d = Utils::PositionToCell(sw);
+                if (d == c)
+                {
+                    envItemManager->p_panel->setEnable(true);
+                    envItemManager->t_id->setText(
+                        std::to_string(env_items[i]->getItemID()));
+                    selectedItem = env_items[i];
+                }
+            }
+        }
     }
 
     if (SaveLoad->b_map_save->IsMouseDown())
@@ -528,10 +559,6 @@ void Editor::ProcessInput()
         SaveLoad->SaveMap();
     }
 
-    if (b_load->IsMouseDown())
-    {
-        SaveLoad->B_LoadMap();
-    }
 
     if (b_objects->IsMouseDown())
     {
@@ -568,41 +595,12 @@ void Editor::ProcessInput()
         selectedTile = &tils->tilesUI.at(0)->getTile();
     }
 
-    if (b_tileProperties->IsMouseDown())
-    {
-        this->tilePropertiesPanel->setEnable(true);
-        this->rb_tileProperties->Select(
-            static_cast<int>(selectedTile->getType()));
-    }
-
     bool panelsPressed =
         buildPanel->isPressed || tilePropertiesPanel->isPressed ||
         buildPanel->isMouseHover(false) || NewMap->isPressedOrHover() ||
         tilePropertiesPanel->isMouseHover(false) ||
         SaveLoad->isPressedOrHover() || envItemManager->isPressedOrHover();
 
-    for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
-    {
-        if (!envItemManager->p_panel->isEnable())
-        {
-            if (selectedMode == SelectedMode::OBJECT_MOD &&
-                InputManager::isButtonDown(MOUSE_BUTTON_LEFT))
-            {
-                Vector2<int> sw =
-                    Utils::ScreenToWorld(camera->view, InputManager::mousePos);
-                Vector2<int> c =
-                    Utils::PositionToCell(env_items[i]->getPosition());
-                Vector2<int> d = Utils::PositionToCell(sw);
-                if (d == c)
-                {
-                    envItemManager->p_panel->setEnable(true);
-                    envItemManager->t_id->setText(
-                        std::to_string(env_items[i]->getItemID()));
-                    selectedItem = env_items[i];
-                }
-            }
-        }
-    }
 
     if (envItemManager->p_panel->isEnable())
     {
@@ -645,7 +643,7 @@ void Editor::ProcessInput()
 
     if (selectedMode == SelectedMode::TILE_MOD)
     {
-        if (firstSelect && !panelsPressed)
+        if (!panelsPressed)
         {
             if (InputManager::isButton(MOUSE_BUTTON_LEFT))
             {
@@ -755,8 +753,7 @@ void Editor::Render()
     {
         for (auto &tile : tils->tilesUI)
         {
-            if (firstSelect &&
-                selectedTile->GetID() == tile->getTile().GetID())
+            if (selectedTile->GetID() == tile->getTile().GetID())
             {
                 tile->Draw(*menuRenderer, *squareRenderer, 0.3F, true,
                            this->time);
