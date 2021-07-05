@@ -44,19 +44,22 @@
       << std::endl, 0) : 1
 #else
     #define ASSERTM_ERROR(condition, message)\
-   (!(condition)) ?\
-      (WRITE_ERROR(message)\
-      abort(), 0) : 1
+   ({            \
+   if (!(condition)) {\
+      WRITE_ERROR(message); \
+      abort(); }    \
+   })
     #define ASSERT_ERROR(condition)\
-   (!(condition)) ?\
-      (abort(), 0) : 1
+   ({            \
+   if (!(condition)) {\
+      abort(); }    \
+   })
     #define ASSERTM_WARNING(condition, message)\
-   (!(condition)) ?\
-      (WRITE_WARNING(message)\
-      0) : 1
-    #define ASSERT_WARNING(condition)\
-   (!(condition)) ?\
-      (0) : 1
+   ({            \
+   if (!(condition)) {\
+      WRITE_WARNING(message); } \
+   })
+    #define ASSERT_WARNING(condition) : 0
 #endif
 
 class Logger
