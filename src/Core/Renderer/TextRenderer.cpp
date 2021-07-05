@@ -62,20 +62,12 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
     this->Characters.clear();
     // Then initialize and load the FreeType library
     FT_Library ft;
-    if (FT_Init_FreeType(&ft))  // All functions return a value different than 0
-                                // whenever an error occurred
-    {
-        WRITE_ERROR("ERROR::FREETYPE: Could not init FreeType Library");
-        exit(EXIT_FAILURE);
-    }
+    ASSERTM_ERROR(FT_Init_FreeType(&ft) == 0, "FREETYPE: Could not init FreeType Library");
 
     // Load font as face
     FT_Face face;
-    if (FT_New_Face(ft, font.c_str(), 0, &face))
-    {
-        WRITE_ERROR("ERROR::FREETYPE: Failed to load font");
-        exit(EXIT_FAILURE);
-    }
+    ASSERTM_ERROR(FT_New_Face(ft, font.c_str(), 0, &face) == 0, "FREETYPE: Failed to load font");
+
     // Set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, fontSize);
     // Disable byte-alignment restriction

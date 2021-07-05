@@ -5,8 +5,6 @@ Collider::Collider(Vector2<int> pos, ColliderTypes _type)
 
 Collider::Collider(ColliderTypes _type) : type(_type) {}
 
-Collider::~Collider() {}
-
 ColliderTypes Collider::GetType() { return this->type; }
 
 Vector2<int> Collider::GetPosition() { return this->position; }

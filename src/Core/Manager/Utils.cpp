@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "../../CS2D/Other/GameParameters.hpp"
+#include "../Manager/Logger.hpp"
 
 int Utils::curIndex = 1;
 
@@ -32,16 +33,14 @@ Vector2<int> Utils::WorldToScreen(Vector2<int> view, Vector2<int> point)
 
 Vector2<int> Utils::PositionToCell(Vector2<int> pos)
 {
-    if (pos.x >= 0 && pos.y >= 0)
-    {
-        return Vector2<int>(pos.x / GameParameters::SIZE_TILE,
-                            pos.y / GameParameters::SIZE_TILE);
-    }
-    return Vector2<int>(-1, -1);  // gereksiz
+    ASSERT_ERROR(pos >= 0);
+    return Vector2<int>(pos.x / GameParameters::SIZE_TILE,
+                        pos.y / GameParameters::SIZE_TILE);
 }
 
 Vector2<int> Utils::CellToPosition(Vector2<int> cell)
 {
+    ASSERT_ERROR(cell >= 0);
     return Vector2<int>(cell.x * GameParameters::SIZE_TILE,
                         cell.y * GameParameters::SIZE_TILE);
 }

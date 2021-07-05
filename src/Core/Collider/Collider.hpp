@@ -22,7 +22,7 @@ class Collider
    public:
     explicit Collider(Vector2<int> pos, ColliderTypes _type);
     explicit Collider(ColliderTypes _type);
-    ~Collider();
+    ~Collider() = default;
 
     ColliderTypes GetType();
 

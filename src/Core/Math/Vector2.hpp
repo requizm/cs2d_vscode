@@ -67,6 +67,10 @@ class Vector2
 
     bool operator!=(Vector2 const &obj) { return !(obj.x == x && obj.y == y); }
 
+    bool operator<=(Vector2 const &obj) { return (obj.x <= x && obj.y <= y); }
+
+    bool operator>=(Vector2 const &obj) { return (obj.x >= x && obj.y >= y); }
+
     Vector2 operator+(T obj) { return Vector2(x + obj, y + obj); }
 
     Vector2 operator-(T obj) { return Vector2(x - obj, y - obj); }
@@ -74,6 +78,14 @@ class Vector2
     Vector2 operator*(T obj) { return Vector2(x * obj, y * obj); }
 
     Vector2 operator/(T obj) { return Vector2(x / obj, y / obj); }
+
+    bool operator==(T obj) { return (x == obj && y == obj); }
+
+    bool operator!=(T obj) { return !(x == obj && y == obj); }
+
+    bool operator<=(T obj) { return (x <= obj && y <= obj); }
+
+    bool operator>=(T obj) { return (x >= obj && y >= obj); }
 
     std::string ToString()
     {

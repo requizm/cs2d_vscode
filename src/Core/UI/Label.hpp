@@ -89,10 +89,6 @@ class Label : public UIObject
     Vector3<float> labelMouseHoverColor;
     Vector3<float> labelCurrentColor;
 
-    void DrawForButton(const bool center);
-
-    Vector2<int> getPositionForButton(const bool center);
-
     virtual bool isMouseHoverM();
     virtual bool isMouseDownM(MouseKeys key);
     virtual bool isMouseUpM(MouseKeys key);

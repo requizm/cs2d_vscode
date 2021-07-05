@@ -208,7 +208,6 @@ Tile *Map::GetTileByPosition(int x, int y)
 Tile *Map::GetTileByPosition(Vector2<int> position)
 {
     Vector2<int> cell = Utils::PositionToCell(position);
-
     return GetTileByCell(cell);
 }
 

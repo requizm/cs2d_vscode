@@ -14,11 +14,12 @@ class CircleCollider : public Collider
     ~CircleCollider() = default;
 
     bool Intersect(RectangleCollider &col);
-    bool Intersect(CircleCollider &col);
 
-    int radius = 1;  // FIXME: private olacak
+    int GetRadius() const;
+    void SetRadius(int radius_);
 
    private:
+   int radius = 1;
 };
 
 #endif  // CIRCLECOLLIDER_H

@@ -8,7 +8,7 @@ class RectangleCollider : public Collider
    public:
     RectangleCollider(Vector2<int> pos, Vector2<int> siz);
     RectangleCollider();
-    ~RectangleCollider();
+    ~RectangleCollider() = default;
 
     Vector2<int> GetSize();
     void SetSize(Vector2<int> siz);

@@ -78,5 +78,6 @@
         "-modernize-pass-by-value",
         "-modernize-use-trailing-return-type*",
         "-modernize-avoid-c-arrays"
-    ]
+    ],
+    "C_Cpp.dimInactiveRegions": false
 }
