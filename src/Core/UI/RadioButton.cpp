@@ -1,8 +1,8 @@
 #include "RadioButton.hpp"
 
 #include "../Manager/InputManager.hpp"
+#include "../Manager/Logger.hpp"
 #include "../Manager/MemoryOverride/MemoryOverride.hpp"
-
 
 #if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
@@ -270,6 +270,8 @@ void RadioButton::ProcessInput()
 
 void RadioButton::Select(int index)
 {
+    ASSERTM_ERROR(i >= 0 && i < elements.size(), "boyle bir item indexi yok");
+
     if (selectedIndex != index)
     {
         int old = selectedIndex;

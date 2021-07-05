@@ -158,17 +158,17 @@ NewMapResult NewMapSystem::B_NewMap()
     std::string tileSet = t_tile->getText();
     if (sizeX.empty() || sizeY.empty() || tileSet.empty())
     {
-        WRITE_ERROR("BOS");
+        LOG_WARNING("BOS");
         return (NewMapResult());
     }
     if (ResourceManager::GetTexture(tileSet).Width == 0)
     {
-        WRITE_ERROR("BOYLE BIR TEXTURE YOK");
+        LOG_WARNING("BOYLE BIR TEXTURE YOK");
         return (NewMapResult());
     }
     if (!Utils::TryStringToInt(sizeX) || !Utils::TryStringToInt(sizeY))
     {
-        WRITE_ERROR("BUNLAR SAYI DEGIL");
+        LOG_WARNING("BUNLAR SAYI DEGIL");
         return (NewMapResult());
     }
 
@@ -177,7 +177,7 @@ NewMapResult NewMapSystem::B_NewMap()
 
     if (isizeX <= 0 || isizeY <= 0)
     {
-        WRITE_ERROR("BUNLAR NEGATIF");
+        LOG_WARNING("BUNLAR NEGATIF");
         return (NewMapResult());
     }
     return NewMap(tileSet, Vector2<int>(isizeX, isizeY));

@@ -16,11 +16,7 @@ void XMLLoader::Load(std::string &mapName)
 {
     std::string codeString;
     std::ifstream fileC(mapName.c_str());
-    if (!fileC)
-    {
-        WRITE_ERROR("dosya acilamadi: " + mapName);
-        exit(EXIT_FAILURE);
-    }
+    ASSERTM_ERROR(fileC, "dosya acilamadi: " + mapName);
 
     std::stringstream fileStream;
     fileStream << fileC.rdbuf();

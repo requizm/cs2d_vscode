@@ -113,11 +113,8 @@ void ListItem::Update()
 
 void ListItem::Select(int i)
 {
-    if (i < 0 || i > items.size())
-    {
-        WRITE_ERROR("Boyle bir list item indexi yok" + std::to_string(i));
-        exit(EXIT_FAILURE);
-    }
+    ASSERTM_ERROR(i >= 0 && i < items.size(), "boyle bir item indexi yok");
+
     int old = selectedIndex;
     if (selectedIndex != -1)
     {
@@ -149,11 +146,7 @@ int ListItem::getSelectedIndex() { return selectedIndex; }
 
 ListItemElement *ListItem::getIndex(int i)
 {
-    if (i < 0 || i > items.size())
-    {
-        WRITE_ERROR("Boyle bir list item indexi yok" + std::to_string(i));
-        exit(EXIT_FAILURE);
-    }
+    ASSERTM_ERROR(i >= 0 && i < items.size(), "boyle bir item indexi yok");
     return items.at(i);
 }
 

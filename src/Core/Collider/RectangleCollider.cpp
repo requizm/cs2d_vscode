@@ -5,8 +5,6 @@ RectangleCollider::RectangleCollider(Vector2<int> pos, Vector2<int> siz)
 
 RectangleCollider::RectangleCollider() : Collider(ColliderTypes::RECTANGLE) {}
 
-RectangleCollider::~RectangleCollider() {}
-
 Vector2<int> RectangleCollider::GetSize() { return this->size; }
 
 void RectangleCollider::SetSize(Vector2<int> siz) { this->size = siz; }

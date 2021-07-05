@@ -222,12 +222,7 @@ void SaveLoadSystem::SaveMap()
         std::string a(GameParameters::resDirectory + "levels/" +
                       t_save->getText() + ".xml");
         fileC.open(a.c_str());
-        if (!fileC)
-        {
-            std::string str = a + "dosyasi acilamadi";
-            WRITE_ERROR(str);
-            exit(EXIT_FAILURE);
-        }
+        ASSERTM_ERROR(fileC, a + "dosyasi acilamadi");
         fileC << doc;
         fileC.close();
 

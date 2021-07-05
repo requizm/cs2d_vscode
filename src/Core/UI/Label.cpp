@@ -74,13 +74,6 @@ void Label::Draw()
         this->rend->RenderText(text, getPosition(), scale, labelCurrentColor);
 }
 
-void Label::DrawForButton(const bool center)
-{
-    if (isVisible() && isEnable() && !text.empty())
-        this->rend->RenderText(text, getPositionForButton(center), scale,
-                               labelCurrentColor);
-}
-
 void Label::Update()
 {
     if (isEnable() && isMouseEvents())
@@ -141,37 +134,6 @@ bool Label::isMouseUp()
 bool Label::isMousePress()
 {
     return isMousePressM(MOUSE_BUTTON_LEFT);
-}
-
-Vector2<int> Label::getPositionForButton(const bool center)  //FIXME: silinecek
-{
-    if (isParent())
-    {
-        if (objType == UIObjectType::TEXTBUTTON)
-        {
-            Vector2<int> dif = getSize() - getLabelSize();
-            dif.y /= 2;
-            if (center)
-            {
-                dif.x /= 2;
-                return parent->getPosition() + this->position + dif;
-            }
-            return parent->getPosition() + this->position +
-                   Vector2<int>(0, dif.y);
-        }
-        return parent->getPosition() + this->position;
-    }
-    if (objType == UIObjectType::TEXTBUTTON)
-    {
-        Vector2<int> dif = getSize() - getLabelSize();
-        dif.y /= 2;
-        if (center)
-        {
-            dif.x /= 2;
-        }
-        return this->position + dif;
-    }
-    return this->position;
 }
 
 Vector3<float> Label::getLabelColor() const { return this->labelColor; }

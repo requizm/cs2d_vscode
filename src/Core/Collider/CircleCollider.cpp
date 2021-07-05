@@ -1,5 +1,7 @@
 #include "CircleCollider.hpp"
 
+#include "../Manager/Logger.hpp"
+
 #if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
@@ -36,4 +38,6 @@ bool CircleCollider::Intersect(RectangleCollider &col)  // top left axis
     return difference.Magnitude() < this->radius;
 }
 
-bool CircleCollider::Intersect(CircleCollider &col) { return false; }
+int CircleCollider::GetRadius() const { return radius; }
+
+void CircleCollider::SetRadius(int radius_) { radius = radius_; }

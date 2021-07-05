@@ -90,7 +90,7 @@ Shader ResourceManager::loadShaderFromFile(const char *vShaderFile,
     }
     catch (std::exception &e)
     {
-        std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
+        ASSERTM_ERROR(false, "SHADER: Failed to read shader files");
     }
     const GLchar *vShaderCode = vertexCode.c_str();
     const GLchar *fShaderCode = fragmentCode.c_str();
@@ -125,11 +125,8 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file,
     else
         image = stbi_load(file, &width, &height, &channels, STBI_rgb);
 
-    if (!image)
-    {
-        WRITE_ERROR("texture yuklenmedi!");
-        exit(EXIT_FAILURE);
-    }
+    ASSERTM_ERROR(image, "Texture yuklenemedi");
+
     // Now generate texture
     // SOIL_last_result();
     texture.Generate(width, height, image);

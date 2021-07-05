@@ -135,7 +135,7 @@ void StartGame::Render()
         Vector3<float>(0.5F));
 
     squareRenderer.world_RenderEmptyCircle(
-        player->collider.GetPosition(), Vector2<int>(player->collider.radius),
+        player->collider.GetPosition(), Vector2<int>(player->collider.GetRadius()),
         Vector3<float>(0, 0, 0));
     // label->Draw(*textRenderer);
 
