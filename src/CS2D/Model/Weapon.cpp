@@ -139,14 +139,7 @@ void Weapon::setSelect(bool value)
         else
         {
             // ondeselect
-            if (!IsParent())
-            {
-                currentIndex = 1;
-            }
-            else
-            {
-                currentIndex = 1;
-            }
+            currentIndex = 1;
         }
     }
 }

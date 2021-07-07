@@ -59,9 +59,9 @@ void Player::Update()
 {
     if (lastMousePos != InputManager::mousePos)
     {
-        const int komsu = static_cast<int>(InputManager::mousePos.x) -
+        const int komsu = InputManager::mousePos.x -
                           GameParameters::SCREEN_WIDTH / 2;
-        const int karsi = static_cast<int>(InputManager::mousePos.y) -
+        const int karsi = InputManager::mousePos.y -
                           GameParameters::SCREEN_HEIGHT / 2;
         const float atan =
             atan2(static_cast<float>(karsi), static_cast<float>(komsu)) *
@@ -89,13 +89,15 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
     this->collider.SetPosition(this->GetPositionOfCenter());
     this->BuildTransform();
 
-    SceneManager::instance().GetActiveScene<StartGame>()->camera->setPosition(Vector2(
+    StartGame *startGame = SceneManager::instance().GetActiveScene<StartGame>();
+
+    startGame->camera->setPosition(Vector2(
         this->GetPositionOfCenter().x - GameParameters::SCREEN_WIDTH / 2,
         this->GetPositionOfCenter().y - GameParameters::SCREEN_HEIGHT / 2));
-    SceneManager::instance().GetActiveScene<StartGame>()->renderer->SetProjection(
-        SceneManager::instance().GetActiveScene<StartGame>()->camera->cameraMatrix);
-    SceneManager::instance().GetActiveScene<StartGame>()->squareRenderer.SetProjection(
-        SceneManager::instance().GetActiveScene<StartGame>()->camera->cameraMatrix);
+    startGame->renderer->SetProjection(
+        startGame->camera->cameraMatrix);
+    startGame->squareRenderer.SetProjection(
+        startGame->camera->cameraMatrix);
 
     Vector2<int> newCellPos =
         Utils::PositionToCell(this->GetPositionOfCenter());

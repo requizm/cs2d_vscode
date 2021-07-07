@@ -37,10 +37,10 @@ class Player : public GameObject
 
         weaponLimit[0] = false;
         weaponLimit[1] = false;
-        weaponLimit[2] = false;  // init()
+        weaponLimit[2] = false;
     }
 
-    ~Player();
+    ~Player() final;
 
     void Init();
     void setIndex(int index);
