@@ -9,7 +9,7 @@
 class ButtonTile
 {
    public:
-    TileButtonWorld *button = nullptr;
+    TileButtonWorld button;
     Vector2<int> cell;
     Env_Item *item = nullptr;
     bool init = false;
@@ -19,30 +19,25 @@ class ButtonTile
     explicit ButtonTile(Vector2<int> cell)
     {
         this->cell = cell;
-        this->button = new TileButtonWorld();
     }
 
-    ButtonTile(TileButtonWorld *button, Vector2<int> cell)
+    ButtonTile(TileButtonWorld button, Vector2<int> cell)
     {
         this->cell = cell;
         this->button = button;
     }
 
-    ButtonTile(int item_id, TileButtonWorld *button, Vector2<int> cell)
+    ButtonTile(int item_id, TileButtonWorld button, Vector2<int> cell)
     {
-        this->item = new Env_Item(item_id, button->getPosition());
+        this->item = new Env_Item(item_id, button.getPosition());
         this->cell = cell;
         this->button = button;
     }
 
-    ~ButtonTile() { delete button; }
+    ~ButtonTile() = default;
 
-    void SetButton(TileButtonWorld *bt)
+    void SetButton(TileButtonWorld bt)
     {
-        if (this->button != nullptr)
-        {
-            delete this->button;
-        }
         this->button = bt;
     }
 

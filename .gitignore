@@ -77,3 +77,5 @@ CMakeCache.txt
 *.trace
 
 wrapper_output/
+
+include/tracy/

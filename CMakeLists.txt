@@ -8,10 +8,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_language(CXX)
 
-set(CMAKE_CXX_FLAGS_DEBUG "-DTRACY_ENABLE")
-
 # Add source files
-file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/include/tracy/TracyClient.cpp)
+# file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/include/tracy/TracyClient.cpp)
+file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
 # Add header files
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/src/*.hpp)

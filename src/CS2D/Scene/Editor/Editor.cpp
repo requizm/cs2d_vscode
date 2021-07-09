@@ -45,21 +45,8 @@ void Editor::Load()
     currentTileSet = "cs2dnorm";
     if (tils != nullptr)
     {
-        for (auto tile : tils->tiles)
-        {
-            delete tile;
-        }
-        tils->tiles.clear();
-        for (auto tile : tils->tilesUI)
-        {
-            delete tile;
-        }
-        tils->tilesUI.clear();
-        if (tils != nullptr)
-        {
-            delete tils;
-            tils = nullptr;
-        }
+        delete tils;
+        tils = nullptr;
     }
 
     for (auto &env : env_items)
@@ -245,11 +232,8 @@ void Editor::Load()
 
 
     tils = nullptr;
-    tils = new NewMapResult();
-    NewMapResult r = NewMap->NewMap("cs2dnorm", Vector2<int>(50));
-    tils->tiles = r.tiles;
-    tils->tilesUI = r.tilesUI;
-    selectedTile = &tils->tilesUI.at(0)->getTile();
+    tils = NewMap->NewMap("cs2dnorm", Vector2<int>(50));
+    selectedTile = &tils->tilesUI[0].getTile();
 }
 
 void Editor::Unload()
@@ -261,16 +245,6 @@ void Editor::Unload()
 
     if (tils != nullptr)
     {
-        for (auto tile : tils->tiles)
-        {
-            delete tile;
-        }
-        tils->tiles.clear();
-        for (auto tile : tils->tilesUI)
-        {
-            delete tile;
-        }
-        tils->tilesUI.clear();
         delete tils;
     }
     tils = nullptr;
@@ -353,22 +327,22 @@ void Editor::Update()
     if (InputManager::scrollYPressed &&
         selectedMode == SelectedMode::TILE_MOD && tilePanel->isScrollable())
     {
-        if (!tils->tilesUI.empty())
+        if (texture.x > 0)
         {
-            bool check_1 = tils->tilesUI.at(0)->getLocalPosition().y == 0 &&
+            bool check_1 = tils->tilesUI[0].getLocalPosition().y == 0 &&
                            InputManager::scroll.y > 0;
             bool check_2 =
-                tils->tilesUI.at(tileCount - 1)->getLocalPosition().y ==
+                tils->tilesUI[tileCount - 1].getLocalPosition().y ==
                     maxCellInRow * 32 &&
                 InputManager::scroll.y < 0;
 
             if (!check_1 && !check_2)
             {
-                for (auto &tile : tils->tilesUI)
+                for (int i = 0; i < tileCount; i++)
                 {
-                    tile->setLocalPosition(Vector2<int>(tile->getLocalPosition().x,
-                                                        tile->getLocalPosition().y +
-                                                            InputManager::scroll.y * 32));
+                    tils->tilesUI[i].setLocalPosition(Vector2<int>(tils->tilesUI[i].getLocalPosition().x,
+                                                                   tils->tilesUI[i].getLocalPosition().y +
+                                                                       InputManager::scroll.y * 32));
                 }
             }
         }
@@ -388,14 +362,14 @@ void Editor::ProcessInput()
     this->SaveLoad->ProcessInput();
     this->objects_ui->ProcessInput();
 
-    for (auto &tile : tils->tilesUI)
+    for (int i = 0; i < tileCount; i++)
     {
-        if (tile->isRenderable())
+        if (tils->tilesUI[i].isRenderable())
         {
-            // tile->ProcessInput();
-            if (tile->IsMouseDown())
+            // tils->tilesUIProcessInput();
+            if (tils->tilesUI[i].IsMouseDown())
             {
-                selectedTile = &tile->getTile();
+                selectedTile = &tils->tilesUI[i].getTile();
             }
         }
     }
@@ -462,21 +436,11 @@ void Editor::ProcessInput()
 
     if (NewMap->b_okey->IsMouseDown())
     {
-        NewMapResult t = NewMap->B_NewMap();
-        if (!t.tiles.empty() && !t.tilesUI.empty())
+        NewMapResult *t = NewMap->B_NewMap();
+        if (t != nullptr)
         {
             if (tils != nullptr)
             {
-                for (auto tile : tils->tiles)
-                {
-                    delete tile;
-                }
-                tils->tiles.clear();
-                for (auto tile : tils->tilesUI)
-                {
-                    delete tile;
-                }
-                tils->tilesUI.clear();
                 delete tils;
             }
 
@@ -485,28 +449,8 @@ void Editor::ProcessInput()
                 if (env != nullptr) delete env;
             }
             env_items.clear();
-            tils = nullptr;
             NewMap->newPanel->setEnable(false);
-            tils = new NewMapResult();
-            tils->tiles = t.tiles;
-            tils->tilesUI = t.tilesUI;
-        }
-        else
-        {
-            for (auto tile : t.tiles)
-            {
-                delete tile;
-            }
-            t.tiles.clear();
-            for (auto tile : t.tilesUI)
-            {
-                delete tile;
-            }
-            t.tilesUI.clear();
-            // delete t;
-
-            // t = nullptr;
-            // oops
+            tils = t;
         }
     }
     if (!(NewMap->newPanel->isEnable() || SaveLoad->loadPanel->isEnable() || SaveLoad->savePanel->isEnable() || tilePropertiesPanel->isEnable() || envItemManager->p_panel->isEnable()))
@@ -584,15 +528,14 @@ void Editor::ProcessInput()
         currentTileSet = "cs2dnorm";
         if (tils != nullptr)
         {
-            for (auto tile : tils->tiles)
-            {
-                delete tile;
-            }
-            tils->tiles.clear();
+            free(tils->tiles);
+#if defined(TRACY_ENABLE)
+            TracyFree(tils->tiles);
+#endif
         }
 
         tils->tiles = SaveLoad->LoadMap(newMapName);
-        selectedTile = &tils->tilesUI.at(0)->getTile();
+        selectedTile = &tils->tilesUI[0].getTile();
     }
 
     bool panelsPressed =
@@ -620,22 +563,21 @@ void Editor::ProcessInput()
             {
                 if (env_items[i]->getObjID() == selectedItem->getObjID())
                 {
-                    for (std::vector<int>::size_type j = 0;
-                         j < tils->tiles.size(); j++)
+                    for (int j = 0; j < mapLimit.x * mapLimit.y; j++)
                     {
-                        if (tils->tiles[j]->item != nullptr &&
-                            tils->tiles[j]->item->getObjID() ==
+                        if (tils->tiles[j].item != nullptr &&
+                            tils->tiles[j].item->getObjID() ==
                                 selectedItem->getObjID())
                         {
-                            tils->tiles[j]->item = nullptr;
+                            tils->tiles[j].item = nullptr;
                             break;
                         }
                     }
-                    delete env_items[i];
-                    env_items.erase(env_items.begin() + i);
-                    selectedItem = nullptr;
-                    break;
                 }
+                delete env_items[i];
+                env_items.erase(env_items.begin() + i);
+                selectedItem = nullptr;
+                break;
             }
             envItemManager->p_panel->setEnable(false);
         }
@@ -650,9 +592,9 @@ void Editor::ProcessInput()
                 Vector2 wd =
                     Utils::ScreenToWorld(camera->view, InputManager::mousePos);
                 Vector2 selectedCell = Utils::PositionToCell(wd);
-                for (auto &tile : tils->tiles)
+                for (int i = 0; i < mapLimit.x * mapLimit.y; i++)
                 {
-                    if (tile->cell == selectedCell)
+                    if (tils->tiles[i].cell == selectedCell)
                     {
                         Tile tilee =
                             Tile(Utils::CellToPosition(selectedCell),
@@ -660,10 +602,10 @@ void Editor::ProcessInput()
                                  Vector2<int>(GameParameters::SIZE_TILE),
                                  selectedTile->getType(), selectedTile->frame);
                         if (!(selectedTile->frame ==
-                              tile->button->getTile().frame))
+                              tils->tiles[i].button.getTile().frame))
                         {
-                            TileButtonWorld *bt = new TileButtonWorld(tilee);
-                            tile->SetButton(bt);
+                            TileButtonWorld bt = TileButtonWorld(tilee);
+                            tils->tiles[i].SetButton(bt);
                             break;
                         }
                     }
@@ -681,15 +623,15 @@ void Editor::ProcessInput()
                 Vector2 wd =
                     Utils::ScreenToWorld(camera->view, InputManager::mousePos);
                 Vector2 selectedCell = Utils::PositionToCell(wd);
-                for (auto &tile : tils->tiles)
+                for (int i = 0; i < mapLimit.x * mapLimit.y; i++)
                 {
-                    if (tile->cell == selectedCell)
+                    if (tils->tiles[i].cell == selectedCell)
                     {
-                        if (tile->item == nullptr)
+                        if (tils->tiles[i].item == nullptr)
                         {
                             Env_Item *a = new Env_Item(
                                 1, Utils::CellToPosition(selectedCell));
-                            tile->SetItem(a);
+                            tils->tiles[i].SetItem(a);
                             break;
                         }
                     }
@@ -707,26 +649,26 @@ void Editor::Render()
     Vector2<int> ms = Utils::PositionToCell(
         Utils::ScreenToWorld(camera->view, InputManager::mousePos));
     bool f = false;
-    for (auto &tile_1 : tils->tiles)
+    for (int i = 0; i < mapLimit.x * mapLimit.y; i++)
     {
         Vector2 pos = Utils::WorldToScreen(
             camera->view,
-            tile_1->cell * Vector2<int>(GameParameters::SIZE_TILE));
+            tils->tiles[i].cell * Vector2<int>(GameParameters::SIZE_TILE));
         if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
             pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
         {
-            tile_1->button->Draw(*worldRenderer, *squareRenderer);
+            tils->tiles[i].button.Draw(*worldRenderer, *squareRenderer);
             squareRenderer->world_RenderEmptySquare(
-                Utils::CellToPosition(tile_1->cell),
+                Utils::CellToPosition(tils->tiles[i].cell),
                 Vector2<int>(GameParameters::SIZE_TILE), cell_yellow);
         }
 
-        if (!f && ms == tile_1->cell && !NewMap->isMouseHover() &&
+        if (!f && ms == tils->tiles[i].cell && !NewMap->isMouseHover() &&
             !buildPanel->isMouseHover(false) && !SaveLoad->isMouseHover() &&
             !envItemManager->isPressedOrHover() && !tilePropertiesPanel->isMouseHover(false))
         {
             f = true;
-            Vector2<int> pos = Utils::CellToPosition(tile_1->cell);
+            Vector2<int> pos = Utils::CellToPosition(tils->tiles[i].cell);
             squareRenderer->world_RenderEmptySquare(
                 pos, Vector2<int>(GameParameters::SIZE_TILE), mouse_yellow,
                 1.0F, 0, 4.0F);
@@ -749,23 +691,23 @@ void Editor::Render()
 
     SaveLoad->Render(*menuRenderer, *squareRenderer);
 
-    if (!tils->tilesUI.empty())
+    if (tils->tilesUI)
     {
-        for (auto &tile : tils->tilesUI)
+        for (int i = 0; i < tileCount; i++)
         {
-            if (selectedTile->GetID() == tile->getTile().GetID())
+            if (selectedTile->GetID() == tils->tilesUI[i].getTile().GetID())
             {
-                tile->Draw(*menuRenderer, *squareRenderer, 0.3F, true,
-                           this->time);
+                tils->tilesUI[i].Draw(*menuRenderer, *squareRenderer, 0.3F, true,
+                                      this->time);
             }
-            else if (tile->IsMouseHover())
+            else if (tils->tilesUI[i].IsMouseHover())
             {
-                tile->Draw(*menuRenderer, *squareRenderer, 0.3F, false,
-                           this->time);
+                tils->tilesUI[i].Draw(*menuRenderer, *squareRenderer, 0.3F, false,
+                                      this->time);
             }
             else
             {
-                tile->Draw(*menuRenderer, *squareRenderer);
+                tils->tilesUI[i].Draw(*menuRenderer, *squareRenderer);
                 int a = 2;
             }
         }
