@@ -93,12 +93,12 @@ bool NewMapSystem::isEditMode()
 
 bool NewMapSystem::isMouseHover() { return newPanel->isMouseHover(false); }
 
-NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
+NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    NewMapResult res = NewMapResult();
+    NewMapResult *res = new NewMapResult();
     Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
     editor->time = 0.0F;
     editor->position =
@@ -115,6 +115,21 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
 
     InputManager::scroll.y = 0.0F;
 
+    res->tilesUILength = editor->tileCount;
+    res->tilesLength = editor->mapLimit.x * editor->mapLimit.y;
+
+    res->tilesUI = (TileButtonScreen *)malloc(sizeof(TileButtonScreen) * editor->tileCount);
+    res->tiles = (ButtonTile *)malloc(sizeof(ButtonTile) * (mapSize.x * mapSize.y));
+#if defined(TRACY_ENABLE)
+    TracyAlloc(res->tilesUI, sizeof(TileButtonScreen) * editor->tileCount);
+    TracyAlloc(res->tiles, sizeof(ButtonTile) * (mapSize.x * mapSize.y));
+#endif
+    //res->tilesUI = new TileButtonScreen[editor->tileCount];
+    //res->tiles = new ButtonTile[mapSize.x * mapSize.y];
+
+    LOG_INFO(sizeof(TileButtonScreen));
+
+
     int curIndex = 0;
     for (int i = 0; i < editor->tileCount; i++)
     {
@@ -129,26 +144,23 @@ NewMapResult NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
         const Sprite sprite = Sprite(ResourceManager::GetTexture(tileSet),
                                      (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-        TileButtonScreen *button = new TileButtonScreen(tile);
-        button->independent = true;
-        button->setParent(editor->tilePanel, true);
-        res.tilesUI.push_back(button);
+        new (res->tilesUI + i) TileButtonScreen(tile);
+        res->tilesUI[i].independent = true;
+        res->tilesUI[i].setParent(editor->tilePanel, true);
     }
 
     for (int i = 0; i < editor->mapLimit.x; i++)
     {
         for (int j = 0; j < editor->mapLimit.y; j++)
         {
-            ButtonTile *t = new ButtonTile(Vector2<int>(i, j));
-            t->button->getTile().frame = 0;
-            t->button->getTile().setType(TileTypes::FLOOR);
-            res.tiles.push_back(t);
+            new (res->tiles + (i * editor->mapLimit.x) + j) ButtonTile(Vector2<int>(i, j));
+            res->tiles[(i * editor->mapLimit.x) + j].button.getTile().frame = 0;
+            res->tiles[(i * editor->mapLimit.x) + j].button.getTile().setType(TileTypes::FLOOR);
         }
     }
-
     return res;
 }
-NewMapResult NewMapSystem::B_NewMap()
+NewMapResult *NewMapSystem::B_NewMap()
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
@@ -159,17 +171,17 @@ NewMapResult NewMapSystem::B_NewMap()
     if (sizeX.empty() || sizeY.empty() || tileSet.empty())
     {
         LOG_WARNING("BOS");
-        return (NewMapResult());
+        return nullptr;
     }
     if (ResourceManager::GetTexture(tileSet).Width == 0)
     {
         LOG_WARNING("BOYLE BIR TEXTURE YOK");
-        return (NewMapResult());
+        return nullptr;
     }
     if (!Utils::TryStringToInt(sizeX) || !Utils::TryStringToInt(sizeY))
     {
         LOG_WARNING("BUNLAR SAYI DEGIL");
-        return (NewMapResult());
+        return nullptr;
     }
 
     int isizeX = Utils::StringToInt(sizeX);
@@ -178,7 +190,7 @@ NewMapResult NewMapSystem::B_NewMap()
     if (isizeX <= 0 || isizeY <= 0)
     {
         LOG_WARNING("BUNLAR NEGATIF");
-        return (NewMapResult());
+        return nullptr;
     }
     return NewMap(tileSet, Vector2<int>(isizeX, isizeY));
 }

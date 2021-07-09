@@ -7,8 +7,29 @@
 
 struct NewMapResult
 {
-    std::vector<TileButtonScreen *> tilesUI;
-    std::vector<ButtonTile *> tiles;
+    TileButtonScreen *tilesUI;
+    ButtonTile *tiles;
+
+    int tilesUILength = 0;
+    int tilesLength = 0;
+
+    ~NewMapResult()
+    {
+        for (int i = 0; i < tilesUILength; i++)
+        {
+            tilesUI[i].~TileButtonScreen();
+        }
+        for (int i = 0; i < tilesLength; i++)
+        {
+            tiles[i].~ButtonTile();
+        }
+        free(tiles);
+        free(tilesUI);
+#if defined(TRACY_ENABLE)
+        TracyFree(tiles);
+        TracyFree(tilesUI);
+#endif
+    }
 };
 
 class NewMapSystem
@@ -26,8 +47,8 @@ class NewMapSystem
     bool isEditMode();
     bool isMouseHover();
 
-    NewMapResult NewMap(std::string tileSet, Vector2<int> mapSize);
-    NewMapResult B_NewMap();
+    NewMapResult *NewMap(std::string tileSet, Vector2<int> mapSize);
+    NewMapResult *B_NewMap();
 
     Panel *newPanel;
     Label *l_tile, *l_mapSize, *l_x;

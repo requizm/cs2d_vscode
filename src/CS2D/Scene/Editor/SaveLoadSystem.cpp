@@ -151,26 +151,26 @@ void SaveLoadSystem::Render(SpriteRenderer &menuRenderer,
 void SaveLoadSystem::SaveMap()
 {
     Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
-    if (!editor->tils->tiles.empty() && !t_save->getText().empty())
+    if (!t_save->getText().empty())
     {
         rapidxml::xml_document<> doc;
         rapidxml::xml_node<> *node_map =
             doc.allocate_node(rapidxml::node_element, "map");
         // int i = 0;
-        for (auto &tile : editor->tils->tiles)
+        for (int i = 0; i < editor->mapLimit.x * editor->mapLimit.y; i++)
         {
             rapidxml::xml_node<> *node_tile =
                 doc.allocate_node(rapidxml::node_element, "tile");
             char *cellX =
-                doc.allocate_string(std::to_string(tile->cell.x).c_str());
+                doc.allocate_string(std::to_string(editor->tils->tiles[i].cell.x).c_str());
             char *cellY =
-                doc.allocate_string(std::to_string(tile->cell.y).c_str());
+                doc.allocate_string(std::to_string(editor->tils->tiles[i].cell.y).c_str());
             char *frame = doc.allocate_string(
-                std::to_string(tile->button->getTile().frame).c_str());
+                std::to_string(editor->tils->tiles[i].button.getTile().frame).c_str());
             char *type = doc.allocate_string(
-                std::to_string((int)tile->button->getTile().getType())
+                std::to_string((int)editor->tils->tiles[i].button.getTile().getType())
                     .c_str());
-            int item_id = tile->item != nullptr ? tile->item->getItemID() : 0;
+            int item_id = editor->tils->tiles[i].item != nullptr ? editor->tils->tiles[i].item->getItemID() : 0;
             char *itemId = doc.allocate_string(std::to_string(item_id).c_str());
 
             rapidxml::xml_node<> *node_tile_texture;
@@ -242,13 +242,12 @@ void SaveLoadSystem::B_SaveMap()
     this->savePanel->setEnable(true);
 }
 
-std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
+ButtonTile *SaveLoadSystem::LoadMap(std::string &mapName)
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
     Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
-    std::vector<ButtonTile *> tiles;
 
     InputManager::scroll.y = 0.0F;
     this->loadPanel->setEnable(false);
@@ -267,9 +266,12 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
     editor->mapLimit.x = atoi(mapx);
     editor->mapLimit.y = atoi(mapy);
     rapidxml::xml_node<> *node = loader.GetDoc().first_node("map");
-    // std::cout <<
-    // node->first_node("tile")->first_node("cellX")->next_sibling()->name() <<
-    // std::endl;
+
+    editor->tils->tilesLength = editor->mapLimit.x * editor->mapLimit.y;
+    ButtonTile *tiles = (ButtonTile *)malloc(sizeof(ButtonTile) * (editor->mapLimit.x * editor->mapLimit.y));
+#if defined(TRACY_ENABLE)
+    TracyAlloc(tiles, sizeof(ButtonTile) * (editor->mapLimit.x * editor->mapLimit.y));
+#endif
     int i = 0;
     for (rapidxml::xml_node<> *child = node->first_node(); child;
          child = child->next_sibling())
@@ -304,18 +306,16 @@ std::vector<ButtonTile *> SaveLoadSystem::LoadMap(std::string &mapName)
             ResourceManager::GetTexture(editor->currentTileSet),
             (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes(tileType), textureIndex);
-        TileButtonWorld *b = new TileButtonWorld(tile);
-        ButtonTile *t = nullptr;
+        TileButtonWorld b = TileButtonWorld(tile);
         if (itemId == 0)
         {
-            t = new ButtonTile(b, Vector2<int>(cellX, cellY));
+            new (tiles + i) ButtonTile(b, Vector2<int>(cellX, cellY));
         }
         else
         {
-            t = new ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
+            new (tiles + i) ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
         }
-
-        tiles.push_back(t);
+        i += 1;
     }
 
     return tiles;

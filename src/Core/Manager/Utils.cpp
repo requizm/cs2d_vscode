@@ -33,14 +33,14 @@ Vector2<int> Utils::WorldToScreen(Vector2<int> view, Vector2<int> point)
 
 Vector2<int> Utils::PositionToCell(Vector2<int> pos)
 {
-    ASSERT_ERROR(pos >= 0);
+    //ASSERT_ERROR(pos >= 0);
     return Vector2<int>(pos.x / GameParameters::SIZE_TILE,
                         pos.y / GameParameters::SIZE_TILE);
 }
 
 Vector2<int> Utils::CellToPosition(Vector2<int> cell)
 {
-    ASSERT_ERROR(cell >= 0);
+    //ASSERT_ERROR(cell >= 0);
     return Vector2<int>(cell.x * GameParameters::SIZE_TILE,
                         cell.y * GameParameters::SIZE_TILE);
 }
