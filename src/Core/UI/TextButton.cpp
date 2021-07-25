@@ -116,7 +116,7 @@ void TextButton::setPosition(const Vector2<int> &position)
     }
 }
 
-void TextButton::setLocalPosition(const Vector2<int> value)
+void TextButton::setLocalPosition(const Vector2<int> &value)
 {
     UIObject::setLocalPosition(value);
 

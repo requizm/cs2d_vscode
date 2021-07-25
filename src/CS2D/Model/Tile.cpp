@@ -2,7 +2,7 @@
 
 Tile::Tile() : type(TileTypes::FLOOR), frame(-1), GameObject() {}
 
-Tile::Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size,
+Tile::Tile(const Vector2<int> &pos, const Sprite &sprite, const Vector2<int> &size,
            TileTypes type, int frame)
     : GameObject(pos, sprite, size, ObjectType::TILE),
       type(type),

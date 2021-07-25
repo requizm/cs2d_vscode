@@ -6,12 +6,12 @@
 class RectangleCollider : public Collider
 {
    public:
-    RectangleCollider(Vector2<int> pos, Vector2<int> siz);
+    RectangleCollider(const Vector2<int> &pos, const Vector2<int> &siz);
     RectangleCollider();
     ~RectangleCollider() = default;
 
     Vector2<int> GetSize();
-    void SetSize(Vector2<int> siz);
+    void SetSize(const Vector2<int> &siz);
 
    private:
     Vector2<int> size = Vector2<int>(0);

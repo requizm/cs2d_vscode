@@ -5,8 +5,8 @@
 #include "../Manager/Timer.hpp"
 
 
-TextBox::TextBox(Vector2<int> position, TextRenderer &renderer,
-                 Vector2<int> size, bool isBackGround, float scale /*= 1.0F*/,
+TextBox::TextBox(const Vector2<int> &position, TextRenderer &renderer,
+                 const Vector2<int> &size, bool isBackGround, float scale /*= 1.0F*/,
                  const Vector3<float> &color /*= Vector3<float>(1.0F)*/)
     : Label(position, renderer, scale, color, UIObjectType::TEXTBOX)
 {
@@ -39,11 +39,9 @@ void TextBox::Draw(SpriteRenderer &spriteRenderer,
         {
             if (time <= 0.5F)
             {
-                spriteRenderer.DrawSprite(
-                    cursor,
-                    Vector2<int>(getPosition().x - 2.0F + labelSize.x,
-                                 getPosition().y + 2.0F),
-                    Vector2<int>(8, 16));
+                Vector2<int> pos = Vector2<int>(getPosition().x - 2.0F + labelSize.x, getPosition().y + 2.0F);
+                Vector2<int> size = Vector2<int>(8, 16);
+                spriteRenderer.DrawSprite(cursor, pos, size);
             }
             else if (time >= 1.0F)
             {

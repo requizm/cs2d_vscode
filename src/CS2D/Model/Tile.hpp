@@ -15,7 +15,7 @@ class Tile : public GameObject
 {
    public:
     Tile();
-    Tile(Vector2<int> pos, const Sprite &sprite, Vector2<int> size,
+    Tile(const Vector2<int> &pos, const Sprite &sprite, const Vector2<int> &size,
          TileTypes type = TileTypes::WALL, int frame = -1);
 
     void setType(TileTypes type);

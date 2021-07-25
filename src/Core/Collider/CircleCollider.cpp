@@ -6,7 +6,7 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-CircleCollider::CircleCollider(Vector2<int> pos, int r)
+CircleCollider::CircleCollider(const Vector2<int> &pos, int r)
     : Collider(pos, ColliderTypes::CIRCLE), radius(r) {}
 
 CircleCollider::CircleCollider() : Collider(ColliderTypes::CIRCLE) {}

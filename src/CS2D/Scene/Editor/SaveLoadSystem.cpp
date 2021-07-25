@@ -242,7 +242,7 @@ void SaveLoadSystem::B_SaveMap()
     this->savePanel->setEnable(true);
 }
 
-ButtonTile *SaveLoadSystem::LoadMap(std::string &mapName)
+ButtonTile *SaveLoadSystem::LoadMap(const std::string &mapName)
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
@@ -252,8 +252,8 @@ ButtonTile *SaveLoadSystem::LoadMap(std::string &mapName)
     InputManager::scroll.y = 0.0F;
     this->loadPanel->setEnable(false);
 
-    mapName = GameParameters::resDirectory + "levels/" + mapName + ".xml";
-    XMLLoader loader = XMLLoader(mapName);
+    std::string mapNameN = GameParameters::resDirectory + "levels/" + mapName + ".xml";
+    XMLLoader loader = XMLLoader(mapNameN);
 
     this->t_save->setText(
         loader.GetDoc().first_node("info")->first_node("name")->value());

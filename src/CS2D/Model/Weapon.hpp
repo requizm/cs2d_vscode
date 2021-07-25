@@ -17,7 +17,7 @@ class Weapon : public GameObject
 {
    public:
     Weapon();
-    Weapon(const Vector2<int> pos, const Sprite &sprite,
+    Weapon(const Vector2<int> &pos, const Sprite &sprite,
            const Sprite &floorSprite, const std::string &weaponName,
            WeaponType type, int maxAmmo, int curAmmo, int curAmmoInMag,
            const int maxAmmoInMag, bool dropable, bool ammoAndWeapon);

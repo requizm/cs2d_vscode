@@ -26,7 +26,7 @@ class SaveLoadSystem
     ListItem *save_listMaps;
 
     // load
-    ButtonTile *LoadMap(std::string &mapName);
+    ButtonTile *LoadMap(const std::string &mapName);
     void B_LoadMap();
     void LoadListChanged(TextButton *old, TextButton *n);
     Panel *loadPanel, *load_mapsPanel;

@@ -18,9 +18,9 @@ class TileButtonWorld : public UIObject
     void setPosition(const Vector2<int> &value) final;
 
     Vector2<int> getSize() final;
-    void setSize(const Vector2<int> value) final;
+    void setSize(const Vector2<int> &value) final;
 
-    void setLocalPosition(const Vector2<int> value) final;
+    void setLocalPosition(const Vector2<int> &value) final;
 
     bool isRenderable() final;
 
@@ -49,10 +49,10 @@ class TileButtonScreen : public UIObject
     void setPosition(const Vector2<int> &value) final;
 
     Vector2<int> getSize() final;
-    void setSize(const Vector2<int> value) final;
+    void setSize(const Vector2<int> &value) final;
 
     Vector2<int> getLocalPosition() final;
-    void setLocalPosition(const Vector2<int> value) final;
+    void setLocalPosition(const Vector2<int> &value) final;
 
     void setParent(UIObject *uiobject, bool dependParent = true) final;
 

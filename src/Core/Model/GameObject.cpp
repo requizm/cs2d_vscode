@@ -19,8 +19,8 @@ GameObject::GameObject()
     this->setID(Utils::GenerateID());
 }
 
-GameObject::GameObject(Vector2<int> pos, const Sprite &sprite,
-                       Vector2<int> size, ObjectType objType)
+GameObject::GameObject(const Vector2<int> &pos, const Sprite &sprite,
+                       const Vector2<int> &size, ObjectType objType)
     : globalPosition(pos),
       globalSize(size),
       globalRotation(0),
@@ -146,20 +146,21 @@ void GameObject::RemoveParent()
 
 void GameObject::setID(int id) { this->id = id; }
 
-void GameObject::SetTransform(Vector2<int> pos, Vector2<int> size, int rot)
+void GameObject::SetTransform(const Vector2<int> &pos, const Vector2<int> &size, int rot)
 {
     this->globalSize = size;
     this->globalRotation = rot;
     SetPosition(pos);
 }
 
-void GameObject::SetPosition(const Vector2<int> pos, bool changeCell)
+void GameObject::SetPosition(const Vector2<int> &pos, bool changeCell)
 {
     this->globalPosition = pos;
     if (changeCell)
     {
+        Vector2<int> centerPos = GetPositionOfCenter();
         Vector2<int> newCellPos =
-            Utils::PositionToCell(this->GetPositionOfCenter());
+            Utils::PositionToCell(centerPos);
         if (newCellPos != cellPos)
         {
             cellPos = newCellPos;
@@ -180,7 +181,7 @@ void GameObject::SetLocalPosition(const Vector2<int> &value)
     localPosition = value;
 }
 
-void GameObject::SetSize(Vector2<int> size)
+void GameObject::SetSize(const Vector2<int> &size)
 {
     this->globalSize = size;
     BuildTransform();
@@ -197,11 +198,11 @@ void GameObject::setCellPosition(int x, int y, bool changeCell)
     Vector2<int> newPos = Vector2<int>(x, y);
     setCellPosition(newPos, changeCell);
 }
-void GameObject::setCellPosition(Vector2<int> pos, bool changeCell)
+void GameObject::setCellPosition(const Vector2<int> &pos, bool changeCell)
 {
-    SetPosition(Vector2<int>(pos.x * GameParameters::SIZE_TILE,
-                             pos.y * GameParameters::SIZE_TILE),
-                changeCell);
+    Vector2<int> p = Vector2<int>(pos.x * GameParameters::SIZE_TILE,
+                                  pos.y * GameParameters::SIZE_TILE);
+    SetPosition(p, changeCell);
 }
 
 GameObject *GameObject::GetParent() { return parent; }

@@ -93,7 +93,7 @@ bool NewMapSystem::isEditMode()
 
 bool NewMapSystem::isMouseHover() { return newPanel->isMouseHover(false); }
 
-NewMapResult *NewMapSystem::NewMap(std::string tileSet, Vector2<int> mapSize)
+NewMapResult *NewMapSystem::NewMap(const std::string &tileSet, const Vector2<int> &mapSize)
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);

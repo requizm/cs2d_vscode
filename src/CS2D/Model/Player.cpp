@@ -80,7 +80,7 @@ void Player::ProcessInput()
     SlotInput();
 }
 
-void Player::SetPosition(Vector2<int> pos, bool changeCell)
+void Player::SetPosition(const Vector2<int> &pos, bool changeCell)
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
@@ -99,8 +99,8 @@ void Player::SetPosition(Vector2<int> pos, bool changeCell)
     startGame->squareRenderer.SetProjection(
         startGame->camera->cameraMatrix);
 
-    Vector2<int> newCellPos =
-        Utils::PositionToCell(this->GetPositionOfCenter());
+    Vector2<int> posCenter = Vector2<int>(GetPositionOfCenter());
+    Vector2<int> newCellPos = Utils::PositionToCell(posCenter);
     if (newCellPos != cellPos)
     {
         this->cellPos = newCellPos;

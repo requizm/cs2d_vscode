@@ -31,8 +31,8 @@ class SpriteRenderer
      * @param isSelected false
      * @param time 0.0F
      */
-    void DrawSprite(const Sprite &sprite, Vector2<int> position,
-                    Vector2<int> size, int rotate = 0.0F,
+    void DrawSprite(const Sprite &sprite, const Vector2<int> &position,
+                    const Vector2<int> &size, int rotate = 0.0F,
                     bool drawCenter = false, GLfloat shineFactor = 0.0F,
                     bool isSelected = false, GLfloat time = 0.0F);
 
@@ -50,14 +50,14 @@ class SpriteRenderer
      * @param isSelected false
      * @param time 0.0F
      */
-    void DrawSprite(const Sprite &sprite, Vector2<int> position,
-                    Vector2<int> size, const Vector3<float> &color,
+    void DrawSprite(const Sprite &sprite, const Vector2<int> &position,
+                    const Vector2<int> &size, const Vector3<float> &color,
                     bool drawCenter = false, int rotate = 0,
                     GLfloat shineFactor = 0.0F, bool isSelected = false,
                     float time = 0.0F);
 
-    void DrawSprite(const Sprite &sprite, Matrix4<float> model);
-    void SetProjection(Matrix4<float> projection);
+    void DrawSprite(const Sprite &sprite, const Matrix4<float> &model);
+    void SetProjection(const Matrix4<float> &projection);
 
    private:
     Shader shader;

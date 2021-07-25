@@ -2,8 +2,8 @@
 #define MAP_H
 
 #include <GL/glew.h>
-#include <math.h>  // pow()
 
+#include <cmath>  // pow()
 #include <string>
 #include <vector>
 
@@ -27,13 +27,13 @@ class Map
     void Draw(SpriteRenderer &renderer);
 
     Tile *GetTileByCell(int x, int y);
-    Tile *GetTileByCell(Vector2<int> cellPos);
+    Tile *GetTileByCell(Vector2<int> &cellPos);
 
     Tile *GetTileByPosition(int x, int y);
-    Tile *GetTileByPosition(Vector2<int> position);
+    Tile *GetTileByPosition(Vector2<int> &position);
 
    private:
-    void Load(std::string file);
+    void Load(const std::string &file);
     std::string name;
 
     Vector2<int> mapLimit;

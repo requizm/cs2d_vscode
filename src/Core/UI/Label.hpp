@@ -27,7 +27,7 @@ class Label : public UIObject
      * @param color Vector3<float>(1.0F)
      * @param type UIObjectType::LABEL
      */
-    Label(const std::string &text, Vector2<int> position,
+    Label(const std::string &text, const Vector2<int> &position,
           TextRenderer &renderer, float scale = 1.0F,
           const Vector3<float> &color = Vector3<float>(1.0F),
           UIObjectType type = UIObjectType::LABEL,
@@ -42,7 +42,7 @@ class Label : public UIObject
      * @param color Vector3<float>(1.0F)
      * @param type UIObjectType::LABEL
      */
-    Label(Vector2<int> position, TextRenderer &renderer, float scale = 1.0F,
+    Label(const Vector2<int> &position, TextRenderer &renderer, float scale = 1.0F,
           const Vector3<float> &color = Vector3<float>(1.0F),
           UIObjectType type = UIObjectType::LABEL);
 
@@ -54,7 +54,7 @@ class Label : public UIObject
      * @param scale 1.0F
      * @param type UIObjectType::LABEL
      */
-    Label(Vector2<int> position, Vector2<int> size, float scale = 1.0F,
+    Label(const Vector2<int> &position, const Vector2<int> &size, float scale = 1.0F,
           UIObjectType type = UIObjectType::LABEL,
           LabelType ltype = LabelType::CLICKABLE);
     virtual ~Label();

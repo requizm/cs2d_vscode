@@ -22,7 +22,7 @@ class TextButton : public UIObject
     bool IsMousePress();
 
     void setPosition(const Vector2<int> &position) final;
-    void setLocalPosition(const Vector2<int> value) final;
+    void setLocalPosition(const Vector2<int> &value) final;
 
     void setButtonColor(const Vector3<float> &value);
 

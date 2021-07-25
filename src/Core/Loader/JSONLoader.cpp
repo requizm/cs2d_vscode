@@ -4,7 +4,7 @@
 
 #include "../Manager/Logger.hpp"
 
-nlohmann::json JSONLoader::Load(std::string str)
+nlohmann::json JSONLoader::Load(const std::string &str)
 {
     std::ifstream t(str);
     ASSERTM_ERROR(t, "dosya acilamadi: " + str);

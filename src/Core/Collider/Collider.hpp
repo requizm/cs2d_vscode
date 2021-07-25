@@ -20,14 +20,14 @@ class Collider
     Vector2<int> position = Vector2<int>(0);
 
    public:
-    explicit Collider(Vector2<int> pos, ColliderTypes _type);
+    explicit Collider(const Vector2<int> &pos, ColliderTypes _type);
     explicit Collider(ColliderTypes _type);
     ~Collider() = default;
 
     ColliderTypes GetType();
 
     Vector2<int> GetPosition();
-    void SetPosition(Vector2<int> pos);
+    void SetPosition(const Vector2<int> &pos);
 };
 
 #endif  // COLLIDER_H

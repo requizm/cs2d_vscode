@@ -38,19 +38,20 @@ void TileButtonWorld::setPosition(const Vector2<int> &value)
 
 Vector2<int> TileButtonWorld::getSize() { return tile.GetSize(); }
 
-void TileButtonWorld::setSize(const Vector2<int> value)
+void TileButtonWorld::setSize(const Vector2<int> &value)
 {
     tile.SetSize(value);
 }
 
-void TileButtonWorld::setLocalPosition(const Vector2<int> value)
+void TileButtonWorld::setLocalPosition(const Vector2<int> &value)
 {
     tile.SetLocalPosition(value);
 }
 
 bool TileButtonWorld::isRenderable()
 {
-    Vector2 pos = Utils::WorldToScreen(SceneManager::instance().GetActiveScene<Editor>()->camera->view, tile.GetCellPos() * Vector2<int>(GameParameters::SIZE_TILE));
+    Vector2<int> tilePos = tile.GetCellPos() * Vector2<int>(GameParameters::SIZE_TILE);
+    Vector2 pos = Utils::WorldToScreen(SceneManager::instance().GetActiveScene<Editor>()->camera->view, tilePos);
     if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
         pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
     {
@@ -126,8 +127,10 @@ void TileButtonScreen::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squa
 {
     if (isEnable() && isRenderable())
     {
+        Vector2<int> pos = getPosition();
+        Vector2<int> siz = getSize();
         spriteRenderer.DrawSprite(this->tile.sprite,
-                                  this->getPosition(), this->getSize(),
+                                  pos, siz,
                                   0.0F, false, shine, selected, time);
     }
 }
@@ -142,14 +145,14 @@ void TileButtonScreen::setPosition(const Vector2<int> &value)
 
 Vector2<int> TileButtonScreen::getSize() { return tile.GetSize(); }
 
-void TileButtonScreen::setSize(const Vector2<int> value)
+void TileButtonScreen::setSize(const Vector2<int> &value)
 {
     tile.SetSize(value);
 }
 
 Vector2<int> TileButtonScreen::getLocalPosition() { return tile.GetLocalPosition(); }
 
-void TileButtonScreen::setLocalPosition(const Vector2<int> value)
+void TileButtonScreen::setLocalPosition(const Vector2<int> &value)
 {
     Vector2<int> newLocalPos = value;
     tile.SetLocalPosition(newLocalPos);

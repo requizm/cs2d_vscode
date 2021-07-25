@@ -22,7 +22,7 @@ class RadioButtonElement : public Label
      * @param textColor Vector3<float>(0.0F)
      * @param scale 1.0F
      */
-    RadioButtonElement(const std::string &text, Vector2<int> position,
+    RadioButtonElement(const std::string &text, const Vector2<int> &position,
                        TextRenderer &textRenderer, int index,
                        const Vector3<float> &buttonColor = Vector3<float>(1.0F),
                        const Vector3<float> &textColor = Vector3<float>(0.0F),
@@ -76,7 +76,7 @@ class RadioButton : public UIObject
 
    public:
     RadioButton() = default;
-    RadioButton(TextRenderer &renderer, Vector2<int> position, int y_sep);
+    RadioButton(TextRenderer &renderer, const Vector2<int> &position, int y_sep);
     ~RadioButton() final;
 
     void AddListener(

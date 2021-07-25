@@ -2,7 +2,7 @@
 
 #include "../Math/Projection.hpp"
 
-Camera::Camera(int width, int height, Vector2<int> pos)
+Camera::Camera(int width, int height, const Vector2<int> &pos)
 {
     view = pos;
     this->width = width;
@@ -13,7 +13,7 @@ Camera::Camera(int width, int height, Vector2<int> pos)
                           static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 };
 
-void Camera::setPosition(Vector2<int> newPos)
+void Camera::setPosition(const Vector2<int> &newPos)
 {
     needX = static_cast<float>(newPos.x - view.x);
     needY = static_cast<float>(newPos.y - view.y);
