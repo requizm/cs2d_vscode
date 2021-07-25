@@ -2,6 +2,7 @@
 #define TEXT_RENDERER_H
 
 #include <GL/glew.h>
+
 #include <map>
 
 #include "Shader.hpp"
@@ -29,14 +30,14 @@ class TextRenderer
     GLuint VBO = 0;
     // Constructor
     TextRenderer(GLuint width, GLuint height);
-    TextRenderer(GLuint width, GLuint height, Matrix4<float> camera);
+    TextRenderer(GLuint width, GLuint height, const Matrix4<float> camera);
     TextRenderer() = default;
     // Pre-compiles a list of characters from the given font
-    void Load(std::string font, GLuint fontSize);
+    void Load(const std::string font, GLuint fontSize);
     // Renders a string of text using the precompiled list of characters
-    void RenderText(std::string text, int x, int y, GLfloat scale,
+    void RenderText(const std::string &text, int x, int y, GLfloat scale,
                     const Vector3<float> &color = Vector3<float>(1.0f));
-    void RenderText(std::string text, Vector2<int> position, GLfloat scale,
+    void RenderText(const std::string &text, const Vector2<int> &position, GLfloat scale,
                     const Vector3<float> &color = Vector3<float>(1.0f));
     // void RenderLabel(Label *label);
     Vector2<int> CalculateSize(const std::string &text, GLfloat scale);

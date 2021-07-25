@@ -21,7 +21,7 @@ class Env_Item
    public:
     int obj_id = 0;
     Env_Item() = default;
-    explicit Env_Item(int id, Vector2<int> position);
+    explicit Env_Item(int id, const Vector2<int> &position);
     ~Env_Item();
 
     void Initialize();

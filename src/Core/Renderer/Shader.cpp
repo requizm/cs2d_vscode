@@ -87,7 +87,7 @@ useShader) const
         glUniform4f(glGetUniformLocation(this->ID, name), value.x, value.y,
 value.z, value.w);
 }*/
-void Shader::SetMatrix4(const GLchar *name, Matrix4<float> matrix,
+void Shader::SetMatrix4(const GLchar *name, const Matrix4<float> &matrix,
                         GLboolean useShader) const
 {
     glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, GL_FALSE,

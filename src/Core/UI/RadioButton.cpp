@@ -9,7 +9,7 @@
 #endif
 
 RadioButtonElement::RadioButtonElement(const std::string &text,
-                                       Vector2<int> position,
+                                       const Vector2<int> &position,
                                        TextRenderer &textRenderer, int index,
                                        const Vector3<float> &buttonColor,
                                        const Vector3<float> &textColor,
@@ -28,11 +28,11 @@ void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer,
                               SquareRenderer &squareRenderer)
 {
     if (!text.empty())
-        this->rend->RenderText(
-            text,
-            Vector2<int>(getPosition().x + labelSize.y / 2 + 2.0F,
-                         getPosition().y),
-            scale, labelCurrentColor);
+    {
+        Vector2<int> pos = Vector2<int>(getPosition().x + labelSize.y / 2 + 2.0F, getPosition().y);
+        this->rend->RenderText(text, pos, scale, labelCurrentColor);
+    }
+
     squareRenderer.ui_RenderFilledCircle(
         Vector2<int>(getPosition().x, getPosition().y + labelSize.y / 2),
         Vector2<int>(labelSize.y / 2), Vector3<float>(0.21F));
@@ -164,7 +164,7 @@ bool RadioButtonElement::isMousePressM(MouseKeys key)
     return false;
 }
 
-RadioButton::RadioButton(TextRenderer &renderer, Vector2<int> position,
+RadioButton::RadioButton(TextRenderer &renderer, const Vector2<int> &position,
                          int y_sep)
     : UIObject(position, 1.0F, renderer)
 {

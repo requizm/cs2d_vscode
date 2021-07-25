@@ -16,14 +16,14 @@ Weapon::Weapon()
     this->objType = ObjectType::WEAPON;
 }
 
-Weapon::Weapon(const Vector2<int> pos, const Sprite &sprite,
+Weapon::Weapon(const Vector2<int> &pos, const Sprite &sprite,
                const Sprite &floorSprite, const std::string &weaponName,
                WeaponType type, int maxAmmo, int curAmmo, int curAmmoInMag,
                const int maxAmmoInMag, bool dropable, bool ammoAndWeapon)
     : GameObject(
           Vector2<int>(
-              Utils::PositionToCell(pos).x * GameParameters::SIZE_TILE,
-              Utils::PositionToCell(pos).y * GameParameters::SIZE_TILE),
+              Utils::PositionToCell(cellPos).x * GameParameters::SIZE_TILE,
+              Utils::PositionToCell(cellPos).y * GameParameters::SIZE_TILE),
           floorSprite,
           Vector2<int>(GameParameters::SIZE_TILE,
                        GameParameters::SIZE_TILE),

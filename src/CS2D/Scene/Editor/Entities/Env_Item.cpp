@@ -12,7 +12,7 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-Env_Item::Env_Item(int id, Vector2<int> position)
+Env_Item::Env_Item(int id, const Vector2<int> &position)
 {
     this->item_id = id;
     this->position = position;

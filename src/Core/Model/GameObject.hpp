@@ -27,7 +27,7 @@ class GameObject
      * @param size
      * @param objType 2(ObjectType::GAMEOBJECT)
      */
-    GameObject(Vector2<int> pos, const Sprite &sprite, Vector2<int> size, ObjectType objType);
+    GameObject(const Vector2<int> &pos, const Sprite &sprite, const Vector2<int> &size, ObjectType objType);
     virtual ~GameObject();
 
     // Draw sprite
@@ -39,14 +39,14 @@ class GameObject
 
     void SetTransform(const Matrix4<float> &transform);
 
-    void SetTransform(Vector2<int> pos, Vector2<int> size, int rot = 0);
-    virtual void SetPosition(Vector2<int> pos, bool changeCell = true);
+    void SetTransform(const Vector2<int> &pos, const Vector2<int> &size, int rot = 0);
+    virtual void SetPosition(const Vector2<int> &pos, bool changeCell = true);
     virtual void SetPosition(const int x, const int y, bool changeCell = true);
     void SetLocalPosition(const Vector2<int> &value);
-    void SetSize(Vector2<int> size);
+    void SetSize(const Vector2<int> &size);
     void SetRotation(int rot);
     void setCellPosition(int x, int y, bool changeCell = true);
-    void setCellPosition(Vector2<int> pos, bool changeCell = true);
+    void setCellPosition(const Vector2<int> &pos, bool changeCell = true);
     void setID(int id);
 
     virtual void Destroy();

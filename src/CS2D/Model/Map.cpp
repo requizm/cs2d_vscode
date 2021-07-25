@@ -39,7 +39,7 @@ Map::~Map()
     weapons.clear();
 }
 
-void Map::Load(std::string file)
+void Map::Load(const std::string &file)
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
@@ -157,8 +157,9 @@ void Map::Draw(SpriteRenderer &renderer)
     {
         if (!tile->IsDestroyed())
         {
+            Vector2<int> tilePos = tile->GetPosition();
             Vector2 pos = Utils::WorldToScreen(
-                SceneManager::instance().GetActiveScene<StartGame>()->camera->view, tile->GetPosition());
+                SceneManager::instance().GetActiveScene<StartGame>()->camera->view, tilePos);
             if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
                 pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
             {
@@ -168,8 +169,8 @@ void Map::Draw(SpriteRenderer &renderer)
     }
     for (auto &weapon : weapons)
     {
-        Vector2 pos = Utils::WorldToScreen(SceneManager::instance().GetActiveScene<StartGame>()->camera->view,
-                                           weapon->GetPosition());
+        Vector2<int> weaponPos = weapon->GetPosition();
+        Vector2 pos = Utils::WorldToScreen(SceneManager::instance().GetActiveScene<StartGame>()->camera->view, weaponPos);
         if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
             pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
         {
@@ -188,7 +189,7 @@ Tile *Map::GetTileByCell(int x, int y)
     return tiles.at(tileIndex);
 }
 
-Tile *Map::GetTileByCell(Vector2<int> cellPos)
+Tile *Map::GetTileByCell(Vector2<int> &cellPos)
 {
     if (cellPos.x < 0 || cellPos.y < 0 || cellPos.x >= mapLimit.x ||
         cellPos.y >= mapLimit.y)
@@ -201,11 +202,12 @@ Tile *Map::GetTileByCell(Vector2<int> cellPos)
 
 Tile *Map::GetTileByPosition(int x, int y)
 {
-    Vector2<int> cell = Utils::PositionToCell(Vector2<int>(x, y));
+    Vector2<int> pos = Vector2<int>(x, y);
+    Vector2<int> cell = Utils::PositionToCell(pos);
     return GetTileByCell(cell);
 }
 
-Tile *Map::GetTileByPosition(Vector2<int> position)
+Tile *Map::GetTileByPosition(Vector2<int> &position)
 {
     Vector2<int> cell = Utils::PositionToCell(position);
     return GetTileByCell(cell);

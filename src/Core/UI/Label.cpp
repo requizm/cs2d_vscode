@@ -4,7 +4,7 @@
 #include "../Manager/Logger.hpp"
 #include "../Manager/ObjectManager.hpp"
 
-Label::Label(const std::string &text, Vector2<int> position,
+Label::Label(const std::string &text, const Vector2<int> &position,
              TextRenderer &renderer, float scale, const Vector3<float> &color,
              UIObjectType type, LabelType ltype)
     : UIObject(position, scale, renderer, type)
@@ -29,7 +29,7 @@ Label::Label(const std::string &text, Vector2<int> position,
     }
 }
 
-Label::Label(Vector2<int> position, TextRenderer &renderer, float scale,
+Label::Label(const Vector2<int> &position, TextRenderer &renderer, float scale,
              const Vector3<float> &color, UIObjectType type)
     : UIObject(position, scale, renderer, type)
 {
@@ -39,7 +39,7 @@ Label::Label(Vector2<int> position, TextRenderer &renderer, float scale,
     this->labelCurrentColor = color;
 }
 
-Label::Label(Vector2<int> position, Vector2<int> size, float scale,
+Label::Label(const Vector2<int> &position, const Vector2<int> &size, float scale,
              UIObjectType type, LabelType ltype)
     : UIObject(position, size, scale, type)
 {

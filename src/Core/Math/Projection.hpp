@@ -185,7 +185,7 @@ class Projection
         return R;
     }
 
-    static float *value_ptr(Matrix4<float> &m) { return &(m.values[0]); }
+    static const float *value_ptr(const Matrix4<float> &m) { return &(m.values[0]); }
 
     static float radians(float degrees)
     {

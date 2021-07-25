@@ -6,8 +6,8 @@
 
 SpriteRenderer::SpriteRenderer(const Shader shader) { this->shader = shader; }
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
-                                Vector2<int> size, int rotate, bool drawCenter,
+void SpriteRenderer::DrawSprite(const Sprite &sprite, const Vector2<int> &position,
+                                const Vector2<int> &size, int rotate, bool drawCenter,
                                 GLfloat shineFactor, bool isSelected,
                                 GLfloat time)
 {
@@ -61,8 +61,8 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
     this->shader.UnUse();
 }
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
-                                Vector2<int> size, const Vector3<float> &color,
+void SpriteRenderer::DrawSprite(const Sprite &sprite, const Vector2<int> &position,
+                                const Vector2<int> &size, const Vector3<float> &color,
                                 bool drawCenter, int rotate,
                                 GLfloat shineFactor, bool isSelected,
                                 float time)
@@ -120,7 +120,7 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Vector2<int> position,
     this->shader.UnUse();
 }
 
-void SpriteRenderer::DrawSprite(const Sprite &sprite, Matrix4<float> model)
+void SpriteRenderer::DrawSprite(const Sprite &sprite, const Matrix4<float> &model)
 {
     this->shader.Use();
     this->shader.SetMatrix4("model", model);
@@ -136,7 +136,7 @@ void SpriteRenderer::DrawSprite(const Sprite &sprite, Matrix4<float> model)
     this->shader.UnUse();
 }
 
-void SpriteRenderer::SetProjection(Matrix4<float> projection)
+void SpriteRenderer::SetProjection(const Matrix4<float> &projection)
 {
     this->shader.Use();
     this->shader.SetMatrix4("projection", projection);

@@ -20,8 +20,8 @@ enum MoveDirection
 class Player : public GameObject
 {
    public:
-    Player(const Vector2<int> pos, const std::vector<Sprite> &sprites,
-           const Vector2<int> size = Vector2<int>(GameParameters::SIZE_TILE),
+    Player(const Vector2<int> &pos, const std::vector<Sprite> &sprites,
+           const Vector2<int> &size = Vector2<int>(GameParameters::SIZE_TILE),
            int maxHealth = 100)
         : GameObject(pos, sprites[0], size, ObjectType::PLAYER),
           collider(CircleCollider(
@@ -48,7 +48,7 @@ class Player : public GameObject
     void DrawModel(SpriteRenderer &renderer) override;
     void Update();
     void ProcessInput();
-    void SetPosition(Vector2<int> pos, bool changeCell = true) override;
+    void SetPosition(const Vector2<int> &pos, bool changeCell = true) override;
     void SetPosition(const int x, const int y, bool changeCell = true) override;
     void SetMap(Map *map);
     void setVelocity(const int velocity);

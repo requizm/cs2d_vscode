@@ -9,7 +9,7 @@ class JSONLoader
     JSONLoader() = default;
     ~JSONLoader() = default;
 
-    nlohmann::json Load(std::string str);
+    nlohmann::json Load(const std::string &str);
 };
 
 #endif  // JSONLOADER_H

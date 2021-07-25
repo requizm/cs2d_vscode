@@ -43,7 +43,7 @@ class Shader
                      GLfloat w, GLboolean useShader = false) const;
     // void    SetVector4f(const GLchar* name, const glm::vec4& value, GLboolean
     // useShader = false) const;
-    void SetMatrix4(const GLchar* name, Matrix4<float> matrix,
+    void SetMatrix4(const GLchar* name, const Matrix4<float>& matrix,
                     GLboolean useShader = false) const;
 
     void UnUse() const;

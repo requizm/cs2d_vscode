@@ -36,7 +36,7 @@ class SquareRenderer
      * @param transperancy 1.0F
      * @param rotate 0
      */
-    void ui_RenderFilledSquare(Vector2<int> position, Vector2<int> size,
+    void ui_RenderFilledSquare(const Vector2<int> &position, const Vector2<int> &size,
                                const Vector3<float> &color, bool outline,
                                const Vector3<float> &borderColor,
                                float borderSize, GLfloat transperancy = 1.0F,
@@ -51,7 +51,7 @@ class SquareRenderer
      * @param transperancy 1.0F
      * @param rotate 0
      */
-    void ui_RenderFilledSquare(Vector2<int> position, Vector2<int> size,
+    void ui_RenderFilledSquare(const Vector2<int> &position, const Vector2<int> &size,
                                const Vector3<float> &color,
                                GLfloat transperancy = 1.0F, int rotate = 0);
 
@@ -64,7 +64,7 @@ class SquareRenderer
      * @param transperancy 1.0F
      * @param rotate 0
      */
-    void world_RenderFilledSquare(Vector2<int> position, Vector2<int> size,
+    void world_RenderFilledSquare(const Vector2<int> position, const Vector2<int> size,
                                   const Vector3<float> &color,
                                   GLfloat transperancy = 1.0F, int rotate = 0);
 
@@ -77,7 +77,7 @@ class SquareRenderer
      * @param lineSize 1.0F
      * @param transperancy 0.0F
      */
-    void ui_RenderLine(Vector2<int> startPos, Vector2<int> endPos,
+    void ui_RenderLine(const Vector2<int> &startPos, const Vector2<int> &endPos,
                        const Vector3<float> &color, float lineSize = 1.0F,
                        GLfloat transperancy = 1.0F);
 
@@ -90,7 +90,7 @@ class SquareRenderer
      * @param lineSize 1.0F
      * @param transperancy 1.0F
      */
-    void world_RenderLine(Vector2<int> startPos, Vector2<int> endPos,
+    void world_RenderLine(const Vector2<int> &startPos, const Vector2<int> &endPos,
                           const Vector3<float> &color, float lineSize = 1.0F,
                           GLfloat transperancy = 1.0F);
 
@@ -103,7 +103,7 @@ class SquareRenderer
      * @param transperancy 1.0F
      * @param rotate 0
      */
-    void ui_RenderEmptySquare(Vector2<int> position, Vector2<int> size,
+    void ui_RenderEmptySquare(const Vector2<int> &position, const Vector2<int> &size,
                               const Vector3<float> &color,
                               GLfloat transperancy = 1.0F, int rotate = 0,
                               float lineSize = 1.0F);
@@ -117,7 +117,7 @@ class SquareRenderer
      * @param transperancy 1.0F
      * @param rotate 0
      */
-    void world_RenderEmptySquare(Vector2<int> position, Vector2<int> size,
+    void world_RenderEmptySquare(const Vector2<int> &position, const Vector2<int> &size,
                                  const Vector3<float> &color,
                                  GLfloat transperancy = 1.0F, int rotate = 0,
                                  float lineSize = 1.0F);
@@ -131,7 +131,7 @@ class SquareRenderer
      * @param transperancy 1.0F
      * @param rotate 0
      */
-    void ui_RenderEmptyCircle(Vector2<int> position, Vector2<int> size,
+    void ui_RenderEmptyCircle(const Vector2<int> &position, const Vector2<int> &size,
                               const Vector3<float> &color,
                               GLfloat transperancy = 1.0F, int rotate = 0);
 
@@ -144,7 +144,7 @@ class SquareRenderer
      * @param transperancy 1.0F
      * @param rotate 0
      */
-    void ui_RenderFilledCircle(Vector2<int> position, Vector2<int> size,
+    void ui_RenderFilledCircle(const Vector2<int> &position, const Vector2<int> &size,
                                const Vector3<float> &color,
                                GLfloat transperancy = 1.0F, int rotate = 0);
 
@@ -157,11 +157,11 @@ class SquareRenderer
      * @param transperancy 1.0F
      * @param rotate 0
      */
-    void world_RenderEmptyCircle(Vector2<int> position, Vector2<int> size,
+    void world_RenderEmptyCircle(const Vector2<int> &position, const Vector2<int> &size,
                                  const Vector3<float> &color,
                                  GLfloat transperancy = 1.0F, int rotate = 0);
 
-    void SetProjection(Matrix4<float> proj);
+    void SetProjection(const Matrix4<float> proj);
 };
 
 #endif  // SQUARE_RENDERER_H

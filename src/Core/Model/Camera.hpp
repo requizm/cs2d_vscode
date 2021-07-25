@@ -11,9 +11,9 @@ class Camera
 {
    public:
     Camera() = default;
-    Camera(int width, int height, Vector2<int> pos = Vector2<int>(0));
+    Camera(int width, int height, const Vector2<int> &pos = Vector2<int>(0));
 
-    void setPosition(Vector2<int> newPos);
+    void setPosition(const Vector2<int> &newPos);
 
     Matrix4<float> cameraMatrix = Matrix4<float>(1.0F);
     Vector2<int> view = Vector2<int>(0);

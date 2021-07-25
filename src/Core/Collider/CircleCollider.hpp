@@ -9,7 +9,7 @@
 class CircleCollider : public Collider
 {
    public:
-    CircleCollider(Vector2<int> pos, int r);
+    CircleCollider(const Vector2<int> &pos, int r);
     CircleCollider();
     ~CircleCollider() = default;
 

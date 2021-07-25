@@ -47,7 +47,7 @@ class NewMapSystem
     bool isEditMode();
     bool isMouseHover();
 
-    NewMapResult *NewMap(std::string tileSet, Vector2<int> mapSize);
+    NewMapResult *NewMap(const std::string &tileSet, const Vector2<int> &mapSize);
     NewMapResult *B_NewMap();
 
     Panel *newPanel;

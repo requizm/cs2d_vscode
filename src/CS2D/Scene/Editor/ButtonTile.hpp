@@ -16,18 +16,18 @@ class ButtonTile
 
     ButtonTile() = default;
 
-    explicit ButtonTile(Vector2<int> cell)
+    explicit ButtonTile(const Vector2<int> &cell)
     {
         this->cell = cell;
     }
 
-    ButtonTile(TileButtonWorld button, Vector2<int> cell)
+    ButtonTile(TileButtonWorld &button, const Vector2<int> &cell)
     {
         this->cell = cell;
         this->button = button;
     }
 
-    ButtonTile(int item_id, TileButtonWorld button, Vector2<int> cell)
+    ButtonTile(int item_id, TileButtonWorld &button, const Vector2<int> &cell)
     {
         this->item = new Env_Item(item_id, button.getPosition());
         this->cell = cell;
@@ -36,7 +36,7 @@ class ButtonTile
 
     ~ButtonTile() = default;
 
-    void SetButton(TileButtonWorld bt)
+    void SetButton(TileButtonWorld &bt)
     {
         this->button = bt;
     }

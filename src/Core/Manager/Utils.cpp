@@ -16,29 +16,33 @@
 
 int Utils::curIndex = 1;
 
-Vector2<int> Utils::ScreenToWorld(Vector2<int> view, Vector2<int> point)
+Vector2<int> Utils::ScreenToWorld(const Vector2<int> &view, const Vector2<int> &point)
 {
-    return (view + point);
+    Vector2<int> viewN = view;
+    Vector2<int> pointN = point;
+    return (viewN + pointN);
 }
 
-Vector2<int> Utils::WorldToScreen(Vector2<int> view, Vector2<int> point)
+Vector2<int> Utils::WorldToScreen(const Vector2<int> &view, const Vector2<int> &point)
 {
+    Vector2<int> viewN = view;
+    Vector2<int> pointN = point;
     Vector2<int> screen = Vector2<int>(GameParameters::SCREEN_WIDTH,
                                        GameParameters::SCREEN_HEIGHT);
-    Vector2<int> res = screen - (view + screen - point);
+    Vector2<int> res = screen - (viewN + screen - pointN);
     res.x = abs(res.x);
     res.y = abs(res.y);
     return res;
 }
 
-Vector2<int> Utils::PositionToCell(Vector2<int> pos)
+Vector2<int> Utils::PositionToCell(const Vector2<int> &pos)
 {
     //ASSERT_ERROR(pos >= 0);
     return Vector2<int>(pos.x / GameParameters::SIZE_TILE,
                         pos.y / GameParameters::SIZE_TILE);
 }
 
-Vector2<int> Utils::CellToPosition(Vector2<int> cell)
+Vector2<int> Utils::CellToPosition(const Vector2<int> &cell)
 {
     //ASSERT_ERROR(cell >= 0);
     return Vector2<int>(cell.x * GameParameters::SIZE_TILE,
@@ -47,7 +51,7 @@ Vector2<int> Utils::CellToPosition(Vector2<int> cell)
 
 int Utils::GenerateID() { return curIndex++; }
 
-bool Utils::TryStringToInt(std::string s)
+bool Utils::TryStringToInt(std::string &s)
 {
     const char *sC = s.c_str();
     if (sC == NULL || *sC == '\0') return false;
@@ -71,7 +75,7 @@ bool Utils::TryStringToInt(std::string s)
     return true;
 }
 
-int Utils::StringToInt(std::string s)
+int Utils::StringToInt(std::string &s)
 {
     const char *sC = s.c_str();
 

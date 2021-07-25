@@ -56,10 +56,9 @@ void Game::Render()
     ZoneScopedS(10);
 #endif
     SceneManager::instance().GetActiveScene<Scene>()->Render();
-    menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos,
-                            Vector2<int>(GameParameters::SCREEN_HEIGHT / 35,
-                                         GameParameters::SCREEN_HEIGHT / 35),
-                            0, true);
+    Vector2<int> mouseSize = Vector2<int>(GameParameters::SCREEN_HEIGHT / 35,
+                                          GameParameters::SCREEN_HEIGHT / 35);
+    menuRenderer.DrawSprite(mouseSprite, InputManager::mousePos, mouseSize, 0, true);
 
     SceneManager::instance().LoadNextScene();
 }

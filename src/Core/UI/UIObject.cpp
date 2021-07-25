@@ -8,7 +8,7 @@ UIObject::UIObject(UIObjectType type)
     this->objType = type;
 }
 
-UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
+UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale,
                    TextRenderer &renderer)
 {
     this->objType = UIObjectType::UIOBJECT;
@@ -21,7 +21,7 @@ UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
     this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
+UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale,
                    TextRenderer &renderer, UIObjectType type)
 {
     this->objType = type;
@@ -34,7 +34,7 @@ UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
     this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale)
+UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale)
 {
     this->objType = UIObjectType::UIOBJECT;
     this->position = position;
@@ -45,7 +45,7 @@ UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale)
     this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
+UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale,
                    UIObjectType type)
 {
     this->objType = type;
@@ -57,7 +57,7 @@ UIObject::UIObject(Vector2<int> position, Vector2<int> size, float scale,
     this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<int> position, float scale, TextRenderer &renderer)
+UIObject::UIObject(const Vector2<int> &position, float scale, TextRenderer &renderer)
 {
     this->objType = UIObjectType::UIOBJECT;
     this->position = position;
@@ -68,7 +68,7 @@ UIObject::UIObject(Vector2<int> position, float scale, TextRenderer &renderer)
     this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<int> position, float scale, TextRenderer &renderer,
+UIObject::UIObject(const Vector2<int> &position, float scale, TextRenderer &renderer,
                    UIObjectType type)
 {
     this->objType = type;
@@ -80,7 +80,7 @@ UIObject::UIObject(Vector2<int> position, float scale, TextRenderer &renderer,
     this->childs.clear();
 }
 
-UIObject::UIObject(Vector2<int> position, float scale, UIObjectType type)
+UIObject::UIObject(const Vector2<int> &position, float scale, UIObjectType type)
 {
     this->objType = type;
     this->position = position;
@@ -141,7 +141,7 @@ void UIObject::setParentCenterPos()
                                       parent->getSize().y / 2 - this->getSize().y / 2));
 }
 
-void UIObject::setLocalPosition(const Vector2<int> value)
+void UIObject::setLocalPosition(const Vector2<int> &value)
 {
     if (isParent())
     {
@@ -162,7 +162,7 @@ void UIObject::setLocalPosition(const Vector2<int> value)
     }
 }
 
-void UIObject::setSize(const Vector2<int> size) { this->size = size; }
+void UIObject::setSize(const Vector2<int> &size) { this->size = size; }
 
 void UIObject::setSize(const int x, const int y)
 {

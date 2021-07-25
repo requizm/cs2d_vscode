@@ -27,17 +27,17 @@ class UIObject
    public:
     UIObject() = default;
     explicit UIObject(UIObjectType type);
-    UIObject(Vector2<int> position, Vector2<int> size, float scale,
+    UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale,
              TextRenderer &renderer);
-    UIObject(Vector2<int> position, Vector2<int> size, float scale,
+    UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale,
              TextRenderer &renderer, UIObjectType type);
-    UIObject(Vector2<int> position, Vector2<int> size, float scale);
-    UIObject(Vector2<int> position, Vector2<int> size, float scale,
+    UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale);
+    UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale,
              UIObjectType type);
-    UIObject(Vector2<int> position, float scale, TextRenderer &renderer);
-    UIObject(Vector2<int> position, float scale, TextRenderer &renderer,
+    UIObject(const Vector2<int> &position, float scale, TextRenderer &renderer);
+    UIObject(const Vector2<int> &position, float scale, TextRenderer &renderer,
              UIObjectType type);
-    UIObject(Vector2<int> position, float scale, UIObjectType type);
+    UIObject(const Vector2<int> &position, float scale, UIObjectType type);
     virtual ~UIObject();
 
     virtual void Update();
@@ -66,8 +66,8 @@ class UIObject
 
     virtual void setPosition(const Vector2<int> &position);
     virtual void setParentCenterPos();
-    virtual void setLocalPosition(const Vector2<int> value);
-    virtual void setSize(const Vector2<int> size);
+    virtual void setLocalPosition(const Vector2<int> &value);
+    virtual void setSize(const Vector2<int> &size);
     virtual void setSize(const int x, const int y);
     void setScale(const float scale);
     virtual void setParent(UIObject *uiobject, bool dependParent = true);

@@ -109,7 +109,7 @@ void SpriteButton::setPosition(const Vector2<int> &position)
     spritePos = Vector2<int>(newPos.x + margin.x / 2, newPos.y + margin.y / 2);
 }
 
-void SpriteButton::setLocalPosition(const Vector2<int> value)
+void SpriteButton::setLocalPosition(const Vector2<int> &value)
 {
     UIObject::setLocalPosition(value);
     spritePos = Vector2<int>(position.x + margin.x / 2, position.y + margin.y / 2);

@@ -21,7 +21,7 @@ class Panel : public UIObject
      * @param color Vector3<int>(1)
      * @param transp 0.9F
      */
-    Panel(Vector2<int> position, const std::string &title, Vector2<int> size,
+    Panel(const Vector2<int> &position, const std::string &title, const Vector2<int> &size,
           TextRenderer &renderer, bool isBackGround = false,
           bool opttitles = true, float scale = 1.0F,
           const Vector3<float> &color = Vector3<float>(1.0F),
