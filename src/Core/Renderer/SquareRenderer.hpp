@@ -64,7 +64,7 @@ class SquareRenderer
      * @param transperancy 1.0F
      * @param rotate 0
      */
-    void world_RenderFilledSquare(const Vector2<int> position, const Vector2<int> size,
+    void world_RenderFilledSquare(const Vector2<int> &position, const Vector2<int> &size,
                                   const Vector3<float> &color,
                                   GLfloat transperancy = 1.0F, int rotate = 0);
 
@@ -161,7 +161,7 @@ class SquareRenderer
                                  const Vector3<float> &color,
                                  GLfloat transperancy = 1.0F, int rotate = 0);
 
-    void SetProjection(const Matrix4<float> proj);
+    void SetProjection(const Matrix4<float> &proj);
 };
 
 #endif  // SQUARE_RENDERER_H

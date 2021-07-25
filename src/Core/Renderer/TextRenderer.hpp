@@ -30,7 +30,7 @@ class TextRenderer
     GLuint VBO = 0;
     // Constructor
     TextRenderer(GLuint width, GLuint height);
-    TextRenderer(GLuint width, GLuint height, const Matrix4<float> camera);
+    TextRenderer(GLuint width, GLuint height, const Matrix4<float> &camera);
     TextRenderer() = default;
     // Pre-compiles a list of characters from the given font
     void Load(const std::string font, GLuint fontSize);
