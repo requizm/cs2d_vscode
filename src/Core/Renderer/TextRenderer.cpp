@@ -55,7 +55,7 @@ TextRenderer::TextRenderer(GLuint width, GLuint height, const Matrix4<float> &ca
     this->TextShader.UnUse();
 }
 
-void TextRenderer::Load(std::string font, GLuint fontSize)
+void TextRenderer::Load(const std::string &font, GLuint fontSize)
 {
     // First clear the previously loaded Characters
     this->Characters.clear();
