@@ -5,3 +5,4 @@ BreakBeforeBraces: Allman
 IndentWidth: 4
 MaxEmptyLinesToKeep: 2
 ColumnLimit: 0
+BinPackParameters: true

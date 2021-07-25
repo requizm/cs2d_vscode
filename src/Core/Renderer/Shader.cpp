@@ -104,12 +104,12 @@ void Shader::checkCompileErrors(GLuint object, const std::string &type) const
     {
         glGetShaderiv(object, GL_COMPILE_STATUS, &success);
         ASSERTM_ERROR(success != 0, "SHADER: Compile-time error: Type: " + type +
-                                   "\n" +infoLog);
+                                        "\n" + infoLog);
     }
     else
     {
         glGetProgramiv(object, GL_LINK_STATUS, &success);
         ASSERTM_ERROR(success != 0, "SHADER: Link-time error: Type: " + type +
-                                   "\n" + infoLog);
+                                        "\n" + infoLog);
     }
 }
