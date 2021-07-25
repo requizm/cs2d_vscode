@@ -91,7 +91,7 @@ enum KeyStates
 struct KeyEvent
 {
    public:
-    KeyEvent() {}
+    KeyEvent() = default;
     int state = 0;
 };
 #endif  // INPUTSTRUCTS_H

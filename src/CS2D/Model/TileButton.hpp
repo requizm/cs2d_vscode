@@ -37,7 +37,7 @@ class TileButtonWorld : public UIObject
 class TileButtonScreen : public UIObject
 {
    public:
-   TileButtonScreen() = default;
+    TileButtonScreen() = default;
     explicit TileButtonScreen(Tile &tile, float scale = 1.0F);
     ~TileButtonScreen() final;
 

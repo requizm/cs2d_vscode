@@ -19,7 +19,7 @@ class CircleCollider : public Collider
     void SetRadius(int radius_);
 
    private:
-   int radius = 1;
+    int radius = 1;
 };
 
 #endif  // CIRCLECOLLIDER_H

@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "UIObject.hpp"
 #include "../Manager/Input/InputStructs.hpp"
+#include "UIObject.hpp"
 
 enum LabelType
 {

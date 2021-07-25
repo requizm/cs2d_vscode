@@ -12,10 +12,10 @@
 ___
   
 ### Available Compilers  
-- Mingw
 - Mingw-w64
 - MSVC
-- MSYS
+- GCC
+- Clang
   
 ___
   
@@ -57,7 +57,3 @@ ___
 - [stb_image](https://github.com/nothings/stb)
 - [rapidxml 1.13](http://rapidxml.sourceforge.net/)
 - [nlohmann/json 3.9.1](https://github.com/nlohmann/json)
-  
-___
-  
-https://quire.io/w/requizm?view=stats
