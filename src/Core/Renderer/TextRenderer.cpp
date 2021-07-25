@@ -32,7 +32,7 @@ TextRenderer::TextRenderer(GLuint width, GLuint height)
     this->TextShader.UnUse();
 }
 
-TextRenderer::TextRenderer(GLuint width, GLuint height, Matrix4<float> camera)
+TextRenderer::TextRenderer(GLuint width, GLuint height, const Matrix4<float> &camera)
 {
     // Load and configure shader
     this->TextShader = ResourceManager::LoadShader(

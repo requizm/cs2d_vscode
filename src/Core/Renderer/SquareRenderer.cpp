@@ -110,8 +110,8 @@ void SquareRenderer::ui_RenderFilledSquare(const Vector2<int> &position,
     this->squareShader_ui.UnUse();
 }
 
-void SquareRenderer::world_RenderFilledSquare(const Vector2<int> position,
-                                              const Vector2<int> size,
+void SquareRenderer::world_RenderFilledSquare(const Vector2<int> &position,
+                                              const Vector2<int> &size,
                                               const Vector3<float> &color,
                                               GLfloat transperancy, int rotate)
 {
@@ -490,7 +490,7 @@ void SquareRenderer::world_RenderEmptyCircle(const Vector2<int> &position,
     this->squareShader_world.UnUse();
 }
 
-void SquareRenderer::SetProjection(const Matrix4<float> proj)
+void SquareRenderer::SetProjection(const Matrix4<float> &proj)
 {
     this->squareShader_world.Use();
     this->squareShader_world.SetMatrix4("projection", proj);
