@@ -33,7 +33,7 @@ class TextRenderer
     TextRenderer(GLuint width, GLuint height, const Matrix4<float> &camera);
     TextRenderer() = default;
     // Pre-compiles a list of characters from the given font
-    void Load(const std::string font, GLuint fontSize);
+    void Load(const std::string &font, GLuint fontSize);
     // Renders a string of text using the precompiled list of characters
     void RenderText(const std::string &text, int x, int y, GLfloat scale,
                     const Vector3<float> &color = Vector3<float>(1.0f));
