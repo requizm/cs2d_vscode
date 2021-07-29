@@ -40,13 +40,16 @@
             "options": {
                 "cwd": "C:\\mingw64\\bin"
             },
-            "problemMatcher": ["$gcc"]
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "(64)test_build",
             "type": "shell",
-            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+            "command": "C:\\mingw64\\bin\\g++.exe",
             "args": [
+                "--%",
                 "-I${workspaceFolder}\\include",
                 "-L${workspaceFolder}\\lib\\x64",
                 "-g",
@@ -64,14 +67,11 @@
                 "-limagehlp",
                 "-w",
                 "-std=c++17",
-                "-O3",
+                "-Wa,-mbig-obj",
                 "-static-libstdc++",
                 "-static-libgcc",
                 "-D_DEBUG",
-                "-DWIN32",
-                "-D_WIN32_WINNT=0x0602",
-                "-DWINVER=0x0602",
-                "-DTRACY_ENABLE"
+                "-DWIN32"
             ],
             "group": {
                 "kind": "build",
@@ -79,7 +79,10 @@
             },
             "options": {
                 "cwd": "C:\\mingw64\\bin"
-            }
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
         }
     ]
 }

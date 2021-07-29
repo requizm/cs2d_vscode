@@ -14,8 +14,6 @@ Circle::Circle(bool fill)
     }
 }
 
-Circle::~Circle() = default;
-
 void Circle::initEmptyCircle()
 {
     GLuint VBO;

@@ -28,23 +28,29 @@ void Sprite::initData(GLuint x, GLuint y, GLuint width, GLuint height)
         vertices[1] = 1.0f;
         vertices[2] = 0.0f;
         vertices[3] = 1.0f;
+
         vertices[4] = 1.0f;
         vertices[5] = 0.0f;
         vertices[6] = 1.0f;
         vertices[7] = 0.0f;
+
         vertices[8] = 0.0f;
         vertices[9] = 0.0f;
         vertices[10] = 0.0f;
         vertices[11] = 0.0f;
 
+
+
         vertices[12] = 0.0f;
         vertices[13] = 1.0f;
         vertices[14] = 0.0f;
         vertices[15] = 1.0f;
+
         vertices[16] = 1.0f;
         vertices[17] = 1.0f;
         vertices[18] = 1.0f;
         vertices[19] = 1.0f;
+        
         vertices[20] = 1.0f;
         vertices[21] = 0.0f;
         vertices[22] = 1.0f;

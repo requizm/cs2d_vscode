@@ -69,6 +69,7 @@ void SceneManager::LoadScene(const std::string& name)
     {
         activeScene = sc;
         activeScene->Load();
+        Timer::timeSinceSceneStart = 0.0F;
     }
     else
     {

@@ -19,7 +19,7 @@ Editor::Editor() : Scene("Editor")
     this->maxCellInColumn = 0;
     this->maxCellInRow = 0;
     this->position = Vector2(0);
-    this->time = 0.0F;
+    Timer::timeSinceSceneStart = 0.0F;
     this->mapLimit = Vector2<int>(0);
     this->texture = Vector2<int>(0);
     this->selectedMode = SelectedMode::TILE_MOD;
@@ -31,7 +31,7 @@ void Editor::Initialize()
     this->maxCellInColumn = 0;
     this->maxCellInRow = 0;
     this->position = Vector2(0);
-    this->time = 0.0F;
+    Timer::timeSinceSceneStart = 0.0F;
     this->mapLimit = Vector2<int>(0);
     this->texture = Vector2<int>(0);
     this->selectedMode = SelectedMode::TILE_MOD;
@@ -312,7 +312,7 @@ void Editor::Update()
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    this->time += Timer::DeltaTime;
+    Timer::timeSinceSceneStart += Timer::DeltaTime;
     this->buildPanel->Update();
     this->NewMap->Update();
     this->tilePropertiesPanel->Update();
@@ -520,7 +520,7 @@ void Editor::ProcessInput()
 
     if (SaveLoad->b_map_load->IsMouseDown())
     {
-        this->time = 0.0F;
+        Timer::timeSinceSceneStart = 0.0F;
         this->position = Vector2<int>(0 - buildPanel->getSize().x, 0);
         std::string newMapName = SaveLoad->t_load->getText();
         Unload();
@@ -677,7 +677,7 @@ void Editor::Render()
     for (std::vector<int>::size_type i = 0; i < env_items.size(); i++)
     {
         env_items[i]->Render(*worldRenderer, *menuRenderer, *squareRenderer,
-                             this->time);
+                             Timer::timeSinceSceneStart);
     }
 
     // ui
@@ -698,12 +698,12 @@ void Editor::Render()
             if (selectedTile->GetID() == tils->tilesUI[i].getTile().GetID())
             {
                 tils->tilesUI[i].Draw(*menuRenderer, *squareRenderer, 0.3F, true,
-                                      this->time);
+                                      Timer::timeSinceSceneStart);
             }
             else if (tils->tilesUI[i].IsMouseHover())
             {
                 tils->tilesUI[i].Draw(*menuRenderer, *squareRenderer, 0.3F, false,
-                                      this->time);
+                                      Timer::timeSinceSceneStart);
             }
             else
             {

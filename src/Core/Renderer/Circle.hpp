@@ -10,7 +10,7 @@ class Circle
    public:
     Circle() = default;
     explicit Circle(bool empty);
-    ~Circle();
+    ~Circle() = default;
 
     void initEmptyCircle();
     void initFilledCircle();

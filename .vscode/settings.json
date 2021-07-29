@@ -65,7 +65,11 @@
         "list": "cpp",
         "set": "cpp",
         "variant": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "ranges": "cpp",
+        "stop_token": "cpp"
     },
     "clang-tidy.checks": [
         "clang-diagnostic-*",

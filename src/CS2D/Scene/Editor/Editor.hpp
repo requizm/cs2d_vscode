@@ -48,7 +48,6 @@ class Editor : public Scene
 
     NewMapResult *tils = nullptr;
 
-    float time = 0;
     Vector2<int> texture;
     int tileCount;
     int maxCellInColumn;

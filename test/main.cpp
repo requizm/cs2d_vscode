@@ -1,83 +1,76 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <memory>
 
-#include "../src/Core/Window.hpp"
-#include "ResourceManager.hpp"
 #include "../src/CS2D/Other/GameParameters.hpp"
-#include "SquareRenderer.hpp"
+#include "../src/Core/Manager/InputManager.hpp"
+#include "../src/Core/Manager/Logger.hpp"
+#include "../src/Core/Manager/ResourceManager.hpp"
+#include "../src/Core/Manager/Timer.hpp"
+#include "../src/Core/Window.hpp"
+#include "CS2D/Game.hpp"
 
-#include "../tracy/Tracy.hpp"
 
-class TestClass
-{
-public:
-	TestClass()
-	{
-	}
-	int a;
+#if defined(TRACY_ENABLE)
+#include <tracy/Tracy.hpp>
+#endif
 
-	void SetA(int a)
-	{
-		ZoneScoped;
-		this->a = a;
-	}
-};
+std::unique_ptr<Game> cs2d = std::make_unique<Game>(Game());
+auto logger = spdlog::basic_logger_mt("write_logger", "log.txt");
 
-void initShader();
-void TestFunc();
+int nbFrames = 0;
 
 int main(int argc, char *argv[])
 {
-	GameParameters::LoadParameters();
-	Window window("CS2D Test", GameParameters::SCREEN_WIDTH, GameParameters::SCREEN_HEIGHT);
-	initShader();
-	InputManager::InitKeyboardKeys();
+    // FreeConsole();
+    GameParameters::LoadParameters();
+    Window window("CS2D Test", GameParameters::SCREEN_WIDTH,
+                  GameParameters::SCREEN_HEIGHT);
+    Logger::StartApp();
 
-	TestClass testClass;
+    // Initialize game
+    cs2d->Init();
 
-	SquareRenderer renderer = SquareRenderer(true);
+    // DeltaTime variables
+    float lastFrame = 0.0F;
+    float time = 0.0F;
+    InputManager::m_fps = 0;
+    int fps = 0;
+    InputManager::InitKeyboardKeys();
+    while (!glfwWindowShouldClose(window.GetWindow()))
+    {
+#if defined(TRACY_ENABLE)
+        ZoneScopedS(10);
+#endif
+        const auto currentFrame = static_cast<float>(glfwGetTime());
+        Timer::DeltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+        time += Timer::DeltaTime;
+        nbFrames++;
+        fps++;
+        if (time >= 1.0F)
+        {
+            InputManager::m_fps = fps;
+            time = 0.0F;
+            fps = 0;
+            // nbFrames = 0;
+        }
 
-	while (!glfwWindowShouldClose(window.GetWindow()))
-	{
-		ZoneScopedN("mainLoop");
-		InputManager::UpdateMouse(window.GetWindow());
-		InputManager::UpdateKeyboard(window.GetWindow());
-		//processinput
-		//update
-		TestFunc();
-		testClass.SetA(2);
+        InputManager::UpdateMouse(window.GetWindow());
+        InputManager::UpdateKeyboard(window.GetWindow());
+        cs2d->ProcessInput();
+        cs2d->Update();
 
-		window.Clear();
-		renderer.ui_RenderEmptySquare(Vector2<int>(300, 300), Vector2<int>(300, 300), Vector3<float>(1.0F, 1.0F, 1.0F));
+        window.Clear();
+        cs2d->Render();
 
-		window.Update();
-		FrameMark;
-	}
-	window.Destroy();
-	ResourceManager::Destroy();
-	Logger::StopApp();
-	return 0;
-}
+        window.Update();
+#if defined(TRACY_ENABLE)
+        FrameMark;
+#endif
+    }
 
-void initShader()
-{
-	ResourceManager::LoadShader(GameParameters::resDirectory + "shaders/textVertex.txt", GameParameters::resDirectory + "shaders/textFragment.txt", "", "text");
-	ResourceManager::LoadShader(GameParameters::resDirectory + "shaders/spriteVertex.txt", GameParameters::resDirectory + "shaders/spriteFragment.txt", "", "sprite");
-	ResourceManager::LoadShader(GameParameters::resDirectory + "shaders/spriteVertex.txt", GameParameters::resDirectory + "shaders/spriteFragment.txt", "", "menu");
-
-	ResourceManager::GetShader("sprite").Use();
-	ResourceManager::GetShader("sprite").SetInteger("image", 0);
-	ResourceManager::GetShader("sprite").UnUse();
-	ResourceManager::GetShader("menu").Use();
-	ResourceManager::GetShader("menu").SetMatrix4("projection", Projection::ortho(0.0f, static_cast<float>(GameParameters::SCREEN_WIDTH), static_cast<float>(GameParameters::SCREEN_HEIGHT), 0.0f), GL_TRUE);
-	ResourceManager::GetShader("menu").SetInteger("image", 0);
-	ResourceManager::GetShader("menu").UnUse();
-}
-
-void TestFunc()
-{
-	ZoneScoped;
-	int b = 2;
-	int a = 5;
+    ResourceManager::Destroy();
+    window.Destroy();
+    Logger::StopApp();
+    return 0;
 }

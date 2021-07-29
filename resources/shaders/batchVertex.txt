@@ -1,0 +1,20 @@
+#version 330 core
+layout (location = 0) in vec2 vertex;
+layout (location = 1) in vec4 model_1;
+layout (location = 2) in vec4 model_2;
+layout (location = 3) in vec4 model_3;
+layout (location = 4) in vec4 model_4;
+layout (location = 5) in vec3 color;
+layout (location = 6) in float trans;
+
+uniform mat4 projection;
+
+out vec3 colorN;
+out float transN;
+
+void main()
+{
+    colorN = color;
+    transN = trans;
+    gl_Position = projection * mat4(model_1, model_2, model_3, model_4) * vec4(vertex, 1.0, 1.0);
+}

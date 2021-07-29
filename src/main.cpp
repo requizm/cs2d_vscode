@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         ZoneScopedS(10);
 #endif
         const auto currentFrame = static_cast<float>(glfwGetTime());
-        Timer::DeltaTime = currentFrame - lastFrame;
+        Timer::Update(currentFrame - lastFrame);
         lastFrame = currentFrame;
         time += Timer::DeltaTime;
         nbFrames++;

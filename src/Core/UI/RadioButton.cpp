@@ -212,7 +212,7 @@ void RadioButton::AddElement(const std::string &text,
     ZoneScopedS(10);
 #endif
     RadioButtonElement *r = new RadioButtonElement(
-        text, Vector2<int>(0, y_sep * i), *rend, i++,
+        text, Vector2<int>(0, y_sep * i), *rend, i,
         buttonColor, textColor, scale);
     r->setSize(300, 300);
     r->setMouseHoverColor(Vector3<float>(0.9F));
@@ -220,6 +220,7 @@ void RadioButton::AddElement(const std::string &text,
     r->setMouseHoverOutlineColor(Vector3<float>(0.9F));
     r->setParent(this, true);
     this->elements.push_back(r);
+    i += 1;
 }
 
 void RadioButton::Update()

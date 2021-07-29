@@ -100,7 +100,6 @@ NewMapResult *NewMapSystem::NewMap(const std::string &tileSet, const Vector2<int
 #endif
     NewMapResult *res = new NewMapResult();
     Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
-    editor->time = 0.0F;
     editor->position =
         Vector2<int>(0 - editor->buildPanel->getSize().x, 0);
 

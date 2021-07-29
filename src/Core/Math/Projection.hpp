@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "Matrix4.hpp"
+#include "Vector2.hpp"
 #include "Vector3.hpp"
 class Projection
 {
@@ -186,6 +187,8 @@ class Projection
     }
 
     static const float *value_ptr(const Matrix4<float> &m) { return &(m.values[0]); }
+    static const float *value_ptr(const Vector2<float> &m) { return &(m.x); }
+    static const float *value_ptr(const Vector3<float> &m) { return &(m.x); }
 
     static float radians(float degrees)
     {

@@ -9,13 +9,13 @@
 inline void* operator new(std ::size_t count)
 {
     auto ptr = malloc(count);
-    TracyAlloc(ptr, count);
+    //TracyAlloc(ptr, count);
     return ptr;
 }
 
 inline void operator delete(void* ptr) noexcept
 {
-    TracyFree(ptr);
+    //TracyFree(ptr);
     free(ptr);
 }
 #endif

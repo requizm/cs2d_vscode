@@ -130,12 +130,13 @@ void TextRenderer::RenderText(const std::string &text, int x, int y, GLfloat sca
         GLfloat w = ch.Size.x * scale;
         GLfloat h = ch.Size.y * scale;
         // Update VBO for each character
-        GLfloat vertices[6][4] = {
-            {xpos, ypos + h, 0.0, 1.0}, {xpos + w, ypos, 1.0, 0.0}, {xpos, ypos, 0.0, 0.0},
-
-            {xpos, ypos + h, 0.0, 1.0},
-            {xpos + w, ypos + h, 1.0, 1.0},
-            {xpos + w, ypos, 1.0, 0.0}};
+        GLfloat vertices[6][4] =
+            {{xpos, ypos + h, 0.0, 1.0},
+             {xpos + w, ypos, 1.0, 0.0},
+             {xpos, ypos, 0.0, 0.0},
+             {xpos, ypos + h, 0.0, 1.0},
+             {xpos + w, ypos + h, 1.0, 1.0},
+             {xpos + w, ypos, 1.0, 0.0}};
         // Render glyph texture over quad
         glBindTexture(GL_TEXTURE_2D, ch.TextureID);
         // Update content of VBO memory
@@ -206,61 +207,6 @@ void TextRenderer::RenderText(const std::string &text, const Vector2<int> &posit
     this->TextShader.UnUse();
 }
 
-/*
-void TextRenderer::RenderLabel(Label *label)
-{
-        GLfloat startX = label->position.x;
-        GLfloat startY = label->position.y;
-        float x = label->position.x;
-        // Activate corresponding render state
-        this->TextShader.Use();
-        this->TextShader.SetVector3f("textColor", label->labelCurrentColor);
-        glActiveTexture(GL_TEXTURE0);
-        glBindVertexArray(this->VAO);
-        GLfloat ypos;
-        // Iterate through all characters
-        std::string::const_iterator c;
-        for (c = label->text.begin(); c != label->text.end(); c++)
-        {
-                Character ch = Characters[*c];
-
-                GLfloat xpos = x + ch.Bearing.x * label->scale;
-                ypos = label->position.y + (this->Characters['H'].Bearing.y -
-ch.Bearing.y) * label->scale;
-
-                GLfloat w = ch.Size.x * label->scale;
-                GLfloat h = ch.Size.y * label->scale;
-                // Update VBO for each character
-                GLfloat vertices[6][4] = {
-                        { xpos,     ypos + h,   0.0, 1.0 },
-                        { xpos + w, ypos,       1.0, 0.0 },
-                        { xpos,     ypos,       0.0, 0.0 },
-
-                        { xpos,     ypos + h,   0.0, 1.0 },
-                        { xpos + w, ypos + h,   1.0, 1.0 },
-                        { xpos + w, ypos,       1.0, 0.0 }
-                };
-                // Render glyph texture over quad
-                glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-                // Update content of VBO memory
-                glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-                glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-// Be sure to use glBufferSubData and not glBufferData
-
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
-                // Render quad
-                glDrawArrays(GL_TRIANGLES, 0, 6);
-                // Now advance cursors for next glyph
-                x += (ch.Advance >> 6) * label->scale; // Bitshift by 6 to get
-value in pixels (1/64th times 2^6 = 64)
-        }
-        glBindVertexArray(0);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        this->TextShader.UnUse();
-        //label->size.x = x - startX;
-        //label->size.y = 12;
-}*/
-
 Vector2<int> TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
 {
     // GLfloat startX = 0;
@@ -272,66 +218,9 @@ Vector2<int> TextRenderer::CalculateSize(const std::string &text, GLfloat scale)
     {
         Character ch = this->Characters[*c];
 
-        GLfloat w = ch.Size.x * scale;
-        GLfloat h = ch.Size.y * scale;
         // Now advance cursors for next glyph
         xPo += (ch.Advance >> 6) * scale;  // Bitshift by 6 to get value in
                                            // pixels (1/64th times 2^6 = 64)
     }
     return Vector2<int>(static_cast<int>(xPo), 12);
 }
-/*
-void TextRenderer::RenderButton(Button *button)
-{
-        GLfloat startX = button->position.x;
-        GLfloat startY = button->position.y;
-        float x = button->position.x;
-        // Activate corresponding render state
-        this->TextShader.Use();
-        this->TextShader.SetVector3f("textColor", button->labelColor);
-        glActiveTexture(GL_TEXTURE0);
-        glBindVertexArray(this->VAO);
-        GLfloat ypos;
-        // Iterate through all characters
-        std::string::const_iterator c;
-        for (c = button->text.begin(); c != button->text.end(); c++)
-        {
-                Character ch = Characters[*c];
-
-                GLfloat xpos = x + ch.Bearing.x * button->scale;
-                ypos = button->position.y + (this->Characters['H'].Bearing.y -
-ch.Bearing.y) * button->scale;
-
-                GLfloat w = ch.Size.x * button->scale;
-                GLfloat h = ch.Size.y * button->scale;
-                // Update VBO for each character
-                GLfloat vertices[6][4] = {
-                        { xpos,     ypos + h,   0.0, 1.0 },
-                        { xpos + w, ypos,       1.0, 0.0 },
-                        { xpos,     ypos,       0.0, 0.0 },
-
-                        { xpos,     ypos + h,   0.0, 1.0 },
-                        { xpos + w, ypos + h,   1.0, 1.0 },
-                        { xpos + w, ypos,       1.0, 0.0 }
-                };
-                // Render glyph texture over quad
-                glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-                // Update content of VBO memory
-                glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-                glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-// Be sure to use glBufferSubData and not glBufferData
-
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
-                // Render quad
-                glDrawArrays(GL_TRIANGLES, 0, 6);
-                // Now advance cursors for next glyph
-                x += (ch.Advance >> 6) * button->scale; // Bitshift by 6 to get
-value in pixels (1/64th times 2^6 = 64)
-        }
-        glBindVertexArray(0);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        this->TextShader.UnUse();
-        button->size.x = x - startX;
-        button->size.y = ypos - startY;
-}
-*/
