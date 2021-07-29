@@ -1,6 +1,7 @@
 #include "SceneManager.hpp"
 
 #include "../../Core/Manager/InputManager.hpp"
+#include "../../Core/Manager/Timer.hpp"
 
 SceneManager::~SceneManager()
 {
