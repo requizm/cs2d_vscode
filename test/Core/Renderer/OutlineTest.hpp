@@ -3,6 +3,8 @@
 
 #include <GL/glew.h>
 
+#include "VertexArray.hpp"
+
 struct VertexOne
 {
     float vertex[2];
@@ -18,9 +20,11 @@ class OutlineTest
 {
    public:
     OutlineTest() = default;
-    ~OutlineTest();
-    GLuint VAO = 0;
-    GLuint VBO = 0;
+    ~OutlineTest() = default;
+
     void initData();
+
+    VertexArray va;
+    VertexBuffer vb;
 };
 #endif  // OUTLINETEST_H

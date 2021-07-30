@@ -45,6 +45,8 @@
 #include "CS2D/Scene/TestScene.cpp"
 #include "Core/Renderer/BatchRenderer.cpp"
 #include "Core/Renderer/OutlineTest.cpp"
-
+#include "Core/Renderer/VertexArray.cpp"
+#include "Core/Renderer/VertexBuffer.cpp"
+#include "Core/Renderer/VertexBufferLayout.cpp"
 
 #endif

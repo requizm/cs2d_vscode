@@ -17,6 +17,11 @@ TestScene::TestScene() : Scene("TestScene")
 {
 }
 
+TestScene::~TestScene()
+{
+    Unload();
+}
+
 void TestScene::Load()
 {
 #if defined(TRACY_ENABLE)
@@ -53,6 +58,8 @@ void TestScene::Unload()
     menuRenderer = nullptr;
     if (squareRenderer != nullptr) delete squareRenderer;
     squareRenderer = nullptr;
+    if (batchRenderer != nullptr) delete batchRenderer;
+    batchRenderer = nullptr;
 }
 
 void TestScene::Update()

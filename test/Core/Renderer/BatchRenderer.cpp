@@ -57,7 +57,7 @@ void BatchRenderer::AddRectangle(const Vector3<int> &position,
     ex.trans = transperancy;
 
     //triangle
-    /*memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
     gaycums[index++] = ex;
 
     memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 0.0F)), 2 * sizeof(float));
@@ -73,11 +73,11 @@ void BatchRenderer::AddRectangle(const Vector3<int> &position,
     gaycums[index++] = ex;
 
     memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 0.0F)), 2 * sizeof(float));
-    gaycums[index++] = ex;*/
+    gaycums[index++] = ex;
 
 
     //line loop
-    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
+    /*memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
     gaycums[index++] = ex;
 
     memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 1.0F)), 2 * sizeof(float));
@@ -87,29 +87,20 @@ void BatchRenderer::AddRectangle(const Vector3<int> &position,
     gaycums[index++] = ex;
 
     memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 0.0F)), 2 * sizeof(float));
-    gaycums[index++] = ex;
+    gaycums[index++] = ex;*/
 }
 
 void BatchRenderer::Draw()
 {
     this->batchShader_ui.Use();
-    glBindVertexArray(outline.VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, outline.VBO);
 
+    float buffer[528];
+    memcpy(buffer, gaycums, sizeof(gaycums));
+    outline.va.Bind();
+    outline.vb.ChangeData(0, buffer, sizeof(buffer));
 
-    size_t size = sizeof(gaycums);
-    glBufferSubData(
-        GL_ARRAY_BUFFER, 0, size,
-        gaycums);  // Be sure to use glBufferSubData and not glBufferData
+    glDrawArrays(GL_TRIANGLES, 0, 24);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glDrawArrays(GL_LINE_LOOP, 0, 16);
-
-
-    glBindVertexArray(0);
-
+    outline.va.Unbind();
     this->batchShader_ui.UnUse();
 }
-
-// OpenGL batching

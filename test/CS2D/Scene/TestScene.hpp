@@ -11,7 +11,7 @@ class TestScene : public Scene
 {
    public:
     TestScene();
-    ~TestScene() = default;
+    ~TestScene() final;
 
     void Initialize();
 

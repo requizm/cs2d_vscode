@@ -7,7 +7,7 @@ SceneManager::~SceneManager()
 {
     for (auto& scene : scenes)
     {
-        delete &scene;
+        delete scene;
     }
 }
 

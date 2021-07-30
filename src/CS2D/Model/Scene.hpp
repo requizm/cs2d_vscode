@@ -12,7 +12,7 @@ class Scene
     Scene(const Scene &) = default;
     Scene &operator=(Scene &&) = default;
     Scene &operator=(const Scene &) = default;
-    ~Scene();
+    virtual ~Scene();
 
    public:
     virtual void Load();
