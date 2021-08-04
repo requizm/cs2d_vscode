@@ -57,7 +57,7 @@ void BatchRenderer::AddRectangle(const Vector3<int> &position,
     ex.trans = transperancy;
 
     //triangle
-    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
+    /*memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
     gaycums[index++] = ex;
 
     memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 0.0F)), 2 * sizeof(float));
@@ -73,17 +73,48 @@ void BatchRenderer::AddRectangle(const Vector3<int> &position,
     gaycums[index++] = ex;
 
     memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 0.0F)), 2 * sizeof(float));
-    gaycums[index++] = ex;
+    gaycums[index++] = ex;*/
 
 
     //line loop
-    /*memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
+    indices[indicesIndex++] = index;
+    gaycums[index++] = ex;
+
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 1.0F)), 2 * sizeof(float));
+    indices[indicesIndex++] = index;
+    gaycums[index++] = ex;
+
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 0.0F)), 2 * sizeof(float));
+    indices[indicesIndex++] = index;
+    gaycums[index++] = ex;
+
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 0.0F)), 2 * sizeof(float));
+    indices[indicesIndex++] = index;
+    gaycums[index++] = ex;
+
+    indices[indicesIndex++] = 0xFFFF;
+
+    //line
+    /*memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 0.0F)), 2 * sizeof(float));
+    gaycums[index++] = ex;
+
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 0.0F)), 2 * sizeof(float));
+    gaycums[index++] = ex;
+
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 0.0F)), 2 * sizeof(float));
     gaycums[index++] = ex;
 
     memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 1.0F)), 2 * sizeof(float));
     gaycums[index++] = ex;
 
-    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 0.0F)), 2 * sizeof(float));
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 1.0F)), 2 * sizeof(float));
+    gaycums[index++] = ex;
+
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
+    gaycums[index++] = ex;
+
+    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
     gaycums[index++] = ex;
 
     memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 0.0F)), 2 * sizeof(float));
@@ -94,12 +125,18 @@ void BatchRenderer::Draw()
 {
     this->batchShader_ui.Use();
 
-    float buffer[528];
+    float buffer[352];
     memcpy(buffer, gaycums, sizeof(gaycums));
     outline.va.Bind();
     outline.vb.ChangeData(0, buffer, sizeof(buffer));
+    outline.ib.Bind();
+    outline.ib.ChangeData(0, indices, sizeof(indices));
 
-    glDrawArrays(GL_TRIANGLES, 0, 24);
+    glEnable(GL_PRIMITIVE_RESTART);
+    glPrimitiveRestartIndex(0xFFFF);
+
+    outline.ib.Bind();
+    glDrawElements(GL_LINE_LOOP, 19, GL_UNSIGNED_INT, nullptr);
 
     outline.va.Unbind();
     this->batchShader_ui.UnUse();

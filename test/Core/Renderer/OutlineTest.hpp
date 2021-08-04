@@ -25,6 +25,6 @@ class OutlineTest
     void initData();
 
     VertexArray va;
-    VertexBuffer vb;
+    VertexBuffer vb, ib;
 };
 #endif  // OUTLINETEST_H

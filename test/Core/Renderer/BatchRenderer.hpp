@@ -16,7 +16,9 @@ class BatchRenderer
     BatchRenderer &operator=(const BatchRenderer &) = default;
     ~BatchRenderer() = default;
 
-    VertexOne gaycums[24];
+    VertexOne gaycums[16];
+    unsigned int indices[19];
+    unsigned int indicesIndex = 0;
 
     void AddRectangle(const Vector3<int> &position, const Vector2<int> &size,
                       const Vector3<float> &color,
