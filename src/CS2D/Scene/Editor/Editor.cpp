@@ -42,19 +42,6 @@ void Editor::Load()
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    currentTileSet = "cs2dnorm";
-    if (tils != nullptr)
-    {
-        delete tils;
-        tils = nullptr;
-    }
-
-    for (auto &env : env_items)
-    {
-        if (env != nullptr) delete env;
-    }
-    env_items.clear();
-
 
     this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
     this->worldRenderer =
@@ -230,10 +217,40 @@ void Editor::Load()
 
     this->selectedMode = SelectedMode::TILE_MOD;
 
+    editorMapRenderer = new EditorMapRenderer();
 
-    tils = nullptr;
-    tils = NewMap->NewMap("cs2dnorm", Vector2<int>(50));
-    selectedTile = &tils->tilesUI[0].getTile();
+    if (firstLoad == true)
+    {
+        tils = NewMap->NewMap("cs2dnorm", Vector2<int>(50));
+        selectedTile = &tils->tilesUI[0].getTile();
+
+        int mapL = mapLimit.x * mapLimit.y;
+        editorMapRenderer->init(mapL);
+
+        for (int i = 0; i < mapL; i++)
+        {
+            Vector2<int> pos = Utils::CellToPosition(tils->tiles[i].cell);
+            editorMapRenderer->addRect(pos, Vector2<int>(GameParameters::SIZE_TILE), cell_yellow, 1.0F, 0);
+        }
+        editorMapRenderer->updateData();
+
+        firstLoad = false;
+    }
+    else
+    {
+        tils = new NewMapResult();
+        NewMapResult *temp = NewMap->NewMap("cs2dnorm", Vector2<int>(1));
+        tils->tilesUI = temp->tilesUI;
+
+        for (int i = 0; i < temp->tilesLength; i++)
+        {
+            temp->tiles[i].~ButtonTile();
+        }
+        free(temp->tiles);
+#if defined(TRACY_ENABLE)
+        TracyFree(temp->tiles);
+#endif
+    }
 }
 
 void Editor::Unload()
@@ -243,10 +260,7 @@ void Editor::Unload()
 #endif
     selectedTile = nullptr;
 
-    if (tils != nullptr)
-    {
-        delete tils;
-    }
+    if (tils != nullptr) delete tils;
     tils = nullptr;
 
     if (objects_ui != nullptr) delete objects_ui;
@@ -305,6 +319,9 @@ void Editor::Unload()
 
     if (camera != nullptr) delete camera;
     camera = nullptr;
+
+    if (editorMapRenderer != nullptr) delete editorMapRenderer;
+    editorMapRenderer = nullptr;
 }
 
 void Editor::Update()
@@ -389,6 +406,7 @@ void Editor::ProcessInput()
             camera->setPosition(position);
             worldRenderer->SetProjection(camera->cameraMatrix);
             squareRenderer->SetProjection(camera->cameraMatrix);
+            editorMapRenderer->setProjection(camera->cameraMatrix);
         }
         if (InputManager::isKey(KeyboardKeys::KEY_S))
         {
@@ -401,6 +419,7 @@ void Editor::ProcessInput()
             camera->setPosition(position);
             worldRenderer->SetProjection(camera->cameraMatrix);
             squareRenderer->SetProjection(camera->cameraMatrix);
+            editorMapRenderer->setProjection(camera->cameraMatrix);
         }
         if (InputManager::isKey(KeyboardKeys::KEY_A))
         {
@@ -413,6 +432,7 @@ void Editor::ProcessInput()
             camera->setPosition(position);
             worldRenderer->SetProjection(camera->cameraMatrix);
             squareRenderer->SetProjection(camera->cameraMatrix);
+            editorMapRenderer->setProjection(camera->cameraMatrix);
         }
         if (InputManager::isKey(KeyboardKeys::KEY_D))
         {
@@ -425,6 +445,7 @@ void Editor::ProcessInput()
             camera->setPosition(position);
             worldRenderer->SetProjection(camera->cameraMatrix);
             squareRenderer->SetProjection(camera->cameraMatrix);
+            editorMapRenderer->setProjection(camera->cameraMatrix);
         }
     }
 
@@ -439,10 +460,7 @@ void Editor::ProcessInput()
         NewMapResult *t = NewMap->B_NewMap();
         if (t != nullptr)
         {
-            if (tils != nullptr)
-            {
-                delete tils;
-            }
+            if (tils != nullptr) delete tils;
 
             for (auto &env : env_items)
             {
@@ -451,6 +469,18 @@ void Editor::ProcessInput()
             env_items.clear();
             NewMap->newPanel->setEnable(false);
             tils = t;
+
+            delete editorMapRenderer;
+            int mapL = mapLimit.x * mapLimit.y;
+            editorMapRenderer = new EditorMapRenderer();
+            editorMapRenderer->init(mapL);
+
+            for (int i = 0; i < mapL; i++)
+            {
+                Vector2<int> pos = Utils::CellToPosition(tils->tiles[i].cell);
+                editorMapRenderer->addRect(pos, Vector2<int>(GameParameters::SIZE_TILE), cell_yellow, 1.0F, 0);
+            }
+            editorMapRenderer->updateData();
         }
     }
     if (!(NewMap->newPanel->isEnable() || SaveLoad->loadPanel->isEnable() || SaveLoad->savePanel->isEnable() || tilePropertiesPanel->isEnable() || envItemManager->p_panel->isEnable()))
@@ -525,17 +555,19 @@ void Editor::ProcessInput()
         std::string newMapName = SaveLoad->t_load->getText();
         Unload();
         Load();
-        currentTileSet = "cs2dnorm";
-        if (tils != nullptr)
-        {
-            free(tils->tiles);
-#if defined(TRACY_ENABLE)
-            TracyFree(tils->tiles);
-#endif
-        }
 
         tils->tiles = SaveLoad->LoadMap(newMapName);
         selectedTile = &tils->tilesUI[0].getTile();
+
+        int mapL = mapLimit.x * mapLimit.y;
+        editorMapRenderer->init(mapL);
+
+        for (int i = 0; i < mapL; i++)
+        {
+            Vector2<int> pos = Utils::CellToPosition(tils->tiles[i].cell);
+            editorMapRenderer->addRect(pos, Vector2<int>(GameParameters::SIZE_TILE), cell_yellow, 1.0F, 0);
+        }
+        editorMapRenderer->updateData();
     }
 
     bool panelsPressed =
@@ -649,6 +681,9 @@ void Editor::Render()
     Vector2<int> ms = Utils::PositionToCell(
         Utils::ScreenToWorld(camera->view, InputManager::mousePos));
     bool f = false;
+
+    editorMapRenderer->render();
+
     for (int i = 0; i < mapLimit.x * mapLimit.y; i++)
     {
         Vector2 pos = Utils::WorldToScreen(
@@ -658,9 +693,6 @@ void Editor::Render()
             pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
         {
             tils->tiles[i].button.Draw(*worldRenderer, *squareRenderer);
-            squareRenderer->world_RenderEmptySquare(
-                Utils::CellToPosition(tils->tiles[i].cell),
-                Vector2<int>(GameParameters::SIZE_TILE), cell_yellow);
         }
 
         if (!f && ms == tils->tiles[i].cell && !NewMap->isMouseHover() &&

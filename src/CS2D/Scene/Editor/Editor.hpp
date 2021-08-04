@@ -5,6 +5,7 @@
 #include "../../../Core/UI/RadioButton.hpp"
 #include "../../Model/Scene.hpp"
 #include "../../Model/Tile.hpp"
+#include "../../Renderer/EditorMapRenderer.hpp"
 #include "Entities/Env_Item.hpp"
 #include "NewMapSystem.hpp"
 #include "SaveLoadSystem.hpp"
@@ -57,29 +58,32 @@ class Editor : public Scene
    private:
     void SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n);
 
-    SpriteRenderer *menuRenderer;
-    SquareRenderer *squareRenderer;
+    SpriteRenderer *menuRenderer = nullptr;
+    SquareRenderer *squareRenderer = nullptr;
+    SpriteRenderer *worldRenderer = nullptr;
 
-    SpriteRenderer *worldRenderer;
+    ListItem *objects_ui = nullptr;
 
-    ListItem *objects_ui;
+    NewMapSystem *NewMap = nullptr;
+    SaveLoadSystem *SaveLoad = nullptr;
 
-    NewMapSystem *NewMap;
-
-    SaveLoadSystem *SaveLoad;
 
     Tile *selectedTile = nullptr;
     Env_Item *selectedItem = nullptr;
 
     SpriteButton *b_save, *b_new, *b_load, *b_objects, *b_tiles;
 
-    Panel *tilePropertiesPanel;
-    TextButton *b_tileProperties;
-    RadioButton *rb_tileProperties;
+    Panel *tilePropertiesPanel = nullptr;
+    TextButton *b_tileProperties = nullptr;
+    RadioButton *rb_tileProperties = nullptr;
 
     std::string currentName;
 
     Vector3<float> cell_yellow;
     Vector3<float> mouse_yellow;
+
+    EditorMapRenderer *editorMapRenderer = nullptr;
+
+    bool firstLoad = true;
 };
 #endif
