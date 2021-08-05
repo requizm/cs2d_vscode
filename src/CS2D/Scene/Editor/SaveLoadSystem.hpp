@@ -3,6 +3,7 @@
 
 #include "../../../Core/UI/ListItem.hpp"
 #include "ButtonTile.hpp"
+#include "NewMapSystem.hpp"
 
 
 class SaveLoadSystem
