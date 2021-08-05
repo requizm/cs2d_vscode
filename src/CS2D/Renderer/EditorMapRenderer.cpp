@@ -1,5 +1,8 @@
 #include "EditorMapRenderer.hpp"
 
+#include <cstring>
+
+#include "../../Core/Manager/MemoryOverride/MemoryOverride.hpp"
 #include "../../Core/Manager/ResourceManager.hpp"
 #include "../../Core/Math/Projection.hpp"
 #include "../Other/GameParameters.hpp"

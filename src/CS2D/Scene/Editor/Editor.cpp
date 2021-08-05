@@ -236,21 +236,6 @@ void Editor::Load()
 
         firstLoad = false;
     }
-    else
-    {
-        tils = new NewMapResult();
-        NewMapResult *temp = NewMap->NewMap("cs2dnorm", Vector2<int>(1));
-        tils->tilesUI = temp->tilesUI;
-
-        for (int i = 0; i < temp->tilesLength; i++)
-        {
-            temp->tiles[i].~ButtonTile();
-        }
-        free(temp->tiles);
-#if defined(TRACY_ENABLE)
-        TracyFree(temp->tiles);
-#endif
-    }
 }
 
 void Editor::Unload()
@@ -451,6 +436,7 @@ void Editor::ProcessInput()
 
     if (InputManager::isKeyDown(KeyboardKeys::KEY_ESCAPE))
     {
+        firstLoad = true;
         SceneManager::instance().RequestLoadScene("Menu");
         return;
     }
@@ -556,7 +542,7 @@ void Editor::ProcessInput()
         Unload();
         Load();
 
-        tils->tiles = SaveLoad->LoadMap(newMapName);
+        tils = SaveLoad->LoadMap(newMapName);
         selectedTile = &tils->tilesUI[0].getTile();
 
         int mapL = mapLimit.x * mapLimit.y;
