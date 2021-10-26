@@ -4,6 +4,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/7qjq7a7vhsh5cbow?svg=true)](https://ci.appveyor.com/project/requizm/cs2d-vscode)
 ![GitHub repo size](https://img.shields.io/github/repo-size/requizm/cs2d_vscode)
 ![GitHub last commit](https://img.shields.io/github/last-commit/requizm/cs2d_vscode)
+[![Visits Badge](https://badges.pufler.dev/visits/requizm/cs2d_vscode)](https://badges.pufler.dev)
 
 
 **WIP**  
