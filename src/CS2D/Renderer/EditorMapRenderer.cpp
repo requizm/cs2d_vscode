@@ -96,7 +96,7 @@ void EditorMapRenderer::updateData()
 {
     std::size_t siz = sizeof(er_vertices);
     std::size_t siz2 = sizeof(er_indices);
-    float buffer[(sizeof(Vertex_EmptyRect) * vertexCount) / 4];
+    float *buffer = new float[(sizeof(Vertex_EmptyRect) * vertexCount) / 4];
     memcpy(buffer, er_vertices, sizeof(Vertex_EmptyRect) * vertexCount);  //er_vertices =
     emptyRects.va.Bind();
     emptyRects.vb.ChangeData(0, buffer, sizeof(buffer));

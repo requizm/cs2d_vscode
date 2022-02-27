@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <spdlog/spdlog.h>
 
 #include "CS2D/Game.hpp"
 #include "Core/Manager/InputManager.hpp"
@@ -8,13 +9,12 @@
 #include "Core/Manager/Timer.hpp"
 #include "Core/Window.hpp"
 
-
 #if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif
 
 std::unique_ptr<Game> cs2d = std::make_unique<Game>(Game());
-auto logger = spdlog::basic_logger_mt("write_logger", "log.txt");
+auto logger = spdlog::default_logger();
 
 int nbFrames = 0;
 

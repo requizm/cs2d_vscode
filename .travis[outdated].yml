@@ -9,9 +9,6 @@ env:
 cache:
   apt: true
 
-before_install:
-  - mkdir $TRAVIS_BUILD_DIR/Build
-
 addons:
   apt:
     packages:
@@ -20,8 +17,8 @@ addons:
       - libxinerama-dev
       - libxcursor-dev
       - libxi-dev
-      - valgrind
       - libgl1-mesa-dev
+      - libglu1-mesa-dev
   coverity_scan:
     project:
       name: requizm/cs2d_vscode
@@ -30,15 +27,29 @@ addons:
     notification_email: mehmet41650@gmail.com
     # Commands to prepare for build_command
     # ** likely specific to your build **
-    build_command_prepend: "(ls ; rm -rf ./Build ; mkdir ./Build ; cmake . -BBuild -G 'Unix Makefiles')"
+    build_command_prepend: "(ls ; rm -rf ./build ; git clone https://github.com/microsoft/vcpkg ; ./vcpkg/bootstrap-vcpkg.sh ; mkdir ./build ; cmake . -Bbuild -G 'Unix Makefiles')"
 
     # The command that will be added as an argument to "cov-build" to compile your project for analysis,
     # ** likely specific to your build **
-    build_command: make -C ./Build
+    build_command: make -C ./build
 
     # Pattern to match selecting branches that will run analysis. We recommend leaving this set to 'coverity_scan'.
     # Take care in resource usage, and consider the build frequency allowances per
     #   https://scan.coverity.com/faq#frequency
     branch_pattern: coverity_scan
 
-script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then cmake . -BBuild -G "Unix Makefiles" ; make -C ./Build ; fi
+jobs:
+  include:
+    - stage: install vcpkg
+      script:
+        - ls
+        - git clone https://github.com/microsoft/vcpkg
+        - ./vcpkg/bootstrap-vcpkg.sh
+        - ls
+    - stage: generate cmake
+      script:
+        - mkdir $TRAVIS_BUILD_DIR/build
+        - cmake . -Bbuild -G 'Unix Makefiles' -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
+    - stage: build
+      script:
+        - cmake --build build

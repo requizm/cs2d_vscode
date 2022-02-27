@@ -23,13 +23,23 @@ jobs:
     - uses: actions/checkout@v2
       with:
           submodules: true
-    - name: install packages and build
+    - name: install linux packages
       shell: bash
       run: |
-        sudo apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
-        cmake -BBuild -G "Unix Makefiles"
-        cd Build
-        make
+        sudo apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev
+    - name: install vcpkg
+      shell: bash
+      run: |
+        git clone https://github.com/microsoft/vcpkg
+        ./vcpkg/bootstrap-vcpkg.sh
+    - name: generate cmake
+      shell: bash
+      run: |
+        cmake -Bbuild -G "Unix Makefiles"
+    - name: build
+      shell: bash
+      run: |
+        cmake --build build
   windows:
     # The CMake configure and build commands are platform agnostic and should work equally
     # well on Windows or Mac.  You can convert this to a matrix build if you need
@@ -41,9 +51,16 @@ jobs:
     - uses: actions/checkout@v2
       with:
           submodules: true
+    - name: install vcpkg
+      shell: bash
+      run: |
+        git clone https://github.com/microsoft/vcpkg
+        ./vcpkg/bootstrap-vcpkg.bat
+    - name: generate cmake
+      shell: bash
+      run: |
+        cmake -DVCPKG_TARGET_TRIPLET=x64-mingw-static -Bbuild -G "MinGW Makefiles"
     - name: build
       shell: bash
       run: |
-        cmake -BBuild -G "MinGW Makefiles" 
-        cd Build
-        mingw32-make.exe
+        cmake --build build
