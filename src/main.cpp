@@ -1,6 +1,5 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <spdlog/spdlog.h>
 
 #include "CS2D/Game.hpp"
 #include "Core/Manager/InputManager.hpp"
@@ -14,7 +13,7 @@
 #endif
 
 std::unique_ptr<Game> cs2d = std::make_unique<Game>(Game());
-auto logger = spdlog::default_logger();
+auto logger = spdlog::basic_logger_mt("write_logger", "log.txt");
 
 int nbFrames = 0;
 
