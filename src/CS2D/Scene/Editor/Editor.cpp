@@ -19,7 +19,6 @@ Editor::Editor() : Scene("Editor")
     this->maxCellInColumn = 0;
     this->maxCellInRow = 0;
     this->position = Vector2(0);
-    Timer::timeSinceSceneStart = 0.0F;
     this->mapLimit = Vector2<int>(0);
     this->texture = Vector2<int>(0);
     this->selectedMode = SelectedMode::TILE_MOD;
@@ -31,7 +30,6 @@ void Editor::Initialize()
     this->maxCellInColumn = 0;
     this->maxCellInRow = 0;
     this->position = Vector2(0);
-    Timer::timeSinceSceneStart = 0.0F;
     this->mapLimit = Vector2<int>(0);
     this->texture = Vector2<int>(0);
     this->selectedMode = SelectedMode::TILE_MOD;
