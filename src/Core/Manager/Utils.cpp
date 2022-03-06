@@ -38,8 +38,17 @@ Vector2<int> Utils::WorldToScreen(const Vector2<int> &view, const Vector2<int> &
 Vector2<int> Utils::PositionToCell(const Vector2<int> &pos)
 {
     //ASSERT_ERROR(pos >= 0);
-    return Vector2<int>(pos.x / GameParameters::SIZE_TILE,
-                        pos.y / GameParameters::SIZE_TILE);
+    float resX = static_cast<float>(pos.x) / static_cast<float>(GameParameters::SIZE_TILE);
+    float resY = static_cast<float>(pos.y) / static_cast<float>(GameParameters::SIZE_TILE);
+    if (resX < 0 && pos.x < GameParameters::SIZE_TILE)
+    {
+        resX = -1;
+    }
+    if (resY < 0 && pos.y < GameParameters::SIZE_TILE)
+    {
+        resY = -1;
+    }
+    return Vector2<int>(static_cast<int>(resX), static_cast<int>(resY));
 }
 
 Vector2<int> Utils::CellToPosition(const Vector2<int> &cell)
