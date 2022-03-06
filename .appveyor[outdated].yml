@@ -1,0 +1,8 @@
+image:
+  - Visual Studio 2019
+
+build_script:
+  - cmd: git clone https://github.com/microsoft/vcpkg
+  - cmd: .\vcpkg\bootstrap-vcpkg.bat
+  - cmd: cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static -Bbuild -G "Visual Studio 16 2019"
+  - cmd: cmake --build build

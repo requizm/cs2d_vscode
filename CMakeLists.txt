@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
+#set(VCPKG_TARGET_TRIPLET "x64-mingw-static" CACHE STRING "VCPKG Target Triplet to use")
 project(cs2d_vscode)
-
 
 set(CMAKE_SUPPRESS_REGENERATION true)
 
@@ -15,7 +16,6 @@ file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 # Add header files
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/src/*.hpp)
 
-
 list(FILTER SOURCE_FILES EXCLUDE REGEX ".*src/Common.cpp$")
 list(FILTER HEADER_FILES EXCLUDE REGEX ".*src/Common.hpp$")
 
@@ -25,38 +25,35 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/../bin/Release)
 execute_process(COMMAND git submodule update --init WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
-if (UNIX)
+if(UNIX)
 	message("unix")
 	add_definitions(-DLINUX)
-endif (UNIX)
+endif(UNIX)
 
-if (WIN32)
+if(WIN32)
 	message("win32")
-	add_definitions(-DWIN32)
-endif (WIN32)
+	add_definitions(-DWIN32 -DGLEW_STATIC)
+endif(WIN32)
+
 
 include_directories("${CMAKE_SOURCE_DIR}/include")
 
-# glfw
-add_subdirectory(${CMAKE_SOURCE_DIR}/deps/glfw EXCLUDE_FROM_ALL)
-target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
+find_package(fmt REQUIRED)
+find_package(OpenGL REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(FREETYPE CONFIG REQUIRED)
+find_package(GLEW REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 
-# glew
-add_definitions(-DGLEW_STATIC)
-add_subdirectory(${CMAKE_SOURCE_DIR}/deps/glew EXCLUDE_FROM_ALL)
-target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
+include_directories(${glfw3_INCLUDE_DIRS})
+include_directories(${FREETYPE_INCLUDE_DIRS})
+include_directories(${GLEW_INCLUDE_DIRS})
+include_directories(${spdlog_INCLUDE_DIRS})
 
-# freetype
-add_subdirectory(${CMAKE_SOURCE_DIR}/deps/freetype EXCLUDE_FROM_ALL)
-target_link_libraries(${PROJECT_NAME} PRIVATE freetype)
-
-# spdlog
-add_subdirectory(${CMAKE_SOURCE_DIR}/deps/spdlog EXCLUDE_FROM_ALL)
-target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
-
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL fmt::fmt glfw freetype GLEW::GLEW spdlog::spdlog)
 
 if(MINGW)
-	SET(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc -O3")
+	SET(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc")
 	target_link_libraries(${PROJECT_NAME} PRIVATE ws2_32 imagehlp)
 endif(MINGW)
 
@@ -64,6 +61,7 @@ if(MSVC_IDE)
 	message("msvc")
 	set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/../bin)
 	target_compile_definitions(${PROJECT_NAME} PUBLIC -D_UNICODE -DUNICODE)
+
 	# Macro to preserve source files hierarchy in the IDE
 	macro(GroupSources curdir)
 		file(GLOB children RELATIVE ${PROJECT_SOURCE_DIR}/${curdir} ${PROJECT_SOURCE_DIR}/${curdir}/*)

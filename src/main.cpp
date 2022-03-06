@@ -8,7 +8,6 @@
 #include "Core/Manager/Timer.hpp"
 #include "Core/Window.hpp"
 
-
 #if defined(TRACY_ENABLE)
 #include <tracy/Tracy.hpp>
 #endif

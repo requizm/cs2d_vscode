@@ -94,12 +94,11 @@ void EditorMapRenderer::addRect(const Vector2<int> &position,
 
 void EditorMapRenderer::updateData()
 {
-    std::size_t siz = sizeof(er_vertices);
-    std::size_t siz2 = sizeof(er_indices);
-    float buffer[(sizeof(Vertex_EmptyRect) * vertexCount) / 4];
-    memcpy(buffer, er_vertices, sizeof(Vertex_EmptyRect) * vertexCount);  //er_vertices =
+    std::size_t buffer_size = (sizeof(Vertex_EmptyRect) * vertexCount);
+    float *buffer = new float[buffer_size / 4];
+    memcpy(buffer, er_vertices, buffer_size);
     emptyRects.va.Bind();
-    emptyRects.vb.ChangeData(0, buffer, sizeof(buffer));
+    emptyRects.vb.ChangeData(0, buffer, buffer_size);
     emptyRects.ib.ChangeData(0, er_indices, sizeof(unsigned int) * indexCount);
 }
 

@@ -79,3 +79,5 @@ CMakeCache.txt
 wrapper_output/
 
 include/tracy/
+.cache/
+vcpkg_installed/
