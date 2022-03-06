@@ -22,7 +22,7 @@ void SceneManager::LoadNextScene()
         }
         activeScene = nextScene;
         activeScene->Load();
-
+        Timer::timeSinceSceneStart = 0.0F;
         nextScene = nullptr;
     }
 }
