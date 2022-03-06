@@ -4,9 +4,6 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
-#include <iostream>
-
-
 #define LOG_ERROR(...) ::spdlog::error(__VA_ARGS__)
 #define LOG_WARNING(...) ::spdlog::warn(__VA_ARGS__)
 #define LOG_INFO(...) ::spdlog::info(__VA_ARGS__)
