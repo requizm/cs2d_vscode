@@ -27,11 +27,6 @@ jobs:
       shell: bash
       run: |
         sudo apt-get install cmake libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev
-    - name: install vcpkg
-      shell: bash
-      run: |
-        git clone https://github.com/microsoft/vcpkg
-        ./vcpkg/bootstrap-vcpkg.sh
     - name: generate cmake
       shell: bash
       run: |
@@ -51,11 +46,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
           submodules: true
-    - name: install vcpkg
-      shell: bash
-      run: |
-        git clone https://github.com/microsoft/vcpkg
-        ./vcpkg/bootstrap-vcpkg.bat
     - name: generate cmake
       shell: bash
       run: |

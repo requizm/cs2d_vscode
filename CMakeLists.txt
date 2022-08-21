@@ -1,6 +1,4 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
-#set(VCPKG_TARGET_TRIPLET "x64-mingw-static" CACHE STRING "VCPKG Target Triplet to use")
 project(cs2d_vscode)
 
 set(CMAKE_SUPPRESS_REGENERATION true)
@@ -38,19 +36,22 @@ endif(WIN32)
 
 include_directories("${CMAKE_SOURCE_DIR}/include")
 
-find_package(fmt REQUIRED)
-find_package(OpenGL REQUIRED)
-find_package(glfw3 CONFIG REQUIRED)
-find_package(FREETYPE CONFIG REQUIRED)
-find_package(GLEW REQUIRED)
-find_package(spdlog CONFIG REQUIRED)
+# glfw
+add_subdirectory(${CMAKE_SOURCE_DIR}/dep/glfw EXCLUDE_FROM_ALL)
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
 
-include_directories(${glfw3_INCLUDE_DIRS})
-include_directories(${FREETYPE_INCLUDE_DIRS})
-include_directories(${GLEW_INCLUDE_DIRS})
-include_directories(${spdlog_INCLUDE_DIRS})
+# glew
+add_definitions(-DGLEW_STATIC)
+add_subdirectory(${CMAKE_SOURCE_DIR}/dep/glew EXCLUDE_FROM_ALL)
+target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL fmt::fmt glfw freetype GLEW::GLEW spdlog::spdlog)
+# freetype
+add_subdirectory(${CMAKE_SOURCE_DIR}/dep/freetype EXCLUDE_FROM_ALL)
+target_link_libraries(${PROJECT_NAME} PRIVATE freetype)
+
+# spdlog
+add_subdirectory(${CMAKE_SOURCE_DIR}/dep/spdlog EXCLUDE_FROM_ALL)
+target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
 
 if(MINGW)
 	SET(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc")
