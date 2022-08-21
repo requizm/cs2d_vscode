@@ -1,5 +1,7 @@
 #include "Shader.hpp"
 
+#include <iostream>
+
 #include "../Manager/Logger.hpp"
 #include "../Math/Projection.hpp"
 

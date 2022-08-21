@@ -1,6 +1,7 @@
 #include "JSONLoader.hpp"
 
 #include <fstream>
+#include <iostream>
 
 #include "../Manager/Logger.hpp"
 

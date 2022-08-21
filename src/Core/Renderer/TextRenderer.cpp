@@ -1,6 +1,7 @@
 #include "TextRenderer.hpp"
 
 #include <ft2build.h>
+#include <iostream>
 
 #include "../../CS2D/Other/GameParameters.hpp"
 #include "../Manager/Logger.hpp"
