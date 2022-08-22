@@ -22,7 +22,10 @@ RadioButtonElement::RadioButtonElement(const std::string &text,
     this->index = index;
 }
 
-RadioButtonElement::~RadioButtonElement() = default;
+RadioButtonElement::~RadioButtonElement()
+{
+    UIObject::removeParent();
+}
 
 void RadioButtonElement::Draw(SpriteRenderer &spriteRenderer,
                               SquareRenderer &squareRenderer)

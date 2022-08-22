@@ -5,77 +5,40 @@
 
 SceneManager::~SceneManager()
 {
-    for (auto& scene : scenes)
-    {
-        delete scene;
-    }
+    activeScene->Unload();
+    delete activeScene;
 }
 
 void SceneManager::LoadNextScene()
 {
-    if (nextScene != nullptr)
+    if (!nextSceneName.empty())
     {
         if (activeScene != nullptr)
         {
             activeScene->Unload();
-            InputManager::removeAllListeners();
+            delete activeScene;
         }
-        activeScene = nextScene;
+        activeScene = scenes[nextSceneName]();
         activeScene->Load();
         Timer::timeSinceSceneStart = 0.0F;
-        nextScene = nullptr;
+        nextSceneName = "";
     }
 }
 
 void SceneManager::RequestLoadScene(const std::string& name)
 {
-    Scene* sc = nullptr;
-    for (auto& scene : scenes)
+    if (scenes[name] != nullptr)
     {
-        if (scene->GetName() == name)
-        {
-            sc = scene;
-            break;
-        }
+        nextSceneName = name;
     }
-
-    if (sc != nullptr)
-    {
-        nextScene = sc;
-    }
-    else
-    {
-        //boyle bir sahne yok
-    }
-}
-
-void SceneManager::AddScene(Scene* scene)
-{
-    scenes.push_back(scene);
 }
 
 void SceneManager::LoadScene(const std::string& name)
 {
-    Scene* sc = nullptr;
-    for (auto& scene : scenes)
+    if (scenes[name] != nullptr)
     {
-        if (scene->GetName() == name)
-        {
-            sc = scene;
-            break;
-        }
-    }
-
-    if (sc != nullptr)
-    {
-        activeScene = sc;
+        activeScene = scenes[name]();
         activeScene->Load();
         Timer::timeSinceSceneStart = 0.0F;
     }
-    else
-    {
-        //boyle bir sahne yok
-    }
 }
-
-std::vector<Scene*> SceneManager::GetScenes() const { return scenes; }

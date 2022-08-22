@@ -20,16 +20,9 @@ void Game::Init()
     initMaps();
     initMenuSprites();
 
-    Menu *menu = new Menu();
-    menu->Initialize(menuSprites);
-    SceneManager::instance().AddScene(menu);
-
-    Editor *editor = new Editor();
-    editor->Initialize();
-    SceneManager::instance().AddScene(editor);
-
-    StartGame *startGame = new StartGame();
-    SceneManager::instance().AddScene(startGame);
+    SceneManager::instance().scenes["Menu"] = []() { return new Menu(); };
+    SceneManager::instance().scenes["StartGame"] = []() { return new StartGame(); };
+    SceneManager::instance().scenes["Editor"] = []() { return new Editor(); };
 
     SceneManager::instance().LoadScene("Menu");
 }

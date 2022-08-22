@@ -1,6 +1,8 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include <memory>
+
 #include "../../../Core/Model/Camera.hpp"
 #include "../../../Core/UI/RadioButton.hpp"
 #include "../../Model/Scene.hpp"
@@ -47,7 +49,7 @@ class Editor : public Scene
 
     SelectedMode selectedMode;
 
-    NewMapResult *tils = nullptr;
+    std::unique_ptr<NewMapResult> tils;
 
     Vector2<int> texture;
     int tileCount;

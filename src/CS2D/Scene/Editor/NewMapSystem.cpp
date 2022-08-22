@@ -117,8 +117,8 @@ NewMapResult *NewMapSystem::NewMap(const std::string &tileSet, const Vector2<int
     res->tilesUILength = editor->tileCount;
     res->tilesLength = editor->mapLimit.x * editor->mapLimit.y;
 
-    res->tilesUI = (TileButtonScreen *)malloc(sizeof(TileButtonScreen) * editor->tileCount);
-    res->tiles = (ButtonTile *)malloc(sizeof(ButtonTile) * (mapSize.x * mapSize.y));
+    res->tilesUI = std::unique_ptr<TileButtonScreen []>(new TileButtonScreen[editor->tileCount]);
+    res->tiles = std::unique_ptr<ButtonTile []>(new ButtonTile[mapSize.x * mapSize.y]);
 #if defined(TRACY_ENABLE)
     TracyAlloc(res->tilesUI, sizeof(TileButtonScreen) * editor->tileCount);
     TracyAlloc(res->tiles, sizeof(ButtonTile) * (mapSize.x * mapSize.y));
@@ -143,7 +143,7 @@ NewMapResult *NewMapSystem::NewMap(const std::string &tileSet, const Vector2<int
         const Sprite sprite = Sprite(ResourceManager::GetTexture(tileSet),
                                      (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-        new (res->tilesUI + i) TileButtonScreen(tile);
+        new (&res->tilesUI[i]) TileButtonScreen(tile);
         res->tilesUI[i].independent = true;
         res->tilesUI[i].setParent(editor->tilePanel, true);
     }
@@ -152,14 +152,14 @@ NewMapResult *NewMapSystem::NewMap(const std::string &tileSet, const Vector2<int
     {
         for (int j = 0; j < editor->mapLimit.y; j++)
         {
-            new (res->tiles + (i * editor->mapLimit.x) + j) ButtonTile(Vector2<int>(i, j));
+            new (&res->tiles[(i * editor->mapLimit.x) + j]) ButtonTile(Vector2<int>(i, j));
             res->tiles[(i * editor->mapLimit.x) + j].button.getTile().frame = 0;
             res->tiles[(i * editor->mapLimit.x) + j].button.getTile().setType(TileTypes::FLOOR);
         }
     }
     return res;
 }
-NewMapResult *NewMapSystem::B_NewMap()
+std::unique_ptr<NewMapResult> NewMapSystem::B_NewMap()
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
@@ -191,5 +191,5 @@ NewMapResult *NewMapSystem::B_NewMap()
         LOG_WARNING("BUNLAR NEGATIF");
         return nullptr;
     }
-    return NewMap(tileSet, Vector2<int>(isizeX, isizeY));
+    return std::unique_ptr<NewMapResult>(NewMap(tileSet, Vector2<int>(isizeX, isizeY)));
 }

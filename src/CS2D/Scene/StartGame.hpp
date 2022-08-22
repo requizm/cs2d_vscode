@@ -1,6 +1,8 @@
 #ifndef STARTGAME_H
 #define STARTGAME_H
 
+#include <memory>
+
 #include "../../Core/Model/Camera.hpp"
 #include "../../Core/Renderer/SquareRenderer.hpp"
 #include "../../Core/Renderer/TextRenderer.hpp"
@@ -21,16 +23,16 @@ class StartGame : public Scene
     void ProcessInput() final;
     void Render() final;
 
-    Camera *camera;
+    std::unique_ptr<Camera> camera;
 
     SquareRenderer squareRenderer;
-    SpriteRenderer *renderer;
+    std::unique_ptr<SpriteRenderer> renderer;
 
    private:
-    Map *map;
-    Player *player;
+    std::unique_ptr<Map> map;
+    std::unique_ptr<Player> player;
 
-    TextRenderer *textRenderer;
+    std::unique_ptr<TextRenderer> textRenderer;
     std::vector<Weapon> weapons;
 };
 

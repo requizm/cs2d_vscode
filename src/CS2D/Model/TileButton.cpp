@@ -19,6 +19,7 @@ TileButtonWorld::TileButtonWorld(Tile &tile, float scale) : UIObject(tile.GetPos
 
 TileButtonWorld::~TileButtonWorld()
 {
+    UIObject::removeParent();
 }
 
 void TileButtonWorld::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)

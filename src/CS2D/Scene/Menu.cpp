@@ -15,6 +15,7 @@
 
 Menu::Menu() : Scene("Menu")
 {
+    Initialize();
 }
 
 void Menu::Load()
@@ -22,72 +23,72 @@ void Menu::Load()
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
-    this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH,
-                                          GameParameters::SCREEN_HEIGHT);
+    this->menuRenderer = std::unique_ptr<SpriteRenderer>(new SpriteRenderer(ResourceManager::GetShader("menu")));
+    this->textRenderer = std::unique_ptr<TextRenderer>(new TextRenderer(GameParameters::SCREEN_WIDTH,
+                                          GameParameters::SCREEN_HEIGHT));
     this->textRenderer->Load(
         GameParameters::resDirectory + "fonts/liberationsans.ttf", 16);
-    this->squareRenderer = new SquareRenderer(true);
+    this->squareRenderer = std::unique_ptr<SquareRenderer>(new SquareRenderer(true));
 
-    this->l_console = new Label(
+    this->l_console = std::unique_ptr<Label>(new Label(
         "Console", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 - 50),
-        *textRenderer, 0.8F, Vector3<float>(0.55F));
-    this->l_newgame = new Label(
+        *textRenderer, 0.8F, Vector3<float>(0.55F)));
+    this->l_newgame = std::unique_ptr<Label>(new Label(
         "New Game", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 - 20),
-        *textRenderer, 1.0F, Vector3<float>(0.58F));
-    this->l_options = new Label(
+        *textRenderer, 1.0F, Vector3<float>(0.58F)));
+    this->l_options = std::unique_ptr<Label>(new Label(
         "Options", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2),
-        *textRenderer, 1.0F, Vector3<float>(0.58F));
-    this->l_editor = new Label(
+        *textRenderer, 1.0F, Vector3<float>(0.58F)));
+    this->l_editor = std::unique_ptr<Label>(new Label(
         "Editor", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 + 20),
-        *textRenderer, 1.0F, Vector3<float>(0.58F));
+        *textRenderer, 1.0F, Vector3<float>(0.58F)));
 
     this->optionsPanel =
-        new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F,
+        std::unique_ptr<Panel>(new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F,
                                GameParameters::SCREEN_HEIGHT / 2 - 225.0F),
                   "Options", Vector2<int>(420, 450), *textRenderer, true, true,
-                  1.0F, Vector3<float>(0.21F));
+                  1.0F, Vector3<float>(0.21F)));
     this->optionsPanel->setMovable(true);
 
     this->t_test =
-        new TextBox(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
-    this->t_test->setParent(optionsPanel);
+        std::unique_ptr<TextBox>(new TextBox(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20),
+                    true, 1.0F, Vector3<float>(0.58F)));
+    this->t_test->setParent(optionsPanel.get());
     this->t_test->setParentCenterPos();
 
     this->newPanel =
-        new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F,
+        std::unique_ptr<Panel>(new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F,
                                GameParameters::SCREEN_HEIGHT / 2 - 225.0F),
                   "New Game", Vector2<int>(420, 450), *textRenderer, true, true,
-                  1.0F, Vector3<float>(0.21F));
+                  1.0F, Vector3<float>(0.21F)));
     this->newPanel->setMovable(true);
 
     this->mapsPanel =
-        new Panel(Vector2<int>(100, 100), "Maps", Vector2<int>(120, 200),
-                  *textRenderer, true, false, 1.0F, Vector3<float>(0.21F));
+        std::unique_ptr<Panel>(new Panel(Vector2<int>(100, 100), "Maps", Vector2<int>(120, 200),
+                  *textRenderer, true, false, 1.0F, Vector3<float>(0.21F)));
     this->mapsPanel->setMovable(false);
     this->mapsPanel->setScrollable(true);
     this->mapsPanel->setOutline(true);
     this->mapsPanel->setVisible(true);
     this->mapsPanel->setOutlineColor(Vector3<float>(0.47F));
-    this->mapsPanel->setParent(newPanel, true);
-    this->mapNames = new ListItem(mapsPanel);
+    this->mapsPanel->setParent(newPanel.get(), true);
+    this->mapNames = std::unique_ptr<ListItem>(new ListItem(mapsPanel.get()));
 
     this->t_mapName =
-        new TextBox(Vector2<int>(100, 320), *textRenderer,
-                    Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F));
-    this->t_mapName->setParent(newPanel, true);
+        std::unique_ptr<TextBox>(new TextBox(Vector2<int>(100, 320), *textRenderer,
+                    Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F)));
+    this->t_mapName->setParent(newPanel.get(), true);
 
-    this->b_newGame = new TextButton(
+    this->b_newGame = std::unique_ptr<TextButton>(new TextButton(
         "Start", Vector2<int>(240, 320), Vector2<int>(60, 20), *textRenderer,
-        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F, true);
+        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F, true));
     this->b_newGame->setButtonClickColor(Vector3<float>(0.30F));
     this->b_newGame->setButtonHoverColor(Vector3<float>(0.30F));
     this->b_newGame->setTextHoverColor(Vector3<float>(0.58F));
     this->b_newGame->setTextClickColor(Vector3<float>(1.0F));
     this->b_newGame->setHaveOutline(true);
     this->b_newGame->setOutlineColor(Vector3<float>(1.0F));
-    this->b_newGame->setParent(newPanel, true);
+    this->b_newGame->setParent(newPanel.get(), true);
     this->b_newGame->addListenerDown(std::bind(&Menu::newGameBtnClick, this));
 
     std::function<void(TextButton *, TextButton *)> mapChange =
@@ -99,12 +100,17 @@ void Menu::Load()
     this->mapsPanel->setEnable(false);
 }
 
-void Menu::Initialize(Sprite menuSprites[4])
+void Menu::Initialize()
 {
-    for (int i = 0; i < 4; i++)
-    {
-        this->menuSprites[i] = menuSprites[i];
-    }
+    Sprite cs2d = Sprite(ResourceManager::GetTexture("cs2d"));
+    Sprite unrealsoftware =
+        Sprite(ResourceManager::GetTexture("unrealsoftware"));
+    Sprite splash = Sprite(ResourceManager::GetTexture("splash"));
+    Sprite gametitle = Sprite(ResourceManager::GetTexture("gametitle"));
+    menuSprites[0] = unrealsoftware;
+    menuSprites[1] = cs2d;
+    menuSprites[2] = gametitle;
+    menuSprites[3] = splash;
 }
 
 void Menu::Unload()
@@ -112,38 +118,6 @@ void Menu::Unload()
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    if (l_console != nullptr) delete l_console;
-    l_console = nullptr;
-    if (l_newgame != nullptr) delete l_newgame;
-    l_newgame = nullptr;
-    if (l_options != nullptr) delete l_options;
-    l_options = nullptr;
-    if (l_editor != nullptr) delete l_editor;
-    l_editor = nullptr;
-
-    if (t_test != nullptr) delete t_test;
-    t_test = nullptr;
-    if (optionsPanel != nullptr) delete optionsPanel;
-    optionsPanel = nullptr;
-
-    if (mapNames != nullptr) delete mapNames;
-    mapNames = nullptr;
-
-    if (t_mapName != nullptr) delete t_mapName;
-    t_mapName = nullptr;
-    if (b_newGame != nullptr) delete b_newGame;
-    b_newGame = nullptr;
-    if (mapsPanel != nullptr) delete mapsPanel;
-    mapsPanel = nullptr;
-    if (newPanel != nullptr) delete newPanel;
-    newPanel = nullptr;
-
-    if (textRenderer != nullptr) delete textRenderer;
-    textRenderer = nullptr;
-    if (menuRenderer != nullptr) delete menuRenderer;
-    menuRenderer = nullptr;
-    if (squareRenderer != nullptr) delete squareRenderer;
-    squareRenderer = nullptr;
 }
 
 void Menu::Update()

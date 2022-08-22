@@ -22,6 +22,7 @@ Editor::Editor() : Scene("Editor")
     this->mapLimit = Vector2<int>(0);
     this->texture = Vector2<int>(0);
     this->selectedMode = SelectedMode::TILE_MOD;
+    Initialize();
 }
 
 void Editor::Initialize()
@@ -219,7 +220,7 @@ void Editor::Load()
 
     if (firstLoad == true)
     {
-        tils = NewMap->NewMap("cs2dnorm", Vector2<int>(50));
+        tils = std::unique_ptr<NewMapResult>(NewMap->NewMap("cs2dnorm", Vector2<int>(50)));
         selectedTile = &tils->tilesUI[0].getTile();
 
         int mapL = mapLimit.x * mapLimit.y;
@@ -242,9 +243,6 @@ void Editor::Unload()
     ZoneScopedS(10);
 #endif
     selectedTile = nullptr;
-
-    if (tils != nullptr) delete tils;
-    tils = nullptr;
 
     if (objects_ui != nullptr) delete objects_ui;
     objects_ui = nullptr;
@@ -441,18 +439,16 @@ void Editor::ProcessInput()
 
     if (NewMap->b_okey->IsMouseDown())
     {
-        NewMapResult *t = NewMap->B_NewMap();
-        if (t != nullptr)
+        std::unique_ptr<NewMapResult> t = NewMap->B_NewMap();
+        if (t.get() != nullptr)
         {
-            if (tils != nullptr) delete tils;
-
             for (auto &env : env_items)
             {
                 if (env != nullptr) delete env;
             }
             env_items.clear();
             NewMap->newPanel->setEnable(false);
-            tils = t;
+            tils = std::move(t);
 
             delete editorMapRenderer;
             int mapL = mapLimit.x * mapLimit.y;
@@ -540,7 +536,8 @@ void Editor::ProcessInput()
         Unload();
         Load();
 
-        tils = SaveLoad->LoadMap(newMapName);
+        std::unique_ptr<NewMapResult> newTils = std::unique_ptr<NewMapResult>(SaveLoad->LoadMap(newMapName));
+        tils = std::move(newTils);
         selectedTile = &tils->tilesUI[0].getTile();
 
         int mapL = mapLimit.x * mapLimit.y;

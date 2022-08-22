@@ -1,6 +1,9 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 
+#include <map>
+#include <functional>
+
 #include "../Model/Scene.hpp"
 
 class SceneManager
@@ -35,27 +38,19 @@ class SceneManager
     void RequestLoadScene(const std::string &name);
 
     /**
-     * @brief Every scene should to be add on beginning of program
-     * 
-     * @param scene 
-     */
-    void AddScene(Scene *scene);
-
-    /**
      * @brief Load scene instantly. Just that.
      * 
      */
     void LoadScene(const std::string &name);
 
-    std::vector<Scene *> GetScenes() const;
-
     std::vector<std::string> params;
+
+    typedef std::map<std::string, std::function<Scene*()>> SceneType;
+    SceneType scenes;
 
    private:
     Scene *activeScene = nullptr;
-    Scene *nextScene = nullptr;
-
-    std::vector<Scene *> scenes;
+    std::string nextSceneName;
 };
 
 

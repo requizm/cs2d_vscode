@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include <string>
+#include <memory>
 
 #include "../../Core/UI/ListItem.hpp"
 #include "../../Core/UI/TextBox.hpp"
@@ -13,7 +14,7 @@ class Menu : public Scene
     Menu();
     ~Menu() = default;
 
-    void Initialize(Sprite menuSprites[4]);
+    void Initialize();
 
     void Unload() final;
     void Load() final;
@@ -22,26 +23,26 @@ class Menu : public Scene
     void Render() final;
 
     Sprite menuSprites[4];
-    TextRenderer *textRenderer;
+    std::unique_ptr<TextRenderer> textRenderer;
 
-    SpriteRenderer *menuRenderer;
-    SquareRenderer *squareRenderer;
+    std::unique_ptr<SpriteRenderer> menuRenderer;
+    std::unique_ptr<SquareRenderer> squareRenderer;
 
-    Label *l_console = nullptr;
-    Label *l_quickplay = nullptr;
-    Label *l_newgame = nullptr;
-    Label *l_options = nullptr;
-    Label *l_editor = nullptr;
+    std::unique_ptr<Label> l_console;
+    std::unique_ptr<Label> l_quickplay;
+    std::unique_ptr<Label> l_newgame;
+    std::unique_ptr<Label> l_options;
+    std::unique_ptr<Label> l_editor;
 
-    TextBox *t_test = nullptr;
+    std::unique_ptr<TextBox> t_test;
 
-    Panel *optionsPanel = nullptr;
+    std::unique_ptr<Panel> optionsPanel;
 
-    Panel *newPanel = nullptr;
-    Panel *mapsPanel = nullptr;
-    TextBox *t_mapName = nullptr;
-    TextButton *b_newGame = nullptr;
-    ListItem *mapNames = nullptr;
+    std::unique_ptr<Panel> newPanel;
+    std::unique_ptr<Panel> mapsPanel;
+    std::unique_ptr<TextBox> t_mapName;
+    std::unique_ptr<TextButton> b_newGame;
+    std::unique_ptr<ListItem> mapNames;
 
    private:
     void selectedMapChange(TextButton *old, TextButton *n);

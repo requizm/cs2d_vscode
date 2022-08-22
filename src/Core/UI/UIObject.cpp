@@ -235,6 +235,15 @@ void UIObject::removeParent()
         }
         this->parent = nullptr;
     }
+
+    if (!childs.empty())
+    {
+        for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+        {
+            childs[i]->removeParent();
+            i--;
+        }
+    }
 }
 
 void UIObject::setVisible(const bool value) { this->visible = value; }

@@ -21,12 +21,12 @@ void StartGame::Initialize(const std::string &mapName)
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    this->map = new Map(mapName, mapName);
-    this->renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
-    this->camera = new Camera(static_cast<int>(GameParameters::SCREEN_WIDTH),
-                              static_cast<int>(GameParameters::SCREEN_HEIGHT));
-    this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH,
-                                          GameParameters::SCREEN_HEIGHT);
+    this->map = std::unique_ptr<Map>(new Map(mapName, mapName));
+    this->renderer = std::unique_ptr<SpriteRenderer>(new SpriteRenderer(ResourceManager::GetShader("sprite")));
+    this->camera = std::unique_ptr<Camera>(new Camera(static_cast<int>(GameParameters::SCREEN_WIDTH),
+                              static_cast<int>(GameParameters::SCREEN_HEIGHT)));
+    this->textRenderer = std::unique_ptr<TextRenderer>(new TextRenderer(GameParameters::SCREEN_WIDTH,
+                                          GameParameters::SCREEN_HEIGHT));
     this->textRenderer->Load(
         GameParameters::resDirectory + "fonts/liberationsans.ttf", 20);
     this->squareRenderer = SquareRenderer(true);
@@ -47,9 +47,9 @@ void StartGame::Load()
     sprites.push_back(ct1_0);
     sprites.push_back(ct1_1);
 
-    player = new Player(Vector2<int>(70, 70), sprites);
+    player = std::unique_ptr<Player>(new Player(Vector2<int>(70, 70), sprites));
 
-    player->SetMap(map);
+    player->SetMap(map.get());
     player->SetPosition(Vector2<int>(GameParameters::SCREEN_WIDTH / 2,
                                      GameParameters::SCREEN_HEIGHT / 2));
     player->setVelocity(500);
@@ -67,16 +67,6 @@ void StartGame::Unload()
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    if (renderer != nullptr) delete renderer;
-    renderer = nullptr;
-    if (textRenderer != nullptr) delete textRenderer;
-    textRenderer = nullptr;
-    if (map != nullptr) delete map;
-    map = nullptr;
-    if (player != nullptr) delete player;
-    player = nullptr;
-    if (camera != nullptr) delete camera;
-    camera = nullptr;
 }
 
 void StartGame::Update()

@@ -277,8 +277,8 @@ NewMapResult *SaveLoadSystem::LoadMap(const std::string &mapName)
     res->tilesUILength = editor->tileCount;
     res->tilesLength = editor->mapLimit.x * editor->mapLimit.y;
 
-    res->tilesUI = (TileButtonScreen *)malloc(sizeof(TileButtonScreen) * editor->tileCount);
-    res->tiles = (ButtonTile *)malloc(sizeof(ButtonTile) * (editor->mapLimit.x * editor->mapLimit.y));
+    res->tilesUI = std::unique_ptr<TileButtonScreen []>(new TileButtonScreen[editor->tileCount]);
+    res->tiles = std::unique_ptr<ButtonTile []>(new ButtonTile[editor->mapLimit.x * editor->mapLimit.y]);
 #if defined(TRACY_ENABLE)
     TracyAlloc(res->tilesUI, sizeof(TileButtonScreen) * editor->tileCount);
     TracyAlloc(res->tiles, sizeof(ButtonTile) * (editor->mapLimit.x * editor->mapLimit.y));
@@ -320,11 +320,11 @@ NewMapResult *SaveLoadSystem::LoadMap(const std::string &mapName)
         TileButtonWorld b = TileButtonWorld(tile);
         if (itemId == 0)
         {
-            new (res->tiles + i) ButtonTile(b, Vector2<int>(cellX, cellY));
+            new (&res->tiles[i]) ButtonTile(b, Vector2<int>(cellX, cellY));
         }
         else
         {
-            new (res->tiles + i) ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
+            new (&res->tiles[i]) ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
         }
         i += 1;
     }
@@ -343,7 +343,7 @@ NewMapResult *SaveLoadSystem::LoadMap(const std::string &mapName)
         const Sprite sprite = Sprite(ResourceManager::GetTexture(editor->currentTileSet),
                                      (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-        new (res->tilesUI + i) TileButtonScreen(tile);
+        new (&res->tilesUI[i]) TileButtonScreen(tile);
         res->tilesUI[i].independent = true;
         res->tilesUI[i].setParent(editor->tilePanel, true);
     }

@@ -7,12 +7,6 @@
 #include "../../Core/Math/Projection.hpp"
 #include "../Other/GameParameters.hpp"
 
-EditorMapRenderer::~EditorMapRenderer()
-{
-    delete[] er_vertices;
-    delete[] er_indices;
-}
-
 void EditorMapRenderer::init(unsigned int tileCount)
 {
     this->batchShader_world = ResourceManager::LoadShader(
@@ -30,8 +24,8 @@ void EditorMapRenderer::init(unsigned int tileCount)
     indexCount = (tileCount * 4) + ((tileCount)-1);
 
     emptyRects.initData(vertexCount);
-    er_vertices = new Vertex_EmptyRect[vertexCount];
-    er_indices = new unsigned int[indexCount];
+    er_vertices = std::unique_ptr<Vertex_EmptyRect[]>(new Vertex_EmptyRect[vertexCount]);
+    er_indices = std::unique_ptr<unsigned int[]>(new unsigned int[indexCount]);
 }
 
 void EditorMapRenderer::addRect(const Vector2<int> &position,
@@ -73,21 +67,27 @@ void EditorMapRenderer::addRect(const Vector2<int> &position,
 
 
     //line loop
-    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 1.0F)), 2 * sizeof(float));
+    memcpy(&ex.vertex, &l1, 2 * sizeof(float));
     er_indices[er_indicesIndex++] = er_index;
     er_vertices[er_index++] = ex;
 
-    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 1.0F)), 2 * sizeof(float));
+    memcpy(&ex.vertex, &l2, 2 * sizeof(float));
     er_indices[er_indicesIndex++] = er_index;
     er_vertices[er_index++] = ex;
 
-    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(1.0F, 0.0F)), 2 * sizeof(float));
+    memcpy(&ex.vertex, &l3, 2 * sizeof(float));
     er_indices[er_indicesIndex++] = er_index;
     er_vertices[er_index++] = ex;
 
-    memcpy(&ex.vertex, Projection::value_ptr(Vector2<float>(0.0F, 0.0F)), 2 * sizeof(float));
+    memcpy(&ex.vertex, &l4, 2 * sizeof(float));
     er_indices[er_indicesIndex++] = er_index;
     er_vertices[er_index++] = ex;
+
+    // There was a memory leak here and I don't know how to fix it. But somehow it works.
+    if (er_indicesIndex >= indexCount)
+    {
+        return;
+    }
 
     er_indices[er_indicesIndex++] = 0xFFFF;
 }
@@ -96,10 +96,14 @@ void EditorMapRenderer::updateData()
 {
     std::size_t buffer_size = (sizeof(Vertex_EmptyRect) * vertexCount);
     float *buffer = new float[buffer_size / 4];
-    memcpy(buffer, er_vertices, buffer_size);
+    memcpy(buffer, er_vertices.get(), buffer_size);
+
     emptyRects.va.Bind();
     emptyRects.vb.ChangeData(0, buffer, buffer_size);
-    emptyRects.ib.ChangeData(0, er_indices, sizeof(unsigned int) * indexCount);
+    emptyRects.ib.ChangeData(0, er_indices.get(), sizeof(unsigned int) * indexCount);
+    emptyRects.va.Unbind();
+
+    delete[] buffer;
 }
 
 void EditorMapRenderer::render()
