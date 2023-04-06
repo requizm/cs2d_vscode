@@ -162,7 +162,7 @@ void Editor::Load()
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 16, 16,
                     16);  // save_sprite
     pos = Vector2<int>(30, 25);
-    // b_objects = new SpriteButton(sprite, pos, Vector2<int>(16));
+
     b_objects = std::make_shared<SpriteButton>(sprite, pos, Vector2<int>(16));
     b_objects->setHaveOutline(true);
     b_objects->setOutlineColor(Vector3<float>(0.45F));

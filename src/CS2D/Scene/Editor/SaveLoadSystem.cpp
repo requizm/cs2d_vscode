@@ -265,10 +265,6 @@ std::unique_ptr<NewMapResult> SaveLoadSystem::LoadMap(const std::string &mapName
 
     res->tilesUI = std::shared_ptr<std::shared_ptr<TileButtonScreen>[]>(new std::shared_ptr<TileButtonScreen>[editor->tileCount]);
     res->tiles = std::shared_ptr<std::shared_ptr<ButtonTile>[]>(new std::shared_ptr<ButtonTile>[editor->mapLimit.x * editor->mapLimit.y]);
-#if defined(TRACY_ENABLE)
-    TracyAlloc(res->tilesUI, sizeof(TileButtonScreen) * editor->tileCount);
-    TracyAlloc(res->tiles, sizeof(ButtonTile) * (editor->mapLimit.x * editor->mapLimit.y));
-#endif
     int i = 0;
     for (rapidxml::xml_node<> *child = node->first_node(); child;
          child = child->next_sibling())

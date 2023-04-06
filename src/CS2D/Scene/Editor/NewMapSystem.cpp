@@ -107,10 +107,6 @@ std::unique_ptr<NewMapResult> NewMapSystem::NewMap(const std::string &tileSet, c
 
     res->tilesUI = std::shared_ptr<std::shared_ptr<TileButtonScreen>[]>(new std::shared_ptr<TileButtonScreen>[editor->tileCount]);
     res->tiles = std::shared_ptr<std::shared_ptr<ButtonTile>[]>(new std::shared_ptr<ButtonTile>[mapSize.x * mapSize.y]);
-#if defined(TRACY_ENABLE)
-    TracyAlloc(res->tilesUI, sizeof(TileButtonScreen) * editor->tileCount);
-    TracyAlloc(res->tiles, sizeof(ButtonTile) * (mapSize.x * mapSize.y));
-#endif
 
     LOG_INFO(sizeof(TileButtonScreen));
 
@@ -129,7 +125,6 @@ std::unique_ptr<NewMapResult> NewMapSystem::NewMap(const std::string &tileSet, c
         const Sprite sprite = Sprite(ResourceManager::GetTexture(tileSet),
                                      (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-        // new (&res->tilesUI[i]) TileButtonScreen(tile);
         res->tilesUI[i] = std::make_shared<TileButtonScreen>(tile);
         res->tilesUI[i]->independent = true;
         res->tilesUI[i]->setParent(editor->tilePanel, true);
@@ -139,7 +134,6 @@ std::unique_ptr<NewMapResult> NewMapSystem::NewMap(const std::string &tileSet, c
     {
         for (int j = 0; j < editor->mapLimit.y; j++)
         {
-            // new (&res->tiles[(i * editor->mapLimit.x) + j]) ButtonTile(Vector2<int>(i, j));
             res->tiles[(i * editor->mapLimit.x) + j] = std::make_shared<ButtonTile>(Vector2<int>(i, j));
             res->tiles[(i * editor->mapLimit.x) + j]->button.getTile().frame = 0;
             res->tiles[(i * editor->mapLimit.x) + j]->button.getTile().setType(TileTypes::FLOOR);

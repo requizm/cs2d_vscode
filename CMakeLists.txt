@@ -5,6 +5,8 @@ set(CMAKE_SUPPRESS_REGENERATION true)
 
 set(CMAKE_CXX_STANDARD 17)
 
+option(TRACY_ENABLE "Enable profiling" OFF)
+
 enable_language(CXX)
 
 # Add source files
@@ -52,6 +54,17 @@ target_link_libraries(${PROJECT_NAME} PRIVATE freetype)
 # spdlog
 add_subdirectory(${CMAKE_SOURCE_DIR}/dep/spdlog EXCLUDE_FROM_ALL)
 target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
+
+# tracy
+if(TRACY_ENABLE)
+	message("tracy enabled")
+	add_definitions(-DTRACY_ENABLE)
+
+	option(TRACY_ENABLE "" ON)
+	option(TRACY_ON_DEMAND "" ON)
+	add_subdirectory(${CMAKE_SOURCE_DIR}/dep/tracy EXCLUDE_FROM_ALL)
+	target_link_libraries(${PROJECT_NAME} PUBLIC Tracy::TracyClient)
+endif(TRACY_ENABLE)
 
 if(MINGW)
 	SET(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc")
