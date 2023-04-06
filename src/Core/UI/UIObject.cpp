@@ -231,7 +231,7 @@ void UIObject::setParent(std::shared_ptr<UIObject> uiobject, bool dependParent)
     }
 
     this->parent = std::move(uiobject);
-    this->parent.lock()->AddChild(shared_from_this());
+    this->parent.lock()->AddChild(std::move(shared_from_this()));
     this->setLocalPosition(getPosition());
     this->dependParent = dependParent;
 }

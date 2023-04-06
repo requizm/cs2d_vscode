@@ -37,7 +37,7 @@ void Env_Item::Initialize()
 
     if (item_id != 0)
     {
-        SceneManager::instance().GetActiveScene<Editor>()->env_items.push_back(shared_from_this());
+        SceneManager::instance().GetActiveScene<Editor>()->env_items.push_back(std::move(shared_from_this()));
     }
 }
 

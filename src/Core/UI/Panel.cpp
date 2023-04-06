@@ -344,7 +344,7 @@ void Panel::InitTitleAndEscapeButton(TextRenderer &renderer, const std::string &
     escapeButton = std::make_shared<SpriteButton>(
         Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16),
         Vector2<int>(this->size.x - 20, 3), Vector2<int>(20, 20), true);
-    escapeButton->setParent(shared_from_this());
+    escapeButton->setParent(std::move(shared_from_this()));
     escapeButton->independent = true;
     escapeButton->setButtonColor(this->panelColor);
     escapeButton->setButtonHoverColor(Vector3<float>(0.64F));
@@ -354,7 +354,7 @@ void Panel::InitTitleAndEscapeButton(TextRenderer &renderer, const std::string &
     this->title = std::make_shared<Label>(title, Vector2<int>(lineOffset, 4), renderer, scale, Vector3<float>(1.0F),
                                           UIObjectType::PANEL, LabelType::NOT_CLICKABLE);
     this->title->setMouseEvent(false);
-    this->title->setParent(shared_from_this());
+    this->title->setParent(std::move(shared_from_this()));
     this->title->independent = true;
 }
 

@@ -43,7 +43,7 @@ void ListItem::AddItem(const std::string &text)
     bt->independent = true;
     bt->setDrawCenter(false);
 
-    items.push_back(std::make_shared<ListItemElement>(std::move(bt), i++, shared_from_this()));
+    items.push_back(std::make_shared<ListItemElement>(std::move(bt), i++, std::move(shared_from_this())));
 }
 
 void ListItem::Clear()
