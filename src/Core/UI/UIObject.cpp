@@ -138,8 +138,8 @@ void UIObject::setPosition(const Vector2<int> &position)
 void UIObject::setParentCenterPos()
 {
     if (isParent())
-        setLocalPosition(Vector2<int>(parent->getSize().x / 2 - this->getSize().x / 2,
-                                      parent->getSize().y / 2 - this->getSize().y / 2));
+        setLocalPosition(Vector2<int>(parent.lock()->getSize().x / 2 - this->getSize().x / 2,
+                                      parent.lock()->getSize().y / 2 - this->getSize().y / 2));
 }
 
 void UIObject::setLocalPosition(const Vector2<int> &value)
@@ -180,7 +180,7 @@ Vector2<int> UIObject::getLocalPosition()
 {
     if (isParent())
     {
-        return this->position - parent->getPosition();
+        return this->position - parent.lock()->getPosition();
     }
 }
 
@@ -194,7 +194,7 @@ Vector2<int> UIObject::getCenterPosition() const
 
 UIObject *UIObject::getParent() const
 {
-    return isParent() ? parent.get() : nullptr;
+    return isParent() ? parent.lock().get() : nullptr;
 }
 
 std::vector<std::shared_ptr<UIObject>> UIObject::GetChildren() const
@@ -218,20 +218,20 @@ void UIObject::setParent(std::shared_ptr<UIObject> uiobject, bool dependParent)
     {
         if (uiobject->getID() != getParent()->getID())
         {
-            auto children = parent->GetChildren();
+            auto children = parent.lock()->GetChildren();
             for (std::vector<int>::size_type i = 0; i != children.size(); i++)
             {
                 if (children[i]->getID() == this->getID())
                 {
-                    parent->RemoveChild(children[i]);
+                    parent.lock()->RemoveChild(children[i]);
                     break;
                 }
             }
         }
     }
 
-    this->parent = uiobject;
-    uiobject->AddChild(shared_from_this());
+    this->parent = std::move(uiobject);
+    this->parent.lock()->AddChild(shared_from_this());
     this->setLocalPosition(getPosition());
     this->dependParent = dependParent;
 }
@@ -240,7 +240,7 @@ void UIObject::removeParent()
 {
     /*if (isParent())
     {
-        auto children = parent->GetChildren();
+        auto children = parent.lock()->GetChildren();
         for (std::vector<int>::size_type i = 0; i != children.size(); i++)
         {
             if (children[i]->getID() == this->getID())
@@ -286,13 +286,13 @@ void UIObject::setDependParent(const bool value) { this->dependParent = value; }
 
 float UIObject::getScale() const { return this->scale; }
 
-bool UIObject::isParent() const { return this->parent != nullptr; }
+bool UIObject::isParent() const { return this->parent.lock().get() != nullptr; }
 
 bool UIObject::isVisible() const
 {
     if (this->isParent() && dependParent)
     {
-        return parent->isVisible() && this->visible;
+        return parent.lock()->isVisible() && this->visible;
     }
     return this->visible;
 }
@@ -301,7 +301,7 @@ bool UIObject::isEnable() const
 {
     if (this->isParent() && dependParent)
     {
-        return parent->isEnable() && this->enable;
+        return parent.lock()->isEnable() && this->enable;
     }
     return this->enable;
 }
@@ -310,7 +310,7 @@ bool UIObject::isMouseEvents() const
 {
     if (this->isParent() && dependParent)
     {
-        return parent->isMouseEvents() && this->mouseEvents;
+        return parent.lock()->isMouseEvents() && this->mouseEvents;
     }
     return this->mouseEvents;
 }

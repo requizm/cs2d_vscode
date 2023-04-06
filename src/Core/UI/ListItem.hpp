@@ -11,14 +11,14 @@ class ListItem;
 class ListItemElement : public UIObject
 {
    public:
-    explicit ListItemElement(std::shared_ptr<TextButton> btn, int i, ListItem *listItem);
+    explicit ListItemElement(std::shared_ptr<TextButton> btn, int i, std::shared_ptr<UIObject> listItem);
     ~ListItemElement() final;
 
     bool selected = false;
     std::shared_ptr<TextButton> bt = nullptr;
 
    private:
-    ListItem *listItem = nullptr;
+    std::weak_ptr<UIObject> listItem;
 
 
     int index = -1;

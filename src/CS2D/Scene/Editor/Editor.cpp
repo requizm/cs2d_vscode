@@ -104,7 +104,6 @@ void Editor::Load()
     this->objectPanel->setParent(buildPanel);
 
     objects_ui = std::make_shared<ListItem>(this->objectPanel);
-    objects_ui->Clear();
     std::string a = "Env_Item";
     objects_ui->AddItem(a);
 
@@ -249,10 +248,6 @@ void Editor::Unload()
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    selectedTile = nullptr;
-
-    objects_ui.reset();
-
     for (auto &env : env_items)
     {
         env.reset();
@@ -627,7 +622,7 @@ void Editor::ProcessInput()
                             auto a = std::make_shared<Env_Item>(
                                 1, Utils::CellToPosition(selectedCell));
                             a->Initialize();
-                            tils->tiles[i]->SetItem(a);
+                            tils->tiles[i]->SetItem(std::move(a));
                             break;
                         }
                     }

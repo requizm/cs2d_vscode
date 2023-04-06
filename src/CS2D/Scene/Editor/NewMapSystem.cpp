@@ -139,7 +139,7 @@ std::unique_ptr<NewMapResult> NewMapSystem::NewMap(const std::string &tileSet, c
             res->tiles[(i * editor->mapLimit.x) + j]->button.getTile().setType(TileTypes::FLOOR);
         }
     }
-    return res;
+    return std::move(res);
 }
 std::unique_ptr<NewMapResult> NewMapSystem::B_NewMap()
 {
@@ -173,5 +173,5 @@ std::unique_ptr<NewMapResult> NewMapSystem::B_NewMap()
         LOG_WARNING("BUNLAR NEGATIF");
         return nullptr;
     }
-    return NewMap(tileSet, Vector2<int>(isizeX, isizeY));
+    return std::move(NewMap(tileSet, Vector2<int>(isizeX, isizeY)));
 }

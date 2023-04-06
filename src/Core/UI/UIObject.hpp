@@ -103,7 +103,7 @@ class UIObject : public std::enable_shared_from_this<UIObject>
     float scale = 1.0F;
     Vector2<int> size = Vector2<int>(0);
     UIObjectType objType = UIObjectType::UIOBJECT;
-    std::shared_ptr<UIObject> parent;
+    std::weak_ptr<UIObject> parent;
 
     int id = 0;
 

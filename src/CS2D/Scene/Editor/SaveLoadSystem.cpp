@@ -330,7 +330,7 @@ std::unique_ptr<NewMapResult> SaveLoadSystem::LoadMap(const std::string &mapName
         res->tilesUI[i]->setParent(editor->tilePanel, true);
     }
 
-    return res;
+    return std::move(res);
 }
 void SaveLoadSystem::B_LoadMap()
 {

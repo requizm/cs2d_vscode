@@ -141,7 +141,7 @@ Vector2<int> TileButtonScreen::getPosition() { return tile.GetPosition(); }
 void TileButtonScreen::setPosition(const Vector2<int> &value)
 {
     tile.SetPosition(value);
-    tile.SetLocalPosition(getPosition() - parent->getPosition());
+    tile.SetLocalPosition(getPosition() - getParent()->getPosition());
 }
 
 Vector2<int> TileButtonScreen::getSize() { return tile.GetSize(); }
@@ -157,13 +157,13 @@ void TileButtonScreen::setLocalPosition(const Vector2<int> &value)
 {
     Vector2<int> newLocalPos = value;
     tile.SetLocalPosition(newLocalPos);
-    tile.SetPosition(newLocalPos + parent->getPosition());
+    tile.SetPosition(newLocalPos + getParent()->getPosition());
 }
 
 bool TileButtonScreen::isRenderable()
 {
     Vector2<int> pe = getLocalPosition();
-    if ((pe.y + getSize().y <= parent->getSize().y) &&
+    if ((pe.y + getSize().y <= getParent()->getSize().y) &&
         pe.y >= 0)
     {
         return true;

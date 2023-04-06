@@ -19,7 +19,7 @@ ListItem::ListItem() : UIObject()
 
 ListItem::~ListItem()
 {
-    UIObject::removeParent();
+    this->Clear();
 }
 
 void ListItem::AddItem(const std::string &text)
@@ -43,13 +43,17 @@ void ListItem::AddItem(const std::string &text)
     bt->independent = true;
     bt->setDrawCenter(false);
 
-    items.push_back(std::make_shared<ListItemElement>(bt, i++, this));
+    items.push_back(std::make_shared<ListItemElement>(std::move(bt), i++, shared_from_this()));
 }
 
 void ListItem::Clear()
 {
-    removeParent();
+    for (auto &item : items)
+    {
+        item.reset();
+    }
     items.clear();
+    removeParent();
     i = 0;
 }
 
@@ -140,7 +144,7 @@ ListItemElement *ListItem::getIndex(int i)
     return items.at(i).get();
 }
 
-ListItemElement::ListItemElement(std::shared_ptr<TextButton> btn, int i, ListItem *listItem) : UIObject(UIObjectType::LISTITEMELEMENT)
+ListItemElement::ListItemElement(std::shared_ptr<TextButton> btn, int i, std::shared_ptr<UIObject> listItem) : UIObject(UIObjectType::LISTITEMELEMENT)
 {
     bt = btn;
     btn->addListenerDown(std::bind(&ListItemElement::MouseDown, this));
@@ -159,6 +163,7 @@ void ListItemElement::MouseDown()
     {
         if (!selected && isRenderable())
         {
+            ListItem *listItem = reinterpret_cast<ListItem *>(this->listItem.lock().get());
             listItem->Select(index);
         }
     }

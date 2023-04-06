@@ -176,6 +176,7 @@ RadioButton::RadioButton(TextRenderer &renderer, const Vector2<int> &position,
 
 RadioButton::~RadioButton()
 {
+    this->Clear();
     UIObject::removeParent();
 }
 
@@ -199,6 +200,10 @@ void RadioButton::AddListener(
 
 void RadioButton::Clear()
 {
+    for (auto &element : elements)
+    {
+        element.reset();
+    }
     this->elements.clear();
     i = 0;
 }
@@ -217,8 +222,8 @@ void RadioButton::AddElement(const std::string &text,
     r->setMouseHoverColor(Vector3<float>(0.9F));
     r->setOutlineColor(Vector3<float>(0.58F));
     r->setMouseHoverOutlineColor(Vector3<float>(0.9F));
-    r->setParent(shared_from_this());
-    this->elements.push_back(r);
+    r->setParent(std::move(shared_from_this()));
+    this->elements.push_back(std::move(r));
     i += 1;
 }
 
