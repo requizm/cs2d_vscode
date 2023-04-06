@@ -67,7 +67,7 @@ class RadioButtonElement : public Label
 class RadioButton : public UIObject
 {
    private:
-    std::vector<RadioButtonElement *> elements;
+    std::vector<std::shared_ptr<RadioButtonElement>> elements;
     int i = 0;
     int y_sep;  // aradaki bosluklar
 

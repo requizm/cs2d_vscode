@@ -9,7 +9,7 @@ UIObject::UIObject(UIObjectType type)
 }
 
 UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale,
-                   TextRenderer &renderer)
+                   TextRenderer &renderer) : std::enable_shared_from_this<UIObject>()
 {
     this->objType = UIObjectType::UIOBJECT;
     this->position = position;
@@ -22,7 +22,7 @@ UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float
 }
 
 UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale,
-                   TextRenderer &renderer, UIObjectType type)
+                   TextRenderer &renderer, UIObjectType type) : std::enable_shared_from_this<UIObject>()
 {
     this->objType = type;
     this->position = position;
@@ -34,7 +34,7 @@ UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float
     this->childs.clear();
 }
 
-UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale)
+UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale) : std::enable_shared_from_this<UIObject>()
 {
     this->objType = UIObjectType::UIOBJECT;
     this->position = position;
@@ -46,7 +46,7 @@ UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float
 }
 
 UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float scale,
-                   UIObjectType type)
+                   UIObjectType type) : std::enable_shared_from_this<UIObject>()
 {
     this->objType = type;
     this->position = position;
@@ -57,7 +57,7 @@ UIObject::UIObject(const Vector2<int> &position, const Vector2<int> &size, float
     this->childs.clear();
 }
 
-UIObject::UIObject(const Vector2<int> &position, float scale, TextRenderer &renderer)
+UIObject::UIObject(const Vector2<int> &position, float scale, TextRenderer &renderer) : std::enable_shared_from_this<UIObject>()
 {
     this->objType = UIObjectType::UIOBJECT;
     this->position = position;
@@ -69,7 +69,7 @@ UIObject::UIObject(const Vector2<int> &position, float scale, TextRenderer &rend
 }
 
 UIObject::UIObject(const Vector2<int> &position, float scale, TextRenderer &renderer,
-                   UIObjectType type)
+                   UIObjectType type) : std::enable_shared_from_this<UIObject>()
 {
     this->objType = type;
     this->position = position;
@@ -80,7 +80,7 @@ UIObject::UIObject(const Vector2<int> &position, float scale, TextRenderer &rend
     this->childs.clear();
 }
 
-UIObject::UIObject(const Vector2<int> &position, float scale, UIObjectType type)
+UIObject::UIObject(const Vector2<int> &position, float scale, UIObjectType type) : std::enable_shared_from_this<UIObject>()
 {
     this->objType = type;
     this->position = position;
@@ -124,10 +124,11 @@ void UIObject::setPosition(const Vector2<int> &position)
     {
         Vector2<int> oldPos = this->position;
 
-        for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+        auto children = GetChildren();
+        for (std::vector<int>::size_type i = 0; i != children.size(); i++)
         {
             Vector2<int> delta = newPos - oldPos;
-            childs[i]->setLocalPosition(childs[i]->getLocalPosition() + delta);
+            children[i]->setLocalPosition(children[i]->getLocalPosition() + delta);
         }
     }
 
@@ -151,10 +152,11 @@ void UIObject::setLocalPosition(const Vector2<int> &value)
         {
             Vector2<int> oldPos = this->position;
 
-            for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+            auto children = GetChildren();
+            for (std::vector<int>::size_type i = 0; i != children.size(); i++)
             {
                 Vector2<int> delta = newPos - oldPos;
-                childs[i]->setLocalPosition(childs[i]->getLocalPosition() + delta);
+                children[i]->setLocalPosition(children[i]->getLocalPosition() + delta);
             }
         }
 
@@ -192,70 +194,82 @@ Vector2<int> UIObject::getCenterPosition() const
 
 UIObject *UIObject::getParent() const
 {
-    if (isParent()) return parent;
-    return nullptr;
+    return isParent() ? parent.get() : nullptr;
+}
+
+std::vector<std::shared_ptr<UIObject>> UIObject::GetChildren() const
+{
+    std::vector<std::shared_ptr<UIObject>> children = std::vector<std::shared_ptr<UIObject>>();
+    for (const auto &child : childs)
+    {
+        if (auto sp = child.lock())
+        {
+            children.push_back(sp);
+        }
+    }
+    return children;
 }
 
 void UIObject::setScale(const float scale) { this->scale = scale; }
 
-void UIObject::setParent(UIObject *uiobject, bool dependParent)
+void UIObject::setParent(std::shared_ptr<UIObject> uiobject, bool dependParent)
 {
     if (isParent())
     {
         if (uiobject->getID() != getParent()->getID())
         {
-            for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
+            auto children = parent->GetChildren();
+            for (std::vector<int>::size_type i = 0; i != children.size(); i++)
             {
-                if (parent->childs[i]->getID() == this->getID())
+                if (children[i]->getID() == this->getID())
                 {
-                    parent->childs.erase(parent->childs.begin() + i);
+                    parent->RemoveChild(children[i]);
                     break;
                 }
             }
         }
     }
 
-    uiobject->childs.push_back(this);
     this->parent = uiobject;
+    uiobject->AddChild(shared_from_this());
     this->setLocalPosition(getPosition());
     this->dependParent = dependParent;
 }
 
 void UIObject::removeParent()
 {
-    if (isParent())
+    /*if (isParent())
     {
-        for (std::vector<int>::size_type i = 0; i != parent->childs.size(); i++)
+        auto children = parent->GetChildren();
+        for (std::vector<int>::size_type i = 0; i != children.size(); i++)
         {
-            if (parent->childs[i]->getID() == this->getID())
+            if (children[i]->getID() == this->getID())
             {
-                parent->childs.erase(parent->childs.begin() + i);
-                break;
+                children.erase(children.begin() + i);
+                i--;
             }
         }
-        this->parent = nullptr;
+        // this->parent = nullptr;
     }
 
     if (!childs.empty())
     {
-        for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+        auto children = GetChildren();
+        for (std::vector<int>::size_type i = 0; i != children.size(); i++)
         {
-            childs[i]->removeParent();
-            i--;
+            children[i]->removeParent();
         }
-    }
+    }*/
 }
 
 void UIObject::setVisible(const bool value) { this->visible = value; }
 
 void UIObject::setEnable(const bool value)
 {
-    if (!childs.empty())
+    auto children = GetChildren();
+    for (std::vector<int>::size_type i = 0; i != children.size(); i++)
     {
-        for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
-        {
-            childs[i]->setEnable(value);
-        }
+        children[i]->setEnable(value);
     }
 
     if (enable == value) return;
@@ -371,6 +385,24 @@ std::string UIObject::GetObjectTypeString()
             break;
     }
     return str;
+}
+
+void UIObject::RemoveChild(std::shared_ptr<UIObject> child)
+{
+    childs.erase(
+        std::remove_if(
+            childs.begin(),
+            childs.end(),
+            [child](const std::weak_ptr<UIObject> &wp)
+            {
+                return wp.expired() || wp.lock() == child;
+            }),
+        childs.end());
+}
+
+void UIObject::AddChild(std::shared_ptr<UIObject> child)
+{
+    childs.push_back(std::weak_ptr<UIObject>(child));
 }
 
 void UIObject::setScrollable(const bool value) { this->scrollable = value; }

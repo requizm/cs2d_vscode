@@ -7,7 +7,7 @@
 #include "../../../Model/TileButton.hpp"
 
 
-class Env_Item
+class Env_Item : public std::enable_shared_from_this<Env_Item>
 {
    private:
     int item_id = 0;  // 0=null  1=ak47   2=m4a1 ..
@@ -16,7 +16,7 @@ class Env_Item
     Vector2<int> size;
     Sprite sp;
 
-    TileButtonWorld *button;
+    std::shared_ptr<TileButtonWorld> button;
 
    public:
     int obj_id = 0;
@@ -59,15 +59,15 @@ class Env_Item_Manager
 {
    public:
     Env_Item_Manager();
-    ~Env_Item_Manager();
+    ~Env_Item_Manager() = default;
 
     void Update();
     void Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer);
     void ProcessInput();
 
-    Panel *p_panel;
-    TextButton *b_okay, *b_cancel, *b_delete;
-    TextBox *t_id;
+    std::shared_ptr<Panel> p_panel;
+    std::shared_ptr<TextButton> b_okay, b_cancel, b_delete;
+    std::shared_ptr<TextBox> t_id;
 
     bool isPressedOrHover();
 };

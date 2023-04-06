@@ -21,12 +21,12 @@ void StartGame::Initialize(const std::string &mapName)
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    this->map = std::unique_ptr<Map>(new Map(mapName, mapName));
-    this->renderer = std::unique_ptr<SpriteRenderer>(new SpriteRenderer(ResourceManager::GetShader("sprite")));
-    this->camera = std::unique_ptr<Camera>(new Camera(static_cast<int>(GameParameters::SCREEN_WIDTH),
-                              static_cast<int>(GameParameters::SCREEN_HEIGHT)));
-    this->textRenderer = std::unique_ptr<TextRenderer>(new TextRenderer(GameParameters::SCREEN_WIDTH,
-                                          GameParameters::SCREEN_HEIGHT));
+    this->map = std::make_unique<Map>(mapName, mapName);
+    this->renderer = std::make_unique<SpriteRenderer>(ResourceManager::GetShader("sprite"));
+    this->camera = std::make_unique<Camera>(static_cast<int>(GameParameters::SCREEN_WIDTH),
+                                            static_cast<int>(GameParameters::SCREEN_HEIGHT));
+    this->textRenderer = std::make_unique<TextRenderer>(GameParameters::SCREEN_WIDTH,
+                                                        GameParameters::SCREEN_HEIGHT);
     this->textRenderer->Load(
         GameParameters::resDirectory + "fonts/liberationsans.ttf", 20);
     this->squareRenderer = SquareRenderer(true);
@@ -47,7 +47,7 @@ void StartGame::Load()
     sprites.push_back(ct1_0);
     sprites.push_back(ct1_1);
 
-    player = std::unique_ptr<Player>(new Player(Vector2<int>(70, 70), sprites));
+    player = std::make_unique<Player>(Vector2<int>(70, 70), sprites);
 
     player->SetMap(map.get());
     player->SetPosition(Vector2<int>(GameParameters::SCREEN_WIDTH / 2,

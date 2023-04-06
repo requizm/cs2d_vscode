@@ -16,14 +16,11 @@ Env_Item::Env_Item(int id, const Vector2<int> &position)
 {
     this->item_id = id;
     this->position = position;
-    this->Initialize();
 }
 
 Env_Item::~Env_Item()
 {
     button->removeParent();
-    if (button != nullptr) delete button;
-    button = nullptr;
 }
 
 void Env_Item::Initialize()
@@ -35,12 +32,12 @@ void Env_Item::Initialize()
     this->obj_id = Utils::GenerateID();
 
     Tile t = Tile(position, sp, Vector2<int>(GameParameters::SIZE_TILE));
-    button = new TileButtonWorld(t, 1.0F);
-    //button->setType(ButtonType::ENV_OBJ);
+    button = std::make_shared<TileButtonWorld>(t, 1.0F);
+    // button->setType(ButtonType::ENV_OBJ);
 
     if (item_id != 0)
     {
-        SceneManager::instance().GetActiveScene<Editor>()->env_items.push_back(this);
+        SceneManager::instance().GetActiveScene<Editor>()->env_items.push_back(shared_from_this());
     }
 }
 
@@ -73,17 +70,17 @@ Env_Item_Manager::Env_Item_Manager()
     ZoneScopedS(10);
 #endif
     p_panel =
-        new Panel(Vector2<int>(SceneManager::instance().GetActiveScene<Editor>()->tilePanel->getSize().x + 20,
-                               SceneManager::instance().GetActiveScene<Editor>()->controlPanel->getSize().y),
-                  "Entity Options", Vector2<int>(400, 200),
-                  *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer), true, true, 1.0F,
-                  Vector3<float>(0.21F), 0.8F);
+        std::make_shared<Panel>(Vector2<int>(SceneManager::instance().GetActiveScene<Editor>()->tilePanel->getSize().x + 20,
+                                             SceneManager::instance().GetActiveScene<Editor>()->controlPanel->getSize().y),
+                                "Entity Options", Vector2<int>(400, 200),
+                                *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer), true, true, 1.0F,
+                                Vector3<float>(0.21F), 0.8F);
     p_panel->setMovable(false);
     p_panel->setEnable(false);
 
-    b_okay = new TextButton("Okay", Vector2<int>(330, 170), Vector2<int>(60, 20),
-                            *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
-                            Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    b_okay = std::make_shared<TextButton>("Okay", Vector2<int>(330, 170), Vector2<int>(60, 20),
+                                          *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
+                                          Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
     b_okay->setButtonClickColor(Vector3<float>(0.30F));
     b_okay->setButtonHoverColor(Vector3<float>(0.30F));
     b_okay->setTextHoverColor(Vector3<float>(0.58F));
@@ -93,9 +90,9 @@ Env_Item_Manager::Env_Item_Manager()
     b_okay->setParent(p_panel);
 
     b_cancel =
-        new TextButton("Cancel", Vector2<int>(230, 170), Vector2<int>(60, 20),
-                       *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer), Vector3<float>(0.15F),
-                       Vector3<float>(0.58F), 1.0F);
+        std::make_shared<TextButton>("Cancel", Vector2<int>(230, 170), Vector2<int>(60, 20),
+                                     *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer), Vector3<float>(0.15F),
+                                     Vector3<float>(0.58F), 1.0F);
     b_cancel->setButtonClickColor(Vector3<float>(0.30F));
     b_cancel->setButtonHoverColor(Vector3<float>(0.30F));
     b_cancel->setTextHoverColor(Vector3<float>(0.58F));
@@ -104,9 +101,9 @@ Env_Item_Manager::Env_Item_Manager()
     b_cancel->setOutlineColor(Vector3<float>(1.0F));
     b_cancel->setParent(p_panel);
 
-    b_delete = new TextButton("Delete", Vector2<int>(0, 170), Vector2<int>(60, 20),
-                              *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
-                              Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
+    b_delete = std::make_shared<TextButton>("Delete", Vector2<int>(0, 170), Vector2<int>(60, 20),
+                                            *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
+                                            Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
     b_delete->setButtonClickColor(Vector3<float>(0.30F));
     b_delete->setButtonHoverColor(Vector3<float>(0.30F));
     b_delete->setTextHoverColor(Vector3<float>(0.58F));
@@ -116,18 +113,9 @@ Env_Item_Manager::Env_Item_Manager()
     b_delete->setParent(p_panel);
 
     t_id =
-        new TextBox(Vector2<int>(300, 40), *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
-                    Vector2<int>(60, 20), true, 1.0F, Vector3<float>(0.58F));
+        std::make_shared<TextBox>(Vector2<int>(300, 40), *(SceneManager::instance().GetActiveScene<Editor>()->textRenderer),
+                                  Vector2<int>(60, 20), true, 1.0F, Vector3<float>(0.58F));
     t_id->setParent(p_panel);
-}
-
-Env_Item_Manager::~Env_Item_Manager()
-{
-    delete t_id;
-    delete b_cancel;
-    delete b_okay;
-    delete b_delete;
-    delete p_panel;
 }
 
 void Env_Item_Manager::Update() { p_panel->Update(); }

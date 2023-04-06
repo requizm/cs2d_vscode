@@ -5,7 +5,7 @@
 #include "../Manager/MemoryOverride/MemoryOverride.hpp"
 
 
-ListItem::ListItem(Panel *panel)
+ListItem::ListItem(std::shared_ptr<Panel> panel)
     : UIObject(panel->getPosition(), panel->getScale(), *(panel->rend))
 {
     this->panel = panel;
@@ -19,10 +19,6 @@ ListItem::ListItem() : UIObject()
 
 ListItem::~ListItem()
 {
-    for (auto &item : items)
-    {
-        if (item != nullptr) delete item;
-    }
     UIObject::removeParent();
 }
 
@@ -31,13 +27,13 @@ void ListItem::AddItem(const std::string &text)
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    const Vector2<int> pos = Vector2<int>(0.0F, static_cast<int>(i * 20));
+    const Vector2<int> pos = Vector2<int>(0, static_cast<int>(i * 20));
     const Vector2<int> size = Vector2<int>(panel->getSize().x, 20);
-    TextButton *bt =
-        new TextButton(text, pos,
-                       size, *(panel->rend),
-                       Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F, true,
-                       UIObjectType::LISTITEM);
+    auto bt =
+        std::make_shared<TextButton>(text, pos,
+                                     size, *(panel->rend),
+                                     Vector3<float>(0.21F), Vector3<float>(0.58F), 1.0F, true,
+                                     UIObjectType::LISTITEM);
     bt->setButtonClickColor(Vector3<float>(0.35F));
     bt->setButtonHoverColor(Vector3<float>(0.25F));
     bt->setTextHoverColor(Vector3<float>(1.0F));
@@ -47,15 +43,11 @@ void ListItem::AddItem(const std::string &text)
     bt->independent = true;
     bt->setDrawCenter(false);
 
-    items.push_back(new ListItemElement(bt, i++, this));
+    items.push_back(std::make_shared<ListItemElement>(bt, i++, this));
 }
 
 void ListItem::Clear()
 {
-    for (auto &item : items)
-    {
-        if (item != nullptr) delete item;
-    }
     removeParent();
     items.clear();
     i = 0;
@@ -131,11 +123,11 @@ void ListItem::Select(int i)
     {
         if (old != -1)
         {
-            f(items[old]->bt, items[selectedIndex]->bt);
+            f(items[old]->bt.get(), items[selectedIndex]->bt.get());
         }
         else
         {
-            f(nullptr, items[selectedIndex]->bt);
+            f(nullptr, items[selectedIndex]->bt.get());
         }
     }
 }
@@ -145,10 +137,10 @@ int ListItem::getSelectedIndex() { return selectedIndex; }
 ListItemElement *ListItem::getIndex(int i)
 {
     ASSERTM_ERROR(i >= 0 && i < items.size(), "boyle bir item indexi yok");
-    return items.at(i);
+    return items.at(i).get();
 }
 
-ListItemElement::ListItemElement(TextButton *btn, int i, ListItem *listItem) : UIObject(UIObjectType::LISTITEMELEMENT)
+ListItemElement::ListItemElement(std::shared_ptr<TextButton> btn, int i, ListItem *listItem) : UIObject(UIObjectType::LISTITEMELEMENT)
 {
     bt = btn;
     btn->addListenerDown(std::bind(&ListItemElement::MouseDown, this));
@@ -158,7 +150,6 @@ ListItemElement::ListItemElement(TextButton *btn, int i, ListItem *listItem) : U
 
 ListItemElement::~ListItemElement()
 {
-    delete bt;
     removeParent();
 }
 

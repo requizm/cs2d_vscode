@@ -43,6 +43,7 @@ src/.scannerwork/report-task.txt
 
 test/main.exe
 build/**
+out/**
 CMakeFiles/**
 bin/32/**
 bin/64/**
@@ -55,6 +56,7 @@ include/ft2build.h
 include/freetype/**
 include/spdlog/**
 *.pb
+*.pdb
 .scannerwork/.sonar_lock
 .scannerwork/scanner-report/analysis.log
 .scannerwork/report-task.txt

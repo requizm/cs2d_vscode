@@ -10,7 +10,7 @@ class SaveLoadSystem
 {
    public:
     SaveLoadSystem() = default;
-    ~SaveLoadSystem();
+    ~SaveLoadSystem() = default;
 
     void Load();
     void ProcessInput();
@@ -21,19 +21,19 @@ class SaveLoadSystem
     void SaveMap();
     void B_SaveMap();
     void SaveListChanged(TextButton *old, TextButton *n);
-    Panel *savePanel, *save_mapsPanel;
-    TextButton *b_map_save;
-    TextBox *t_save;
-    ListItem *save_listMaps;
+    std::shared_ptr<Panel> savePanel, save_mapsPanel;
+    std::shared_ptr<TextButton> b_map_save;
+    std::shared_ptr<TextBox> t_save;
+    std::shared_ptr<ListItem> save_listMaps;
 
     // load
-    NewMapResult *LoadMap(const std::string &mapName);
+    std::unique_ptr<NewMapResult> LoadMap(const std::string &mapName);
     void B_LoadMap();
     void LoadListChanged(TextButton *old, TextButton *n);
-    Panel *loadPanel, *load_mapsPanel;
-    TextButton *b_map_load;
-    TextBox *t_load;
-    ListItem *load_listMaps;
+    std::shared_ptr<Panel> loadPanel, load_mapsPanel;
+    std::shared_ptr<TextButton> b_map_load;
+    std::shared_ptr<TextBox> t_load;
+    std::shared_ptr<ListItem> load_listMaps;
 
     // both
     bool isPressedOrHover();

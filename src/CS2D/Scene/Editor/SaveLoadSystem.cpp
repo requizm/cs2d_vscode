@@ -18,36 +18,20 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-SaveLoadSystem::~SaveLoadSystem()
-{
-    delete load_mapsPanel;
-    delete save_mapsPanel;
-
-    delete b_map_load;
-    delete b_map_save;
-
-    delete t_load;
-    delete t_save;
-
-    delete load_listMaps;
-    delete save_listMaps;
-
-    delete loadPanel;
-    delete savePanel;
-}
-
 void SaveLoadSystem::Load()
 {
     Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
-    this->loadPanel = new Panel(
+    this->loadPanel = std::make_shared<Panel>(
         Vector2<int>(editor->tilePanel->getSize().x + 20, editor->controlPanel->getSize().y),
         "Load Panel", Vector2<int>(400, 200), *editor->textRenderer, true, true, 1.0F,
         Vector3<float>(0.21F), 0.8F);
+    this->loadPanel->InitTitleAndEscapeButton(*editor->textRenderer, "Load Panel");
     this->loadPanel->setMovable(false);
     this->loadPanel->setEnable(false);
-    this->load_mapsPanel = new Panel(
+    this->load_mapsPanel = std::make_shared<Panel>(
         Vector2<int>(20, 60), "Map Panel", Vector2<int>(300, 100),
         *editor->textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
+    this->load_mapsPanel->InitTitleAndEscapeButton(*editor->textRenderer, "Map Panel");
     this->load_mapsPanel->setMovable(false);
     this->load_mapsPanel->setEnable(false);
     this->load_mapsPanel->setScrollable(true);
@@ -57,15 +41,15 @@ void SaveLoadSystem::Load()
     this->load_mapsPanel->setParent(this->loadPanel, true);
     this->load_mapsPanel->setParentCenterPos();
     this->load_listMaps =
-        new ListItem(this->load_mapsPanel);
+        std::make_shared<ListItem>(this->load_mapsPanel);
     // this->load_listMaps->setParent(this->load_mapsPanel,
     // true);
     this->t_load =
-        new TextBox(Vector2<int>(20, 170), *editor->textRenderer, Vector2<int>(120, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
+        std::make_shared<TextBox>(Vector2<int>(20, 170), *editor->textRenderer, Vector2<int>(120, 20),
+                                  true, 1.0F, Vector3<float>(0.58F));
     this->t_load->setParent(this->loadPanel);
     this->t_load->editable = false;
-    this->b_map_load = new TextButton(
+    this->b_map_load = std::make_shared<TextButton>(
         "Load", Vector2<int>(180, 170), Vector2<int>(60, 20), *editor->textRenderer,
         Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
     this->b_map_load->setButtonClickColor(Vector3<float>(0.30F));
@@ -81,15 +65,17 @@ void SaveLoadSystem::Load()
     this->load_listMaps->AddListener(loadListChanged);
 
     // harita save paneli
-    this->savePanel = new Panel(
+    this->savePanel = std::make_shared<Panel>(
         Vector2<int>(editor->tilePanel->getSize().x + 20, editor->controlPanel->getSize().y),
         "Save Panel", Vector2<int>(400, 200), *editor->textRenderer, true, true, 1.0F,
         Vector3<float>(0.21F), 0.8F);
+    this->savePanel->InitTitleAndEscapeButton(*editor->textRenderer, "Save Panel");
     this->savePanel->setMovable(false);
     this->savePanel->setEnable(false);
-    this->save_mapsPanel = new Panel(
+    this->save_mapsPanel = std::make_shared<Panel>(
         Vector2<int>(20, 60), "Map Panel", Vector2<int>(300, 100),
         *editor->textRenderer, true, false, 1.0F, Vector3<float>(0.21F), 0.6F);
+    this->save_mapsPanel->InitTitleAndEscapeButton(*editor->textRenderer, "Map Panel");
     this->save_mapsPanel->setMovable(false);
     this->save_mapsPanel->setEnable(false);
     this->save_mapsPanel->setScrollable(true);
@@ -99,14 +85,14 @@ void SaveLoadSystem::Load()
     this->save_mapsPanel->setParent(this->savePanel, true);
     this->save_mapsPanel->setParentCenterPos();
     this->save_listMaps =
-        new ListItem(this->save_mapsPanel);
+        std::make_shared<ListItem>(this->save_mapsPanel);
     // this->save_listMaps->setParent(this->save_mapsPanel,
     // true);
     this->t_save =
-        new TextBox(Vector2<int>(20, 170), *editor->textRenderer, Vector2<int>(120, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
+        std::make_shared<TextBox>(Vector2<int>(20, 170), *editor->textRenderer, Vector2<int>(120, 20),
+                                  true, 1.0F, Vector3<float>(0.58F));
     this->t_save->setParent(this->savePanel);
-    this->b_map_save = new TextButton(
+    this->b_map_save = std::make_shared<TextButton>(
         "Save", Vector2<int>(180, 170), Vector2<int>(60, 20), *editor->textRenderer,
         Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
     this->b_map_save->setButtonClickColor(Vector3<float>(0.30F));
@@ -162,15 +148,15 @@ void SaveLoadSystem::SaveMap()
             rapidxml::xml_node<> *node_tile =
                 doc.allocate_node(rapidxml::node_element, "tile");
             char *cellX =
-                doc.allocate_string(std::to_string(editor->tils->tiles[i].cell.x).c_str());
+                doc.allocate_string(std::to_string(editor->tils->tiles[i]->cell.x).c_str());
             char *cellY =
-                doc.allocate_string(std::to_string(editor->tils->tiles[i].cell.y).c_str());
+                doc.allocate_string(std::to_string(editor->tils->tiles[i]->cell.y).c_str());
             char *frame = doc.allocate_string(
-                std::to_string(editor->tils->tiles[i].button.getTile().frame).c_str());
+                std::to_string(editor->tils->tiles[i]->button.getTile().frame).c_str());
             char *type = doc.allocate_string(
-                std::to_string((int)editor->tils->tiles[i].button.getTile().getType())
+                std::to_string((int)editor->tils->tiles[i]->button.getTile().getType())
                     .c_str());
-            int item_id = editor->tils->tiles[i].item != nullptr ? editor->tils->tiles[i].item->getItemID() : 0;
+            int item_id = editor->tils->tiles[i]->item != nullptr ? editor->tils->tiles[i]->item->getItemID() : 0;
             char *itemId = doc.allocate_string(std::to_string(item_id).c_str());
 
             rapidxml::xml_node<> *node_tile_texture;
@@ -242,12 +228,12 @@ void SaveLoadSystem::B_SaveMap()
     this->savePanel->setEnable(true);
 }
 
-NewMapResult *SaveLoadSystem::LoadMap(const std::string &mapName)
+std::unique_ptr<NewMapResult> SaveLoadSystem::LoadMap(const std::string &mapName)
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    NewMapResult *res = new NewMapResult();
+    auto res = std::make_unique<NewMapResult>();
     Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
 
     InputManager::scroll.y = 0.0F;
@@ -277,8 +263,8 @@ NewMapResult *SaveLoadSystem::LoadMap(const std::string &mapName)
     res->tilesUILength = editor->tileCount;
     res->tilesLength = editor->mapLimit.x * editor->mapLimit.y;
 
-    res->tilesUI = std::unique_ptr<TileButtonScreen []>(new TileButtonScreen[editor->tileCount]);
-    res->tiles = std::unique_ptr<ButtonTile []>(new ButtonTile[editor->mapLimit.x * editor->mapLimit.y]);
+    res->tilesUI = std::shared_ptr<std::shared_ptr<TileButtonScreen>[]>(new std::shared_ptr<TileButtonScreen>[editor->tileCount]);
+    res->tiles = std::shared_ptr<std::shared_ptr<ButtonTile>[]>(new std::shared_ptr<ButtonTile>[editor->mapLimit.x * editor->mapLimit.y]);
 #if defined(TRACY_ENABLE)
     TracyAlloc(res->tilesUI, sizeof(TileButtonScreen) * editor->tileCount);
     TracyAlloc(res->tiles, sizeof(ButtonTile) * (editor->mapLimit.x * editor->mapLimit.y));
@@ -320,11 +306,11 @@ NewMapResult *SaveLoadSystem::LoadMap(const std::string &mapName)
         TileButtonWorld b = TileButtonWorld(tile);
         if (itemId == 0)
         {
-            new (&res->tiles[i]) ButtonTile(b, Vector2<int>(cellX, cellY));
+            res->tiles[i] = std::make_shared<ButtonTile>(b, Vector2<int>(cellX, cellY));
         }
         else
         {
-            new (&res->tiles[i]) ButtonTile(itemId, b, Vector2<int>(cellX, cellY));
+            res->tiles[i] = std::make_shared<ButtonTile>(itemId, b, Vector2<int>(cellX, cellY));
         }
         i += 1;
     }
@@ -343,9 +329,9 @@ NewMapResult *SaveLoadSystem::LoadMap(const std::string &mapName)
         const Sprite sprite = Sprite(ResourceManager::GetTexture(editor->currentTileSet),
                                      (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-        new (&res->tilesUI[i]) TileButtonScreen(tile);
-        res->tilesUI[i].independent = true;
-        res->tilesUI[i].setParent(editor->tilePanel, true);
+        res->tilesUI[i] = std::make_shared<TileButtonScreen>(tile);
+        res->tilesUI[i]->independent = true;
+        res->tilesUI[i]->setParent(editor->tilePanel, true);
     }
 
     return res;

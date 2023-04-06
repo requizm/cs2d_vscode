@@ -11,11 +11,11 @@ class ListItem;
 class ListItemElement : public UIObject
 {
    public:
-    explicit ListItemElement(TextButton *btn, int i, ListItem *listItem);
+    explicit ListItemElement(std::shared_ptr<TextButton> btn, int i, ListItem *listItem);
     ~ListItemElement() final;
 
     bool selected = false;
-    TextButton *bt = nullptr;
+    std::shared_ptr<TextButton> bt = nullptr;
 
    private:
     ListItem *listItem = nullptr;
@@ -29,7 +29,7 @@ class ListItemElement : public UIObject
 class ListItem : public UIObject
 {
    public:
-    explicit ListItem(Panel *panel);
+    explicit ListItem(std::shared_ptr<Panel> panel);
     ListItem();
     ~ListItem() final;
 
@@ -46,8 +46,8 @@ class ListItem : public UIObject
     ListItemElement *getIndex(int i);
 
    private:
-    Panel *panel = nullptr;
-    std::vector<ListItemElement *> items;
+    std::shared_ptr<Panel> panel;
+    std::vector<std::shared_ptr<ListItemElement>> items;
     int selectedIndex = -1;
 
     int i = 0;

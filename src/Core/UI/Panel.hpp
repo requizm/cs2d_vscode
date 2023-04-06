@@ -54,13 +54,14 @@ class Panel : public UIObject
     void setTitle(const std::string &text);
     void setOutlineColor(const Vector3<float> &color);
     void setOutline(const bool value);
+    void InitTitleAndEscapeButton(TextRenderer &renderer, const std::string &title);
 
    protected:
     Vector3<float> panelColor;
     Vector2<int> dragSize;
     Vector2<int> dragPos;
-    SpriteButton *escapeButton;
-    Label title;
+    std::shared_ptr<SpriteButton> escapeButton;
+    std::shared_ptr<Label> title;
     bool opttitles;
     bool backGround;
     bool movable;

@@ -13,22 +13,10 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-NewMapSystem::~NewMapSystem()
-{
-    delete l_tile;
-    delete l_mapSize;
-    delete l_x;
-    delete t_tile;
-    delete t_mapSizeX;
-    delete t_mapSizeY;
-    delete b_okey;
-    delete newPanel;
-}
-
 void NewMapSystem::Load()
 {
     Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
-    this->newPanel = new Panel(
+    this->newPanel = std::make_shared<Panel>(
         Vector2<int>(editor->tilePanel->getSize().x + 20, editor->controlPanel->getSize().y),
         "New Map", Vector2<int>(400, 135), *editor->textRenderer, true, true, 1.0F,
         Vector3<float>(0.21F), 0.8F);
@@ -36,34 +24,34 @@ void NewMapSystem::Load()
     this->newPanel->setEnable(false);
 
     this->t_mapSizeX =
-        new TextBox(Vector2<int>(180, 40), *editor->textRenderer, Vector2<int>(60, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
+        std::make_shared<TextBox>(Vector2<int>(180, 40), *editor->textRenderer, Vector2<int>(60, 20),
+                                  true, 1.0F, Vector3<float>(0.58F));
     this->t_mapSizeX->setParent(this->newPanel);
     this->t_mapSizeY =
-        new TextBox(Vector2<int>(250, 40), *editor->textRenderer, Vector2<int>(60, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
+        std::make_shared<TextBox>(Vector2<int>(250, 40), *editor->textRenderer, Vector2<int>(60, 20),
+                                  true, 1.0F, Vector3<float>(0.58F));
     this->t_mapSizeY->setParent(this->newPanel);
     this->t_tile =
-        new TextBox(Vector2<int>(180, 65), *editor->textRenderer, Vector2<int>(120, 20),
-                    true, 1.0F, Vector3<float>(0.58F));
+        std::make_shared<TextBox>(Vector2<int>(180, 65), *editor->textRenderer, Vector2<int>(120, 20),
+                                  true, 1.0F, Vector3<float>(0.58F));
     this->t_tile->setParent(this->newPanel);
 
-    this->l_mapSize = new Label(
+    this->l_mapSize = std::make_shared<Label>(
         "Map Size", Vector2<int>(40, 40), *editor->textRenderer, 1.0F,
         Vector3<float>(0.58F), UIObjectType::LABEL, LabelType::NOT_CLICKABLE);
     this->l_mapSize->setParent(this->newPanel);
     this->l_mapSize->setMouseEvent(false);
-    this->l_x = new Label("x", Vector2<int>(240, 40), *editor->textRenderer, 1.0F,
-                          Vector3<float>(0.58F), UIObjectType::LABEL,
-                          LabelType::NOT_CLICKABLE);
+    this->l_x = std::make_shared<Label>("x", Vector2<int>(240, 40), *editor->textRenderer, 1.0F,
+                                        Vector3<float>(0.58F), UIObjectType::LABEL,
+                                        LabelType::NOT_CLICKABLE);
     this->l_x->setParent(this->newPanel);
     this->l_x->setMouseEvent(false);
-    this->l_tile = new Label("Tileset", Vector2<int>(40, 65), *editor->textRenderer,
-                             1.0F, Vector3<float>(0.58F), UIObjectType::LABEL,
-                             LabelType::NOT_CLICKABLE);
+    this->l_tile = std::make_shared<Label>("Tileset", Vector2<int>(40, 65), *editor->textRenderer,
+                                           1.0F, Vector3<float>(0.58F), UIObjectType::LABEL,
+                                           LabelType::NOT_CLICKABLE);
     this->l_tile->setParent(this->newPanel);
     this->l_tile->setMouseEvent(false);
-    this->b_okey = new TextButton(
+    this->b_okey = std::make_shared<TextButton>(
         "Okay", Vector2<int>(50, 105), Vector2<int>(60, 20), *editor->textRenderer,
         Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F);
     this->b_okey->setButtonClickColor(Vector3<float>(0.30F));
@@ -93,12 +81,12 @@ bool NewMapSystem::isEditMode()
 
 bool NewMapSystem::isMouseHover() { return newPanel->isMouseHover(false); }
 
-NewMapResult *NewMapSystem::NewMap(const std::string &tileSet, const Vector2<int> &mapSize)
+std::unique_ptr<NewMapResult> NewMapSystem::NewMap(const std::string &tileSet, const Vector2<int> &mapSize)
 {
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    NewMapResult *res = new NewMapResult();
+    auto res = std::make_unique<NewMapResult>();
     Editor *editor = SceneManager::instance().GetActiveScene<Editor>();
     editor->position =
         Vector2<int>(0 - editor->buildPanel->getSize().x, 0);
@@ -117,14 +105,12 @@ NewMapResult *NewMapSystem::NewMap(const std::string &tileSet, const Vector2<int
     res->tilesUILength = editor->tileCount;
     res->tilesLength = editor->mapLimit.x * editor->mapLimit.y;
 
-    res->tilesUI = std::unique_ptr<TileButtonScreen []>(new TileButtonScreen[editor->tileCount]);
-    res->tiles = std::unique_ptr<ButtonTile []>(new ButtonTile[mapSize.x * mapSize.y]);
+    res->tilesUI = std::shared_ptr<std::shared_ptr<TileButtonScreen>[]>(new std::shared_ptr<TileButtonScreen>[editor->tileCount]);
+    res->tiles = std::shared_ptr<std::shared_ptr<ButtonTile>[]>(new std::shared_ptr<ButtonTile>[mapSize.x * mapSize.y]);
 #if defined(TRACY_ENABLE)
     TracyAlloc(res->tilesUI, sizeof(TileButtonScreen) * editor->tileCount);
     TracyAlloc(res->tiles, sizeof(ButtonTile) * (mapSize.x * mapSize.y));
 #endif
-    //res->tilesUI = new TileButtonScreen[editor->tileCount];
-    //res->tiles = new ButtonTile[mapSize.x * mapSize.y];
 
     LOG_INFO(sizeof(TileButtonScreen));
 
@@ -143,18 +129,20 @@ NewMapResult *NewMapSystem::NewMap(const std::string &tileSet, const Vector2<int
         const Sprite sprite = Sprite(ResourceManager::GetTexture(tileSet),
                                      (xoffset)*32, yoffset * 32, 32, 32);
         Tile tile = Tile(pos, sprite, size, TileTypes::FLOOR, curIndex++);
-        new (&res->tilesUI[i]) TileButtonScreen(tile);
-        res->tilesUI[i].independent = true;
-        res->tilesUI[i].setParent(editor->tilePanel, true);
+        // new (&res->tilesUI[i]) TileButtonScreen(tile);
+        res->tilesUI[i] = std::make_shared<TileButtonScreen>(tile);
+        res->tilesUI[i]->independent = true;
+        res->tilesUI[i]->setParent(editor->tilePanel, true);
     }
 
     for (int i = 0; i < editor->mapLimit.x; i++)
     {
         for (int j = 0; j < editor->mapLimit.y; j++)
         {
-            new (&res->tiles[(i * editor->mapLimit.x) + j]) ButtonTile(Vector2<int>(i, j));
-            res->tiles[(i * editor->mapLimit.x) + j].button.getTile().frame = 0;
-            res->tiles[(i * editor->mapLimit.x) + j].button.getTile().setType(TileTypes::FLOOR);
+            // new (&res->tiles[(i * editor->mapLimit.x) + j]) ButtonTile(Vector2<int>(i, j));
+            res->tiles[(i * editor->mapLimit.x) + j] = std::make_shared<ButtonTile>(Vector2<int>(i, j));
+            res->tiles[(i * editor->mapLimit.x) + j]->button.getTile().frame = 0;
+            res->tiles[(i * editor->mapLimit.x) + j]->button.getTile().setType(TileTypes::FLOOR);
         }
     }
     return res;
@@ -191,5 +179,5 @@ std::unique_ptr<NewMapResult> NewMapSystem::B_NewMap()
         LOG_WARNING("BUNLAR NEGATIF");
         return nullptr;
     }
-    return std::unique_ptr<NewMapResult>(NewMap(tileSet, Vector2<int>(isizeX, isizeY)));
+    return NewMap(tileSet, Vector2<int>(isizeX, isizeY));
 }

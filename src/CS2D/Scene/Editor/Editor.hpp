@@ -33,19 +33,19 @@ class Editor : public Scene
     void ProcessInput() final;
     void Render() final;
 
-    TextRenderer *textRenderer;
-    Panel *controlPanel;
-    Panel *buildPanel;
-    Panel *tilePanel, *objectPanel;
+    std::shared_ptr<TextRenderer> textRenderer;
+    std::shared_ptr<Panel> controlPanel;
+    std::shared_ptr<Panel> buildPanel;
+    std::shared_ptr<Panel> tilePanel, objectPanel;
 
-    std::vector<Env_Item *> env_items;
-    Env_Item_Manager *envItemManager;
+    std::vector<std::shared_ptr<Env_Item>> env_items;
+    std::shared_ptr<Env_Item_Manager> envItemManager;
 
     std::string currentTileSet;
 
     Vector2<int> mapLimit;
 
-    Camera *camera;
+    std::shared_ptr<Camera> camera;
 
     SelectedMode selectedMode;
 
@@ -60,31 +60,31 @@ class Editor : public Scene
    private:
     void SelectedRbChanged(RadioButtonElement *old, RadioButtonElement *n);
 
-    SpriteRenderer *menuRenderer = nullptr;
-    SquareRenderer *squareRenderer = nullptr;
-    SpriteRenderer *worldRenderer = nullptr;
+    std::shared_ptr<SpriteRenderer> menuRenderer = nullptr;
+    std::shared_ptr<SquareRenderer> squareRenderer = nullptr;
+    std::shared_ptr<SpriteRenderer> worldRenderer = nullptr;
 
-    ListItem *objects_ui = nullptr;
+    std::shared_ptr<ListItem> objects_ui = nullptr;
 
-    NewMapSystem *NewMap = nullptr;
-    SaveLoadSystem *SaveLoad = nullptr;
+    std::shared_ptr<NewMapSystem> NewMap = nullptr;
+    std::shared_ptr<SaveLoadSystem> SaveLoad = nullptr;
 
 
-    Tile *selectedTile = nullptr;
-    Env_Item *selectedItem = nullptr;
+    std::shared_ptr<Tile> selectedTile = nullptr;
+    std::shared_ptr<Env_Item> selectedItem = nullptr;
 
-    SpriteButton *b_save, *b_new, *b_load, *b_objects, *b_tiles;
+    std::shared_ptr<SpriteButton> b_save, b_new, b_load, b_objects, b_tiles;
 
-    Panel *tilePropertiesPanel = nullptr;
-    TextButton *b_tileProperties = nullptr;
-    RadioButton *rb_tileProperties = nullptr;
+    std::shared_ptr<Panel> tilePropertiesPanel = nullptr;
+    std::shared_ptr<TextButton> b_tileProperties = nullptr;
+    std::shared_ptr<RadioButton> rb_tileProperties = nullptr;
 
     std::string currentName;
 
     Vector3<float> cell_yellow;
     Vector3<float> mouse_yellow;
 
-    EditorMapRenderer *editorMapRenderer = nullptr;
+    std::shared_ptr<EditorMapRenderer> editorMapRenderer = nullptr;
 
     bool firstLoad = true;
 };

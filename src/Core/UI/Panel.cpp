@@ -12,28 +12,13 @@ Panel::Panel(const Vector2<int> &position, const std::string &title, const Vecto
 {
     this->panelColor = color;
     this->backGround = isBackGround;
-    this->dragSize = Vector2<int>(size.x, 23.0F);
+    this->dragSize = Vector2<int>(size.x, 23);
     this->opttitles = opttitles;
     this->trans = transp;
     this->enable = false;
     this->movable = false;
     this->scrollable = false;
     this->outline = false;
-    escapeButton = new SpriteButton(
-        Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16),
-        Vector2<int>(this->size.x - 20, 3), Vector2<int>(20, 20), true);
-    escapeButton->setParent(this);
-    escapeButton->independent = true;
-    escapeButton->setButtonColor(color);
-    escapeButton->setButtonHoverColor(Vector3<float>(0.64F));
-    escapeButton->setButtonClickColor(Vector3<float>(1.0F));
-    escapeButton->setHaveOutline(false);
-    escapeButton->addListenerUp(std::bind(&Panel::escapeButtonClicked, this));
-    this->title = Label(title, Vector2<int>(lineOffset, 4), renderer, scale, Vector3<float>(1.0F),
-                        UIObjectType::PANEL, LabelType::NOT_CLICKABLE);
-    this->title.setMouseEvent(false);
-    this->title.setParent(this);
-    this->title.independent = true;
 }
 
 Panel::Panel() : UIObject() {}
@@ -41,7 +26,6 @@ Panel::Panel() : UIObject() {}
 Panel::~Panel()
 {
     InputManager::removeListenerUp(GLFW_MOUSE_BUTTON_LEFT, escapeDown, id);
-    delete escapeButton;
     UIObject::removeParent();
 }
 
@@ -61,31 +45,32 @@ void Panel::Draw(SpriteRenderer &spriteRenderer, SquareRenderer &squareRenderer)
             {
                 squareRenderer.ui_RenderFilledSquare(
                     this->getPosition(), this->getSize(), getPanelColor(), true,
-                    getOutlineColor(), 2.0F, this->trans, 0.0F);
+                    getOutlineColor(), 2.0F, this->trans, 0);
             }
         }
         if (opttitles)
         {
             squareRenderer.ui_RenderLine(
                 Vector2<int>(getPosition().x + lineOffset,
-                             getPosition().y + 23.0F),
+                             getPosition().y + 23),
                 Vector2<int>(getPosition().x + size.x - lineOffset,
-                             getPosition().y + 23.0F),
+                             getPosition().y + 23),
                 Vector3<float>(0.39F), 1.0F, this->trans);
             escapeButton->Draw(spriteRenderer, squareRenderer);
-            title.Draw();
+            title->Draw();
         }
     }
-    for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+    auto children = GetChildren();
+    for (std::vector<int>::size_type i = 0; i != children.size(); i++)
     {
-        if (!childs[i]->independent)
+        if (!children[i]->independent)
         {
-            if (childs[i]->GetObjectTypeString() == "Label")
-                childs[i]->Draw();
-            else if (childs[i]->GetObjectTypeString() == "TextButton")
-                childs[i]->Draw(squareRenderer);
+            if (children[i]->GetObjectTypeString() == "Label")
+                children[i]->Draw();
+            else if (children[i]->GetObjectTypeString() == "TextButton")
+                children[i]->Draw(squareRenderer);
             else
-                childs[i]->Draw(spriteRenderer, squareRenderer);
+                children[i]->Draw(spriteRenderer, squareRenderer);
         }
     }
 }
@@ -124,11 +109,12 @@ void Panel::Update()
             escapeButton->Update();
         }
     }
-    for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+    auto children = GetChildren();
+    for (std::vector<int>::size_type i = 0; i != children.size(); i++)
     {
-        if (!(childs[i]->independent))
+        if (!(children[i]->independent))
         {
-            childs[i]->Update();
+            children[i]->Update();
         }
     }
 }
@@ -154,9 +140,10 @@ void Panel::ProcessInput()
                 isMouseDownForMouse(MOUSE_BUTTON_LEFT);
             }
         }
-        for (std::vector<int>::size_type i = 0; i != childs.size(); i++)
+        auto children = GetChildren();
+        for (std::vector<int>::size_type i = 0; i != children.size(); i++)
         {
-            if (!childs[i]->independent) childs[i]->ProcessInput();
+            if (!children[i]->independent) children[i]->ProcessInput();
         }
     }
 }
@@ -166,9 +153,9 @@ void Panel::OnEnable()
     if (opttitles)
     {
         escapeButton->setEnable(true);
-        title.setEnable(true);
+        title->setEnable(true);
         escapeButton->setVisible(true);
-        title.setVisible(true);
+        title->setVisible(true);
     }
 }
 
@@ -177,9 +164,9 @@ void Panel::OnDisable()
     if (opttitles)
     {
         escapeButton->setEnable(false);
-        title.setEnable(false);
+        title->setEnable(false);
         escapeButton->setVisible(false);
-        title.setVisible(false);
+        title->setVisible(false);
         this->isPressed = false;
         this->isDown = false;
         this->isUp = false;
@@ -332,7 +319,7 @@ bool Panel::isMovable() const { return this->movable; }
 
 bool Panel::isOutline() const { return this->outline; }
 
-std::string Panel::getTitle() const { return title.getText(); }
+std::string Panel::getTitle() const { return title->getText(); }
 
 void Panel::setPanelColor(const Vector3<float> &color)
 {
@@ -343,7 +330,7 @@ void Panel::setBackGround(const bool value) { this->backGround = value; }
 
 void Panel::setMovable(const bool value) { this->movable = value; }
 
-void Panel::setTitle(const std::string &text) { this->title.setText(text); }
+void Panel::setTitle(const std::string &text) { this->title->setText(text); }
 
 void Panel::setOutlineColor(const Vector3<float> &color)
 {
@@ -351,6 +338,25 @@ void Panel::setOutlineColor(const Vector3<float> &color)
 }
 
 void Panel::setOutline(const bool value) { this->outline = value; }
+
+void Panel::InitTitleAndEscapeButton(TextRenderer &renderer, const std::string &title)
+{
+    escapeButton = std::make_shared<SpriteButton>(
+        Sprite(ResourceManager::GetTexture("gui_icons"), 0, 0, 16, 16),
+        Vector2<int>(this->size.x - 20, 3), Vector2<int>(20, 20), true);
+    escapeButton->setParent(shared_from_this());
+    escapeButton->independent = true;
+    escapeButton->setButtonColor(this->panelColor);
+    escapeButton->setButtonHoverColor(Vector3<float>(0.64F));
+    escapeButton->setButtonClickColor(Vector3<float>(1.0F));
+    escapeButton->setHaveOutline(false);
+    escapeButton->addListenerUp(std::bind(&Panel::escapeButtonClicked, this));
+    this->title = std::make_shared<Label>(title, Vector2<int>(lineOffset, 4), renderer, scale, Vector3<float>(1.0F),
+                                          UIObjectType::PANEL, LabelType::NOT_CLICKABLE);
+    this->title->setMouseEvent(false);
+    this->title->setParent(shared_from_this());
+    this->title->independent = true;
+}
 
 void Panel::escapeButtonClicked()
 {

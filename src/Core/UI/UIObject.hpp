@@ -1,11 +1,13 @@
 #ifndef UIOBJECT_H
 #define UIOBJECT_H
 
+#include <memory>
 #include <vector>
 
 #include "../Renderer/SpriteRenderer.hpp"
 #include "../Renderer/SquareRenderer.hpp"
 #include "../Renderer/TextRenderer.hpp"
+
 
 enum class UIObjectType
 {
@@ -22,7 +24,7 @@ enum class UIObjectType
     ENV_ITEM
 };
 
-class UIObject
+class UIObject : public std::enable_shared_from_this<UIObject>
 {
    public:
     UIObject() = default;
@@ -54,6 +56,7 @@ class UIObject
     virtual Vector2<int> getCenterPosition() const;
     virtual Vector2<int> getLocalPosition();
     UIObject *getParent() const;
+    std::vector<std::shared_ptr<UIObject>> GetChildren() const;
     float getScale() const;
     bool isParent() const;
     bool isVisible() const;
@@ -70,8 +73,10 @@ class UIObject
     virtual void setSize(const Vector2<int> &size);
     virtual void setSize(const int x, const int y);
     void setScale(const float scale);
-    virtual void setParent(UIObject *uiobject, bool dependParent = true);
+    virtual void setParent(std::shared_ptr<UIObject> uiobject, bool dependParent = true);
     void removeParent();
+    void RemoveChild(std::shared_ptr<UIObject> child);
+    void AddChild(std::shared_ptr<UIObject> child);
     void setVisible(const bool value);
     void setEnable(const bool value);
     void setMouseEvent(const bool value);
@@ -89,7 +94,7 @@ class UIObject
      */
     bool independent = false;
 
-    std::vector<UIObject *> childs;
+    std::vector<std::weak_ptr<UIObject>> childs;
 
     TextRenderer *rend = nullptr;
 
@@ -98,7 +103,7 @@ class UIObject
     float scale = 1.0F;
     Vector2<int> size = Vector2<int>(0);
     UIObjectType objType = UIObjectType::UIOBJECT;
-    UIObject *parent = nullptr;
+    std::shared_ptr<UIObject> parent;
 
     int id = 0;
 

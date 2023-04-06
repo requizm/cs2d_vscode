@@ -41,17 +41,17 @@ void Editor::Load()
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-
-    this->menuRenderer = new SpriteRenderer(ResourceManager::GetShader("menu"));
-    this->worldRenderer =
-        new SpriteRenderer(ResourceManager::GetShader("sprite"));
-    this->textRenderer = new TextRenderer(GameParameters::SCREEN_WIDTH,
-                                          GameParameters::SCREEN_HEIGHT);
+    this->menuRenderer = std::make_shared<SpriteRenderer>(
+        ResourceManager::GetShader("menu"));
+    this->worldRenderer = std::make_shared<SpriteRenderer>(ResourceManager::GetShader("sprite"));
+    this->textRenderer = std::make_shared<TextRenderer>(
+        GameParameters::SCREEN_WIDTH,
+        GameParameters::SCREEN_HEIGHT);
     this->textRenderer->Load(
         GameParameters::resDirectory + "fonts/liberationsans.ttf", 16);
-    this->squareRenderer = new SquareRenderer(true);
-    this->camera = new Camera(static_cast<int>(GameParameters::SCREEN_WIDTH),
-                              static_cast<int>(GameParameters::SCREEN_HEIGHT));
+    this->squareRenderer = std::make_shared<SquareRenderer>(true);
+    this->camera = std::make_shared<Camera>(static_cast<int>(GameParameters::SCREEN_WIDTH),
+                                            static_cast<int>(GameParameters::SCREEN_HEIGHT));
     camera->setPosition(position);
     worldRenderer->SetProjection(camera->cameraMatrix);
     squareRenderer->SetProjection(camera->cameraMatrix);
@@ -61,26 +61,29 @@ void Editor::Load()
     this->maxCellInRow =
         (GameParameters::SCREEN_HEIGHT - (32 * 4) - 22) / 32 + 1;
 
-    this->buildPanel = new Panel(Vector2<int>(0, 0), "Build Panel",
-                                 Vector2<int>(32 * maxCellInColumn + (5 * 2),
-                                              GameParameters::SCREEN_HEIGHT),
-                                 *textRenderer, true, false, 1.0F,
-                                 Vector3<float>(0.21F), 1.0F);
+    this->buildPanel = std::make_shared<Panel>(Vector2<int>(0, 0), "Build Panel",
+                                               Vector2<int>(32 * maxCellInColumn + (5 * 2),
+                                                            GameParameters::SCREEN_HEIGHT),
+                                               *textRenderer, true, false, 1.0F,
+                                               Vector3<float>(0.21F), 1.0F);
+    this->buildPanel->InitTitleAndEscapeButton(*textRenderer, "Build Panel");
     this->buildPanel->setMovable(false);
     this->buildPanel->setEnable(true);
 
-    this->controlPanel = new Panel(
-        Vector2<int>(5, 5), "Control Panel",
-        Vector2<int>(32 * maxCellInColumn, 32 * 2 - 11), *textRenderer, true,
-        false, 1.0F, Vector3<float>(0.21F), 1.0F);
+    this->controlPanel = std::make_shared<Panel>(Vector2<int>(5, 5), "Control Panel",
+                                                 Vector2<int>(32 * maxCellInColumn, 32 * 2 - 11),
+                                                 *textRenderer, true, false, 1.0F,
+                                                 Vector3<float>(0.21F), 1.0F);
+    this->controlPanel->InitTitleAndEscapeButton(*textRenderer, "Control Panel");
     this->controlPanel->setMovable(false);
     this->controlPanel->setEnable(true);
     this->controlPanel->setParent(buildPanel);
 
-    this->tilePanel = new Panel(
-        Vector2<int>(5, 75), "Tile Panel",
-        Vector2<int>(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer,
-        true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
+    this->tilePanel = std::make_shared<Panel>(Vector2<int>(5, 75), "Tile Panel",
+                                              Vector2<int>(32 * maxCellInColumn, 32 * maxCellInRow),
+                                              *textRenderer, true, false, 1.0F,
+                                              Vector3<float>(0.21F), 1.0F);
+    this->tilePanel->InitTitleAndEscapeButton(*textRenderer, "Tile Panel");
     this->tilePanel->setEnable(true);
     this->tilePanel->setMovable(false);
     this->tilePanel->setScrollable(true);
@@ -88,10 +91,11 @@ void Editor::Load()
     this->tilePanel->setOutlineColor(Vector3<float>(0.47F));
     this->tilePanel->setParent(buildPanel);
 
-    this->objectPanel = new Panel(
-        Vector2<int>(5, 75), "Object Panel",
-        Vector2<int>(32 * maxCellInColumn, 32 * maxCellInRow), *textRenderer,
-        true, false, 1.0F, Vector3<float>(0.21F), 1.0F);
+    this->objectPanel = std::make_shared<Panel>(Vector2<int>(5, 75), "Object Panel",
+                                                Vector2<int>(32 * maxCellInColumn, 32 * maxCellInRow),
+                                                *textRenderer, true, false, 1.0F,
+                                                Vector3<float>(0.21F), 1.0F);
+    this->objectPanel->InitTitleAndEscapeButton(*textRenderer, "Object Panel");
     this->objectPanel->setEnable(false);
     this->objectPanel->setMovable(false);
     this->objectPanel->setScrollable(true);
@@ -99,7 +103,7 @@ void Editor::Load()
     this->objectPanel->setOutlineColor(Vector3<float>(0.47F));
     this->objectPanel->setParent(buildPanel);
 
-    objects_ui = new ListItem(this->objectPanel);
+    objects_ui = std::make_shared<ListItem>(this->objectPanel);
     objects_ui->Clear();
     std::string a = "Env_Item";
     objects_ui->AddItem(a);
@@ -110,9 +114,9 @@ void Editor::Load()
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 16, 0, 16,
                     16);  // new_sprite
     pos = Vector2<int>(0);
-    b_new = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_new = std::make_shared<SpriteButton>(sprite, pos, Vector2<int>(16));
     b_new->setHaveOutline(true);
-    b_new->setOutlineColor(Vector3<float>(0.45));
+    b_new->setOutlineColor(Vector3<float>(0.45F));
     b_new->setMargin(Vector2<int>(8, 8));
     b_new->setButtonColor(Vector3<float>(0.15F));
     b_new->setButtonClickColor(Vector3<float>(0.30F));
@@ -122,9 +126,9 @@ void Editor::Load()
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 0, 16,
                     16);  // load_sprite
     pos = Vector2<int>(30, 0);
-    b_load = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_load = std::make_shared<SpriteButton>(sprite, pos, Vector2<int>(16));
     b_load->setHaveOutline(true);
-    b_load->setOutlineColor(Vector3<float>(0.45));
+    b_load->setOutlineColor(Vector3<float>(0.45F));
     b_load->setMargin(Vector2<int>(8, 8));
     b_load->setButtonColor(Vector3<float>(0.15F));
     b_load->setButtonClickColor(Vector3<float>(0.30F));
@@ -134,9 +138,9 @@ void Editor::Load()
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 0, 16,
                     16);  // save_sprite
     pos = Vector2<int>(60, 0);
-    b_save = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_save = std::make_shared<SpriteButton>(sprite, pos, Vector2<int>(16));
     b_save->setHaveOutline(true);
-    b_save->setOutlineColor(Vector3<float>(0.45));
+    b_save->setOutlineColor(Vector3<float>(0.45F));
     b_save->setMargin(Vector2<int>(8, 8));
     b_save->setButtonColor(Vector3<float>(0.15F));
     b_save->setButtonClickColor(Vector3<float>(0.30F));
@@ -146,9 +150,9 @@ void Editor::Load()
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 32, 16, 16,
                     16);  // save_sprite
     pos = Vector2<int>(0, 25);
-    b_tiles = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_tiles = std::make_shared<SpriteButton>(sprite, pos, Vector2<int>(16));
     b_tiles->setHaveOutline(true);
-    b_tiles->setOutlineColor(Vector3<float>(0.45));
+    b_tiles->setOutlineColor(Vector3<float>(0.45F));
     b_tiles->setMargin(Vector2<int>(8, 8));
     b_tiles->setButtonColor(Vector3<float>(0.15F));
     b_tiles->setButtonClickColor(Vector3<float>(0.30F));
@@ -158,9 +162,10 @@ void Editor::Load()
     sprite = Sprite(ResourceManager::GetTexture("gui_icons"), 48, 16, 16,
                     16);  // save_sprite
     pos = Vector2<int>(30, 25);
-    b_objects = new SpriteButton(sprite, pos, Vector2<int>(16));
+    // b_objects = new SpriteButton(sprite, pos, Vector2<int>(16));
+    b_objects = std::make_shared<SpriteButton>(sprite, pos, Vector2<int>(16));
     b_objects->setHaveOutline(true);
-    b_objects->setOutlineColor(Vector3<float>(0.45));
+    b_objects->setOutlineColor(Vector3<float>(0.45F));
     b_objects->setMargin(Vector2<int>(8, 8));
     b_objects->setButtonColor(Vector3<float>(0.15F));
     b_objects->setButtonClickColor(Vector3<float>(0.30F));
@@ -168,29 +173,30 @@ void Editor::Load()
     b_objects->setParent(controlPanel);
 
     // yeni harita paneli
-    this->NewMap = new NewMapSystem();
+    this->NewMap = std::make_shared<NewMapSystem>();
     this->NewMap->Load();
 
     // harita yukle paneli
-    this->SaveLoad = new SaveLoadSystem();
+    this->SaveLoad = std::make_shared<SaveLoadSystem>();
     this->SaveLoad->Load();
 
     // env_item
-    envItemManager = new Env_Item_Manager();
+    envItemManager = std::make_shared<Env_Item_Manager>();
 
     // tile properties
-    this->tilePropertiesPanel = new Panel(
+    this->tilePropertiesPanel = std::make_shared<Panel>(
         Vector2<int>(tilePanel->getSize().x + 20, controlPanel->getSize().y),
         "Tile Properties", Vector2<int>(400, 400), *textRenderer, true, true,
         1.0F, Vector3<float>(0.21F), 0.8F);
+    this->tilePropertiesPanel->InitTitleAndEscapeButton(*textRenderer, "Tile Properties");
     this->tilePropertiesPanel->setMovable(false);
     this->tilePropertiesPanel->setEnable(false);
 
-    this->b_tileProperties = new TextButton(
-        "Tile Properties", Vector2<int>(10, buildPanel->getSize().y - 35),
-        Vector2<int>(buildPanel->getSize().x - 20, 15), *textRenderer);
+    this->b_tileProperties = std::make_shared<TextButton>(
+        "Tile Properties", Vector2<int>(10, 10), Vector2<int>(380, 15),
+        *textRenderer);
     this->b_tileProperties->setHaveOutline(true);
-    this->b_tileProperties->setOutlineColor(Vector3<float>(0.54));
+    this->b_tileProperties->setOutlineColor(Vector3<float>(0.54F));
     this->b_tileProperties->setTextColor(Vector3<float>(0.54F));
     this->b_tileProperties->setTextHoverColor(Vector3<float>(0.60F));
     this->b_tileProperties->setTextClickColor(Vector3<float>(0.60F));
@@ -199,8 +205,8 @@ void Editor::Load()
     this->b_tileProperties->setButtonHoverColor(Vector3<float>(0.30F));
     this->b_tileProperties->setParent(buildPanel);
 
-    this->rb_tileProperties =
-        new RadioButton(*textRenderer, Vector2<int>(20, 50), 30);
+    this->rb_tileProperties = std::make_shared<RadioButton>(
+        *textRenderer, Vector2<int>(20, 50), 30);
     this->rb_tileProperties->setParent(tilePropertiesPanel);
     this->rb_tileProperties->Clear();
     this->rb_tileProperties->AddElement("Wall", Vector3<float>(0.15F),
@@ -216,19 +222,20 @@ void Editor::Load()
 
     this->selectedMode = SelectedMode::TILE_MOD;
 
-    editorMapRenderer = new EditorMapRenderer();
+    editorMapRenderer = std::make_shared<EditorMapRenderer>();
 
     if (firstLoad == true)
     {
-        tils = std::unique_ptr<NewMapResult>(NewMap->NewMap("cs2dnorm", Vector2<int>(50)));
-        selectedTile = &tils->tilesUI[0].getTile();
+        tils = std::move(NewMap->NewMap("cs2dnorm", Vector2<int>(50)));
+        tils->tilesUI[0]->getTile();
+        selectedTile = std::make_shared<Tile>(tils->tilesUI[0]->getTile());
 
         int mapL = mapLimit.x * mapLimit.y;
         editorMapRenderer->init(mapL);
 
         for (int i = 0; i < mapL; i++)
         {
-            Vector2<int> pos = Utils::CellToPosition(tils->tiles[i].cell);
+            Vector2<int> pos = Utils::CellToPosition(tils->tiles[i]->cell);
             editorMapRenderer->addRect(pos, Vector2<int>(GameParameters::SIZE_TILE), cell_yellow, 1.0F, 0);
         }
         editorMapRenderer->updateData();
@@ -244,65 +251,42 @@ void Editor::Unload()
 #endif
     selectedTile = nullptr;
 
-    if (objects_ui != nullptr) delete objects_ui;
-    objects_ui = nullptr;
+    objects_ui.reset();
 
     for (auto &env : env_items)
     {
-        if (env != nullptr) delete env;
+        env.reset();
     }
     env_items.clear();
 
-    if (envItemManager != nullptr) delete envItemManager;
-    envItemManager = nullptr;
+    envItemManager.reset();
 
-    if (NewMap != nullptr) delete NewMap;
-    NewMap = nullptr;
-    if (SaveLoad != nullptr) delete SaveLoad;
-    SaveLoad = nullptr;
-    if (rb_tileProperties != nullptr) delete rb_tileProperties;
-    rb_tileProperties = nullptr;
-    if (b_tileProperties != nullptr) delete b_tileProperties;
-    b_tileProperties = nullptr;
-    if (tilePropertiesPanel != nullptr) delete tilePropertiesPanel;
-    tilePropertiesPanel = nullptr;
-    if (objects_ui != nullptr) delete objects_ui;
-    objects_ui = nullptr;
+    NewMap.reset();
+    SaveLoad.reset();
+    rb_tileProperties.reset();
+    b_tileProperties.reset();
+    tilePropertiesPanel.reset();
+    objects_ui.reset();
 
-    if (b_save != nullptr) delete b_save;
-    b_save = nullptr;
-    if (b_new != nullptr) delete b_new;
-    b_new = nullptr;
-    if (b_load != nullptr) delete b_load;
-    b_load = nullptr;
-    if (b_objects != nullptr) delete b_objects;
-    b_objects = nullptr;
-    if (b_tiles != nullptr) delete b_tiles;
-    b_tiles = nullptr;
+    b_save.reset();
+    b_new.reset();
+    b_load.reset();
+    b_objects.reset();
+    b_tiles.reset();
 
-    if (tilePanel != nullptr) delete tilePanel;
-    tilePanel = nullptr;
-    if (objectPanel != nullptr) delete objectPanel;
-    objectPanel = nullptr;
-    if (controlPanel != nullptr) delete controlPanel;
-    controlPanel = nullptr;
-    if (buildPanel != nullptr) delete buildPanel;
-    buildPanel = nullptr;
+    tilePanel.reset();
+    objectPanel.reset();
+    controlPanel.reset();
+    buildPanel.reset();
 
-    if (menuRenderer != nullptr) delete menuRenderer;
-    menuRenderer = nullptr;
-    if (squareRenderer != nullptr) delete squareRenderer;
-    squareRenderer = nullptr;
-    if (worldRenderer != nullptr) delete worldRenderer;
-    worldRenderer = nullptr;
-    if (textRenderer != nullptr) delete textRenderer;
-    textRenderer = nullptr;
+    menuRenderer.reset();
+    squareRenderer.reset();
+    worldRenderer.reset();
+    textRenderer.reset();
 
-    if (camera != nullptr) delete camera;
-    camera = nullptr;
+    camera.reset();
 
-    if (editorMapRenderer != nullptr) delete editorMapRenderer;
-    editorMapRenderer = nullptr;
+    editorMapRenderer.reset();
 }
 
 void Editor::Update()
@@ -327,10 +311,10 @@ void Editor::Update()
     {
         if (texture.x > 0)
         {
-            bool check_1 = tils->tilesUI[0].getLocalPosition().y == 0 &&
+            bool check_1 = tils->tilesUI[0]->getLocalPosition().y == 0 &&
                            InputManager::scroll.y > 0;
             bool check_2 =
-                tils->tilesUI[tileCount - 1].getLocalPosition().y ==
+                tils->tilesUI[tileCount - 1]->getLocalPosition().y ==
                     maxCellInRow * 32 &&
                 InputManager::scroll.y < 0;
 
@@ -338,9 +322,9 @@ void Editor::Update()
             {
                 for (int i = 0; i < tileCount; i++)
                 {
-                    tils->tilesUI[i].setLocalPosition(Vector2<int>(tils->tilesUI[i].getLocalPosition().x,
-                                                                   tils->tilesUI[i].getLocalPosition().y +
-                                                                       InputManager::scroll.y * 32));
+                    tils->tilesUI[i]->setLocalPosition(Vector2<int>(tils->tilesUI[i]->getLocalPosition().x,
+                                                                    tils->tilesUI[i]->getLocalPosition().y +
+                                                                        InputManager::scroll.y * 32));
                 }
             }
         }
@@ -362,12 +346,12 @@ void Editor::ProcessInput()
 
     for (int i = 0; i < tileCount; i++)
     {
-        if (tils->tilesUI[i].isRenderable())
+        if (tils->tilesUI[i]->isRenderable())
         {
             // tils->tilesUIProcessInput();
-            if (tils->tilesUI[i].IsMouseDown())
+            if (tils->tilesUI[i]->IsMouseDown())
             {
-                selectedTile = &tils->tilesUI[i].getTile();
+                selectedTile = std::make_shared<Tile>(tils->tilesUI[i]->getTile());
             }
         }
     }
@@ -440,24 +424,23 @@ void Editor::ProcessInput()
     if (NewMap->b_okey->IsMouseDown())
     {
         std::unique_ptr<NewMapResult> t = NewMap->B_NewMap();
-        if (t.get() != nullptr)
+        if (t != nullptr)
         {
             for (auto &env : env_items)
             {
-                if (env != nullptr) delete env;
+                env.reset();
             }
             env_items.clear();
             NewMap->newPanel->setEnable(false);
             tils = std::move(t);
 
-            delete editorMapRenderer;
             int mapL = mapLimit.x * mapLimit.y;
-            editorMapRenderer = new EditorMapRenderer();
+            editorMapRenderer = std::make_shared<EditorMapRenderer>();
             editorMapRenderer->init(mapL);
 
             for (int i = 0; i < mapL; i++)
             {
-                Vector2<int> pos = Utils::CellToPosition(tils->tiles[i].cell);
+                Vector2<int> pos = Utils::CellToPosition(tils->tiles[i]->cell);
                 editorMapRenderer->addRect(pos, Vector2<int>(GameParameters::SIZE_TILE), cell_yellow, 1.0F, 0);
             }
             editorMapRenderer->updateData();
@@ -536,16 +519,15 @@ void Editor::ProcessInput()
         Unload();
         Load();
 
-        std::unique_ptr<NewMapResult> newTils = std::unique_ptr<NewMapResult>(SaveLoad->LoadMap(newMapName));
-        tils = std::move(newTils);
-        selectedTile = &tils->tilesUI[0].getTile();
+        tils = std::move(SaveLoad->LoadMap(newMapName));
+        selectedTile = std::make_shared<Tile>(tils->tilesUI[0]->getTile());
 
         int mapL = mapLimit.x * mapLimit.y;
         editorMapRenderer->init(mapL);
 
         for (int i = 0; i < mapL; i++)
         {
-            Vector2<int> pos = Utils::CellToPosition(tils->tiles[i].cell);
+            Vector2<int> pos = Utils::CellToPosition(tils->tiles[i]->cell);
             editorMapRenderer->addRect(pos, Vector2<int>(GameParameters::SIZE_TILE), cell_yellow, 1.0F, 0);
         }
         editorMapRenderer->updateData();
@@ -578,16 +560,16 @@ void Editor::ProcessInput()
                 {
                     for (int j = 0; j < mapLimit.x * mapLimit.y; j++)
                     {
-                        if (tils->tiles[j].item != nullptr &&
-                            tils->tiles[j].item->getObjID() ==
+                        if (tils->tiles[j]->item != nullptr &&
+                            tils->tiles[j]->item->getObjID() ==
                                 selectedItem->getObjID())
                         {
-                            tils->tiles[j].item = nullptr;
+                            tils->tiles[j]->item = nullptr;
                             break;
                         }
                     }
                 }
-                delete env_items[i];
+                env_items[i].reset();
                 env_items.erase(env_items.begin() + i);
                 selectedItem = nullptr;
                 break;
@@ -607,7 +589,7 @@ void Editor::ProcessInput()
                 Vector2 selectedCell = Utils::PositionToCell(wd);
                 for (int i = 0; i < mapLimit.x * mapLimit.y; i++)
                 {
-                    if (tils->tiles[i].cell == selectedCell)
+                    if (tils->tiles[i]->cell == selectedCell)
                     {
                         Tile tilee =
                             Tile(Utils::CellToPosition(selectedCell),
@@ -615,10 +597,10 @@ void Editor::ProcessInput()
                                  Vector2<int>(GameParameters::SIZE_TILE),
                                  selectedTile->getType(), selectedTile->frame);
                         if (!(selectedTile->frame ==
-                              tils->tiles[i].button.getTile().frame))
+                              tils->tiles[i]->button.getTile().frame))
                         {
                             TileButtonWorld bt = TileButtonWorld(tilee);
-                            tils->tiles[i].SetButton(bt);
+                            tils->tiles[i]->SetButton(bt);
                             break;
                         }
                     }
@@ -638,13 +620,14 @@ void Editor::ProcessInput()
                 Vector2 selectedCell = Utils::PositionToCell(wd);
                 for (int i = 0; i < mapLimit.x * mapLimit.y; i++)
                 {
-                    if (tils->tiles[i].cell == selectedCell)
+                    if (tils->tiles[i]->cell == selectedCell)
                     {
-                        if (tils->tiles[i].item == nullptr)
+                        if (tils->tiles[i]->item == nullptr)
                         {
-                            Env_Item *a = new Env_Item(
+                            auto a = std::make_shared<Env_Item>(
                                 1, Utils::CellToPosition(selectedCell));
-                            tils->tiles[i].SetItem(a);
+                            a->Initialize();
+                            tils->tiles[i]->SetItem(a);
                             break;
                         }
                     }
@@ -669,19 +652,19 @@ void Editor::Render()
     {
         Vector2 pos = Utils::WorldToScreen(
             camera->view,
-            tils->tiles[i].cell * Vector2<int>(GameParameters::SIZE_TILE));
+            tils->tiles[i]->cell * Vector2<int>(GameParameters::SIZE_TILE));
         if (pos.x <= GameParameters::SCREEN_WIDTH && pos.x >= 0 &&
             pos.y <= GameParameters::SCREEN_HEIGHT && pos.y >= 0)
         {
-            tils->tiles[i].button.Draw(*worldRenderer, *squareRenderer);
+            tils->tiles[i]->button.Draw(*worldRenderer, *squareRenderer);
         }
 
-        if (!f && ms == tils->tiles[i].cell && !NewMap->isMouseHover() &&
+        if (!f && ms == tils->tiles[i]->cell && !NewMap->isMouseHover() &&
             !buildPanel->isMouseHover(false) && !SaveLoad->isMouseHover() &&
             !envItemManager->isPressedOrHover() && !tilePropertiesPanel->isMouseHover(false))
         {
             f = true;
-            Vector2<int> pos = Utils::CellToPosition(tils->tiles[i].cell);
+            Vector2<int> pos = Utils::CellToPosition(tils->tiles[i]->cell);
             squareRenderer->world_RenderEmptySquare(
                 pos, Vector2<int>(GameParameters::SIZE_TILE), mouse_yellow,
                 1.0F, 0, 4.0F);
@@ -708,19 +691,19 @@ void Editor::Render()
     {
         for (int i = 0; i < tileCount; i++)
         {
-            if (selectedTile->GetID() == tils->tilesUI[i].getTile().GetID())
+            if (selectedTile->GetID() == tils->tilesUI[i]->getTile().GetID())
             {
-                tils->tilesUI[i].Draw(*menuRenderer, *squareRenderer, 0.3F, true,
-                                      Timer::timeSinceSceneStart);
+                tils->tilesUI[i]->Draw(*menuRenderer, *squareRenderer, 0.3F, true,
+                                       Timer::timeSinceSceneStart);
             }
-            else if (tils->tilesUI[i].IsMouseHover())
+            else if (tils->tilesUI[i]->IsMouseHover())
             {
-                tils->tilesUI[i].Draw(*menuRenderer, *squareRenderer, 0.3F, false,
-                                      Timer::timeSinceSceneStart);
+                tils->tilesUI[i]->Draw(*menuRenderer, *squareRenderer, 0.3F, false,
+                                       Timer::timeSinceSceneStart);
             }
             else
             {
-                tils->tilesUI[i].Draw(*menuRenderer, *squareRenderer);
+                tils->tilesUI[i]->Draw(*menuRenderer, *squareRenderer);
                 int a = 2;
             }
         }

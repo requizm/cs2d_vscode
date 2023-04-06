@@ -176,10 +176,6 @@ RadioButton::RadioButton(TextRenderer &renderer, const Vector2<int> &position,
 
 RadioButton::~RadioButton()
 {
-    for (auto &element : elements)
-    {
-        delete element;
-    }
     UIObject::removeParent();
 }
 
@@ -214,14 +210,14 @@ void RadioButton::AddElement(const std::string &text,
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    RadioButtonElement *r = new RadioButtonElement(
+    auto r = std::make_shared<RadioButtonElement>(
         text, Vector2<int>(0, y_sep * i), *rend, i,
         buttonColor, textColor, scale);
     r->setSize(300, 300);
     r->setMouseHoverColor(Vector3<float>(0.9F));
     r->setOutlineColor(Vector3<float>(0.58F));
     r->setMouseHoverOutlineColor(Vector3<float>(0.9F));
-    r->setParent(this, true);
+    r->setParent(shared_from_this());
     this->elements.push_back(r);
     i += 1;
 }
@@ -259,11 +255,11 @@ void RadioButton::ProcessInput()
                 {
                     try
                     {
-                        f(elements[old], elements[selectedIndex]);
+                        f(elements[old].get(), elements[selectedIndex].get());
                     }
                     catch (const std::exception &e)
                     {
-                        f(nullptr, elements[selectedIndex]);
+                        f(nullptr, elements[selectedIndex].get());
                     }
                 }
                 break;
@@ -293,7 +289,7 @@ RadioButtonElement *RadioButton::GetSelectedElement()
 {
     if (selectedIndex != -1)
     {
-        return elements.at(selectedIndex);
+        return elements.at(selectedIndex).get();
     }
     return nullptr;
 }

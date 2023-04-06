@@ -23,72 +23,75 @@ void Menu::Load()
 #if defined(TRACY_ENABLE)
     ZoneScopedS(10);
 #endif
-    this->menuRenderer = std::unique_ptr<SpriteRenderer>(new SpriteRenderer(ResourceManager::GetShader("menu")));
-    this->textRenderer = std::unique_ptr<TextRenderer>(new TextRenderer(GameParameters::SCREEN_WIDTH,
-                                          GameParameters::SCREEN_HEIGHT));
+    this->menuRenderer = std::make_shared<SpriteRenderer>(ResourceManager::GetShader("menu"));
+    this->textRenderer = std::make_shared<TextRenderer>(GameParameters::SCREEN_WIDTH,
+                                                        GameParameters::SCREEN_HEIGHT);
     this->textRenderer->Load(
         GameParameters::resDirectory + "fonts/liberationsans.ttf", 16);
-    this->squareRenderer = std::unique_ptr<SquareRenderer>(new SquareRenderer(true));
+    this->squareRenderer = std::make_shared<SquareRenderer>(true);
 
-    this->l_console = std::unique_ptr<Label>(new Label(
+    this->l_console = std::make_shared<Label>(
         "Console", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 - 50),
-        *textRenderer, 0.8F, Vector3<float>(0.55F)));
-    this->l_newgame = std::unique_ptr<Label>(new Label(
+        *textRenderer, 0.8F, Vector3<float>(0.55F));
+    this->l_newgame = std::make_shared<Label>(
         "New Game", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 - 20),
-        *textRenderer, 1.0F, Vector3<float>(0.58F)));
-    this->l_options = std::unique_ptr<Label>(new Label(
+        *textRenderer, 1.0F, Vector3<float>(0.58F));
+    this->l_options = std::make_shared<Label>(
         "Options", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2),
-        *textRenderer, 1.0F, Vector3<float>(0.58F)));
-    this->l_editor = std::unique_ptr<Label>(new Label(
+        *textRenderer, 1.0F, Vector3<float>(0.58F));
+    this->l_editor = std::make_shared<Label>(
         "Editor", Vector2<int>(10, GameParameters::SCREEN_HEIGHT / 2 + 20),
-        *textRenderer, 1.0F, Vector3<float>(0.58F)));
+        *textRenderer, 1.0F, Vector3<float>(0.58F));
 
     this->optionsPanel =
-        std::unique_ptr<Panel>(new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F,
-                               GameParameters::SCREEN_HEIGHT / 2 - 225.0F),
-                  "Options", Vector2<int>(420, 450), *textRenderer, true, true,
-                  1.0F, Vector3<float>(0.21F)));
+        std::make_shared<Panel>(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210,
+                                             GameParameters::SCREEN_HEIGHT / 2 - 225),
+                                "Options", Vector2<int>(420, 450), *textRenderer, true, true,
+                                1.0F, Vector3<float>(0.21F));
+    this->optionsPanel->InitTitleAndEscapeButton(*textRenderer, "Options");
     this->optionsPanel->setMovable(true);
 
     this->t_test =
-        std::unique_ptr<TextBox>(new TextBox(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20),
-                    true, 1.0F, Vector3<float>(0.58F)));
-    this->t_test->setParent(optionsPanel.get());
+        std::make_shared<TextBox>(Vector2<int>(20, 20), *textRenderer, Vector2<int>(100, 20),
+                                  true, 1.0F, Vector3<float>(0.58F));
+    this->t_test->setParent(optionsPanel);
     this->t_test->setParentCenterPos();
 
     this->newPanel =
-        std::unique_ptr<Panel>(new Panel(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210.0F,
-                               GameParameters::SCREEN_HEIGHT / 2 - 225.0F),
-                  "New Game", Vector2<int>(420, 450), *textRenderer, true, true,
-                  1.0F, Vector3<float>(0.21F)));
+        std::make_shared<Panel>(Vector2<int>(GameParameters::SCREEN_WIDTH / 2 - 210,
+                                             GameParameters::SCREEN_HEIGHT / 2 - 225),
+                                "New Game", Vector2<int>(420, 450), *textRenderer, true, true,
+                                1.0F, Vector3<float>(0.21F));
+    this->newPanel->InitTitleAndEscapeButton(*textRenderer, "New Game");
     this->newPanel->setMovable(true);
 
     this->mapsPanel =
-        std::unique_ptr<Panel>(new Panel(Vector2<int>(100, 100), "Maps", Vector2<int>(120, 200),
-                  *textRenderer, true, false, 1.0F, Vector3<float>(0.21F)));
+        std::make_shared<Panel>(Vector2<int>(100, 100), "Maps", Vector2<int>(120, 200),
+                                *textRenderer, true, false, 1.0F, Vector3<float>(0.21F));
+    this->mapsPanel->InitTitleAndEscapeButton(*textRenderer, "Maps");
     this->mapsPanel->setMovable(false);
     this->mapsPanel->setScrollable(true);
     this->mapsPanel->setOutline(true);
     this->mapsPanel->setVisible(true);
     this->mapsPanel->setOutlineColor(Vector3<float>(0.47F));
-    this->mapsPanel->setParent(newPanel.get(), true);
-    this->mapNames = std::unique_ptr<ListItem>(new ListItem(mapsPanel.get()));
+    this->mapsPanel->setParent(newPanel, true);
+    this->mapNames = std::make_shared<ListItem>(mapsPanel);
 
     this->t_mapName =
-        std::unique_ptr<TextBox>(new TextBox(Vector2<int>(100, 320), *textRenderer,
-                    Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F)));
-    this->t_mapName->setParent(newPanel.get(), true);
+        std::make_shared<TextBox>(Vector2<int>(100, 320), *textRenderer,
+                                  Vector2<int>(120, 20), true, 1.0F, Vector3<float>(0.58F));
+    this->t_mapName->setParent(newPanel, true);
 
-    this->b_newGame = std::unique_ptr<TextButton>(new TextButton(
+    this->b_newGame = std::make_shared<TextButton>(
         "Start", Vector2<int>(240, 320), Vector2<int>(60, 20), *textRenderer,
-        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F, true));
+        Vector3<float>(0.15F), Vector3<float>(0.58F), 1.0F, true);
     this->b_newGame->setButtonClickColor(Vector3<float>(0.30F));
     this->b_newGame->setButtonHoverColor(Vector3<float>(0.30F));
     this->b_newGame->setTextHoverColor(Vector3<float>(0.58F));
     this->b_newGame->setTextClickColor(Vector3<float>(1.0F));
     this->b_newGame->setHaveOutline(true);
     this->b_newGame->setOutlineColor(Vector3<float>(1.0F));
-    this->b_newGame->setParent(newPanel.get(), true);
+    this->b_newGame->setParent(newPanel, true);
     this->b_newGame->addListenerDown(std::bind(&Menu::newGameBtnClick, this));
 
     std::function<void(TextButton *, TextButton *)> mapChange =

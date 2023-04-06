@@ -11,7 +11,7 @@ class ButtonTile
    public:
     TileButtonWorld button;
     Vector2<int> cell;
-    Env_Item *item = nullptr;
+    std::shared_ptr<Env_Item> item = nullptr;
     bool init = false;
 
     ButtonTile() = default;
@@ -29,7 +29,8 @@ class ButtonTile
 
     ButtonTile(int item_id, TileButtonWorld &button, const Vector2<int> &cell)
     {
-        this->item = new Env_Item(item_id, button.getPosition());
+        this->item = std::make_shared<Env_Item>(item_id, button.getPosition());
+        this->item->Initialize();
         this->cell = cell;
         this->button = button;
     }
@@ -41,12 +42,8 @@ class ButtonTile
         this->button = bt;
     }
 
-    void SetItem(Env_Item *item)
+    void SetItem(std::shared_ptr<Env_Item> item)
     {
-        if (this->item != nullptr)
-        {
-            delete this->item;
-        }
         this->item = item;
     }
 };
